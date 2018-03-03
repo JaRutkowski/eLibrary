@@ -1,0 +1,50 @@
+#1 changing using functional interfaces (Java 8)
+		tabbedForm.getPanelClient().getCockpitPanel().getBtnDelete().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				onClickBtnDelete();
+				System.out.println("Pressed Delete");
+			}
+		});
+------------------------------------------------------------------------------------------------------------------------------------------------		
+		tabbedForm.getPanelClient().getCockpitPanel().getBtnDelete().addActionListener(e -> {
+				onClickBtnDelete();
+				System.out.println("Pressed Delete");
+		});
+		
+		tabbedForm.getPanelClient().getCockpitPanel().getBtnDelete().addActionListener(e ->onClickBtnDelete());
+------------------------------------------------------------------------------------------------------------------------------------------------	
+#2 log4j
+		Registered errors:
+		1. RefusedLogInException
+		2. RefusedRegistrationException
+------------------------------------------------------------------------------------------------------------------------------------------------	
+#3 Java 9 - java.lang.NoClassDefFoundError: javax/xml/bind/JAXBException in Java 9
+		https://stackoverflow.com/questions/43574426/how-to-resolve-java-lang-noclassdeffounderror-javax-xml-bind-jaxbexception-in-j
+------------------------------------------------------------------------------------------------------------------------------------------------	
+#4 Hibernate session new configuration (HibernateUtil)
+		static {
+	       try
+	        {
+	    	    Configuration configuration = new Configuration().configure();
+	            serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
+	            sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+	            session = sessionFactory.openSession();
+
+	        }
+	        catch (HibernateException he)
+	        {
+	            System.err.println("Error creating Session: " + he);
+	            throw new ExceptionInInitializerError(he);
+	        }
+			// try {
+			// sessionFactory = new Configuration().configure().buildSessionFactory();
+			// session = sessionFactory.openSession();
+			// } catch (HibernateException e) {
+			// Logger.getLogger("app").log(Level.WARNING, e.getMessage());
+			// throw new ExceptionInInitializerError(e);
+			// }
+		}
+------------------------------------------------------------------------------------------------------------------------------------------------	
+#5 Java 9 - java.lang.NoClassDefFoundError: javax/activation/DataSource in Java 9
+		--add-modules java.activation
