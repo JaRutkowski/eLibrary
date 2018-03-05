@@ -48,3 +48,6 @@
 ------------------------------------------------------------------------------------------------------------------------------------------------	
 #5 Java 9 - java.lang.NoClassDefFoundError: javax/activation/DataSource in Java 9
 		--add-modules java.activation
+------------------------------------------------------------------------------------------------------------------------------------------------	
+#6 Mvn versions and parent - child pom
+		https://stackoverflow.com/questions/10582054/maven-project-version-inheritance-do-i-have-to-specify-the-parent-version

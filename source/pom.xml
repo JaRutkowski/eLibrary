@@ -8,6 +8,7 @@
 		<maven.compiler.source>9</maven.compiler.source>
 		<maven.compiler.target>9</maven.compiler.target>
 		<postgresql.driver.version>42.1.4</postgresql.driver.version>
+		<org.hibernate.version>5.2.13.Final</org.hibernate.version>
 	</properties>
 	<build>
 		<plugins>
@@ -36,6 +37,12 @@
 					</execution>
 				</executions>
 			</plugin>
+						<!-- https://mvnrepository.com/artifact/org.sonarsource.scanner.maven/sonar-maven-plugin -->
+			<plugin>
+				<groupId>org.sonarsource.scanner.maven</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>3.4.0.905</version>
+			</plugin>
 		</plugins>
 	</build>
 	<version>1.0-SNAPSHOT</version>
@@ -52,7 +59,7 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
-			<version>5.2.13.Final</version>
+			<version>${org.hibernate.version}</version>
 		</dependency>
 	<!-- Java 6 = JAX-B Version 2.0 -->
 	<!-- Java 7 = JAX-B Version 2.2.3 -->
