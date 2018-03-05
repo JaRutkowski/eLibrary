@@ -134,6 +134,7 @@ public class Actions implements IRegistrationForm {
 							startForm.getRegistrationPanel().getTextFieldAddress().getText(),
 							(City) startForm.getRegistrationPanel().getComboBoxCity().getSelectedItem(), sex, birthDate,
 							startForm.getRegistrationPanel().getTextFieldLogin().getText(),
+							startForm.getRegistrationPanel().getTextFieldEMail().getText(),
 							String.valueOf(startForm.getRegistrationPanel().getPasswordField().getPassword()),
 							Role.WORKER_LIBRARIAN);
 				}else if(birthDate.before(new Date())) {
@@ -145,6 +146,7 @@ public class Actions implements IRegistrationForm {
 							startForm.getRegistrationPanel().getTextFieldAddress().getText(),
 							(City) startForm.getRegistrationPanel().getComboBoxCity().getSelectedItem(), sex, birthDate,
 							startForm.getRegistrationPanel().getTextFieldLogin().getText(),
+							startForm.getRegistrationPanel().getTextFieldEMail().getText(),
 							String.valueOf(startForm.getRegistrationPanel().getPasswordField().getPassword()),
 							Role.WORKER_LIBRARIAN);
 				} else {

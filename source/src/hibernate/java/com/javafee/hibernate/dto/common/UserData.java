@@ -36,6 +36,9 @@ public abstract class UserData {
 
 	@Column(name = "login", unique = false, nullable = false, insertable = true, updatable = true, length = 15)
 	private String login;
+	
+	@Column(name = "e_mail", unique = true, nullable = false, insertable = true, updatable = true, length = 80)
+	private String eMail;
 
 	@Column(name = "password", unique = false, nullable = false, insertable = true, updatable = true, length = 80)
 	private String password;
@@ -123,6 +126,14 @@ public abstract class UserData {
 
 	public void setSex(Character sex) {
 		this.sex = sex;
+	}
+	
+	public String getEMail() {
+		return eMail;
+	}
+	
+	public void setEMail(String eMail) {
+		this.eMail = eMail;
 	}
 
 	public String getPeselNumber() {

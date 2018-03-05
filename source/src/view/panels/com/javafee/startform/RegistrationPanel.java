@@ -1,6 +1,5 @@
 package com.javafee.startform;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -16,13 +15,13 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
 
 import com.javafee.common.Constans;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
 import com.javafee.hibernate.dto.association.City;
 import com.toedter.calendar.JDateChooser;
-import javax.swing.border.TitledBorder;
 
 public class RegistrationPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -41,15 +40,17 @@ public class RegistrationPanel extends JPanel {
 	private ButtonGroup groupRadioButtonSex;
 	private JRadioButton radioButtonFemale;
 	private JRadioButton radioButtonMale;
+	private JLabel lblEMail;
+	private JTextField textFieldEMail;
 
 	public RegistrationPanel() {
 		setBackground(Utils.getApplicationColor());
 		setBorder(new TitledBorder(null, SystemProperties.getInstance().getResourceBundle().getString("registrationPanel.registrationPanelBorderTitle"), TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 100, 130, 198, 0 };
-		gridBagLayout.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-		gridBagLayout.columnWeights = new double[] { 0.0, 0.0, 1.0, Double.MIN_VALUE };
-		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+		gridBagLayout.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+		gridBagLayout.columnWeights = new double[] { 0.0, 1.0, 1.0, Double.MIN_VALUE };
+		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
 				Double.MIN_VALUE };
 		setLayout(gridBagLayout);
 
@@ -232,6 +233,25 @@ public class RegistrationPanel extends JPanel {
 		gbc_dateChooserBirthDate.gridx = 1;
 		gbc_dateChooserBirthDate.gridy = 7;
 		add(dateChooserBirthDate, gbc_dateChooserBirthDate);
+		
+		lblEMail = new JLabel(SystemProperties.getInstance().getResourceBundle().getString("registrationPanel.lblEMail"));
+		lblEMail.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		GridBagConstraints gbc_lblEMail = new GridBagConstraints();
+		gbc_lblEMail.anchor = GridBagConstraints.WEST;
+		gbc_lblEMail.insets = new Insets(0, 0, 5, 5);
+		gbc_lblEMail.gridx = 0;
+		gbc_lblEMail.gridy = 8;
+		add(lblEMail, gbc_lblEMail);
+		
+		textFieldEMail = new JTextField();
+		GridBagConstraints gbc_textFieldEMail = new GridBagConstraints();
+		gbc_textFieldEMail.gridwidth = 2;
+		gbc_textFieldEMail.insets = new Insets(0, 0, 5, 0);
+		gbc_textFieldEMail.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textFieldEMail.gridx = 1;
+		gbc_textFieldEMail.gridy = 8;
+		add(textFieldEMail, gbc_textFieldEMail);
+		textFieldEMail.setColumns(10);
 
 		JLabel lblLogin = new JLabel(
 				SystemProperties.getInstance().getResourceBundle().getString("registrationPanel.lblLogin"));
@@ -240,7 +260,7 @@ public class RegistrationPanel extends JPanel {
 		gbc_lblLogin.anchor = GridBagConstraints.WEST;
 		gbc_lblLogin.insets = new Insets(0, 0, 5, 5);
 		gbc_lblLogin.gridx = 0;
-		gbc_lblLogin.gridy = 8;
+		gbc_lblLogin.gridy = 9;
 		add(lblLogin, gbc_lblLogin);
 
 		textFieldLogin = new JTextField();
@@ -250,7 +270,7 @@ public class RegistrationPanel extends JPanel {
 		gbc_textFieldLogin.insets = new Insets(0, 0, 5, 0);
 		gbc_textFieldLogin.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textFieldLogin.gridx = 1;
-		gbc_textFieldLogin.gridy = 8;
+		gbc_textFieldLogin.gridy = 9;
 		add(textFieldLogin, gbc_textFieldLogin);
 		textFieldLogin.setColumns(10);
 
@@ -261,7 +281,7 @@ public class RegistrationPanel extends JPanel {
 		gbc_lblPassword.anchor = GridBagConstraints.WEST;
 		gbc_lblPassword.insets = new Insets(0, 0, 5, 5);
 		gbc_lblPassword.gridx = 0;
-		gbc_lblPassword.gridy = 9;
+		gbc_lblPassword.gridy = 10;
 		add(lblPassword, gbc_lblPassword);
 
 		passwordField = new JPasswordField();
@@ -270,7 +290,7 @@ public class RegistrationPanel extends JPanel {
 		gbc_passwordField.insets = new Insets(0, 0, 5, 0);
 		gbc_passwordField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_passwordField.gridx = 1;
-		gbc_passwordField.gridy = 9;
+		gbc_passwordField.gridy = 10;
 		add(passwordField, gbc_passwordField);
 
 		btnRegisterNow = new JButton(
@@ -280,7 +300,7 @@ public class RegistrationPanel extends JPanel {
 		gbc_btnRegisterNow.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnRegisterNow.gridwidth = 3;
 		gbc_btnRegisterNow.gridx = 0;
-		gbc_btnRegisterNow.gridy = 10;
+		gbc_btnRegisterNow.gridy = 11;
 		add(btnRegisterNow, gbc_btnRegisterNow);
 	}
 
@@ -306,6 +326,10 @@ public class RegistrationPanel extends JPanel {
 
 	public void setDateChooserBirthDate(JDateChooser dateChooserBirthDate) {
 		this.dateChooserBirthDate = dateChooserBirthDate;
+	}
+	
+	public JTextField getTextFieldEMail() {
+		return textFieldEMail;
 	}
 
 	public JTextField getTextFieldAddress() {

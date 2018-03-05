@@ -28,12 +28,17 @@ public class WorkerTableModel extends AbstractTableModel {
 	public WorkerTableModel() {
 		super();
 		this.prepareHibernateDao();
-		this.columns = new String[] { SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.peselNumberCol"),
+		this.columns = new String[] {
+				SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.peselNumberCol"),
 				SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.documentNumberCol"),
-				SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.loginCol"), SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.nameCol"),
+				SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.loginCol"),
+				SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.eMailCol"),
+				SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.nameCol"),
 				SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.surnameCol"),
-				SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.addressCol"), SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.cityCol"),
-				SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.sexCol"), SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.birthDateCol"),
+				SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.addressCol"),
+				SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.cityCol"),
+				SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.sexCol"),
+				SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.birthDateCol"),
 				SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.registeredCol")};
 	}
 
@@ -86,6 +91,8 @@ public class WorkerTableModel extends AbstractTableModel {
 			return client.getDocumentNumber();
 		case COL_LOGIN:
 			return client.getLogin();
+		case COL_E_MAIL:
+			return client.getEMail();
 		case COL_NAME:
 			return client.getName();
 		case COL_SURNAME:
@@ -126,6 +133,9 @@ public class WorkerTableModel extends AbstractTableModel {
 			break;
 		case COL_LOGIN:
 			workerShallowClone.setLogin(value.toString());
+			break;
+		case COL_E_MAIL:
+			workerShallowClone.setEMail(value.toString());
 			break;
 		case COL_NAME:
 			workerShallowClone.setName(value.toString());

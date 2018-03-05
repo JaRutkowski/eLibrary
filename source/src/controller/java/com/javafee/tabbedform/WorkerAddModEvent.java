@@ -105,6 +105,7 @@ public class WorkerAddModEvent {
 				.setBirthDate(workerAddModFrame.getWorkerDataPanel().getDateChooserBirthDate().getDate() != null
 						? workerAddModFrame.getWorkerDataPanel().getDateChooserBirthDate().getDate()
 						: null);
+		workerShallowClone.setEMail(workerAddModFrame.getWorkerDataPanel().getTextFieldEMail().getText());
 		workerShallowClone.setLogin(workerAddModFrame.getWorkerDataPanel().getTextFieldLogin().getText());
 
 		// if (!validatePasswordFieldIsEmpty())
@@ -208,6 +209,11 @@ public class WorkerAddModEvent {
 				.setText(((Worker) Params.getInstance().get("selectedWorkerShallowClone")).getLogin() != null
 						? ((Worker) Params.getInstance().get("selectedWorkerShallowClone")).getLogin().toString()
 						: "");
+		
+		workerAddModFrame.getWorkerDataPanel().getTextFieldEMail()
+		.setText(((Worker) Params.getInstance().get("selectedWorkerShallowClone")).getEMail() != null
+				? ((Worker) Params.getInstance().get("selectedWorkerShallowClone")).getEMail().toString()
+				: "");
 
 		workerAddModFrame.getWorkerDataPanel().getTextFieldName()
 				.setText(((Worker) Params.getInstance().get("selectedWorkerShallowClone")).getName() != null
@@ -290,6 +296,7 @@ public class WorkerAddModEvent {
 							workerAddModFrame.getWorkerDataPanel().getTextFieldAddress().getText(),
 							(City) workerAddModFrame.getWorkerDataPanel().getComboBoxCity().getSelectedItem(), sex,
 							birthDate, workerAddModFrame.getWorkerDataPanel().getTextFieldLogin().getText(),
+							workerAddModFrame.getWorkerDataPanel().getTextFieldEMail().getText(),
 							String.valueOf(workerAddModFrame.getWorkerDataPanel().getPasswordField().getPassword()),
 							Role.WORKER_LIBRARIAN);
 					workerTableModel.add((Worker) RegistrationEvent.userData);
@@ -303,6 +310,7 @@ public class WorkerAddModEvent {
 							workerAddModFrame.getWorkerDataPanel().getTextFieldAddress().getText(),
 							(City) workerAddModFrame.getWorkerDataPanel().getComboBoxCity().getSelectedItem(), sex,
 							birthDate, workerAddModFrame.getWorkerDataPanel().getTextFieldLogin().getText(),
+							workerAddModFrame.getWorkerDataPanel().getTextFieldEMail().getText(),
 							String.valueOf(workerAddModFrame.getWorkerDataPanel().getPasswordField().getPassword()),
 							Role.WORKER_LIBRARIAN);
 
