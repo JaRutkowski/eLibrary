@@ -220,6 +220,8 @@ public final class Constans {
 	public static final SimpleDateFormat APPLICATION_DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
 	public static final SimpleDateFormat APPLICATION_DATE_TIME_FORMAT = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
 	public static final String APPLICATION_CURRENCY = "PLN";
+	public static final String APPLICATION_EMAIL = "nreply.elibrary@gmail.com";
+	public static final String APPLICATION_EMAIL_PASSWORD = "Admin95!";
 	
 	public static final String ROLE_ADMIN = SystemProperties.getInstance().getResourceBundle()
 			.getString("constans.ROLE_ADMIN");

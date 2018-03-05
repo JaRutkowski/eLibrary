@@ -47,6 +47,7 @@ public class Actions implements IRegistrationForm {
 
 		// FIXME #4 Fix adding key listener.
 
+		startForm.getLogInPanel().getBtnForgotPassword().addActionListener(e -> onClickBtnForgotPassword());
 		startForm.getBtnLogIn().addActionListener(e -> onClickBtnLogIn());
 		startForm.getBtnRegistrationMode().addActionListener(e -> onClickBtnRegistrationMode());
 		startForm.getNavigationPanel().getBtnBack().addActionListener(e -> onClickBtnBack());
@@ -66,6 +67,10 @@ public class Actions implements IRegistrationForm {
 		cityListToSort.forEach(c -> comboBoxCity.addElement(c));
 
 		startForm.getRegistrationPanel().getComboBoxCity().setModel(comboBoxCity);
+	}
+	
+	private void onClickBtnForgotPassword() {
+		
 	}
 
 	private void onClickBtnLogIn() {
