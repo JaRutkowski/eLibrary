@@ -220,6 +220,9 @@ public final class Constans {
 	public static final SimpleDateFormat APPLICATION_DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
 	public static final SimpleDateFormat APPLICATION_DATE_TIME_FORMAT = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
 	public static final String APPLICATION_CURRENCY = "PLN";
+	public static final Integer APPLICATION_MIN_PASSWORD_LENGTH = 8;
+	public static final Integer APPLICATION_MAX_PASSWORD_LENGTH = 16;
+	public static final Integer APPLICATION_GENERATE_PASSWORD_LENGTH = 16;
 	public static final String APPLICATION_EMAIL = "nreply.elibrary@gmail.com";
 	public static final String APPLICATION_EMAIL_PASSWORD = "Admin95!";
 	

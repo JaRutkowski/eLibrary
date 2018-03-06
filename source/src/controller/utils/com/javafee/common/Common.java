@@ -6,8 +6,13 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.javafee.hibernate.dto.library.Client;
+import com.javafee.hibernate.dto.library.Worker;
+import com.sun.xml.bind.v2.runtime.reflect.opt.Const;
+
 import edu.vt.middleware.password.AlphabeticalSequenceRule;
 import edu.vt.middleware.password.CharacterCharacteristicsRule;
+import edu.vt.middleware.password.CharacterRule;
 import edu.vt.middleware.password.DigitCharacterRule;
 import edu.vt.middleware.password.LengthRule;
 import edu.vt.middleware.password.LowercaseCharacterRule;
@@ -15,6 +20,7 @@ import edu.vt.middleware.password.NonAlphanumericCharacterRule;
 import edu.vt.middleware.password.NumericalSequenceRule;
 import edu.vt.middleware.password.Password;
 import edu.vt.middleware.password.PasswordData;
+import edu.vt.middleware.password.PasswordGenerator;
 import edu.vt.middleware.password.PasswordValidator;
 import edu.vt.middleware.password.QwertySequenceRule;
 import edu.vt.middleware.password.RepeatCharacterRegexRule;
@@ -37,11 +43,24 @@ public final class Common {
 
 		return md5;
 	}
+	
+	public static final String generatePassword() {
+		PasswordGenerator generator = new PasswordGenerator();
+
+		// create character rules to generate passwords with
+		List<CharacterRule> rules = new ArrayList<CharacterRule>();
+		rules.add(new DigitCharacterRule(1));
+		rules.add(new NonAlphanumericCharacterRule(1));
+		rules.add(new UppercaseCharacterRule(1));
+		rules.add(new LowercaseCharacterRule(1));
+
+		return generator.generatePassword(Constans.APPLICATION_GENERATE_PASSWORD_LENGTH, rules);
+	}
 
 	public static final boolean checkPasswordStrenght(String password) {
 		boolean result = false;
 		// password must be between 8 and 16 chars long
-		LengthRule lengthRule = new LengthRule(8, 16);
+		LengthRule lengthRule = new LengthRule(Constans.APPLICATION_MIN_PASSWORD_LENGTH, Constans.APPLICATION_MAX_PASSWORD_LENGTH);
 		// don't allow whitespace
 		WhitespaceRule whitespaceRule = new WhitespaceRule();
 		// control allowed characters
@@ -84,5 +103,15 @@ public final class Common {
 		}
 
 		return result;
+	}
+	
+	public static boolean isAdmin(Worker worker) {
+		return Constans.DATA_BASE_ADMIN_LOGIN.equals(worker.getLogin())
+				&& Constans.DATA_BASE_ADMIN_PASSWORD.equals(worker.getPassword()) ? true : false;
+	}
+
+	public static boolean isAdmin(Client client) {
+		return Constans.DATA_BASE_ADMIN_LOGIN.equals(client.getLogin())
+				&& Constans.DATA_BASE_ADMIN_PASSWORD.equals(client.getPassword()) ? true : false;
 	}
 }
