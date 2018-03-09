@@ -105,6 +105,7 @@ public class ClientAddModEvent {
 				.setBirthDate(clientAddModFrame.getClientDataPanel().getDateChooserBirthDate().getDate() != null
 						? clientAddModFrame.getClientDataPanel().getDateChooserBirthDate().getDate()
 						: null);
+		clientShallowClone.setEMail(clientAddModFrame.getClientDataPanel().getTextFieldEMail().getText());
 		clientShallowClone.setLogin(clientAddModFrame.getClientDataPanel().getTextFieldLogin().getText());
 
 		// if (!validatePasswordFieldIsEmpty())
@@ -213,6 +214,11 @@ public class ClientAddModEvent {
 				.setText(((Client) Params.getInstance().get("selectedClientShallowClone")).getLogin() != null
 						? ((Client) Params.getInstance().get("selectedClientShallowClone")).getLogin().toString()
 						: "");
+		
+		clientAddModFrame.getClientDataPanel().getTextFieldEMail()
+		.setText(((Client) Params.getInstance().get("selectedClientShallowClone")).getEMail() != null
+				? ((Client) Params.getInstance().get("selectedClientShallowClone")).getEMail().toString()
+				: "");
 
 		clientAddModFrame.getClientDataPanel().getTextFieldName()
 				.setText(((Client) Params.getInstance().get("selectedClientShallowClone")).getName() != null
@@ -297,6 +303,7 @@ public class ClientAddModEvent {
 									(City) clientAddModFrame.getClientDataPanel().getComboBoxCity().getSelectedItem(),
 									sex, birthDate,
 									clientAddModFrame.getClientDataPanel().getTextFieldLogin().getText(),
+									clientAddModFrame.getClientDataPanel().getTextFieldEMail().getText(),
 									String.valueOf(
 											clientAddModFrame.getClientDataPanel().getPasswordField().getPassword()),
 									Role.CLIENT);
@@ -314,6 +321,7 @@ public class ClientAddModEvent {
 									(City) clientAddModFrame.getClientDataPanel().getComboBoxCity().getSelectedItem(),
 									sex, birthDate,
 									clientAddModFrame.getClientDataPanel().getTextFieldLogin().getText(),
+									clientAddModFrame.getClientDataPanel().getTextFieldEMail().getText(),
 									String.valueOf(
 											clientAddModFrame.getClientDataPanel().getPasswordField().getPassword()),
 									Role.CLIENT);

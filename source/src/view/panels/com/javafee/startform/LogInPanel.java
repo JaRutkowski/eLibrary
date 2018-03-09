@@ -16,6 +16,7 @@ import com.javafee.common.Utils;
 
 import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
+import javax.swing.JButton;
 
 public class LogInPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -24,15 +25,16 @@ public class LogInPanel extends JPanel {
 	private JLabel lblPassword;
 	private JTextField textFieldLogin;
 	private JPasswordField passwordField;
+	private JButton btnForgotPassword;
 
 	public LogInPanel() {
 		setBackground(Utils.getApplicationColor());
 		setBorder(new TitledBorder(null, SystemProperties.getInstance().getResourceBundle().getString("logInPanel.logInPanelBorderTitle"), TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 124, 0, 0 };
-		gridBagLayout.rowHeights = new int[] { 0, 0, 0 };
+		gridBagLayout.rowHeights = new int[] { 0, 0, 0, 0 };
 		gridBagLayout.columnWeights = new double[] { 0.0, 1.0, Double.MIN_VALUE };
-		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, Double.MIN_VALUE };
+		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
 
 		lblLogin = new JLabel(SystemProperties.getInstance().getResourceBundle().getString("logInPanel.lblLogin"));
@@ -59,17 +61,30 @@ public class LogInPanel extends JPanel {
 		lblPassword.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		GridBagConstraints gbc_lblPassword = new GridBagConstraints();
 		gbc_lblPassword.anchor = GridBagConstraints.WEST;
-		gbc_lblPassword.insets = new Insets(0, 0, 0, 5);
+		gbc_lblPassword.insets = new Insets(0, 0, 5, 5);
 		gbc_lblPassword.gridx = 0;
 		gbc_lblPassword.gridy = 1;
 		add(lblPassword, gbc_lblPassword);
 
 		passwordField = new JPasswordField();
 		GridBagConstraints gbc_passwordField = new GridBagConstraints();
+		gbc_passwordField.insets = new Insets(0, 0, 5, 0);
 		gbc_passwordField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_passwordField.gridx = 1;
 		gbc_passwordField.gridy = 1;
 		add(passwordField, gbc_passwordField);
+		
+		btnForgotPassword = new JButton(SystemProperties.getInstance().getResourceBundle().getString("logInPanel.btnForgotPassword"));
+		btnForgotPassword.setContentAreaFilled(false);
+		btnForgotPassword.setOpaque(false);
+		btnForgotPassword.setBorderPainted(false);
+		btnForgotPassword.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		btnForgotPassword.setBorder(null);
+		GridBagConstraints gbc_btnForgotPassword = new GridBagConstraints();
+		gbc_btnForgotPassword.anchor = GridBagConstraints.WEST;
+		gbc_btnForgotPassword.gridx = 1;
+		gbc_btnForgotPassword.gridy = 2;
+		add(btnForgotPassword, gbc_btnForgotPassword);
 	}
 
 	public JLabel getLblLogin() {
@@ -102,5 +117,9 @@ public class LogInPanel extends JPanel {
 
 	public void setPasswordField(JPasswordField passwordField) {
 		this.passwordField = passwordField;
+	}
+	
+	public JButton getBtnForgotPassword() {
+		return btnForgotPassword;
 	}
 }

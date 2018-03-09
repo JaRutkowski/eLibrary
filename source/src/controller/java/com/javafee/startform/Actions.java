@@ -1,7 +1,5 @@
 package com.javafee.startform;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.ParseException;
@@ -10,9 +8,14 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
+import com.javafee.common.Common;
 import com.javafee.common.Constans;
 import com.javafee.common.Constans.Role;
 import com.javafee.common.IRegistrationForm;
@@ -23,7 +26,12 @@ import com.javafee.exception.LogGuiException;
 import com.javafee.exception.RefusedLogInException;
 import com.javafee.exception.RefusedRegistrationException;
 import com.javafee.hibernate.dao.HibernateDao;
+import com.javafee.hibernate.dao.HibernateUtil;
 import com.javafee.hibernate.dto.association.City;
+import com.javafee.hibernate.dto.common.UserData;
+import com.javafee.hibernate.dto.library.Client;
+import com.javafee.hibernate.dto.library.Worker;
+import com.javafee.mail.MailSender;
 import com.javafee.startform.RegistrationEvent.RegistrationFailureCause;
 
 public class Actions implements IRegistrationForm {
@@ -46,7 +54,9 @@ public class Actions implements IRegistrationForm {
 		});
 
 		// FIXME #4 Fix adding key listener.
+		// FIXME #5 Mail template for restoring password
 
+		startForm.getLogInPanel().getBtnForgotPassword().addActionListener(e -> onClickBtnForgotPassword());
 		startForm.getBtnLogIn().addActionListener(e -> onClickBtnLogIn());
 		startForm.getBtnRegistrationMode().addActionListener(e -> onClickBtnRegistrationMode());
 		startForm.getNavigationPanel().getBtnBack().addActionListener(e -> onClickBtnBack());
@@ -66,6 +76,32 @@ public class Actions implements IRegistrationForm {
 		cityListToSort.forEach(c -> comboBoxCity.addElement(c));
 
 		startForm.getRegistrationPanel().getComboBoxCity().setModel(comboBoxCity);
+	}
+	
+	private void onClickBtnForgotPassword() {
+		if (validateForgotPassword()) {
+			if (Utils.displayConfirmDialog(
+					SystemProperties.getInstance().getResourceBundle().getString("confirmDialog.forgotPassword"),
+					"") == JOptionPane.YES_OPTION) {
+				UserData userData = (UserData) Params.getInstance().get("USER_DATA");
+				String generatedPassword = Common.generatePassword();
+				userData.setPassword(Common.createMd5(generatedPassword));
+
+				HibernateUtil.beginTransaction();
+				HibernateUtil.getSession().update(UserData.class.getName(), userData);
+				HibernateUtil.commitTransaction();
+
+				sendMailWithPassword(generatedPassword, userData.getEMail());
+				Params.getInstance().remove("USER_DATA");
+				
+				Utils.displayOptionPane(
+						SystemProperties.getInstance().getResourceBundle()
+								.getString("startForm.passwordRecoverySuccess"),
+						SystemProperties.getInstance().getResourceBundle().getString(
+								"startForm.passwordRecoverySuccessTitle"),
+						JOptionPane.INFORMATION_MESSAGE);
+			}
+		}
 	}
 
 	private void onClickBtnLogIn() {
@@ -134,6 +170,7 @@ public class Actions implements IRegistrationForm {
 							startForm.getRegistrationPanel().getTextFieldAddress().getText(),
 							(City) startForm.getRegistrationPanel().getComboBoxCity().getSelectedItem(), sex, birthDate,
 							startForm.getRegistrationPanel().getTextFieldLogin().getText(),
+							startForm.getRegistrationPanel().getTextFieldEMail().getText(),
 							String.valueOf(startForm.getRegistrationPanel().getPasswordField().getPassword()),
 							Role.WORKER_LIBRARIAN);
 				}else if(birthDate.before(new Date())) {
@@ -145,6 +182,7 @@ public class Actions implements IRegistrationForm {
 							startForm.getRegistrationPanel().getTextFieldAddress().getText(),
 							(City) startForm.getRegistrationPanel().getComboBoxCity().getSelectedItem(), sex, birthDate,
 							startForm.getRegistrationPanel().getTextFieldLogin().getText(),
+							startForm.getRegistrationPanel().getTextFieldEMail().getText(),
 							String.valueOf(startForm.getRegistrationPanel().getPasswordField().getPassword()),
 							Role.WORKER_LIBRARIAN);
 				} else {
@@ -230,6 +268,21 @@ public class Actions implements IRegistrationForm {
 		startForm.getFrame().pack();
 	}
 
+	private void sendMailWithPassword(String generatedPassword, String recipient) {
+		MailSender ms = new MailSender();
+		Message message = new MimeMessage(ms.getSession());
+		
+		try {
+			message.setFrom(new InternetAddress("no-reply@gmail.com"));
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipient));
+			message.setSubject("Przywrócenie has³a w sytemie eLibrary");
+			message.setText("Drogi u¿ytkowniku," + "\n\nPrzywrócono Twoje has³o. Zaloguj siê do systemu korzystaj¹c z wygenerowanego przez system has³a: " + generatedPassword + "\n\n Administracja eLibrary");
+			ms.send(message);
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	private boolean validateLogIn() {
 		boolean result = false;
 		if (startForm.getLogInPanel().getTextFieldLogin().getText().isEmpty() || startForm.getLogInPanel().getPasswordField().getPassword().length == 0)
@@ -237,6 +290,54 @@ public class Actions implements IRegistrationForm {
 					SystemProperties.getInstance().getResourceBundle().getString("startForm.validateLogInError1Title"), JOptionPane.ERROR_MESSAGE);
 		else
 			result = true;
+
+		return result;
+	}
+	
+	private boolean validateForgotPassword() {
+		boolean result = false;
+		if (startForm.getLogInPanel().getTextFieldLogin().getText().isEmpty())
+			JOptionPane.showMessageDialog(startForm.getFrame(), SystemProperties.getInstance().getResourceBundle().getString("startForm.validateForgotPasswordError1"),
+					SystemProperties.getInstance().getResourceBundle().getString("startForm.validateForgotPassword1Title"), JOptionPane.ERROR_MESSAGE);
+		else {
+			Client client = (Client) HibernateUtil.getSession().getNamedQuery("Client.checkIfClientLoginExist")
+					.setParameter("login", startForm.getLogInPanel().getTextFieldLogin().getText()).uniqueResult();
+			Worker worker = (Worker) HibernateUtil.getSession().getNamedQuery("Worker.checkIfWorkerLoginExist")
+					.setParameter("login", startForm.getLogInPanel().getTextFieldLogin().getText()).uniqueResult();
+
+			if(client != null && worker != null) {
+				JOptionPane.showMessageDialog(startForm.getFrame(), SystemProperties.getInstance().getResourceBundle().getString("startForm.validateForgotPasswordError1"),
+						SystemProperties.getInstance().getResourceBundle().getString("startForm.validateForgotPassword1Title"), JOptionPane.ERROR_MESSAGE);
+			} else {
+				if (client != null) {
+					if (Common.isAdmin(client))
+						JOptionPane.showMessageDialog(startForm.getFrame(), SystemProperties.getInstance().getResourceBundle().getString("startForm.validateForgotPasswordError2"),
+								SystemProperties.getInstance().getResourceBundle().getString("startForm.validateForgotPassword1Title"), JOptionPane.ERROR_MESSAGE);
+					else {
+						if(client.getEMail() != null) {
+							Params.getInstance().add("USER_DATA", (UserData)client);
+							result = true;
+						}
+						else 
+							JOptionPane.showMessageDialog(startForm.getFrame(), SystemProperties.getInstance().getResourceBundle().getString("startForm.validateForgotPasswordError3"),
+									SystemProperties.getInstance().getResourceBundle().getString("startForm.validateForgotPassword1Title"), JOptionPane.ERROR_MESSAGE);
+					}
+				} else if (worker != null) {
+					if (Common.isAdmin(worker))
+						JOptionPane.showMessageDialog(startForm.getFrame(), SystemProperties.getInstance().getResourceBundle().getString("startForm.validateForgotPasswordError2"),
+								SystemProperties.getInstance().getResourceBundle().getString("startForm.validateForgotPassword1Title"), JOptionPane.ERROR_MESSAGE);
+					else {
+						if(worker.getEMail() != null) {
+							Params.getInstance().add("USER_DATA", (UserData)worker);
+							result = true;
+						}
+						else 
+							JOptionPane.showMessageDialog(startForm.getFrame(), SystemProperties.getInstance().getResourceBundle().getString("startForm.validateForgotPasswordError3"),
+									SystemProperties.getInstance().getResourceBundle().getString("startForm.validateForgotPassword1Title"), JOptionPane.ERROR_MESSAGE);
+					}
+				}
+			}
+		}
 
 		return result;
 	}

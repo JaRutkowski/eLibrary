@@ -32,12 +32,12 @@ public class RegistrationEvent {
 	}
 
 	public static RegistrationEvent getInstance(String peselNumber, String documentNumber, String name, String surname,
-			String address, City city, Character sex, Date birthDate, String login, String password, Role role) throws RefusedRegistrationException {
+			String address, City city, Character sex, Date birthDate, String login, String eMail, String password, Role role) throws RefusedRegistrationException {
 		if (checkRegistration(login, password, peselNumber, role)) {
 			registrationEvent = new RegistrationEvent();
 			registrationDate = new Date();
 			RegistrationEvent.userData = createUser(peselNumber, documentNumber, name, surname, address, city, sex,
-					birthDate, login, password, role);
+					birthDate, login, eMail, password, role);
 		} else
 			throw new RefusedRegistrationException("Cannot register to the system");
 		return registrationEvent;
@@ -90,7 +90,7 @@ public class RegistrationEvent {
 	}
 
 	private static UserData createUser(String peselNumber, String documentNumber, String name, String surname,
-			String address, City city, Character sex, Date birthDate, String login, String password, Role role) {
+			String address, City city, Character sex, Date birthDate, String login, String eMail, String password, Role role) {
 		HibernateUtil.beginTransaction();
 		UserData resultUserData = null;
 
@@ -106,6 +106,7 @@ public class RegistrationEvent {
 			worker.setSex(sex);
 			worker.setBirthDate(birthDate);
 			worker.setLogin(login);
+			worker.setEMail(eMail);
 			worker.setPassword(Common.createMd5(password));
 			worker.setRegistered(Constans.DATA_BASE_REGISTER_DEFAULT_FLAG);
 			HibernateUtil.getSession().save(worker);
@@ -144,6 +145,7 @@ public class RegistrationEvent {
 			client.setSex(sex);
 			client.setBirthDate(birthDate);
 			client.setLogin(login);
+			client.setEMail(eMail);
 			client.setPassword(Common.createMd5(password));
 			client.setRegistered(Constans.DATA_BASE_REGISTER_DEFAULT_FLAG);
 			HibernateUtil.getSession().save(client);

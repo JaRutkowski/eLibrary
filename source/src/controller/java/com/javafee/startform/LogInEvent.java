@@ -55,7 +55,7 @@ public final class LogInEvent {
 				.setParameter("login", login).uniqueResult();
 
 		if (client != null) {
-			isAdmin = isAdmin(client);
+			isAdmin = Common.isAdmin(client);
 			if (isAdmin)
 				role = Role.ADMIN;
 			if (checkLoginAndPassword(password)) {
@@ -66,7 +66,7 @@ public final class LogInEvent {
 					Params.getInstance().add("NOT_REGISTERED", LogInFailureCause.NOT_REGISTERED);
 			}
 		} else if (worker != null) {
-			isAdmin = isAdmin(worker);
+			isAdmin = Common.isAdmin(worker);
 			if (isAdmin)
 				role = Role.ADMIN;
 			if (checkLoginAndPassword(password)) {
@@ -85,16 +85,6 @@ public final class LogInEvent {
 			Params.getInstance().add("NO_USER", LogInFailureCause.NO_USER);
 
 		return result;
-	}
-
-	private static boolean isAdmin(Worker worker) {
-		return Constans.DATA_BASE_ADMIN_LOGIN.equals(worker.getLogin())
-				&& Constans.DATA_BASE_ADMIN_PASSWORD.equals(worker.getPassword()) ? true : false;
-	}
-
-	private static boolean isAdmin(Client client) {
-		return Constans.DATA_BASE_ADMIN_LOGIN.equals(client.getLogin())
-				&& Constans.DATA_BASE_ADMIN_PASSWORD.equals(client.getPassword()) ? true : false;
 	}
 
 	// TODO 08.07.2017 Method checks if worker is hired in one library, that's the

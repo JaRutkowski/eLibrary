@@ -77,7 +77,7 @@ public final class Constans {
 	}
 	
 	public enum ClientTableColumn {
-		COL_PESEL_NUMBER(0), COL_DOCUMENT_NUMBER(1), COL_LOGIN(2), COL_NAME(3), COL_SURNAME(4), COL_ADDRESS(5), COL_CITY(6), COL_SEX(7), COL_BIRTH_DATE(8), COL_REGISTERED(9);
+		COL_PESEL_NUMBER(0), COL_DOCUMENT_NUMBER(1), COL_LOGIN(2), COL_E_MAIL(3), COL_NAME(4), COL_SURNAME(5), COL_ADDRESS(6), COL_CITY(7), COL_SEX(8), COL_BIRTH_DATE(9), COL_REGISTERED(10);
 
 		private final Integer value;
 
@@ -220,6 +220,11 @@ public final class Constans {
 	public static final SimpleDateFormat APPLICATION_DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
 	public static final SimpleDateFormat APPLICATION_DATE_TIME_FORMAT = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
 	public static final String APPLICATION_CURRENCY = "PLN";
+	public static final Integer APPLICATION_MIN_PASSWORD_LENGTH = 8;
+	public static final Integer APPLICATION_MAX_PASSWORD_LENGTH = 16;
+	public static final Integer APPLICATION_GENERATE_PASSWORD_LENGTH = 16;
+	public static final String APPLICATION_EMAIL = "nreply.elibrary@gmail.com";
+	public static final String APPLICATION_EMAIL_PASSWORD = "Admin95!";
 	
 	public static final String ROLE_ADMIN = SystemProperties.getInstance().getResourceBundle()
 			.getString("constans.ROLE_ADMIN");
