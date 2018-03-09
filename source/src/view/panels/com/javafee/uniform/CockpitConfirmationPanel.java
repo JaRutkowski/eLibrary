@@ -12,9 +12,12 @@ import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
 import com.javafee.startform.RegistrationPanel;
 
+import lombok.Getter;
+
 public class CockpitConfirmationPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
+	@Getter
 	private JButton btnAccept;
 
 	public CockpitConfirmationPanel() {
@@ -36,13 +39,5 @@ public class CockpitConfirmationPanel extends JPanel {
 		gbc_btnAccept.gridx = 0;
 		gbc_btnAccept.gridy = 0;
 		add(btnAccept, gbc_btnAccept);
-	}
-
-	public JButton getBtnAccept() {
-		return btnAccept;
-	}
-
-	public void setBtnAccept(JButton btnAccept) {
-		this.btnAccept = btnAccept;
 	}
 }

@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
 import com.javafee.common.Utils;
@@ -18,27 +19,33 @@ import com.javafee.model.CategoryTableModel;
 import com.javafee.model.PublishingHouseTableModel;
 import com.javafee.uniform.CockpitConfirmationPanel;
 
+import lombok.Getter;
 import net.coderazzi.filters.gui.TableFilterHeader;
 
 public class BookAddModFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 
+	@Getter
 	private BookDataPanel bookDataPanel;
+	@Getter
 	private CockpitConfirmationPanel cockpitConfirmationPanel;
 
+	@Getter
 	private JTable authorTable;
+	@Getter
 	private JTable categoryTable;
 	private JScrollPane scrollPane;
 	private JScrollPane scrollPane_categoryTable;
 	private JScrollPane scrollPane_publishingHouse;
+	@Getter
 	private JTable publishingHouseTable;
 
 	public BookAddModFrame() {
 		setBackground(Utils.getApplicationColor());
 		setIconImage(
 				Toolkit.getDefaultToolkit().getImage(BookAddModFrame.class.getResource("/images/splashScreen.jpg")));
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 667, 561);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -118,25 +125,5 @@ public class BookAddModFrame extends JFrame {
 		gbc_cockpitConfirmationPanel.gridx = 0;
 		gbc_cockpitConfirmationPanel.gridy = 3;
 		contentPane.add(cockpitConfirmationPanel, gbc_cockpitConfirmationPanel);
-	}
-
-	public BookDataPanel getBookDataPanel() {
-		return bookDataPanel;
-	}
-
-	public CockpitConfirmationPanel getCockpitConfirmationPanel() {
-		return cockpitConfirmationPanel;
-	}
-
-	public JTable getAuthorTable() {
-		return authorTable;
-	}
-
-	public JTable getCategoryTable() {
-		return categoryTable;
-	}
-
-	public JTable getPublishingHouseTable() {
-		return publishingHouseTable;
 	}
 }

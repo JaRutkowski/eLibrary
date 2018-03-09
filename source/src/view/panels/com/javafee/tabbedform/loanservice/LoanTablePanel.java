@@ -11,11 +11,13 @@ import javax.swing.ListSelectionModel;
 import com.javafee.common.Utils;
 import com.javafee.model.LoanTableModel;
 
+import lombok.Getter;
 import net.coderazzi.filters.gui.TableFilterHeader;
 
 public class LoanTablePanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
+	@Getter
 	private JTable loanTable;
 
 	public LoanTablePanel() {
@@ -42,13 +44,5 @@ public class LoanTablePanel extends JPanel {
 		loanTable.setModel(new LoanTableModel());
 		loanTable.setAutoCreateRowSorter(true);
 		scrollPane.setViewportView(loanTable);
-	}
-
-	public JTable getLoanTable() {
-		return loanTable;
-	}
-
-	public void setLoanTable(JTable loanTable) {
-		this.loanTable = loanTable;
 	}
 }

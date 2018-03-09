@@ -30,6 +30,7 @@ class MainSplashScreen extends JWindow {
 		setLocation(screenSize.width / 2 - (labelSize.width / 2), screenSize.height / 2 - (labelSize.height / 2));
 
 		addMouseListener(new MouseAdapter() {
+			@Override
 			public void mousePressed(MouseEvent e) {
 				setVisible(false);
 				dispose();
@@ -38,6 +39,7 @@ class MainSplashScreen extends JWindow {
 
 		final int pause = waitTime;
 		final Runnable closerRunner = new Runnable() {
+			@Override
 			public void run() {
 				setVisible(false);
 				f.setVisible(true);
@@ -46,6 +48,7 @@ class MainSplashScreen extends JWindow {
 		};
 
 		Runnable waitRunner = new Runnable() {
+			@Override
 			public void run() {
 				try {
 					SystemProperties.getInstance().initializeSystem();

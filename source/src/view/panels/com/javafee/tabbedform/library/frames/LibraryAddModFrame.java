@@ -6,10 +6,13 @@ import java.awt.Insets;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
 import com.javafee.common.SystemProperties;
@@ -18,8 +21,6 @@ import com.javafee.model.BookTableModel;
 import com.javafee.uniform.CockpitConfirmationPanel;
 
 import net.coderazzi.filters.gui.TableFilterHeader;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
 
 public class LibraryAddModFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -35,7 +36,7 @@ public class LibraryAddModFrame extends JFrame {
 		setBackground(Utils.getApplicationColor());
 		setIconImage(
 				Toolkit.getDefaultToolkit().getImage(LibraryAddModFrame.class.getResource("/images/splashScreen.jpg")));
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 517, 444);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -64,15 +65,16 @@ public class LibraryAddModFrame extends JFrame {
 		bookTable.setModel(new BookTableModel());
 		bookTable.setAutoCreateRowSorter(true);
 		scrollPane.setViewportView(bookTable);
-		
-		lblInventoryNumber = new JLabel(SystemProperties.getInstance().getResourceBundle().getString("libraryAddModFrame.lblInventoryNumber"));
+
+		lblInventoryNumber = new JLabel(
+				SystemProperties.getInstance().getResourceBundle().getString("libraryAddModFrame.lblInventoryNumber"));
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.anchor = GridBagConstraints.WEST;
 		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel.gridx = 0;
 		gbc_lblNewLabel.gridy = 1;
 		contentPane.add(lblInventoryNumber, gbc_lblNewLabel);
-		
+
 		textFieldInventoryNumber = new JTextField();
 		GridBagConstraints gbc_textField = new GridBagConstraints();
 		gbc_textField.insets = new Insets(0, 0, 5, 0);
@@ -81,7 +83,7 @@ public class LibraryAddModFrame extends JFrame {
 		gbc_textField.gridy = 1;
 		contentPane.add(textFieldInventoryNumber, gbc_textField);
 		textFieldInventoryNumber.setColumns(10);
-		
+
 		cockpitConfirmationPanel = new CockpitConfirmationPanel();
 		GridBagConstraints gbc_cockpitConfirmationPanel = new GridBagConstraints();
 		gbc_cockpitConfirmationPanel.anchor = GridBagConstraints.SOUTH;
@@ -91,15 +93,15 @@ public class LibraryAddModFrame extends JFrame {
 		gbc_cockpitConfirmationPanel.gridy = 2;
 		contentPane.add(cockpitConfirmationPanel, gbc_cockpitConfirmationPanel);
 	}
-	
+
 	public JTable getBookTable() {
 		return bookTable;
 	}
-	
+
 	public JTextField getTextFieldInventoryNumber() {
 		return textFieldInventoryNumber;
 	}
-	
+
 	public CockpitConfirmationPanel getCockpitConfirmationPanel() {
 		return cockpitConfirmationPanel;
 	}

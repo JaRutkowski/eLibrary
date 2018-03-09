@@ -129,14 +129,14 @@ public class TabLibraryEvent implements IActionForm {
 	}
 
 	private void onClickBtnDeleteVolumeReadingRoom() {
-		if (tabbedForm.getPanelLibrary().getReadingRoomBookTable().getSelectedRow() != -1) {
-			int selectedRowIndex = tabbedForm.getPanelLibrary().getReadingRoomBookTable()
-					.convertRowIndexToModel(tabbedForm.getPanelLibrary().getReadingRoomBookTable().getSelectedRow());
+		if (tabbedForm.getPanelLibrary().getReadingRoomVolumeTable().getSelectedRow() != -1) {
+			int selectedRowIndex = tabbedForm.getPanelLibrary().getReadingRoomVolumeTable()
+					.convertRowIndexToModel(tabbedForm.getPanelLibrary().getReadingRoomVolumeTable().getSelectedRow());
 			if (Utils.displayConfirmDialog(
 					SystemProperties.getInstance().getResourceBundle().getString("confirmDialog.deleteMessage"),
 					"") == JOptionPane.YES_OPTION) {
 				if (selectedRowIndex != -1) {
-					Volume selectedVolume = ((VolumeTableReadingRoomModel) tabbedForm.getPanelLibrary().getReadingRoomBookTable()
+					Volume selectedVolume = ((VolumeTableReadingRoomModel) tabbedForm.getPanelLibrary().getReadingRoomVolumeTable()
 							.getModel()).getVolume(selectedRowIndex);
 //					Volume volumeShallowClone = (Volume) selectedVolume.clone();
 
@@ -144,7 +144,7 @@ public class TabLibraryEvent implements IActionForm {
 						HibernateUtil.beginTransaction();
 						HibernateUtil.getSession().delete(selectedVolume);
 						HibernateUtil.commitTransaction();
-						((VolumeTableReadingRoomModel) tabbedForm.getPanelLibrary().getReadingRoomBookTable().getModel()).remove(selectedVolume);
+						((VolumeTableReadingRoomModel) tabbedForm.getPanelLibrary().getReadingRoomVolumeTable().getModel()).remove(selectedVolume);
 					} else {
 						LogGuiException.logWarning(
 								SystemProperties.getInstance().getResourceBundle()
@@ -203,12 +203,12 @@ public class TabLibraryEvent implements IActionForm {
 	}
 
 	private void onClickBtnModifyVolumeReadingRoom() {
-		if (tabbedForm.getPanelLibrary().getReadingRoomBookTable().getSelectedRow() != -1) {
-			int selectedRowIndex = tabbedForm.getPanelLibrary().getReadingRoomBookTable()
-					.convertRowIndexToModel(tabbedForm.getPanelLibrary().getReadingRoomBookTable().getSelectedRow());
+		if (tabbedForm.getPanelLibrary().getReadingRoomVolumeTable().getSelectedRow() != -1) {
+			int selectedRowIndex = tabbedForm.getPanelLibrary().getReadingRoomVolumeTable()
+					.convertRowIndexToModel(tabbedForm.getPanelLibrary().getReadingRoomVolumeTable().getSelectedRow());
 			if (selectedRowIndex != -1) {
 				Volume selectedVolume = ((VolumeTableReadingRoomModel) tabbedForm.getPanelLibrary()
-						.getReadingRoomBookTable().getModel()).getVolume(selectedRowIndex);
+						.getReadingRoomVolumeTable().getModel()).getVolume(selectedRowIndex);
 				Volume volumeShallowClone = (Volume) selectedVolume.clone();
 
 				Params.getInstance().add("selectedVolumeShallowClone", volumeShallowClone);
@@ -217,7 +217,7 @@ public class TabLibraryEvent implements IActionForm {
 				if (libraryAddModEvent == null)
 					libraryAddModEvent = new LibraryAddModEvent();
 				libraryAddModEvent.control(Constans.Context.MODIFICATION, Context.READING_ROOM,
-						(VolumeTableModel) tabbedForm.getPanelLibrary().getReadingRoomBookTable().getModel());
+						(VolumeTableModel) tabbedForm.getPanelLibrary().getReadingRoomVolumeTable().getModel());
 
 			}
 		} else {
@@ -277,7 +277,7 @@ public class TabLibraryEvent implements IActionForm {
 		if (libraryAddModEvent == null)
 			libraryAddModEvent = new LibraryAddModEvent();
 		libraryAddModEvent.control(Constans.Context.ADDITION, Constans.Context.READING_ROOM,
-				(VolumeTableReadingRoomModel) tabbedForm.getPanelLibrary().getReadingRoomBookTable().getModel());
+				(VolumeTableReadingRoomModel) tabbedForm.getPanelLibrary().getReadingRoomVolumeTable().getModel());
 
 	}
 

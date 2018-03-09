@@ -12,9 +12,12 @@ import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
 import com.javafee.startform.RegistrationPanel;
 
+import lombok.Getter;
+
 public class ReloadPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
+	@Getter
 	private JButton btnReload;
 
 	public ReloadPanel() {
@@ -27,15 +30,12 @@ public class ReloadPanel extends JPanel {
 		setLayout(gridBagLayout);
 
 		btnReload = new JButton(SystemProperties.getInstance().getResourceBundle().getString("reloadPanel.btnReload"));
-		btnReload.setIcon(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnReload-ico.png")).getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
+		btnReload.setIcon(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnReload-ico.png"))
+				.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
 		GridBagConstraints gbc_btnReload = new GridBagConstraints();
 		gbc_btnReload.anchor = GridBagConstraints.NORTHWEST;
 		gbc_btnReload.gridx = 0;
 		gbc_btnReload.gridy = 0;
 		add(btnReload, gbc_btnReload);
-	}
-
-	public JButton getBtnReload() {
-		return btnReload;
 	}
 }

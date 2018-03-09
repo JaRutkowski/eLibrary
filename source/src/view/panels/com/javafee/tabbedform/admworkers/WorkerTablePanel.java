@@ -8,25 +8,29 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
-import javax.swing.border.TitledBorder;
 
-import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
 import com.javafee.model.WorkerTableModel;
 import com.javafee.uniform.AdmIsAccountantPanel;
 import com.javafee.uniform.AdmIsRegisteredPanel;
 import com.javafee.uniform.CockpitEditionPanel;
 
+import lombok.Getter;
 import net.coderazzi.filters.gui.TableFilterHeader;
 
 public class WorkerTablePanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
+	@Getter
 	private JTable workerTable;
 
+	@Getter
 	private WorkerDataPanel workerDataPanel;
+	@Getter
 	private CockpitEditionPanel cockpitEditionPanel;
+	@Getter
 	private AdmIsRegisteredPanel admIsRegisteredPanel;
+	@Getter
 	private AdmIsAccountantPanel admIsAccountantPanel;
 
 	public WorkerTablePanel() {
@@ -56,66 +60,44 @@ public class WorkerTablePanel extends JPanel {
 		workerTable.setModel(new WorkerTableModel());
 		workerTable.setAutoCreateRowSorter(true);
 		scrollPane.setViewportView(workerTable);
-		
-		//		workerDataPanel = new WorkerDataPanel();
-		//		workerDataPanel.setBorder(new TitledBorder(null, SystemProperties.getInstance().getResourceBundle().getString("workerTablePanel.workerDataPanelBorderTitle"), TitledBorder.LEADING,
-		//				TitledBorder.TOP, null, null));
-		//		GridBagConstraints gbc_workerDataPanel = new GridBagConstraints();
-		//		gbc_workerDataPanel.gridheight = 2;
-		//		gbc_workerDataPanel.insets = new Insets(0, 0, 5, 0);
-		//		gbc_workerDataPanel.fill = GridBagConstraints.BOTH;
-		//		gbc_workerDataPanel.gridx = 1;
-		//		gbc_workerDataPanel.gridy = 0;
-		//		workerDataPanel.getBtnRegisterNow().setVisible(false);
-		//		add(workerDataPanel, gbc_workerDataPanel);
-				
-				admIsAccountantPanel = new AdmIsAccountantPanel();
-				GridBagConstraints gbc_admIsAccountantPanel = new GridBagConstraints();
-				gbc_admIsAccountantPanel.insets = new Insets(0, 0, 5, 5);
-				gbc_admIsAccountantPanel.fill = GridBagConstraints.BOTH;
-				gbc_admIsAccountantPanel.gridx = 0;
-				gbc_admIsAccountantPanel.gridy = 2;
-				add(admIsAccountantPanel, gbc_admIsAccountantPanel);
-				
-						admIsRegisteredPanel = new AdmIsRegisteredPanel();
-						GridBagConstraints gbc_admIsRegisteredPanel = new GridBagConstraints();
-						gbc_admIsRegisteredPanel.insets = new Insets(0, 0, 5, 0);
-						gbc_admIsRegisteredPanel.fill = GridBagConstraints.BOTH;
-						gbc_admIsRegisteredPanel.gridx = 1;
-						gbc_admIsRegisteredPanel.gridy = 2;
-						add(admIsRegisteredPanel, gbc_admIsRegisteredPanel);
-		
-				cockpitEditionPanel = new CockpitEditionPanel();
-				GridBagConstraints gbc_cockpitEditionPanel = new GridBagConstraints();
-				gbc_cockpitEditionPanel.gridwidth = 2;
-				gbc_cockpitEditionPanel.fill = GridBagConstraints.HORIZONTAL;
-				gbc_cockpitEditionPanel.anchor = GridBagConstraints.NORTH;
-				gbc_cockpitEditionPanel.gridx = 0;
-				gbc_cockpitEditionPanel.gridy = 3;
-				add(cockpitEditionPanel, gbc_cockpitEditionPanel);
-	}
 
-	public JTable getWorkerTable() {
-		return workerTable;
-	}
-	
-	public void setWorkerTable(JTable workerTable) {
-		this.workerTable = workerTable;
-	}
+		// workerDataPanel = new WorkerDataPanel();
+		// workerDataPanel.setBorder(new TitledBorder(null,
+		// SystemProperties.getInstance().getResourceBundle().getString("workerTablePanel.workerDataPanelBorderTitle"),
+		// TitledBorder.LEADING,
+		// TitledBorder.TOP, null, null));
+		// GridBagConstraints gbc_workerDataPanel = new GridBagConstraints();
+		// gbc_workerDataPanel.gridheight = 2;
+		// gbc_workerDataPanel.insets = new Insets(0, 0, 5, 0);
+		// gbc_workerDataPanel.fill = GridBagConstraints.BOTH;
+		// gbc_workerDataPanel.gridx = 1;
+		// gbc_workerDataPanel.gridy = 0;
+		// workerDataPanel.getBtnRegisterNow().setVisible(false);
+		// add(workerDataPanel, gbc_workerDataPanel);
 
-	public CockpitEditionPanel getCockpitEditionPanel() {
-		return cockpitEditionPanel;
-	}
+		admIsAccountantPanel = new AdmIsAccountantPanel();
+		GridBagConstraints gbc_admIsAccountantPanel = new GridBagConstraints();
+		gbc_admIsAccountantPanel.insets = new Insets(0, 0, 5, 5);
+		gbc_admIsAccountantPanel.fill = GridBagConstraints.BOTH;
+		gbc_admIsAccountantPanel.gridx = 0;
+		gbc_admIsAccountantPanel.gridy = 2;
+		add(admIsAccountantPanel, gbc_admIsAccountantPanel);
 
-	public WorkerDataPanel getWorkerDataPanel() {
-		return workerDataPanel;
-	}
+		admIsRegisteredPanel = new AdmIsRegisteredPanel();
+		GridBagConstraints gbc_admIsRegisteredPanel = new GridBagConstraints();
+		gbc_admIsRegisteredPanel.insets = new Insets(0, 0, 5, 0);
+		gbc_admIsRegisteredPanel.fill = GridBagConstraints.BOTH;
+		gbc_admIsRegisteredPanel.gridx = 1;
+		gbc_admIsRegisteredPanel.gridy = 2;
+		add(admIsRegisteredPanel, gbc_admIsRegisteredPanel);
 
-	public AdmIsRegisteredPanel getAdmIsRegisteredPanel() {
-		return admIsRegisteredPanel;
-	}
-
-	public AdmIsAccountantPanel getAdmIsAccountantPanel() {
-		return admIsAccountantPanel;
+		cockpitEditionPanel = new CockpitEditionPanel();
+		GridBagConstraints gbc_cockpitEditionPanel = new GridBagConstraints();
+		gbc_cockpitEditionPanel.gridwidth = 2;
+		gbc_cockpitEditionPanel.fill = GridBagConstraints.HORIZONTAL;
+		gbc_cockpitEditionPanel.anchor = GridBagConstraints.NORTH;
+		gbc_cockpitEditionPanel.gridx = 0;
+		gbc_cockpitEditionPanel.gridy = 3;
+		add(cockpitEditionPanel, gbc_cockpitEditionPanel);
 	}
 }

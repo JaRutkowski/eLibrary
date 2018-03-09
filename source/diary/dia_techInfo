@@ -51,3 +51,7 @@
 ------------------------------------------------------------------------------------------------------------------------------------------------	
 #6 Mvn versions and parent - child pom
 		https://stackoverflow.com/questions/10582054/maven-project-version-inheritance-do-i-have-to-specify-the-parent-version
+------------------------------------------------------------------------------------------------------------------------------------------------	
+#7 @Data and @EqualsAndHashCode in lombok	
+		https://projectlombok.org/features/EqualsAndHashCode
+		https://stackoverflow.com/questions/34972895/lombok-hashcode-issue-with-java-lang-stackoverflowerror-null

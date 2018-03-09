@@ -23,29 +23,49 @@ import com.javafee.common.Utils;
 import com.javafee.hibernate.dto.association.City;
 import com.toedter.calendar.JDateChooser;
 
+import lombok.Getter;
+
 public class RegistrationPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
+	@Getter
 	private JTextField textFieldName;
+	@Getter
 	private JTextField textFieldSurname;
+	@Getter
 	private JDateChooser dateChooserBirthDate;
+	@Getter
 	private JTextField textFieldAddress;
+	@Getter
 	private JTextField textFieldPeselNumber;
+	@Getter
 	private JTextField textFieldDocumentNumber;
+	@Getter
 	private JTextField textFieldLogin;
-	private JLabel lblPassword;
+	@Getter
 	private JPasswordField passwordField;
+	@Getter
 	private JButton btnRegisterNow;
+	@Getter
 	private JComboBox<City> comboBoxCity;
+	@Getter
 	private ButtonGroup groupRadioButtonSex;
+	@Getter
 	private JRadioButton radioButtonFemale;
+	@Getter
 	private JRadioButton radioButtonMale;
-	private JLabel lblEMail;
+	@Getter
 	private JTextField textFieldEMail;
+	@Getter
+	private JLabel lblPassword;
+	private JLabel lblEMail;
 
 	public RegistrationPanel() {
 		setBackground(Utils.getApplicationColor());
-		setBorder(new TitledBorder(null, SystemProperties.getInstance().getResourceBundle().getString("registrationPanel.registrationPanelBorderTitle"), TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		setBorder(new TitledBorder(null,
+				SystemProperties.getInstance().getResourceBundle()
+						.getString("registrationPanel.registrationPanelBorderTitle"),
+				TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 100, 130, 198, 0 };
 		gridBagLayout.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
@@ -209,7 +229,7 @@ public class RegistrationPanel extends JPanel {
 		gbc_radioButtonMale.gridx = 2;
 		gbc_radioButtonMale.gridy = 6;
 		add(radioButtonMale, gbc_radioButtonMale);
-		
+
 		groupRadioButtonSex = new ButtonGroup();
 		groupRadioButtonSex.add(radioButtonFemale);
 		groupRadioButtonSex.add(radioButtonMale);
@@ -233,8 +253,9 @@ public class RegistrationPanel extends JPanel {
 		gbc_dateChooserBirthDate.gridx = 1;
 		gbc_dateChooserBirthDate.gridy = 7;
 		add(dateChooserBirthDate, gbc_dateChooserBirthDate);
-		
-		lblEMail = new JLabel(SystemProperties.getInstance().getResourceBundle().getString("registrationPanel.lblEMail"));
+
+		lblEMail = new JLabel(
+				SystemProperties.getInstance().getResourceBundle().getString("registrationPanel.lblEMail"));
 		lblEMail.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		GridBagConstraints gbc_lblEMail = new GridBagConstraints();
 		gbc_lblEMail.anchor = GridBagConstraints.WEST;
@@ -242,7 +263,7 @@ public class RegistrationPanel extends JPanel {
 		gbc_lblEMail.gridx = 0;
 		gbc_lblEMail.gridy = 8;
 		add(lblEMail, gbc_lblEMail);
-		
+
 		textFieldEMail = new JTextField();
 		GridBagConstraints gbc_textFieldEMail = new GridBagConstraints();
 		gbc_textFieldEMail.gridwidth = 2;
@@ -295,124 +316,14 @@ public class RegistrationPanel extends JPanel {
 
 		btnRegisterNow = new JButton(
 				SystemProperties.getInstance().getResourceBundle().getString("registrationPanel.btnRegisterNow"));
-		btnRegisterNow.setIcon(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnRegisterNow-ico.png")).getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
+		btnRegisterNow.setIcon(
+				new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnRegisterNow-ico.png"))
+						.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
 		GridBagConstraints gbc_btnRegisterNow = new GridBagConstraints();
 		gbc_btnRegisterNow.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnRegisterNow.gridwidth = 3;
 		gbc_btnRegisterNow.gridx = 0;
 		gbc_btnRegisterNow.gridy = 11;
 		add(btnRegisterNow, gbc_btnRegisterNow);
-	}
-
-	public JTextField getTextFieldName() {
-		return textFieldName;
-	}
-
-	public void setTextFieldName(JTextField textFieldName) {
-		this.textFieldName = textFieldName;
-	}
-
-	public JTextField getTextFieldSurname() {
-		return textFieldSurname;
-	}
-
-	public void setTextFieldSurname(JTextField textFieldSurname) {
-		this.textFieldSurname = textFieldSurname;
-	}
-
-	public JDateChooser getDateChooserBirthDate() {
-		return dateChooserBirthDate;
-	}
-
-	public void setDateChooserBirthDate(JDateChooser dateChooserBirthDate) {
-		this.dateChooserBirthDate = dateChooserBirthDate;
-	}
-	
-	public JTextField getTextFieldEMail() {
-		return textFieldEMail;
-	}
-
-	public JTextField getTextFieldAddress() {
-		return textFieldAddress;
-	}
-
-	public void setTextFieldAddress(JTextField textFieldAddress) {
-		this.textFieldAddress = textFieldAddress;
-	}
-
-	public JTextField getTextFieldPeselNumber() {
-		return textFieldPeselNumber;
-	}
-
-	public void setTextFieldPeselNumber(JTextField textFieldPeselNumber) {
-		this.textFieldPeselNumber = textFieldPeselNumber;
-	}
-
-	public JTextField getTextFieldDocumentNumber() {
-		return textFieldDocumentNumber;
-	}
-
-	public void setTextFieldDocumentNumber(JTextField textFieldDocumentNumber) {
-		this.textFieldDocumentNumber = textFieldDocumentNumber;
-	}
-
-	public JTextField getTextFieldLogin() {
-		return textFieldLogin;
-	}
-
-	public void setTextFieldLogin(JTextField textFieldLogin) {
-		this.textFieldLogin = textFieldLogin;
-	}
-	
-	public JLabel getLblPassword() {
-		return lblPassword;
-	}
-	
-	public JPasswordField getPasswordField() {
-		return passwordField;
-	}
-
-	public void setPasswordField(JPasswordField passwordField) {
-		this.passwordField = passwordField;
-	}
-
-	public JButton getBtnRegisterNow() {
-		return btnRegisterNow;
-	}
-
-	public void setBtnRegisterNow(JButton btnRegisterNow) {
-		this.btnRegisterNow = btnRegisterNow;
-	}
-
-	public JComboBox<City> getComboBoxCity() {
-		return comboBoxCity;
-	}
-
-	public void setComboBoxCity(JComboBox<City> comboBoxCity) {
-		this.comboBoxCity = comboBoxCity;
-	}
-	
-	public ButtonGroup getGroupRadioButtonSex() {
-		return groupRadioButtonSex;
-	}
-
-	public void setGroupRadioButtonSex(ButtonGroup groupRadioButtonSex) {
-		this.groupRadioButtonSex = groupRadioButtonSex;
-	}
-
-	public JRadioButton getRadioButtonFemale() {
-		return radioButtonFemale;
-	}
-
-	public void setRadioButtonFemale(JRadioButton radioButtonFemale) {
-		this.radioButtonFemale = radioButtonFemale;
-	}
-
-	public JRadioButton getRadioButtonMale() {
-		return radioButtonMale;
-	}
-
-	public void setRadioButtonMale(JRadioButton radioButtonMale) {
-		this.radioButtonMale = radioButtonMale;
 	}
 }

@@ -11,11 +11,13 @@ import javax.swing.ListSelectionModel;
 import com.javafee.common.Utils;
 import com.javafee.model.VolumeTableModel;
 
+import lombok.Getter;
 import net.coderazzi.filters.gui.TableFilterHeader;
 
 public class VolumeTablePanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
+	@Getter
 	private JTable volumeTable;
 
 	public VolumeTablePanel() {
@@ -42,9 +44,5 @@ public class VolumeTablePanel extends JPanel {
 		volumeTable.setModel(new VolumeTableModel());
 		volumeTable.setAutoCreateRowSorter(true);
 		scrollPane.setViewportView(volumeTable);
-	}
-
-	public JTable getVolumeTable() {
-		return volumeTable;
 	}
 }

@@ -3,11 +3,9 @@ package com.javafee.tabbedform;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.stream.Collectors;
 
 import javax.swing.JOptionPane;
 
@@ -16,10 +14,6 @@ import com.javafee.common.Constans.Role;
 import com.javafee.common.Constans.Tab;
 import com.javafee.common.Constans.Tab_Client;
 import com.javafee.common.Constans.Tab_Worker;
-import com.javafee.hibernate.dao.HibernateDao;
-import com.javafee.hibernate.dao.HibernateUtil;
-import com.javafee.hibernate.dto.association.Language;
-import com.javafee.hibernate.dto.library.Client;
 import com.javafee.common.IActionForm;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
@@ -36,6 +30,7 @@ public class Actions implements IActionForm {
         calendar = Calendar.getInstance();
         currentSecond = calendar.get(Calendar.SECOND);
     }
+    
     public void start(){
         reset();
         Timer timer = new Timer();
@@ -44,12 +39,11 @@ public class Actions implements IActionForm {
                 if( currentSecond == 60 ) {
                     reset();
                 }
-                tabbedForm.getTime().setText( String.format("%s:%02d ", sdf.format(calendar.getTime()), currentSecond ));
+                tabbedForm.getLblTime().setText( String.format("%s:%02d ", sdf.format(calendar.getTime()), currentSecond ));
                 currentSecond++;
             }
         }, 0, 1000 );
     }
-    
     
 	public void control() {
 		tabbedForm.getFrame().setVisible(true);
