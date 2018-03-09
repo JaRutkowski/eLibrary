@@ -42,7 +42,7 @@ public abstract class UserData {
 	@Column(name = "login", unique = false, nullable = false, insertable = true, updatable = true, length = 15)
 	private String login;
 
-	@Column(name = "e_mail", unique = true, nullable = false, insertable = true, updatable = true, length = 80)
+	@Column(name = "e_mail", unique = false, nullable = false, insertable = true, updatable = true, length = 80)
 	private String eMail;
 
 	@Column(name = "password", unique = false, nullable = false, insertable = true, updatable = true, length = 80)
