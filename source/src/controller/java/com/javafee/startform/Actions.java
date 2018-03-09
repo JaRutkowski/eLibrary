@@ -1,7 +1,5 @@
 package com.javafee.startform;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.ParseException;
@@ -12,7 +10,6 @@ import java.util.List;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.swing.DefaultComboBoxModel;
@@ -25,7 +22,6 @@ import com.javafee.common.IRegistrationForm;
 import com.javafee.common.Params;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
-import com.javafee.common.Validator;
 import com.javafee.exception.LogGuiException;
 import com.javafee.exception.RefusedLogInException;
 import com.javafee.exception.RefusedRegistrationException;
@@ -36,7 +32,6 @@ import com.javafee.hibernate.dto.common.UserData;
 import com.javafee.hibernate.dto.library.Client;
 import com.javafee.hibernate.dto.library.Worker;
 import com.javafee.mail.MailSender;
-import com.javafee.startform.LogInEvent.LogInFailureCause;
 import com.javafee.startform.RegistrationEvent.RegistrationFailureCause;
 
 public class Actions implements IRegistrationForm {
@@ -59,6 +54,7 @@ public class Actions implements IRegistrationForm {
 		});
 
 		// FIXME #4 Fix adding key listener.
+		// FIXME #5 Mail template for restoring password
 
 		startForm.getLogInPanel().getBtnForgotPassword().addActionListener(e -> onClickBtnForgotPassword());
 		startForm.getBtnLogIn().addActionListener(e -> onClickBtnLogIn());
