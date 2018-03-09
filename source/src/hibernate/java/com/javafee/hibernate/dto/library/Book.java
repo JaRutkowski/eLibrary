@@ -18,8 +18,10 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(exclude = {"author", "publishingHouse", "category", "volume"})
 @Entity
 @Table(name = "lib_book")
 @SequenceGenerator(name = "seq_lib_book", sequenceName = "seq_lib_book", allocationSize = 1)
