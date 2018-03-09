@@ -15,6 +15,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import lombok.Data;
+
+@Data
 @Entity
 @Table(name = "lib_raw_lending_data")
 @SequenceGenerator(name = "seq_lib_raw_lending_data", sequenceName = "seq_lib_raw_lending_data", allocationSize = 1)
@@ -37,44 +40,4 @@ public class RawLendingData {
 	@OneToOne
 	@JoinColumn(name = "id_client")
 	private Client client;
-
-	public Integer getIdLendingData() {
-		return idLendingData;
-	}
-
-	public void setIdLendingData(Integer idLendingData) {
-		this.idLendingData = idLendingData;
-	}
-
-	public Integer getLendingQuantity() {
-		return lendingQuantity;
-	}
-
-	public void setLendingQuantity(Integer lendingQuantity) {
-		this.lendingQuantity = lendingQuantity;
-	}
-
-	public BigDecimal getSummaryPenaltyValue() {
-		return summaryPenaltyValue;
-	}
-
-	public void setSummaryPenaltyValue(BigDecimal summaryPenaltyValue) {
-		this.summaryPenaltyValue = summaryPenaltyValue;
-	}
-
-	public Date getLastLendingDate() {
-		return lastLendingDate;
-	}
-
-	public void setLastLendingDate(Date lastLendingDate) {
-		this.lastLendingDate = lastLendingDate;
-	}
-
-	public Client getClient() {
-		return client;
-	}
-
-	public void setClient(Client client) {
-		this.client = client;
-	}
 }

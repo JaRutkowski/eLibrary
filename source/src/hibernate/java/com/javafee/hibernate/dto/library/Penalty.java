@@ -15,6 +15,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import lombok.Data;
+
+@Data
 @Entity
 @Table(name = "lib_penalty")
 @SequenceGenerator(name = "seq_lib_penalty", sequenceName = "seq_lib_penalty", allocationSize = 1)

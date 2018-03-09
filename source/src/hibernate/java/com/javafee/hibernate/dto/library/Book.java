@@ -13,12 +13,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import lombok.Data;
+
+@Data
 @Entity
 @Table(name = "lib_book")
 @SequenceGenerator(name = "seq_lib_book", sequenceName = "seq_lib_book", allocationSize = 1)
@@ -27,7 +28,7 @@ public class Book implements Cloneable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_lib_book")
 	@Column(name = "id_book", unique = false, nullable = false, insertable = true, updatable = true)
 	private Integer idBook;
-	
+
 	@Column(name = "isbn_number", unique = false, nullable = true, insertable = true, updatable = true, length = 13)
 	private String isbnNumber;
 
@@ -61,78 +62,6 @@ public class Book implements Cloneable {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "book")
 	private Set<Volume> volume = new HashSet<Volume>(0);
 
-	public Integer getIdBook() {
-		return idBook;
-	}
-
-	public void setIdBook(Integer idBook) {
-		this.idBook = idBook;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-	
-	public String getIsbnNumber() {
-		return isbnNumber;
-	}
-
-	public void setIsbnNumber(String isbnNumber) {
-		this.isbnNumber = isbnNumber;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public Integer getNumberOfPage() {
-		return numberOfPage;
-	}
-
-	public void setNumberOfPage(Integer numberOfPage) {
-		this.numberOfPage = numberOfPage;
-	}
-
-	public Integer getNumberOfTomes() {
-		return numberOfTomes;
-	}
-
-	public void setNumberOfTomes(Integer numberOfTomes) {
-		this.numberOfTomes = numberOfTomes;
-	}
-
-	public Set<Author> getAuthor() {
-		return author;
-	}
-
-	public void setAuthor(Set<Author> author) {
-		this.author = author;
-	}
-
-	public Set<PublishingHouse> getPublishingHouse() {
-		return publishingHouse;
-	}
-
-	public void setPublishingHouse(Set<PublishingHouse> publishingHouse) {
-		this.publishingHouse = publishingHouse;
-	}
-
-	public Set<Category> getCategory() {
-		return category;
-	}
-
-	public void setCategory(Set<Category> category) {
-		this.category = category;
-	}
-
-	public Set<Volume> getVolume() {
-		return volume;
-	}
-
-	public void setVolume(Set<Volume> volume) {
-		this.volume = volume;
-	}
-	
 	@Override
 	public Object clone() {
 		Object result = null;
@@ -143,7 +72,7 @@ public class Book implements Cloneable {
 		}
 		return result;
 	}
-	
+
 	@Override
 	public String toString() {
 		return getTitle();

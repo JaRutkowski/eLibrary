@@ -20,8 +20,12 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import lombok.Data;
+
+@Data
 @Entity
-@NamedQueries({ @NamedQuery(name = "Volume.checkIfInventoryNumberExist", query = "from Volume where inventoryNumber = :inventoryNumber") })
+@NamedQueries({
+		@NamedQuery(name = "Volume.checkIfInventoryNumberExist", query = "from Volume where inventoryNumber = :inventoryNumber") })
 @Table(name = "lib_volume", uniqueConstraints = { @UniqueConstraint(columnNames = { "inventory_number" }) })
 @SequenceGenerator(name = "seq_lib_volume", sequenceName = "seq_lib_volume", allocationSize = 1)
 public class Volume implements Cloneable {
@@ -29,103 +33,31 @@ public class Volume implements Cloneable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_lib_volume")
 	@Column(name = "id_volume", unique = false, nullable = false, insertable = true, updatable = true)
 	private Integer idVolume;
-	
+
 	@Column(name = "inventory_number", unique = false, nullable = true, insertable = true, updatable = true, length = 13)
 	private String inventoryNumber;
-	
+
 	@Column(name = "state", unique = false, nullable = true, insertable = true, updatable = true, length = 1)
 	private Character state;
 
 	@Column(name = "is_reading_room", unique = false, nullable = true, insertable = true, updatable = true)
 	private Boolean isReadingRoom = false;
-	
+
 	@Column(name = "is_lended", unique = false, nullable = true, insertable = true, updatable = true)
 	private Boolean isLended = false;
-	
+
 	@Column(name = "is_reserve", unique = false, nullable = true, insertable = true, updatable = true)
 	private Boolean isReserve = false;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_book")
 	private Book book;
-	
+
 	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.REFRESH }, fetch = FetchType.LAZY, mappedBy = "volume")
 	private Set<Lend> lend = new HashSet<Lend>(0);
-	
+
 	@Column(name = "penalty_value", unique = false, nullable = true, insertable = true, updatable = true, precision = 9, scale = 2)
 	private BigDecimal penaltyValue;
-
-	public Integer getIdVolume() {
-		return idVolume;
-	}
-
-	public void setIdVolume(Integer idVolume) {
-		this.idVolume = idVolume;
-	}
-	
-	public String getInventoryNumber() {
-		return inventoryNumber;
-	}
-	
-	public void setInventoryNumber(String inventoryNumber) {
-		this.inventoryNumber = inventoryNumber;
-	}
-	
-	public Character getState() {
-		return state;
-	}
-	
-	public void setState(Character state) {
-		this.state = state;
-	}
-
-	public Boolean getIsReadingRoom() {
-		return isReadingRoom;
-	}
-
-	public void setIsReadingRoom(Boolean isReadingRoom) {
-		this.isReadingRoom = isReadingRoom;
-	}
-	
-	public Boolean getIsLended() {
-		return isLended;
-	}
-	
-	public void setIsLended(Boolean isLended) {
-		this.isLended = isLended;
-	}
-
-	public Book getBook() {
-		return book;
-	}
-
-	public void setBook(Book book) {
-		this.book = book;
-	}
-
-	public Set<Lend> getLend() {
-		return lend;
-	}
-	
-	public void setLend(Set<Lend> lend) {
-		this.lend = lend;
-	}
-	
-	public BigDecimal getPenaltyValue() {
-		return penaltyValue;
-	}
-	
-	public void setPenaltyValue(BigDecimal penaltyValue) {
-		this.penaltyValue = penaltyValue;
-	}
-	
-	public Boolean getIsReserve() {
-		return isReserve;
-	}
-
-	public void setIsReserve(Boolean isReserve) {
-		this.isReserve = isReserve;
-	}
 
 	@Override
 	public Object clone() {
@@ -141,9 +73,8 @@ public class Volume implements Cloneable {
 	@Override
 	public String toString() {
 		return "Volume [idVolume=" + idVolume + ", inventoryNumber=" + inventoryNumber + ", state=" + state
-				+ ", isReadingRoom=" + isReadingRoom + ", isLended=" + isLended + ", isReserve=" + isReserve
-				+ ", book=" + book + ", lend=" + lend + ", penaltyValue=" + penaltyValue + "]";
+				+ ", isReadingRoom=" + isReadingRoom + ", isLended=" + isLended + ", isReserve=" + isReserve + ", book="
+				+ book + ", lend=" + lend + ", penaltyValue=" + penaltyValue + "]";
 	}
-	
-	
+
 }

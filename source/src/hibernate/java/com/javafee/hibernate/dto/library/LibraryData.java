@@ -17,6 +17,9 @@ import javax.persistence.Table;
 
 import com.javafee.hibernate.dto.association.City;
 
+import lombok.Data;
+
+@Data
 @Entity
 @Table(name = "lib_library_data")
 @SequenceGenerator(name = "seq_lib_library_data", sequenceName = "seq_lib_library_data", allocationSize = 1)
@@ -41,52 +44,4 @@ public class LibraryData {
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.libraryData")
 	private Set<LibraryWorker> libraryWorker = new HashSet<LibraryWorker>(0);
-
-	public Integer getIdLibraryData() {
-		return idLibraryData;
-	}
-
-	public void setIdLibraryData(Integer idLibraryData) {
-		this.idLibraryData = idLibraryData;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getBranch() {
-		return branch;
-	}
-
-	public void setBranch(String branch) {
-		this.branch = branch;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public City getCity() {
-		return city;
-	}
-
-	public void setCity(City city) {
-		this.city = city;
-	}
-
-	public Set<LibraryWorker> getLibraryWorker() {
-		return this.libraryWorker;
-	}
-
-	public void setLibraryWorker(Set<LibraryWorker> libraryWorker) {
-		this.libraryWorker = libraryWorker;
-	}
 }

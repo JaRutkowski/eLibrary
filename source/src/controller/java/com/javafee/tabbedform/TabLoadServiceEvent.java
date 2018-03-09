@@ -619,12 +619,12 @@ public class TabLoadServiceEvent implements IActionForm {
 
 	private void onClickBtnProlongation2() {
 		final Lend lend = getLendClicked();
-		final Integer prolognate = lend.getProlognate();
+		final Integer prolognate = lend.getProlognation();
 		final Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.MONTH, 1);
 
 		if (prolognate < Constans.MAX_PROLONGNATION) {
-			lend.setProlognate(prolognate + 1);
+			lend.setProlognation(prolognate + 1);
 			lend.setReturnedDate(getNewDate(lend.getReturnedDate(), cal.getTime()));
 			HibernateUtil.beginTransaction();
 			HibernateUtil.getSession().save(lend);

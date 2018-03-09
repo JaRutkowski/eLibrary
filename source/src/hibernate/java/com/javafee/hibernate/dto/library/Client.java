@@ -24,15 +24,15 @@ public class Client extends UserData implements Cloneable {
 		}
 		return result;
 	}
-	
+
 	@Override
 	public String toString() {
 		String result = "";
-		if(getSurname() != null && getName() == null)
+		if (getSurname() != null && getName() == null)
 			result = getSurname();
-		else if(getSurname() == null && getName() != null)
+		else if (getSurname() == null && getName() != null)
 			result = getName();
-		else if( getSurname() != null && getName() != null)
+		else if (getSurname() != null && getName() != null)
 			result = getSurname() + " " + getName();
 		return result;
 	}

@@ -8,6 +8,9 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import lombok.Data;
+
+@Data
 @Entity
 @Table(name = "com_city")
 @SequenceGenerator(name = "seq_com_city", sequenceName = "seq_com_city", allocationSize = 1)
@@ -23,30 +26,6 @@ public class City {
 	@Column(name = "postal_code", unique = false, nullable = true, insertable = true, updatable = true, length = 6)
 	private String postalCode;
 
-	public Integer getIdCity() {
-		return idCity;
-	}
-
-	public void setIdCity(Integer idCity) {
-		this.idCity = idCity;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getPostalCode() {
-		return postalCode;
-	}
-
-	public void setPostalCode(String postalCode) {
-		this.postalCode = postalCode;
-	}
-	
 	@Override
 	public String toString() {
 		return this.name;
