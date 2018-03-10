@@ -3,7 +3,6 @@ package com.javafee.startform;
 import java.util.Date;
 
 import com.javafee.common.Common;
-import com.javafee.common.Constans;
 import com.javafee.common.Constans.Role;
 import com.javafee.common.Params;
 import com.javafee.exception.RefusedLogInException;
@@ -12,13 +11,22 @@ import com.javafee.hibernate.dto.library.Client;
 import com.javafee.hibernate.dto.library.LibraryWorker;
 import com.javafee.hibernate.dto.library.Worker;
 
+import lombok.Getter;
+
 public final class LogInEvent {
+	@Getter
 	private static LogInEvent logInEvent = null;
+	@Getter
 	private static Role role;
+	@Getter
 	private static Client client;
+	@Getter
 	private static Worker worker;
+	@Getter
 	private static LibraryWorker libraryWorker;
+	@Getter
 	private static Boolean isAdmin;
+	@Getter
 	private static Date logInDate;
 
 	public enum LogInFailureCause {
@@ -112,29 +120,9 @@ public final class LogInEvent {
 
 		return result;
 	}
-	
-	public static Role getRole() {
-		return LogInEvent.role;
-	}
-	
+
 	public static void clearLogInData() {
 		LogInEvent.role = null;
 		LogInEvent.logInDate = null;
-	}
-
-	public static Date getlogInDate() {
-		return logInDate;
-	}
-
-	public static Client getClient() {
-		return client;
-	}
-
-	public static Worker getWorker() {
-		return worker;
-	}
-
-	public static Boolean getIsAdmin() {
-		return isAdmin;
 	}
 }

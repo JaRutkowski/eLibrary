@@ -1,9 +1,7 @@
 package com.javafee.startform;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import com.javafee.common.Common;
 import com.javafee.common.Constans;
@@ -18,8 +16,11 @@ import com.javafee.hibernate.dto.library.LibraryData;
 import com.javafee.hibernate.dto.library.LibraryWorker;
 import com.javafee.hibernate.dto.library.Worker;
 
+import lombok.Getter;
+
 public class RegistrationEvent {
 	private static RegistrationEvent registrationEvent = null;
+	@Getter
 	private static Date registrationDate;
 
 	public static UserData userData = null;
@@ -32,7 +33,8 @@ public class RegistrationEvent {
 	}
 
 	public static RegistrationEvent getInstance(String peselNumber, String documentNumber, String name, String surname,
-			String address, City city, Character sex, Date birthDate, String login, String eMail, String password, Role role) throws RefusedRegistrationException {
+			String address, City city, Character sex, Date birthDate, String login, String eMail, String password,
+			Role role) throws RefusedRegistrationException {
 		if (checkRegistration(login, password, peselNumber, role)) {
 			registrationEvent = new RegistrationEvent();
 			registrationDate = new Date();
@@ -42,7 +44,7 @@ public class RegistrationEvent {
 			throw new RefusedRegistrationException("Cannot register to the system");
 		return registrationEvent;
 	}
-	
+
 	public static void forceClearRegistrationEvenet() {
 		registrationEvent = null;
 	}
@@ -67,12 +69,15 @@ public class RegistrationEvent {
 		case CLIENT:
 			Client client = (Client) HibernateUtil.getSession().getNamedQuery("Client.checkIfClientLoginExist")
 					.setParameter("login", login).uniqueResult();
-//			Client existingPeselClient = (Client) HibernateUtil.getSession().getNamedQuery("UserData.checkIfUserDataPeselExist")
-//					.setParameter("peselNumber", peselNumber).uniqueResult();
-			if(client != null)
+			// Client existingPeselClient = (Client)
+			// HibernateUtil.getSession().getNamedQuery("UserData.checkIfUserDataPeselExist")
+			// .setParameter("peselNumber", peselNumber).uniqueResult();
+			if (client != null)
 				Params.getInstance().add("ALREADY_REGISTERED", RegistrationFailureCause.ALREADY_REGISTERED);
-//			if (!"".equals(peselNumber) && (client != null || existingPeselClient != null))
-//				Params.getInstance().add("ALREADY_REGISTERED", RegistrationFailureCause.ALREADY_REGISTERED);
+			// if (!"".equals(peselNumber) && (client != null || existingPeselClient !=
+			// null))
+			// Params.getInstance().add("ALREADY_REGISTERED",
+			// RegistrationFailureCause.ALREADY_REGISTERED);
 			else {
 				if (Common.checkPasswordStrenght(password))
 					result = true;
@@ -90,13 +95,14 @@ public class RegistrationEvent {
 	}
 
 	private static UserData createUser(String peselNumber, String documentNumber, String name, String surname,
-			String address, City city, Character sex, Date birthDate, String login, String eMail, String password, Role role) {
+			String address, City city, Character sex, Date birthDate, String login, String eMail, String password,
+			Role role) {
 		HibernateUtil.beginTransaction();
 		UserData resultUserData = null;
 
 		switch (role) {
 		case WORKER_LIBRARIAN:
-			Worker worker = new Worker();		
+			Worker worker = new Worker();
 			worker.setPeselNumber(peselNumber);
 			worker.setDocumentNumber(documentNumber);
 			worker.setName(name);
@@ -111,19 +117,21 @@ public class RegistrationEvent {
 			worker.setRegistered(Constans.DATA_BASE_REGISTER_DEFAULT_FLAG);
 			HibernateUtil.getSession().save(worker);
 			HibernateUtil.commitTransaction();
-			
+
 			HibernateUtil.beginTransaction();
 			LibraryWorker lWorker = new LibraryWorker();
 			lWorker.setIsAccountant(false);
 			lWorker.setWorker(worker);
-			@SuppressWarnings("unchecked") List<LibraryData> libData = HibernateUtil.getSession().createQuery("from LibraryData where idLibraryData = 1").list();
-			if(libData.isEmpty()) {
+			@SuppressWarnings("unchecked")
+			List<LibraryData> libData = HibernateUtil.getSession()
+					.createQuery("from LibraryData where idLibraryData = 1").list();
+			if (libData.isEmpty()) {
 				LibraryData libDataAdm = new LibraryData();
 				libDataAdm.setName("Adm");
-				
+
 				HibernateUtil.getSession().save(libDataAdm);
 				HibernateUtil.commitTransaction();
-				
+
 				HibernateUtil.beginTransaction();
 				lWorker.setLibData(libDataAdm);
 			} else
@@ -159,10 +167,6 @@ public class RegistrationEvent {
 
 		HibernateUtil.commitTransaction();
 		return resultUserData;
-	}
-
-	public static Date getRegistrationDate() {
-		return registrationDate;
 	}
 
 	@SuppressWarnings("unused")

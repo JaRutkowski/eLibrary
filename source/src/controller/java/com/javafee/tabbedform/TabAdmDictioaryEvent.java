@@ -1,10 +1,7 @@
 package com.javafee.tabbedform;
 
-import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.persistence.RollbackException;
 import javax.swing.DefaultComboBoxModel;
@@ -15,22 +12,22 @@ import com.javafee.common.IActionForm;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
 import com.javafee.exception.RefusedAdmDictionaryEventLoadingException;
-import com.javafee.exception.RefusedClientsEventLoadingException;
 import com.javafee.hibernate.dao.HibernateDao;
 import com.javafee.hibernate.dao.HibernateUtil;
 import com.javafee.hibernate.dto.library.Author;
 import com.javafee.hibernate.dto.library.Book;
 import com.javafee.hibernate.dto.library.Category;
 import com.javafee.hibernate.dto.library.PublishingHouse;
-import com.javafee.hibernate.dto.library.Volume;
 import com.javafee.tabbedform.admdictionaries.AdmDictionaryPanel;
 
+import lombok.Setter;
+
 public class TabAdmDictioaryEvent implements IActionForm {
+	@Setter
 	private TabbedForm tabbedForm;
 
 	private String pressedRadioButton = Constans.RADIO_BUTTON_AUTHOR;
 
-	@SuppressWarnings("unused")
 	private static TabAdmDictioaryEvent admDictionaryEvent = null;
 
 	public TabAdmDictioaryEvent(TabbedForm tabbedForm) {
@@ -48,11 +45,11 @@ public class TabAdmDictioaryEvent implements IActionForm {
 	public void control(TabbedForm tabbedForm) {
 		setTabbedForm(tabbedForm);
 		initializeForm();
-		
+
 		fillDictionaryData(Constans.RADIO_BUTTON_AUTHOR);
 		fillDictionaryData(Constans.RADIO_BUTTON_CATEGORY);
 		fillDictionaryData(Constans.RADIO_BUTTON_PUBLISHING_HOUSE);
-		
+
 		tabbedForm.getPanelAdmDictionary().getRadioButtonAuthor()
 				.addActionListener(e -> switchRadioButtonsEnable(Constans.RADIO_BUTTON_AUTHOR));
 		tabbedForm.getPanelAdmDictionary().getRadioButtonCategory()
@@ -69,10 +66,6 @@ public class TabAdmDictioaryEvent implements IActionForm {
 				.addActionListener(e -> onClickBtnModify(pressedRadioButton));
 		tabbedForm.getPanelAdmDictionary().getCockpitEditionPanel().getBtnDelete()
 				.addActionListener(e -> onClickBtnDelete(pressedRadioButton));
-	}
-
-	public void setTabbedForm(TabbedForm tabbedForm) {
-		this.tabbedForm = tabbedForm;
 	}
 
 	@Override
@@ -202,121 +195,142 @@ public class TabAdmDictioaryEvent implements IActionForm {
 		}
 	}
 
+	@SuppressWarnings({ "deprecation", "unchecked", "rawtypes" })
 	private void onClickBtnModify(String pressedRadioButton) {
 		final AdmDictionaryPanel admDictionaryPanel = tabbedForm.getPanelAdmDictionary();
 		switch (pressedRadioButton) {
 		case Constans.RADIO_BUTTON_AUTHOR:
-				final Author authorClicked = ((Author) admDictionaryPanel.getComboBoxAuthor().getSelectedItem());
-				final org.hibernate.query.Query query = HibernateUtil.getSession()
-						.createSQLQuery("select * from lib_book_author where id_author = :idAuthor")
-						.addEntity(Book.class).setParameter("idAuthor", authorClicked.getIdAuthor());
-				final List<Author> resultAuthor = query.list();
+			final Author authorClicked = ((Author) admDictionaryPanel.getComboBoxAuthor().getSelectedItem());
+			final org.hibernate.query.Query query = HibernateUtil.getSession()
+					.createSQLQuery("select * from lib_book_author where id_author = :idAuthor").addEntity(Book.class)
+					.setParameter("idAuthor", authorClicked.getIdAuthor());
+			final List<Author> resultAuthor = query.list();
 
-				if (resultAuthor.isEmpty()) {
-					try {
-				HibernateUtil.beginTransaction();
-				authorClicked.setIdAuthor(authorClicked.getIdAuthor());
-				authorClicked.setName(admDictionaryPanel.getTextFieldAuthorName().getText() != null
-						? admDictionaryPanel.getTextFieldAuthorName().getText().toString()
-						: null);
-				authorClicked.setNickname(admDictionaryPanel.getTextFieldAuthorNickname().getText() != null
-						? admDictionaryPanel.getTextFieldAuthorNickname().getText().toString()
-						: null);
-				authorClicked.setSurname(admDictionaryPanel.getTextFieldAuthorSurname().getText() != null
-						? admDictionaryPanel.getTextFieldAuthorSurname().getText().toString()
-						: null);
-				authorClicked.setBirthDate(admDictionaryPanel.getDateChooserBirthDate().getDate() != null
-						? admDictionaryPanel.getDateChooserBirthDate().getDate()
-						: null);
-				HibernateUtil.getSession().update(authorClicked);
-				HibernateUtil.commitTransaction();
-				reloadComboBoxAuthor();
-				JOptionPane.showMessageDialog(tabbedForm.getFrame(),
-						SystemProperties.getInstance().getResourceBundle().getString("tabDictionaryEvent.modifyDictionaryElementSuccess"), SystemProperties.getInstance().getResourceBundle().getString("tabDictionaryEvent.modifyDictionaryElementSuccessTitle"),
-						JOptionPane.INFORMATION_MESSAGE);
+			if (resultAuthor.isEmpty()) {
+				try {
+					HibernateUtil.beginTransaction();
+					authorClicked.setIdAuthor(authorClicked.getIdAuthor());
+					authorClicked.setName(admDictionaryPanel.getTextFieldAuthorName().getText() != null
+							? admDictionaryPanel.getTextFieldAuthorName().getText().toString()
+							: null);
+					authorClicked.setNickname(admDictionaryPanel.getTextFieldAuthorNickname().getText() != null
+							? admDictionaryPanel.getTextFieldAuthorNickname().getText().toString()
+							: null);
+					authorClicked.setSurname(admDictionaryPanel.getTextFieldAuthorSurname().getText() != null
+							? admDictionaryPanel.getTextFieldAuthorSurname().getText().toString()
+							: null);
+					authorClicked.setBirthDate(admDictionaryPanel.getDateChooserBirthDate().getDate() != null
+							? admDictionaryPanel.getDateChooserBirthDate().getDate()
+							: null);
+					HibernateUtil.getSession().update(authorClicked);
+					HibernateUtil.commitTransaction();
+					reloadComboBoxAuthor();
+					JOptionPane.showMessageDialog(tabbedForm.getFrame(),
+							SystemProperties.getInstance().getResourceBundle()
+									.getString("tabDictionaryEvent.modifyDictionaryElementSuccess"),
+							SystemProperties.getInstance().getResourceBundle()
+									.getString("tabDictionaryEvent.modifyDictionaryElementSuccessTitle"),
+							JOptionPane.INFORMATION_MESSAGE);
 
-			} catch (NumberFormatException e) {
-				e.printStackTrace();
-			} catch (IllegalStateException e) {
-				e.printStackTrace();
-			} catch (RollbackException e) {
-				e.printStackTrace();
-			}
+				} catch (NumberFormatException e) {
+					e.printStackTrace();
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				} catch (RollbackException e) {
+					e.printStackTrace();
+				}
 			} else {
 				JOptionPane.showMessageDialog(tabbedForm.getFrame(),
-						SystemProperties.getInstance().getResourceBundle().getString("tabDictionaryEvent.modifyDictionaryElementWarning"), SystemProperties.getInstance().getResourceBundle().getString("tabDictionaryEvent.modifyDictionaryElementWarningTitle"),
+						SystemProperties.getInstance().getResourceBundle()
+								.getString("tabDictionaryEvent.modifyDictionaryElementWarning"),
+						SystemProperties.getInstance().getResourceBundle().getString(
+								"tabDictionaryEvent.modifyDictionaryElementWarningTitle"),
 						JOptionPane.ERROR_MESSAGE);
 			}
 			break;
 		case Constans.RADIO_BUTTON_CATEGORY:
-				final Category categoryClicked = ((Category) admDictionaryPanel.getComboBoxCategory()
-						.getSelectedItem());
-				final org.hibernate.query.Query query1 = HibernateUtil.getSession()
-						.createSQLQuery("select * from lib_book_category where id_category = :idCategory")
-						.setParameter("idCategory", categoryClicked.getIdCategory());
-				final List<Category> resultCategory = query1.list();
+			final Category categoryClicked = ((Category) admDictionaryPanel.getComboBoxCategory().getSelectedItem());
+			final org.hibernate.query.Query query1 = HibernateUtil.getSession()
+					.createSQLQuery("select * from lib_book_category where id_category = :idCategory")
+					.setParameter("idCategory", categoryClicked.getIdCategory());
+			final List<Category> resultCategory = query1.list();
 
-				if (resultCategory.isEmpty()) {
+			if (resultCategory.isEmpty()) {
 				try {
-				HibernateUtil.beginTransaction();
-				categoryClicked.setIdCategory(categoryClicked.getIdCategory());
-				categoryClicked.setName(admDictionaryPanel.getTextFieldCategoryName().getText() != null
-						? tabbedForm.getPanelAdmDictionary().getTextFieldCategoryName().getText().toString()
-						: null);
-				HibernateUtil.getSession().update(categoryClicked);
-				HibernateUtil.commitTransaction();
-				reloadComboBoxCategory();
+					HibernateUtil.beginTransaction();
+					categoryClicked.setIdCategory(categoryClicked.getIdCategory());
+					categoryClicked.setName(admDictionaryPanel.getTextFieldCategoryName().getText() != null
+							? tabbedForm.getPanelAdmDictionary().getTextFieldCategoryName().getText().toString()
+							: null);
+					HibernateUtil.getSession().update(categoryClicked);
+					HibernateUtil.commitTransaction();
+					reloadComboBoxCategory();
+					JOptionPane.showMessageDialog(tabbedForm.getFrame(),
+							SystemProperties.getInstance().getResourceBundle()
+									.getString("tabDictionaryEvent.modifyDictionaryElementSuccess"),
+							SystemProperties.getInstance().getResourceBundle()
+									.getString("tabDictionaryEvent.modifyDictionaryElementSuccessTitle"),
+							JOptionPane.INFORMATION_MESSAGE);
+				} catch (NumberFormatException e) {
+					e.printStackTrace();
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				} catch (RollbackException e) {
+					e.printStackTrace();
+				}
+			} else {
 				JOptionPane.showMessageDialog(tabbedForm.getFrame(),
-						SystemProperties.getInstance().getResourceBundle().getString("tabDictionaryEvent.modifyDictionaryElementSuccess"), SystemProperties.getInstance().getResourceBundle().getString("tabDictionaryEvent.modifyDictionaryElementSuccessTitle"),
-						JOptionPane.INFORMATION_MESSAGE);
-			} catch (NumberFormatException e) {
-				e.printStackTrace();
-			} catch (IllegalStateException e) {
-				e.printStackTrace();
-			} catch (RollbackException e) {
-				e.printStackTrace();
-			}}else {
-				JOptionPane.showMessageDialog(tabbedForm.getFrame(),
-						SystemProperties.getInstance().getResourceBundle().getString("tabDictionaryEvent.modifyDictionaryElementWarning"), SystemProperties.getInstance().getResourceBundle().getString("tabDictionaryEvent.modifyDictionaryElementWarningTitle"),
+						SystemProperties.getInstance().getResourceBundle()
+								.getString("tabDictionaryEvent.modifyDictionaryElementWarning"),
+						SystemProperties.getInstance().getResourceBundle().getString(
+								"tabDictionaryEvent.modifyDictionaryElementWarningTitle"),
 						JOptionPane.ERROR_MESSAGE);
 			}
 			break;
 		case Constans.RADIO_BUTTON_PUBLISHING_HOUSE:
-				final PublishingHouse publishingClicked = ((PublishingHouse) admDictionaryPanel.getComboBoxPublishingHouse()
-						.getSelectedItem());
-				final org.hibernate.query.Query query2 = HibernateUtil.getSession()
-						.createSQLQuery("select * from lib_book_publishing_house where id_publishing_house = :idP")
-						.setParameter("idP", publishingClicked.getIdPublishingHouse());
-				final List<PublishingHouse> resultPuBlishinHouse = query2.list();
+			final PublishingHouse publishingClicked = ((PublishingHouse) admDictionaryPanel.getComboBoxPublishingHouse()
+					.getSelectedItem());
+			final org.hibernate.query.Query query2 = HibernateUtil.getSession()
+					.createSQLQuery("select * from lib_book_publishing_house where id_publishing_house = :idP")
+					.setParameter("idP", publishingClicked.getIdPublishingHouse());
+			final List<PublishingHouse> resultPuBlishinHouse = query2.list();
 
-				if (resultPuBlishinHouse.isEmpty()) {
+			if (resultPuBlishinHouse.isEmpty()) {
 				try {
-				HibernateUtil.beginTransaction();
-				publishingClicked.setIdPublishingHouse(publishingClicked.getIdPublishingHouse());
-				publishingClicked.setName(admDictionaryPanel.getTextFieldPublishingHouseName().getText() != null
-						? admDictionaryPanel.getTextFieldPublishingHouseName().getText().toString()
-						: null);
-				HibernateUtil.getSession().update(publishingClicked);
-				HibernateUtil.commitTransaction();
-				reloadComboBoxPublishingHouse();
+					HibernateUtil.beginTransaction();
+					publishingClicked.setIdPublishingHouse(publishingClicked.getIdPublishingHouse());
+					publishingClicked.setName(admDictionaryPanel.getTextFieldPublishingHouseName().getText() != null
+							? admDictionaryPanel.getTextFieldPublishingHouseName().getText().toString()
+							: null);
+					HibernateUtil.getSession().update(publishingClicked);
+					HibernateUtil.commitTransaction();
+					reloadComboBoxPublishingHouse();
+					JOptionPane.showMessageDialog(tabbedForm.getFrame(),
+							SystemProperties.getInstance().getResourceBundle()
+									.getString("tabDictionaryEvent.modifyDictionaryElementSuccess"),
+							SystemProperties.getInstance().getResourceBundle()
+									.getString("tabDictionaryEvent.modifyDictionaryElementSuccessTitle"),
+							JOptionPane.INFORMATION_MESSAGE);
+				} catch (NumberFormatException e) {
+					e.printStackTrace();
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				} catch (RollbackException e) {
+					e.printStackTrace();
+				}
+			} else {
 				JOptionPane.showMessageDialog(tabbedForm.getFrame(),
-						SystemProperties.getInstance().getResourceBundle().getString("tabDictionaryEvent.modifyDictionaryElementSuccess"), SystemProperties.getInstance().getResourceBundle().getString("tabDictionaryEvent.modifyDictionaryElementSuccessTitle"),
-						JOptionPane.INFORMATION_MESSAGE);
-			} catch (NumberFormatException e) {
-				e.printStackTrace();
-			} catch (IllegalStateException e) {
-				e.printStackTrace();
-			} catch (RollbackException e) {
-				e.printStackTrace();
-			}}else {
-				JOptionPane.showMessageDialog(tabbedForm.getFrame(),
-						SystemProperties.getInstance().getResourceBundle().getString("tabDictionaryEvent.modifyDictionaryElementWarning"), SystemProperties.getInstance().getResourceBundle().getString("tabDictionaryEvent.modifyDictionaryElementWarningTitle"),
+						SystemProperties.getInstance().getResourceBundle()
+								.getString("tabDictionaryEvent.modifyDictionaryElementWarning"),
+						SystemProperties.getInstance().getResourceBundle().getString(
+								"tabDictionaryEvent.modifyDictionaryElementWarningTitle"),
 						JOptionPane.ERROR_MESSAGE);
 			}
 			break;
 		}
 	}
 
+	@SuppressWarnings({ "rawtypes", "deprecation", "unchecked" })
 	private void onClickBtnDelete(String pressedRadioButton) {
 		final AdmDictionaryPanel admDictionaryPanel = tabbedForm.getPanelAdmDictionary();
 
@@ -342,7 +356,10 @@ public class TabAdmDictioaryEvent implements IActionForm {
 						reloadComboBoxAuthor();
 						fillDictionaryData(Constans.RADIO_BUTTON_AUTHOR);
 						JOptionPane.showMessageDialog(tabbedForm.getFrame(),
-								SystemProperties.getInstance().getResourceBundle().getString("tabDictionaryEvent.deleteDictionaryElementSuccess"), SystemProperties.getInstance().getResourceBundle().getString("tabDictionaryEvent.deleteDictionaryElementSuccessTitle"),
+								SystemProperties.getInstance().getResourceBundle()
+										.getString("tabDictionaryEvent.deleteDictionaryElementSuccess"),
+								SystemProperties.getInstance().getResourceBundle()
+										.getString("tabDictionaryEvent.deleteDictionaryElementSuccessTitle"),
 								JOptionPane.INFORMATION_MESSAGE);
 
 					} catch (NumberFormatException e) {
@@ -354,7 +371,10 @@ public class TabAdmDictioaryEvent implements IActionForm {
 					}
 				} else {
 					JOptionPane.showMessageDialog(tabbedForm.getFrame(),
-							SystemProperties.getInstance().getResourceBundle().getString("tabDictionaryEvent.deleteDictionaryElementWarning"), SystemProperties.getInstance().getResourceBundle().getString("tabDictionaryEvent.deleteDictionaryElementWarningTitle"),
+							SystemProperties.getInstance().getResourceBundle()
+									.getString("tabDictionaryEvent.deleteDictionaryElementWarning"),
+							SystemProperties.getInstance().getResourceBundle()
+									.getString("tabDictionaryEvent.deleteDictionaryElementWarningTitle"),
 							JOptionPane.ERROR_MESSAGE);
 				}
 			}
@@ -379,7 +399,10 @@ public class TabAdmDictioaryEvent implements IActionForm {
 						reloadComboBoxCategory();
 						fillDictionaryData(Constans.RADIO_BUTTON_CATEGORY);
 						JOptionPane.showMessageDialog(tabbedForm.getFrame(),
-								SystemProperties.getInstance().getResourceBundle().getString("tabDictionaryEvent.deleteDictionaryElementSuccess"), SystemProperties.getInstance().getResourceBundle().getString("tabDictionaryEvent.deleteDictionaryElementSuccessTitle"),
+								SystemProperties.getInstance().getResourceBundle()
+										.getString("tabDictionaryEvent.deleteDictionaryElementSuccess"),
+								SystemProperties.getInstance().getResourceBundle()
+										.getString("tabDictionaryEvent.deleteDictionaryElementSuccessTitle"),
 								JOptionPane.INFORMATION_MESSAGE);
 					} catch (NumberFormatException e) {
 						e.printStackTrace();
@@ -390,7 +413,10 @@ public class TabAdmDictioaryEvent implements IActionForm {
 					}
 				} else {
 					JOptionPane.showMessageDialog(tabbedForm.getFrame(),
-							SystemProperties.getInstance().getResourceBundle().getString("tabDictionaryEvent.deleteDictionaryElementWarning"), SystemProperties.getInstance().getResourceBundle().getString("tabDictionaryEvent.deleteDictionaryElementWarningTitle"),
+							SystemProperties.getInstance().getResourceBundle()
+									.getString("tabDictionaryEvent.deleteDictionaryElementWarning"),
+							SystemProperties.getInstance().getResourceBundle()
+									.getString("tabDictionaryEvent.deleteDictionaryElementWarningTitle"),
 							JOptionPane.ERROR_MESSAGE);
 				}
 			}
@@ -399,47 +425,46 @@ public class TabAdmDictioaryEvent implements IActionForm {
 			if (Utils.displayConfirmDialog(
 					SystemProperties.getInstance().getResourceBundle().getString("confirmDialog.deleteMessage"),
 					"") == JOptionPane.YES_OPTION) {
-			final PublishingHouse publishingHouse = ((PublishingHouse) admDictionaryPanel.getComboBoxPublishingHouse()
-					.getSelectedItem());
-			final org.hibernate.query.Query query2 = HibernateUtil.getSession()
-					.createSQLQuery("select * from lib_book_publishing_house where id_publishing_house = :idP")
-					.setParameter("idP", publishingHouse.getIdPublishingHouse());
-			final List<PublishingHouse> resultPuBlishinHouse = query2.list();
+				final PublishingHouse publishingHouse = ((PublishingHouse) admDictionaryPanel
+						.getComboBoxPublishingHouse().getSelectedItem());
+				final org.hibernate.query.Query query2 = HibernateUtil.getSession()
+						.createSQLQuery("select * from lib_book_publishing_house where id_publishing_house = :idP")
+						.setParameter("idP", publishingHouse.getIdPublishingHouse());
+				final List<PublishingHouse> resultPuBlishinHouse = query2.list();
 
-			if (resultPuBlishinHouse.isEmpty()) {
-				try {
-					HibernateUtil.beginTransaction();
+				if (resultPuBlishinHouse.isEmpty()) {
+					try {
+						HibernateUtil.beginTransaction();
 
-					HibernateUtil.getSession().delete(publishingHouse);
-					HibernateUtil.commitTransaction();
-					reloadComboBoxPublishingHouse();
-					fillDictionaryData(Constans.RADIO_BUTTON_PUBLISHING_HOUSE);
+						HibernateUtil.getSession().delete(publishingHouse);
+						HibernateUtil.commitTransaction();
+						reloadComboBoxPublishingHouse();
+						fillDictionaryData(Constans.RADIO_BUTTON_PUBLISHING_HOUSE);
+						JOptionPane.showMessageDialog(tabbedForm.getFrame(),
+								SystemProperties.getInstance().getResourceBundle()
+										.getString("tabDictionaryEvent.deleteDictionaryElementSuccess"),
+								SystemProperties.getInstance().getResourceBundle()
+										.getString("tabDictionaryEvent.deleteDictionaryElementSuccessTitle"),
+								JOptionPane.INFORMATION_MESSAGE);
+					} catch (NumberFormatException e) {
+						e.printStackTrace();
+					} catch (IllegalStateException e) {
+						e.printStackTrace();
+					} catch (RollbackException e) {
+						e.printStackTrace();
+					}
+				} else {
 					JOptionPane.showMessageDialog(tabbedForm.getFrame(),
-							SystemProperties.getInstance().getResourceBundle().getString("tabDictionaryEvent.deleteDictionaryElementSuccess"), SystemProperties.getInstance().getResourceBundle().getString("tabDictionaryEvent.deleteDictionaryElementSuccessTitle"),
-							JOptionPane.INFORMATION_MESSAGE);
-				} catch (NumberFormatException e) {
-					e.printStackTrace();
-				} catch (IllegalStateException e) {
-					e.printStackTrace();
-				} catch (RollbackException e) {
-					e.printStackTrace();
+							SystemProperties.getInstance().getResourceBundle()
+									.getString("tabDictionaryEvent.deleteDictionaryElementWarning"),
+							SystemProperties.getInstance().getResourceBundle()
+									.getString("tabDictionaryEvent.deleteDictionaryElementWarningTitle"),
+							JOptionPane.ERROR_MESSAGE);
 				}
-			} else {
-				JOptionPane.showMessageDialog(tabbedForm.getFrame(),
-						SystemProperties.getInstance().getResourceBundle().getString("tabDictionaryEvent.deleteDictionaryElementWarning"), SystemProperties.getInstance().getResourceBundle().getString("tabDictionaryEvent.deleteDictionaryElementWarningTitle"),
-						JOptionPane.ERROR_MESSAGE);
-			}
 			}
 			break;
 
 		}
-	}
-
-	private <T> void delete(final String nameParameter, final String entityName, final T parameter) {
-		final org.hibernate.query.Query query = HibernateUtil.getSession()
-				.createQuery("delete " + entityName + " where " + nameParameter + " = " + parameter);
-		int result = query.executeUpdate();
-
 	}
 
 	private void onChangeComboBoxAuthor() {

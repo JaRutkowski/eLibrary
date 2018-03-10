@@ -9,7 +9,6 @@ import javax.swing.table.AbstractTableModel;
 import com.javafee.common.Constans.VolumeTableColumn;
 import com.javafee.common.SystemProperties;
 import com.javafee.hibernate.dao.HibernateUtil;
-import com.javafee.hibernate.dto.library.Client;
 import com.javafee.hibernate.dto.library.Volume;
 
 public class VolumeTableModel extends AbstractTableModel {
@@ -21,7 +20,8 @@ public class VolumeTableModel extends AbstractTableModel {
 	public VolumeTableModel() {
 		super();
 		this.prepareHibernateDao();
-		this.columns = new String[] { SystemProperties.getInstance().getResourceBundle().getString("volumeTableModel.bookTitleCol"),
+		this.columns = new String[] {
+				SystemProperties.getInstance().getResourceBundle().getString("volumeTableModel.bookTitleCol"),
 				SystemProperties.getInstance().getResourceBundle().getString("volumeTableModel.authorsCol"),
 				SystemProperties.getInstance().getResourceBundle().getString("volumeTableModel.categoriesCol"),
 				SystemProperties.getInstance().getResourceBundle().getString("volumeTableModel.publishingHousesCol"),
@@ -95,29 +95,15 @@ public class VolumeTableModel extends AbstractTableModel {
 		case COL_BOOK_NUMBER_OF_TOME:
 			return volume.getBook().getNumberOfTomes();
 		case COL_IS_READING_ROOM:
-			return volume.getIsReadingRoom() ? SystemProperties.getInstance().getResourceBundle().getString("volumeTableModel.isReadigRoomTrueVal")
-					: SystemProperties.getInstance().getResourceBundle().getString("volumeTableModel.isReadigRoomFalseVal");
+			return volume.getIsReadingRoom()
+					? SystemProperties.getInstance().getResourceBundle()
+							.getString("volumeTableModel.isReadigRoomTrueVal")
+					: SystemProperties.getInstance().getResourceBundle()
+							.getString("volumeTableModel.isReadigRoomFalseVal");
 		default:
 			return null;
 		}
 	}
-
-	// @Override
-	// public void setValueAt(Object value, int row, int col) {
-	// Volume volume = volumes.get(row);
-	// Volume volumeShallowClone = (Volume) volume.clone();
-	//
-	// switch (VolumeTableColumn.getByNumber(col)) {
-	// case COL_BOOK:
-	// volumeShallowClone.setBook((Book) value);
-	// break;
-	// case COL_IS_READING_ROOM:
-	// volumeShallowClone.setIsReadingRoom((Boolean) value);
-	// break;
-	// }
-	//
-	// this.fireTableRowsUpdated(row, row);
-	// }
 
 	@Override
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
@@ -132,7 +118,7 @@ public class VolumeTableModel extends AbstractTableModel {
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
 		return false;
 	}
-	
+
 	public void reloadData() {
 		this.prepareHibernateDao();
 		this.fireTableDataChanged();

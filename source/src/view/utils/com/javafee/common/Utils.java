@@ -1,7 +1,5 @@
 package com.javafee.common;
 
-
-
 import java.awt.Color;
 
 import javax.swing.JDialog;
@@ -23,7 +21,7 @@ public class Utils {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static Color getApplicationColor() {
 		return new Color(237, 245, 248);
 	}
@@ -37,10 +35,9 @@ public class Utils {
 	}
 
 	public static int displayConfirmDialog(String message, String title) {
-		Object[] options = { SystemProperties.getInstance().getResourceBundle().getString("confirmDialog.yes"), SystemProperties.getInstance().getResourceBundle().getString("confirmDialog.no") };
-		return JOptionPane.showOptionDialog(null, message, title,
-				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, 
-				options, 
-				options[0]);
+		Object[] options = { SystemProperties.getInstance().getResourceBundle().getString("confirmDialog.yes"),
+				SystemProperties.getInstance().getResourceBundle().getString("confirmDialog.no") };
+		return JOptionPane.showOptionDialog(null, message, title, JOptionPane.YES_NO_OPTION,
+				JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 	}
 }

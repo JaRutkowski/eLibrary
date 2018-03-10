@@ -11,16 +11,20 @@ import com.javafee.hibernate.dao.HibernateDao;
 import com.javafee.hibernate.dao.HibernateUtil;
 import com.javafee.hibernate.dto.library.Category;
 
+import lombok.Getter;
+
 public class CategoryTableModel extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
 
+	@Getter
 	protected List<Category> categories;
 	private String[] columns;
 
 	public CategoryTableModel() {
 		super();
 		this.prepareHibernateDao();
-		this.columns = new String[] { SystemProperties.getInstance().getResourceBundle().getString("categoryTableModel.categoryNameCol")};
+		this.columns = new String[] {
+				SystemProperties.getInstance().getResourceBundle().getString("categoryTableModel.categoryNameCol") };
 	}
 
 	public Category getCategory(int index) {
@@ -31,10 +35,6 @@ public class CategoryTableModel extends AbstractTableModel {
 		categories.set(index, Category);
 	}
 
-	public List<Category> getCategories() {
-		return categories;
-	}
-	
 	public void add(Category Category) {
 		categories.add(Category);
 		this.fireTableDataChanged();
@@ -76,23 +76,6 @@ public class CategoryTableModel extends AbstractTableModel {
 			return null;
 		}
 	}
-
-	// @Override
-	// public void setValueAt(Object value, int row, int col) {
-	// Category Category = Categorys.get(row);
-	// Category CategoryShallowClone = (Category) Category.clone();
-	//
-	// switch (CategoryTableColumn.getByNumber(col)) {
-	// case COL_BOOK:
-	// CategoryShallowClone.setBook((Book) value);
-	// break;
-	// case COL_IS_READING_ROOM:
-	// CategoryShallowClone.setIsReadingRoom((Boolean) value);
-	// break;
-	// }
-	//
-	// this.fireTableRowsUpdated(row, row);
-	// }
 
 	@Override
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {

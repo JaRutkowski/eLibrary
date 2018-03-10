@@ -8,7 +8,6 @@ import java.util.List;
 
 import com.javafee.hibernate.dto.library.Client;
 import com.javafee.hibernate.dto.library.Worker;
-import com.sun.xml.bind.v2.runtime.reflect.opt.Const;
 
 import edu.vt.middleware.password.AlphabeticalSequenceRule;
 import edu.vt.middleware.password.CharacterCharacteristicsRule;
@@ -43,7 +42,7 @@ public final class Common {
 
 		return md5;
 	}
-	
+
 	public static final String generatePassword() {
 		PasswordGenerator generator = new PasswordGenerator();
 
@@ -60,7 +59,8 @@ public final class Common {
 	public static final boolean checkPasswordStrenght(String password) {
 		boolean result = false;
 		// password must be between 8 and 16 chars long
-		LengthRule lengthRule = new LengthRule(Constans.APPLICATION_MIN_PASSWORD_LENGTH, Constans.APPLICATION_MAX_PASSWORD_LENGTH);
+		LengthRule lengthRule = new LengthRule(Constans.APPLICATION_MIN_PASSWORD_LENGTH,
+				Constans.APPLICATION_MAX_PASSWORD_LENGTH);
 		// don't allow whitespace
 		WhitespaceRule whitespaceRule = new WhitespaceRule();
 		// control allowed characters
@@ -104,7 +104,7 @@ public final class Common {
 
 		return result;
 	}
-	
+
 	public static boolean isAdmin(Worker worker) {
 		return Constans.DATA_BASE_ADMIN_LOGIN.equals(worker.getLogin())
 				&& Constans.DATA_BASE_ADMIN_PASSWORD.equals(worker.getPassword()) ? true : false;

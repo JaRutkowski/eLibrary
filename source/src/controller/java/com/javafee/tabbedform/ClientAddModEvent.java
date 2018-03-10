@@ -88,7 +88,6 @@ public class ClientAddModEvent {
 
 	private void modificateClient() {
 		Client clientShallowClone = (Client) Params.getInstance().get("selectedClientShallowClone");
-		// Params.getInstance().remove("selectedClientShallowClone");
 
 		clientShallowClone.setPeselNumber(clientAddModFrame.getClientDataPanel().getTextFieldPeselNumber().getText());
 		clientShallowClone
@@ -97,10 +96,11 @@ public class ClientAddModEvent {
 		clientShallowClone.setSurname(clientAddModFrame.getClientDataPanel().getTextFieldSurname().getText());
 		clientShallowClone.setAddress(clientAddModFrame.getClientDataPanel().getTextFieldAddress().getText());
 		clientShallowClone.setCity((City) clientAddModFrame.getClientDataPanel().getComboBoxCity().getSelectedItem());
-		if(clientAddModFrame.getClientDataPanel().getRadioButtonMale().isSelected() || clientAddModFrame.getClientDataPanel().getRadioButtonFemale().isSelected())
-		clientShallowClone.setSex(
-				clientAddModFrame.getClientDataPanel().getRadioButtonMale().isSelected() ? Constans.DATA_BASE_MALE_SIGN
-						: Constans.DATA_BASE_FEMALE_SIGN);
+		if (clientAddModFrame.getClientDataPanel().getRadioButtonMale().isSelected()
+				|| clientAddModFrame.getClientDataPanel().getRadioButtonFemale().isSelected())
+			clientShallowClone.setSex(clientAddModFrame.getClientDataPanel().getRadioButtonMale().isSelected()
+					? Constans.DATA_BASE_MALE_SIGN
+					: Constans.DATA_BASE_FEMALE_SIGN);
 		clientShallowClone
 				.setBirthDate(clientAddModFrame.getClientDataPanel().getDateChooserBirthDate().getDate() != null
 						? clientAddModFrame.getClientDataPanel().getDateChooserBirthDate().getDate()
@@ -108,13 +108,6 @@ public class ClientAddModEvent {
 		clientShallowClone.setEMail(clientAddModFrame.getClientDataPanel().getTextFieldEMail().getText());
 		clientShallowClone.setLogin(clientAddModFrame.getClientDataPanel().getTextFieldLogin().getText());
 
-		// if (!validatePasswordFieldIsEmpty())
-		// Utils.displayOptionPane(
-		// SystemProperties.getInstance().getResourceBundle()
-		// .getString("tabClientEvent.validatePasswordFieldIsEmptyWarning2"),
-		// SystemProperties.getInstance().getResourceBundle()
-		// .getString("tabClientEvent.validatePasswordFieldIsEmptyWarning2Title"),
-		// JOptionPane.WARNING_MESSAGE);
 		if (!"".equals(clientShallowClone.getPeselNumber())
 				&& clientShallowClone.getPeselNumber().length() != Constans.DATA_BASE_PESEL_NUMBER_LENGHT) {
 			Utils.displayOptionPane(
@@ -154,18 +147,6 @@ public class ClientAddModEvent {
 						JOptionPane.ERROR_MESSAGE);
 			}
 		}
-
-		//
-
-		// reloadClientTable();
-		//
-		// } else {
-		// LogGuiException.logWarning(
-		// SystemProperties.getInstance().getResourceBundle()
-		// .getString("clientTableModel.constraintViolationErrorTitle"),
-		// SystemProperties.getInstance().getResourceBundle()
-		// .getString("clientTableModel.constraintViolationError"));
-		// }
 	}
 
 	private void openClientAddModFrame(Context context) {
@@ -214,11 +195,11 @@ public class ClientAddModEvent {
 				.setText(((Client) Params.getInstance().get("selectedClientShallowClone")).getLogin() != null
 						? ((Client) Params.getInstance().get("selectedClientShallowClone")).getLogin().toString()
 						: "");
-		
+
 		clientAddModFrame.getClientDataPanel().getTextFieldEMail()
-		.setText(((Client) Params.getInstance().get("selectedClientShallowClone")).getEMail() != null
-				? ((Client) Params.getInstance().get("selectedClientShallowClone")).getEMail().toString()
-				: "");
+				.setText(((Client) Params.getInstance().get("selectedClientShallowClone")).getEMail() != null
+						? ((Client) Params.getInstance().get("selectedClientShallowClone")).getEMail().toString()
+						: "");
 
 		clientAddModFrame.getClientDataPanel().getTextFieldName()
 				.setText(((Client) Params.getInstance().get("selectedClientShallowClone")).getName() != null
@@ -276,6 +257,7 @@ public class ClientAddModEvent {
 
 				RegistrationEvent.forceClearRegistrationEvenet();
 				boolean result = true;
+				@SuppressWarnings("unchecked")
 				List<UserData> ud = HibernateUtil.getSession().createQuery("from UserData").list();
 				for (UserData u : ud) {
 					if (u.getLogin().equals(clientAddModFrame.getClientDataPanel().getTextFieldLogin().getText()))
@@ -330,10 +312,6 @@ public class ClientAddModEvent {
 
 							clientAddModFrame.dispose();
 						} else {
-							// Utils.displayOptionPane(
-							// SystemProperties.getInstance().getResourceBundle().getString("startForm.registrationError9"),
-							// SystemProperties.getInstance().getResourceBundle().getString("startForm.registrationErrorTitle"),
-							// JOptionPane.INFORMATION_MESSAGE);
 							Params.getInstance().add("INCORRECT_BIRTH_DATE",
 									RegistrationFailureCause.INCORRECT_BIRTH_DATE);
 							throw new RefusedRegistrationException("Cannot register to the system");

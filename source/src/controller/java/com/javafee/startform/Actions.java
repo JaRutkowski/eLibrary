@@ -42,7 +42,8 @@ public class Actions implements IRegistrationForm {
 
 	public void control() {
 		if (MainSplashScreen.isNull())
-			MainSplashScreen.getInstance(Constans.MAIN_SPLASH_SCREEN_IMAGE, startForm.getFrame(), Constans.MAIN_SPLASH_SCREEN_DURATION);
+			MainSplashScreen.getInstance(Constans.MAIN_SPLASH_SCREEN_IMAGE, startForm.getFrame(),
+					Constans.MAIN_SPLASH_SCREEN_DURATION);
 		else
 			startForm.getFrame().setVisible(true);
 
@@ -77,7 +78,7 @@ public class Actions implements IRegistrationForm {
 
 		startForm.getRegistrationPanel().getComboBoxCity().setModel(comboBoxCity);
 	}
-	
+
 	private void onClickBtnForgotPassword() {
 		if (validateForgotPassword()) {
 			if (Utils.displayConfirmDialog(
@@ -93,12 +94,12 @@ public class Actions implements IRegistrationForm {
 
 				sendMailWithPassword(generatedPassword, userData.getEMail());
 				Params.getInstance().remove("USER_DATA");
-				
+
 				Utils.displayOptionPane(
 						SystemProperties.getInstance().getResourceBundle()
 								.getString("startForm.passwordRecoverySuccess"),
-						SystemProperties.getInstance().getResourceBundle().getString(
-								"startForm.passwordRecoverySuccessTitle"),
+						SystemProperties.getInstance().getResourceBundle()
+								.getString("startForm.passwordRecoverySuccessTitle"),
 						JOptionPane.INFORMATION_MESSAGE);
 			}
 		}
@@ -107,35 +108,44 @@ public class Actions implements IRegistrationForm {
 	private void onClickBtnLogIn() {
 		if (validateLogIn()) {
 			try {
-				logInEvent = LogInEvent.getInstance(startForm.getLogInPanel().getTextFieldLogin().getText(), String.valueOf(startForm.getLogInPanel().getPasswordField().getPassword()));
+				logInEvent = LogInEvent.getInstance(startForm.getLogInPanel().getTextFieldLogin().getText(),
+						String.valueOf(startForm.getLogInPanel().getPasswordField().getPassword()));
 			} catch (RefusedLogInException e) {
 				StringBuilder errorBuilder = new StringBuilder();
 
 				if (Params.getInstance().get("NO_USER") != null) {
-					errorBuilder.append(SystemProperties.getInstance().getResourceBundle().getString("startForm.logInError3"));
+					errorBuilder.append(
+							SystemProperties.getInstance().getResourceBundle().getString("startForm.logInError3"));
 					Params.getInstance().remove("NO_USER");
 				}
 				if (Params.getInstance().get("BAD_PASSWORD") != null) {
-					errorBuilder.append(SystemProperties.getInstance().getResourceBundle().getString("startForm.logInError2"));
+					errorBuilder.append(
+							SystemProperties.getInstance().getResourceBundle().getString("startForm.logInError2"));
 					Params.getInstance().remove("BAD_PASSWORD");
 				}
 				if (Params.getInstance().get("NOT_REGISTERED") != null) {
-					errorBuilder.append(SystemProperties.getInstance().getResourceBundle().getString("startForm.logInError4"));
+					errorBuilder.append(
+							SystemProperties.getInstance().getResourceBundle().getString("startForm.logInError4"));
 					Params.getInstance().remove("NOT_REGISTERED");
 				}
 				if (Params.getInstance().get("NOT_HIRED") != null) {
-					errorBuilder.append(SystemProperties.getInstance().getResourceBundle().getString("startForm.logInError9"));
+					errorBuilder.append(
+							SystemProperties.getInstance().getResourceBundle().getString("startForm.logInError9"));
 					Params.getInstance().remove("NOT_HIRED");
 				}
 
-				LogGuiException.logError(SystemProperties.getInstance().getResourceBundle().getString("startForm.logInErrorTitle"), errorBuilder.toString(), e);
-				
+				LogGuiException.logError(
+						SystemProperties.getInstance().getResourceBundle().getString("startForm.logInErrorTitle"),
+						errorBuilder.toString(), e);
+
 				clearLogInFailsInParams();
 			}
 
 			if (logInEvent != null) {
-				JOptionPane.showMessageDialog(startForm.getFrame(), SystemProperties.getInstance().getResourceBundle().getString("startForm.logInSuccess1"),
-						SystemProperties.getInstance().getResourceBundle().getString("startForm.logInSuccess1Title"), JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(startForm.getFrame(),
+						SystemProperties.getInstance().getResourceBundle().getString("startForm.logInSuccess1"),
+						SystemProperties.getInstance().getResourceBundle().getString("startForm.logInSuccess1Title"),
+						JOptionPane.INFORMATION_MESSAGE);
 				openTabbedForm();
 			}
 		}
@@ -155,13 +165,15 @@ public class Actions implements IRegistrationForm {
 			switchPerspectiveToRegistrationOrLogIn(false);
 			try {
 				Character sex = startForm.getRegistrationPanel().getGroupRadioButtonSex().getSelection() != null
-						? startForm.getRegistrationPanel().getGroupRadioButtonSex().getSelection().getActionCommand().charAt(0)
+						? startForm.getRegistrationPanel().getGroupRadioButtonSex().getSelection().getActionCommand()
+								.charAt(0)
 						: null;
 				Date birthDate = startForm.getRegistrationPanel().getDateChooserBirthDate().getDate() != null
-						? new SimpleDateFormat("dd-MM-yyyy").parse(new SimpleDateFormat("dd-MM-yyyy").format(startForm.getRegistrationPanel().getDateChooserBirthDate().getDate()))
+						? new SimpleDateFormat("dd-MM-yyyy").parse(new SimpleDateFormat("dd-MM-yyyy")
+								.format(startForm.getRegistrationPanel().getDateChooserBirthDate().getDate()))
 						: null;
 
-				if(birthDate == null) {
+				if (birthDate == null) {
 					registrationEvent = RegistrationEvent.getInstance(
 							startForm.getRegistrationPanel().getTextFieldPeselNumber().getText(),
 							startForm.getRegistrationPanel().getTextFieldDocumentNumber().getText(),
@@ -173,7 +185,7 @@ public class Actions implements IRegistrationForm {
 							startForm.getRegistrationPanel().getTextFieldEMail().getText(),
 							String.valueOf(startForm.getRegistrationPanel().getPasswordField().getPassword()),
 							Role.WORKER_LIBRARIAN);
-				}else if(birthDate.before(new Date())) {
+				} else if (birthDate.before(new Date())) {
 					registrationEvent = RegistrationEvent.getInstance(
 							startForm.getRegistrationPanel().getTextFieldPeselNumber().getText(),
 							startForm.getRegistrationPanel().getTextFieldDocumentNumber().getText(),
@@ -186,9 +198,10 @@ public class Actions implements IRegistrationForm {
 							String.valueOf(startForm.getRegistrationPanel().getPasswordField().getPassword()),
 							Role.WORKER_LIBRARIAN);
 				} else {
-//					Utils.displayOptionPane(
-//							SystemProperties.getInstance().getResourceBundle().getString("startForm.registrationError9"),
-//							SystemProperties.getInstance().getResourceBundle().getString("startForm.registrationErrorTitle"), JOptionPane.INFORMATION_MESSAGE);
+					// Utils.displayOptionPane(
+					// SystemProperties.getInstance().getResourceBundle().getString("startForm.registrationError9"),
+					// SystemProperties.getInstance().getResourceBundle().getString("startForm.registrationErrorTitle"),
+					// JOptionPane.INFORMATION_MESSAGE);
 					Params.getInstance().add("INCORRECT_BIRTH_DATE", RegistrationFailureCause.INCORRECT_BIRTH_DATE);
 					throw new RefusedRegistrationException("Cannot register to the system");
 				}
@@ -196,28 +209,36 @@ public class Actions implements IRegistrationForm {
 				StringBuilder errorBuilder = new StringBuilder();
 
 				if (Params.getInstance().get("ALREADY_REGISTERED") != null) {
-					errorBuilder.append(SystemProperties.getInstance().getResourceBundle().getString("startForm.registrationError5"));
+					errorBuilder.append(SystemProperties.getInstance().getResourceBundle()
+							.getString("startForm.registrationError5"));
 					Params.getInstance().remove("ALREADY_REGISTERED");
 				}
 				if (Params.getInstance().get("PARAMETERS_ERROR") != null) {
-					errorBuilder.append(SystemProperties.getInstance().getResourceBundle().getString("startForm.registrationError6"));
+					errorBuilder.append(SystemProperties.getInstance().getResourceBundle()
+							.getString("startForm.registrationError6"));
 				}
 				if (Params.getInstance().get("WEAK_PASSWORD") != null) {
-					errorBuilder.append(SystemProperties.getInstance().getResourceBundle().getString("startForm.registrationError7"));
+					errorBuilder.append(SystemProperties.getInstance().getResourceBundle()
+							.getString("startForm.registrationError7"));
 				}
-				if(Params.getInstance().get("INCORRECT_BIRTH_DATE") != null) {
-					errorBuilder.append(SystemProperties.getInstance().getResourceBundle().getString("startForm.registrationError9"));
+				if (Params.getInstance().get("INCORRECT_BIRTH_DATE") != null) {
+					errorBuilder.append(SystemProperties.getInstance().getResourceBundle()
+							.getString("startForm.registrationError9"));
 				}
 
-				LogGuiException.logError(SystemProperties.getInstance().getResourceBundle().getString("startForm.registrationErrorTitle"), errorBuilder.toString(), e);
+				LogGuiException.logError(SystemProperties.getInstance().getResourceBundle()
+						.getString("startForm.registrationErrorTitle"), errorBuilder.toString(), e);
 				clearRegistrationFailsInParams();
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
 
 			if (registrationEvent != null)
-				Utils.displayOptionPane(SystemProperties.getInstance().getResourceBundle().getString("startForm.registrationSuccess2"),
-						SystemProperties.getInstance().getResourceBundle().getString("startForm.registrationSuccess2Title"), JOptionPane.INFORMATION_MESSAGE);
+				Utils.displayOptionPane(
+						SystemProperties.getInstance().getResourceBundle().getString("startForm.registrationSuccess2"),
+						SystemProperties.getInstance().getResourceBundle()
+								.getString("startForm.registrationSuccess2Title"),
+						JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 
@@ -226,7 +247,7 @@ public class Actions implements IRegistrationForm {
 		Params.getInstance().remove("PARAMETERS_ERROR");
 		Params.getInstance().remove("WEAK_PASSWORD");
 		Params.getInstance().remove("INCORRECT_BIRTH_DATE");
-		
+
 	}
 
 	private void onClickBtnRegistrationMode() {
@@ -271,69 +292,96 @@ public class Actions implements IRegistrationForm {
 	private void sendMailWithPassword(String generatedPassword, String recipient) {
 		MailSender ms = new MailSender();
 		Message message = new MimeMessage(ms.getSession());
-		
+
 		try {
 			message.setFrom(new InternetAddress("no-reply@gmail.com"));
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipient));
 			message.setSubject("Przywrócenie has³a w sytemie eLibrary");
-			message.setText("Drogi u¿ytkowniku," + "\n\nPrzywrócono Twoje has³o. Zaloguj siê do systemu korzystaj¹c z wygenerowanego przez system has³a: " + generatedPassword + "\n\n Administracja eLibrary");
+			message.setText("Drogi u¿ytkowniku,"
+					+ "\n\nPrzywrócono Twoje has³o. Zaloguj siê do systemu korzystaj¹c z wygenerowanego przez system has³a: "
+					+ generatedPassword + "\n\n Administracja eLibrary");
 			ms.send(message);
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private boolean validateLogIn() {
 		boolean result = false;
-		if (startForm.getLogInPanel().getTextFieldLogin().getText().isEmpty() || startForm.getLogInPanel().getPasswordField().getPassword().length == 0)
-			JOptionPane.showMessageDialog(startForm.getFrame(), SystemProperties.getInstance().getResourceBundle().getString("startForm.validateLogInError1"),
-					SystemProperties.getInstance().getResourceBundle().getString("startForm.validateLogInError1Title"), JOptionPane.ERROR_MESSAGE);
+		if (startForm.getLogInPanel().getTextFieldLogin().getText().isEmpty()
+				|| startForm.getLogInPanel().getPasswordField().getPassword().length == 0)
+			JOptionPane.showMessageDialog(startForm.getFrame(),
+					SystemProperties.getInstance().getResourceBundle().getString("startForm.validateLogInError1"),
+					SystemProperties.getInstance().getResourceBundle().getString("startForm.validateLogInError1Title"),
+					JOptionPane.ERROR_MESSAGE);
 		else
 			result = true;
 
 		return result;
 	}
-	
+
 	private boolean validateForgotPassword() {
 		boolean result = false;
 		if (startForm.getLogInPanel().getTextFieldLogin().getText().isEmpty())
-			JOptionPane.showMessageDialog(startForm.getFrame(), SystemProperties.getInstance().getResourceBundle().getString("startForm.validateForgotPasswordError1"),
-					SystemProperties.getInstance().getResourceBundle().getString("startForm.validateForgotPassword1Title"), JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(startForm.getFrame(),
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("startForm.validateForgotPasswordError1"),
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("startForm.validateForgotPassword1Title"),
+					JOptionPane.ERROR_MESSAGE);
 		else {
 			Client client = (Client) HibernateUtil.getSession().getNamedQuery("Client.checkIfClientLoginExist")
 					.setParameter("login", startForm.getLogInPanel().getTextFieldLogin().getText()).uniqueResult();
 			Worker worker = (Worker) HibernateUtil.getSession().getNamedQuery("Worker.checkIfWorkerLoginExist")
 					.setParameter("login", startForm.getLogInPanel().getTextFieldLogin().getText()).uniqueResult();
 
-			if(client != null && worker != null) {
-				JOptionPane.showMessageDialog(startForm.getFrame(), SystemProperties.getInstance().getResourceBundle().getString("startForm.validateForgotPasswordError1"),
-						SystemProperties.getInstance().getResourceBundle().getString("startForm.validateForgotPassword1Title"), JOptionPane.ERROR_MESSAGE);
+			if (client != null && worker != null) {
+				JOptionPane.showMessageDialog(startForm.getFrame(),
+						SystemProperties.getInstance().getResourceBundle()
+								.getString("startForm.validateForgotPasswordError1"),
+						SystemProperties.getInstance().getResourceBundle()
+								.getString("startForm.validateForgotPassword1Title"),
+						JOptionPane.ERROR_MESSAGE);
 			} else {
 				if (client != null) {
 					if (Common.isAdmin(client))
-						JOptionPane.showMessageDialog(startForm.getFrame(), SystemProperties.getInstance().getResourceBundle().getString("startForm.validateForgotPasswordError2"),
-								SystemProperties.getInstance().getResourceBundle().getString("startForm.validateForgotPassword1Title"), JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(startForm.getFrame(),
+								SystemProperties.getInstance().getResourceBundle()
+										.getString("startForm.validateForgotPasswordError2"),
+								SystemProperties.getInstance().getResourceBundle().getString(
+										"startForm.validateForgotPassword1Title"),
+								JOptionPane.ERROR_MESSAGE);
 					else {
-						if(client.getEMail() != null) {
-							Params.getInstance().add("USER_DATA", (UserData)client);
+						if (client.getEMail() != null) {
+							Params.getInstance().add("USER_DATA", client);
 							result = true;
-						}
-						else 
-							JOptionPane.showMessageDialog(startForm.getFrame(), SystemProperties.getInstance().getResourceBundle().getString("startForm.validateForgotPasswordError3"),
-									SystemProperties.getInstance().getResourceBundle().getString("startForm.validateForgotPassword1Title"), JOptionPane.ERROR_MESSAGE);
+						} else
+							JOptionPane.showMessageDialog(startForm.getFrame(),
+									SystemProperties.getInstance().getResourceBundle()
+											.getString("startForm.validateForgotPasswordError3"),
+									SystemProperties.getInstance().getResourceBundle().getString(
+											"startForm.validateForgotPassword1Title"),
+									JOptionPane.ERROR_MESSAGE);
 					}
 				} else if (worker != null) {
 					if (Common.isAdmin(worker))
-						JOptionPane.showMessageDialog(startForm.getFrame(), SystemProperties.getInstance().getResourceBundle().getString("startForm.validateForgotPasswordError2"),
-								SystemProperties.getInstance().getResourceBundle().getString("startForm.validateForgotPassword1Title"), JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(startForm.getFrame(),
+								SystemProperties.getInstance().getResourceBundle()
+										.getString("startForm.validateForgotPasswordError2"),
+								SystemProperties.getInstance().getResourceBundle().getString(
+										"startForm.validateForgotPassword1Title"),
+								JOptionPane.ERROR_MESSAGE);
 					else {
-						if(worker.getEMail() != null) {
-							Params.getInstance().add("USER_DATA", (UserData)worker);
+						if (worker.getEMail() != null) {
+							Params.getInstance().add("USER_DATA", worker);
 							result = true;
-						}
-						else 
-							JOptionPane.showMessageDialog(startForm.getFrame(), SystemProperties.getInstance().getResourceBundle().getString("startForm.validateForgotPasswordError3"),
-									SystemProperties.getInstance().getResourceBundle().getString("startForm.validateForgotPassword1Title"), JOptionPane.ERROR_MESSAGE);
+						} else
+							JOptionPane.showMessageDialog(startForm.getFrame(),
+									SystemProperties.getInstance().getResourceBundle()
+											.getString("startForm.validateForgotPasswordError3"),
+									SystemProperties.getInstance().getResourceBundle().getString(
+											"startForm.validateForgotPassword1Title"),
+									JOptionPane.ERROR_MESSAGE);
 					}
 				}
 			}
@@ -345,9 +393,14 @@ public class Actions implements IRegistrationForm {
 	@Override
 	public boolean validateRegistration() {
 		boolean result = false;
-		if (startForm.getRegistrationPanel().getTextFieldLogin().getText().isEmpty() || startForm.getRegistrationPanel().getPasswordField().getPassword().length == 0)
-			JOptionPane.showMessageDialog(startForm.getFrame(), SystemProperties.getInstance().getResourceBundle().getString("startForm.validateRegistrationError8"),
-					SystemProperties.getInstance().getResourceBundle().getString("startForm.validateRegistrationError8Title"), JOptionPane.ERROR_MESSAGE);
+		if (startForm.getRegistrationPanel().getTextFieldLogin().getText().isEmpty()
+				|| startForm.getRegistrationPanel().getPasswordField().getPassword().length == 0)
+			JOptionPane.showMessageDialog(startForm.getFrame(),
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("startForm.validateRegistrationError8"),
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("startForm.validateRegistrationError8Title"),
+					JOptionPane.ERROR_MESSAGE);
 		else
 			result = true;
 

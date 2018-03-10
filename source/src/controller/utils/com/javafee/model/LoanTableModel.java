@@ -4,8 +4,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.AbstractTableModel;
@@ -16,24 +14,28 @@ import com.javafee.common.SystemProperties;
 import com.javafee.hibernate.dao.HibernateUtil;
 import com.javafee.hibernate.dto.library.Lend;
 
+import lombok.Getter;
+
 public class LoanTableModel extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
 
+	@Getter
 	private List<Lend> lends;
 	private String[] columns;
 
 	public LoanTableModel() {
 		super();
 		this.prepareHibernateDao();
-		this.columns = new String[] { SystemProperties.getInstance().getResourceBundle().getString("loanTableModel.clientCol"),
+		this.columns = new String[] {
+				SystemProperties.getInstance().getResourceBundle().getString("loanTableModel.clientCol"),
 				SystemProperties.getInstance().getResourceBundle().getString("loanTableModel.clientPeselNumberCol"),
 				SystemProperties.getInstance().getResourceBundle().getString("loanTableModel.clientDocumentNumberCol"),
 				SystemProperties.getInstance().getResourceBundle().getString("loanTableModel.volumeBookTitleCol"),
 				SystemProperties.getInstance().getResourceBundle().getString("loanTableModel.volumeBookIsbnNumberCol"),
 				SystemProperties.getInstance().getResourceBundle().getString("loanTableModel.volumeInventoryNumberCol"),
 				SystemProperties.getInstance().getResourceBundle().getString("loanTableModel.lendDateCol"),
-		SystemProperties.getInstance().getResourceBundle().getString("loanTableModel.returnDateCol"),
-		SystemProperties.getInstance().getResourceBundle().getString("loanTableModel.penaltyCol")};
+				SystemProperties.getInstance().getResourceBundle().getString("loanTableModel.returnDateCol"),
+				SystemProperties.getInstance().getResourceBundle().getString("loanTableModel.penaltyCol") };
 	}
 
 	public Lend getLend(int index) {
@@ -43,16 +45,12 @@ public class LoanTableModel extends AbstractTableModel {
 	public void setLend(int index, Lend lend) {
 		lends.set(index, lend);
 	}
-	
-	public List<Lend> getLends() {
-		return lends;
-	}
 
 	public void add(Lend lend) {
 		lends.add(lend);
 		this.fireTableDataChanged();
 	}
-	
+
 	public void delete(Lend lend) {
 		lends.remove(lend);
 		this.fireTableDataChanged();
@@ -61,9 +59,6 @@ public class LoanTableModel extends AbstractTableModel {
 	@SuppressWarnings("unchecked")
 	private void prepareHibernateDao() {
 		this.lends = HibernateUtil.getSession().createQuery("from Lend as len join fetch len.volume").list();
-//		this.lends = this.lends.stream()
-//				.filter(l -> !l.getIsReturned())
-//				.collect(Collectors.toList());
 	}
 
 	@SuppressWarnings("unused")
@@ -110,11 +105,11 @@ public class LoanTableModel extends AbstractTableModel {
 			return null;
 		}
 	}
-	
+
 	private double calculatePenalty(Date returnDate) {
 		int diffMonth = 0;
-		
-		if(new Date().after(returnDate)) {
+
+		if (new Date().after(returnDate)) {
 			Calendar startCalendar = new GregorianCalendar();
 			startCalendar.setTime(returnDate);
 			Calendar endCalendar = new GregorianCalendar();
@@ -123,26 +118,9 @@ public class LoanTableModel extends AbstractTableModel {
 			int diffYear = endCalendar.get(Calendar.YEAR) - startCalendar.get(Calendar.YEAR);
 			diffMonth = diffYear * 12 + endCalendar.get(Calendar.MONTH) - startCalendar.get(Calendar.MONTH);
 		}
-		
+
 		return diffMonth * Constans.PENALTY_VALUE;
 	}
-
-	// @Override
-	// public void setValueAt(Object value, int row, int col) {
-	// Volume volume = volumes.get(row);
-	// Volume volumeShallowClone = (Volume) volume.clone();
-	//
-	// switch (VolumeTableColumn.getByNumber(col)) {
-	// case COL_BOOK:
-	// volumeShallowClone.setBook((Book) value);
-	// break;
-	// case COL_IS_READING_ROOM:
-	// volumeShallowClone.setIsReadingRoom((Boolean) value);
-	// break;
-	// }
-	//
-	// this.fireTableRowsUpdated(row, row);
-	// }
 
 	@Override
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
@@ -162,10 +140,9 @@ public class LoanTableModel extends AbstractTableModel {
 		this.prepareHibernateDao();
 		this.fireTableDataChanged();
 	}
-	
+
 	@Override
 	public void fireTableChanged(TableModelEvent e) {
 		super.fireTableChanged(e);
 	}
-	
 }

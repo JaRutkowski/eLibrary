@@ -40,7 +40,6 @@ public class ClientTableModel extends AbstractTableModel {
 				SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.birthDateCol"),
 				SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.registeredCol") };
 	}
-	
 
 	public Client getClient(int index) {
 		return clients.get(index);
@@ -54,7 +53,7 @@ public class ClientTableModel extends AbstractTableModel {
 		clients.add(client);
 		this.fireTableDataChanged();
 	}
-	
+
 	public void remove(Client client) {
 		clients.remove(client);
 		this.fireTableDataChanged();
@@ -104,16 +103,21 @@ public class ClientTableModel extends AbstractTableModel {
 		case COL_SEX:
 			if (client.getSex() != null) {
 				if (Constans.DATA_BASE_MALE_SIGN.toString().equals(client.getSex().toString()))
-					return SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.registeredMaleVal");
+					return SystemProperties.getInstance().getResourceBundle()
+							.getString("clientTableModel.registeredMaleVal");
 				else if (Constans.DATA_BASE_FEMALE_SIGN.toString().equals(client.getSex().toString()))
-					return SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.registeredFemaleVal");
+					return SystemProperties.getInstance().getResourceBundle()
+							.getString("clientTableModel.registeredFemaleVal");
 			} else
 				return null;
 		case COL_BIRTH_DATE:
-			return client.getBirthDate() != null ? Constans.APPLICATION_DATE_FORMAT.format(client.getBirthDate()) : null;
+			return client.getBirthDate() != null ? Constans.APPLICATION_DATE_FORMAT.format(client.getBirthDate())
+					: null;
 		case COL_REGISTERED:
-			return client.getRegistered() ? SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.registeredTrueVal")
-					: SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.registeredFalseVal");
+			return client.getRegistered()
+					? SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.registeredTrueVal")
+					: SystemProperties.getInstance().getResourceBundle()
+							.getString("clientTableModel.registeredFalseVal");
 		default:
 			return null;
 		}
@@ -163,8 +167,11 @@ public class ClientTableModel extends AbstractTableModel {
 			executeUpdate(Client.class.getName(), client);
 			clients.set(row, clientShallowClone);
 		} else {
-			LogGuiException.logWarning(SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.constraintViolationErrorTitle"),
-					SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.constraintViolationError"));
+			LogGuiException.logWarning(
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("clientTableModel.constraintViolationErrorTitle"),
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("clientTableModel.constraintViolationError"));
 		}
 
 		this.fireTableRowsUpdated(row, row);
@@ -179,7 +186,7 @@ public class ClientTableModel extends AbstractTableModel {
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
 		return false;
 	}
-	
+
 	public void reloadData() {
 		prepareHibernateDao();
 		fireTableDataChanged();

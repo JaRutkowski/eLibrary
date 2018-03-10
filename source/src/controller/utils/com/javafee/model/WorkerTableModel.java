@@ -39,7 +39,7 @@ public class WorkerTableModel extends AbstractTableModel {
 				SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.cityCol"),
 				SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.sexCol"),
 				SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.birthDateCol"),
-				SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.registeredCol")};
+				SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.registeredCol") };
 	}
 
 	public Worker getWorker(int index) {
@@ -54,7 +54,7 @@ public class WorkerTableModel extends AbstractTableModel {
 		workers.add(worker);
 		this.fireTableDataChanged();
 	}
-	
+
 	public void remove(Worker worker) {
 		workers.remove(worker);
 		this.fireTableDataChanged();
@@ -104,16 +104,21 @@ public class WorkerTableModel extends AbstractTableModel {
 		case COL_SEX:
 			if (client.getSex() != null) {
 				if (Constans.DATA_BASE_MALE_SIGN.toString().equals(client.getSex().toString()))
-					return SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.registeredMaleVal");
+					return SystemProperties.getInstance().getResourceBundle()
+							.getString("clientTableModel.registeredMaleVal");
 				else if (Constans.DATA_BASE_FEMALE_SIGN.toString().equals(client.getSex().toString()))
-					return SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.registeredFemaleVal");
+					return SystemProperties.getInstance().getResourceBundle()
+							.getString("clientTableModel.registeredFemaleVal");
 			} else
 				return null;
 		case COL_BIRTH_DATE:
-			return client.getBirthDate() != null ? Constans.APPLICATION_DATE_FORMAT.format(client.getBirthDate()) : null;
+			return client.getBirthDate() != null ? Constans.APPLICATION_DATE_FORMAT.format(client.getBirthDate())
+					: null;
 		case COL_REGISTERED:
-			return client.getRegistered() ? SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.registeredTrueVal")
-					: SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.registeredFalseVal");
+			return client.getRegistered()
+					? SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.registeredTrueVal")
+					: SystemProperties.getInstance().getResourceBundle()
+							.getString("clientTableModel.registeredFalseVal");
 		default:
 			return null;
 		}
@@ -164,8 +169,11 @@ public class WorkerTableModel extends AbstractTableModel {
 			executeUpdate(Client.class.getName(), client);
 			workers.set(row, workerShallowClone);
 		} else {
-			LogGuiException.logWarning(SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.constraintViolationErrorTitle"),
-					SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.constraintViolationError"));
+			LogGuiException.logWarning(
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("clientTableModel.constraintViolationErrorTitle"),
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("clientTableModel.constraintViolationError"));
 		}
 
 		this.fireTableRowsUpdated(row, row);
