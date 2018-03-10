@@ -30,7 +30,6 @@ import com.javafee.startform.RegistrationEvent.RegistrationFailureCause;
 import com.javafee.tabbedform.admworkers.frames.WorkerAddModFrame;
 
 public class WorkerAddModEvent {
-
 	private WorkerAddModFrame workerAddModFrame;
 
 	private RegistrationEvent registrationEvent;
@@ -88,7 +87,6 @@ public class WorkerAddModEvent {
 
 	private void modificateClient() {
 		Worker workerShallowClone = (Worker) Params.getInstance().get("selectedWorkerShallowClone");
-		// Params.getInstance().remove("selectedWorkerShallowClone");
 
 		workerShallowClone.setPeselNumber(workerAddModFrame.getWorkerDataPanel().getTextFieldPeselNumber().getText());
 		workerShallowClone
@@ -97,10 +95,11 @@ public class WorkerAddModEvent {
 		workerShallowClone.setSurname(workerAddModFrame.getWorkerDataPanel().getTextFieldSurname().getText());
 		workerShallowClone.setAddress(workerAddModFrame.getWorkerDataPanel().getTextFieldAddress().getText());
 		workerShallowClone.setCity((City) workerAddModFrame.getWorkerDataPanel().getComboBoxCity().getSelectedItem());
-		if(workerAddModFrame.getWorkerDataPanel().getRadioButtonMale().isSelected() || workerAddModFrame.getWorkerDataPanel().getRadioButtonFemale().isSelected())
-		workerShallowClone.setSex(
-				workerAddModFrame.getWorkerDataPanel().getRadioButtonMale().isSelected() ? Constans.DATA_BASE_MALE_SIGN
-						: Constans.DATA_BASE_FEMALE_SIGN);
+		if (workerAddModFrame.getWorkerDataPanel().getRadioButtonMale().isSelected()
+				|| workerAddModFrame.getWorkerDataPanel().getRadioButtonFemale().isSelected())
+			workerShallowClone.setSex(workerAddModFrame.getWorkerDataPanel().getRadioButtonMale().isSelected()
+					? Constans.DATA_BASE_MALE_SIGN
+					: Constans.DATA_BASE_FEMALE_SIGN);
 		workerShallowClone
 				.setBirthDate(workerAddModFrame.getWorkerDataPanel().getDateChooserBirthDate().getDate() != null
 						? workerAddModFrame.getWorkerDataPanel().getDateChooserBirthDate().getDate()
@@ -108,13 +107,6 @@ public class WorkerAddModEvent {
 		workerShallowClone.setEMail(workerAddModFrame.getWorkerDataPanel().getTextFieldEMail().getText());
 		workerShallowClone.setLogin(workerAddModFrame.getWorkerDataPanel().getTextFieldLogin().getText());
 
-		// if (!validatePasswordFieldIsEmpty())
-		// Utils.displayOptionPane(
-		// SystemProperties.getInstance().getResourceBundle()
-		// .getString("tabClientEvent.validatePasswordFieldIsEmptyWarning2"),
-		// SystemProperties.getInstance().getResourceBundle()
-		// .getString("tabClientEvent.validatePasswordFieldIsEmptyWarning2Title"),
-		// JOptionPane.WARNING_MESSAGE);
 		if (!"".equals(workerShallowClone.getPeselNumber())
 				&& workerShallowClone.getPeselNumber().length() != Constans.DATA_BASE_PESEL_NUMBER_LENGHT) {
 			Utils.displayOptionPane(
@@ -150,17 +142,6 @@ public class WorkerAddModEvent {
 						JOptionPane.ERROR_MESSAGE);
 			}
 		}
-		//
-
-		// reloadClientTable();
-		//
-		// } else {
-		// LogGuiException.logWarning(
-		// SystemProperties.getInstance().getResourceBundle()
-		// .getString("clientTableModel.constraintViolationErrorTitle"),
-		// SystemProperties.getInstance().getResourceBundle()
-		// .getString("clientTableModel.constraintViolationError"));
-		// }
 	}
 
 	private void openWorkerAddModFrame(Context context) {
@@ -209,11 +190,11 @@ public class WorkerAddModEvent {
 				.setText(((Worker) Params.getInstance().get("selectedWorkerShallowClone")).getLogin() != null
 						? ((Worker) Params.getInstance().get("selectedWorkerShallowClone")).getLogin().toString()
 						: "");
-		
+
 		workerAddModFrame.getWorkerDataPanel().getTextFieldEMail()
-		.setText(((Worker) Params.getInstance().get("selectedWorkerShallowClone")).getEMail() != null
-				? ((Worker) Params.getInstance().get("selectedWorkerShallowClone")).getEMail().toString()
-				: "");
+				.setText(((Worker) Params.getInstance().get("selectedWorkerShallowClone")).getEMail() != null
+						? ((Worker) Params.getInstance().get("selectedWorkerShallowClone")).getEMail().toString()
+						: "");
 
 		workerAddModFrame.getWorkerDataPanel().getTextFieldName()
 				.setText(((Worker) Params.getInstance().get("selectedWorkerShallowClone")).getName() != null
@@ -257,6 +238,7 @@ public class WorkerAddModEvent {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	private void registerNow() {
 		if (Validator.validateWorkerPesel(workerAddModFrame.getWorkerDataPanel().getTextFieldPeselNumber().getText())) {
 			try {
@@ -276,88 +258,65 @@ public class WorkerAddModEvent {
 					if (u.getLogin().equals(workerAddModFrame.getWorkerDataPanel().getTextFieldLogin().getText()))
 						result = false;
 				}
-				 if(result) {
-					 if (!"".equals(workerAddModFrame.getWorkerDataPanel().getTextFieldPeselNumber().getText())
-								&& workerAddModFrame.getWorkerDataPanel().getTextFieldPeselNumber().getText()
-										.length() != Constans.DATA_BASE_PESEL_NUMBER_LENGHT) {
-							Utils.displayOptionPane(
-									SystemProperties.getInstance().getResourceBundle()
-											.getString("clientAddModEvent.updatingClientPeselError"),
-									SystemProperties.getInstance().getResourceBundle().getString(
-											"clientAddModEvent.updatingClientPeselErrorTitle"),
-									JOptionPane.ERROR_MESSAGE);
-						} else {
-				if (birthDate == null) {
-					registrationEvent = RegistrationEvent.getInstance(
-							workerAddModFrame.getWorkerDataPanel().getTextFieldPeselNumber().getText(),
-							workerAddModFrame.getWorkerDataPanel().getTextFieldDocumentNumber().getText(),
-							workerAddModFrame.getWorkerDataPanel().getTextFieldName().getText(),
-							workerAddModFrame.getWorkerDataPanel().getTextFieldSurname().getText(),
-							workerAddModFrame.getWorkerDataPanel().getTextFieldAddress().getText(),
-							(City) workerAddModFrame.getWorkerDataPanel().getComboBoxCity().getSelectedItem(), sex,
-							birthDate, workerAddModFrame.getWorkerDataPanel().getTextFieldLogin().getText(),
-							workerAddModFrame.getWorkerDataPanel().getTextFieldEMail().getText(),
-							String.valueOf(workerAddModFrame.getWorkerDataPanel().getPasswordField().getPassword()),
-							Role.WORKER_LIBRARIAN);
-					workerTableModel.add((Worker) RegistrationEvent.userData);
-					workerAddModFrame.dispose();
-				} else if (birthDate.before(new Date())) {
-					registrationEvent = RegistrationEvent.getInstance(
-							workerAddModFrame.getWorkerDataPanel().getTextFieldPeselNumber().getText(),
-							workerAddModFrame.getWorkerDataPanel().getTextFieldDocumentNumber().getText(),
-							workerAddModFrame.getWorkerDataPanel().getTextFieldName().getText(),
-							workerAddModFrame.getWorkerDataPanel().getTextFieldSurname().getText(),
-							workerAddModFrame.getWorkerDataPanel().getTextFieldAddress().getText(),
-							(City) workerAddModFrame.getWorkerDataPanel().getComboBoxCity().getSelectedItem(), sex,
-							birthDate, workerAddModFrame.getWorkerDataPanel().getTextFieldLogin().getText(),
-							workerAddModFrame.getWorkerDataPanel().getTextFieldEMail().getText(),
-							String.valueOf(workerAddModFrame.getWorkerDataPanel().getPasswordField().getPassword()),
-							Role.WORKER_LIBRARIAN);
-
-					workerTableModel.add((Worker) RegistrationEvent.userData);
-					workerAddModFrame.dispose();
-				} else {
-					// Utils.displayOptionPane(
-					// SystemProperties.getInstance().getResourceBundle().getString("startForm.registrationError9"),
-					// SystemProperties.getInstance().getResourceBundle().getString("startForm.registrationErrorTitle"),
-					// JOptionPane.INFORMATION_MESSAGE);
-					Params.getInstance().add("INCORRECT_BIRTH_DATE", RegistrationFailureCause.INCORRECT_BIRTH_DATE);
-					throw new RefusedRegistrationException("Cannot register to the system");
-				}}
-				 } else {
+				if (result) {
+					if (!"".equals(workerAddModFrame.getWorkerDataPanel().getTextFieldPeselNumber().getText())
+							&& workerAddModFrame.getWorkerDataPanel().getTextFieldPeselNumber().getText()
+									.length() != Constans.DATA_BASE_PESEL_NUMBER_LENGHT) {
 						Utils.displayOptionPane(
-								SystemProperties.getInstance().getResourceBundle().getString("workerAddModEvent.existingLogin"),
 								SystemProperties.getInstance().getResourceBundle()
-										.getString("workerAddModEvent.existingLoginTitle"),
+										.getString("clientAddModEvent.updatingClientPeselError"),
+								SystemProperties.getInstance().getResourceBundle().getString(
+										"clientAddModEvent.updatingClientPeselErrorTitle"),
 								JOptionPane.ERROR_MESSAGE);
-				 }
-			}
+					} else {
+						if (birthDate == null) {
+							registrationEvent = RegistrationEvent.getInstance(
+									workerAddModFrame.getWorkerDataPanel().getTextFieldPeselNumber().getText(),
+									workerAddModFrame.getWorkerDataPanel().getTextFieldDocumentNumber().getText(),
+									workerAddModFrame.getWorkerDataPanel().getTextFieldName().getText(),
+									workerAddModFrame.getWorkerDataPanel().getTextFieldSurname().getText(),
+									workerAddModFrame.getWorkerDataPanel().getTextFieldAddress().getText(),
+									(City) workerAddModFrame.getWorkerDataPanel().getComboBoxCity().getSelectedItem(),
+									sex, birthDate,
+									workerAddModFrame.getWorkerDataPanel().getTextFieldLogin().getText(),
+									workerAddModFrame.getWorkerDataPanel().getTextFieldEMail().getText(),
+									String.valueOf(
+											workerAddModFrame.getWorkerDataPanel().getPasswordField().getPassword()),
+									Role.WORKER_LIBRARIAN);
+							workerTableModel.add((Worker) RegistrationEvent.userData);
+							workerAddModFrame.dispose();
+						} else if (birthDate.before(new Date())) {
+							registrationEvent = RegistrationEvent.getInstance(
+									workerAddModFrame.getWorkerDataPanel().getTextFieldPeselNumber().getText(),
+									workerAddModFrame.getWorkerDataPanel().getTextFieldDocumentNumber().getText(),
+									workerAddModFrame.getWorkerDataPanel().getTextFieldName().getText(),
+									workerAddModFrame.getWorkerDataPanel().getTextFieldSurname().getText(),
+									workerAddModFrame.getWorkerDataPanel().getTextFieldAddress().getText(),
+									(City) workerAddModFrame.getWorkerDataPanel().getComboBoxCity().getSelectedItem(),
+									sex, birthDate,
+									workerAddModFrame.getWorkerDataPanel().getTextFieldLogin().getText(),
+									workerAddModFrame.getWorkerDataPanel().getTextFieldEMail().getText(),
+									String.valueOf(
+											workerAddModFrame.getWorkerDataPanel().getPasswordField().getPassword()),
+									Role.WORKER_LIBRARIAN);
 
-			// if (birthDate != null && birthDate.before(new Date())) {
-			// registrationEvent = RegistrationEvent.getInstance(
-			// workerAddModFrame.getWorkerDataPanel().getTextFieldPeselNumber().getText(),
-			// workerAddModFrame.getWorkerDataPanel().getTextFieldDocumentNumber().getText(),
-			// workerAddModFrame.getWorkerDataPanel().getTextFieldName().getText(),
-			// workerAddModFrame.getWorkerDataPanel().getTextFieldSurname().getText(),
-			// workerAddModFrame.getWorkerDataPanel().getTextFieldAddress().getText(),
-			// (City)
-			// workerAddModFrame.getWorkerDataPanel().getComboBoxCity().getSelectedItem(),
-			// sex,
-			// birthDate,
-			// workerAddModFrame.getWorkerDataPanel().getTextFieldLogin().getText(),
-			// String.valueOf(workerAddModFrame.getWorkerDataPanel().getPasswordField().getPassword()),
-			// Role.WORKER_LIBRARIAN);
-			//
-			// workerTableModel.add((Worker) RegistrationEvent.userData);
-			//
-			// workerAddModFrame.dispose();
-			// } else {
-			// Utils.displayOptionPane(
-			// "Podana data urodzenia nie jest wczeniejszza od be¿¹cej, wype³nione muszê
-			// byæ dane nazwiska, imienia, numeru pesel.",
-			// "Z³a data", JOptionPane.INFORMATION_MESSAGE);
-			// }
-			catch (RefusedRegistrationException e) {
+							workerTableModel.add((Worker) RegistrationEvent.userData);
+							workerAddModFrame.dispose();
+						} else {
+							Params.getInstance().add("INCORRECT_BIRTH_DATE",
+									RegistrationFailureCause.INCORRECT_BIRTH_DATE);
+							throw new RefusedRegistrationException("Cannot register to the system");
+						}
+					}
+				} else {
+					Utils.displayOptionPane(
+							SystemProperties.getInstance().getResourceBundle()
+									.getString("workerAddModEvent.existingLogin"),
+							SystemProperties.getInstance().getResourceBundle()
+									.getString("workerAddModEvent.existingLoginTitle"),
+							JOptionPane.ERROR_MESSAGE);
+				}
+			} catch (RefusedRegistrationException e) {
 				StringBuilder errorBuilder = new StringBuilder();
 
 				if (Params.getInstance().get("ALREADY_REGISTERED") != null) {

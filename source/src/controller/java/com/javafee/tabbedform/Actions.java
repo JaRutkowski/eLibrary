@@ -3,11 +3,9 @@ package com.javafee.tabbedform;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.stream.Collectors;
 
 import javax.swing.JOptionPane;
 
@@ -16,10 +14,6 @@ import com.javafee.common.Constans.Role;
 import com.javafee.common.Constans.Tab;
 import com.javafee.common.Constans.Tab_Client;
 import com.javafee.common.Constans.Tab_Worker;
-import com.javafee.hibernate.dao.HibernateDao;
-import com.javafee.hibernate.dao.HibernateUtil;
-import com.javafee.hibernate.dto.association.Language;
-import com.javafee.hibernate.dto.library.Client;
 import com.javafee.common.IActionForm;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
@@ -27,30 +21,32 @@ import com.javafee.startform.LogInEvent;
 
 public class Actions implements IActionForm {
 	private TabbedForm tabbedForm = new TabbedForm();
-	
-	private final SimpleDateFormat sdf  = new SimpleDateFormat("HH:mm");
-    private int   currentSecond;
-    private Calendar calendar;
 
-    private void reset(){
-        calendar = Calendar.getInstance();
-        currentSecond = calendar.get(Calendar.SECOND);
-    }
-    public void start(){
-        reset();
-        Timer timer = new Timer();
-        timer.scheduleAtFixedRate( new TimerTask(){
-            public void run(){
-                if( currentSecond == 60 ) {
-                    reset();
-                }
-                tabbedForm.getTime().setText( String.format("%s:%02d ", sdf.format(calendar.getTime()), currentSecond ));
-                currentSecond++;
-            }
-        }, 0, 1000 );
-    }
-    
-    
+	private final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+	private int currentSecond;
+	private Calendar calendar;
+
+	private void reset() {
+		calendar = Calendar.getInstance();
+		currentSecond = calendar.get(Calendar.SECOND);
+	}
+
+	public void start() {
+		reset();
+		Timer timer = new Timer();
+		timer.scheduleAtFixedRate(new TimerTask() {
+			@Override
+			public void run() {
+				if (currentSecond == 60) {
+					reset();
+				}
+				tabbedForm.getLblTime()
+						.setText(String.format("%s:%02d ", sdf.format(calendar.getTime()), currentSecond));
+				currentSecond++;
+			}
+		}, 0, 1000);
+	}
+
 	public void control() {
 		tabbedForm.getFrame().setVisible(true);
 		initializeForm();
@@ -64,17 +60,18 @@ public class Actions implements IActionForm {
 
 		tabbedForm.getBtnLogOut().addActionListener(e -> onClickBtnLogOut());
 		tabbedForm.getTabbedPane().addChangeListener(e -> onChangeTabbedPane());
-	
+
 		tabbedForm.getComboBoxLanguage().addActionListener(e -> onChangeComboBoxLanguage());
-		
+
 	}
-	
+
 	private void onChangeComboBoxLanguage() {
 		if (Utils.displayConfirmDialog(
 				SystemProperties.getInstance().getResourceBundle().getString("confirmDialog.languageChange"),
 				"") == JOptionPane.YES_OPTION) {
-			Constans.APPLICATION_LANGUAGE = (String)tabbedForm.getComboBoxLanguage().getSelectedItem();
-			SystemProperties.getInstance().setResourceBundleLanguage((String)tabbedForm.getComboBoxLanguage().getSelectedItem());
+			Constans.APPLICATION_LANGUAGE = (String) tabbedForm.getComboBoxLanguage().getSelectedItem();
+			SystemProperties.getInstance()
+					.setResourceBundleLanguage((String) tabbedForm.getComboBoxLanguage().getSelectedItem());
 			onClickBtnLogOut();
 		}
 	}
@@ -108,8 +105,8 @@ public class Actions implements IActionForm {
 					SystemProperties.getInstance().getResourceBundle().getString("tabbedForm.tabBookTitle"), null,
 					tabbedForm.getPanelBook(), null);
 			tabbedForm.getTabbedPane().addTab(
-					SystemProperties.getInstance().getResourceBundle().getString("tabbedForm.tabLoanServiceTitle"), null,
-					tabbedForm.getLoanServicePanel_new(), null);
+					SystemProperties.getInstance().getResourceBundle().getString("tabbedForm.tabLoanServiceTitle"),
+					null, tabbedForm.getLoanServicePanel_new(), null);
 			tabbedForm.pack();
 		}
 
@@ -124,11 +121,11 @@ public class Actions implements IActionForm {
 					SystemProperties.getInstance().getResourceBundle().getString("tabbedForm.tabBookTitle"), null,
 					tabbedForm.getPanelBook(), null);
 			tabbedForm.getTabbedPane().addTab(
-					SystemProperties.getInstance().getResourceBundle().getString("tabbedForm.tabLoanServiceTitle"), null,
-					tabbedForm.getLoanServicePanel_new(), null);
+					SystemProperties.getInstance().getResourceBundle().getString("tabbedForm.tabLoanServiceTitle"),
+					null, tabbedForm.getLoanServicePanel_new(), null);
 			tabbedForm.getTabbedPane().addTab(
-					SystemProperties.getInstance().getResourceBundle().getString("tabbedForm.tabAdmDictionaryTitle"), null,
-					tabbedForm.getPanelAdmDictionary(), null);
+					SystemProperties.getInstance().getResourceBundle().getString("tabbedForm.tabAdmDictionaryTitle"),
+					null, tabbedForm.getPanelAdmDictionary(), null);
 			tabbedForm.getTabbedPane().addTab(
 					SystemProperties.getInstance().getResourceBundle().getString("tabbedForm.tabWorkerTitle"), null,
 					tabbedForm.getPanelWorker(), null);
@@ -138,22 +135,26 @@ public class Actions implements IActionForm {
 
 	private void reloadLblLogInInformationDynamic() {
 		StringBuilder logInInformation = new StringBuilder(tabbedForm.getLblLogInInformation().getText());
-		
+
 		Role role = LogInEvent.getRole();
 		String stringRole = null;
-		if(role == Role.CLIENT)
+		if (role == Role.CLIENT)
 			stringRole = Constans.CLIENT;
-		else if(role == Role.ADMIN)
+		else if (role == Role.ADMIN)
 			stringRole = Constans.ROLE_ADMIN;
-		else if(role == Role.WORKER_ACCOUNTANT)
+		else if (role == Role.WORKER_ACCOUNTANT)
 			stringRole = Constans.WORKER_ACCOUNTANT;
-		else if(role == Role.WORKER_LIBRARIAN)
+		else if (role == Role.WORKER_LIBRARIAN)
 			stringRole = Constans.WORKER_LIBRARIAN;
-		
+
 		if (LogInEvent.getWorker() != null)
-			logInInformation.append(LogInEvent.getWorker().getName() + " " + LogInEvent.getWorker().getSurname() + ", " +  stringRole + " [" + Constans.APPLICATION_DATE_TIME_FORMAT.format(LogInEvent.getlogInDate()) + "]");
+			logInInformation.append(
+					LogInEvent.getWorker().getName() + " " + LogInEvent.getWorker().getSurname() + ", " + stringRole
+							+ " [" + Constans.APPLICATION_DATE_TIME_FORMAT.format(LogInEvent.getLogInDate()) + "]");
 		else if (LogInEvent.getClient() != null)
-			logInInformation.append(LogInEvent.getClient().getName() + " " + LogInEvent.getClient().getSurname() + ", " +  stringRole + " [" + Constans.APPLICATION_DATE_TIME_FORMAT.format(LogInEvent.getlogInDate()) + "]");
+			logInInformation.append(
+					LogInEvent.getClient().getName() + " " + LogInEvent.getClient().getSurname() + ", " + stringRole
+							+ " [" + Constans.APPLICATION_DATE_TIME_FORMAT.format(LogInEvent.getLogInDate()) + "]");
 
 		if (LogInEvent.getIsAdmin())
 			logInInformation.append(stringRole);
@@ -169,7 +170,7 @@ public class Actions implements IActionForm {
 			default:
 				break;
 			}
-		
+
 		if (LogInEvent.getRole() == Role.WORKER_LIBRARIAN)
 			switch (Tab_Worker.getByNumber(tabbedForm.getTabbedPane().getSelectedIndex())) {
 			case TAB_CLIENT:
@@ -187,7 +188,7 @@ public class Actions implements IActionForm {
 			default:
 				break;
 			}
-		
+
 		if (LogInEvent.getRole() == Role.WORKER_ACCOUNTANT)
 			switch (Tab.getByNumber(tabbedForm.getTabbedPane().getSelectedIndex())) {
 			case TAB_CLIENT:

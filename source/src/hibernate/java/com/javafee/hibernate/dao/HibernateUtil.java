@@ -11,13 +11,17 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.service.ServiceRegistry;
 
+import lombok.Getter;
+
 public class HibernateUtil {
+	@Getter
 	private static final SessionFactory sessionFactory;
 	// private static final ServiceRegistry serviceRegistry;
+	@Getter
 	private static final Session session;
 
 	static {
-		//Hibernate 5
+		// Hibernate 5
 		try {
 			// Configuration configuration = new Configuration().configure();
 			// serviceRegistry = new
@@ -42,14 +46,6 @@ public class HibernateUtil {
 		// Logger.getLogger("app").log(Level.WARNING, e.getMessage());
 		// throw new ExceptionInInitializerError(e);
 		// }
-	}
-
-	public static SessionFactory getSessionFactory() {
-		return sessionFactory;
-	}
-
-	public static Session getSession() {
-		return session;
 	}
 
 	public static void beginTransaction() {

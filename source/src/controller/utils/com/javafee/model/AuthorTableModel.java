@@ -12,16 +12,20 @@ import com.javafee.hibernate.dao.HibernateDao;
 import com.javafee.hibernate.dao.HibernateUtil;
 import com.javafee.hibernate.dto.library.Author;
 
+import lombok.Getter;
+
 public class AuthorTableModel extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
 
+	@Getter
 	protected List<Author> authors;
 	private String[] columns;
 
 	public AuthorTableModel() {
 		super();
 		this.prepareHibernateDao();
-		this.columns = new String[] { SystemProperties.getInstance().getResourceBundle().getString("authorTableModel.authorNameCol"),
+		this.columns = new String[] {
+				SystemProperties.getInstance().getResourceBundle().getString("authorTableModel.authorNameCol"),
 				SystemProperties.getInstance().getResourceBundle().getString("authorTableModel.authorSurnameCol"),
 				SystemProperties.getInstance().getResourceBundle().getString("authorTableModel.authorBirthDateCol") };
 	}
@@ -32,10 +36,6 @@ public class AuthorTableModel extends AbstractTableModel {
 
 	public void setAuthor(int index, Author author) {
 		authors.set(index, author);
-	}
-	
-	public List<Author> getAuthors() {
-		return authors;
 	}
 
 	public void add(Author author) {
@@ -78,28 +78,12 @@ public class AuthorTableModel extends AbstractTableModel {
 		case COL_SURNAME:
 			return author.getSurname();
 		case COL_BIRTH_DATE:
-			return author.getBirthDate() != null ? Constans.APPLICATION_DATE_FORMAT.format(author.getBirthDate()) : null;
+			return author.getBirthDate() != null ? Constans.APPLICATION_DATE_FORMAT.format(author.getBirthDate())
+					: null;
 		default:
 			return null;
 		}
 	}
-
-	// @Override
-	// public void setValueAt(Object value, int row, int col) {
-	// Volume volume = volumes.get(row);
-	// Volume volumeShallowClone = (Volume) volume.clone();
-	//
-	// switch (VolumeTableColumn.getByNumber(col)) {
-	// case COL_BOOK:
-	// volumeShallowClone.setBook((Book) value);
-	// break;
-	// case COL_IS_READING_ROOM:
-	// volumeShallowClone.setIsReadingRoom((Boolean) value);
-	// break;
-	// }
-	//
-	// this.fireTableRowsUpdated(row, row);
-	// }
 
 	@Override
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {

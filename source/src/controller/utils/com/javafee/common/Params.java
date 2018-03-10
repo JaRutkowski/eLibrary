@@ -18,27 +18,27 @@ public class Params implements IParam {
 		}
 		return comParams;
 	}
-	
+
 	@Override
 	public void add(String key, Object value) {
 		params.put(key, value);
 	}
-	
+
 	@Override
 	public Object get(String key) {
 		return params.get(key);
 	}
-	
+
 	@Override
 	public boolean contains(String key) {
 		return params.containsKey(key);
 	}
-	
+
 	@Override
 	public void remove(String key) {
 		params.remove(key);
 	}
-	
+
 	@Override
 	public Collection<String> keySet() {
 		return Collections.unmodifiableCollection(params.keySet());

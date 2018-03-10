@@ -15,6 +15,9 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
+import lombok.Data;
+
+@Data
 @Entity
 @Table(name = "com_system_data", uniqueConstraints = { @UniqueConstraint(columnNames = { "license_number" }) })
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -43,60 +46,4 @@ public abstract class SystemData {
 
 	@Column(name = "license_number", unique = false, nullable = true, insertable = true, updatable = true, length = 80)
 	private String licenseNumber;
-
-	public Integer getIdSystemData() {
-		return idSystemData;
-	}
-
-	public void setIdSystemData(Integer idSystemData) {
-		this.idSystemData = idSystemData;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getVersion() {
-		return version;
-	}
-
-	public void setVersion(String version) {
-		this.version = version;
-	}
-
-	public String getBuildNumber() {
-		return buildNumber;
-	}
-
-	public void setBuildNumber(String buildNumber) {
-		this.buildNumber = buildNumber;
-	}
-
-	public Date getInstallationDate() {
-		return installationDate;
-	}
-
-	public void setInstallationDate(Date installationDate) {
-		this.installationDate = installationDate;
-	}
-
-	public Boolean getHasLicense() {
-		return hasLicense;
-	}
-
-	public void setHasLicense(Boolean hasLicense) {
-		this.hasLicense = hasLicense;
-	}
-
-	public String getLicenseNumber() {
-		return licenseNumber;
-	}
-
-	public void setLicenseNumber(String licenseNumber) {
-		this.licenseNumber = licenseNumber;
-	}
 }

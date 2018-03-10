@@ -18,7 +18,8 @@ public final class Constans {
 		}
 
 		public static Tab getByNumber(int tabbedPaneSelectedIndex) {
-			return Stream.of(Tab.values()).filter(item -> item.getValue().equals(tabbedPaneSelectedIndex)).findFirst().get();
+			return Stream.of(Tab.values()).filter(item -> item.getValue().equals(tabbedPaneSelectedIndex)).findFirst()
+					.get();
 		}
 	}
 
@@ -36,10 +37,11 @@ public final class Constans {
 		}
 
 		public static Tab_Client getByNumber(int tabbedPaneSelectedIndex) {
-			return Stream.of(Tab_Client.values()).filter(item -> item.getValue().equals(tabbedPaneSelectedIndex)).findFirst().get();
+			return Stream.of(Tab_Client.values()).filter(item -> item.getValue().equals(tabbedPaneSelectedIndex))
+					.findFirst().get();
 		}
 	}
-	
+
 	public enum Tab_Worker {
 		TAB_CLIENT(0), TAB_LIBRARY(1), TAB_BOOK(2), TAB_LOAN_SERVICE(3);
 
@@ -54,10 +56,11 @@ public final class Constans {
 		}
 
 		public static Tab_Worker getByNumber(int tabbedPaneSelectedIndex) {
-			return Stream.of(Tab_Worker.values()).filter(item -> item.getValue().equals(tabbedPaneSelectedIndex)).findFirst().get();
+			return Stream.of(Tab_Worker.values()).filter(item -> item.getValue().equals(tabbedPaneSelectedIndex))
+					.findFirst().get();
 		}
 	}
-	
+
 	public enum Tab_Accountant {
 		TAB_CLIENT(0), TAB_LIBRARY(1), TAB_BOOK(2), TAB_LOAN_SERVICE(3), TAB_ADM_DICTIONARY(4), TAB_ADM_WORKER(5);
 
@@ -72,12 +75,14 @@ public final class Constans {
 		}
 
 		public static Tab getByNumber(int tabbedPaneSelectedIndex) {
-			return Stream.of(Tab.values()).filter(item -> item.getValue().equals(tabbedPaneSelectedIndex)).findFirst().get();
+			return Stream.of(Tab.values()).filter(item -> item.getValue().equals(tabbedPaneSelectedIndex)).findFirst()
+					.get();
 		}
 	}
-	
+
 	public enum ClientTableColumn {
-		COL_PESEL_NUMBER(0), COL_DOCUMENT_NUMBER(1), COL_LOGIN(2), COL_E_MAIL(3), COL_NAME(4), COL_SURNAME(5), COL_ADDRESS(6), COL_CITY(7), COL_SEX(8), COL_BIRTH_DATE(9), COL_REGISTERED(10);
+		COL_PESEL_NUMBER(0), COL_DOCUMENT_NUMBER(1), COL_LOGIN(2), COL_E_MAIL(3), COL_NAME(4), COL_SURNAME(
+				5), COL_ADDRESS(6), COL_CITY(7), COL_SEX(8), COL_BIRTH_DATE(9), COL_REGISTERED(10);
 
 		private final Integer value;
 
@@ -90,7 +95,8 @@ public final class Constans {
 		}
 
 		public static ClientTableColumn getByNumber(int clientTableSelectedIndex) {
-			return Stream.of(ClientTableColumn.values()).filter(item -> item.getValue().equals(clientTableSelectedIndex)).findFirst().get();
+			return Stream.of(ClientTableColumn.values())
+					.filter(item -> item.getValue().equals(clientTableSelectedIndex)).findFirst().get();
 		}
 	}
 
@@ -108,12 +114,15 @@ public final class Constans {
 		}
 
 		public static BookTableColumn getByNumber(int bookTableSelectedIndex) {
-			return Stream.of(BookTableColumn.values()).filter(item -> item.getValue().equals(bookTableSelectedIndex)).findFirst().get();
+			return Stream.of(BookTableColumn.values()).filter(item -> item.getValue().equals(bookTableSelectedIndex))
+					.findFirst().get();
 		}
 	}
 
 	public enum VolumeTableColumn {
-		COL_BOOK_TITLE(0), AUTHOR(1), CATEGORY(2), PUBLISHING_HOUSE(3), COL_BOOK_ISBN_NUMBER(4), COL_INVENTORY_NUMBER(5), COL_BOOK_NUMBER_OF_PAGE(6), COL_BOOK_NUMBER_OF_TOME(7), COL_IS_READING_ROOM(8), COL_IS_RESERVERD(9), COL_IS_LOANED(10);
+		COL_BOOK_TITLE(0), AUTHOR(1), CATEGORY(2), PUBLISHING_HOUSE(3), COL_BOOK_ISBN_NUMBER(4), COL_INVENTORY_NUMBER(
+				5), COL_BOOK_NUMBER_OF_PAGE(
+						6), COL_BOOK_NUMBER_OF_TOME(7), COL_IS_READING_ROOM(8), COL_IS_RESERVERD(9), COL_IS_LOANED(10);
 
 		private final Integer value;
 
@@ -126,12 +135,15 @@ public final class Constans {
 		}
 
 		public static VolumeTableColumn getByNumber(int volumeTableSelectedIndex) {
-			return Stream.of(VolumeTableColumn.values()).filter(item -> item.getValue().equals(volumeTableSelectedIndex)).findFirst().get();
+			return Stream.of(VolumeTableColumn.values())
+					.filter(item -> item.getValue().equals(volumeTableSelectedIndex)).findFirst().get();
 		}
 	}
 
 	public enum LendTableColumn {
-		COL_CLIENT_BASIC_DATA(0), COL_CLIENT_PESEL_NUMBER(1), COL_CLIENT_DOCUMENT_NUMBER(2), COL_VOLUME_BOOK_TITLE(3), COL_VOLUME_BOOK_ISBN_NUMBER(4), COL_VOLUME_INVENTORY_NUMBER(5), COL_LEND_DATE(6), COL_RETURNED_DATE(7), COL_PENALTY(8),LENDED(9);
+		COL_CLIENT_BASIC_DATA(0), COL_CLIENT_PESEL_NUMBER(1), COL_CLIENT_DOCUMENT_NUMBER(2), COL_VOLUME_BOOK_TITLE(
+				3), COL_VOLUME_BOOK_ISBN_NUMBER(4), COL_VOLUME_INVENTORY_NUMBER(
+						5), COL_LEND_DATE(6), COL_RETURNED_DATE(7), COL_PENALTY(8), LENDED(9);
 
 		private final Integer value;
 
@@ -144,10 +156,11 @@ public final class Constans {
 		}
 
 		public static LendTableColumn getByNumber(int lendTableSelectedIndex) {
-			return Stream.of(LendTableColumn.values()).filter(item -> item.getValue().equals(lendTableSelectedIndex)).findFirst().get();
+			return Stream.of(LendTableColumn.values()).filter(item -> item.getValue().equals(lendTableSelectedIndex))
+					.findFirst().get();
 		}
 	}
-	
+
 	public enum AuthorTableColumn {
 		COL_NAME(0), COL_SURNAME(1), COL_BIRTH_DATE(2);
 
@@ -162,7 +175,8 @@ public final class Constans {
 		}
 
 		public static AuthorTableColumn getByNumber(int authorTableSelectedIndex) {
-			return Stream.of(AuthorTableColumn.values()).filter(item -> item.getValue().equals(authorTableSelectedIndex)).findFirst().get();
+			return Stream.of(AuthorTableColumn.values())
+					.filter(item -> item.getValue().equals(authorTableSelectedIndex)).findFirst().get();
 		}
 	}
 
@@ -180,10 +194,11 @@ public final class Constans {
 		}
 
 		public static CategoryTableColumn getByNumber(int categoryTableSelectedIndex) {
-			return Stream.of(CategoryTableColumn.values()).filter(item -> item.getValue().equals(categoryTableSelectedIndex)).findFirst().get();
+			return Stream.of(CategoryTableColumn.values())
+					.filter(item -> item.getValue().equals(categoryTableSelectedIndex)).findFirst().get();
 		}
 	}
-	
+
 	public enum PublishingHouseTableColumn {
 		COL_NAME(0);
 
@@ -198,14 +213,15 @@ public final class Constans {
 		}
 
 		public static PublishingHouseTableColumn getByNumber(int publishingHouseTableSelectedIndex) {
-			return Stream.of(PublishingHouseTableColumn.values()).filter(item -> item.getValue().equals(publishingHouseTableSelectedIndex)).findFirst().get();
+			return Stream.of(PublishingHouseTableColumn.values())
+					.filter(item -> item.getValue().equals(publishingHouseTableSelectedIndex)).findFirst().get();
 		}
 	}
-	
+
 	public enum Role {
 		ADMIN, WORKER_ACCOUNTANT, WORKER_LIBRARIAN, CLIENT;
 	}
-	
+
 	public enum Context {
 		ADDITION, MODIFICATION, CANCELED, LOAN, READING_ROOM;
 	}
@@ -225,7 +241,7 @@ public final class Constans {
 	public static final Integer APPLICATION_GENERATE_PASSWORD_LENGTH = 16;
 	public static final String APPLICATION_EMAIL = "nreply.elibrary@gmail.com";
 	public static final String APPLICATION_EMAIL_PASSWORD = "Admin95!";
-	
+
 	public static final String ROLE_ADMIN = SystemProperties.getInstance().getResourceBundle()
 			.getString("constans.ROLE_ADMIN");
 	public static final String WORKER_ACCOUNTANT = SystemProperties.getInstance().getResourceBundle()
@@ -233,9 +249,8 @@ public final class Constans {
 	public static final String WORKER_LIBRARIAN = SystemProperties.getInstance().getResourceBundle()
 			.getString("constans.WORKER_LIBRARIAN");
 	public static final String CLIENT = SystemProperties.getInstance().getResourceBundle().getString("constans.CLIENT");
-	
+
 	public static final Integer MAX_PROLONGNATION = 5;
-	
 
 	public static final String RADIO_BUTTON_AUTHOR = "Author";
 	public static final String RADIO_BUTTON_CATEGORY = "Category";

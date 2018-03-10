@@ -1,7 +1,6 @@
 package com.javafee.common;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import com.javafee.hibernate.dao.HibernateUtil;
 import com.javafee.hibernate.dto.common.UserData;
@@ -12,6 +11,7 @@ import com.javafee.hibernate.dto.library.PublishingHouse;
 import com.javafee.hibernate.dto.library.Worker;
 
 public final class Validator {
+	@SuppressWarnings("unchecked")
 	public static boolean validateClientUpdate(Client client) {
 		Client existingPeselClient = null;
 		boolean result;
@@ -20,27 +20,23 @@ public final class Validator {
 				.getNamedQuery("Client.checkWithComparingIdIfClientLoginExist").setParameter("login", client.getLogin())
 				.setParameter("id", client.getIdUserData()).uniqueResult();
 		List<UserData> ud = HibernateUtil.getSession().createQuery("from UserData").list();
-		for(UserData u : ud) {
-			if(u.getLogin().equals(client.getLogin()) && u.getIdUserData() != client.getIdUserData())
-					return false;
+		for (UserData u : ud) {
+			if (u.getLogin().equals(client.getLogin()) && u.getIdUserData() != client.getIdUserData())
+				return false;
 		}
 
-		if(existingLoginClient == null ) {
-		if (!"".equals(client.getPeselNumber())) {
-
-			Client test = (Client) HibernateUtil.getSession().getNamedQuery("UserData.checkIfUserDataPeselExist")
-					.setParameter("peselNumber", client.getPeselNumber()).uniqueResult();
-
-			existingPeselClient = (Client) HibernateUtil.getSession()
-					.getNamedQuery("UserData.checkWithComparingIdIfUserDataPeselExist")
-					.setParameter("peselNumber", client.getPeselNumber()).setParameter("id", client.getIdUserData())
-					.uniqueResult();
-			result = client.getPeselNumber() != null && (existingLoginClient != null || existingPeselClient != null)
-					? false
-					: true;
-		} else
-			result = existingLoginClient != null ? false : true;
-		}else {
+		if (existingLoginClient == null) {
+			if (!"".equals(client.getPeselNumber())) {
+				existingPeselClient = (Client) HibernateUtil.getSession()
+						.getNamedQuery("UserData.checkWithComparingIdIfUserDataPeselExist")
+						.setParameter("peselNumber", client.getPeselNumber()).setParameter("id", client.getIdUserData())
+						.uniqueResult();
+				result = client.getPeselNumber() != null && (existingLoginClient != null || existingPeselClient != null)
+						? false
+						: true;
+			} else
+				result = existingLoginClient != null ? false : true;
+		} else {
 			result = false;
 		}
 
@@ -57,7 +53,7 @@ public final class Validator {
 		}
 		return result;
 	}
-	
+
 	public static boolean validateWorkerPesel(String pesel) {
 		boolean result = true;
 		if (!"".equals(pesel)) {
@@ -69,37 +65,7 @@ public final class Validator {
 		return result;
 	}
 
-	// public static boolean validateWorkerPesel(String pesel) {
-	// Worker existingPeselClient = (Worker) HibernateUtil.getSession()
-	// .getNamedQuery("UserData.checkIfUserDataPeselExist")
-	// .setParameter("peselNumber", pesel)
-	// .uniqueResult();
-	// return existingPeselClient != null ? false : true;
-	// }
-
-//	public static boolean validateClientUpdate(Worker client) {
-//		boolean result = true;
-//		if(!"".equals(client.getPeselNumber())) {
-//		Worker existingLoginClient = (Worker) HibernateUtil.getSession()
-//				.getNamedQuery("Worker.checkWithComparingIdIfClientLoginExist").setParameter("login", client.getLogin())
-//				.setParameter("id", client.getIdUserData()).uniqueResult();
-//		Worker existingPeselClient = (Worker) HibernateUtil.getSession()
-//				.getNamedQuery("UserData.checkWithComparingIdIfUserDataPeselExist")
-//				.setParameter("peselNumber", client.getPeselNumber()).setParameter("id", client.getIdUserData())
-//				.uniqueResult();
-//		result = client.getPeselNumber() != null && (existingLoginClient != null || existingPeselClient != null) ? false
-//				: true;
-//		} else {
-//			Worker existingLoginClient = (Worker) HibernateUtil.getSession()
-//					.getNamedQuery("UserData.checkIfUserDataLoginExist").setParameter("login", client.getLogin())
-//					.setParameter("id", client.getIdUserData()).uniqueResult();
-//			if(existingLoginClient != null)
-//				result = false;
-//		}
-//		
-//		return result;
-//	}
-	
+	@SuppressWarnings("unchecked")
 	public static boolean validateClientUpdate(Worker client) {
 		Worker existingPeselClient = null;
 		boolean result;
@@ -107,28 +73,24 @@ public final class Validator {
 		Worker existingLoginClient = (Worker) HibernateUtil.getSession()
 				.getNamedQuery("Worker.checkWithComparingIdIfClientLoginExist").setParameter("login", client.getLogin())
 				.setParameter("id", client.getIdUserData()).uniqueResult();
-		
+
 		List<UserData> ud = HibernateUtil.getSession().createQuery("from UserData").list();
-		for(UserData u : ud) {
-			if(u.getLogin().equals(client.getLogin()) && u.getIdUserData() != client.getIdUserData())
-					return false;
+		for (UserData u : ud) {
+			if (u.getLogin().equals(client.getLogin()) && u.getIdUserData() != client.getIdUserData())
+				return false;
 		}
 
-		if(existingLoginClient == null ) {
-		if (!"".equals(client.getPeselNumber())) {
-
-			Worker test = (Worker) HibernateUtil.getSession().getNamedQuery("UserData.checkIfUserDataPeselExist")
-					.setParameter("peselNumber", client.getPeselNumber()).uniqueResult();
-
-			existingPeselClient = (Worker) HibernateUtil.getSession()
-					.getNamedQuery("UserData.checkWithComparingIdIfUserDataPeselExist")
-					.setParameter("peselNumber", client.getPeselNumber()).setParameter("id", client.getIdUserData())
-					.uniqueResult();
-			result = client.getPeselNumber() != null && (existingLoginClient != null || existingPeselClient != null)
-					? false
-					: true;
-		} else
-			result = existingLoginClient != null ? false : true;
+		if (existingLoginClient == null) {
+			if (!"".equals(client.getPeselNumber())) {
+				existingPeselClient = (Worker) HibernateUtil.getSession()
+						.getNamedQuery("UserData.checkWithComparingIdIfUserDataPeselExist")
+						.setParameter("peselNumber", client.getPeselNumber()).setParameter("id", client.getIdUserData())
+						.uniqueResult();
+				result = client.getPeselNumber() != null && (existingLoginClient != null || existingPeselClient != null)
+						? false
+						: true;
+			} else
+				result = existingLoginClient != null ? false : true;
 		} else {
 			result = false;
 		}

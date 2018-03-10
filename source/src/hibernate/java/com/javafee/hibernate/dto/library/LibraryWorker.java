@@ -10,7 +10,12 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+@Data
 @Entity
+@EqualsAndHashCode(exclude = "pk")
 @NamedQuery(name = "LibraryWorker.checkIfLibraryWorkerHiredExist", query = "from LibraryWorker where pk.worker.idUserData = :idWorker")
 @Table(name = "lib_library_worker")
 @AssociationOverrides({ @AssociationOverride(name = "pk.worker", joinColumns = @JoinColumn(name = "id_worker")),
@@ -46,13 +51,5 @@ public class LibraryWorker {
 
 	public void setLibData(LibraryData libraryData) {
 		getPk().setLibraryData(libraryData);
-	}
-
-	public Boolean getIsAccountant() {
-		return isAccountant;
-	}
-
-	public void setIsAccountant(Boolean isAccountant) {
-		this.isAccountant = isAccountant;
 	}
 }

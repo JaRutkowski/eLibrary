@@ -14,6 +14,9 @@ import javax.persistence.Table;
 
 import com.javafee.hibernate.dto.association.Language;
 
+import lombok.Data;
+
+@Data
 @Entity
 @Table(name = "com_system_properties")
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -30,12 +33,4 @@ public abstract class SystemProperties {
 
 	@Column(name = "font_size", unique = false, nullable = true, insertable = true, updatable = true, length = 2)
 	private Integer fontSize;
-	
-	public Language getLanguage() {
-		return language;
-	}
-	
-	public void setLanguage(Language language) {
-		this.language = language;
-	}
 }

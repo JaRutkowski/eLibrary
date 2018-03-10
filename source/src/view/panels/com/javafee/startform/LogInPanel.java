@@ -1,35 +1,39 @@
 package com.javafee.startform;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
 
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
 
-import javax.swing.border.TitledBorder;
-import javax.swing.UIManager;
-import javax.swing.JButton;
+import lombok.Getter;
 
 public class LogInPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	private JLabel lblLogin;
 	private JLabel lblPassword;
+	@Getter
 	private JTextField textFieldLogin;
+	@Getter
 	private JPasswordField passwordField;
+	@Getter
 	private JButton btnForgotPassword;
 
 	public LogInPanel() {
 		setBackground(Utils.getApplicationColor());
-		setBorder(new TitledBorder(null, SystemProperties.getInstance().getResourceBundle().getString("logInPanel.logInPanelBorderTitle"), TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		setBorder(new TitledBorder(null,
+				SystemProperties.getInstance().getResourceBundle().getString("logInPanel.logInPanelBorderTitle"),
+				TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 124, 0, 0 };
 		gridBagLayout.rowHeights = new int[] { 0, 0, 0, 0 };
@@ -73,8 +77,9 @@ public class LogInPanel extends JPanel {
 		gbc_passwordField.gridx = 1;
 		gbc_passwordField.gridy = 1;
 		add(passwordField, gbc_passwordField);
-		
-		btnForgotPassword = new JButton(SystemProperties.getInstance().getResourceBundle().getString("logInPanel.btnForgotPassword"));
+
+		btnForgotPassword = new JButton(
+				SystemProperties.getInstance().getResourceBundle().getString("logInPanel.btnForgotPassword"));
 		btnForgotPassword.setContentAreaFilled(false);
 		btnForgotPassword.setOpaque(false);
 		btnForgotPassword.setBorderPainted(false);
@@ -85,41 +90,5 @@ public class LogInPanel extends JPanel {
 		gbc_btnForgotPassword.gridx = 1;
 		gbc_btnForgotPassword.gridy = 2;
 		add(btnForgotPassword, gbc_btnForgotPassword);
-	}
-
-	public JLabel getLblLogin() {
-		return lblLogin;
-	}
-
-	public void setLblLogin(JLabel lblLogin) {
-		this.lblLogin = lblLogin;
-	}
-
-	public JLabel getLblPassword() {
-		return lblPassword;
-	}
-
-	public void setLblPassword(JLabel lblPassword) {
-		this.lblPassword = lblPassword;
-	}
-
-	public JTextField getTextFieldLogin() {
-		return textFieldLogin;
-	}
-
-	public void setTextFieldLogin(JTextField textFieldLogin) {
-		this.textFieldLogin = textFieldLogin;
-	}
-
-	public JPasswordField getPasswordField() {
-		return passwordField;
-	}
-
-	public void setPasswordField(JPasswordField passwordField) {
-		this.passwordField = passwordField;
-	}
-	
-	public JButton getBtnForgotPassword() {
-		return btnForgotPassword;
 	}
 }

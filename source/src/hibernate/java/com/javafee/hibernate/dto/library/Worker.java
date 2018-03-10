@@ -16,6 +16,11 @@ import javax.persistence.Table;
 
 import com.javafee.hibernate.dto.common.UserData;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+@Data
+@EqualsAndHashCode(callSuper = false)
 @Entity
 @NamedQueries({ @NamedQuery(name = "Worker.checkIfWorkerLoginExist", query = "from Worker where login = :login"),
 		@NamedQuery(name = "Worker.checkWithComparingIdIfClientLoginExist", query = "from Worker where login = :login and id != :id") })
@@ -27,22 +32,6 @@ public class Worker extends UserData implements Cloneable {
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "pk.worker")
 	private Set<LibraryWorker> libraryWorker = new HashSet<LibraryWorker>(0);
-
-	public Set<LibraryWorker> getLibraryWorker() {
-		return this.libraryWorker;
-	}
-
-	public void setLibraryWorker(Set<LibraryWorker> libraryWorker) {
-		this.libraryWorker = libraryWorker;
-	}
-
-	public BigDecimal getSalary() {
-		return salary;
-	}
-
-	public void setSalary(BigDecimal salary) {
-		this.salary = salary;
-	}
 
 	@Override
 	public Object clone() {

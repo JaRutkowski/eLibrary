@@ -18,27 +18,27 @@ public class Context implements IParam {
 		}
 		return comContext;
 	}
-	
+
 	@Override
 	public void add(String key, Object value) {
 		context.put(key, value);
 	}
-	
+
 	@Override
 	public Object get(String key) {
 		return context.get(key);
 	}
-	
+
 	@Override
 	public boolean contains(String key) {
 		return context.containsKey(key);
 	}
-	
+
 	@Override
 	public void remove(String key) {
 		context.remove(key);
 	}
-	
+
 	@Override
 	public Collection<String> keySet() {
 		return Collections.unmodifiableCollection(context.keySet());

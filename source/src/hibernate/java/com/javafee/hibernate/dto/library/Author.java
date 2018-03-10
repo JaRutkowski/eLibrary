@@ -17,6 +17,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import lombok.Data;
+
+@Data
 @Entity
 @Table(name = "lib_author")
 @SequenceGenerator(name = "seq_lib_author", sequenceName = "seq_lib_author", allocationSize = 1)
@@ -42,54 +45,6 @@ public class Author implements Cloneable {
 	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, mappedBy = "author")
 	private Set<Book> book = new HashSet<Book>(0);
 
-	public Integer getIdAuthor() {
-		return idAuthor;
-	}
-
-	public void setIdAuthor(Integer idAuthor) {
-		this.idAuthor = idAuthor;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getSurname() {
-		return surname;
-	}
-
-	public void setSurname(String surname) {
-		this.surname = surname;
-	}
-
-	public String getNickname() {
-		return nickname;
-	}
-
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
-	}
-
-	public Date getBirthDate() {
-		return birthDate;
-	}
-
-	public void setBirthDate(Date birthDate) {
-		this.birthDate = birthDate;
-	}
-
-	public Set<Book> getBook() {
-		return book;
-	}
-
-	public void setBook(Set<Book> book) {
-		this.book = book;
-	}
-	
 	@Override
 	public Object clone() {
 		Object result = null;
@@ -100,15 +55,15 @@ public class Author implements Cloneable {
 		}
 		return result;
 	}
-	
+
 	@Override
 	public String toString() {
 		String result = "";
-		if(surname != null && name == null)
+		if (surname != null && name == null)
 			result = surname;
-		else if(surname == null && name != null)
+		else if (surname == null && name != null)
 			result = name;
-		else if( surname != null && name != null)
+		else if (surname != null && name != null)
 			result = surname + " " + name;
 		return result;
 	}

@@ -9,11 +9,13 @@ import com.javafee.common.Constans.BookTableColumn;
 import com.javafee.common.SystemProperties;
 import com.javafee.hibernate.dao.HibernateDao;
 import com.javafee.hibernate.dto.library.Book;
-import com.javafee.hibernate.dto.library.Volume;
+
+import lombok.Getter;
 
 public class BookTableModel extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
 
+	@Getter
 	private List<Book> books;
 	private String[] columns;
 
@@ -22,7 +24,8 @@ public class BookTableModel extends AbstractTableModel {
 	public BookTableModel() {
 		super();
 		this.prepareHibernateDao();
-		this.columns = new String[] { SystemProperties.getInstance().getResourceBundle().getString("bookTableModel.titleCol"),
+		this.columns = new String[] {
+				SystemProperties.getInstance().getResourceBundle().getString("bookTableModel.titleCol"),
 				SystemProperties.getInstance().getResourceBundle().getString("bookTableModel.isbnNumberCol"),
 				SystemProperties.getInstance().getResourceBundle().getString("bookTableModel.numberOfPageCol"),
 				SystemProperties.getInstance().getResourceBundle().getString("bookTableModel.numberOfTomesCol") };
@@ -32,29 +35,25 @@ public class BookTableModel extends AbstractTableModel {
 		this.books = books;
 		fireTableDataChanged();
 	}
-	
+
 	public Book getBook(int index) {
 		return books.get(index);
-	}
-	
-	public List<Book> getBooks() {
-		return books;
 	}
 
 	public void setBook(int index, Book book) {
 		books.set(index, book);
 	}
-	
+
 	public void deleteBook(Book book) {
 		books.remove(book);
 	}
 
 	public void add(Book book) {
 		books.add(book);
-		
+
 		this.fireTableDataChanged();
 	}
-	
+
 	public void remove(Book book) {
 		books.remove(book);
 		this.fireTableDataChanged();

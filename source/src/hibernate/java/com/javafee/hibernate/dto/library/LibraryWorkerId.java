@@ -5,6 +5,11 @@ import java.io.Serializable;
 import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+@Data
+@EqualsAndHashCode(exclude = { "worker", "libraryData" })
 @Embeddable
 public class LibraryWorkerId implements Serializable {
 	private static final long serialVersionUID = 9005724542871956989L;
@@ -14,20 +19,4 @@ public class LibraryWorkerId implements Serializable {
 
 	@ManyToOne
 	private LibraryData libraryData;
-
-	public Worker getWorker() {
-		return worker;
-	}
-
-	public void setWorker(Worker worker) {
-		this.worker = worker;
-	}
-
-	public LibraryData getLibraryData() {
-		return libraryData;
-	}
-
-	public void setLibraryData(LibraryData libraryData) {
-		this.libraryData = libraryData;
-	}
 }

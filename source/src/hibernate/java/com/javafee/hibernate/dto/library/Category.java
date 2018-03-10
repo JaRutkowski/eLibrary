@@ -14,6 +14,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import lombok.Data;
+
+@Data
 @Entity
 @Table(name = "lib_category")
 @SequenceGenerator(name = "seq_lib_category", sequenceName = "seq_lib_category", allocationSize = 1)
@@ -29,30 +32,6 @@ public class Category {
 	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, mappedBy = "category")
 	private Set<Book> book = new HashSet<Book>(0);
 
-	public Integer getIdCategory() {
-		return idCategory;
-	}
-
-	public void setIdCategory(Integer idCategory) {
-		this.idCategory = idCategory;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public Set<Book> getBook() {
-		return book;
-	}
-
-	public void setBook(Set<Book> book) {
-		this.book = book;
-	}
-	
 	@Override
 	public String toString() {
 		return this.name;

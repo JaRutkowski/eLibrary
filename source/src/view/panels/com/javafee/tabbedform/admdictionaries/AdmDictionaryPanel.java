@@ -20,25 +20,41 @@ import com.javafee.hibernate.dto.library.PublishingHouse;
 import com.javafee.uniform.CockpitEditionPanel;
 import com.toedter.calendar.JDateChooser;
 
+import lombok.Getter;
+
 public class AdmDictionaryPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
+	@Getter
 	private CockpitEditionPanel cockpitEditionPanel;
 
+	@Getter
 	private JTextField textFieldAuthorName;
+	@Getter
 	private JTextField textFieldAuthorNickname;
+	@Getter
 	private JTextField textFieldAuthorSurname;
+	@Getter
 	private JTextField textFieldCategoryName;
+	@Getter
 	private JTextField textFieldPublishingHouseName;
 
+	@Getter
 	private JDateChooser dateChooserBirthDate;
 
+	@Getter
 	private JRadioButton radioButtonAuthor;
+	@Getter
 	private JRadioButton radioButtonCategory;
+	@Getter
 	private JRadioButton radioButtonPublishingHouse;
+	@Getter
 	private ButtonGroup groupRadioButtonChoice;
 
+	@Getter
 	private JComboBox<Author> comboBoxAuthor;
+	@Getter
 	private JComboBox<Category> comboBoxCategory;
+	@Getter
 	private JComboBox<PublishingHouse> comboBoxPublishingHouse;
 
 	public AdmDictionaryPanel() {
@@ -50,7 +66,8 @@ public class AdmDictionaryPanel extends JPanel {
 		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
 
-		JLabel lblAuthor = new JLabel(SystemProperties.getInstance().getResourceBundle().getString("bookFilterPanel.lblAuthor"));
+		JLabel lblAuthor = new JLabel(
+				SystemProperties.getInstance().getResourceBundle().getString("bookFilterPanel.lblAuthor"));
 		GridBagConstraints gbc_lblAuthor = new GridBagConstraints();
 		gbc_lblAuthor.gridwidth = 2;
 		gbc_lblAuthor.insets = new Insets(0, 0, 5, 5);
@@ -58,7 +75,8 @@ public class AdmDictionaryPanel extends JPanel {
 		gbc_lblAuthor.gridy = 0;
 		add(lblAuthor, gbc_lblAuthor);
 
-		JLabel lblCategory = new JLabel(SystemProperties.getInstance().getResourceBundle().getString("bookFilterPanel.lblCategory"));
+		JLabel lblCategory = new JLabel(
+				SystemProperties.getInstance().getResourceBundle().getString("bookFilterPanel.lblCategory"));
 		GridBagConstraints gbc_lblCategory = new GridBagConstraints();
 		gbc_lblCategory.gridwidth = 2;
 		gbc_lblCategory.insets = new Insets(0, 0, 5, 5);
@@ -66,7 +84,8 @@ public class AdmDictionaryPanel extends JPanel {
 		gbc_lblCategory.gridy = 0;
 		add(lblCategory, gbc_lblCategory);
 
-		JLabel lblPublishingHouse = new JLabel(SystemProperties.getInstance().getResourceBundle().getString("bookFilterPanel.lblPublishingHouse"));
+		JLabel lblPublishingHouse = new JLabel(
+				SystemProperties.getInstance().getResourceBundle().getString("bookFilterPanel.lblPublishingHouse"));
 		GridBagConstraints gbc_lblPublishingHouse = new GridBagConstraints();
 		gbc_lblPublishingHouse.gridwidth = 2;
 		gbc_lblPublishingHouse.insets = new Insets(0, 0, 5, 0);
@@ -101,7 +120,8 @@ public class AdmDictionaryPanel extends JPanel {
 		gbc_comboBoxPublishingHouse.gridy = 1;
 		add(comboBoxPublishingHouse, gbc_comboBoxPublishingHouse);
 
-		JLabel lblAuthorName = new JLabel(SystemProperties.getInstance().getResourceBundle().getString("admDictionaryPanel.lblAuthorName"));
+		JLabel lblAuthorName = new JLabel(
+				SystemProperties.getInstance().getResourceBundle().getString("admDictionaryPanel.lblAuthorName"));
 		GridBagConstraints gbc_lblAuthorName = new GridBagConstraints();
 		gbc_lblAuthorName.anchor = GridBagConstraints.WEST;
 		gbc_lblAuthorName.insets = new Insets(0, 0, 5, 5);
@@ -118,7 +138,8 @@ public class AdmDictionaryPanel extends JPanel {
 		add(textFieldAuthorName, gbc_textFieldAuthorName);
 		textFieldAuthorName.setColumns(10);
 
-		JLabel lblCategoryName = new JLabel(SystemProperties.getInstance().getResourceBundle().getString("admDictionaryPanel.lblCategoryName"));
+		JLabel lblCategoryName = new JLabel(
+				SystemProperties.getInstance().getResourceBundle().getString("admDictionaryPanel.lblCategoryName"));
 		GridBagConstraints gbc_lblCategoryName = new GridBagConstraints();
 		gbc_lblCategoryName.anchor = GridBagConstraints.WEST;
 		gbc_lblCategoryName.insets = new Insets(0, 0, 5, 5);
@@ -136,7 +157,8 @@ public class AdmDictionaryPanel extends JPanel {
 		add(textFieldCategoryName, gbc_textFieldCategoryName);
 		textFieldCategoryName.setColumns(10);
 
-		JLabel lblPublishingHouseName = new JLabel(SystemProperties.getInstance().getResourceBundle().getString("admDictionaryPanel.lblPublishingHouseName"));
+		JLabel lblPublishingHouseName = new JLabel(SystemProperties.getInstance().getResourceBundle()
+				.getString("admDictionaryPanel.lblPublishingHouseName"));
 		GridBagConstraints gbc_lblPublishingHouseName = new GridBagConstraints();
 		gbc_lblPublishingHouseName.anchor = GridBagConstraints.WEST;
 		gbc_lblPublishingHouseName.insets = new Insets(0, 0, 5, 5);
@@ -154,7 +176,8 @@ public class AdmDictionaryPanel extends JPanel {
 		add(textFieldPublishingHouseName, gbc_textFieldPublishingHouseName);
 		textFieldPublishingHouseName.setColumns(10);
 
-		JLabel lblAuthorNickname = new JLabel(SystemProperties.getInstance().getResourceBundle().getString("admDictionaryPanel.lblAuthorNickname"));
+		JLabel lblAuthorNickname = new JLabel(
+				SystemProperties.getInstance().getResourceBundle().getString("admDictionaryPanel.lblAuthorNickname"));
 		GridBagConstraints gbc_lblAuthorNickname = new GridBagConstraints();
 		gbc_lblAuthorNickname.anchor = GridBagConstraints.WEST;
 		gbc_lblAuthorNickname.insets = new Insets(0, 0, 5, 5);
@@ -171,7 +194,8 @@ public class AdmDictionaryPanel extends JPanel {
 		add(textFieldAuthorNickname, gbc_textFieldAuthorNickname);
 		textFieldAuthorNickname.setColumns(10);
 
-		JLabel lblAuthorSurname = new JLabel(SystemProperties.getInstance().getResourceBundle().getString("admDictionaryPanel.lblAuthorSurname"));
+		JLabel lblAuthorSurname = new JLabel(
+				SystemProperties.getInstance().getResourceBundle().getString("admDictionaryPanel.lblAuthorSurname"));
 		GridBagConstraints gbc_lblAuthorSurname = new GridBagConstraints();
 		gbc_lblAuthorSurname.anchor = GridBagConstraints.WEST;
 		gbc_lblAuthorSurname.insets = new Insets(0, 0, 5, 5);
@@ -188,7 +212,8 @@ public class AdmDictionaryPanel extends JPanel {
 		add(textFieldAuthorSurname, gbc_textFieldAuthorSurname);
 		textFieldAuthorSurname.setColumns(10);
 
-		JLabel lblAuthorBirthDate = new JLabel(SystemProperties.getInstance().getResourceBundle().getString("admDictionaryPanel.lblAuthorBirthDate"));
+		JLabel lblAuthorBirthDate = new JLabel(
+				SystemProperties.getInstance().getResourceBundle().getString("admDictionaryPanel.lblAuthorBirthDate"));
 		GridBagConstraints gbc_lblAuthorBirthDate = new GridBagConstraints();
 		gbc_lblAuthorBirthDate.anchor = GridBagConstraints.WEST;
 		gbc_lblAuthorBirthDate.insets = new Insets(0, 0, 5, 5);
@@ -250,61 +275,5 @@ public class AdmDictionaryPanel extends JPanel {
 		gbc_cockpitEditionPanel.gridx = 2;
 		gbc_cockpitEditionPanel.gridy = 7;
 		add(cockpitEditionPanel, gbc_cockpitEditionPanel);
-	}
-
-	public CockpitEditionPanel getCockpitEditionPanel() {
-		return cockpitEditionPanel;
-	}
-
-	public JTextField getTextFieldAuthorName() {
-		return textFieldAuthorName;
-	}
-
-	public JTextField getTextFieldAuthorNickname() {
-		return textFieldAuthorNickname;
-	}
-
-	public JTextField getTextFieldAuthorSurname() {
-		return textFieldAuthorSurname;
-	}
-
-	public JTextField getTextFieldCategoryName() {
-		return textFieldCategoryName;
-	}
-
-	public JTextField getTextFieldPublishingHouseName() {
-		return textFieldPublishingHouseName;
-	}
-
-	public JRadioButton getRadioButtonAuthor() {
-		return radioButtonAuthor;
-	}
-
-	public JRadioButton getRadioButtonCategory() {
-		return radioButtonCategory;
-	}
-
-	public JRadioButton getRadioButtonPublishingHouse() {
-		return radioButtonPublishingHouse;
-	}
-
-	public ButtonGroup getGroupRadioButtonChoice() {
-		return groupRadioButtonChoice;
-	}
-
-	public JDateChooser getDateChooserBirthDate() {
-		return dateChooserBirthDate;
-	}
-
-	public JComboBox<Author> getComboBoxAuthor() {
-		return comboBoxAuthor;
-	}
-
-	public JComboBox<Category> getComboBoxCategory() {
-		return comboBoxCategory;
-	}
-
-	public JComboBox<PublishingHouse> getComboBoxPublishingHouse() {
-		return comboBoxPublishingHouse;
 	}
 }

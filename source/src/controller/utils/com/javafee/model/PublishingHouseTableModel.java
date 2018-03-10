@@ -11,16 +11,20 @@ import com.javafee.hibernate.dao.HibernateDao;
 import com.javafee.hibernate.dao.HibernateUtil;
 import com.javafee.hibernate.dto.library.PublishingHouse;
 
+import lombok.Getter;
+
 public class PublishingHouseTableModel extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
 
+	@Getter
 	protected List<PublishingHouse> publishingHouses;
 	private String[] columns;
 
 	public PublishingHouseTableModel() {
 		super();
 		this.prepareHibernateDao();
-		this.columns = new String[] { SystemProperties.getInstance().getResourceBundle().getString("publishingHouseTableModel.publishingHouseNameCol")};
+		this.columns = new String[] { SystemProperties.getInstance().getResourceBundle()
+				.getString("publishingHouseTableModel.publishingHouseNameCol") };
 	}
 
 	public PublishingHouse getPublishingHouse(int index) {
@@ -29,10 +33,6 @@ public class PublishingHouseTableModel extends AbstractTableModel {
 
 	public void setPublishingHouse(int index, PublishingHouse PublishingHouse) {
 		publishingHouses.set(index, PublishingHouse);
-	}
-	
-	public List<PublishingHouse> getPublishingHouses() {
-		return publishingHouses;
 	}
 
 	public void add(PublishingHouse PublishingHouse) {
@@ -46,7 +46,7 @@ public class PublishingHouseTableModel extends AbstractTableModel {
 	}
 
 	protected void prepareHibernateDao() {
-		this.publishingHouses =  new HibernateDao<PublishingHouse, Integer>(PublishingHouse.class).findAll();
+		this.publishingHouses = new HibernateDao<PublishingHouse, Integer>(PublishingHouse.class).findAll();
 	}
 
 	@SuppressWarnings("unused")
@@ -76,23 +76,6 @@ public class PublishingHouseTableModel extends AbstractTableModel {
 			return null;
 		}
 	}
-
-	// @Override
-	// public void setValueAt(Object value, int row, int col) {
-	// PublishingHouse PublishingHouse = PublishingHouses.get(row);
-	// PublishingHouse PublishingHouseShallowClone = (PublishingHouse) PublishingHouse.clone();
-	//
-	// switch (PublishingHouseTableColumn.getByNumber(col)) {
-	// case COL_BOOK:
-	// PublishingHouseShallowClone.setBook((Book) value);
-	// break;
-	// case COL_IS_READING_ROOM:
-	// PublishingHouseShallowClone.setIsReadingRoom((Boolean) value);
-	// break;
-	// }
-	//
-	// this.fireTableRowsUpdated(row, row);
-	// }
 
 	@Override
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {

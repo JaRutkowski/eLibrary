@@ -12,9 +12,12 @@ import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
 import com.javafee.startform.RegistrationPanel;
 
+import lombok.Getter;
+
 public class NavigationPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
+	@Getter
 	private JButton btnBack;
 
 	public NavigationPanel() {
@@ -27,15 +30,12 @@ public class NavigationPanel extends JPanel {
 		setLayout(gridBagLayout);
 
 		btnBack = new JButton(SystemProperties.getInstance().getResourceBundle().getString("navigationPanel.btnBack"));
-		btnBack.setIcon(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnBack-ico.png")).getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
+		btnBack.setIcon(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnBack-ico.png"))
+				.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
 		GridBagConstraints gbc_btnBack = new GridBagConstraints();
 		gbc_btnBack.anchor = GridBagConstraints.NORTHWEST;
 		gbc_btnBack.gridx = 0;
 		gbc_btnBack.gridy = 0;
 		add(btnBack, gbc_btnBack);
-	}
-
-	public JButton getBtnBack() {
-		return btnBack;
 	}
 }

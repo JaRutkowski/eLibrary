@@ -1,12 +1,7 @@
 package com.javafee.model;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.AbstractTableModel;
@@ -34,8 +29,7 @@ public class LoanReservationTableModel extends AbstractTableModel {
 				SystemProperties.getInstance().getResourceBundle().getString("loanTableModel.volumeBookIsbnNumberCol"),
 				SystemProperties.getInstance().getResourceBundle().getString("loanTableModel.volumeInventoryNumberCol"),
 				SystemProperties.getInstance().getResourceBundle().getString("loanTableModel.lendDateCol"),
-				SystemProperties.getInstance().getResourceBundle().getString("loanTableModel.returnDateCol")
-				};
+				SystemProperties.getInstance().getResourceBundle().getString("loanTableModel.returnDateCol") };
 	}
 
 	public Lend getLend(int index) {
@@ -60,9 +54,9 @@ public class LoanReservationTableModel extends AbstractTableModel {
 	private void prepareHibernateDao() {
 		this.lends = new ArrayList<Lend>();
 		List<Lend> lends = HibernateUtil.getSession().createQuery("from Lend as len join fetch len.volume").list();
-		
+
 		lends.forEach(l -> {
-			if(l.getVolume().getIsLended() && l.getVolume().getIsReserve())
+			if (l.getVolume().getIsLended() && l.getVolume().getIsReserve())
 				this.lends.add(l);
 		});
 	}
@@ -83,7 +77,7 @@ public class LoanReservationTableModel extends AbstractTableModel {
 	public int getRowCount() {
 		return lends.size();
 	}
-	
+
 	public void reloadData() {
 		this.prepareHibernateDao();
 		this.fireTableDataChanged();

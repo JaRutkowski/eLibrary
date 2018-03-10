@@ -8,6 +8,9 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import lombok.Data;
+
+@Data
 @Entity
 @Table(name = "com_language")
 @SequenceGenerator(name = "seq_com_language", sequenceName = "seq_com_language", allocationSize = 1)
@@ -19,20 +22,4 @@ public class Language {
 
 	@Column(name = "name", unique = false, nullable = true, insertable = true, updatable = true, length = 200)
 	private String name;
-
-	public String getName() {
-		return name;
-	}
-	
-	public void setName(String name) {
-		this.name = name;
-	}	
-
-	public Integer getIdLanguage() {
-		return idLanguage;
-	}
-
-	public void setIdLanguage(Integer idLanguage) {
-		this.idLanguage = idLanguage;
-	}
 }

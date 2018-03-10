@@ -14,13 +14,17 @@ import com.javafee.model.ClientTableModel;
 import com.javafee.uniform.AdmIsRegisteredPanel;
 import com.javafee.uniform.CockpitEditionPanel;
 
+import lombok.Getter;
 import net.coderazzi.filters.gui.TableFilterHeader;
 
 public class ClientTablePanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
+	@Getter
 	private JTable clientTable;
+	@Getter
 	private CockpitEditionPanel cockpitEditionPanel;
+	@Getter
 	private AdmIsRegisteredPanel admIsRegisteredPanel;
 
 	public ClientTablePanel() {
@@ -48,16 +52,16 @@ public class ClientTablePanel extends JPanel {
 		clientTable.setModel(new ClientTableModel());
 		clientTable.setAutoCreateRowSorter(true);
 		scrollPane.setViewportView(clientTable);
-		
-				admIsRegisteredPanel = new AdmIsRegisteredPanel();
-				admIsRegisteredPanel.setEnabled(false);
-				admIsRegisteredPanel.setVisible(false);
-				GridBagConstraints gbc_admIsRegisteredPanel = new GridBagConstraints();
-				gbc_admIsRegisteredPanel.insets = new Insets(0, 0, 5, 0);
-				gbc_admIsRegisteredPanel.fill = GridBagConstraints.BOTH;
-				gbc_admIsRegisteredPanel.gridx = 0;
-				gbc_admIsRegisteredPanel.gridy = 1;
-				add(admIsRegisteredPanel, gbc_admIsRegisteredPanel);
+
+		admIsRegisteredPanel = new AdmIsRegisteredPanel();
+		admIsRegisteredPanel.setEnabled(false);
+		admIsRegisteredPanel.setVisible(false);
+		GridBagConstraints gbc_admIsRegisteredPanel = new GridBagConstraints();
+		gbc_admIsRegisteredPanel.insets = new Insets(0, 0, 5, 0);
+		gbc_admIsRegisteredPanel.fill = GridBagConstraints.BOTH;
+		gbc_admIsRegisteredPanel.gridx = 0;
+		gbc_admIsRegisteredPanel.gridy = 1;
+		add(admIsRegisteredPanel, gbc_admIsRegisteredPanel);
 
 		cockpitEditionPanel = new CockpitEditionPanel();
 		GridBagConstraints gbc_panel = new GridBagConstraints();
@@ -67,21 +71,5 @@ public class ClientTablePanel extends JPanel {
 		gbc_panel.gridx = 0;
 		gbc_panel.gridy = 2;
 		add(cockpitEditionPanel, gbc_panel);
-	}
-
-	public JTable getClientTable() {
-		return clientTable;
-	}
-
-	public void setClientTable(JTable clientTable) {
-		this.clientTable = clientTable;
-	}
-
-	public CockpitEditionPanel getCockpitEditionPanel() {
-		return cockpitEditionPanel;
-	}
-
-	public AdmIsRegisteredPanel getAdmIsRegisteredPanel() {
-		return admIsRegisteredPanel;
 	}
 }

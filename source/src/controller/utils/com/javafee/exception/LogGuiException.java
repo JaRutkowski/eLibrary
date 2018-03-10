@@ -12,7 +12,7 @@ public class LogGuiException {
 		LogGuiException.createErrorJOptionPane(title, message);
 		logger.error(message, t);
 	}
-	
+
 	public static void logWarning(String title, Object message) {
 		LogGuiException.createWarningJOptionPane(title, message);
 		logger.warn(message);
@@ -25,7 +25,7 @@ public class LogGuiException {
 		JDialog dialog = optionPane.createDialog(null, title);
 		dialog.setVisible(true);
 	}
-	
+
 	private static void createWarningJOptionPane(String title, Object message) {
 		JOptionPane optionPane = new JOptionPane();
 		optionPane.setMessage("<html>" + message + "</html>");

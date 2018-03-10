@@ -13,12 +13,15 @@ import com.javafee.common.Utils;
 import com.javafee.model.BookTableModel;
 import com.javafee.uniform.CockpitEditionPanel;
 
+import lombok.Getter;
 import net.coderazzi.filters.gui.TableFilterHeader;
 
 public class BookTablePanel extends JPanel {
 	private static final long serialVersionUID = 1L;
-	
+
+	@Getter
 	private JTable bookTable;
+	@Getter
 	private CockpitEditionPanel cockpitEditionPanelBook;
 
 	public BookTablePanel() {
@@ -29,7 +32,7 @@ public class BookTablePanel extends JPanel {
 		gridBagLayout.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
 		gridBagLayout.rowWeights = new double[] { 1.0, 1.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.insets = new Insets(0, 0, 5, 0);
@@ -37,7 +40,7 @@ public class BookTablePanel extends JPanel {
 		gbc_scrollPane.gridx = 0;
 		gbc_scrollPane.gridy = 0;
 		add(scrollPane, gbc_scrollPane);
-		
+
 		bookTable = new JTable();
 		@SuppressWarnings("unused")
 		TableFilterHeader tableFilterHeader = new TableFilterHeader(bookTable);
@@ -46,7 +49,7 @@ public class BookTablePanel extends JPanel {
 		bookTable.setModel(new BookTableModel());
 		bookTable.setAutoCreateRowSorter(true);
 		scrollPane.setViewportView(bookTable);
-		
+
 		cockpitEditionPanelBook = new CockpitEditionPanel();
 		GridBagConstraints gbc_panel = new GridBagConstraints();
 		gbc_panel.anchor = GridBagConstraints.WEST;
@@ -54,13 +57,5 @@ public class BookTablePanel extends JPanel {
 		gbc_panel.gridx = 0;
 		gbc_panel.gridy = 1;
 		add(cockpitEditionPanelBook, gbc_panel);
-	}
-	
-	public JTable getBookTable() {
-		return bookTable;
-	}
-	
-	public CockpitEditionPanel getCockpitEditionPanelBook() {
-		return cockpitEditionPanelBook;
 	}
 }
