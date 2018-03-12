@@ -138,7 +138,7 @@ public class TabLibraryEvent implements IActionForm {
 						.getReadingRoomVolumeTable().getModel()).getVolume(selectedRowIndex);
 				Volume volumeShallowClone = (Volume) selectedVolume.clone();
 
-				Params.getInstance().add("selectedVolumeShallowClone", volumeShallowClone);
+				Params.getInstance().add("selectedVolume", volumeShallowClone);
 				Params.getInstance().add("selectedRowIndex", selectedRowIndex);
 
 				if (libraryAddModEvent == null)
@@ -168,7 +168,7 @@ public class TabLibraryEvent implements IActionForm {
 
 				if (!selectedVolume.getIsLended() && !selectedVolume.getIsReserve()) {
 
-					Params.getInstance().add("selectedVolumeShallowClone", volumeShallowClone);
+					Params.getInstance().add("selectedVolume", volumeShallowClone);
 					Params.getInstance().add("selectedRowIndex", selectedRowIndex);
 
 					if (libraryAddModEvent == null)

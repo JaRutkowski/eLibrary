@@ -64,7 +64,7 @@ public class WorkerAddModEvent {
 			@Override
 			public void windowClosed(WindowEvent e) {
 				Params.getInstance().remove("selectedRowIndex");
-				Params.getInstance().remove("selectedWorkerShallowClone");
+				Params.getInstance().remove("selectedWorker");
 			}
 
 			@Override
@@ -86,7 +86,7 @@ public class WorkerAddModEvent {
 	}
 
 	private void modificateClient() {
-		Worker workerShallowClone = (Worker) Params.getInstance().get("selectedWorkerShallowClone");
+		Worker workerShallowClone = (Worker) Params.getInstance().get("selectedWorker");
 
 		workerShallowClone.setPeselNumber(workerAddModFrame.getWorkerDataPanel().getTextFieldPeselNumber().getText());
 		workerShallowClone
@@ -130,7 +130,7 @@ public class WorkerAddModEvent {
 						SystemProperties.getInstance().getResourceBundle().getString(
 								"workerAddModEvent.updatingWorkerSuccessTitle"),
 						JOptionPane.INFORMATION_MESSAGE);
-				Params.getInstance().remove("selectedWorkerShallowClone");
+				Params.getInstance().remove("selectedWorker");
 				Params.getInstance().remove("selectedRowIndex");
 				workerAddModFrame.dispose();
 			} else {
@@ -176,62 +176,62 @@ public class WorkerAddModEvent {
 
 	private void fillRegistrationPanel() {
 		workerAddModFrame.getWorkerDataPanel().getTextFieldPeselNumber()
-				.setText(((Worker) Params.getInstance().get("selectedWorkerShallowClone")).getPeselNumber() != null
-						? ((Worker) Params.getInstance().get("selectedWorkerShallowClone")).getPeselNumber().toString()
+				.setText(((Worker) Params.getInstance().get("selectedWorker")).getPeselNumber() != null
+						? ((Worker) Params.getInstance().get("selectedWorker")).getPeselNumber().toString()
 						: "");
 
 		workerAddModFrame.getWorkerDataPanel().getTextFieldDocumentNumber()
-				.setText(((Worker) Params.getInstance().get("selectedWorkerShallowClone")).getDocumentNumber() != null
-						? ((Worker) Params.getInstance().get("selectedWorkerShallowClone")).getDocumentNumber()
+				.setText(((Worker) Params.getInstance().get("selectedWorker")).getDocumentNumber() != null
+						? ((Worker) Params.getInstance().get("selectedWorker")).getDocumentNumber()
 								.toString()
 						: "");
 
 		workerAddModFrame.getWorkerDataPanel().getTextFieldLogin()
-				.setText(((Worker) Params.getInstance().get("selectedWorkerShallowClone")).getLogin() != null
-						? ((Worker) Params.getInstance().get("selectedWorkerShallowClone")).getLogin().toString()
+				.setText(((Worker) Params.getInstance().get("selectedWorker")).getLogin() != null
+						? ((Worker) Params.getInstance().get("selectedWorker")).getLogin().toString()
 						: "");
 
 		workerAddModFrame.getWorkerDataPanel().getTextFieldEMail()
-				.setText(((Worker) Params.getInstance().get("selectedWorkerShallowClone")).getEMail() != null
-						? ((Worker) Params.getInstance().get("selectedWorkerShallowClone")).getEMail().toString()
+				.setText(((Worker) Params.getInstance().get("selectedWorker")).getEMail() != null
+						? ((Worker) Params.getInstance().get("selectedWorker")).getEMail().toString()
 						: "");
 
 		workerAddModFrame.getWorkerDataPanel().getTextFieldName()
-				.setText(((Worker) Params.getInstance().get("selectedWorkerShallowClone")).getName() != null
-						? ((Worker) Params.getInstance().get("selectedWorkerShallowClone")).getName().toString()
+				.setText(((Worker) Params.getInstance().get("selectedWorker")).getName() != null
+						? ((Worker) Params.getInstance().get("selectedWorker")).getName().toString()
 						: "");
 
 		workerAddModFrame.getWorkerDataPanel().getTextFieldSurname()
-				.setText(((Worker) Params.getInstance().get("selectedWorkerShallowClone")).getSurname() != null
-						? ((Worker) Params.getInstance().get("selectedWorkerShallowClone")).getSurname().toString()
+				.setText(((Worker) Params.getInstance().get("selectedWorker")).getSurname() != null
+						? ((Worker) Params.getInstance().get("selectedWorker")).getSurname().toString()
 						: "");
 
 		workerAddModFrame.getWorkerDataPanel().getTextFieldAddress()
-				.setText(((Worker) Params.getInstance().get("selectedWorkerShallowClone")).getAddress() != null
-						? ((Worker) Params.getInstance().get("selectedWorkerShallowClone")).getAddress().toString()
+				.setText(((Worker) Params.getInstance().get("selectedWorker")).getAddress() != null
+						? ((Worker) Params.getInstance().get("selectedWorker")).getAddress().toString()
 						: "");
 
 		workerAddModFrame.getWorkerDataPanel().getComboBoxCity().getModel()
-				.setSelectedItem(((Worker) Params.getInstance().get("selectedWorkerShallowClone")).getCity() != null
-						? ((Worker) Params.getInstance().get("selectedWorkerShallowClone")).getCity()
+				.setSelectedItem(((Worker) Params.getInstance().get("selectedWorker")).getCity() != null
+						? ((Worker) Params.getInstance().get("selectedWorker")).getCity()
 						: null);
 
-		if (((Worker) Params.getInstance().get("selectedWorkerShallowClone")).getSex() != null
+		if (((Worker) Params.getInstance().get("selectedWorker")).getSex() != null
 				&& Constans.DATA_BASE_MALE_SIGN.toString()
-						.equals(((Worker) Params.getInstance().get("selectedWorkerShallowClone")).getSex().toString()))
+						.equals(((Worker) Params.getInstance().get("selectedWorker")).getSex().toString()))
 			workerAddModFrame.getWorkerDataPanel().getGroupRadioButtonSex()
 					.setSelected(workerAddModFrame.getWorkerDataPanel().getRadioButtonMale().getModel(), true);
-		else if (((Worker) Params.getInstance().get("selectedWorkerShallowClone")).getSex() != null
+		else if (((Worker) Params.getInstance().get("selectedWorker")).getSex() != null
 				&& Constans.DATA_BASE_FEMALE_SIGN.toString()
-						.equals(((Worker) Params.getInstance().get("selectedWorkerShallowClone")).getSex().toString()))
+						.equals(((Worker) Params.getInstance().get("selectedWorker")).getSex().toString()))
 			workerAddModFrame.getWorkerDataPanel().getGroupRadioButtonSex()
 					.setSelected(workerAddModFrame.getWorkerDataPanel().getRadioButtonFemale().getModel(), true);
 
 		try {
 			workerAddModFrame.getWorkerDataPanel().getDateChooserBirthDate()
-					.setDate(((Worker) Params.getInstance().get("selectedWorkerShallowClone")).getBirthDate() != null
+					.setDate(((Worker) Params.getInstance().get("selectedWorker")).getBirthDate() != null
 							? Constans.APPLICATION_DATE_FORMAT.parse(Constans.APPLICATION_DATE_FORMAT.format(
-									((Worker) Params.getInstance().get("selectedWorkerShallowClone")).getBirthDate()))
+									((Worker) Params.getInstance().get("selectedWorker")).getBirthDate()))
 							: null);
 		} catch (ParseException e) {
 			e.printStackTrace();

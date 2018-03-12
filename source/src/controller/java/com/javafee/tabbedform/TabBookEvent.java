@@ -62,9 +62,8 @@ public class TabBookEvent implements IActionForm {
 			if (selectedRowIndex != -1) {
 				Book selectedBook = ((BookTableModel) tabbedForm.getPanelBook().getBookTable().getModel())
 						.getBook(selectedRowIndex);
-				Book bookShallowClone = (Book) selectedBook.clone();
 
-				Params.getInstance().add("selectedBookShallowClone", bookShallowClone);
+				Params.getInstance().add("selectedBook", selectedBook);
 				Params.getInstance().add("selectedRowIndex", selectedRowIndex);
 
 				if (bookAddModEvent == null)
