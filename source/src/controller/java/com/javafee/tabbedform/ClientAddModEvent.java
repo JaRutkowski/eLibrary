@@ -65,7 +65,7 @@ public class ClientAddModEvent {
 			@Override
 			public void windowClosed(WindowEvent e) {
 				Params.getInstance().remove("selectedRowIndex");
-				Params.getInstance().remove("selectedClientShallowClone");
+				Params.getInstance().remove("selectedClient");
 			}
 
 			@Override
@@ -87,7 +87,7 @@ public class ClientAddModEvent {
 	}
 
 	private void modificateClient() {
-		Client clientShallowClone = (Client) Params.getInstance().get("selectedClientShallowClone");
+		Client clientShallowClone = (Client) Params.getInstance().get("selectedClient");
 
 		clientShallowClone.setPeselNumber(clientAddModFrame.getClientDataPanel().getTextFieldPeselNumber().getText());
 		clientShallowClone
@@ -134,7 +134,7 @@ public class ClientAddModEvent {
 								"clientAddModEvent.updatingClientSuccessTitle"),
 						JOptionPane.INFORMATION_MESSAGE);
 
-				Params.getInstance().remove("selectedClientShallowClone");
+				Params.getInstance().remove("selectedClient");
 				Params.getInstance().remove("selectedRowIndex");
 
 				clientAddModFrame.dispose();
@@ -181,62 +181,62 @@ public class ClientAddModEvent {
 
 	private void fillRegistrationPanel() {
 		clientAddModFrame.getClientDataPanel().getTextFieldPeselNumber()
-				.setText(((Client) Params.getInstance().get("selectedClientShallowClone")).getPeselNumber() != null
-						? ((Client) Params.getInstance().get("selectedClientShallowClone")).getPeselNumber().toString()
+				.setText(((Client) Params.getInstance().get("selectedClient")).getPeselNumber() != null
+						? ((Client) Params.getInstance().get("selectedClient")).getPeselNumber().toString()
 						: "");
 
 		clientAddModFrame.getClientDataPanel().getTextFieldDocumentNumber()
-				.setText(((Client) Params.getInstance().get("selectedClientShallowClone")).getDocumentNumber() != null
-						? ((Client) Params.getInstance().get("selectedClientShallowClone")).getDocumentNumber()
+				.setText(((Client) Params.getInstance().get("selectedClient")).getDocumentNumber() != null
+						? ((Client) Params.getInstance().get("selectedClient")).getDocumentNumber()
 								.toString()
 						: "");
 
 		clientAddModFrame.getClientDataPanel().getTextFieldLogin()
-				.setText(((Client) Params.getInstance().get("selectedClientShallowClone")).getLogin() != null
-						? ((Client) Params.getInstance().get("selectedClientShallowClone")).getLogin().toString()
+				.setText(((Client) Params.getInstance().get("selectedClient")).getLogin() != null
+						? ((Client) Params.getInstance().get("selectedClient")).getLogin().toString()
 						: "");
 
 		clientAddModFrame.getClientDataPanel().getTextFieldEMail()
-				.setText(((Client) Params.getInstance().get("selectedClientShallowClone")).getEMail() != null
-						? ((Client) Params.getInstance().get("selectedClientShallowClone")).getEMail().toString()
+				.setText(((Client) Params.getInstance().get("selectedClient")).getEMail() != null
+						? ((Client) Params.getInstance().get("selectedClient")).getEMail().toString()
 						: "");
 
 		clientAddModFrame.getClientDataPanel().getTextFieldName()
-				.setText(((Client) Params.getInstance().get("selectedClientShallowClone")).getName() != null
-						? ((Client) Params.getInstance().get("selectedClientShallowClone")).getName().toString()
+				.setText(((Client) Params.getInstance().get("selectedClient")).getName() != null
+						? ((Client) Params.getInstance().get("selectedClient")).getName().toString()
 						: "");
 
 		clientAddModFrame.getClientDataPanel().getTextFieldSurname()
-				.setText(((Client) Params.getInstance().get("selectedClientShallowClone")).getSurname() != null
-						? ((Client) Params.getInstance().get("selectedClientShallowClone")).getSurname().toString()
+				.setText(((Client) Params.getInstance().get("selectedClient")).getSurname() != null
+						? ((Client) Params.getInstance().get("selectedClient")).getSurname().toString()
 						: "");
 
 		clientAddModFrame.getClientDataPanel().getTextFieldAddress()
-				.setText(((Client) Params.getInstance().get("selectedClientShallowClone")).getAddress() != null
-						? ((Client) Params.getInstance().get("selectedClientShallowClone")).getAddress().toString()
+				.setText(((Client) Params.getInstance().get("selectedClient")).getAddress() != null
+						? ((Client) Params.getInstance().get("selectedClient")).getAddress().toString()
 						: "");
 
 		clientAddModFrame.getClientDataPanel().getComboBoxCity()
-				.setSelectedItem(((Client) Params.getInstance().get("selectedClientShallowClone")).getCity() != null
-						? ((Client) Params.getInstance().get("selectedClientShallowClone")).getCity()
+				.setSelectedItem(((Client) Params.getInstance().get("selectedClient")).getCity() != null
+						? ((Client) Params.getInstance().get("selectedClient")).getCity()
 						: null);
 
-		if (((Client) Params.getInstance().get("selectedClientShallowClone")).getSex() != null
+		if (((Client) Params.getInstance().get("selectedClient")).getSex() != null
 				&& Constans.DATA_BASE_MALE_SIGN.toString()
-						.equals(((Client) Params.getInstance().get("selectedClientShallowClone")).getSex().toString()))
+						.equals(((Client) Params.getInstance().get("selectedClient")).getSex().toString()))
 			clientAddModFrame.getClientDataPanel().getGroupRadioButtonSex()
 					.setSelected(clientAddModFrame.getClientDataPanel().getRadioButtonMale().getModel(), true);
-		else if (((Client) Params.getInstance().get("selectedClientShallowClone")).getSex() != null
+		else if (((Client) Params.getInstance().get("selectedClient")).getSex() != null
 				&& Constans.DATA_BASE_FEMALE_SIGN.toString()
-						.equals(((Client) Params.getInstance().get("selectedClientShallowClone")).getSex().toString()))
+						.equals(((Client) Params.getInstance().get("selectedClient")).getSex().toString()))
 			clientAddModFrame.getClientDataPanel().getGroupRadioButtonSex()
 					.setSelected(clientAddModFrame.getClientDataPanel().getRadioButtonFemale().getModel(), true);
 
 		try {
 			clientAddModFrame.getClientDataPanel().getDateChooserBirthDate()
-					.setDate(((Client) Params.getInstance().get("selectedClientShallowClone")).getBirthDate() != null
+					.setDate(((Client) Params.getInstance().get("selectedClient")).getBirthDate() != null
 							? Constans.APPLICATION_DATE_FORMAT.parse(Constans.APPLICATION_DATE_FORMAT.format(
-									((Client) Params.getInstance().get("selectedClientShallowClone")).getBirthDate()))
+									((Client) Params.getInstance().get("selectedClient")).getBirthDate()))
 							: null);
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -375,7 +375,6 @@ public class ClientAddModEvent {
 		Params.getInstance().remove("PARAMETERS_ERROR");
 		Params.getInstance().remove("WEAK_PASSWORD");
 		Params.getInstance().remove("INCORRECT_BIRTH_DATE");
-
 	}
 
 	private boolean validateRegistration() {

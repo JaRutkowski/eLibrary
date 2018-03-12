@@ -85,9 +85,8 @@ public final class TabClientEvent implements IActionForm {
 			if (selectedRowIndex != -1) {
 				Client selectedClient = ((ClientTableModel) tabbedForm.getPanelClient().getClientTable().getModel())
 						.getClient(selectedRowIndex);
-				Client clientShallowClone = (Client) selectedClient.clone();
 
-				Params.getInstance().add("selectedClientShallowClone", clientShallowClone);
+				Params.getInstance().add("selectedClient", selectedClient);
 				Params.getInstance().add("selectedRowIndex", selectedRowIndex);
 
 				if (clientAddModEvent == null)

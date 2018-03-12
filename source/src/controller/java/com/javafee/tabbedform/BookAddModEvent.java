@@ -1,5 +1,7 @@
 package com.javafee.tabbedform;
 
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +32,39 @@ public class BookAddModEvent {
 	public void control(Context context, BookTableModel bookTableModel) {
 		this.bookTableModel = bookTableModel;
 		openBookAddModFrame(context);
+		
+		bookAddModFrame.addWindowListener(new WindowListener() {
+
+			@Override
+			public void windowOpened(WindowEvent e) {
+			}
+
+			@Override
+			public void windowIconified(WindowEvent e) {
+			}
+
+			@Override
+			public void windowDeiconified(WindowEvent e) {
+			}
+
+			@Override
+			public void windowDeactivated(WindowEvent e) {
+			}
+
+			@Override
+			public void windowClosing(WindowEvent e) {
+			}
+
+			@Override
+			public void windowClosed(WindowEvent e) {
+				Params.getInstance().remove("selectedRowIndex");
+				Params.getInstance().remove("selectedBook");
+			}
+
+			@Override
+			public void windowActivated(WindowEvent e) {
+			}
+		});
 
 		bookAddModFrame.getCockpitConfirmationPanel().getBtnAccept().addActionListener(e -> onClickBtnAccept(context));
 	}
@@ -53,28 +88,24 @@ public class BookAddModEvent {
 
 	private void modificateBook() {
 		try {
-			Book bookShallowClone = (Book) Params.getInstance().get("selectedBookShallowClone");
-			Params.getInstance().remove("selectedBookShallowClone");
-
-			List<Author> authorList = getSelectedAuthors();
-			List<Category> categoryList = getSelectedCategories();
-			List<PublishingHouse> publishingHouseList = getSelectedPublishingHouses();
-			String title = bookAddModFrame.getBookDataPanel().getTextFieldTitle().getText();
-			String isbnNumber = bookAddModFrame.getBookDataPanel().getTextFieldIsbnNumber().getText();
-			Integer numberOfPage = bookAddModFrame.getBookDataPanel().getTextFieldNumberOfPage().getText() != null
-					? Integer.parseInt(bookAddModFrame.getBookDataPanel().getTextFieldNumberOfPage().getText())
-					: null;
-			Integer numberOfTomes = bookAddModFrame.getBookDataPanel().getTextFieldNumberOfTomes().getText() != null
+			Book bookShallowClone = (Book) Params.getInstance().get("selectedBook");
+			
+			bookShallowClone.getAuthor().clear();
+			bookShallowClone.getCategory().clear();
+			bookShallowClone.getPublishingHouse().clear();
+			
+			getSelectedAuthors().forEach(e -> bookShallowClone.getAuthor().add(e));
+			getSelectedCategories().forEach(e -> bookShallowClone.getCategory().add(e));
+			getSelectedPublishingHouses().forEach(e -> bookShallowClone.getPublishingHouse().add(e));
+			bookShallowClone.setTitle(bookAddModFrame.getBookDataPanel().getTextFieldTitle().getText());
+			bookShallowClone.setIsbnNumber(bookAddModFrame.getBookDataPanel().getTextFieldIsbnNumber().getText());
+			bookShallowClone
+					.setNumberOfPage(bookAddModFrame.getBookDataPanel().getTextFieldNumberOfPage().getText() != null
+							? Integer.parseInt(bookAddModFrame.getBookDataPanel().getTextFieldNumberOfPage().getText())
+							: null);
+			bookShallowClone.setNumberOfTomes(bookAddModFrame.getBookDataPanel().getTextFieldNumberOfTomes().getText() != null
 					? Integer.parseInt(bookAddModFrame.getBookDataPanel().getTextFieldNumberOfTomes().getText())
-					: null;
-
-			authorList.forEach(e -> bookShallowClone.getAuthor().add(e));
-			categoryList.forEach(e -> bookShallowClone.getCategory().add(e));
-			publishingHouseList.forEach(e -> bookShallowClone.getPublishingHouse().add(e));
-			bookShallowClone.setTitle(title);
-			bookShallowClone.setIsbnNumber(isbnNumber);
-			bookShallowClone.setNumberOfPage(numberOfPage);
-			bookShallowClone.setNumberOfTomes(numberOfTomes);
+					: null);
 
 			HibernateUtil.beginTransaction();
 			HibernateUtil.getSession()
@@ -91,9 +122,10 @@ public class BookAddModEvent {
 							.getString("bookAddModEvent.updatingBookSuccessTitle"),
 					JOptionPane.INFORMATION_MESSAGE);
 
-			bookAddModFrame.dispose();
-
+			Params.getInstance().remove("selectedBook");
 			Params.getInstance().remove("selectedRowIndex");
+
+			bookAddModFrame.dispose();
 		} catch (NumberFormatException e) {
 			LogGuiException.logError(
 					SystemProperties.getInstance().getResourceBundle()
@@ -190,13 +222,13 @@ public class BookAddModEvent {
 		List<Integer> categoryIndexes = new ArrayList<Integer>();
 		List<Integer> publishingHouseIndexes = new ArrayList<Integer>();
 
-		((Book) Params.getInstance().get("selectedBookShallowClone")).getAuthor().forEach(e -> authorIndexes
+		((Book) Params.getInstance().get("selectedBook")).getAuthor().forEach(e -> authorIndexes
 				.add(((AuthorTableModel) bookAddModFrame.getAuthorTable().getModel()).getAuthors().indexOf(e)));
 		authorIndexes.forEach(e -> bookAddModFrame.getAuthorTable().addRowSelectionInterval(e, e));
-		((Book) Params.getInstance().get("selectedBookShallowClone")).getCategory().forEach(e -> categoryIndexes
+		((Book) Params.getInstance().get("selectedBook")).getCategory().forEach(e -> categoryIndexes
 				.add(((CategoryTableModel) bookAddModFrame.getCategoryTable().getModel()).getCategories().indexOf(e)));
 		categoryIndexes.forEach(e -> bookAddModFrame.getCategoryTable().addRowSelectionInterval(e, e));
-		((Book) Params.getInstance().get("selectedBookShallowClone")).getPublishingHouse()
+		((Book) Params.getInstance().get("selectedBook")).getPublishingHouse()
 				.forEach(e -> publishingHouseIndexes
 						.add(((PublishingHouseTableModel) bookAddModFrame.getPublishingHouseTable().getModel())
 								.getPublishingHouses().indexOf(e)));
@@ -205,20 +237,20 @@ public class BookAddModEvent {
 
 	private void fillBookDataPanel() {
 		bookAddModFrame.getBookDataPanel().getTextFieldTitle()
-				.setText(((Book) Params.getInstance().get("selectedBookShallowClone")).getTitle() != null
-						? ((Book) Params.getInstance().get("selectedBookShallowClone")).getTitle().toString()
+				.setText(((Book) Params.getInstance().get("selectedBook")).getTitle() != null
+						? ((Book) Params.getInstance().get("selectedBook")).getTitle().toString()
 						: "");
 		bookAddModFrame.getBookDataPanel().getTextFieldIsbnNumber()
-				.setText(((Book) Params.getInstance().get("selectedBookShallowClone")).getIsbnNumber() != null
-						? ((Book) Params.getInstance().get("selectedBookShallowClone")).getIsbnNumber().toString()
+				.setText(((Book) Params.getInstance().get("selectedBook")).getIsbnNumber() != null
+						? ((Book) Params.getInstance().get("selectedBook")).getIsbnNumber().toString()
 						: "");
 		bookAddModFrame.getBookDataPanel().getTextFieldNumberOfPage()
-				.setText(((Book) Params.getInstance().get("selectedBookShallowClone")).getNumberOfPage() != null
-						? ((Book) Params.getInstance().get("selectedBookShallowClone")).getNumberOfPage().toString()
+				.setText(((Book) Params.getInstance().get("selectedBook")).getNumberOfPage() != null
+						? ((Book) Params.getInstance().get("selectedBook")).getNumberOfPage().toString()
 						: "");
 		bookAddModFrame.getBookDataPanel().getTextFieldNumberOfTomes()
-				.setText(((Book) Params.getInstance().get("selectedBookShallowClone")).getNumberOfTomes() != null
-						? ((Book) Params.getInstance().get("selectedBookShallowClone")).getNumberOfTomes().toString()
+				.setText(((Book) Params.getInstance().get("selectedBook")).getNumberOfTomes() != null
+						? ((Book) Params.getInstance().get("selectedBook")).getNumberOfTomes().toString()
 						: "");
 	}
 

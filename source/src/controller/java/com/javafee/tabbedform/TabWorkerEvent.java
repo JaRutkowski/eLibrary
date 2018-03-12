@@ -97,9 +97,8 @@ public final class TabWorkerEvent implements IActionForm {
 			if (selectedRowIndex != -1) {
 				Worker selectedWorker = ((WorkerTableModel) tabbedForm.getPanelWorker().getWorkerTable().getModel())
 						.getWorker(selectedRowIndex);
-				Worker workerShallowClone = (Worker) selectedWorker.clone();
 
-				Params.getInstance().add("selectedWorkerShallowClone", workerShallowClone);
+				Params.getInstance().add("selectedWorker", selectedWorker);
 				Params.getInstance().add("selectedRowIndex", selectedRowIndex);
 
 				if (workerAddModEvent == null)

@@ -59,7 +59,7 @@ public class LibraryAddModEvent {
 			@Override
 			public void windowClosed(WindowEvent e) {
 				Params.getInstance().remove("selectedRowIndex");
-				Params.getInstance().remove("selectedVolumeShallowClone");
+				Params.getInstance().remove("selectedVolume");
 			}
 
 			@Override
@@ -89,7 +89,7 @@ public class LibraryAddModEvent {
 
 	private void modificateVolume(Context loanOrReadingRoom) {
 		if (libraryAddModFrame.getBookTable().getSelectedRow() != -1) {
-			Volume volumeShallowClone = (Volume) Params.getInstance().get("selectedVolumeShallowClone");
+			Volume volumeShallowClone = (Volume) Params.getInstance().get("selectedVolume");
 
 			int selectedRowIndex = libraryAddModFrame.getBookTable()
 					.convertRowIndexToModel(libraryAddModFrame.getBookTable().getSelectedRow());
@@ -206,14 +206,14 @@ public class LibraryAddModEvent {
 
 	private void reloadTable() {
 		Integer selectedBookIndex = ((BookTableModel) libraryAddModFrame.getBookTable().getModel()).getBooks()
-				.indexOf(((Volume) Params.getInstance().get("selectedVolumeShallowClone")).getBook());
+				.indexOf(((Volume) Params.getInstance().get("selectedVolume")).getBook());
 		libraryAddModFrame.getBookTable().setRowSelectionInterval(selectedBookIndex, selectedBookIndex);
 	}
 
 	private void fillTextBoxInventoryNumber() {
 		libraryAddModFrame.getTextFieldInventoryNumber()
-				.setText(((Volume) Params.getInstance().get("selectedVolumeShallowClone")).getInventoryNumber() != null
-						? ((Volume) Params.getInstance().get("selectedVolumeShallowClone")).getInventoryNumber()
+				.setText(((Volume) Params.getInstance().get("selectedVolume")).getInventoryNumber() != null
+						? ((Volume) Params.getInstance().get("selectedVolume")).getInventoryNumber()
 								.toString()
 						: "");
 	}
