@@ -10,6 +10,7 @@ import com.javafee.common.Constans.Context;
 import com.javafee.common.Params;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
+import com.javafee.common.Validator;
 import com.javafee.exception.LogGuiException;
 import com.javafee.hibernate.dao.HibernateUtil;
 import com.javafee.hibernate.dto.library.Book;
@@ -93,8 +94,14 @@ public class LibraryAddModEvent {
 
 			int selectedRowIndex = libraryAddModFrame.getBookTable()
 					.convertRowIndexToModel(libraryAddModFrame.getBookTable().getSelectedRow());
-			if (libraryAddModFrame.getTextFieldInventoryNumber().getText()
-					.length() == Constans.DATA_BASE_INVENTORY_NUMBER_LENGHT) {
+			if(Validator.validateInventoryNumberExist(libraryAddModFrame.getTextFieldInventoryNumber().getText())) {
+				LogGuiException.logWarning(
+						SystemProperties.getInstance().getResourceBundle()
+								.getString("libraryAddModEvent.incorrectInventoryNumberWarningTitle"),
+						SystemProperties.getInstance().getResourceBundle()
+								.getString("libraryAddModEvent.incorrectInventoryNumberWarning1"));
+			} else if (libraryAddModFrame.getTextFieldInventoryNumber().getText()
+					.length() == Constans.DATA_BASE_INVENTORY_NUMBER_LENGTH) {
 
 				Book selectedBook = ((BookTableModel) libraryAddModFrame.getBookTable().getModel())
 						.getBook(selectedRowIndex);
@@ -136,7 +143,7 @@ public class LibraryAddModEvent {
 						SystemProperties.getInstance().getResourceBundle()
 								.getString("libraryAddModEvent.incorrectInventoryNumberWarningTitle"),
 						SystemProperties.getInstance().getResourceBundle()
-								.getString("libraryAddModEvent.incorrectInventoryNumberWarning"));
+								.getString("libraryAddModEvent.incorrectInventoryNumberWarning2"));
 			}
 
 		} else {
@@ -156,7 +163,13 @@ public class LibraryAddModEvent {
 				Book selectedBook = ((BookTableModel) libraryAddModFrame.getBookTable().getModel())
 						.getBook(selectedRowIndex);
 				String inventoryNumber = libraryAddModFrame.getTextFieldInventoryNumber().getText();
-				if (inventoryNumber.length() == Constans.DATA_BASE_INVENTORY_NUMBER_LENGHT) {
+				if(Validator.validateInventoryNumberExist(inventoryNumber)) {
+					LogGuiException.logWarning(
+							SystemProperties.getInstance().getResourceBundle()
+									.getString("libraryAddModEvent.incorrectInventoryNumberWarningTitle"),
+							SystemProperties.getInstance().getResourceBundle()
+									.getString("libraryAddModEvent.incorrectInventoryNumberWarning1"));
+				} else if (inventoryNumber.length() == Constans.DATA_BASE_INVENTORY_NUMBER_LENGTH) {
 					HibernateUtil.beginTransaction();
 					Volume volume = new Volume();
 					volume.setBook(selectedBook);
@@ -185,7 +198,7 @@ public class LibraryAddModEvent {
 							SystemProperties.getInstance().getResourceBundle()
 									.getString("libraryAddModEvent.incorrectInventoryNumberWarningTitle"),
 							SystemProperties.getInstance().getResourceBundle()
-									.getString("libraryAddModEvent.incorrectInventoryNumberWarning"));
+									.getString("libraryAddModEvent.incorrectInventoryNumberWarning2"));
 				}
 			}
 		}

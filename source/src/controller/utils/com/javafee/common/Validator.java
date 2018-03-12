@@ -8,6 +8,7 @@ import com.javafee.hibernate.dto.library.Author;
 import com.javafee.hibernate.dto.library.Category;
 import com.javafee.hibernate.dto.library.Client;
 import com.javafee.hibernate.dto.library.PublishingHouse;
+import com.javafee.hibernate.dto.library.Volume;
 import com.javafee.hibernate.dto.library.Worker;
 
 public final class Validator {
@@ -100,5 +101,12 @@ public final class Validator {
 
 	public static boolean validateBookFilter(Author author, Category category, PublishingHouse publishingHouse) {
 		return author == null && category == null && publishingHouse == null ? false : true;
+	}
+	
+	public static boolean validateInventoryNumberExist(String inventoryNumber) {
+		Volume existingInventoryNumberVolume = (Volume) HibernateUtil.getSession()
+				.getNamedQuery("Volume.checkIfInventoryNumberExist").setParameter("inventoryNumber", inventoryNumber)
+				.uniqueResult();
+		return existingInventoryNumberVolume != null ? true : false;
 	}
 }
