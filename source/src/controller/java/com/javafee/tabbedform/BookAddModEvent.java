@@ -8,9 +8,11 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import com.javafee.common.Constans.Context;
+import com.javafee.common.Constans;
 import com.javafee.common.Params;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
+import com.javafee.common.Validator;
 import com.javafee.exception.LogGuiException;
 import com.javafee.hibernate.dao.HibernateUtil;
 import com.javafee.hibernate.dto.library.Author;
@@ -93,40 +95,58 @@ public class BookAddModEvent {
 			bookShallowClone.getAuthor().clear();
 			bookShallowClone.getCategory().clear();
 			bookShallowClone.getPublishingHouse().clear();
+			if (Validator
+					.validateIsbnNumberExist(bookAddModFrame.getBookDataPanel().getTextFieldIsbnNumber().getText())) {
+				LogGuiException.logWarning(
+						SystemProperties.getInstance().getResourceBundle()
+								.getString("bookAddModEvent.incorrectIsbnNumberWarningTitle"),
+						SystemProperties.getInstance().getResourceBundle()
+								.getString("bookAddModEvent.incorrectIsbnNumberWarning1"));
+			} else if (bookAddModFrame.getBookDataPanel().getTextFieldIsbnNumber().getText()
+					.length() == Constans.DATA_BASE_ISBN_NUMBER_LENGTH) {
+				getSelectedAuthors().forEach(e -> bookShallowClone.getAuthor().add(e));
+				getSelectedCategories().forEach(e -> bookShallowClone.getCategory().add(e));
+				getSelectedPublishingHouses().forEach(e -> bookShallowClone.getPublishingHouse().add(e));
+				bookShallowClone.setTitle(bookAddModFrame.getBookDataPanel().getTextFieldTitle().getText());
+				bookShallowClone.setIsbnNumber(bookAddModFrame.getBookDataPanel().getTextFieldIsbnNumber().getText());
+				bookShallowClone.setNumberOfPage(
+						!"".equals(bookAddModFrame.getBookDataPanel().getTextFieldNumberOfPage().getText())
+								? Integer.parseInt(
+										bookAddModFrame.getBookDataPanel().getTextFieldNumberOfPage().getText())
+								: null);
+				bookShallowClone.setNumberOfTomes(
+						!"".equals(bookAddModFrame.getBookDataPanel().getTextFieldNumberOfTomes().getText())
+								? Integer.parseInt(
+										bookAddModFrame.getBookDataPanel().getTextFieldNumberOfTomes().getText())
+								: null);
 
-			getSelectedAuthors().forEach(e -> bookShallowClone.getAuthor().add(e));
-			getSelectedCategories().forEach(e -> bookShallowClone.getCategory().add(e));
-			getSelectedPublishingHouses().forEach(e -> bookShallowClone.getPublishingHouse().add(e));
-			bookShallowClone.setTitle(bookAddModFrame.getBookDataPanel().getTextFieldTitle().getText());
-			bookShallowClone.setIsbnNumber(bookAddModFrame.getBookDataPanel().getTextFieldIsbnNumber().getText());
-			bookShallowClone
-					.setNumberOfPage(!"".equals(bookAddModFrame.getBookDataPanel().getTextFieldNumberOfPage().getText())
-							? Integer.parseInt(bookAddModFrame.getBookDataPanel().getTextFieldNumberOfPage().getText())
-							: null);
-			bookShallowClone.setNumberOfTomes(
-					!"".equals(bookAddModFrame.getBookDataPanel().getTextFieldNumberOfTomes().getText())
-							? Integer.parseInt(bookAddModFrame.getBookDataPanel().getTextFieldNumberOfTomes().getText())
-							: null);
+				HibernateUtil.beginTransaction();
+				HibernateUtil.getSession()
+						.evict(bookTableModel.getBook((Integer) Params.getInstance().get("selectedRowIndex")));
+				HibernateUtil.getSession().update(Book.class.getName(), bookShallowClone);
+				HibernateUtil.commitTransaction();
 
-			HibernateUtil.beginTransaction();
-			HibernateUtil.getSession()
-					.evict(bookTableModel.getBook((Integer) Params.getInstance().get("selectedRowIndex")));
-			HibernateUtil.getSession().update(Book.class.getName(), bookShallowClone);
-			HibernateUtil.commitTransaction();
+				bookTableModel.setBook((Integer) Params.getInstance().get("selectedRowIndex"), bookShallowClone);
+				bookTableModel.fireTableDataChanged();
 
-			bookTableModel.setBook((Integer) Params.getInstance().get("selectedRowIndex"), bookShallowClone);
-			bookTableModel.fireTableDataChanged();
+				Utils.displayOptionPane(
+						SystemProperties.getInstance().getResourceBundle()
+								.getString("bookAddModEvent.updatingBookSuccess"),
+						SystemProperties.getInstance().getResourceBundle().getString(
+								"bookAddModEvent.updatingBookSuccessTitle"),
+						JOptionPane.INFORMATION_MESSAGE);
 
-			Utils.displayOptionPane(
-					SystemProperties.getInstance().getResourceBundle().getString("bookAddModEvent.updatingBookSuccess"),
-					SystemProperties.getInstance().getResourceBundle()
-							.getString("bookAddModEvent.updatingBookSuccessTitle"),
-					JOptionPane.INFORMATION_MESSAGE);
+				Params.getInstance().remove("selectedBook");
+				Params.getInstance().remove("selectedRowIndex");
 
-			Params.getInstance().remove("selectedBook");
-			Params.getInstance().remove("selectedRowIndex");
-
-			bookAddModFrame.dispose();
+				bookAddModFrame.dispose();
+			} else {
+				LogGuiException.logWarning(
+						SystemProperties.getInstance().getResourceBundle()
+								.getString("bookAddModEvent.incorrectIsbnNumberWarningTitle"),
+						SystemProperties.getInstance().getResourceBundle()
+								.getString("bookAddModEvent.incorrectIsbnNumberWarning2"));
+			}
 		} catch (NumberFormatException e) {
 			LogGuiException.logError(
 					SystemProperties.getInstance().getResourceBundle()
@@ -150,29 +170,42 @@ public class BookAddModEvent {
 			Integer numberOfTomes = !"".equals(bookAddModFrame.getBookDataPanel().getTextFieldNumberOfTomes().getText())
 					? Integer.parseInt(bookAddModFrame.getBookDataPanel().getTextFieldNumberOfTomes().getText())
 					: null;
+			if (Validator.validateIsbnNumberExist(isbnNumber)) {
+				LogGuiException.logWarning(
+						SystemProperties.getInstance().getResourceBundle()
+								.getString("bookAddModEvent.incorrectIsbnNumberWarningTitle"),
+						SystemProperties.getInstance().getResourceBundle()
+								.getString("bookAddModEvent.incorrectIsbnNumberWarning1"));
+			} else if (isbnNumber.length() == Constans.DATA_BASE_ISBN_NUMBER_LENGTH) {
+				HibernateUtil.beginTransaction();
+				Book book = new Book();
+				authorList.forEach(e -> book.getAuthor().add(e));
+				categoryList.forEach(e -> book.getCategory().add(e));
+				publishingHouseList.forEach(e -> book.getPublishingHouse().add(e));
+				book.setTitle(title);
+				book.setIsbnNumber(isbnNumber);
+				book.setNumberOfPage(numberOfPage);
+				book.setNumberOfTomes(numberOfTomes);
+				HibernateUtil.getSession().save(book);
+				HibernateUtil.commitTransaction();
 
-			HibernateUtil.beginTransaction();
-			Book book = new Book();
-			authorList.forEach(e -> book.getAuthor().add(e));
-			categoryList.forEach(e -> book.getCategory().add(e));
-			publishingHouseList.forEach(e -> book.getPublishingHouse().add(e));
-			book.setTitle(title);
-			book.setIsbnNumber(isbnNumber);
-			book.setNumberOfPage(numberOfPage);
-			book.setNumberOfTomes(numberOfTomes);
-			HibernateUtil.getSession().save(book);
-			HibernateUtil.commitTransaction();
+				bookTableModel.add(book);
 
-			bookTableModel.add(book);
+				Utils.displayOptionPane(
+						SystemProperties.getInstance().getResourceBundle()
+								.getString("bookAddModEvent.savingBookSuccess"),
+						SystemProperties.getInstance().getResourceBundle()
+								.getString("bookAddModEvent.savingBookSuccessTitle"),
+						JOptionPane.INFORMATION_MESSAGE);
 
-			Utils.displayOptionPane(
-					SystemProperties.getInstance().getResourceBundle().getString("bookAddModEvent.savingBookSuccess"),
-					SystemProperties.getInstance().getResourceBundle()
-							.getString("bookAddModEvent.savingBookSuccessTitle"),
-					JOptionPane.INFORMATION_MESSAGE);
-
-			bookAddModFrame.dispose();
-
+				bookAddModFrame.dispose();
+			} else {
+				LogGuiException.logWarning(
+						SystemProperties.getInstance().getResourceBundle()
+								.getString("bookAddModEvent.incorrectIsbnNumberWarningTitle"),
+						SystemProperties.getInstance().getResourceBundle()
+								.getString("bookAddModEvent.incorrectIsbnNumberWarning2"));
+			}
 		} catch (NumberFormatException e) {
 			LogGuiException.logError(
 					SystemProperties.getInstance().getResourceBundle()

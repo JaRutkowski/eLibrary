@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -23,6 +25,8 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(exclude = { "author", "publishingHouse", "category", "volume" })
 @Entity
+@NamedQueries({
+	@NamedQuery(name = "Book.checkIfIsbnNumberExist", query = "from Book where isbnNumber = :isbnNumber") })
 @Table(name = "lib_book")
 @SequenceGenerator(name = "seq_lib_book", sequenceName = "seq_lib_book", allocationSize = 1)
 public class Book implements Cloneable {
