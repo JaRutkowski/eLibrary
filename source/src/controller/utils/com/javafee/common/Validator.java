@@ -5,6 +5,7 @@ import java.util.List;
 import com.javafee.hibernate.dao.HibernateUtil;
 import com.javafee.hibernate.dto.common.UserData;
 import com.javafee.hibernate.dto.library.Author;
+import com.javafee.hibernate.dto.library.Book;
 import com.javafee.hibernate.dto.library.Category;
 import com.javafee.hibernate.dto.library.Client;
 import com.javafee.hibernate.dto.library.PublishingHouse;
@@ -108,5 +109,12 @@ public final class Validator {
 				.getNamedQuery("Volume.checkIfInventoryNumberExist").setParameter("inventoryNumber", inventoryNumber)
 				.uniqueResult();
 		return existingInventoryNumberVolume != null ? true : false;
+	}
+	
+	public static boolean validateIsbnNumberExist(String isbnNumber) {
+		Book existingIsbnNumber = (Book) HibernateUtil.getSession()
+				.getNamedQuery("Book.checkIfIsbnNumberExist").setParameter("isbnNumber", isbnNumber)
+				.uniqueResult();
+		return existingIsbnNumber != null ? true : false;
 	}
 }
