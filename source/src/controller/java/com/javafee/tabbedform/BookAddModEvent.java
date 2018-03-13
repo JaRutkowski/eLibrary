@@ -32,7 +32,7 @@ public class BookAddModEvent {
 	public void control(Context context, BookTableModel bookTableModel) {
 		this.bookTableModel = bookTableModel;
 		openBookAddModFrame(context);
-		
+
 		bookAddModFrame.addWindowListener(new WindowListener() {
 
 			@Override
@@ -89,23 +89,24 @@ public class BookAddModEvent {
 	private void modificateBook() {
 		try {
 			Book bookShallowClone = (Book) Params.getInstance().get("selectedBook");
-			
+
 			bookShallowClone.getAuthor().clear();
 			bookShallowClone.getCategory().clear();
 			bookShallowClone.getPublishingHouse().clear();
-			
+
 			getSelectedAuthors().forEach(e -> bookShallowClone.getAuthor().add(e));
 			getSelectedCategories().forEach(e -> bookShallowClone.getCategory().add(e));
 			getSelectedPublishingHouses().forEach(e -> bookShallowClone.getPublishingHouse().add(e));
 			bookShallowClone.setTitle(bookAddModFrame.getBookDataPanel().getTextFieldTitle().getText());
 			bookShallowClone.setIsbnNumber(bookAddModFrame.getBookDataPanel().getTextFieldIsbnNumber().getText());
 			bookShallowClone
-					.setNumberOfPage(bookAddModFrame.getBookDataPanel().getTextFieldNumberOfPage().getText() != null
+					.setNumberOfPage(!"".equals(bookAddModFrame.getBookDataPanel().getTextFieldNumberOfPage().getText())
 							? Integer.parseInt(bookAddModFrame.getBookDataPanel().getTextFieldNumberOfPage().getText())
 							: null);
-			bookShallowClone.setNumberOfTomes(bookAddModFrame.getBookDataPanel().getTextFieldNumberOfTomes().getText() != null
-					? Integer.parseInt(bookAddModFrame.getBookDataPanel().getTextFieldNumberOfTomes().getText())
-					: null);
+			bookShallowClone.setNumberOfTomes(
+					!"".equals(bookAddModFrame.getBookDataPanel().getTextFieldNumberOfTomes().getText())
+							? Integer.parseInt(bookAddModFrame.getBookDataPanel().getTextFieldNumberOfTomes().getText())
+							: null);
 
 			HibernateUtil.beginTransaction();
 			HibernateUtil.getSession()
