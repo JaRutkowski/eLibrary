@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 
 import com.javafee.common.Constans;
 import com.javafee.common.Constans.Role;
-import com.javafee.common.Constans.Tab;
+import com.javafee.common.Constans.Tab_Accountant;
 import com.javafee.common.Constans.Tab_Client;
 import com.javafee.common.Constans.Tab_Worker;
 import com.javafee.common.IActionForm;
@@ -190,7 +190,7 @@ public class Actions implements IActionForm {
 			}
 
 		if (LogInEvent.getRole() == Role.WORKER_ACCOUNTANT)
-			switch (Tab.getByNumber(tabbedForm.getTabbedPane().getSelectedIndex())) {
+			switch (Tab_Accountant.getByNumber(tabbedForm.getTabbedPane().getSelectedIndex())) {
 			case TAB_CLIENT:
 				TabClientEvent.getInstance(tabbedForm);
 				break;

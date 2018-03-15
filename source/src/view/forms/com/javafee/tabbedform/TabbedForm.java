@@ -47,8 +47,6 @@ public class TabbedForm {
 	private BookTablePanel panelBook;
 	@Getter
 	private AdmDictionaryPanel panelAdmDictionary;
-	// @Getter
-	// private LoanServicePanel panelLoanService;
 	@Getter
 	private LoanServicePanel_new loanServicePanel_new;
 

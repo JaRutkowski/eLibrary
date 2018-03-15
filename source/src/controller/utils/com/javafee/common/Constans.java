@@ -3,38 +3,16 @@ package com.javafee.common;
 import java.text.SimpleDateFormat;
 import java.util.stream.Stream;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 public final class Constans {
-	public enum Tab {
-		TAB_CLIENT(0), TAB_LIBRARY(1), TAB_BOOK(2), TAB_LOAN_SERVICE(3), TAB_ADM_DICTIONARY(4), TAB_ADM_WORKER(5);
-
-		private final Integer value;
-
-		Tab(final int newValue) {
-			value = newValue;
-		}
-
-		public Integer getValue() {
-			return value;
-		}
-
-		public static Tab getByNumber(int tabbedPaneSelectedIndex) {
-			return Stream.of(Tab.values()).filter(item -> item.getValue().equals(tabbedPaneSelectedIndex)).findFirst()
-					.get();
-		}
-	}
-
+	@Getter
+	@AllArgsConstructor
 	public enum Tab_Client {
 		TAB_LIBRARY(0);
 
 		private final Integer value;
-
-		Tab_Client(final int newValue) {
-			value = newValue;
-		}
-
-		public Integer getValue() {
-			return value;
-		}
 
 		public static Tab_Client getByNumber(int tabbedPaneSelectedIndex) {
 			return Stream.of(Tab_Client.values()).filter(item -> item.getValue().equals(tabbedPaneSelectedIndex))
@@ -42,40 +20,41 @@ public final class Constans {
 		}
 	}
 
+	@Getter
+	@AllArgsConstructor
 	public enum Tab_Worker {
 		TAB_CLIENT(0), TAB_LIBRARY(1), TAB_BOOK(2), TAB_LOAN_SERVICE(3);
 
 		private final Integer value;
-
-		Tab_Worker(final int newValue) {
-			value = newValue;
-		}
-
-		public Integer getValue() {
-			return value;
-		}
 
 		public static Tab_Worker getByNumber(int tabbedPaneSelectedIndex) {
 			return Stream.of(Tab_Worker.values()).filter(item -> item.getValue().equals(tabbedPaneSelectedIndex))
 					.findFirst().get();
 		}
 	}
-
+	
+	@Getter
+	@AllArgsConstructor
 	public enum Tab_Accountant {
 		TAB_CLIENT(0), TAB_LIBRARY(1), TAB_BOOK(2), TAB_LOAN_SERVICE(3), TAB_ADM_DICTIONARY(4), TAB_ADM_WORKER(5);
 
 		private final Integer value;
 
-		Tab_Accountant(final int newValue) {
-			value = newValue;
+		public static Tab_Accountant getByNumber(int tabbedPaneSelectedIndex) {
+			return Stream.of(Tab_Accountant.values()).filter(item -> item.getValue().equals(tabbedPaneSelectedIndex)).findFirst()
+					.get();
 		}
-
-		public Integer getValue() {
-			return value;
-		}
-
-		public static Tab getByNumber(int tabbedPaneSelectedIndex) {
-			return Stream.of(Tab.values()).filter(item -> item.getValue().equals(tabbedPaneSelectedIndex)).findFirst()
+	}
+	
+	@Getter
+	@AllArgsConstructor
+	public enum Tab_Email {
+		TAB_CREATE_PAGE(0), TAB_SENDED_PAGE(1), TAB_WORKING_COPY_PAGE(2), TAB_TEMPLATE_PAGE(3);
+		
+		private final Integer value;
+		
+		public static Tab_Email getByNumber(int tabbedPaneSelectedIndex) {
+			return Stream.of(Tab_Email.values()).filter(item -> item.getValue().equals(tabbedPaneSelectedIndex)).findFirst()
 					.get();
 		}
 	}
