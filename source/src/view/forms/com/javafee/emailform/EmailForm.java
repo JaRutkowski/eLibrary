@@ -14,11 +14,11 @@ import javax.swing.JTabbedPane;
 import com.javafee.common.Constans;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
+import com.javafee.emailform.emails.ComposePagePanel;
+import com.javafee.emailform.emails.DraftPagePanel;
+import com.javafee.emailform.emails.SentMailPagePanel;
+import com.javafee.emailform.emails.TemplatePagePanel;
 import com.javafee.startform.StartForm;
-import com.javafee.tabbedform.emails.ComposePagePanel;
-import com.javafee.tabbedform.emails.DraftPagePanel;
-import com.javafee.tabbedform.emails.SentMailPagePanel;
-import com.javafee.tabbedform.emails.TemplatePagePanel;
 
 import lombok.Getter;
 

@@ -1,4 +1,4 @@
-package com.javafee.tabbedform.emails;
+package com.javafee.emailform.emails;
 
 import java.awt.GridLayout;
 
