@@ -27,7 +27,7 @@ import com.javafee.tabbedform.admworkers.WorkerTablePanel;
 import com.javafee.tabbedform.books.BookTablePanel;
 import com.javafee.tabbedform.clients.ClientTablePanel;
 import com.javafee.tabbedform.library.LibraryTablePanel;
-import com.javafee.tabbedform.loanservice.LoanServicePanel_new;
+import com.javafee.tabbedform.loanservice.LoanServicePanel;
 
 import lombok.Getter;
 
@@ -48,7 +48,7 @@ public class TabbedForm {
 	@Getter
 	private AdmDictionaryPanel panelAdmDictionary;
 	@Getter
-	private LoanServicePanel_new loanServicePanel_new;
+	private LoanServicePanel loanServicePanel_new;
 
 	@Getter
 	private JLabel lblLogInInformation;
@@ -75,7 +75,7 @@ public class TabbedForm {
 		frame.setTitle(Constans.APPLICATION_NAME);
 		frame.setIconImage(
 				Toolkit.getDefaultToolkit().getImage(StartForm.class.getResource("/images/splashScreen.jpg")));
-		frame.setBounds(100, 100, 534, 362);
+		frame.setBounds(100, 100, 626, 100);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 67, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
@@ -98,7 +98,7 @@ public class TabbedForm {
 		lblTime.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		GridBagConstraints gbc_lblTime = new GridBagConstraints();
 		gbc_lblTime.gridwidth = 5;
-		gbc_lblTime.insets = new Insets(0, 0, 5, 5);
+		gbc_lblTime.insets = new Insets(5, 0, 5, 5);
 		gbc_lblTime.gridx = 1;
 		gbc_lblTime.gridy = 0;
 		frame.getContentPane().add(lblTime, gbc_lblTime);
@@ -130,7 +130,7 @@ public class TabbedForm {
 		GridBagConstraints gbc_comboBoxLanguage = new GridBagConstraints();
 		gbc_comboBoxLanguage.fill = GridBagConstraints.VERTICAL;
 		gbc_comboBoxLanguage.anchor = GridBagConstraints.EAST;
-		gbc_comboBoxLanguage.insets = new Insets(0, 0, 5, 0);
+		gbc_comboBoxLanguage.insets = new Insets(5, 0, 5, 5);
 		gbc_comboBoxLanguage.gridx = 12;
 		gbc_comboBoxLanguage.gridy = 0;
 		frame.getContentPane().add(comboBoxLanguage, gbc_comboBoxLanguage);
@@ -165,8 +165,7 @@ public class TabbedForm {
 		// tabbedPane.addTab(SystemProperties.getInstance().getResourceBundle().getString("tabbedForm.tabBookTitle"),
 		// null, panelBook, null);
 
-		// panelLoanService = new LoanServicePanel();
-		loanServicePanel_new = new LoanServicePanel_new();
+		loanServicePanel_new = new LoanServicePanel();
 		// tabbedPane.addTab(SystemProperties.getInstance().getResourceBundle().getString("tabbedForm.tabLoanServiceTitle"),
 		// null, loanServicePanel_new, null);
 

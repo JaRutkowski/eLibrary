@@ -23,13 +23,13 @@ public class Actions implements IActionForm {
 	private void initializeTabbedPane() {
 		emailForm.getTabbedPane().addTab(
 				SystemProperties.getInstance().getResourceBundle().getString("emailForm.tabCreatePageTitle"), null,
-				emailForm.getPanelCreatePage(), null);
+				emailForm.getPanelComposePage(), null);
 		emailForm.getTabbedPane().addTab(
 				SystemProperties.getInstance().getResourceBundle().getString("emailForm.tabSendedPageTitle"), null,
-				emailForm.getPanelSendedPage(), null);
+				emailForm.getPanelSentMailPage(), null);
 		emailForm.getTabbedPane().addTab(
 				SystemProperties.getInstance().getResourceBundle().getString("emailForm.tabWorkingCopyPageTitle"), null,
-				emailForm.getPanelWorkingCopyPage(), null);
+				emailForm.getPanelDraftPage(), null);
 		emailForm.getTabbedPane().addTab(
 				SystemProperties.getInstance().getResourceBundle().getString("emailForm.tabTemplatePageTitle"),
 				null, emailForm.getPanelTemplatePage(), null);

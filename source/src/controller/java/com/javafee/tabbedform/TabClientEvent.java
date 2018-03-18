@@ -11,7 +11,6 @@ import com.javafee.common.Params;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
 import com.javafee.emailform.Actions;
-import com.javafee.emailform.EmailForm;
 import com.javafee.exception.LogGuiException;
 import com.javafee.exception.RefusedClientsEventLoadingException;
 import com.javafee.hibernate.dao.HibernateUtil;

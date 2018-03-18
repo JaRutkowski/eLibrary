@@ -1,7 +1,11 @@
 package com.javafee.common;
 
+import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
 import java.util.stream.Stream;
+
+import javax.swing.KeyStroke;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -220,6 +224,10 @@ public final class Constans {
 	public static final Integer APPLICATION_GENERATE_PASSWORD_LENGTH = 16;
 	public static final String APPLICATION_EMAIL = "nreply.elibrary@gmail.com";
 	public static final String APPLICATION_EMAIL_PASSWORD = "Admin95!";
+	
+	public static final KeyStroke SHURTCUT_SAVE_TEMPLATE  = KeyStroke.getKeyStroke(KeyEvent.VK_T, Toolkit.getDefaultToolkit ().getMenuShortcutKeyMask());
+	public static final KeyStroke SHURTCUT_LOAD_TEMPLATE  = KeyStroke.getKeyStroke(KeyEvent.VK_L, Toolkit.getDefaultToolkit ().getMenuShortcutKeyMask());
+	public static final KeyStroke SHURTCUT_MANAGE_TEMPLATE  = KeyStroke.getKeyStroke(KeyEvent.VK_M, Toolkit.getDefaultToolkit ().getMenuShortcutKeyMask());
 
 	public static final String ROLE_ADMIN = SystemProperties.getInstance().getResourceBundle()
 			.getString("constans.ROLE_ADMIN");

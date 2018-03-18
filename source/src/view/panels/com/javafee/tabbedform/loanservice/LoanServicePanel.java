@@ -24,7 +24,7 @@ import com.javafee.startform.RegistrationPanel;
 import lombok.Getter;
 import net.coderazzi.filters.gui.TableFilterHeader;
 
-public class LoanServicePanel_new extends JPanel {
+public class LoanServicePanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JScrollPane scrollPaneClient;
 	@Getter
@@ -58,7 +58,7 @@ public class LoanServicePanel_new extends JPanel {
 	@Getter
 	private JButton btnCancelReservation;
 
-	public LoanServicePanel_new() {
+	public LoanServicePanel() {
 		setBackground(Utils.getApplicationColor());
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 751, 64, 0, 165, 0 };

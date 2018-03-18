@@ -1,22 +1,26 @@
 package com.javafee.emailform;
 
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JTabbedPane;
 
 import com.javafee.common.Constans;
+import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
 import com.javafee.startform.StartForm;
-import com.javafee.tabbedform.emails.CreatePagePanel;
-import com.javafee.tabbedform.emails.SendedPagePanel;
+import com.javafee.tabbedform.emails.ComposePagePanel;
+import com.javafee.tabbedform.emails.DraftPagePanel;
+import com.javafee.tabbedform.emails.SentMailPagePanel;
 import com.javafee.tabbedform.emails.TemplatePagePanel;
-import com.javafee.tabbedform.emails.WorkingCopyPagePanel;
 
 import lombok.Getter;
-
-import java.awt.GridBagLayout;
-import javax.swing.JTabbedPane;
-import java.awt.GridBagConstraints;
 
 public class EmailForm {
 	@Getter
@@ -25,16 +29,23 @@ public class EmailForm {
 	@Getter
 	private JTabbedPane tabbedPane;
 	@Getter
-	private CreatePagePanel panelCreatePage;
+	private ComposePagePanel panelComposePage;
 	@Getter
-	private SendedPagePanel panelSendedPage;
+	private SentMailPagePanel panelSentMailPage;
 	@Getter
-	private WorkingCopyPagePanel panelWorkingCopyPage;
+	private DraftPagePanel panelDraftPage;
 	@Getter
 	private TemplatePagePanel panelTemplatePage;
-
-	// EmailForm window = new EmailForm();
-	// window.frame.setVisible(true);
+	@Getter
+	private JMenuBar menuBar;
+	@Getter
+	private JMenu menuTemplate;
+	@Getter
+	private JMenuItem menuSaveAsTemplate;
+	@Getter
+	private JMenuItem menuLoadTemplate;
+	@Getter
+	private JMenuItem menuManageTemplate;
 
 	public EmailForm() {
 		initialize();
@@ -66,11 +77,29 @@ public class EmailForm {
 		gbc_tabbedPane.gridy = 0;
 		frame.getContentPane().add(tabbedPane, gbc_tabbedPane);
 		
-		panelCreatePage = new CreatePagePanel();
+		menuBar = new JMenuBar();
+		menuTemplate = new JMenu(SystemProperties.getInstance().getResourceBundle().getString("emailForm.menuTemplateTitle"));
+		menuBar.add(menuTemplate);
 		
-		panelSendedPage = new SendedPagePanel();
+		menuSaveAsTemplate = new JMenuItem(SystemProperties.getInstance().getResourceBundle().getString("emailForm.menuItemSaveAsTemplateTitle"), KeyEvent.VK_CONTROL);
+		menuSaveAsTemplate.setAccelerator(Constans.SHURTCUT_SAVE_TEMPLATE);
+		menuTemplate.add(menuSaveAsTemplate);
+
+		menuLoadTemplate = new JMenuItem(SystemProperties.getInstance().getResourceBundle().getString("emailForm.menuItemLoadTemplateTitle"), KeyEvent.VK_CONTROL);
+		menuLoadTemplate.setAccelerator(Constans.SHURTCUT_LOAD_TEMPLATE);
+		menuTemplate.add(menuLoadTemplate);
 		
-		panelWorkingCopyPage = new WorkingCopyPagePanel();
+		menuManageTemplate = new JMenuItem(SystemProperties.getInstance().getResourceBundle().getString("emailForm.menuItemManageTemplateTitle"), KeyEvent.VK_CONTROL);
+		menuManageTemplate.setAccelerator(Constans.SHURTCUT_MANAGE_TEMPLATE);
+		menuTemplate.add(menuManageTemplate);
+
+		frame.setJMenuBar(menuBar);
+		
+		panelComposePage = new ComposePagePanel();
+		
+		panelSentMailPage = new SentMailPagePanel();
+		
+		panelDraftPage = new DraftPagePanel();
 		
 		panelTemplatePage = new TemplatePagePanel();
 	}
