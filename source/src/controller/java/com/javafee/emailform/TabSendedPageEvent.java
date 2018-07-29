@@ -1,7 +1,7 @@
 package com.javafee.emailform;
 
 import com.javafee.common.IActionForm;
-import com.javafee.exception.RefusedClientsEventLoadingException;
+import com.javafee.exception.RefusedTabSendedPageEventLoadingException;
 
 import lombok.Setter;
 
@@ -19,8 +19,7 @@ public class TabSendedPageEvent implements IActionForm {
 		if (workingCopyPageEvent == null) {
 			workingCopyPageEvent = new TabSendedPageEvent(emailForm);
 		} else
-			//TODO
-			new RefusedClientsEventLoadingException("Cannot client event loading");
+			new RefusedTabSendedPageEventLoadingException("Cannot tab sended page event loading");
 		return workingCopyPageEvent;
 	}
 	

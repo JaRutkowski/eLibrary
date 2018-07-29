@@ -225,8 +225,11 @@ public final class Constans {
 	public static final String APPLICATION_EMAIL = "nreply.elibrary@gmail.com";
 	public static final String APPLICATION_EMAIL_PASSWORD = "Admin95!";
 	
+	@SuppressWarnings("deprecation")
 	public static final KeyStroke SHURTCUT_SAVE_TEMPLATE  = KeyStroke.getKeyStroke(KeyEvent.VK_T, Toolkit.getDefaultToolkit ().getMenuShortcutKeyMask());
+	@SuppressWarnings("deprecation")
 	public static final KeyStroke SHURTCUT_LOAD_TEMPLATE  = KeyStroke.getKeyStroke(KeyEvent.VK_L, Toolkit.getDefaultToolkit ().getMenuShortcutKeyMask());
+	@SuppressWarnings("deprecation")
 	public static final KeyStroke SHURTCUT_MANAGE_TEMPLATE  = KeyStroke.getKeyStroke(KeyEvent.VK_M, Toolkit.getDefaultToolkit ().getMenuShortcutKeyMask());
 
 	public static final String ROLE_ADMIN = SystemProperties.getInstance().getResourceBundle()

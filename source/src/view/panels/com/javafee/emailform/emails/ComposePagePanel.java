@@ -5,6 +5,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -14,6 +15,7 @@ import javax.swing.border.TitledBorder;
 
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
+import com.javafee.hibernate.dto.library.Client;
 
 import lombok.Getter;
 
@@ -28,23 +30,24 @@ public class ComposePagePanel extends JPanel {
 	private JLabel lblTopic;
 	
 	@Getter
-	private JButton btnCC;
+	private JCheckBox chckbxCC;
 	@Getter
-	private JButton btnBCC;
+	private JCheckBox chckbxBCC;
 	
 	@Getter
-	private JComboBox comboBoxTo;
+	private JComboBox<Client> comboBoxTo;
 	@Getter
-	private JComboBox comboBoxCC;
+	private JComboBox<Client> comboBoxCC;
 	@Getter
-	private JComboBox comboBoxBCC;
+	private JComboBox<Client> comboBoxBCC;
 	
 	@Getter
 	private JTextField textFieldTopic;
 	
 	@Getter
 	private JTextArea textAreaContent;
-	private JPanel composeNavigationEmailPanel;
+	@Getter
+	private ComposeNavigationEmailPanel composeNavigationEmailPanel;
 
 	public ComposePagePanel() {
 		Utils.setLookAndFeel();
@@ -63,7 +66,7 @@ public class ComposePagePanel extends JPanel {
 		gbc_lblTo.gridy = 0;
 		add(lblTo, gbc_lblTo);
 		
-		comboBoxTo = new JComboBox();
+		comboBoxTo = new JComboBox<Client>();
 		GridBagConstraints gbc_comboBoxTo = new GridBagConstraints();
 		gbc_comboBoxTo.gridwidth = 8;
 		gbc_comboBoxTo.insets = new Insets(0, 0, 5, 5);
@@ -72,19 +75,19 @@ public class ComposePagePanel extends JPanel {
 		gbc_comboBoxTo.gridy = 0;
 		add(comboBoxTo, gbc_comboBoxTo);
 		
-		btnCC = new JButton(SystemProperties.getInstance().getResourceBundle().getString("composePagePanel.btnCC"));
-		GridBagConstraints gbc_btnCC = new GridBagConstraints();
-		gbc_btnCC.insets = new Insets(0, 0, 5, 5);
-		gbc_btnCC.gridx = 9;
-		gbc_btnCC.gridy = 0;
-		add(btnCC, gbc_btnCC);
+		chckbxCC = new JCheckBox(SystemProperties.getInstance().getResourceBundle().getString("composePagePanel.chckbxCC"));
+		GridBagConstraints gbc_chckbxCC = new GridBagConstraints();
+		gbc_chckbxCC.insets = new Insets(0, 0, 5, 5);
+		gbc_chckbxCC.gridx = 9;
+		gbc_chckbxCC.gridy = 0;
+		add(chckbxCC, gbc_chckbxCC);
 		
-		btnBCC = new JButton(SystemProperties.getInstance().getResourceBundle().getString("composePagePanel.btnBCC"));
-		GridBagConstraints gbc_btnBCC = new GridBagConstraints();
-		gbc_btnBCC.insets = new Insets(0, 0, 5, 5);
-		gbc_btnBCC.gridx = 10;
-		gbc_btnBCC.gridy = 0;
-		add(btnBCC, gbc_btnBCC);
+		chckbxBCC = new JCheckBox(SystemProperties.getInstance().getResourceBundle().getString("composePagePanel.chckbxBCC"));
+		GridBagConstraints gbc_chckbxBCC = new GridBagConstraints();
+		gbc_chckbxBCC.insets = new Insets(0, 0, 5, 0);
+		gbc_chckbxBCC.gridx = 10;
+		gbc_chckbxBCC.gridy = 0;
+		add(chckbxBCC, gbc_chckbxBCC);
 		
 		lblCC = new JLabel(SystemProperties.getInstance().getResourceBundle().getString("composePagePanel.lblCC"));
 		GridBagConstraints gbc_lblCC = new GridBagConstraints();
@@ -93,10 +96,10 @@ public class ComposePagePanel extends JPanel {
 		gbc_lblCC.gridy = 1;
 		add(lblCC, gbc_lblCC);
 		
-		comboBoxCC = new JComboBox();
+		comboBoxCC = new JComboBox<Client>();
 		GridBagConstraints gbc_comboBoxCC = new GridBagConstraints();
 		gbc_comboBoxCC.gridwidth = 10;
-		gbc_comboBoxCC.insets = new Insets(0, 0, 5, 5);
+		gbc_comboBoxCC.insets = new Insets(0, 0, 5, 0);
 		gbc_comboBoxCC.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBoxCC.gridx = 1;
 		gbc_comboBoxCC.gridy = 1;
@@ -109,10 +112,10 @@ public class ComposePagePanel extends JPanel {
 		gbc_lblBCC.gridy = 2;
 		add(lblBCC, gbc_lblBCC);
 		
-		comboBoxBCC = new JComboBox();
+		comboBoxBCC = new JComboBox<Client>();
 		GridBagConstraints gbc_comboBoxBCC = new GridBagConstraints();
 		gbc_comboBoxBCC.gridwidth = 10;
-		gbc_comboBoxBCC.insets = new Insets(0, 0, 5, 5);
+		gbc_comboBoxBCC.insets = new Insets(0, 0, 5, 0);
 		gbc_comboBoxBCC.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBoxBCC.gridx = 1;
 		gbc_comboBoxBCC.gridy = 2;
@@ -128,7 +131,7 @@ public class ComposePagePanel extends JPanel {
 		textFieldTopic = new JTextField();
 		GridBagConstraints gbc_textFieldTopic = new GridBagConstraints();
 		gbc_textFieldTopic.gridwidth = 10;
-		gbc_textFieldTopic.insets = new Insets(0, 0, 5, 5);
+		gbc_textFieldTopic.insets = new Insets(0, 0, 5, 0);
 		gbc_textFieldTopic.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textFieldTopic.gridx = 1;
 		gbc_textFieldTopic.gridy = 3;
@@ -139,7 +142,7 @@ public class ComposePagePanel extends JPanel {
 		GridBagConstraints gbc_textAreaContent = new GridBagConstraints();
 		gbc_textAreaContent.gridheight = 7;
 		gbc_textAreaContent.gridwidth = 10;
-		gbc_textAreaContent.insets = new Insets(0, 0, 5, 5);
+		gbc_textAreaContent.insets = new Insets(0, 0, 5, 0);
 		gbc_textAreaContent.fill = GridBagConstraints.BOTH;
 		gbc_textAreaContent.gridx = 1;
 		gbc_textAreaContent.gridy = 4;
@@ -149,7 +152,6 @@ public class ComposePagePanel extends JPanel {
 		GridBagConstraints gbc_composeNavigationEmailPanel = new GridBagConstraints();
 		gbc_composeNavigationEmailPanel.anchor = GridBagConstraints.WEST;
 		gbc_composeNavigationEmailPanel.gridwidth = 10;
-		gbc_composeNavigationEmailPanel.insets = new Insets(0, 0, 0, 5);
 		gbc_composeNavigationEmailPanel.fill = GridBagConstraints.VERTICAL;
 		gbc_composeNavigationEmailPanel.gridx = 1;
 		gbc_composeNavigationEmailPanel.gridy = 11;

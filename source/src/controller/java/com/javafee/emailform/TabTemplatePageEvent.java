@@ -1,7 +1,7 @@
 package com.javafee.emailform;
 
 import com.javafee.common.IActionForm;
-import com.javafee.exception.RefusedClientsEventLoadingException;
+import com.javafee.exception.RefusedTabTemplatePageEventLoadingException;
 
 import lombok.Setter;
 
@@ -20,7 +20,7 @@ public class TabTemplatePageEvent implements IActionForm {
 			templatePageEvent = new TabTemplatePageEvent(emailForm);
 		} else
 			//TODO
-			new RefusedClientsEventLoadingException("Cannot client event loading");
+			new RefusedTabTemplatePageEventLoadingException("Cannot tab template page event loading");
 		return templatePageEvent;
 	}
 	

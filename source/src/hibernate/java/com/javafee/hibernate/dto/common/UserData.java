@@ -33,7 +33,7 @@ import lombok.Data;
 @Table(name = "com_user_data", uniqueConstraints = { @UniqueConstraint(columnNames = { "login", "pesel" }) })
 @Inheritance(strategy = InheritanceType.JOINED)
 @SequenceGenerator(name = "seq_com_user_data", sequenceName = "seq_com_user_data", allocationSize = 1)
-public abstract class UserData {
+public class UserData {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_com_user_data")
 	@Column(name = "id_user_data", unique = false, nullable = false, insertable = true, updatable = true)
