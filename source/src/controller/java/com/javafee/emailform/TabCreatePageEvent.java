@@ -1,19 +1,28 @@
 package com.javafee.emailform;
 
+import java.text.ParseException;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.mail.Message;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 
+import com.javafee.common.Constans;
 import com.javafee.common.IActionForm;
+import com.javafee.common.SystemProperties;
+import com.javafee.exception.LogGuiException;
 import com.javafee.exception.RefusedTabCreatePageEventLoadingException;
 import com.javafee.hibernate.dao.HibernateDao;
+import com.javafee.hibernate.dao.HibernateUtil;
 import com.javafee.hibernate.dto.common.UserData;
+import com.javafee.hibernate.dto.common.message.Recipient;
 import com.javafee.hibernate.dto.library.Client;
+import com.javafee.startform.LogInEvent;
 
 import lombok.Setter;
 
@@ -73,17 +82,24 @@ public class TabCreatePageEvent implements IActionForm {
 	}
 
 	private void onClickBtnSend() {
-		if(validateSend()) {
-			List<SimpleEntry<Message.RecipientType, String>> recipients = new ArrayList<SimpleEntry<Message.RecipientType, String>>();
+		if (validateSend()) {
+			List<SimpleEntry<Message.RecipientType, UserData>> recipients = new ArrayList<SimpleEntry<Message.RecipientType, UserData>>();
 			recipients.addAll(getRecipientTo(Message.RecipientType.TO));
-			if(emailForm.getPanelComposePage().getChckbxCC().isSelected()) 
+			if (emailForm.getPanelComposePage().getChckbxCC().isSelected())
 				recipients.addAll(getRecipientTo(Message.RecipientType.CC));
-			if(emailForm.getPanelComposePage().getChckbxCC().isSelected()) 
+			if (emailForm.getPanelComposePage().getChckbxBCC().isSelected())
 				recipients.addAll(getRecipientTo(Message.RecipientType.BCC));
 			String subject = emailForm.getPanelComposePage().getTextFieldTopic().getText();
 			String text = emailForm.getPanelComposePage().getTextAreaContent().getText();
-			
-			new MailSenderEvent().control(recipients, subject, text);
+
+			if (new MailSenderEvent().control(recipients, subject, text))
+				createEmail(recipients, subject, text);
+			else
+				LogGuiException.logWarning(
+						SystemProperties.getInstance().getResourceBundle()
+								.getString("tabCreatePageEvent.emailSendErrorTitle"),
+						SystemProperties.getInstance().getResourceBundle()
+								.getString("tabCreatePageEvent.emailSendErrorTitle"));
 		}
 	}
 
@@ -109,37 +125,71 @@ public class TabCreatePageEvent implements IActionForm {
 		emailForm.getPanelComposePage().getLblBCC().setVisible(visible);
 		emailForm.getPanelComposePage().getComboBoxBCC().setVisible(visible);
 	}
-	
-	private List<SimpleEntry<Message.RecipientType, String>> getRecipientTo(Message.RecipientType recipientType) {
-		List<SimpleEntry<Message.RecipientType, String>> result = new ArrayList<SimpleEntry<Message.RecipientType, String>>();
+
+	private void createEmail(List<SimpleEntry<Message.RecipientType, UserData>> recipients, String subject,
+			String text) {
+		try {
+			HibernateUtil.beginTransaction();
+			com.javafee.hibernate.dto.common.message.Message message = new com.javafee.hibernate.dto.common.message.Message();
+
+			message.setSender(LogInEvent.getWorker());
+			recipients.forEach(recipient -> {
+				Recipient newRecipient = new Recipient();
+				newRecipient.setUserData(recipient.getValue());
+				newRecipient.setMessage(message);
+				if (Message.RecipientType.CC.equals(recipient.getKey())) {
+					newRecipient.setIsCC(true);
+				}
+				if (Message.RecipientType.BCC.equals(recipient.getKey())) {
+					newRecipient.setIsBCC(true);
+				}
+				message.getRecipient().add(newRecipient);
+			});
+			message.setTitle(subject);
+			message.setContent(text);
+
+			message.setSendDate(
+					Constans.APPLICATION_DATE_FORMAT.parse(Constans.APPLICATION_DATE_FORMAT.format(new Date())));
+			HibernateUtil.getSession().save(message);
+			HibernateUtil.commitTransaction();
+
+			JOptionPane.showMessageDialog(emailForm.getFrame(),
+					SystemProperties.getInstance().getResourceBundle().getString("tabCreatePageEvent.emailSendSuccess"),
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("tabCreatePageEvent.emailSendSuccessTitle"),
+					JOptionPane.INFORMATION_MESSAGE);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private List<SimpleEntry<Message.RecipientType, UserData>> getRecipientTo(Message.RecipientType recipientType) {
+		List<SimpleEntry<Message.RecipientType, UserData>> result = new ArrayList<SimpleEntry<Message.RecipientType, UserData>>();
 		if (Message.RecipientType.TO.equals(recipientType)) {
 			UserData selectedUser = (UserData) emailForm.getPanelComposePage().getComboBoxTo().getSelectedItem();
-			result.add(
-					new SimpleEntry<Message.RecipientType, String>(Message.RecipientType.TO, selectedUser.getEMail()));
+			result.add(new SimpleEntry<Message.RecipientType, UserData>(Message.RecipientType.TO, selectedUser));
 		}
 		if (Message.RecipientType.CC.equals(recipientType)) {
 			UserData selectedUser = (UserData) emailForm.getPanelComposePage().getComboBoxCC().getSelectedItem();
-			result.add(
-					new SimpleEntry<Message.RecipientType, String>(Message.RecipientType.CC, selectedUser.getEMail()));
+			result.add(new SimpleEntry<Message.RecipientType, UserData>(Message.RecipientType.CC, selectedUser));
 		}
 		if (Message.RecipientType.BCC.equals(recipientType)) {
 			UserData selectedUser = (UserData) emailForm.getPanelComposePage().getComboBoxBCC().getSelectedItem();
-			result.add(
-					new SimpleEntry<Message.RecipientType, String>(Message.RecipientType.BCC, selectedUser.getEMail()));
+			result.add(new SimpleEntry<Message.RecipientType, UserData>(Message.RecipientType.BCC, selectedUser));
 		}
 		return result;
 	}
 
 	private boolean validateSend() {
-		boolean result = true;//false;
+		boolean result = true;// false;
 		// if (startForm.getLogInPanel().getTextFieldLogin().getText().isEmpty()
-		//		 || startForm.getLogInPanel().getPasswordField().getPassword().length == 0)
-		//	 JOptionPane.showMessageDialog(startForm.getFrame(),
-		//			 SystemProperties.getInstance().getResourceBundle().getString("startForm.validateLogInError1"),
-		//			 SystemProperties.getInstance().getResourceBundle().getString("startForm.validateLogInError1Title"),
-		//			 JOptionPane.ERROR_MESSAGE);
+		// || startForm.getLogInPanel().getPasswordField().getPassword().length == 0)
+		// JOptionPane.showMessageDialog(startForm.getFrame(),
+		// SystemProperties.getInstance().getResourceBundle().getString("startForm.validateLogInError1"),
+		// SystemProperties.getInstance().getResourceBundle().getString("startForm.validateLogInError1Title"),
+		// JOptionPane.ERROR_MESSAGE);
 		// else
-		//	 result = true;
+		// result = true;
 
 		return result;
 	}

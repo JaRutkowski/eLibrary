@@ -10,6 +10,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import com.javafee.common.Constans;
+import com.javafee.hibernate.dto.common.UserData;
 import com.javafee.mail.MailSender;
 
 public class MailSenderEvent {
@@ -18,23 +19,23 @@ public class MailSenderEvent {
 
 	private Message message;
 
-	public void control(List<SimpleEntry<Message.RecipientType, String>> recipients, String subject, String text) {
+	public boolean control(List<SimpleEntry<Message.RecipientType, UserData>> recipients, String subject, String text) {
 		setMessage(recipients, subject, text);
-		mailSender.send(message);
+		return mailSender.send(message);
 	}
 
-	private void setMessage(List<SimpleEntry<Message.RecipientType, String>> recipients, String subject, String text) {
+	private void setMessage(List<SimpleEntry<Message.RecipientType, UserData>> recipients, String subject, String text) {
 		try {
 			message = new MimeMessage(mailSender.getSession());
 			message.setFrom(new InternetAddress(Constans.APPLICATION_EMAIL));
 			recipients.forEach(recipient -> {
 				try {
 					if (Message.RecipientType.TO.equals(recipient.getKey()))
-						message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipient.getValue()));
+						message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipient.getValue().getEMail()));
 					if (Message.RecipientType.CC.equals(recipient.getKey()))
-						message.addRecipient(Message.RecipientType.CC, InternetAddress.parse(recipient.getValue())[0]);
+						message.addRecipient(Message.RecipientType.CC, InternetAddress.parse(recipient.getValue().getEMail())[0]);
 					if (Message.RecipientType.BCC.equals(recipient.getKey()))
-						message.addRecipient(Message.RecipientType.BCC, InternetAddress.parse(recipient.getValue())[0]);
+						message.addRecipient(Message.RecipientType.BCC, InternetAddress.parse(recipient.getValue().getEMail())[0]);
 
 				} catch (MessagingException e) {
 					e.printStackTrace();

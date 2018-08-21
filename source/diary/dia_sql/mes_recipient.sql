@@ -1,16 +1,24 @@
--- Drop table
+-- Table: public.mes_recipient
 
--- DROP TABLE public.mes_recipient
+-- DROP TABLE public.mes_recipient;
 
-CREATE TABLE public.mes_recipient (
-	is_bcc bool NULL,
-	is_cc bool NULL,
-	id_message int4 NOT NULL,
-	id_recipient int4 NULL,
-	CONSTRAINT mes_recipient_pkey PRIMARY KEY (id_message),
-	CONSTRAINT fkmmabey7f7bq0dosoyislxv2l8 FOREIGN KEY (id_message) REFERENCES mes_message(id_message),
-	CONSTRAINT fkq6618i2msk1lvs8lfepu75o9m FOREIGN KEY (id_recipient) REFERENCES com_user_data(id_user_data)
+CREATE TABLE public.mes_recipient
+(
+  id_recipiet integer NOT NULL,
+  is_bcc boolean,
+  is_cc boolean,
+  id_message integer,
+  id_message_recipient integer,
+  CONSTRAINT mes_recipient_pkey PRIMARY KEY (id_recipiet),
+  CONSTRAINT fk7jvut0332634tvqq1qgqo1omp FOREIGN KEY (id_message_recipient)
+      REFERENCES public.com_user_data (id_user_data) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT fkmmabey7f7bq0dosoyislxv2l8 FOREIGN KEY (id_message)
+      REFERENCES public.mes_message (id_message) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
 )
 WITH (
-	OIDS=FALSE
-) ;
+  OIDS=FALSE
+);
+ALTER TABLE public.mes_recipient
+  OWNER TO postgres;

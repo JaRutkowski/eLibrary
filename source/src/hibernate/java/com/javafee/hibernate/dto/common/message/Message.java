@@ -7,7 +7,6 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,16 +22,18 @@ import javax.persistence.TemporalType;
 
 import com.javafee.hibernate.dto.common.UserData;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "mes_message")
 @Inheritance(strategy = InheritanceType.JOINED)
-@SequenceGenerator(name = "seq_com_message", sequenceName = "seq_com_message", allocationSize = 1)
+@SequenceGenerator(name = "seq_mes_message", sequenceName = "seq_mes_message", allocationSize = 1)
 public class Message {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_com_message")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_mes_message")
 	@Column(name = "id_message", unique = false, nullable = false, insertable = true, updatable = true)
 	private Integer idMessage;
 
@@ -40,7 +41,7 @@ public class Message {
 	@JoinColumn(name = "id_sender")
 	private UserData sender;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "pk.message")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "message")
 	private Set<Recipient> recipient = new HashSet<Recipient>(0);
 
 	@Column(name = "title", unique = false, nullable = true, insertable = true, updatable = true, length = 100)
@@ -52,7 +53,7 @@ public class Message {
 	@Temporal(TemporalType.DATE)
 	@Column(name = "send_date", unique = false, nullable = true, insertable = true, updatable = true, length = 13)
 	private Date sendDate;
-	
+
 	@Column(name = "is_draft", unique = false, nullable = true, insertable = true, updatable = true)
 	private Boolean isDraft;
 }
