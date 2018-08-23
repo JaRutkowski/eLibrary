@@ -76,4 +76,16 @@ public class UserData {
 	@ManyToOne(cascade = {}, fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_city", unique = false, nullable = true, insertable = true, updatable = true)
 	private City city;
+	
+	@Override
+	public String toString() {
+		String result = "";
+		if (surname != null && name == null)
+			result = surname;
+		else if (surname == null && name != null)
+			result = name;
+		else if (surname != null && name != null)
+			result = surname + " " + name;
+		return result;
+	}
 }

@@ -19,4 +19,5 @@ public class LibraryWorkerId implements Serializable {
 
 	@ManyToOne
 	private LibraryData libraryData;
+
 }

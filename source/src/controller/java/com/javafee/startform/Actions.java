@@ -2,11 +2,14 @@ package com.javafee.startform;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.text.MessageFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.AbstractMap.SimpleEntry;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -18,6 +21,7 @@ import javax.swing.JOptionPane;
 import com.javafee.common.Common;
 import com.javafee.common.Constans;
 import com.javafee.common.Constans.Role;
+import com.javafee.emailform.MailSenderEvent;
 import com.javafee.common.IRegistrationForm;
 import com.javafee.common.Params;
 import com.javafee.common.SystemProperties;
@@ -29,6 +33,7 @@ import com.javafee.hibernate.dao.HibernateDao;
 import com.javafee.hibernate.dao.HibernateUtil;
 import com.javafee.hibernate.dto.association.City;
 import com.javafee.hibernate.dto.common.UserData;
+import com.javafee.hibernate.dto.common.message.Recipient;
 import com.javafee.hibernate.dto.library.Client;
 import com.javafee.hibernate.dto.library.Worker;
 import com.javafee.mail.MailSender;
@@ -56,6 +61,7 @@ public class Actions implements IRegistrationForm {
 
 		// FIXME #4 Fix adding key listener.
 		// FIXME #5 Mail template for restoring password
+		// FIXME #6 No Internet connection - alert (email)
 
 		startForm.getLogInPanel().getBtnForgotPassword().addActionListener(e -> onClickBtnForgotPassword());
 		startForm.getBtnLogIn().addActionListener(e -> onClickBtnLogIn());
@@ -92,7 +98,7 @@ public class Actions implements IRegistrationForm {
 				HibernateUtil.getSession().update(UserData.class.getName(), userData);
 				HibernateUtil.commitTransaction();
 
-				sendMailWithPassword(generatedPassword, userData.getEMail());
+				sendMailWithPassword(generatedPassword, userData);
 				Params.getInstance().remove("USER_DATA");
 
 				Utils.displayOptionPane(
@@ -289,19 +295,40 @@ public class Actions implements IRegistrationForm {
 		startForm.getFrame().pack();
 	}
 
-	private void sendMailWithPassword(String generatedPassword, String recipient) {
-		MailSender ms = new MailSender();
-		Message message = new MimeMessage(ms.getSession());
+	private void sendMailWithPassword(String generatedPassword, UserData recipient) {
+		List<SimpleEntry<Message.RecipientType, UserData>> recipientArg = new ArrayList<SimpleEntry<Message.RecipientType, UserData>>();
+		recipientArg.add(new SimpleEntry<Message.RecipientType, UserData>(Message.RecipientType.TO, recipient));
+		String subject = SystemProperties.getInstance().getResourceBundle()
+				.getString("startForm.forgotPasswordEmailSubject");
+		String content = MessageFormat.format(
+				SystemProperties.getInstance().getResourceBundle().getString("startForm.forgotPasswordEmailContent"),
+				generatedPassword);
 
+		if (new MailSenderEvent().control(recipientArg, subject, content))
+			createEmail(recipientArg, subject, content);
+	}
+
+	private void createEmail(List<SimpleEntry<Message.RecipientType, UserData>> recipients, String subject,
+			String text) {
 		try {
-			message.setFrom(new InternetAddress("no-reply@gmail.com"));
-			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipient));
-			message.setSubject("Przywrócenie has³a w sytemie eLibrary");
-			message.setText("Drogi u¿ytkowniku,"
-					+ "\n\nPrzywrócono Twoje has³o. Zaloguj siê do systemu korzystaj¹c z wygenerowanego przez system has³a: "
-					+ generatedPassword + "\n\n Administracja eLibrary");
-			ms.send(message);
-		} catch (MessagingException e) {
+			HibernateUtil.beginTransaction();
+			com.javafee.hibernate.dto.common.message.Message message = new com.javafee.hibernate.dto.common.message.Message();
+
+			message.setSender(null);
+			recipients.forEach(recipient -> {
+				Recipient newRecipient = new Recipient();
+				newRecipient.setUserData(recipient.getValue());
+				newRecipient.setMessage(message);
+				message.getRecipient().add(newRecipient);
+			});
+			message.setTitle(subject);
+			message.setContent(text);
+
+			message.setSendDate(
+					Constans.APPLICATION_DATE_FORMAT.parse(Constans.APPLICATION_DATE_FORMAT.format(new Date())));
+			HibernateUtil.getSession().save(message);
+			HibernateUtil.commitTransaction();
+		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 	}

@@ -5,19 +5,19 @@ import com.javafee.exception.RefusedTabSendedPageEventLoadingException;
 
 import lombok.Setter;
 
-public class TabSendedPageEvent implements IActionForm {
+public class TabOutboxPageEvent implements IActionForm {
 	@Setter
 	private EmailForm emailForm;
 
-	private static TabSendedPageEvent workingCopyPageEvent = null;
+	private static TabOutboxPageEvent workingCopyPageEvent = null;
 
-	private TabSendedPageEvent(EmailForm emailForm) {
+	private TabOutboxPageEvent(EmailForm emailForm) {
 		this.control(emailForm);
 	}
 	
-	public static TabSendedPageEvent getInstance(EmailForm emailForm) {
+	public static TabOutboxPageEvent getInstance(EmailForm emailForm) {
 		if (workingCopyPageEvent == null) {
-			workingCopyPageEvent = new TabSendedPageEvent(emailForm);
+			workingCopyPageEvent = new TabOutboxPageEvent(emailForm);
 		} else
 			new RefusedTabSendedPageEventLoadingException("Cannot tab sended page event loading");
 		return workingCopyPageEvent;

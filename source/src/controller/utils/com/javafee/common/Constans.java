@@ -36,7 +36,7 @@ public final class Constans {
 					.findFirst().get();
 		}
 	}
-	
+
 	@Getter
 	@AllArgsConstructor
 	public enum Tab_Accountant {
@@ -45,27 +45,27 @@ public final class Constans {
 		private final Integer value;
 
 		public static Tab_Accountant getByNumber(int tabbedPaneSelectedIndex) {
-			return Stream.of(Tab_Accountant.values()).filter(item -> item.getValue().equals(tabbedPaneSelectedIndex)).findFirst()
-					.get();
+			return Stream.of(Tab_Accountant.values()).filter(item -> item.getValue().equals(tabbedPaneSelectedIndex))
+					.findFirst().get();
 		}
 	}
-	
+
 	@Getter
 	@AllArgsConstructor
 	public enum Tab_Email {
 		TAB_CREATE_PAGE(0), TAB_SENDED_PAGE(1), TAB_WORKING_COPY_PAGE(2), TAB_TEMPLATE_PAGE(3);
-		
+
 		private final Integer value;
-		
+
 		public static Tab_Email getByNumber(int tabbedPaneSelectedIndex) {
-			return Stream.of(Tab_Email.values()).filter(item -> item.getValue().equals(tabbedPaneSelectedIndex)).findFirst()
-					.get();
+			return Stream.of(Tab_Email.values()).filter(item -> item.getValue().equals(tabbedPaneSelectedIndex))
+					.findFirst().get();
 		}
 	}
 
 	public enum ClientTableColumn {
-		COL_PESEL_NUMBER(0), COL_DOCUMENT_NUMBER(1), COL_LOGIN(2), COL_E_MAIL(3), COL_NAME(4), COL_SURNAME(
-				5), COL_ADDRESS(6), COL_CITY(7), COL_SEX(8), COL_BIRTH_DATE(9), COL_REGISTERED(10);
+		COL_PESEL_NUMBER(0), COL_DOCUMENT_NUMBER(1), COL_LOGIN(2), COL_E_MAIL(3), COL_NAME(4), COL_SURNAME(5),
+		COL_ADDRESS(6), COL_CITY(7), COL_SEX(8), COL_BIRTH_DATE(9), COL_REGISTERED(10);
 
 		private final Integer value;
 
@@ -103,9 +103,9 @@ public final class Constans {
 	}
 
 	public enum VolumeTableColumn {
-		COL_BOOK_TITLE(0), AUTHOR(1), CATEGORY(2), PUBLISHING_HOUSE(3), COL_BOOK_ISBN_NUMBER(4), COL_INVENTORY_NUMBER(
-				5), COL_BOOK_NUMBER_OF_PAGE(
-						6), COL_BOOK_NUMBER_OF_TOME(7), COL_IS_READING_ROOM(8), COL_IS_RESERVERD(9), COL_IS_LOANED(10);
+		COL_BOOK_TITLE(0), AUTHOR(1), CATEGORY(2), PUBLISHING_HOUSE(3), COL_BOOK_ISBN_NUMBER(4),
+		COL_INVENTORY_NUMBER(5), COL_BOOK_NUMBER_OF_PAGE(6), COL_BOOK_NUMBER_OF_TOME(7), COL_IS_READING_ROOM(8),
+		COL_IS_RESERVERD(9), COL_IS_LOANED(10);
 
 		private final Integer value;
 
@@ -124,9 +124,9 @@ public final class Constans {
 	}
 
 	public enum LendTableColumn {
-		COL_CLIENT_BASIC_DATA(0), COL_CLIENT_PESEL_NUMBER(1), COL_CLIENT_DOCUMENT_NUMBER(2), COL_VOLUME_BOOK_TITLE(
-				3), COL_VOLUME_BOOK_ISBN_NUMBER(4), COL_VOLUME_INVENTORY_NUMBER(
-						5), COL_LEND_DATE(6), COL_RETURNED_DATE(7), COL_PENALTY(8), LENDED(9);
+		COL_CLIENT_BASIC_DATA(0), COL_CLIENT_PESEL_NUMBER(1), COL_CLIENT_DOCUMENT_NUMBER(2), COL_VOLUME_BOOK_TITLE(3),
+		COL_VOLUME_BOOK_ISBN_NUMBER(4), COL_VOLUME_INVENTORY_NUMBER(5), COL_LEND_DATE(6), COL_RETURNED_DATE(7),
+		COL_PENALTY(8), LENDED(9);
 
 		private final Integer value;
 
@@ -201,6 +201,26 @@ public final class Constans {
 		}
 	}
 
+	public enum OutboxTableColumn {
+		COL_RECIPIENT_SIMPLE_DATA(0), COL_RECIPIENT_EMAIL(1), COL_TOPIC(2), COL_CONTENT(3), COL_SENDER_SIMPLE_DATA(4),
+		COL_DATE(5);
+
+		private final Integer value;
+
+		OutboxTableColumn(final int newValue) {
+			value = newValue;
+		}
+
+		public Integer getValue() {
+			return value;
+		}
+
+		public static OutboxTableColumn getByNumber(int outboxTableSelectedIndex) {
+			return Stream.of(OutboxTableColumn.values())
+					.filter(item -> item.getValue().equals(outboxTableSelectedIndex)).findFirst().get();
+		}
+	}
+
 	public enum Role {
 		ADMIN, WORKER_ACCOUNTANT, WORKER_LIBRARIAN, CLIENT;
 	}
@@ -224,13 +244,13 @@ public final class Constans {
 	public static final Integer APPLICATION_GENERATE_PASSWORD_LENGTH = 16;
 	public static final String APPLICATION_EMAIL = "nreply.elibrary@gmail.com";
 	public static final String APPLICATION_EMAIL_PASSWORD = "Admin95!";
-	
-	@SuppressWarnings("deprecation")
-	public static final KeyStroke SHURTCUT_SAVE_TEMPLATE  = KeyStroke.getKeyStroke(KeyEvent.VK_T, Toolkit.getDefaultToolkit ().getMenuShortcutKeyMask());
-	@SuppressWarnings("deprecation")
-	public static final KeyStroke SHURTCUT_LOAD_TEMPLATE  = KeyStroke.getKeyStroke(KeyEvent.VK_L, Toolkit.getDefaultToolkit ().getMenuShortcutKeyMask());
-	@SuppressWarnings("deprecation")
-	public static final KeyStroke SHURTCUT_MANAGE_TEMPLATE  = KeyStroke.getKeyStroke(KeyEvent.VK_M, Toolkit.getDefaultToolkit ().getMenuShortcutKeyMask());
+
+	public static final KeyStroke SHURTCUT_SAVE_TEMPLATE = KeyStroke.getKeyStroke(KeyEvent.VK_T,
+			Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
+	public static final KeyStroke SHURTCUT_LOAD_TEMPLATE = KeyStroke.getKeyStroke(KeyEvent.VK_L,
+			Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
+	public static final KeyStroke SHURTCUT_MANAGE_TEMPLATE = KeyStroke.getKeyStroke(KeyEvent.VK_M,
+			Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
 
 	public static final String ROLE_ADMIN = SystemProperties.getInstance().getResourceBundle()
 			.getString("constans.ROLE_ADMIN");

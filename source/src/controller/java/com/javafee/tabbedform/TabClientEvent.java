@@ -61,6 +61,19 @@ public final class TabClientEvent implements IActionForm {
 	}
 	
 	private void onClickBtnContact() {
+		//TODO getSelectedClient() - consider using onChangeSelectedEvent
+		if (tabbedForm.getPanelClient().getClientTable().getSelectedRow() != -1) {
+			int selectedRowIndex = tabbedForm.getPanelClient().getClientTable()
+					.convertRowIndexToModel(tabbedForm.getPanelClient().getClientTable().getSelectedRow());
+
+			if (selectedRowIndex != -1) {
+				Client selectedClient = ((ClientTableModel) tabbedForm.getPanelClient().getClientTable().getModel())
+						.getClient(selectedRowIndex);
+				
+				Params.getInstance().add("selectedClient", selectedClient);
+			}
+		}
+		
 		Actions a = new Actions();
 		a.control();
 	}

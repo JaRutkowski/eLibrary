@@ -16,7 +16,7 @@ import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
 import com.javafee.emailform.emails.ComposePagePanel;
 import com.javafee.emailform.emails.DraftPagePanel;
-import com.javafee.emailform.emails.SentMailPagePanel;
+import com.javafee.emailform.emails.OutboxMailPagePanel;
 import com.javafee.emailform.emails.TemplatePagePanel;
 import com.javafee.startform.StartForm;
 
@@ -31,7 +31,7 @@ public class EmailForm {
 	@Getter
 	private ComposePagePanel panelComposePage;
 	@Getter
-	private SentMailPagePanel panelSentMailPage;
+	private OutboxMailPagePanel panelSentMailPage;
 	@Getter
 	private DraftPagePanel panelDraftPage;
 	@Getter
@@ -97,7 +97,7 @@ public class EmailForm {
 		
 		panelComposePage = new ComposePagePanel();
 		
-		panelSentMailPage = new SentMailPagePanel();
+		panelSentMailPage = new OutboxMailPagePanel();
 		
 		panelDraftPage = new DraftPagePanel();
 		

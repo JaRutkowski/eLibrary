@@ -38,10 +38,10 @@ public class Actions implements IActionForm {
 	private void reloadTabbedPane() {
 		switch (Tab_Email.getByNumber(emailForm.getTabbedPane().getSelectedIndex())) {
 		case TAB_CREATE_PAGE:
-			TabCreatePageEvent.getInstance(emailForm);
+			TabComposePageEvent.getInstance(emailForm);
 			break;
 		case TAB_SENDED_PAGE:
-			TabSendedPageEvent.getInstance(emailForm);
+			TabOutboxPageEvent.getInstance(emailForm);
 			break;
 		case TAB_WORKING_COPY_PAGE:
 			TabWorkingCopyPageEvent.getInstance(emailForm);

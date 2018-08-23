@@ -42,4 +42,9 @@ public class Recipient {
 	@JoinColumn(name = "id_message", unique = false, nullable = true, insertable = true, updatable = true)
 	private Message message;
 
+	@Override
+	public String toString() {
+		return userData.toString();
+	}
+	
 }

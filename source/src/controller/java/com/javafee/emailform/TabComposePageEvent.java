@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 
 import com.javafee.common.Constans;
 import com.javafee.common.IActionForm;
+import com.javafee.common.Params;
 import com.javafee.common.SystemProperties;
 import com.javafee.exception.LogGuiException;
 import com.javafee.exception.RefusedTabCreatePageEventLoadingException;
@@ -26,21 +27,21 @@ import com.javafee.startform.LogInEvent;
 
 import lombok.Setter;
 
-public class TabCreatePageEvent implements IActionForm {
+public class TabComposePageEvent implements IActionForm {
 	@Setter
 	private EmailForm emailForm;
 
-	private static TabCreatePageEvent createPageEvent = null;
+	private static TabComposePageEvent createPageEvent = null;
 
-	private TabCreatePageEvent(EmailForm emailForm) {
+	private TabComposePageEvent(EmailForm emailForm) {
 		this.control(emailForm);
 	}
 
-	public static TabCreatePageEvent getInstance(EmailForm emailForm) {
-		if (createPageEvent == null) {
-			createPageEvent = new TabCreatePageEvent(emailForm);
-		} else
-			new RefusedTabCreatePageEventLoadingException("Cannot tab create page loading");
+	public static TabComposePageEvent getInstance(EmailForm emailForm) {
+		if (createPageEvent == null)
+			createPageEvent = new TabComposePageEvent(emailForm);
+		createPageEvent.control(emailForm);
+		
 		return createPageEvent;
 	}
 
@@ -79,6 +80,10 @@ public class TabCreatePageEvent implements IActionForm {
 		emailForm.getPanelComposePage().getComboBoxTo().setModel(comboBoxTo);
 		emailForm.getPanelComposePage().getComboBoxCC().setModel(comboBoxCC);
 		emailForm.getPanelComposePage().getComboBoxBCC().setModel(comboBoxBCC);
+		
+		if(Params.getInstance().get("selectedClient") != null && // 
+				((Client)Params.getInstance().get("selectedClient")).getEMail() != null)
+			emailForm.getPanelComposePage().getComboBoxTo().setSelectedItem((Client)Params.getInstance().get("selectedClient"));
 	}
 
 	private void onClickBtnSend() {

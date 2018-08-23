@@ -9,6 +9,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
+import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
 import com.javafee.model.ClientTableModel;
 import com.javafee.uniform.AdmIsRegisteredPanel;
@@ -77,7 +78,7 @@ public class ClientTablePanel extends JPanel {
 		gbc_panel.gridy = 2;
 		add(cockpitEditionPanel, gbc_panel);
 		
-		btnContact = new JButton("Contact");
+		btnContact = new JButton(SystemProperties.getInstance().getResourceBundle().getString("clientTablePanel.btnContact"));
 		GridBagConstraints gbc_btnContact = new GridBagConstraints();
 		gbc_btnContact.fill = GridBagConstraints.VERTICAL;
 		gbc_btnContact.insets = new Insets(0, 0, 5, 0);

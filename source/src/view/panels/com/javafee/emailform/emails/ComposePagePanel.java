@@ -18,6 +18,7 @@ import com.javafee.common.Utils;
 import com.javafee.hibernate.dto.library.Client;
 
 import lombok.Getter;
+import java.awt.Font;
 
 public class ComposePagePanel extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -47,7 +48,7 @@ public class ComposePagePanel extends JPanel {
 	@Getter
 	private JTextArea textAreaContent;
 	@Getter
-	private ComposeNavigationEmailPanel composeNavigationEmailPanel;
+	private ComposeNavigationPanel composeNavigationEmailPanel;
 
 	public ComposePagePanel() {
 		Utils.setLookAndFeel();
@@ -139,6 +140,8 @@ public class ComposePagePanel extends JPanel {
 		textFieldTopic.setColumns(10);
 		
 		textAreaContent = new JTextArea();
+		textAreaContent.setLineWrap(true);
+		textAreaContent.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		GridBagConstraints gbc_textAreaContent = new GridBagConstraints();
 		gbc_textAreaContent.gridheight = 7;
 		gbc_textAreaContent.gridwidth = 10;
@@ -148,7 +151,7 @@ public class ComposePagePanel extends JPanel {
 		gbc_textAreaContent.gridy = 4;
 		add(textAreaContent, gbc_textAreaContent);
 		
-		composeNavigationEmailPanel = new ComposeNavigationEmailPanel();
+		composeNavigationEmailPanel = new ComposeNavigationPanel();
 		GridBagConstraints gbc_composeNavigationEmailPanel = new GridBagConstraints();
 		gbc_composeNavigationEmailPanel.anchor = GridBagConstraints.WEST;
 		gbc_composeNavigationEmailPanel.gridwidth = 10;
