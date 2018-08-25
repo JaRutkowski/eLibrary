@@ -22,21 +22,21 @@ import com.javafee.tabbedform.admdictionaries.AdmDictionaryPanel;
 
 import lombok.Setter;
 
-public class TabAdmDictioaryEvent implements IActionForm {
+public class TabAdmDictionaryEvent implements IActionForm {
 	@Setter
 	private TabbedForm tabbedForm;
 
 	private String pressedRadioButton = Constans.RADIO_BUTTON_AUTHOR;
 
-	private static TabAdmDictioaryEvent admDictionaryEvent = null;
+	private static TabAdmDictionaryEvent admDictionaryEvent = null;
 
-	public TabAdmDictioaryEvent(TabbedForm tabbedForm) {
+	public TabAdmDictionaryEvent(TabbedForm tabbedForm) {
 		this.control(tabbedForm);
 	}
 
-	public static TabAdmDictioaryEvent getInstance(TabbedForm tabbedForm) {
+	public static TabAdmDictionaryEvent getInstance(TabbedForm tabbedForm) {
 		if (admDictionaryEvent == null) {
-			admDictionaryEvent = new TabAdmDictioaryEvent(tabbedForm);
+			admDictionaryEvent = new TabAdmDictionaryEvent(tabbedForm);
 		} else
 			new RefusedAdmDictionaryEventLoadingException("Cannot adm dictionary event loading");
 		return admDictionaryEvent;
@@ -140,7 +140,7 @@ public class TabAdmDictioaryEvent implements IActionForm {
 				HibernateUtil.commitTransaction();
 				reloadComboBoxAuthor();
 				JOptionPane.showMessageDialog(tabbedForm.getFrame(),
-						"Dodano autora pomyúlnie: " + author.getName() + " " + author.getSurname(), "Sukces",
+						"Dodano autora pomy≈õlnie: " + author.getName() + " " + author.getSurname(), "Sukces",
 						JOptionPane.INFORMATION_MESSAGE);
 
 			} catch (NumberFormatException e) {
@@ -162,7 +162,7 @@ public class TabAdmDictioaryEvent implements IActionForm {
 				HibernateUtil.commitTransaction();
 				reloadComboBoxCategory();
 				JOptionPane.showMessageDialog(tabbedForm.getFrame(),
-						"Dodano kategorie pomyúlnie: " + category.getName(), "Sukces", JOptionPane.INFORMATION_MESSAGE);
+						"Dodano kategorie pomy≈õlnie: " + category.getName(), "Sukces", JOptionPane.INFORMATION_MESSAGE);
 			} catch (NumberFormatException e) {
 				e.printStackTrace();
 			} catch (IllegalStateException e) {
@@ -182,7 +182,7 @@ public class TabAdmDictioaryEvent implements IActionForm {
 				HibernateUtil.commitTransaction();
 				reloadComboBoxPublishingHouse();
 				JOptionPane.showMessageDialog(tabbedForm.getFrame(),
-						"Dodano wydawnictwo pomyúlnie: " + publishingHouse.getName(), "Sukces",
+						"Dodano wydawnictwo pomy≈õlnie: " + publishingHouse.getName(), "Sukces",
 						JOptionPane.INFORMATION_MESSAGE);
 			} catch (NumberFormatException e) {
 				e.printStackTrace();

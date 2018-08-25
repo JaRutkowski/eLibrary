@@ -60,8 +60,8 @@ public class EmailForm {
 		gridBagLayout.rowHeights = new int[]{0, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
+		frame.setMinimumSize(Constans.EMAIL_FORM_MINIMUM_SIZE);
 		frame.getContentPane().setLayout(gridBagLayout);
-		
 		frame.setTitle(Constans.APPLICATION_NAME);
 		frame.setIconImage(
 				Toolkit.getDefaultToolkit().getImage(StartForm.class.getResource("/images/splashScreen.jpg")));

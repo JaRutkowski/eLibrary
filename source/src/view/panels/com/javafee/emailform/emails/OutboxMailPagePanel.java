@@ -26,7 +26,7 @@ public class OutboxMailPagePanel extends JPanel {
 	private JTable outboxTable;
 	private JCheckBox checkShowOnlySystemCorrespondence;
 	private JLabel lblRecipient;
-	private JComboBox comboBoxRecipient;
+	private JComboBox<String> comboBoxRecipient;
 
 	public OutboxMailPagePanel() {
 		setBorder(new TitledBorder(null, SystemProperties.getInstance().getResourceBundle().getString("outboxMailPanel.outboxMailPanelBorderTitle"), TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -34,7 +34,7 @@ public class OutboxMailPagePanel extends JPanel {
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0};
 		gridBagLayout.columnWeights = new double[]{1.0, 0.0, 1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
 		chckbxShowOnlyMyCorrespondence = new JCheckBox(SystemProperties.getInstance().getResourceBundle().getString("outboxMailPanel.chckbxShowOnlyMyCorrespondence"));
@@ -53,7 +53,7 @@ public class OutboxMailPagePanel extends JPanel {
 		gbc_lblRecipient.gridy = 0;
 		add(lblRecipient, gbc_lblRecipient);
 		
-		comboBoxRecipient = new JComboBox();
+		comboBoxRecipient = new JComboBox<String>();
 		GridBagConstraints gbc_comboBoxRecipient = new GridBagConstraints();
 		gbc_comboBoxRecipient.insets = new Insets(0, 0, 5, 0);
 		gbc_comboBoxRecipient.fill = GridBagConstraints.HORIZONTAL;
@@ -89,8 +89,9 @@ public class OutboxMailPagePanel extends JPanel {
 		
 		outboxNavigationPanel = new OutboxNavigationPanel();
 		GridBagConstraints gbc_outboxNavigationPanel = new GridBagConstraints();
+		gbc_outboxNavigationPanel.anchor = GridBagConstraints.SOUTH;
 		gbc_outboxNavigationPanel.gridwidth = 3;
-		gbc_outboxNavigationPanel.fill = GridBagConstraints.BOTH;
+		gbc_outboxNavigationPanel.fill = GridBagConstraints.HORIZONTAL;
 		gbc_outboxNavigationPanel.gridx = 0;
 		gbc_outboxNavigationPanel.gridy = 3;
 		add(outboxNavigationPanel, gbc_outboxNavigationPanel);

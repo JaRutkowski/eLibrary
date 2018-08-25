@@ -32,7 +32,7 @@ public class MailSender {
 		try {
 			Transport.send(message);
 			result = true;
-			Logger.getLogger("app").info("Wys≥ano e-mail");
+			Logger.getLogger("app").info("Wys≈Çano e-mail");
 		} catch (MessagingException e) {
 			throw new RuntimeException(e);
 		}

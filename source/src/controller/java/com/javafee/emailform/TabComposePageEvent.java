@@ -17,7 +17,6 @@ import com.javafee.common.IActionForm;
 import com.javafee.common.Params;
 import com.javafee.common.SystemProperties;
 import com.javafee.exception.LogGuiException;
-import com.javafee.exception.RefusedTabCreatePageEventLoadingException;
 import com.javafee.hibernate.dao.HibernateDao;
 import com.javafee.hibernate.dao.HibernateUtil;
 import com.javafee.hibernate.dto.common.UserData;

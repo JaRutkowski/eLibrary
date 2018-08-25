@@ -27,21 +27,21 @@ import com.javafee.model.VolumeTableModel;
 
 import lombok.Setter;
 
-public class TabLoadServiceEvent implements IActionForm {
+public class TabLoanServiceEvent implements IActionForm {
 	@Setter
 	private TabbedForm tabbedForm;
 
-	private static TabLoadServiceEvent loadServiceEvent = null;
+	private static TabLoanServiceEvent loadServiceEvent = null;
 
-	public TabLoadServiceEvent(TabbedForm tabbedForm) {
+	public TabLoanServiceEvent(TabbedForm tabbedForm) {
 		this.control(tabbedForm);
 	}
 
-	public static TabLoadServiceEvent getInstance(TabbedForm tabbedForm) {
+	public static TabLoanServiceEvent getInstance(TabbedForm tabbedForm) {
 		((VolumeTableModel) tabbedForm.getLoanServicePanel_new().getVolumeLoanTable().getModel()).reloadData();
 		((ClientTableModel) tabbedForm.getLoanServicePanel_new().getClientTable().getModel()).reloadData();
 		if (loadServiceEvent == null) {
-			loadServiceEvent = new TabLoadServiceEvent(tabbedForm);
+			loadServiceEvent = new TabLoanServiceEvent(tabbedForm);
 		} else
 			new RefusedLoanServiceEventLoadingException("Cannot loan service event loading");
 		return loadServiceEvent;
@@ -364,7 +364,7 @@ public class TabLoadServiceEvent implements IActionForm {
 			((LoanTableModel) tabbedForm.getLoanServicePanel_new().getLoanTable().getModel()).delete(lend);
 			((LoanTableModel) tabbedForm.getLoanServicePanel_new().getLoanTable().getModel()).reloadData();
 			((VolumeTableModel) tabbedForm.getLoanServicePanel_new().getVolumeLoanTable().getModel()).reloadData();
-			JOptionPane.showMessageDialog(tabbedForm.getFrame(), "Kara zosta≥a sp≥acona", "Sp≥acona",
+			JOptionPane.showMessageDialog(tabbedForm.getFrame(), "Kara zosta≈Ça sp≈Çacona", "Sp≈Çacona",
 					JOptionPane.INFORMATION_MESSAGE);
 		} else {
 			JOptionPane.showMessageDialog(tabbedForm.getFrame(),

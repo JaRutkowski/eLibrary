@@ -183,7 +183,7 @@ public class Actions implements IActionForm {
 				TabBookEvent.getInstance(tabbedForm);
 				break;
 			case TAB_LOAN_SERVICE:
-				TabLoadServiceEvent.getInstance(tabbedForm);
+				TabLoanServiceEvent.getInstance(tabbedForm);
 				break;
 			default:
 				break;
@@ -201,10 +201,10 @@ public class Actions implements IActionForm {
 				TabBookEvent.getInstance(tabbedForm);
 				break;
 			case TAB_ADM_DICTIONARY:
-				TabAdmDictioaryEvent.getInstance(tabbedForm);
+				TabAdmDictionaryEvent.getInstance(tabbedForm);
 				break;
 			case TAB_LOAN_SERVICE:
-				TabLoadServiceEvent.getInstance(tabbedForm);
+				TabLoanServiceEvent.getInstance(tabbedForm);
 				break;
 			case TAB_ADM_WORKER:
 				TabWorkerEvent.getInstance(tabbedForm);

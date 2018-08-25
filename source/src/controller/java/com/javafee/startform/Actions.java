@@ -5,27 +5,24 @@ import java.awt.event.WindowEvent;
 import java.text.MessageFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-import java.util.AbstractMap.SimpleEntry;
 
 import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 import com.javafee.common.Common;
 import com.javafee.common.Constans;
 import com.javafee.common.Constans.Role;
-import com.javafee.emailform.MailSenderEvent;
 import com.javafee.common.IRegistrationForm;
 import com.javafee.common.Params;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
+import com.javafee.emailform.MailSenderEvent;
 import com.javafee.exception.LogGuiException;
 import com.javafee.exception.RefusedLogInException;
 import com.javafee.exception.RefusedRegistrationException;
@@ -36,7 +33,6 @@ import com.javafee.hibernate.dto.common.UserData;
 import com.javafee.hibernate.dto.common.message.Recipient;
 import com.javafee.hibernate.dto.library.Client;
 import com.javafee.hibernate.dto.library.Worker;
-import com.javafee.mail.MailSender;
 import com.javafee.startform.RegistrationEvent.RegistrationFailureCause;
 
 public class Actions implements IRegistrationForm {
