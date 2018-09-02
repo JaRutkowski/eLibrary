@@ -9,7 +9,7 @@ public class TabWorkingCopyPageEvent implements IActionForm{
 	@Setter
 	private EmailForm emailForm;
 
-	private static TabWorkingCopyPageEvent workingCopyPageEvent = null;
+	protected static TabWorkingCopyPageEvent workingCopyPageEvent = null;
 
 	private TabWorkingCopyPageEvent(EmailForm emailForm) {
 		this.control(emailForm);
@@ -20,6 +20,7 @@ public class TabWorkingCopyPageEvent implements IActionForm{
 			workingCopyPageEvent = new TabWorkingCopyPageEvent(emailForm);
 		} else
 			new RefusedTabWorkingCopyPageEventLoadingException("Cannot tab working copy page event loading");
+		
 		return workingCopyPageEvent;
 	}
 	

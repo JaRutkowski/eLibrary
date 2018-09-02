@@ -22,7 +22,7 @@ public class TabBookEvent implements IActionForm {
 	@Setter
 	private TabbedForm tabbedForm;
 
-	private static TabBookEvent bookEvent = null;
+	protected static TabBookEvent bookEvent = null;
 	private BookAddModEvent bookAddModEvent;
 
 	public TabBookEvent(TabbedForm tabbedForm) {

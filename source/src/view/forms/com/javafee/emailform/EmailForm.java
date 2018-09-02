@@ -31,7 +31,7 @@ public class EmailForm {
 	@Getter
 	private ComposePagePanel panelComposePage;
 	@Getter
-	private OutboxMailPagePanel panelSentMailPage;
+	private OutboxMailPagePanel panelOutboxPage;
 	@Getter
 	private DraftPagePanel panelDraftPage;
 	@Getter
@@ -97,7 +97,7 @@ public class EmailForm {
 		
 		panelComposePage = new ComposePagePanel();
 		
-		panelSentMailPage = new OutboxMailPagePanel();
+		panelOutboxPage = new OutboxMailPagePanel();
 		
 		panelDraftPage = new DraftPagePanel();
 		

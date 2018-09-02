@@ -60,8 +60,10 @@
 		<mapping
 			class="com.javafee.hibernate.dto.library.RawLendingData" />
 		<mapping class="com.javafee.hibernate.dto.library.Penalty" />
-		<mapping class="com.javafee.hibernate.dto.common.message.Message"/>
-		<mapping class="com.javafee.hibernate.dto.common.message.Recipient"/>
+		<mapping
+			class="com.javafee.hibernate.dto.common.message.Message" />
+		<mapping
+			class="com.javafee.hibernate.dto.common.message.Recipient" />
 		<!-- <mapping class="com.javafee.hibernate.dto.common.message.RecipientId" 
 			/> -->
 	</session-factory>

@@ -218,6 +218,7 @@ public class Actions implements IActionForm {
 		LogInEvent.clearLogInData();
 		tabbedForm.getFrame().dispose();
 		tabbedForm = null;
+		clearEvents();
 		openStartForm();
 	}
 
@@ -227,7 +228,15 @@ public class Actions implements IActionForm {
 
 	private void openStartForm() {
 		com.javafee.startform.Actions actions = new com.javafee.startform.Actions();
-		onChangeTabbedPane();
 		actions.control();
+	}
+
+	private void clearEvents() {
+		TabClientEvent.clientEvent = null;
+		TabLibraryEvent.libraryEvent = null;
+		TabBookEvent.bookEvent = null;
+		TabLoanServiceEvent.loadServiceEvent = null;
+		TabAdmDictionaryEvent.admDictionaryEvent = null;
+		TabWorkerEvent.workerEvent = null;
 	}
 }

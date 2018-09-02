@@ -1,5 +1,6 @@
 package com.javafee.tabbedform;
 
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.text.ParseException;
@@ -40,41 +41,31 @@ public class ClientAddModEvent {
 		this.clientTableModel = clientTableModel;
 		openClientAddModFrame(context);
 
-		clientAddModFrame.addWindowListener(new WindowListener() {
-
-			@Override
-			public void windowOpened(WindowEvent e) {
-			}
-
-			@Override
-			public void windowIconified(WindowEvent e) {
-			}
-
-			@Override
-			public void windowDeiconified(WindowEvent e) {
-			}
-
-			@Override
-			public void windowDeactivated(WindowEvent e) {
-			}
-
-			@Override
-			public void windowClosing(WindowEvent e) {
-			}
-
+		clientAddModFrame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosed(WindowEvent e) {
 				Params.getInstance().remove("selectedRowIndex");
 				Params.getInstance().remove("selectedClient");
 			}
-
-			@Override
-			public void windowActivated(WindowEvent e) {
-			}
 		});
 
 		clientAddModFrame.getCockpitConfirmationPanel().getBtnAccept()
 				.addActionListener(e -> onClickBtnAccept(context));
+	}
+	
+	private void openClientAddModFrame(Context context) {
+		if (clientAddModFrame == null || (clientAddModFrame != null && !clientAddModFrame.isDisplayable())) {
+			clientAddModFrame = new ClientAddModFrame();
+			if (context == Context.MODIFICATION) {
+				clientAddModFrame.getClientDataPanel().getLblPassword().setVisible(false);
+				clientAddModFrame.getClientDataPanel().getPasswordField().setVisible(false);
+				reloadRegistrationPanel();
+			}
+			reloadComboBoxCity();
+			clientAddModFrame.setVisible(true);
+		} else {
+			clientAddModFrame.toFront();
+		}
 	}
 
 	private void onClickBtnAccept(Context context) {
@@ -149,34 +140,19 @@ public class ClientAddModEvent {
 		}
 	}
 
-	private void openClientAddModFrame(Context context) {
-		if (clientAddModFrame == null || (clientAddModFrame != null && !clientAddModFrame.isDisplayable())) {
-			clientAddModFrame = new ClientAddModFrame();
-			if (context == Context.MODIFICATION) {
-				clientAddModFrame.getClientDataPanel().getLblPassword().setVisible(false);
-				clientAddModFrame.getClientDataPanel().getPasswordField().setVisible(false);
-				reloadRegistrationPanel();
-			}
-			reloadComboBoxCity();
-			clientAddModFrame.setVisible(true);
-		} else {
-			clientAddModFrame.toFront();
-		}
-	}
-
 	private void reloadRegistrationPanel() {
 		reloadComboBoxCity();
 		fillRegistrationPanel();
 	}
 
 	private void reloadComboBoxCity() {
-		DefaultComboBoxModel<City> comboBoxCity = new DefaultComboBoxModel<City>();
+		DefaultComboBoxModel<City> comboBoxCityModel = new DefaultComboBoxModel<City>();
 		HibernateDao<City, Integer> city = new HibernateDao<City, Integer>(City.class);
 		List<City> cityListToSort = city.findAll();
 		cityListToSort.sort(Comparator.comparing(City::getName, Comparator.nullsFirst(Comparator.naturalOrder())));
-		cityListToSort.forEach(c -> comboBoxCity.addElement(c));
+		cityListToSort.forEach(c -> comboBoxCityModel.addElement(c));
 
-		clientAddModFrame.getClientDataPanel().getComboBoxCity().setModel(comboBoxCity);
+		clientAddModFrame.getClientDataPanel().getComboBoxCity().setModel(comboBoxCityModel);
 	}
 
 	private void fillRegistrationPanel() {

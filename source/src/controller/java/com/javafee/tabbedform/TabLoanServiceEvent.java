@@ -31,7 +31,7 @@ public class TabLoanServiceEvent implements IActionForm {
 	@Setter
 	private TabbedForm tabbedForm;
 
-	private static TabLoanServiceEvent loadServiceEvent = null;
+	protected static TabLoanServiceEvent loadServiceEvent = null;
 
 	public TabLoanServiceEvent(TabbedForm tabbedForm) {
 		this.control(tabbedForm);

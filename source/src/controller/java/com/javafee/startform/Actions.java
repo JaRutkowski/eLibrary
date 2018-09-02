@@ -72,13 +72,13 @@ public class Actions implements IRegistrationForm {
 	}
 
 	private void reloadComboBoxCity() {
-		DefaultComboBoxModel<City> comboBoxCity = new DefaultComboBoxModel<City>();
+		DefaultComboBoxModel<City> comboBoxCityModel = new DefaultComboBoxModel<City>();
 		HibernateDao<City, Integer> city = new HibernateDao<City, Integer>(City.class);
 		List<City> cityListToSort = city.findAll();
 		cityListToSort.sort(Comparator.comparing(City::getName, Comparator.nullsFirst(Comparator.naturalOrder())));
-		cityListToSort.forEach(c -> comboBoxCity.addElement(c));
+		cityListToSort.forEach(c -> comboBoxCityModel.addElement(c));
 
-		startForm.getRegistrationPanel().getComboBoxCity().setModel(comboBoxCity);
+		startForm.getRegistrationPanel().getComboBoxCity().setModel(comboBoxCityModel);
 	}
 
 	private void onClickBtnForgotPassword() {

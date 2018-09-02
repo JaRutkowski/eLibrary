@@ -30,18 +30,17 @@ public class TabComposePageEvent implements IActionForm {
 	@Setter
 	private EmailForm emailForm;
 
-	private static TabComposePageEvent createPageEvent = null;
+	protected static TabComposePageEvent composePageEvent = null;
 
-	private TabComposePageEvent(EmailForm emailForm) {
-		this.control(emailForm);
+	private TabComposePageEvent(EmailForm emailForm) { 
+		this.control(emailForm); 
 	}
 
 	public static TabComposePageEvent getInstance(EmailForm emailForm) {
-		if (createPageEvent == null)
-			createPageEvent = new TabComposePageEvent(emailForm);
-		createPageEvent.control(emailForm);
+		if (composePageEvent == null)
+			composePageEvent = new TabComposePageEvent(emailForm);
 		
-		return createPageEvent;
+		return composePageEvent;
 	}
 
 	public void control(EmailForm emailForm) {
@@ -61,9 +60,9 @@ public class TabComposePageEvent implements IActionForm {
 	}
 
 	private void reloadComboBoxes() {
-		DefaultComboBoxModel<Client> comboBoxTo = new DefaultComboBoxModel<Client>();
-		DefaultComboBoxModel<Client> comboBoxCC = new DefaultComboBoxModel<Client>();
-		DefaultComboBoxModel<Client> comboBoxBCC = new DefaultComboBoxModel<Client>();
+		DefaultComboBoxModel<Client> comboBoxToModel = new DefaultComboBoxModel<Client>();
+		DefaultComboBoxModel<Client> comboBoxCCModel = new DefaultComboBoxModel<Client>();
+		DefaultComboBoxModel<Client> comboBoxBCCModel = new DefaultComboBoxModel<Client>();
 
 		HibernateDao<Client, Integer> client = new HibernateDao<Client, Integer>(Client.class);
 		List<Client> clientListToSort = client.findAll().stream(). //
@@ -72,13 +71,13 @@ public class TabComposePageEvent implements IActionForm {
 		clientListToSort
 				.sort(Comparator.comparing(Client::getSurname, Comparator.nullsFirst(Comparator.naturalOrder())));
 
-		clientListToSort.forEach(c -> comboBoxTo.addElement(c));
-		clientListToSort.forEach(c -> comboBoxCC.addElement(c));
-		clientListToSort.forEach(c -> comboBoxBCC.addElement(c));
+		clientListToSort.forEach(c -> comboBoxToModel.addElement(c));
+		clientListToSort.forEach(c -> comboBoxCCModel.addElement(c));
+		clientListToSort.forEach(c -> comboBoxBCCModel.addElement(c));
 
-		emailForm.getPanelComposePage().getComboBoxTo().setModel(comboBoxTo);
-		emailForm.getPanelComposePage().getComboBoxCC().setModel(comboBoxCC);
-		emailForm.getPanelComposePage().getComboBoxBCC().setModel(comboBoxBCC);
+		emailForm.getPanelComposePage().getComboBoxTo().setModel(comboBoxToModel);
+		emailForm.getPanelComposePage().getComboBoxCC().setModel(comboBoxCCModel);
+		emailForm.getPanelComposePage().getComboBoxBCC().setModel(comboBoxBCCModel);
 		
 		if(Params.getInstance().get("selectedClient") != null && // 
 				((Client)Params.getInstance().get("selectedClient")).getEMail() != null)

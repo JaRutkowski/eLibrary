@@ -26,8 +26,10 @@ public final class TabClientEvent implements IActionForm {
 	@Setter
 	private TabbedForm tabbedForm;
 
-	private static TabClientEvent clientEvent = null;
+	protected static TabClientEvent clientEvent = null;
 	private ClientAddModEvent clientAddModEvent;
+	
+	private com.javafee.emailform.Actions action = null;
 
 	private TabClientEvent(TabbedForm tabbedForm) {
 		this.control(tabbedForm);
@@ -74,8 +76,9 @@ public final class TabClientEvent implements IActionForm {
 			}
 		}
 		
-		Actions a = new Actions();
-		a.control();
+		if(action == null)
+			action = new Actions();
+		action.control();
 	}
 
 	@Override

@@ -14,19 +14,26 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
 
 import com.javafee.common.SystemProperties;
+import com.javafee.hibernate.dto.common.UserData;
 import com.javafee.model.OutboxTableModel;
 
+import lombok.Getter;
 import net.coderazzi.filters.gui.TableFilterHeader;
 
 public class OutboxMailPagePanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
+	@Getter
 	private JCheckBox chckbxShowOnlyMyCorrespondence;
+	@Getter
 	private OutboxNavigationPanel outboxNavigationPanel;
+	@Getter
 	private JTable outboxTable;
+	@Getter
 	private JCheckBox checkShowOnlySystemCorrespondence;
 	private JLabel lblRecipient;
-	private JComboBox<String> comboBoxRecipient;
+	@Getter
+	private JComboBox<UserData> comboBoxRecipient;
 
 	public OutboxMailPagePanel() {
 		setBorder(new TitledBorder(null, SystemProperties.getInstance().getResourceBundle().getString("outboxMailPanel.outboxMailPanelBorderTitle"), TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -53,7 +60,7 @@ public class OutboxMailPagePanel extends JPanel {
 		gbc_lblRecipient.gridy = 0;
 		add(lblRecipient, gbc_lblRecipient);
 		
-		comboBoxRecipient = new JComboBox<String>();
+		comboBoxRecipient = new JComboBox<UserData>();
 		GridBagConstraints gbc_comboBoxRecipient = new GridBagConstraints();
 		gbc_comboBoxRecipient.insets = new Insets(0, 0, 5, 0);
 		gbc_comboBoxRecipient.fill = GridBagConstraints.HORIZONTAL;

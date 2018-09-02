@@ -24,7 +24,7 @@ public class TabLibraryEvent implements IActionForm {
 	@Setter
 	private TabbedForm tabbedForm;
 
-	public static TabLibraryEvent libraryEvent = null;
+	protected static TabLibraryEvent libraryEvent = null;
 	private LibraryAddModEvent libraryAddModEvent;
 
 	private TabLibraryEvent(TabbedForm tabbedForm) {

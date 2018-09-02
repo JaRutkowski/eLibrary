@@ -28,7 +28,7 @@ public class TabAdmDictionaryEvent implements IActionForm {
 
 	private String pressedRadioButton = Constans.RADIO_BUTTON_AUTHOR;
 
-	private static TabAdmDictionaryEvent admDictionaryEvent = null;
+	protected static TabAdmDictionaryEvent admDictionaryEvent = null;
 
 	public TabAdmDictionaryEvent(TabbedForm tabbedForm) {
 		this.control(tabbedForm);
@@ -80,40 +80,40 @@ public class TabAdmDictionaryEvent implements IActionForm {
 	}
 
 	private void reloadComboBoxAuthor() {
-		DefaultComboBoxModel<Author> comboBoxAuthor = new DefaultComboBoxModel<Author>();
+		DefaultComboBoxModel<Author> comboBoxAuthorModel = new DefaultComboBoxModel<Author>();
 		HibernateDao<Author, Integer> author = new HibernateDao<Author, Integer>(Author.class);
 		List<Author> authorListToSort = author.findAll();
 		authorListToSort
 				.sort(Comparator.comparing(Author::getSurname, Comparator.nullsFirst(Comparator.naturalOrder())));
-		authorListToSort.forEach(c -> comboBoxAuthor.addElement(c));
-		comboBoxAuthor.insertElementAt(null, 0);
+		authorListToSort.forEach(c -> comboBoxAuthorModel.addElement(c));
+		comboBoxAuthorModel.insertElementAt(null, 0);
 
-		tabbedForm.getPanelAdmDictionary().getComboBoxAuthor().setModel(comboBoxAuthor);
+		tabbedForm.getPanelAdmDictionary().getComboBoxAuthor().setModel(comboBoxAuthorModel);
 	}
 
 	private void reloadComboBoxCategory() {
-		DefaultComboBoxModel<Category> comboBoxCategory = new DefaultComboBoxModel<Category>();
+		DefaultComboBoxModel<Category> comboBoxCategoryModel = new DefaultComboBoxModel<Category>();
 		HibernateDao<Category, Integer> category = new HibernateDao<Category, Integer>(Category.class);
 		List<Category> categoryListToSort = category.findAll();
 		categoryListToSort
 				.sort(Comparator.comparing(Category::getName, Comparator.nullsFirst(Comparator.naturalOrder())));
-		categoryListToSort.forEach(c -> comboBoxCategory.addElement(c));
-		comboBoxCategory.insertElementAt(null, 0);
+		categoryListToSort.forEach(c -> comboBoxCategoryModel.addElement(c));
+		comboBoxCategoryModel.insertElementAt(null, 0);
 
-		tabbedForm.getPanelAdmDictionary().getComboBoxCategory().setModel(comboBoxCategory);
+		tabbedForm.getPanelAdmDictionary().getComboBoxCategory().setModel(comboBoxCategoryModel);
 	}
 
 	private void reloadComboBoxPublishingHouse() {
-		DefaultComboBoxModel<PublishingHouse> comboBoxPublishingHouse = new DefaultComboBoxModel<PublishingHouse>();
+		DefaultComboBoxModel<PublishingHouse> comboBoxPublishingHouseModel = new DefaultComboBoxModel<PublishingHouse>();
 		HibernateDao<PublishingHouse, Integer> publishingHouse = new HibernateDao<PublishingHouse, Integer>(
 				PublishingHouse.class);
 		List<PublishingHouse> publishingHouseListToSort = publishingHouse.findAll();
 		publishingHouseListToSort
 				.sort(Comparator.comparing(PublishingHouse::getName, Comparator.nullsFirst(Comparator.naturalOrder())));
-		publishingHouseListToSort.forEach(c -> comboBoxPublishingHouse.addElement(c));
-		comboBoxPublishingHouse.insertElementAt(null, 0);
+		publishingHouseListToSort.forEach(c -> comboBoxPublishingHouseModel.addElement(c));
+		comboBoxPublishingHouseModel.insertElementAt(null, 0);
 
-		tabbedForm.getPanelAdmDictionary().getComboBoxPublishingHouse().setModel(comboBoxPublishingHouse);
+		tabbedForm.getPanelAdmDictionary().getComboBoxPublishingHouse().setModel(comboBoxPublishingHouseModel);
 	}
 
 	private void onClickBtnAdd(String pressedRadioButton) {

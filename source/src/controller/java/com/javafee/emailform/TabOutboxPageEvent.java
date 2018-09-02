@@ -1,14 +1,13 @@
 package com.javafee.emailform;
 
+import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.swing.DefaultComboBoxModel;
 
 import com.javafee.common.IActionForm;
-import com.javafee.common.Constans.Role;
-import com.javafee.exception.RefusedTabSendedPageEventLoadingException;
 import com.javafee.hibernate.dao.HibernateUtil;
+import com.javafee.hibernate.dto.common.UserData;
 import com.javafee.startform.LogInEvent;
 
 import lombok.Setter;
@@ -17,61 +16,71 @@ public class TabOutboxPageEvent implements IActionForm {
 	@Setter
 	private EmailForm emailForm;
 
-	private static TabOutboxPageEvent workingCopyPageEvent = null;
+	protected static TabOutboxPageEvent outboxPageEvent = null;
 
 	private TabOutboxPageEvent(EmailForm emailForm) {
 		this.control(emailForm);
 	}
-	
+
 	public static TabOutboxPageEvent getInstance(EmailForm emailForm) {
-		if (workingCopyPageEvent == null) {
-			workingCopyPageEvent = new TabOutboxPageEvent(emailForm);
-		} else
-			new RefusedTabSendedPageEventLoadingException("Cannot tab sended page event loading");
-		return workingCopyPageEvent;
+		if (outboxPageEvent == null)
+			outboxPageEvent = new TabOutboxPageEvent(emailForm);
+
+		return outboxPageEvent;
 	}
-	
+
 	public void control(EmailForm emailForm) {
 		setEmailForm(emailForm);
 		initializeForm();
-		
+
 	}
 
 	@Override
 	public void initializeForm() {
 		reloadComboBoxRecipient();
 	}
-	
+
 	private void reloadComboBoxRecipient() {
-		//Admin (centralny)					 					KZB (brak możliwśoci zmiany), KZI, KP, WB, WI
-		//--Admin (lokalny)										KZB, KZI, KP, WB, WI
-		//Accountant											KZB, KP, WB
-		//Worker												KZB, KP, WB
-		
-		//KZB 	Komunikaty zmian użytkownik bieżący
-		//KZI 	Komunikaty zmian inni
-		//KP 	Komunikaty pozostały
-		//WB 	Wiadomości użytkownik bieżący
-		//WI 	Wiadomości użytkownik inni
-		
-		//DefaultComboBoxModel<Client> comboBoxRecipient = new DefaultComboBoxModel<Client>();
-		
-		//this.volumes = HibernateUtil.getSession().createQuery("from Volume as vol join fetch vol.book").list();
-		//this.volumes = volumes.stream().filter(vol -> !vol.getIsLended()).collect(Collectors.toList());
-		//this.volumes = volumes.stream().filter(vol -> !vol.getIsReadingRoom()).collect(Collectors.toList());
-		
+		// Admin (centralny) KZB (brak możliwśoci zmiany), KZI, KP, WB, WI
+		// --Admin (lokalny) KZB, KZI, KP, WB, WI
+		// Accountant KZB, KP, WB
+		// Worker KZB, KP, WB
+
+		// KZB Komunikaty zmian użytkownik bieżący
+		// KZI Komunikaty zmian inni
+		// KP Komunikaty pozostały
+		// WB Wiadomości użytkownik bieżący
+		// WI Wiadomości użytkownik inni
+
+		DefaultComboBoxModel<UserData> comboBoxRecipientModel = new DefaultComboBoxModel<UserData>();
+
+		// this.volumes = HibernateUtil.getSession().createQuery("from Volume as vol
+		// join fetch vol.book").list();
+		// this.volumes = volumes.stream().filter(vol ->
+		// !vol.getIsLended()).collect(Collectors.toList());
+		// this.volumes = volumes.stream().filter(vol ->
+		// !vol.getIsReadingRoom()).collect(Collectors.toList());
+
 		switch (LogInEvent.getRole()) {
 		case ADMIN:
-			
+
 			break;
 
 		case WORKER_ACCOUNTANT:
+			@SuppressWarnings("unchecked")
+			List<UserData> userDataListToSort = (List<UserData>) HibernateUtil.getSession().createQuery(
+					"select distinct rec.userData from Recipient rec where rec.message.sender.login = :login"). //
+					setParameter("login", LogInEvent.getWorker().getLogin()).list();
+			userDataListToSort
+					.sort(Comparator.comparing(UserData::getSurname, Comparator.nullsFirst(Comparator.naturalOrder())));
+			userDataListToSort.forEach(ud -> comboBoxRecipientModel.addElement(ud));
 
+			emailForm.getPanelOutboxPage().getComboBoxRecipient().setModel(comboBoxRecipientModel);
 			break;
 		case WORKER_LIBRARIAN:
-			
+
 			break;
-			
+
 		default:
 			break;
 		}

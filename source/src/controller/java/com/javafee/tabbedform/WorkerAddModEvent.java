@@ -1,5 +1,6 @@
 package com.javafee.tabbedform;
 
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.text.ParseException;
@@ -39,36 +40,11 @@ public class WorkerAddModEvent {
 		this.workerTableModel = workerTableModel;
 		openWorkerAddModFrame(context);
 
-		workerAddModFrame.addWindowListener(new WindowListener() {
-
-			@Override
-			public void windowOpened(WindowEvent e) {
-			}
-
-			@Override
-			public void windowIconified(WindowEvent e) {
-			}
-
-			@Override
-			public void windowDeiconified(WindowEvent e) {
-			}
-
-			@Override
-			public void windowDeactivated(WindowEvent e) {
-			}
-
-			@Override
-			public void windowClosing(WindowEvent e) {
-			}
-
+		workerAddModFrame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosed(WindowEvent e) {
 				Params.getInstance().remove("selectedRowIndex");
 				Params.getInstance().remove("selectedWorker");
-			}
-
-			@Override
-			public void windowActivated(WindowEvent e) {
 			}
 		});
 
@@ -165,13 +141,13 @@ public class WorkerAddModEvent {
 	}
 
 	private void reloadComboBoxCity() {
-		DefaultComboBoxModel<City> comboBoxCity = new DefaultComboBoxModel<City>();
+		DefaultComboBoxModel<City> comboBoxCityModel = new DefaultComboBoxModel<City>();
 		HibernateDao<City, Integer> city = new HibernateDao<City, Integer>(City.class);
 		List<City> cityListToSort = city.findAll();
 		cityListToSort.sort(Comparator.comparing(City::getName, Comparator.nullsFirst(Comparator.naturalOrder())));
-		cityListToSort.forEach(c -> comboBoxCity.addElement(c));
+		cityListToSort.forEach(c -> comboBoxCityModel.addElement(c));
 
-		workerAddModFrame.getWorkerDataPanel().getComboBoxCity().setModel(comboBoxCity);
+		workerAddModFrame.getWorkerDataPanel().getComboBoxCity().setModel(comboBoxCityModel);
 	}
 
 	private void fillRegistrationPanel() {

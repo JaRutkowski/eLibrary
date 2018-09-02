@@ -9,7 +9,7 @@ public class TabTemplatePageEvent implements IActionForm {
 	@Setter
 	private EmailForm emailForm;
 
-	private static TabTemplatePageEvent templatePageEvent = null;
+	protected static TabTemplatePageEvent templatePageEvent = null;
 
 	private TabTemplatePageEvent(EmailForm emailForm) {
 		this.control(emailForm);
@@ -21,6 +21,7 @@ public class TabTemplatePageEvent implements IActionForm {
 		} else
 			//TODO
 			new RefusedTabTemplatePageEventLoadingException("Cannot tab template page event loading");
+		
 		return templatePageEvent;
 	}
 	
