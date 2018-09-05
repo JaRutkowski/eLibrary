@@ -2,7 +2,6 @@ package com.javafee.tabbedform;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.text.ParseException;
 import java.util.Comparator;
 import java.util.Date;

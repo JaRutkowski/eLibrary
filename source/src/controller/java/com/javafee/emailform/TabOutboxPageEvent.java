@@ -1,5 +1,6 @@
 package com.javafee.emailform;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -8,6 +9,7 @@ import javax.swing.DefaultComboBoxModel;
 import com.javafee.common.IActionForm;
 import com.javafee.hibernate.dao.HibernateUtil;
 import com.javafee.hibernate.dto.common.UserData;
+import com.javafee.model.OutboxTableModel;
 import com.javafee.startform.LogInEvent;
 
 import lombok.Setter;
@@ -33,6 +35,7 @@ public class TabOutboxPageEvent implements IActionForm {
 		setEmailForm(emailForm);
 		initializeForm();
 
+		emailForm.getPanelOutboxPage().getComboBoxRecipient().addActionListener(e -> onChangeComboBoxRecipient());
 	}
 
 	@Override
@@ -84,5 +87,13 @@ public class TabOutboxPageEvent implements IActionForm {
 		default:
 			break;
 		}
+	}
+
+	private void onChangeComboBoxRecipient() {
+		UserData recipientUserData = (UserData) emailForm.getPanelOutboxPage().getComboBoxRecipient().getSelectedItem();
+		List<Object> parameters = new ArrayList<Object>();
+		parameters.add(recipientUserData);
+		((OutboxTableModel) emailForm.getPanelOutboxPage().getOutboxTable().getModel()) //
+				.reloadData("from Message mes join fetch mes.recipient r where r.userData = ?", parameters);
 	}
 }

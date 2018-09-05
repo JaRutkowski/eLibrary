@@ -1,19 +1,23 @@
 package com.javafee.model;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.AbstractTableModel;
 
+import org.hibernate.query.Query;
+
 import com.javafee.common.Constans.OutboxTableColumn;
 import com.javafee.common.SystemProperties;
 import com.javafee.hibernate.dao.HibernateUtil;
+import com.javafee.hibernate.dto.common.UserData;
 import com.javafee.hibernate.dto.common.message.Message;
 
 public class OutboxTableModel extends AbstractTableModel {
 
+	private static final long serialVersionUID = -1318024792294636748L;
+	
 	protected List<Message> messages;
 	private String[] columns;
 
@@ -49,8 +53,17 @@ public class OutboxTableModel extends AbstractTableModel {
 
 	@SuppressWarnings("unchecked")
 	protected void prepareHibernateDao() {
-		// as mes join fetch mes.recipient
 		this.messages = HibernateUtil.getSession().createQuery("from Message").list();
+	}
+	
+	@SuppressWarnings("unchecked")
+	protected void prepareHibernateDao(String query, List<Object> parameters) {
+		Query<Message> resultQuery = HibernateUtil.getSession().createQuery(query);
+		AtomicInteger position = new AtomicInteger(0);
+		parameters.forEach(param -> { 
+			resultQuery.setParameter(position.getAndIncrement(), param);
+		});
+		this.messages = resultQuery.list();
 	}
 
 	private void executeUpdate(String entityName, Object object) {
@@ -110,6 +123,11 @@ public class OutboxTableModel extends AbstractTableModel {
 
 	public void reloadData() {
 		prepareHibernateDao();
+		fireTableDataChanged();
+	}
+	
+	public void reloadData(String query, List<Object> parameters) {
+		prepareHibernateDao(query, parameters);
 		fireTableDataChanged();
 	}
 
