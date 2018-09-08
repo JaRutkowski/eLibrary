@@ -237,6 +237,7 @@ public final class Constans {
 	public static String APPLICATION_LANGUAGE = "pl";
 	public static final String APPLICATION_LANGUAGE_PL = "pl";
 	public static final String APPLICATION_LANGUAGE_EN = "en";
+	public static final Object APPLICATION_COMBO_BOX_BLANK_OBJECT = null;
 	public static final SimpleDateFormat APPLICATION_DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
 	public static final SimpleDateFormat APPLICATION_DATE_TIME_FORMAT = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
 	public static final String APPLICATION_CURRENCY = "PLN";
@@ -245,7 +246,7 @@ public final class Constans {
 	public static final Integer APPLICATION_GENERATE_PASSWORD_LENGTH = 16;
 	public static final String APPLICATION_EMAIL = "nreply.elibrary@gmail.com";
 	public static final String APPLICATION_EMAIL_PASSWORD = "Admin95!";
-	
+
 	public static final Dimension START_FORM_MINIMUM_SIZE = new Dimension(300, 200);
 	public static final Dimension EMAIL_FORM_MINIMUM_SIZE = new Dimension(800, 700);
 

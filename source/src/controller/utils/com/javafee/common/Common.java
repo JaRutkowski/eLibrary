@@ -105,6 +105,11 @@ public final class Common {
 		return result;
 	}
 
+	@SuppressWarnings("unchecked")
+	public static <T> void prepareBlankComboBoxElement(List<T> comboBoxDataList) {
+		comboBoxDataList.add((T) Constans.APPLICATION_COMBO_BOX_BLANK_OBJECT);
+	}
+
 	public static boolean isAdmin(Worker worker) {
 		return Constans.DATA_BASE_ADMIN_LOGIN.equals(worker.getLogin())
 				&& Constans.DATA_BASE_ADMIN_PASSWORD.equals(worker.getPassword()) ? true : false;
