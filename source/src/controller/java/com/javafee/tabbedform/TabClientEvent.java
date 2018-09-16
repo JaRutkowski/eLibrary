@@ -59,7 +59,7 @@ public final class TabClientEvent implements IActionForm {
 				onClientTableListSelectionChange();
 		});
 		
-		tabbedForm.getPanelClient().getBtnContact().addActionListener(e -> onClickBtnContact());
+		tabbedForm.getPanelClient().getMessageAndAlertPanel().getBtnContact().addActionListener(e -> onClickBtnContact());
 	}
 	
 	private void onClickBtnContact() {

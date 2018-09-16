@@ -11,7 +11,6 @@ import org.hibernate.query.Query;
 import com.javafee.common.Constans.OutboxTableColumn;
 import com.javafee.common.SystemProperties;
 import com.javafee.hibernate.dao.HibernateUtil;
-import com.javafee.hibernate.dto.common.UserData;
 import com.javafee.hibernate.dto.common.message.Message;
 
 public class OutboxTableModel extends AbstractTableModel {

@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -14,6 +15,8 @@ import java.util.List;
 import javax.mail.Message;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+
+import org.hibernate.sql.ordering.antlr.OrderingSpecification.Ordering;
 
 import com.javafee.common.Common;
 import com.javafee.common.Constans;
@@ -75,6 +78,9 @@ public class Actions implements IRegistrationForm {
 		DefaultComboBoxModel<City> comboBoxCityModel = new DefaultComboBoxModel<City>();
 		HibernateDao<City, Integer> city = new HibernateDao<City, Integer>(City.class);
 		List<City> cityListToSort = city.findAll();
+		//TODO Check another forms
+		//cityListToSort.add(null);
+		//cityListToSort.sort(Comparator.nullsFirst(Comparator.comparing(City::getName)));
 		cityListToSort.sort(Comparator.comparing(City::getName, Comparator.nullsFirst(Comparator.naturalOrder())));
 		cityListToSort.forEach(c -> comboBoxCityModel.addElement(c));
 

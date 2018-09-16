@@ -9,15 +9,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
-import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
 import com.javafee.model.ClientTableModel;
 import com.javafee.uniform.AdmIsRegisteredPanel;
 import com.javafee.uniform.CockpitEditionPanel;
+import com.javafee.uniform.MessageAndAlertPanel;
 
 import lombok.Getter;
 import net.coderazzi.filters.gui.TableFilterHeader;
-import javax.swing.JButton;
 
 public class ClientTablePanel extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -29,15 +28,15 @@ public class ClientTablePanel extends JPanel {
 	@Getter
 	private AdmIsRegisteredPanel admIsRegisteredPanel;
 	@Getter
-	private JButton btnContact;
+	private MessageAndAlertPanel messageAndAlertPanel;
 
 	public ClientTablePanel() {
 		setBackground(Utils.getApplicationColor());
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[] { 843, 0, 0 };
-		gridBagLayout.rowHeights = new int[] { 0, 76, 38, 0, 0 };
-		gridBagLayout.columnWeights = new double[] { 1.0, 0.0, Double.MIN_VALUE };
-		gridBagLayout.rowWeights = new double[] { 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+		gridBagLayout.columnWidths = new int[] { 417, 16, 0 };
+		gridBagLayout.rowHeights = new int[] { 0, 76, 38, 0 };
+		gridBagLayout.columnWeights = new double[] { 1.0, 1.0, Double.MIN_VALUE };
+		gridBagLayout.rowWeights = new double[] { 1.0, 0.0, 0.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -70,20 +69,19 @@ public class ClientTablePanel extends JPanel {
 		add(admIsRegisteredPanel, gbc_admIsRegisteredPanel);
 
 		cockpitEditionPanel = new CockpitEditionPanel();
+		GridBagConstraints gbc_alertAndMessagePanel = new GridBagConstraints();
+		gbc_alertAndMessagePanel.fill = GridBagConstraints.HORIZONTAL;
+		gbc_alertAndMessagePanel.insets = new Insets(10, 0, 0, 5);
+		gbc_alertAndMessagePanel.gridx = 0;
+		gbc_alertAndMessagePanel.gridy = 2;
+		add(cockpitEditionPanel, gbc_alertAndMessagePanel);
+
+		messageAndAlertPanel = new MessageAndAlertPanel();
 		GridBagConstraints gbc_panel = new GridBagConstraints();
-		gbc_panel.anchor = GridBagConstraints.NORTH;
-		gbc_panel.insets = new Insets(0, 0, 5, 5);
-		gbc_panel.fill = GridBagConstraints.HORIZONTAL;
-		gbc_panel.gridx = 0;
+		gbc_panel.fill = GridBagConstraints.BOTH;
+		gbc_panel.gridx = 1;
 		gbc_panel.gridy = 2;
-		add(cockpitEditionPanel, gbc_panel);
-		
-		btnContact = new JButton(SystemProperties.getInstance().getResourceBundle().getString("clientTablePanel.btnContact"));
-		GridBagConstraints gbc_btnContact = new GridBagConstraints();
-		gbc_btnContact.fill = GridBagConstraints.VERTICAL;
-		gbc_btnContact.insets = new Insets(0, 0, 5, 0);
-		gbc_btnContact.gridx = 1;
-		gbc_btnContact.gridy = 2;
-		add(btnContact, gbc_btnContact);
+		add(messageAndAlertPanel, gbc_panel);
+
 	}
 }
