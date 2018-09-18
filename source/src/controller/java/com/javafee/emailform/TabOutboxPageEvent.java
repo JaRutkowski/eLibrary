@@ -15,9 +15,11 @@ import javax.swing.JOptionPane;
 import com.javafee.common.Common;
 import com.javafee.common.Constans;
 import com.javafee.common.IActionForm;
+import com.javafee.common.Params;
 import com.javafee.common.Query;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
+import com.javafee.common.Constans.Tab_Email;
 import com.javafee.exception.LogGuiException;
 import com.javafee.hibernate.dao.HibernateUtil;
 import com.javafee.hibernate.dto.common.UserData;
@@ -52,23 +54,22 @@ public class TabOutboxPageEvent implements IActionForm {
 		emailForm.getPanelOutboxPage().addComponentListener(new ComponentListener() {
 			@Override
 			public void componentShown(ComponentEvent e) {
-				reloadOutboxTable();
-				reloadComboBoxRecipient();
+				onTabOutboxOpen();
 			}
-			
+
 			@Override
 			public void componentResized(ComponentEvent e) {
 			}
-			
+
 			@Override
 			public void componentMoved(ComponentEvent e) {
 			}
-			
+
 			@Override
 			public void componentHidden(ComponentEvent e) {
 			}
 		});
-		
+
 		emailForm.getPanelOutboxPage().getComboBoxRecipient().addActionListener(e -> onChangeComboBoxRecipient());
 		emailForm.getPanelOutboxPage().getOutboxNavigationPanel().getBtnPreview()
 				.addActionListener(e -> onClickBtnPreview());
@@ -82,6 +83,11 @@ public class TabOutboxPageEvent implements IActionForm {
 	public void initializeForm() {
 		reloadComboBoxRecipient();
 		reloadOutboxTable();
+	}
+
+	public void onTabOutboxOpen() {
+		reloadOutboxTable();
+		reloadComboBoxRecipient();
 	}
 
 	private void reloadComboBoxRecipient() {
@@ -105,7 +111,13 @@ public class TabOutboxPageEvent implements IActionForm {
 	}
 
 	private void onClickBtnPreview() {
+		int selectedRowIndex = emailForm.getPanelOutboxPage().getOutboxTable()
+				.convertRowIndexToModel(emailForm.getPanelOutboxPage().getOutboxTable().getSelectedRow());
+		Message selectedMessage = ((OutboxTableModel) emailForm.getPanelOutboxPage().getOutboxTable().getModel())
+				.getMessage(selectedRowIndex);
 
+		Params.getInstance().add("MESSAGE_TO_PREVIEW", selectedMessage);
+		emailForm.getTabbedPane().setSelectedIndex(Tab_Email.TAB_CREATE_PAGE.getValue());
 	}
 
 	private void onClickBtnDelete() {
@@ -166,9 +178,8 @@ public class TabOutboxPageEvent implements IActionForm {
 			parameters.add(recipientUserData);
 			parameters.add(LogInEvent.getWorker().getLogin());
 			((OutboxTableModel) emailForm.getPanelOutboxPage().getOutboxTable().getModel()) //
-					.reloadData(
-							Query.TabOutboxPageEventQuery.MESSAGE_BY_RECIPIENT_USER_DATA_AND_SENDER_LOGIN.getValue(),
-							parameters);
+					.reloadData(Query.TabOutboxPageEventQuery.DISTINCT_MESSAGE_BY_RECIPIENT_USER_DATA_AND_SENDER_LOGIN
+							.getValue(), parameters);
 		} else {
 			parameters.add(LogInEvent.getWorker().getLogin());
 			((OutboxTableModel) emailForm.getPanelOutboxPage().getOutboxTable().getModel()) //

@@ -8,10 +8,10 @@ public class Query {
 		MESSAGE_BY_SENDER_LOGIN("from Message mes where mes.sender.login = ?"), //
 		DISTINCT_MESSAGE_RECIPIENT_BY_SENDER_LOGIN(
 				"select distinct rec.userData from Recipient rec where rec.message.sender.login = :login"),
-		MESSAGE_BY_RECIPIENT_USER_DATA_FROM_SYSTEM(
-				"from Message mes join fetch mes.recipient r where r.userData = ? and mes.sender is null"),
-		MESSAGE_BY_RECIPIENT_USER_DATA_AND_SENDER_LOGIN(
-				"from Message mes join fetch mes.recipient r where r.userData = ? and mes.sender.login = ?");
+		DISTINCT_MESSAGE_BY_RECIPIENT_USER_DATA_FROM_SYSTEM(
+				"select distinct mes from Message mes join fetch mes.recipient r where r.userData = ? and mes.sender is null"),
+		DISTINCT_MESSAGE_BY_RECIPIENT_USER_DATA_AND_SENDER_LOGIN(
+				"select distinct mes from Message mes join fetch mes.recipient r where r.userData = ? and mes.sender.login = ?");
 
 		private final String value;
 

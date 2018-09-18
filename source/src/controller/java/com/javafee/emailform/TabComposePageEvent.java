@@ -1,5 +1,7 @@
 package com.javafee.emailform;
 
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.text.ParseException;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
@@ -32,14 +34,14 @@ public class TabComposePageEvent implements IActionForm {
 
 	protected static TabComposePageEvent composePageEvent = null;
 
-	private TabComposePageEvent(EmailForm emailForm) { 
-		this.control(emailForm); 
+	private TabComposePageEvent(EmailForm emailForm) {
+		this.control(emailForm);
 	}
 
 	public static TabComposePageEvent getInstance(EmailForm emailForm) {
 		if (composePageEvent == null)
 			composePageEvent = new TabComposePageEvent(emailForm);
-		
+
 		return composePageEvent;
 	}
 
@@ -48,15 +50,78 @@ public class TabComposePageEvent implements IActionForm {
 		setVisibleControls();
 		initializeForm();
 
+		emailForm.getPanelComposePage().addComponentListener(new ComponentListener() {
+			@Override
+			public void componentShown(ComponentEvent e) {
+				onTabComposeOpen();
+			}
+
+			@Override
+			public void componentResized(ComponentEvent e) {
+			}
+
+			@Override
+			public void componentMoved(ComponentEvent e) {
+			}
+
+			@Override
+			public void componentHidden(ComponentEvent e) {
+				onTabComposeClose();
+			}
+		});
+
 		emailForm.getPanelComposePage().getChckbxCC().addActionListener(e -> onChangeChckbxCC());
 		emailForm.getPanelComposePage().getChckbxBCC().addActionListener(e -> onChangeChckbxBCC());
 		emailForm.getPanelComposePage().getComposeNavigationEmailPanel().getBtnSend()
 				.addActionListener(e -> onClickBtnSend());
+		emailForm.getPanelComposePage().getComposeNavigationEmailPanel().getBtnClear()
+				.addActionListener(e -> onClickBtnClear());
 	}
 
 	@Override
 	public void initializeForm() {
 		reloadComboBoxes();
+	}
+
+	private void onTabComposeOpen() {
+		if (Params.getInstance().get("MESSAGE_TO_PREVIEW") != null) {
+			com.javafee.hibernate.dto.common.message.Message messageToPreview = ((com.javafee.hibernate.dto.common.message.Message) //
+			Params.getInstance().get("MESSAGE_TO_PREVIEW"));
+			fillComposePagePanel(messageToPreview);
+			Params.getInstance().remove("MESSAGE_TO_PREVIEW");
+		}
+	}
+
+	private void onTabComposeClose() {
+		resetComponents();
+	}
+
+	private void fillComposePagePanel(com.javafee.hibernate.dto.common.message.Message messageToPreview) {
+		emailForm.getPanelComposePage().getTextFieldTopic().setText(messageToPreview.getTitle());
+		emailForm.getPanelComposePage().getTextAreaContent().setText(messageToPreview.getContent());
+
+		messageToPreview.getRecipient().forEach(recipient -> {
+			Client client = null;
+			if (recipient.getIsCC() != null && recipient.getIsCC()) {
+				emailForm.getPanelComposePage().getLblCC().setVisible(true);
+				emailForm.getPanelComposePage().getChckbxCC().setSelected(true);
+				emailForm.getPanelComposePage().getComboBoxCC().setVisible(true);
+				client = (Client) HibernateUtil.getSession().getNamedQuery("Client.checkIfClientLoginExist")
+						.setParameter("login", recipient.getUserData().getLogin()).uniqueResult();
+				emailForm.getPanelComposePage().getComboBoxCC().setSelectedItem(client);
+			} else if (recipient.getIsBCC() != null && recipient.getIsBCC()) {
+				emailForm.getPanelComposePage().getLblBCC().setVisible(true);
+				emailForm.getPanelComposePage().getChckbxBCC().setSelected(true);
+				emailForm.getPanelComposePage().getComboBoxBCC().setVisible(true);
+				client = (Client) HibernateUtil.getSession().getNamedQuery("Client.checkIfClientLoginExist")
+						.setParameter("login", recipient.getUserData().getLogin()).uniqueResult();
+				emailForm.getPanelComposePage().getComboBoxBCC().setSelectedItem(client);
+			} else {
+				client = (Client) HibernateUtil.getSession().getNamedQuery("Client.checkIfClientLoginExist")
+						.setParameter("login", recipient.getUserData().getLogin()).uniqueResult();
+				emailForm.getPanelComposePage().getComboBoxTo().setSelectedItem(client);
+			}
+		});
 	}
 
 	private void reloadComboBoxes() {
@@ -78,10 +143,11 @@ public class TabComposePageEvent implements IActionForm {
 		emailForm.getPanelComposePage().getComboBoxTo().setModel(comboBoxToModel);
 		emailForm.getPanelComposePage().getComboBoxCC().setModel(comboBoxCCModel);
 		emailForm.getPanelComposePage().getComboBoxBCC().setModel(comboBoxBCCModel);
-		
-		if(Params.getInstance().get("selectedClient") != null && // 
-				((Client)Params.getInstance().get("selectedClient")).getEMail() != null)
-			emailForm.getPanelComposePage().getComboBoxTo().setSelectedItem((Client)Params.getInstance().get("selectedClient"));
+
+		if (Params.getInstance().get("selectedClient") != null && //
+				((Client) Params.getInstance().get("selectedClient")).getEMail() != null)
+			emailForm.getPanelComposePage().getComboBoxTo()
+					.setSelectedItem((Client) Params.getInstance().get("selectedClient"));
 	}
 
 	private void onClickBtnSend() {
@@ -106,6 +172,10 @@ public class TabComposePageEvent implements IActionForm {
 		}
 	}
 
+	private void onClickBtnClear() {
+		resetComponents();
+	}
+
 	private void onChangeChckbxCC() {
 		setVisibleCCControls(!emailForm.getPanelComposePage().getComboBoxCC().isVisible());
 	}
@@ -127,6 +197,19 @@ public class TabComposePageEvent implements IActionForm {
 	private void setVisibleBCCControls(boolean visible) {
 		emailForm.getPanelComposePage().getLblBCC().setVisible(visible);
 		emailForm.getPanelComposePage().getComboBoxBCC().setVisible(visible);
+	}
+
+	private void resetComponents() {
+		reloadComboBoxes();
+		setVisibleControls();
+		clearComponentsContent();
+	}
+
+	private void clearComponentsContent() {
+		emailForm.getPanelComposePage().getChckbxCC().setSelected(false);
+		emailForm.getPanelComposePage().getChckbxBCC().setSelected(false);
+		emailForm.getPanelComposePage().getTextFieldTopic().setText(null);
+		emailForm.getPanelComposePage().getTextAreaContent().setText(null);
 	}
 
 	private void createEmail(List<SimpleEntry<Message.RecipientType, UserData>> recipients, String subject,

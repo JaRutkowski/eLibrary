@@ -22,7 +22,7 @@ public class ComposeNavigationPanel extends JPanel {
 	@Getter
 	private JButton btnAddAttachment;
 	@Getter
-	private JButton btnDelete;
+	private JButton btnClear;
 
 	public ComposeNavigationPanel() {
 		setLayout(new GridLayout(0, 2, 0, 0));
@@ -47,10 +47,10 @@ public class ComposeNavigationPanel extends JPanel {
 				.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
 		add(btnSend);
 
-		btnDelete = new JButton(
-				SystemProperties.getInstance().getResourceBundle().getString("composeNavigationPanel.btnDelete"));
-		btnDelete.setIcon(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnClear-ico.png"))
+		btnClear = new JButton(
+				SystemProperties.getInstance().getResourceBundle().getString("composeNavigationPanel.btnClear"));
+		btnClear.setIcon(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnClear-ico.png"))
 				.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
-		add(btnDelete);
+		add(btnClear);
 	}
 }

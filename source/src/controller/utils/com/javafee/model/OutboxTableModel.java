@@ -16,7 +16,7 @@ import com.javafee.hibernate.dto.common.message.Message;
 public class OutboxTableModel extends AbstractTableModel {
 
 	private static final long serialVersionUID = -1318024792294636748L;
-	
+
 	protected List<Message> messages;
 	private String[] columns;
 
@@ -54,12 +54,12 @@ public class OutboxTableModel extends AbstractTableModel {
 	protected void prepareHibernateDao() {
 		this.messages = HibernateUtil.getSession().createQuery("from Message").list();
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	protected void prepareHibernateDao(String query, List<Object> parameters) {
 		Query<Message> resultQuery = HibernateUtil.getSession().createQuery(query);
 		AtomicInteger position = new AtomicInteger(0);
-		parameters.forEach(param -> { 
+		parameters.forEach(param -> {
 			resultQuery.setParameter(position.getAndIncrement(), param);
 		});
 		this.messages = resultQuery.list();
@@ -92,8 +92,9 @@ public class OutboxTableModel extends AbstractTableModel {
 			StringBuilder recipientsEmails = new StringBuilder("[");
 			message.getRecipient().forEach(recipient -> {
 				recipientsEmails.append(recipient.getUserData().getEMail());
-				if(counter.get() != message.getRecipient().size()) recipientsEmails.append(",");
-				});
+				if (counter.get() != message.getRecipient().size())
+					recipientsEmails.append(",");
+			});
 			recipientsEmails.append("]");
 			return recipientsEmails.toString();
 		case COL_TOPIC:
@@ -101,7 +102,8 @@ public class OutboxTableModel extends AbstractTableModel {
 		case COL_CONTENT:
 			return message.getContent();
 		case COL_SENDER_SIMPLE_DATA:
-			return message.getSender() != null ? message.getSender().getSurname() + " " + message.getSender().getName() : "System";
+			return message.getSender() != null ? message.getSender().getSurname() + " " + message.getSender().getName()
+					: "System";
 		case COL_DATE:
 			return message.getSendDate();
 		default:
@@ -124,7 +126,7 @@ public class OutboxTableModel extends AbstractTableModel {
 		prepareHibernateDao();
 		fireTableDataChanged();
 	}
-	
+
 	public void reloadData(String query, List<Object> parameters) {
 		prepareHibernateDao(query, parameters);
 		fireTableDataChanged();
