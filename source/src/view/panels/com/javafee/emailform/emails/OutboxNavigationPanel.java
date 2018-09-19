@@ -1,19 +1,18 @@
 package com.javafee.emailform.emails;
 
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Image;
+import java.awt.Insets;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import com.javafee.common.SystemProperties;
 import com.javafee.startform.RegistrationPanel;
 
 import lombok.Getter;
-
-import java.awt.GridBagLayout;
-import java.awt.Image;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
 
 public class OutboxNavigationPanel extends JPanel {
 

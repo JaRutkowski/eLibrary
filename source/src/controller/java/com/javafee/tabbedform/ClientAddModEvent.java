@@ -51,7 +51,7 @@ public class ClientAddModEvent {
 		clientAddModFrame.getCockpitConfirmationPanel().getBtnAccept()
 				.addActionListener(e -> onClickBtnAccept(context));
 	}
-	
+
 	private void openClientAddModFrame(Context context) {
 		if (clientAddModFrame == null || (clientAddModFrame != null && !clientAddModFrame.isDisplayable())) {
 			clientAddModFrame = new ClientAddModFrame();
@@ -162,8 +162,7 @@ public class ClientAddModEvent {
 
 		clientAddModFrame.getClientDataPanel().getTextFieldDocumentNumber()
 				.setText(((Client) Params.getInstance().get("selectedClient")).getDocumentNumber() != null
-						? ((Client) Params.getInstance().get("selectedClient")).getDocumentNumber()
-								.toString()
+						? ((Client) Params.getInstance().get("selectedClient")).getDocumentNumber().toString()
 						: "");
 
 		clientAddModFrame.getClientDataPanel().getTextFieldLogin()
@@ -196,9 +195,8 @@ public class ClientAddModEvent {
 						? ((Client) Params.getInstance().get("selectedClient")).getCity()
 						: null);
 
-		if (((Client) Params.getInstance().get("selectedClient")).getSex() != null
-				&& Constans.DATA_BASE_MALE_SIGN.toString()
-						.equals(((Client) Params.getInstance().get("selectedClient")).getSex().toString()))
+		if (((Client) Params.getInstance().get("selectedClient")).getSex() != null && Constans.DATA_BASE_MALE_SIGN
+				.toString().equals(((Client) Params.getInstance().get("selectedClient")).getSex().toString()))
 			clientAddModFrame.getClientDataPanel().getGroupRadioButtonSex()
 					.setSelected(clientAddModFrame.getClientDataPanel().getRadioButtonMale().getModel(), true);
 		else if (((Client) Params.getInstance().get("selectedClient")).getSex() != null
@@ -210,8 +208,8 @@ public class ClientAddModEvent {
 		try {
 			clientAddModFrame.getClientDataPanel().getDateChooserBirthDate()
 					.setDate(((Client) Params.getInstance().get("selectedClient")).getBirthDate() != null
-							? Constans.APPLICATION_DATE_FORMAT.parse(Constans.APPLICATION_DATE_FORMAT.format(
-									((Client) Params.getInstance().get("selectedClient")).getBirthDate()))
+							? Constans.APPLICATION_DATE_FORMAT.parse(Constans.APPLICATION_DATE_FORMAT
+									.format(((Client) Params.getInstance().get("selectedClient")).getBirthDate()))
 							: null);
 		} catch (ParseException e) {
 			e.printStackTrace();

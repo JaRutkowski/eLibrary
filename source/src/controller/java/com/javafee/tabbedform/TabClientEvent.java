@@ -28,7 +28,7 @@ public final class TabClientEvent implements IActionForm {
 
 	protected static TabClientEvent clientEvent = null;
 	private ClientAddModEvent clientAddModEvent;
-	
+
 	private com.javafee.emailform.Actions action = null;
 
 	private TabClientEvent(TabbedForm tabbedForm) {
@@ -58,12 +58,13 @@ public final class TabClientEvent implements IActionForm {
 			if (!e.getValueIsAdjusting())
 				onClientTableListSelectionChange();
 		});
-		
-		tabbedForm.getPanelClient().getMessageAndAlertPanel().getBtnContact().addActionListener(e -> onClickBtnContact());
+
+		tabbedForm.getPanelClient().getMessageAndAlertPanel().getBtnContact()
+				.addActionListener(e -> onClickBtnContact());
 	}
-	
+
 	private void onClickBtnContact() {
-		//TODO getSelectedClient() - consider using onChangeSelectedEvent
+		// TODO getSelectedClient() - consider using onChangeSelectedEvent
 		if (tabbedForm.getPanelClient().getClientTable().getSelectedRow() != -1) {
 			int selectedRowIndex = tabbedForm.getPanelClient().getClientTable()
 					.convertRowIndexToModel(tabbedForm.getPanelClient().getClientTable().getSelectedRow());
@@ -71,12 +72,12 @@ public final class TabClientEvent implements IActionForm {
 			if (selectedRowIndex != -1) {
 				Client selectedClient = ((ClientTableModel) tabbedForm.getPanelClient().getClientTable().getModel())
 						.getClient(selectedRowIndex);
-				
+
 				Params.getInstance().add("selectedClient", selectedClient);
 			}
 		}
-		
-		if(action == null)
+
+		if (action == null)
 			action = new Actions();
 		action.control();
 	}

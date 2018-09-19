@@ -25,24 +25,28 @@ public class MailSenderEvent {
 		setMessage(recipients, subject, text);
 		return mailSender.send(message);
 	}
-	
+
 	public boolean control(Set<Recipient> recipients, String subject, String text) {
 		setMessage(recipients, subject, text);
 		return mailSender.send(message);
 	}
 
-	private void setMessage(List<SimpleEntry<Message.RecipientType, UserData>> recipients, String subject, String text) {
+	private void setMessage(List<SimpleEntry<Message.RecipientType, UserData>> recipients, String subject,
+			String text) {
 		try {
 			message = new MimeMessage(mailSender.getSession());
 			message.setFrom(new InternetAddress(Constans.APPLICATION_EMAIL));
 			recipients.forEach(recipient -> {
 				try {
 					if (Message.RecipientType.TO.equals(recipient.getKey()))
-						message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipient.getValue().getEMail()));
+						message.setRecipients(Message.RecipientType.TO,
+								InternetAddress.parse(recipient.getValue().getEMail()));
 					if (Message.RecipientType.CC.equals(recipient.getKey()))
-						message.addRecipient(Message.RecipientType.CC, InternetAddress.parse(recipient.getValue().getEMail())[0]);
+						message.addRecipient(Message.RecipientType.CC,
+								InternetAddress.parse(recipient.getValue().getEMail())[0]);
 					if (Message.RecipientType.BCC.equals(recipient.getKey()))
-						message.addRecipient(Message.RecipientType.BCC, InternetAddress.parse(recipient.getValue().getEMail())[0]);
+						message.addRecipient(Message.RecipientType.BCC,
+								InternetAddress.parse(recipient.getValue().getEMail())[0]);
 
 				} catch (MessagingException e) {
 					e.printStackTrace();
@@ -56,7 +60,7 @@ public class MailSenderEvent {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void setMessage(Set<Recipient> recipients, String subject, String text) {
 		try {
 			message = new MimeMessage(mailSender.getSession());
@@ -64,11 +68,14 @@ public class MailSenderEvent {
 			recipients.forEach(recipient -> {
 				try {
 					if (recipient.getIsBCC() == null && recipient.getIsCC() == null)
-						message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipient.getUserData().getEMail()));
+						message.setRecipients(Message.RecipientType.TO,
+								InternetAddress.parse(recipient.getUserData().getEMail()));
 					if (recipient.getIsCC() != null && recipient.getIsCC())
-						message.addRecipient(Message.RecipientType.CC, InternetAddress.parse(recipient.getUserData().getEMail())[0]);
+						message.addRecipient(Message.RecipientType.CC,
+								InternetAddress.parse(recipient.getUserData().getEMail())[0]);
 					if (recipient.getIsBCC() != null && recipient.getIsBCC())
-						message.addRecipient(Message.RecipientType.BCC, InternetAddress.parse(recipient.getUserData().getEMail())[0]);
+						message.addRecipient(Message.RecipientType.BCC,
+								InternetAddress.parse(recipient.getUserData().getEMail())[0]);
 
 				} catch (MessagingException e) {
 					e.printStackTrace();

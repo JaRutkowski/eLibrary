@@ -12,7 +12,7 @@ public class LogGuiException {
 		LogGuiException.createErrorJOptionPane(title, message);
 		logger.error(message, t);
 	}
-	
+
 	public static void logError(String title, Object message) {
 		LogGuiException.createErrorJOptionPane(title, message);
 		logger.error(message);

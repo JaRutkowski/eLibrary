@@ -43,7 +43,7 @@ public class Worker extends UserData implements Cloneable {
 		}
 		return result;
 	}
-	
+
 	@Override
 	public String toString() {
 		String result = "";

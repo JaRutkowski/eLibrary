@@ -69,7 +69,7 @@ public class LibraryAddModEvent {
 
 			int selectedRowIndex = libraryAddModFrame.getBookTable()
 					.convertRowIndexToModel(libraryAddModFrame.getBookTable().getSelectedRow());
-			if(Validator.validateInventoryNumberExist(libraryAddModFrame.getTextFieldInventoryNumber().getText())) {
+			if (Validator.validateInventoryNumberExist(libraryAddModFrame.getTextFieldInventoryNumber().getText())) {
 				LogGuiException.logWarning(
 						SystemProperties.getInstance().getResourceBundle()
 								.getString("libraryAddModEvent.incorrectInventoryNumberWarningTitle"),
@@ -138,7 +138,7 @@ public class LibraryAddModEvent {
 				Book selectedBook = ((BookTableModel) libraryAddModFrame.getBookTable().getModel())
 						.getBook(selectedRowIndex);
 				String inventoryNumber = libraryAddModFrame.getTextFieldInventoryNumber().getText();
-				if(Validator.validateInventoryNumberExist(inventoryNumber)) {
+				if (Validator.validateInventoryNumberExist(inventoryNumber)) {
 					LogGuiException.logWarning(
 							SystemProperties.getInstance().getResourceBundle()
 									.getString("libraryAddModEvent.incorrectInventoryNumberWarningTitle"),
@@ -201,8 +201,7 @@ public class LibraryAddModEvent {
 	private void fillTextBoxInventoryNumber() {
 		libraryAddModFrame.getTextFieldInventoryNumber()
 				.setText(((Volume) Params.getInstance().get("selectedVolume")).getInventoryNumber() != null
-						? ((Volume) Params.getInstance().get("selectedVolume")).getInventoryNumber()
-								.toString()
+						? ((Volume) Params.getInstance().get("selectedVolume")).getInventoryNumber().toString()
 						: "");
 	}
 

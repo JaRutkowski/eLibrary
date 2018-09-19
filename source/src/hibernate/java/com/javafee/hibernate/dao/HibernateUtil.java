@@ -3,6 +3,8 @@ package com.javafee.hibernate.dao;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.persistence.EntityManager;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -16,36 +18,23 @@ import lombok.Getter;
 public class HibernateUtil {
 	@Getter
 	private static final SessionFactory sessionFactory;
-	// private static final ServiceRegistry serviceRegistry;
 	@Getter
 	private static final Session session;
+	@Getter
+	private static final EntityManager entityManager;
 
 	static {
-		// Hibernate 5
 		try {
-			// Configuration configuration = new Configuration().configure();
-			// serviceRegistry = new
-			// StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
-			// sessionFactory = configuration.buildSessionFactory(serviceRegistry);
-			// session = sessionFactory.openSession();
 			ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()//
 					.configure("hibernate.cfg.xml").build();
 			Metadata metadata = new MetadataSources(serviceRegistry).getMetadataBuilder().build();
 			sessionFactory = metadata.getSessionFactoryBuilder().build();
 			session = sessionFactory.openSession();
+			entityManager = sessionFactory.createEntityManager();
 		} catch (HibernateException e) {
 			Logger.getLogger("app").log(Level.WARNING, e.getMessage());
 			throw new ExceptionInInitializerError(e);
 		}
-
-		// try {
-		// sessionFactory = new Configuration().configure().buildSessionFactory();
-		// sessionFactory = metadata.getSessionFactoryBuilder().build();
-		// session = sessionFactory.openSession();
-		// } catch (HibernateException e) {
-		// Logger.getLogger("app").log(Level.WARNING, e.getMessage());
-		// throw new ExceptionInInitializerError(e);
-		// }
 	}
 
 	public static void beginTransaction() {

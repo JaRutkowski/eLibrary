@@ -21,6 +21,7 @@ import com.javafee.common.SystemProperties;
 import com.javafee.exception.LogGuiException;
 import com.javafee.hibernate.dao.HibernateDao;
 import com.javafee.hibernate.dao.HibernateUtil;
+import com.javafee.hibernate.dto.association.MessageType;
 import com.javafee.hibernate.dto.common.UserData;
 import com.javafee.hibernate.dto.common.message.Recipient;
 import com.javafee.hibernate.dto.library.Client;
@@ -215,10 +216,14 @@ public class TabComposePageEvent implements IActionForm {
 	private void createEmail(List<SimpleEntry<Message.RecipientType, UserData>> recipients, String subject,
 			String text) {
 		try {
+			MessageType messageType = com.javafee.hibernate.dao.common.Common
+					.findMessageTypeByName(Constans.DATA_BASE_MESSAGE_TYPE_USR_MESSAGE).get();
+
 			HibernateUtil.beginTransaction();
 			com.javafee.hibernate.dto.common.message.Message message = new com.javafee.hibernate.dto.common.message.Message();
 
 			message.setSender(LogInEvent.getWorker());
+			message.setMessageType(messageType);
 			recipients.forEach(recipient -> {
 				Recipient newRecipient = new Recipient();
 				newRecipient.setUserData(recipient.getValue());
@@ -233,9 +238,9 @@ public class TabComposePageEvent implements IActionForm {
 			});
 			message.setTitle(subject);
 			message.setContent(text);
-
 			message.setSendDate(
 					Constans.APPLICATION_DATE_FORMAT.parse(Constans.APPLICATION_DATE_FORMAT.format(new Date())));
+
 			HibernateUtil.getSession().save(message);
 			HibernateUtil.commitTransaction();
 

@@ -7,7 +7,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -15,8 +14,6 @@ import java.util.List;
 import javax.mail.Message;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
-
-import org.hibernate.sql.ordering.antlr.OrderingSpecification.Ordering;
 
 import com.javafee.common.Common;
 import com.javafee.common.Constans;
@@ -32,6 +29,7 @@ import com.javafee.exception.RefusedRegistrationException;
 import com.javafee.hibernate.dao.HibernateDao;
 import com.javafee.hibernate.dao.HibernateUtil;
 import com.javafee.hibernate.dto.association.City;
+import com.javafee.hibernate.dto.association.MessageType;
 import com.javafee.hibernate.dto.common.UserData;
 import com.javafee.hibernate.dto.common.message.Recipient;
 import com.javafee.hibernate.dto.library.Client;
@@ -78,9 +76,9 @@ public class Actions implements IRegistrationForm {
 		DefaultComboBoxModel<City> comboBoxCityModel = new DefaultComboBoxModel<City>();
 		HibernateDao<City, Integer> city = new HibernateDao<City, Integer>(City.class);
 		List<City> cityListToSort = city.findAll();
-		//TODO Check another forms
-		//cityListToSort.add(null);
-		//cityListToSort.sort(Comparator.nullsFirst(Comparator.comparing(City::getName)));
+		// TODO Check another forms
+		// cityListToSort.add(null);
+		// cityListToSort.sort(Comparator.nullsFirst(Comparator.comparing(City::getName)));
 		cityListToSort.sort(Comparator.comparing(City::getName, Comparator.nullsFirst(Comparator.naturalOrder())));
 		cityListToSort.forEach(c -> comboBoxCityModel.addElement(c));
 
@@ -313,10 +311,14 @@ public class Actions implements IRegistrationForm {
 	private void createEmail(List<SimpleEntry<Message.RecipientType, UserData>> recipients, String subject,
 			String text) {
 		try {
+			MessageType messageType = com.javafee.hibernate.dao.common.Common
+					.findMessageTypeByName(Constans.DATA_BASE_MESSAGE_TYPE_SYS_MESSAGE).get();
+
 			HibernateUtil.beginTransaction();
 			com.javafee.hibernate.dto.common.message.Message message = new com.javafee.hibernate.dto.common.message.Message();
 
 			message.setSender(null);
+			message.setMessageType(messageType);
 			recipients.forEach(recipient -> {
 				Recipient newRecipient = new Recipient();
 				newRecipient.setUserData(recipient.getValue());
@@ -325,9 +327,9 @@ public class Actions implements IRegistrationForm {
 			});
 			message.setTitle(subject);
 			message.setContent(text);
-
 			message.setSendDate(
 					Constans.APPLICATION_DATE_FORMAT.parse(Constans.APPLICATION_DATE_FORMAT.format(new Date())));
+
 			HibernateUtil.getSession().save(message);
 			HibernateUtil.commitTransaction();
 		} catch (ParseException e) {

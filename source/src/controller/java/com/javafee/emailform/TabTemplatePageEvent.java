@@ -14,25 +14,25 @@ public class TabTemplatePageEvent implements IActionForm {
 	private TabTemplatePageEvent(EmailForm emailForm) {
 		this.control(emailForm);
 	}
-	
+
 	public static TabTemplatePageEvent getInstance(EmailForm emailForm) {
 		if (templatePageEvent == null) {
 			templatePageEvent = new TabTemplatePageEvent(emailForm);
 		} else
-			//TODO
+			// TODO
 			new RefusedTabTemplatePageEventLoadingException("Cannot tab template page event loading");
-		
+
 		return templatePageEvent;
 	}
-	
+
 	public void control(EmailForm emailForm) {
 		setEmailForm(emailForm);
 		initializeForm();
-		
+
 	}
 
 	@Override
 	public void initializeForm() {
-		
+
 	}
 }

@@ -157,8 +157,7 @@ public class WorkerAddModEvent {
 
 		workerAddModFrame.getWorkerDataPanel().getTextFieldDocumentNumber()
 				.setText(((Worker) Params.getInstance().get("selectedWorker")).getDocumentNumber() != null
-						? ((Worker) Params.getInstance().get("selectedWorker")).getDocumentNumber()
-								.toString()
+						? ((Worker) Params.getInstance().get("selectedWorker")).getDocumentNumber().toString()
 						: "");
 
 		workerAddModFrame.getWorkerDataPanel().getTextFieldLogin()
@@ -191,9 +190,8 @@ public class WorkerAddModEvent {
 						? ((Worker) Params.getInstance().get("selectedWorker")).getCity()
 						: null);
 
-		if (((Worker) Params.getInstance().get("selectedWorker")).getSex() != null
-				&& Constans.DATA_BASE_MALE_SIGN.toString()
-						.equals(((Worker) Params.getInstance().get("selectedWorker")).getSex().toString()))
+		if (((Worker) Params.getInstance().get("selectedWorker")).getSex() != null && Constans.DATA_BASE_MALE_SIGN
+				.toString().equals(((Worker) Params.getInstance().get("selectedWorker")).getSex().toString()))
 			workerAddModFrame.getWorkerDataPanel().getGroupRadioButtonSex()
 					.setSelected(workerAddModFrame.getWorkerDataPanel().getRadioButtonMale().getModel(), true);
 		else if (((Worker) Params.getInstance().get("selectedWorker")).getSex() != null
@@ -205,8 +203,8 @@ public class WorkerAddModEvent {
 		try {
 			workerAddModFrame.getWorkerDataPanel().getDateChooserBirthDate()
 					.setDate(((Worker) Params.getInstance().get("selectedWorker")).getBirthDate() != null
-							? Constans.APPLICATION_DATE_FORMAT.parse(Constans.APPLICATION_DATE_FORMAT.format(
-									((Worker) Params.getInstance().get("selectedWorker")).getBirthDate()))
+							? Constans.APPLICATION_DATE_FORMAT.parse(Constans.APPLICATION_DATE_FORMAT
+									.format(((Worker) Params.getInstance().get("selectedWorker")).getBirthDate()))
 							: null);
 		} catch (ParseException e) {
 			e.printStackTrace();

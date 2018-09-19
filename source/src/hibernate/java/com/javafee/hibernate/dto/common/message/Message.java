@@ -7,12 +7,14 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
@@ -20,6 +22,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.javafee.hibernate.dto.association.MessageType;
 import com.javafee.hibernate.dto.common.UserData;
 
 import lombok.Getter;
@@ -40,6 +43,10 @@ public class Message {
 	@OneToOne
 	@JoinColumn(name = "id_sender")
 	private UserData sender;
+
+	@ManyToOne(cascade = {}, fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_message_type", unique = false, nullable = true, insertable = true, updatable = true)
+	private MessageType messageType;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "message")
 	private Set<Recipient> recipient = new HashSet<Recipient>(0);
