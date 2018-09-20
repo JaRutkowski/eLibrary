@@ -27,7 +27,14 @@ public class DraftTableModel extends AbstractTableModel {
 				SystemProperties.getInstance().getResourceBundle().getString("outboxTableModel.recipientSimpleDataCol"),
 				SystemProperties.getInstance().getResourceBundle().getString("outboxTableModel.recipientEmailCol"),
 				SystemProperties.getInstance().getResourceBundle().getString("outboxTableModel.topicCol"),
+<<<<<<< HEAD
 				SystemProperties.getInstance().getResourceBundle().getString("outboxTableModel.contentCol") };
+=======
+				SystemProperties.getInstance().getResourceBundle().getString("outboxTableModel.contentCol"),
+				// SystemProperties.getInstance().getResourceBundle().getString("outboxTableModel.senderSimpleDataCol"),
+				// SystemProperties.getInstance().getResourceBundle().getString("outboxTableModel.dateCol")
+		};
+>>>>>>> 459512eb151387298a33e1b9275396e13e875ec6
 	}
 
 	public Message getMessage(int index) {
@@ -99,6 +106,15 @@ public class DraftTableModel extends AbstractTableModel {
 			return message.getTitle();
 		case COL_CONTENT:
 			return message.getContent();
+<<<<<<< HEAD
+=======
+		// case COL_SENDER_SIMPLE_DATA:
+		// return message.getSender() != null ? message.getSender().getSurname() + " " +
+		// message.getSender().getName()
+		// : "System";
+		// case COL_DATE:
+		// return message.getSendDate();
+>>>>>>> 459512eb151387298a33e1b9275396e13e875ec6
 		default:
 			return null;
 
