@@ -64,8 +64,8 @@ public class Actions implements IActionForm {
 		case TAB_SENDED_PAGE:
 			TabOutboxPageEvent.getInstance(emailForm);
 			break;
-		case TAB_WORKING_COPY_PAGE:
-			TabWorkingCopyPageEvent.getInstance(emailForm);
+		case TAB_DRAFT_PAGE:
+			TabDraftPageEvent.getInstance(emailForm);
 			break;
 		case TAB_TEMPLATE_PAGE:
 			TabTemplatePageEvent.getInstance(emailForm);
@@ -82,7 +82,7 @@ public class Actions implements IActionForm {
 	private void clearEvent() {
 		TabComposePageEvent.composePageEvent = null;
 		TabOutboxPageEvent.outboxPageEvent = null;
-		TabWorkingCopyPageEvent.workingCopyPageEvent = null;
+		TabDraftPageEvent.draftPageEvent = null;
 		TabTemplatePageEvent.templatePageEvent = null;
 	}
 }

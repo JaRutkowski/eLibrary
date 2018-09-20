@@ -27,39 +27,36 @@ import com.javafee.hibernate.dto.association.MessageType;
 import com.javafee.hibernate.dto.common.UserData;
 import com.javafee.hibernate.dto.common.message.Message;
 import com.javafee.hibernate.dto.common.message.Recipient;
-import com.javafee.model.OutboxTableModel;
+import com.javafee.model.DraftTableModel;
 import com.javafee.startform.LogInEvent;
 
 import lombok.Setter;
 
-public class TabOutboxPageEvent implements IMessageForm {
+public class TabDraftPageEvent implements IMessageForm {
 	@Setter
 	private EmailForm emailForm;
 
-	protected static TabOutboxPageEvent outboxPageEvent = null;
+	protected static TabDraftPageEvent draftPageEvent = null;
 
-	protected TabOutboxPageEvent() {
-	}
-
-	private TabOutboxPageEvent(EmailForm emailForm) {
+	private TabDraftPageEvent(EmailForm emailForm) {
 		this.control(emailForm);
 	}
 
-	public static TabOutboxPageEvent getInstance(EmailForm emailForm) {
-		if (outboxPageEvent == null)
-			outboxPageEvent = new TabOutboxPageEvent(emailForm);
+	public static TabDraftPageEvent getInstance(EmailForm emailForm) {
+		if (draftPageEvent == null)
+			draftPageEvent = new TabDraftPageEvent(emailForm);
 
-		return outboxPageEvent;
+		return draftPageEvent;
 	}
 
 	public void control(EmailForm emailForm) {
 		setEmailForm(emailForm);
 		initializeForm();
 
-		emailForm.getPanelOutboxPage().addComponentListener(new ComponentListener() {
+		emailForm.getPanelDraftPage().addComponentListener(new ComponentListener() {
 			@Override
 			public void componentShown(ComponentEvent e) {
-				onTabOutboxOpen();
+				onTabDraftOpen();
 			}
 
 			@Override
@@ -75,26 +72,25 @@ public class TabOutboxPageEvent implements IMessageForm {
 			}
 		});
 
-		emailForm.getPanelOutboxPage().getComboBoxRecipient().addActionListener(e -> onChangeComboBoxRecipient());
-		emailForm.getPanelOutboxPage().getCheckShowOnlySystemCorrespondence()
+		emailForm.getPanelDraftPage().getComboBoxRecipient().addActionListener(e -> onChangeComboBoxRecipient());
+		emailForm.getPanelDraftPage().getCheckShowOnlySystemCorrespondence()
 				.addActionListener(e -> onChangeChckShowOnlySystemCorrespondence());
-		emailForm.getPanelOutboxPage().getOutboxNavigationPanel().getBtnPreview()
-				.addActionListener(e -> onClickBtnPreview());
-		emailForm.getPanelOutboxPage().getOutboxNavigationPanel().getBtnDelete()
+		emailForm.getPanelDraftPage().getDraftNavigationPanel().getBtnModify()
+				.addActionListener(e -> onClickBtnModify());
+		emailForm.getPanelDraftPage().getDraftNavigationPanel().getBtnDelete()
 				.addActionListener(e -> onClickBtnDelete());
-		emailForm.getPanelOutboxPage().getOutboxNavigationPanel().getBtnSendAgain()
-				.addActionListener(e -> onClickBtnSend());
+		emailForm.getPanelDraftPage().getDraftNavigationPanel().getBtnSend().addActionListener(e -> onClickBtnSend());
 	}
 
 	@Override
 	public void initializeForm() {
 		reloadComboBoxRecipient();
-		reloadOutboxTable();
+		reloadDraftTable();
 		switchPerspectiveToAdm(LogInEvent.getRole() == Role.WORKER_ACCOUNTANT);
 	}
 
-	public void onTabOutboxOpen() {
-		reloadOutboxTable();
+	public void onTabDraftOpen() {
+		reloadDraftTable();
 		reloadComboBoxRecipient();
 	}
 
@@ -103,25 +99,25 @@ public class TabOutboxPageEvent implements IMessageForm {
 
 		@SuppressWarnings("unchecked")
 		List<UserData> userDataListToSort = (List<UserData>) HibernateUtil.getSession()
-				.createQuery(Query.TabOutboxPageEventQuery.DISTINCT_MESSAGE_RECIPIENT_BY_SENDER_LOGIN.getValue()). //
+				.createQuery(Query.TabOutboxPageEventQuery.DISTINCT_DRAFT_MESSAGE_RECIPIENT_BY_SENDER_LOGIN.getValue()). //
 				setParameter("login", LogInEvent.getWorker().getLogin()).list();
 		Common.prepareBlankComboBoxElement(userDataListToSort);
 		userDataListToSort.sort(Comparator.nullsFirst(Comparator.comparing(UserData::getSurname)));
 		userDataListToSort.forEach(ud -> comboBoxRecipientModel.addElement(ud));
-		emailForm.getPanelOutboxPage().getComboBoxRecipient().setModel(comboBoxRecipientModel);
+		emailForm.getPanelDraftPage().getComboBoxRecipient().setModel(comboBoxRecipientModel);
 	}
 
-	private void reloadOutboxTable() {
+	private void reloadDraftTable() {
 		List<Object> parameters = new ArrayList<Object>();
 		parameters.add(LogInEvent.getWorker().getLogin());
-		((OutboxTableModel) emailForm.getPanelOutboxPage().getOutboxTable().getModel()) //
-				.reloadData(Query.TabOutboxPageEventQuery.MESSAGE_BY_SENDER_LOGIN.getValue(), parameters);
+		((DraftTableModel) emailForm.getPanelDraftPage().getDraftTable().getModel()) //
+				.reloadData(Query.TabOutboxPageEventQuery.DRAFT_MESSAGE_BY_SENDER_LOGIN.getValue(), parameters);
 	}
 
-	private void onClickBtnPreview() {
-		int selectedRowIndex = emailForm.getPanelOutboxPage().getOutboxTable()
-				.convertRowIndexToModel(emailForm.getPanelOutboxPage().getOutboxTable().getSelectedRow());
-		Message selectedMessage = ((OutboxTableModel) emailForm.getPanelOutboxPage().getOutboxTable().getModel())
+	private void onClickBtnModify() {
+		int selectedRowIndex = emailForm.getPanelDraftPage().getDraftTable()
+				.convertRowIndexToModel(emailForm.getPanelDraftPage().getDraftTable().getSelectedRow());
+		Message selectedMessage = ((DraftTableModel) emailForm.getPanelDraftPage().getDraftTable().getModel())
 				.getMessage(selectedRowIndex);
 
 		Params.getInstance().add("MESSAGE_TO_PREVIEW", selectedMessage);
@@ -129,35 +125,35 @@ public class TabOutboxPageEvent implements IMessageForm {
 	}
 
 	private void onChangeChckShowOnlySystemCorrespondence() {
-		if (emailForm.getPanelOutboxPage().getCheckShowOnlySystemCorrespondence().isSelected()) {
+		if (emailForm.getPanelDraftPage().getCheckShowOnlySystemCorrespondence().isSelected()) {
 			List<Object> parameters = new ArrayList<Object>();
 			MessageType messageType = com.javafee.hibernate.dao.common.Common
 					.findMessageTypeByName(Constans.DATA_BASE_MESSAGE_TYPE_SYS_MESSAGE).get();
 			parameters.add(messageType);
-			((OutboxTableModel) emailForm.getPanelOutboxPage().getOutboxTable().getModel()) //
-					.reloadData(Query.TabOutboxPageEventQuery.MESSAGE_BY_MESSAGE_TYPE.getValue(), parameters);
+			((DraftTableModel) emailForm.getPanelDraftPage().getDraftTable().getModel()) //
+					.reloadData(Query.TabOutboxPageEventQuery.DRAFT_MESSAGE_BY_MESSAGE_TYPE.getValue(), parameters);
 		} else {
 			onChangeComboBoxRecipient();
 		}
 	}
 
 	private void onClickBtnDelete() {
-		if (emailForm.getPanelOutboxPage().getOutboxTable().getSelectedRow() != -1) {
-			int selectedRowIndex = emailForm.getPanelOutboxPage().getOutboxTable()
-					.convertRowIndexToModel(emailForm.getPanelOutboxPage().getOutboxTable().getSelectedRow());
+		if (emailForm.getPanelDraftPage().getDraftTable().getSelectedRow() != -1) {
+			int selectedRowIndex = emailForm.getPanelDraftPage().getDraftTable()
+					.convertRowIndexToModel(emailForm.getPanelDraftPage().getDraftTable().getSelectedRow());
 
 			if (Utils.displayConfirmDialog(
 					SystemProperties.getInstance().getResourceBundle().getString("confirmDialog.deleteMessage"),
 					"") == JOptionPane.YES_OPTION) {
 				if (selectedRowIndex != -1) {
-					Message selectedMessage = ((OutboxTableModel) emailForm.getPanelOutboxPage().getOutboxTable()
+					Message selectedMessage = ((DraftTableModel) emailForm.getPanelDraftPage().getDraftTable()
 							.getModel()).getMessage(selectedRowIndex);
 
 					HibernateUtil.beginTransaction();
 					HibernateUtil.getSession().delete(selectedMessage);
 					HibernateUtil.commitTransaction();
 
-					reloadOutboxTable();
+					reloadDraftTable();
 					reloadComboBoxRecipient();
 				}
 			}
@@ -175,15 +171,15 @@ public class TabOutboxPageEvent implements IMessageForm {
 		if (Utils.displayConfirmDialog(
 				SystemProperties.getInstance().getResourceBundle().getString("confirmDialog.sendAgainMessage"),
 				"") == JOptionPane.YES_OPTION) {
-			int selectedRowIndex = emailForm.getPanelOutboxPage().getOutboxTable()
-					.convertRowIndexToModel(emailForm.getPanelOutboxPage().getOutboxTable().getSelectedRow());
-			Message selectedMessage = ((OutboxTableModel) emailForm.getPanelOutboxPage().getOutboxTable().getModel())
+			int selectedRowIndex = emailForm.getPanelDraftPage().getDraftTable()
+					.convertRowIndexToModel(emailForm.getPanelDraftPage().getDraftTable().getSelectedRow());
+			Message selectedMessage = ((DraftTableModel) emailForm.getPanelDraftPage().getDraftTable().getModel())
 					.getMessage(selectedRowIndex);
 
 			if (new MailSenderEvent().control(selectedMessage.getRecipient(), selectedMessage.getTitle(),
 					selectedMessage.getContent())) {
 				createEmail(selectedMessage.getRecipient(), selectedMessage.getTitle(), selectedMessage.getContent());
-				reloadOutboxTable();
+				reloadDraftTable();
 			} else
 				LogGuiException.logWarning(
 						SystemProperties.getInstance().getResourceBundle()
@@ -194,18 +190,20 @@ public class TabOutboxPageEvent implements IMessageForm {
 	}
 
 	private void onChangeComboBoxRecipient() {
-		UserData recipientUserData = (UserData) emailForm.getPanelOutboxPage().getComboBoxRecipient().getSelectedItem();
+		UserData recipientUserData = (UserData) emailForm.getPanelDraftPage().getComboBoxRecipient().getSelectedItem();
 		List<Object> parameters = new ArrayList<Object>();
 		if (recipientUserData != null) {
 			parameters.add(recipientUserData);
 			parameters.add(LogInEvent.getWorker().getLogin());
-			((OutboxTableModel) emailForm.getPanelOutboxPage().getOutboxTable().getModel()) //
-					.reloadData(Query.TabOutboxPageEventQuery.DISTINCT_MESSAGE_BY_RECIPIENT_USER_DATA_AND_SENDER_LOGIN
-							.getValue(), parameters);
+			((DraftTableModel) emailForm.getPanelDraftPage().getDraftTable().getModel()) //
+					.reloadData(
+							Query.TabOutboxPageEventQuery.DISTINCT_DRAFT_MESSAGE_BY_RECIPIENT_USER_DATA_AND_SENDER_LOGIN
+									.getValue(),
+							parameters);
 		} else {
 			parameters.add(LogInEvent.getWorker().getLogin());
-			((OutboxTableModel) emailForm.getPanelOutboxPage().getOutboxTable().getModel()) //
-					.reloadData(Query.TabOutboxPageEventQuery.MESSAGE_BY_SENDER_LOGIN.getValue(), parameters);
+			((DraftTableModel) emailForm.getPanelDraftPage().getDraftTable().getModel()) //
+					.reloadData(Query.TabOutboxPageEventQuery.DRAFT_MESSAGE_BY_SENDER_LOGIN.getValue(), parameters);
 		}
 	}
 
@@ -250,7 +248,7 @@ public class TabOutboxPageEvent implements IMessageForm {
 	}
 
 	private void switchPerspectiveToAdm(boolean isAdminOrAccountant) {
-		emailForm.getPanelOutboxPage().getCheckShowOnlySystemCorrespondence().setVisible(isAdminOrAccountant);
+		emailForm.getPanelDraftPage().getCheckShowOnlySystemCorrespondence().setVisible(isAdminOrAccountant);
 		if (isAdminOrAccountant)
 			onChangeChckShowOnlySystemCorrespondence();
 	}
