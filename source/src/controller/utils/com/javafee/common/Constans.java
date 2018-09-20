@@ -54,7 +54,7 @@ public final class Constans {
 	@Getter
 	@AllArgsConstructor
 	public enum Tab_Email {
-		TAB_CREATE_PAGE(0), TAB_SENDED_PAGE(1), TAB_WORKING_COPY_PAGE(2), TAB_TEMPLATE_PAGE(3);
+		TAB_CREATE_PAGE(0), TAB_SENDED_PAGE(1), TAB_DRAFT_PAGE(2), TAB_TEMPLATE_PAGE(3);
 
 		private final Integer value;
 

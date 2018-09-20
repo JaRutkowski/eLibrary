@@ -1,24 +1,16 @@
 package com.javafee.model;
 
-import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import javax.swing.event.TableModelEvent;
-import javax.swing.table.AbstractTableModel;
-
-import org.hibernate.query.Query;
-
 import com.javafee.common.Constans.OutboxTableColumn;
+import com.javafee.common.Constans;
 import com.javafee.common.SystemProperties;
 import com.javafee.hibernate.dao.HibernateUtil;
 import com.javafee.hibernate.dto.common.message.Message;
 
-public class OutboxTableModel extends AbstractTableModel {
+public class OutboxTableModel extends DraftTableModel {
 
 	private static final long serialVersionUID = -1318024792294636748L;
-
-	protected List<Message> messages;
-	private String[] columns;
 
 	public OutboxTableModel() {
 		super();
@@ -32,53 +24,9 @@ public class OutboxTableModel extends AbstractTableModel {
 				SystemProperties.getInstance().getResourceBundle().getString("outboxTableModel.dateCol") };
 	}
 
-	public Message getMessage(int index) {
-		return messages.get(index);
-	}
-
-	public void setMessage(int index, Message message) {
-		messages.set(index, message);
-	}
-
-	public void add(Message message) {
-		messages.add(message);
-		this.fireTableDataChanged();
-	}
-
-	public void remove(Message message) {
-		messages.remove(message);
-		this.fireTableDataChanged();
-	}
-
 	@SuppressWarnings("unchecked")
 	protected void prepareHibernateDao() {
 		this.messages = HibernateUtil.getSession().createQuery("from Message").list();
-	}
-
-	@SuppressWarnings("unchecked")
-	protected void prepareHibernateDao(String query, List<Object> parameters) {
-		Query<Message> resultQuery = HibernateUtil.getSession().createQuery(query);
-		AtomicInteger position = new AtomicInteger(0);
-		parameters.forEach(param -> {
-			resultQuery.setParameter(position.getAndIncrement(), param);
-		});
-		this.messages = resultQuery.list();
-	}
-
-	private void executeUpdate(String entityName, Object object) {
-		HibernateUtil.beginTransaction();
-		HibernateUtil.getSession().update(entityName, object);
-		HibernateUtil.commitTransaction();
-	}
-
-	@Override
-	public int getColumnCount() {
-		return columns.length;
-	}
-
-	@Override
-	public int getRowCount() {
-		return messages.size();
 	}
 
 	@Override
@@ -105,36 +53,12 @@ public class OutboxTableModel extends AbstractTableModel {
 			return message.getSender() != null ? message.getSender().getSurname() + " " + message.getSender().getName()
 					: "System";
 		case COL_DATE:
-			return message.getSendDate();
+			return message.getSendDate() != null ? Constans.APPLICATION_DATE_FORMAT.format(message.getSendDate())
+					: null;
 		default:
 			return null;
 
 		}
-	}
-
-	@Override
-	public String getColumnName(int col) {
-		return columns[col];
-	}
-
-	@Override
-	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		return false;
-	}
-
-	public void reloadData() {
-		prepareHibernateDao();
-		fireTableDataChanged();
-	}
-
-	public void reloadData(String query, List<Object> parameters) {
-		prepareHibernateDao(query, parameters);
-		fireTableDataChanged();
-	}
-
-	@Override
-	public void fireTableChanged(TableModelEvent e) {
-		super.fireTableChanged(e);
 	}
 
 }

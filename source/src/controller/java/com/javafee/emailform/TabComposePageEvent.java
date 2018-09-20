@@ -73,6 +73,10 @@ public class TabComposePageEvent implements IActionForm {
 
 		emailForm.getPanelComposePage().getChckbxCC().addActionListener(e -> onChangeChckbxCC());
 		emailForm.getPanelComposePage().getChckbxBCC().addActionListener(e -> onChangeChckbxBCC());
+		emailForm.getPanelComposePage().getComposeNavigationEmailPanel().getBtnSaveAsDraft()
+				.addActionListener(e -> onClickBtnSaveAsDraft());
+		emailForm.getPanelComposePage().getComposeNavigationEmailPanel().getBtnAddAttachment()
+				.addActionListener(e -> onClickBtnAddAttachment());
 		emailForm.getPanelComposePage().getComposeNavigationEmailPanel().getBtnSend()
 				.addActionListener(e -> onClickBtnSend());
 		emailForm.getPanelComposePage().getComposeNavigationEmailPanel().getBtnClear()
@@ -151,7 +155,25 @@ public class TabComposePageEvent implements IActionForm {
 					.setSelectedItem((Client) Params.getInstance().get("selectedClient"));
 	}
 
+	private void onClickBtnAddAttachment() {
+
+	}
+
+	private void onClickBtnSaveAsDraft() {
+			List<SimpleEntry<Message.RecipientType, UserData>> recipients = new ArrayList<SimpleEntry<Message.RecipientType, UserData>>();
+			recipients.addAll(getRecipientTo(Message.RecipientType.TO));
+			if (emailForm.getPanelComposePage().getChckbxCC().isSelected())
+				recipients.addAll(getRecipientTo(Message.RecipientType.CC));
+			if (emailForm.getPanelComposePage().getChckbxBCC().isSelected())
+				recipients.addAll(getRecipientTo(Message.RecipientType.BCC));
+			String subject = emailForm.getPanelComposePage().getTextFieldTopic().getText();
+			String text = emailForm.getPanelComposePage().getTextAreaContent().getText();
+
+			createDraft(recipients, subject, text);
+	}
+
 	private void onClickBtnSend() {
+		//TODO For draft mail sending with draft deletion
 		if (validateSend()) {
 			List<SimpleEntry<Message.RecipientType, UserData>> recipients = new ArrayList<SimpleEntry<Message.RecipientType, UserData>>();
 			recipients.addAll(getRecipientTo(Message.RecipientType.TO));
@@ -254,6 +276,48 @@ public class TabComposePageEvent implements IActionForm {
 		}
 	}
 
+	private void createDraft(List<SimpleEntry<Message.RecipientType, UserData>> recipients, String subject,
+			String text) {
+		try {
+			MessageType messageType = com.javafee.hibernate.dao.common.Common
+					.findMessageTypeByName(Constans.DATA_BASE_MESSAGE_TYPE_USR_MESSAGE).get();
+
+			HibernateUtil.beginTransaction();
+			com.javafee.hibernate.dto.common.message.Message message = new com.javafee.hibernate.dto.common.message.Message();
+
+			message.setSender(LogInEvent.getWorker());
+			message.setMessageType(messageType);
+			message.setIsDraft(true);
+			recipients.forEach(recipient -> {
+				Recipient newRecipient = new Recipient();
+				newRecipient.setUserData(recipient.getValue());
+				newRecipient.setMessage(message);
+				if (Message.RecipientType.CC.equals(recipient.getKey())) {
+					newRecipient.setIsCC(true);
+				}
+				if (Message.RecipientType.BCC.equals(recipient.getKey())) {
+					newRecipient.setIsBCC(true);
+				}
+				message.getRecipient().add(newRecipient);
+			});
+			message.setTitle(subject);
+			message.setContent(text);
+			message.setSendDate(
+					Constans.APPLICATION_DATE_FORMAT.parse(Constans.APPLICATION_DATE_FORMAT.format(new Date())));
+
+			HibernateUtil.getSession().save(message);
+			HibernateUtil.commitTransaction();
+
+			JOptionPane.showMessageDialog(emailForm.getFrame(),
+					SystemProperties.getInstance().getResourceBundle().getString("tabCreatePageEvent.draftCreateSuccess"),
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("tabCreatePageEvent.draftCreateSuccessTitle"),
+					JOptionPane.INFORMATION_MESSAGE);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+
 	private List<SimpleEntry<Message.RecipientType, UserData>> getRecipientTo(Message.RecipientType recipientType) {
 		List<SimpleEntry<Message.RecipientType, UserData>> result = new ArrayList<SimpleEntry<Message.RecipientType, UserData>>();
 		if (Message.RecipientType.TO.equals(recipientType)) {
@@ -272,6 +336,8 @@ public class TabComposePageEvent implements IActionForm {
 	}
 
 	private boolean validateSend() {
+		// TODO Recipients check
+
 		boolean result = true;// false;
 		// if (startForm.getLogInPanel().getTextFieldLogin().getText().isEmpty()
 		// || startForm.getLogInPanel().getPasswordField().getPassword().length == 0)
@@ -284,4 +350,5 @@ public class TabComposePageEvent implements IActionForm {
 
 		return result;
 	}
+
 }

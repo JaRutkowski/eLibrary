@@ -47,14 +47,14 @@ public class OutboxMailPagePanel extends JPanel {
 		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
 
-		chckbxShowOnlyMyCorrespondence = new JCheckBox(SystemProperties.getInstance().getResourceBundle()
-				.getString("outboxMailPanel.chckbxShowOnlyMyCorrespondence"));
-		GridBagConstraints gbc_chckbxShowOnlyMyCorrespondence = new GridBagConstraints();
-		gbc_chckbxShowOnlyMyCorrespondence.anchor = GridBagConstraints.WEST;
-		gbc_chckbxShowOnlyMyCorrespondence.insets = new Insets(0, 0, 5, 5);
-		gbc_chckbxShowOnlyMyCorrespondence.gridx = 0;
-		gbc_chckbxShowOnlyMyCorrespondence.gridy = 0;
-		add(chckbxShowOnlyMyCorrespondence, gbc_chckbxShowOnlyMyCorrespondence);
+		checkShowOnlySystemCorrespondence = new JCheckBox(SystemProperties.getInstance().getResourceBundle()
+				.getString("outboxMailPanel.chckbxShowOnlySystemCorrespondence"));
+		GridBagConstraints gbc_checkShowOnlySystemCorrespondence = new GridBagConstraints();
+		gbc_checkShowOnlySystemCorrespondence.anchor = GridBagConstraints.WEST;
+		gbc_checkShowOnlySystemCorrespondence.insets = new Insets(0, 0, 5, 5);
+		gbc_checkShowOnlySystemCorrespondence.gridx = 0;
+		gbc_checkShowOnlySystemCorrespondence.gridy = 0;
+		add(checkShowOnlySystemCorrespondence, gbc_checkShowOnlySystemCorrespondence);
 
 		lblRecipient = new JLabel(
 				SystemProperties.getInstance().getResourceBundle().getString("outboxMailPanel.lblRecipient"));
@@ -73,14 +73,15 @@ public class OutboxMailPagePanel extends JPanel {
 		gbc_comboBoxRecipient.gridy = 0;
 		add(comboBoxRecipient, gbc_comboBoxRecipient);
 
-		checkShowOnlySystemCorrespondence = new JCheckBox(SystemProperties.getInstance().getResourceBundle()
-				.getString("outboxMailPanel.chckbxShowOnlySystemCorrespondence"));
-		GridBagConstraints gbc_checkShowOnlySystemCorrespondence = new GridBagConstraints();
-		gbc_checkShowOnlySystemCorrespondence.anchor = GridBagConstraints.WEST;
-		gbc_checkShowOnlySystemCorrespondence.insets = new Insets(0, 0, 5, 5);
-		gbc_checkShowOnlySystemCorrespondence.gridx = 0;
-		gbc_checkShowOnlySystemCorrespondence.gridy = 1;
-		add(checkShowOnlySystemCorrespondence, gbc_checkShowOnlySystemCorrespondence);
+		chckbxShowOnlyMyCorrespondence = new JCheckBox(SystemProperties.getInstance().getResourceBundle()
+				.getString("outboxMailPanel.chckbxShowOnlyMyCorrespondence"));
+		chckbxShowOnlyMyCorrespondence.setVisible(false);
+		GridBagConstraints gbc_chckbxShowOnlyMyCorrespondence = new GridBagConstraints();
+		gbc_chckbxShowOnlyMyCorrespondence.anchor = GridBagConstraints.WEST;
+		gbc_chckbxShowOnlyMyCorrespondence.insets = new Insets(0, 0, 5, 5);
+		gbc_chckbxShowOnlyMyCorrespondence.gridx = 0;
+		gbc_chckbxShowOnlyMyCorrespondence.gridy = 1;
+		add(chckbxShowOnlyMyCorrespondence, gbc_chckbxShowOnlyMyCorrespondence);
 
 		JScrollPane scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
