@@ -5,7 +5,6 @@ import java.awt.event.ComponentListener;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
@@ -24,7 +23,6 @@ import com.javafee.hibernate.dao.HibernateUtil;
 import com.javafee.hibernate.dto.association.MessageType;
 import com.javafee.hibernate.dto.common.UserData;
 import com.javafee.hibernate.dto.common.message.Message;
-import com.javafee.hibernate.dto.common.message.Recipient;
 import com.javafee.model.DraftTableModel;
 import com.javafee.startform.LogInEvent;
 
@@ -118,7 +116,7 @@ public class TabDraftPageEvent implements IMessageForm {
 		Message selectedMessage = ((DraftTableModel) emailForm.getPanelDraftPage().getDraftTable().getModel())
 				.getMessage(selectedRowIndex);
 
-		Params.getInstance().add("MESSAGE_TO_PREVIEW", selectedMessage);
+		Params.getInstance().add("DRAFT_TO_MODIFY", selectedMessage);
 		emailForm.getTabbedPane().setSelectedIndex(Tab_Email.TAB_CREATE_PAGE.getValue());
 	}
 
@@ -176,7 +174,7 @@ public class TabDraftPageEvent implements IMessageForm {
 
 			if (new MailSenderEvent().control(selectedMessage.getRecipient(), selectedMessage.getTitle(),
 					selectedMessage.getContent())) {
-				updateDraft(selectedMessage.getRecipient(), selectedMessage.getTitle(), selectedMessage.getContent());
+				updateDraft();
 				reloadDraftTable();
 			} else
 				LogGuiException.logWarning(
@@ -205,7 +203,7 @@ public class TabDraftPageEvent implements IMessageForm {
 		}
 	}
 
-	private void updateDraft(Set<Recipient> recipients, String subject, String text) {
+	private void updateDraft() {
 		int selectedRowIndex = emailForm.getPanelDraftPage().getDraftTable()
 				.convertRowIndexToModel(emailForm.getPanelDraftPage().getDraftTable().getSelectedRow());
 		Message messageShallowClone = ((DraftTableModel) emailForm.getPanelDraftPage().getDraftTable().getModel())

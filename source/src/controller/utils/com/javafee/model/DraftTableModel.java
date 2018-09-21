@@ -63,6 +63,8 @@ public class DraftTableModel extends AbstractTableModel {
 		this.messages = resultQuery.list();
 	}
 
+	
+	@SuppressWarnings("unused")
 	private void executeUpdate(String entityName, Object object) {
 		HibernateUtil.beginTransaction();
 		HibernateUtil.getSession().update(entityName, object);

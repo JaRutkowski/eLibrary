@@ -89,16 +89,22 @@ public class TabComposePageEvent implements IActionForm {
 	}
 
 	private void onTabComposeOpen() {
-		if (Params.getInstance().get("MESSAGE_TO_PREVIEW") != null) {
+		if (Params.getInstance().contains("MESSAGE_TO_PREVIEW")) {
 			com.javafee.hibernate.dto.common.message.Message messageToPreview = ((com.javafee.hibernate.dto.common.message.Message) //
 			Params.getInstance().get("MESSAGE_TO_PREVIEW"));
 			fillComposePagePanel(messageToPreview);
 			Params.getInstance().remove("MESSAGE_TO_PREVIEW");
 		}
+		if (Params.getInstance().contains("DRAFT_TO_MODIFY")) {
+			com.javafee.hibernate.dto.common.message.Message messageToPreview = ((com.javafee.hibernate.dto.common.message.Message) //
+			Params.getInstance().get("DRAFT_TO_MODIFY"));
+			fillComposePagePanel(messageToPreview);
+		}
 	}
 
 	private void onTabComposeClose() {
 		resetComponents();
+		Params.getInstance().remove("DRAFT_TO_MODIFY");
 	}
 
 	private void fillComposePagePanel(com.javafee.hibernate.dto.common.message.Message messageToPreview) {
@@ -160,20 +166,19 @@ public class TabComposePageEvent implements IActionForm {
 	}
 
 	private void onClickBtnSaveAsDraft() {
-			List<SimpleEntry<Message.RecipientType, UserData>> recipients = new ArrayList<SimpleEntry<Message.RecipientType, UserData>>();
-			recipients.addAll(getRecipientTo(Message.RecipientType.TO));
-			if (emailForm.getPanelComposePage().getChckbxCC().isSelected())
-				recipients.addAll(getRecipientTo(Message.RecipientType.CC));
-			if (emailForm.getPanelComposePage().getChckbxBCC().isSelected())
-				recipients.addAll(getRecipientTo(Message.RecipientType.BCC));
-			String subject = emailForm.getPanelComposePage().getTextFieldTopic().getText();
-			String text = emailForm.getPanelComposePage().getTextAreaContent().getText();
+		List<SimpleEntry<Message.RecipientType, UserData>> recipients = new ArrayList<SimpleEntry<Message.RecipientType, UserData>>();
+		recipients.addAll(getRecipientTo(Message.RecipientType.TO));
+		if (emailForm.getPanelComposePage().getChckbxCC().isSelected())
+			recipients.addAll(getRecipientTo(Message.RecipientType.CC));
+		if (emailForm.getPanelComposePage().getChckbxBCC().isSelected())
+			recipients.addAll(getRecipientTo(Message.RecipientType.BCC));
+		String subject = emailForm.getPanelComposePage().getTextFieldTopic().getText();
+		String text = emailForm.getPanelComposePage().getTextAreaContent().getText();
 
-			createDraft(recipients, subject, text);
+		createDraft(recipients, subject, text);
 	}
 
 	private void onClickBtnSend() {
-		//TODO For draft mail sending with draft deletion
 		if (validateSend()) {
 			List<SimpleEntry<Message.RecipientType, UserData>> recipients = new ArrayList<SimpleEntry<Message.RecipientType, UserData>>();
 			recipients.addAll(getRecipientTo(Message.RecipientType.TO));
@@ -184,9 +189,12 @@ public class TabComposePageEvent implements IActionForm {
 			String subject = emailForm.getPanelComposePage().getTextFieldTopic().getText();
 			String text = emailForm.getPanelComposePage().getTextAreaContent().getText();
 
-			if (new MailSenderEvent().control(recipients, subject, text))
-				createEmail(recipients, subject, text);
-			else
+			if (new MailSenderEvent().control(recipients, subject, text)) {
+				if (!Params.getInstance().contains("DRAFT_TO_MODIFY"))
+					createEmail(recipients, subject, text);
+				else
+					updateDraft();
+			} else
 				LogGuiException.logWarning(
 						SystemProperties.getInstance().getResourceBundle()
 								.getString("tabCreatePageEvent.emailSendErrorTitle"),
@@ -276,6 +284,24 @@ public class TabComposePageEvent implements IActionForm {
 		}
 	}
 
+	private void updateDraft() {
+		//TODO modification of other properties
+		com.javafee.hibernate.dto.common.message.Message messageShallowClone = (com.javafee.hibernate.dto.common.message.Message) Params
+				.getInstance().get("DRAFT_TO_MODIFY");
+
+		messageShallowClone.setIsDraft(false);
+
+		HibernateUtil.beginTransaction();
+		HibernateUtil.getSession().update(Message.class.getName(), messageShallowClone);
+		HibernateUtil.commitTransaction();
+
+		JOptionPane.showMessageDialog(emailForm.getFrame(),
+				SystemProperties.getInstance().getResourceBundle().getString("tabCreatePageEvent.emailSendSuccess"),
+				SystemProperties.getInstance().getResourceBundle()
+						.getString("tabCreatePageEvent.emailSendSuccessTitle"),
+				JOptionPane.INFORMATION_MESSAGE);
+	}
+
 	private void createDraft(List<SimpleEntry<Message.RecipientType, UserData>> recipients, String subject,
 			String text) {
 		try {
@@ -309,7 +335,8 @@ public class TabComposePageEvent implements IActionForm {
 			HibernateUtil.commitTransaction();
 
 			JOptionPane.showMessageDialog(emailForm.getFrame(),
-					SystemProperties.getInstance().getResourceBundle().getString("tabCreatePageEvent.draftCreateSuccess"),
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("tabCreatePageEvent.draftCreateSuccess"),
 					SystemProperties.getInstance().getResourceBundle()
 							.getString("tabCreatePageEvent.draftCreateSuccessTitle"),
 					JOptionPane.INFORMATION_MESSAGE);
