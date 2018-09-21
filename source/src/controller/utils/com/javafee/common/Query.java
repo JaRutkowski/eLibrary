@@ -5,10 +5,10 @@ public class Query {
 	public enum TabOutboxPageEventQuery {
 		MESSAGE_ALL("from Message mes where mes.isDraft is null or mes.isDraft is false"), //
 		MESSAGE_BY_SENDER_LOGIN(
-				"from Message mes where mes.sender.login = ? and mes.isDraft is null or mes.isDraft is false"), //
+				"from Message mes where mes.sender.login = ? and (mes.isDraft is null or mes.isDraft is false)"), //
 		DRAFT_MESSAGE_BY_SENDER_LOGIN("from Message mes where mes.sender.login = ? and mes.isDraft is true"), //
 		MESSAGE_BY_MESSAGE_TYPE(
-				"from Message mes where mes.messageType = ? and mes.isDraft is null or mes.isDraft is false"), //
+				"from Message mes where mes.messageType = ? and (mes.isDraft is null or mes.isDraft is false)"), //
 		DRAFT_MESSAGE_BY_MESSAGE_TYPE("from Message mes where mes.messageType = ? and mes.isDraft is true"), //
 		MESSAGE_BY_SENDER_LOGIN_AND_MESSAGE_TYPE("from Message mes where mes.sender.login = ? and mes.messageType = ?"), //
 		DISTINCT_MESSAGE_RECIPIENT_BY_SENDER_LOGIN(

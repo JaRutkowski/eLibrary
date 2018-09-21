@@ -2,10 +2,8 @@ package com.javafee.emailform;
 
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -178,7 +176,7 @@ public class TabDraftPageEvent implements IMessageForm {
 
 			if (new MailSenderEvent().control(selectedMessage.getRecipient(), selectedMessage.getTitle(),
 					selectedMessage.getContent())) {
-				createEmail(selectedMessage.getRecipient(), selectedMessage.getTitle(), selectedMessage.getContent());
+				updateDraft(selectedMessage.getRecipient(), selectedMessage.getTitle(), selectedMessage.getContent());
 				reloadDraftTable();
 			} else
 				LogGuiException.logWarning(
@@ -207,44 +205,28 @@ public class TabDraftPageEvent implements IMessageForm {
 		}
 	}
 
-	private void createEmail(Set<Recipient> recipients, String subject, String text) {
-		try {
-			MessageType messageType = com.javafee.hibernate.dao.common.Common
-					.findMessageTypeByName(Constans.DATA_BASE_MESSAGE_TYPE_USR_MESSAGE).get();
+	private void updateDraft(Set<Recipient> recipients, String subject, String text) {
+		int selectedRowIndex = emailForm.getPanelDraftPage().getDraftTable()
+				.convertRowIndexToModel(emailForm.getPanelDraftPage().getDraftTable().getSelectedRow());
+		Message messageShallowClone = ((DraftTableModel) emailForm.getPanelDraftPage().getDraftTable().getModel())
+				.getMessage(selectedRowIndex);
 
-			HibernateUtil.beginTransaction();
-			com.javafee.hibernate.dto.common.message.Message message = new com.javafee.hibernate.dto.common.message.Message();
+		messageShallowClone.setIsDraft(false);
 
-			message.setSender(LogInEvent.getWorker());
-			message.setMessageType(messageType);
-			recipients.forEach(recipient -> {
-				Recipient newRecipient = new Recipient();
-				newRecipient.setUserData(recipient.getUserData());
-				newRecipient.setMessage(message);
-				if (recipient.getIsCC() != null && recipient.getIsCC()) {
-					newRecipient.setIsCC(true);
-				}
-				if (recipient.getIsBCC() != null && recipient.getIsBCC()) {
-					newRecipient.setIsBCC(true);
-				}
-				message.getRecipient().add(newRecipient);
-			});
-			message.setTitle(subject);
-			message.setContent(text);
-			message.setSendDate(
-					Constans.APPLICATION_DATE_FORMAT.parse(Constans.APPLICATION_DATE_FORMAT.format(new Date())));
+		HibernateUtil.beginTransaction();
+		HibernateUtil.getSession().evict(((DraftTableModel) emailForm.getPanelDraftPage().getDraftTable().getModel())
+				.getMessage(selectedRowIndex));
+		HibernateUtil.getSession().update(Message.class.getName(), messageShallowClone);
+		HibernateUtil.commitTransaction();
 
-			HibernateUtil.getSession().save(message);
-			HibernateUtil.commitTransaction();
+		((DraftTableModel) emailForm.getPanelDraftPage().getDraftTable().getModel()).setMessage(selectedRowIndex,
+				messageShallowClone);
 
-			JOptionPane.showMessageDialog(emailForm.getFrame(),
-					SystemProperties.getInstance().getResourceBundle().getString("tabCreatePageEvent.emailSendSuccess"),
-					SystemProperties.getInstance().getResourceBundle()
-							.getString("tabCreatePageEvent.emailSendSuccessTitle"),
-					JOptionPane.INFORMATION_MESSAGE);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+		JOptionPane.showMessageDialog(emailForm.getFrame(),
+				SystemProperties.getInstance().getResourceBundle().getString("tabCreatePageEvent.emailSendSuccess"),
+				SystemProperties.getInstance().getResourceBundle()
+						.getString("tabCreatePageEvent.emailSendSuccessTitle"),
+				JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	private void switchPerspectiveToAdm(boolean isAdminOrAccountant) {
