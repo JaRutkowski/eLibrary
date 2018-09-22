@@ -175,7 +175,10 @@ public class TabComposePageEvent implements IActionForm {
 		String subject = emailForm.getPanelComposePage().getTextFieldTopic().getText();
 		String text = emailForm.getPanelComposePage().getTextAreaContent().getText();
 
-		createDraft(recipients, subject, text);
+		if (!Params.getInstance().contains("DRAFT_TO_MODIFY"))
+			createDraft(recipients, subject, text);
+		else
+			updateDraft(recipients, subject, text, false);
 	}
 
 	private void onClickBtnSend() {
@@ -193,7 +196,7 @@ public class TabComposePageEvent implements IActionForm {
 				if (!Params.getInstance().contains("DRAFT_TO_MODIFY"))
 					createEmail(recipients, subject, text);
 				else
-					updateDraft();
+					updateDraft(recipients, subject, text, true);
 			} else
 				LogGuiException.logWarning(
 						SystemProperties.getInstance().getResourceBundle()
@@ -284,22 +287,55 @@ public class TabComposePageEvent implements IActionForm {
 		}
 	}
 
-	private void updateDraft() {
-		//TODO modification of other properties
-		com.javafee.hibernate.dto.common.message.Message messageShallowClone = (com.javafee.hibernate.dto.common.message.Message) Params
-				.getInstance().get("DRAFT_TO_MODIFY");
+	private void updateDraft(List<SimpleEntry<Message.RecipientType, UserData>> recipients, String subject, String text,
+			boolean isSendContext) {
+		try {
+			com.javafee.hibernate.dto.common.message.Message messageShallowClone = (com.javafee.hibernate.dto.common.message.Message) Params
+					.getInstance().get("DRAFT_TO_MODIFY");
 
-		messageShallowClone.setIsDraft(false);
+			messageShallowClone.getRecipient().clear();
 
-		HibernateUtil.beginTransaction();
-		HibernateUtil.getSession().update(Message.class.getName(), messageShallowClone);
-		HibernateUtil.commitTransaction();
+			messageShallowClone.setIsDraft(!isSendContext);
+			recipients.forEach(recipient -> {
+				Recipient newRecipient = new Recipient();
+				newRecipient.setUserData(recipient.getValue());
+				newRecipient.setMessage(messageShallowClone);
+				if (Message.RecipientType.CC.equals(recipient.getKey())) {
+					newRecipient.setIsCC(true);
+				}
+				if (Message.RecipientType.BCC.equals(recipient.getKey())) {
+					newRecipient.setIsBCC(true);
+				}
+				messageShallowClone.getRecipient().add(newRecipient);
+			});
 
-		JOptionPane.showMessageDialog(emailForm.getFrame(),
-				SystemProperties.getInstance().getResourceBundle().getString("tabCreatePageEvent.emailSendSuccess"),
-				SystemProperties.getInstance().getResourceBundle()
-						.getString("tabCreatePageEvent.emailSendSuccessTitle"),
-				JOptionPane.INFORMATION_MESSAGE);
+			messageShallowClone.setTitle(subject);
+			messageShallowClone.setContent(text);
+			messageShallowClone.setSendDate(
+					Constans.APPLICATION_DATE_FORMAT.parse(Constans.APPLICATION_DATE_FORMAT.format(new Date())));
+
+			HibernateUtil.beginTransaction();
+			HibernateUtil.getSession().update(Message.class.getName(), messageShallowClone);
+			HibernateUtil.commitTransaction();
+
+			if (isSendContext) {
+				JOptionPane.showMessageDialog(emailForm.getFrame(),
+						SystemProperties.getInstance().getResourceBundle()
+								.getString("tabCreatePageEvent.emailSendSuccess"),
+						SystemProperties.getInstance().getResourceBundle().getString(
+								"tabCreatePageEvent.emailSendSuccessTitle"),
+						JOptionPane.INFORMATION_MESSAGE);
+			} else {
+				JOptionPane.showMessageDialog(emailForm.getFrame(),
+						SystemProperties.getInstance().getResourceBundle()
+								.getString("tabCreatePageEvent.draftUpdateSuccess"),
+						SystemProperties.getInstance().getResourceBundle().getString(
+								"tabCreatePageEvent.draftUpdateSuccessTitle"),
+						JOptionPane.INFORMATION_MESSAGE);
+			}
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void createDraft(List<SimpleEntry<Message.RecipientType, UserData>> recipients, String subject,

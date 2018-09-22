@@ -3,6 +3,7 @@ package com.javafee.hibernate.dto.common.message;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -38,8 +39,8 @@ public class Recipient {
 	@Column(name = "is_bcc", unique = false, nullable = true, insertable = true, updatable = true)
 	private Boolean isBCC;
 
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "id_message", unique = false, nullable = true, insertable = true, updatable = true)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_message")//, unique = false, nullable = true, insertable = true, updatable = true)
 	private Message message;
 
 	@Override
