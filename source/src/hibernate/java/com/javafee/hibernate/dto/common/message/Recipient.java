@@ -1,6 +1,5 @@
 package com.javafee.hibernate.dto.common.message;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -40,7 +39,7 @@ public class Recipient {
 	private Boolean isBCC;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_message")//, unique = false, nullable = true, insertable = true, updatable = true)
+	@JoinColumn(name = "id_message")
 	private Message message;
 
 	@Override

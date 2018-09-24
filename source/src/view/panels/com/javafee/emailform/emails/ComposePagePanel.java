@@ -7,10 +7,9 @@ import java.awt.Insets;
 
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
 import com.javafee.common.SystemProperties;
@@ -45,7 +44,7 @@ public class ComposePagePanel extends JPanel {
 	private JTextField textFieldTopic;
 
 	@Getter
-	private JTextArea textAreaContent;
+	private JEditorPane editorPaneContent;
 	@Getter
 	private ComposeNavigationPanel composeNavigationEmailPanel;
 
@@ -143,16 +142,16 @@ public class ComposePagePanel extends JPanel {
 		add(textFieldTopic, gbc_textFieldTopic);
 		textFieldTopic.setColumns(10);
 
-		textAreaContent = new JTextArea();
-		textAreaContent.setLineWrap(true);
-		textAreaContent.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		editorPaneContent = new JEditorPane();
+		editorPaneContent.setContentType("text/html");
+		editorPaneContent.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		GridBagConstraints gbc_textAreaContent = new GridBagConstraints();
 		gbc_textAreaContent.gridwidth = 3;
 		gbc_textAreaContent.insets = new Insets(0, 0, 5, 0);
 		gbc_textAreaContent.fill = GridBagConstraints.BOTH;
 		gbc_textAreaContent.gridx = 1;
 		gbc_textAreaContent.gridy = 4;
-		add(textAreaContent, gbc_textAreaContent);
+		add(editorPaneContent, gbc_textAreaContent);
 
 		composeNavigationEmailPanel = new ComposeNavigationPanel();
 		GridBagConstraints gbc_composeNavigationEmailPanel = new GridBagConstraints();

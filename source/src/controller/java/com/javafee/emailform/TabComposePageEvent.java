@@ -109,7 +109,7 @@ public class TabComposePageEvent implements IActionForm {
 
 	private void fillComposePagePanel(com.javafee.hibernate.dto.common.message.Message messageToPreview) {
 		emailForm.getPanelComposePage().getTextFieldTopic().setText(messageToPreview.getTitle());
-		emailForm.getPanelComposePage().getTextAreaContent().setText(messageToPreview.getContent());
+		emailForm.getPanelComposePage().getEditorPaneContent().setText(messageToPreview.getContent());
 
 		messageToPreview.getRecipient().forEach(recipient -> {
 			Client client = null;
@@ -173,7 +173,7 @@ public class TabComposePageEvent implements IActionForm {
 		if (emailForm.getPanelComposePage().getChckbxBCC().isSelected())
 			recipients.addAll(getRecipientTo(Message.RecipientType.BCC));
 		String subject = emailForm.getPanelComposePage().getTextFieldTopic().getText();
-		String text = emailForm.getPanelComposePage().getTextAreaContent().getText();
+		String text = emailForm.getPanelComposePage().getEditorPaneContent().getText();
 
 		if (!Params.getInstance().contains("DRAFT_TO_MODIFY"))
 			createDraft(recipients, subject, text);
@@ -190,7 +190,7 @@ public class TabComposePageEvent implements IActionForm {
 			if (emailForm.getPanelComposePage().getChckbxBCC().isSelected())
 				recipients.addAll(getRecipientTo(Message.RecipientType.BCC));
 			String subject = emailForm.getPanelComposePage().getTextFieldTopic().getText();
-			String text = emailForm.getPanelComposePage().getTextAreaContent().getText();
+			String text = emailForm.getPanelComposePage().getEditorPaneContent().getText();
 
 			if (new MailSenderEvent().control(recipients, subject, text)) {
 				if (!Params.getInstance().contains("DRAFT_TO_MODIFY"))
@@ -208,6 +208,19 @@ public class TabComposePageEvent implements IActionForm {
 
 	private void onClickBtnClear() {
 		resetComponents();
+		//---------------------------------------------------------------------------
+		emailForm.getPanelComposePage().getEditorPaneContent().setText("<html>\n" +
+                "Color and font test:\n" +
+                "<ul>\n" +
+                "<li><font color=red>red</font>\n" +
+                "<li><font color=blue>blue</font>\n" +
+                "<li><font color=green>green</font>\n" +
+                "<li><font size=-2>small</font>\n" +
+                "<li><font size=+2>large</font>\n" +
+                "<li><i>italic</i>\n" +
+                "<li><b>bold</b>\n" +
+                "</ul>\n");
+		//---------------------------------------------------------------------------
 	}
 
 	private void onChangeChckbxCC() {
@@ -243,7 +256,7 @@ public class TabComposePageEvent implements IActionForm {
 		emailForm.getPanelComposePage().getChckbxCC().setSelected(false);
 		emailForm.getPanelComposePage().getChckbxBCC().setSelected(false);
 		emailForm.getPanelComposePage().getTextFieldTopic().setText(null);
-		emailForm.getPanelComposePage().getTextAreaContent().setText(null);
+		emailForm.getPanelComposePage().getEditorPaneContent().setText(null);
 	}
 
 	private void createEmail(List<SimpleEntry<Message.RecipientType, UserData>> recipients, String subject,
@@ -413,5 +426,4 @@ public class TabComposePageEvent implements IActionForm {
 
 		return result;
 	}
-
 }

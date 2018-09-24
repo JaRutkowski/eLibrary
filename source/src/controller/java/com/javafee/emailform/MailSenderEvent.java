@@ -53,7 +53,7 @@ public class MailSenderEvent {
 				}
 			});
 			message.setSubject(subject);
-			message.setText(text);
+			message.setContent(text, "text/html");
 		} catch (AddressException e) {
 			e.printStackTrace();
 		} catch (MessagingException e) {
