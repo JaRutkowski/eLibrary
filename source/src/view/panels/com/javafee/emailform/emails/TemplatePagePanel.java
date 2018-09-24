@@ -8,9 +8,12 @@ import javax.swing.JPanel;
 
 import com.javafee.uniform.HTMLeditor;
 
+import lombok.Getter;
+
 public class TemplatePagePanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
+	@Getter
 	private HTMLeditor htmlEditorPanel;
 
 	public TemplatePagePanel() {

@@ -1,7 +1,6 @@
 package com.javafee.emailform;
 
 import com.javafee.common.IActionForm;
-import com.javafee.exception.RefusedTabTemplatePageEventLoadingException;
 
 import lombok.Setter;
 
@@ -16,11 +15,8 @@ public class TabTemplatePageEvent implements IActionForm {
 	}
 
 	public static TabTemplatePageEvent getInstance(EmailForm emailForm) {
-		if (templatePageEvent == null) {
+		if (templatePageEvent == null)
 			templatePageEvent = new TabTemplatePageEvent(emailForm);
-		} else
-			// TODO
-			new RefusedTabTemplatePageEventLoadingException("Cannot tab template page event loading");
 
 		return templatePageEvent;
 	}
@@ -29,10 +25,22 @@ public class TabTemplatePageEvent implements IActionForm {
 		setEmailForm(emailForm);
 		initializeForm();
 
+		emailForm.getPanelTemplatePage().getHtmlEditorPanel().getBtnParse().addActionListener(e -> onClickBtnParse());
+		emailForm.getPanelTemplatePage().getHtmlEditorPanel().getBtnValidate()
+				.addActionListener(e -> onClickBtnValidate());
 	}
 
 	@Override
 	public void initializeForm() {
+
+	}
+
+	private void onClickBtnParse() {
+		emailForm.getPanelTemplatePage().getHtmlEditorPanel().getEditorPanePreview()
+				.setText(emailForm.getPanelTemplatePage().getHtmlEditorPanel().getTextAreaHTMLEditor().getText());
+	}
+
+	private void onClickBtnValidate() {
 
 	}
 }
