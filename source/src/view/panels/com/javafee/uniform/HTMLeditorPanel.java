@@ -1,44 +1,47 @@
 package com.javafee.uniform;
 
-import javax.swing.JPanel;
-import java.awt.GridBagLayout;
-import javax.swing.JEditorPane;
-
 import java.awt.Font;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JEditorPane;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.border.TitledBorder;
 
 import com.javafee.common.SystemProperties;
+import com.javafee.startform.RegistrationPanel;
 
 import lombok.Getter;
 
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-
-public class HTMLeditor extends JPanel {
+public class HTMLeditorPanel extends JPanel {
 
 	private static final long serialVersionUID = -7643308432142313985L;
 
 	@Getter
-	private JTextArea textAreaHTMLEditor;
+	private JTextArea textAreaHTMLeditor;
 	@Getter
 	private JEditorPane editorPanePreview;
-	@Getter
-	private JLabel lblStatus;
 	@Getter
 	private JButton btnParse;
 	@Getter
 	private JButton btnValidate;
+	@Getter
+	private JList<String> listStatus;
+	private JScrollPane scrollPane_listStatus;
 
-	public HTMLeditor() {
+	public HTMLeditorPanel() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 338, 0, 372, 0 };
-		gridBagLayout.rowHeights = new int[] { 282, 253, 0, 0 };
+		gridBagLayout.rowHeights = new int[] { 282, 321, 100, 0 };
 		gridBagLayout.columnWeights = new double[] { 1.0, 0.0, 1.0, Double.MIN_VALUE };
-		gridBagLayout.rowWeights = new double[] { 1.0, 0.0, 0.0, Double.MIN_VALUE };
+		gridBagLayout.rowWeights = new double[] { 1.0, 0.0, 1.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
 
 		JPanel htmlEditorPanel = new JPanel();
@@ -66,11 +69,14 @@ public class HTMLeditor extends JPanel {
 		gbc_scrollPane.gridy = 0;
 		htmlEditorPanel.add(scrollPane, gbc_scrollPane);
 
-		textAreaHTMLEditor = new JTextArea();
-		textAreaHTMLEditor.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		scrollPane.setViewportView(textAreaHTMLEditor);
+		textAreaHTMLeditor = new JTextArea();
+		textAreaHTMLeditor.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		scrollPane.setViewportView(textAreaHTMLeditor);
 
-		btnParse = new JButton(SystemProperties.getInstance().getResourceBundle().getString("htmlEditor.btnParse"));
+		btnParse = new JButton();
+		btnParse.setIcon(
+				new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnRoundParse-ico.png"))
+						.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.anchor = GridBagConstraints.SOUTH;
 		gbc_btnNewButton.insets = new Insets(0, 0, 5, 5);
@@ -84,7 +90,7 @@ public class HTMLeditor extends JPanel {
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		GridBagConstraints gbc_previewPanel = new GridBagConstraints();
 		gbc_previewPanel.gridheight = 2;
-		gbc_previewPanel.insets = new Insets(0, 0, 5, 0);
+		gbc_previewPanel.insets = new Insets(0, 5, 5, 5);
 		gbc_previewPanel.fill = GridBagConstraints.BOTH;
 		gbc_previewPanel.gridx = 2;
 		gbc_previewPanel.gridy = 0;
@@ -108,23 +114,29 @@ public class HTMLeditor extends JPanel {
 		editorPanePreview.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		scrollPane_1.setViewportView(editorPanePreview);
 
-		btnValidate = new JButton(
-				SystemProperties.getInstance().getResourceBundle().getString("htmlEditor.btnValidate"));
-		GridBagConstraints gbc_button = new GridBagConstraints();
-		gbc_button.anchor = GridBagConstraints.NORTH;
-		gbc_button.fill = GridBagConstraints.HORIZONTAL;
-		gbc_button.insets = new Insets(0, 0, 5, 5);
-		gbc_button.gridx = 1;
-		gbc_button.gridy = 1;
-		add(btnValidate, gbc_button);
+		btnValidate = new JButton();
+		btnValidate
+				.setIcon(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/button-bulb-ico.png"))
+						.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
+		GridBagConstraints gbc_btnNewButton1 = new GridBagConstraints();
+		gbc_btnNewButton1.anchor = GridBagConstraints.NORTH;
+		gbc_btnNewButton1.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnNewButton1.insets = new Insets(0, 0, 5, 5);
+		gbc_btnNewButton1.gridx = 1;
+		gbc_btnNewButton1.gridy = 1;
+		add(btnValidate, gbc_btnNewButton1);
 
-		lblStatus = new JLabel("Status");
-		GridBagConstraints gbc_lblStatus = new GridBagConstraints();
-		gbc_lblStatus.anchor = GridBagConstraints.WEST;
-		gbc_lblStatus.gridwidth = 3;
-		gbc_lblStatus.gridx = 0;
-		gbc_lblStatus.gridy = 2;
-		add(lblStatus, gbc_lblStatus);
+		scrollPane_listStatus = new JScrollPane();
+		GridBagConstraints gbc_scrollPane_listStatus = new GridBagConstraints();
+		gbc_scrollPane_listStatus.fill = GridBagConstraints.BOTH;
+		gbc_scrollPane_listStatus.gridwidth = 3;
+		gbc_scrollPane_listStatus.gridx = 0;
+		gbc_scrollPane_listStatus.gridy = 2;
+		add(scrollPane_listStatus, gbc_scrollPane_listStatus);
+
+		listStatus = new JList<String>();
+		scrollPane_listStatus.setViewportView(listStatus);
+		listStatus.setEnabled(false);
 
 	}
 

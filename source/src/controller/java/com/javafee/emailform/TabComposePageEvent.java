@@ -208,19 +208,6 @@ public class TabComposePageEvent implements IActionForm {
 
 	private void onClickBtnClear() {
 		resetComponents();
-		//---------------------------------------------------------------------------
-		emailForm.getPanelComposePage().getEditorPaneContent().setText("<html>\n" +
-                "Color and font test:\n" +
-                "<ul>\n" +
-                "<li><font color=red>red</font>\n" +
-                "<li><font color=blue>blue</font>\n" +
-                "<li><font color=green>green</font>\n" +
-                "<li><font size=-2>small</font>\n" +
-                "<li><font size=+2>large</font>\n" +
-                "<li><i>italic</i>\n" +
-                "<li><b>bold</b>\n" +
-                "</ul>\n");
-		//---------------------------------------------------------------------------
 	}
 
 	private void onChangeChckbxCC() {

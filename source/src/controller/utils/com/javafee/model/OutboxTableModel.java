@@ -2,8 +2,8 @@ package com.javafee.model;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import com.javafee.common.Constans.OutboxTableColumn;
 import com.javafee.common.Constans;
+import com.javafee.common.Constans.OutboxTableColumn;
 import com.javafee.common.SystemProperties;
 import com.javafee.hibernate.dao.HibernateUtil;
 import com.javafee.hibernate.dto.common.message.Message;

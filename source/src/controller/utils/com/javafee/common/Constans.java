@@ -246,6 +246,10 @@ public final class Constans {
 	public static final Integer APPLICATION_GENERATE_PASSWORD_LENGTH = 16;
 	public static final String APPLICATION_EMAIL = "nreply.elibrary@gmail.com";
 	public static final String APPLICATION_EMAIL_PASSWORD = "Admin95!";
+	public static final String APPLICATION_TEMPLATE_EXTENSION = ".html";
+	public static final String APPLICATION_TEMPLATE_EXTENSION_DESCRIPTION = "HTML file";
+	public static final String APPLICATION_TEMPLATE_DIRECTORY_NAME = "eLib-mes-templates";
+	public static final String APPLICATION_TEMPLATE_ENCODING = "UTF-8";
 
 	public static final Dimension START_FORM_MINIMUM_SIZE = new Dimension(300, 200);
 	public static final Dimension EMAIL_FORM_MINIMUM_SIZE = new Dimension(800, 700);
