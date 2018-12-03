@@ -90,7 +90,7 @@ public class TabTemplatePageEvent implements IActionForm {
 				.setText(emailForm.getPanelTemplatePage().getHtmlEditorPanel().getTextAreaHTMLeditor().getText());
 		String htmlText = emailForm.getPanelTemplatePage().getHtmlEditorPanel().getTextAreaHTMLeditor().getText();
 
-		if (validator != null)
+		if (validator == null)
 			validator = new HTMLProcessor(htmlText);
 
 		String[] messages = validator.getMessagesList(true).toArray(new String[validator.getMessagesList(true).size()]);
@@ -106,7 +106,7 @@ public class TabTemplatePageEvent implements IActionForm {
 	private void onClickBtnValidate() {
 		String htmlText = emailForm.getPanelTemplatePage().getHtmlEditorPanel().getTextAreaHTMLeditor().getText();
 
-		if (validator != null)
+		if (validator == null)
 			validator = new HTMLProcessor(htmlText);
 
 		String[] messages = validator.getMessagesList(true).toArray(new String[validator.getMessagesList(true).size()]);
