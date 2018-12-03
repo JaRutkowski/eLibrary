@@ -92,6 +92,8 @@ public class TabTemplatePageEvent implements IActionForm {
 
 		if (validator == null)
 			validator = new HTMLProcessor(htmlText);
+		else 
+			validator.setHtmlString(htmlText);
 
 		String[] messages = validator.getMessagesList(true).toArray(new String[validator.getMessagesList(true).size()]);
 		reloadListStatus(messages);
@@ -108,6 +110,8 @@ public class TabTemplatePageEvent implements IActionForm {
 
 		if (validator == null)
 			validator = new HTMLProcessor(htmlText);
+		else 
+			validator.setHtmlString(htmlText);
 
 		String[] messages = validator.getMessagesList(true).toArray(new String[validator.getMessagesList(true).size()]);
 		reloadListStatus(messages);

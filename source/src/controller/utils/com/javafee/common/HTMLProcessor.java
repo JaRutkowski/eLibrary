@@ -15,10 +15,12 @@ import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
 import lombok.Getter;
+import lombok.Setter;
 
 public class HTMLProcessor {
 
 	@Getter
+	@Setter
 	private String htmlString = null;
 	private Document htmlDocument = null;
 
