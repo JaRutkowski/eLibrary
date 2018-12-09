@@ -34,12 +34,12 @@ public class HTMLeditorPanel extends JPanel {
 	private JButton btnValidate;
 	@Getter
 	private JList<String> listStatus;
-	private JScrollPane scrollPane_listStatus;
+	private JScrollPane scrollPaneListStatus;
 
 	public HTMLeditorPanel() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 338, 0, 372, 0 };
-		gridBagLayout.rowHeights = new int[] { 282, 321, 100, 0 };
+		gridBagLayout.rowHeights = new int[] { 228, 292, 100, 0 };
 		gridBagLayout.columnWeights = new double[] { 1.0, 0.0, 1.0, Double.MIN_VALUE };
 		gridBagLayout.rowWeights = new double[] { 1.0, 0.0, 1.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
@@ -126,16 +126,16 @@ public class HTMLeditorPanel extends JPanel {
 		gbc_btnNewButton1.gridy = 1;
 		add(btnValidate, gbc_btnNewButton1);
 
-		scrollPane_listStatus = new JScrollPane();
+		scrollPaneListStatus = new JScrollPane();
 		GridBagConstraints gbc_scrollPane_listStatus = new GridBagConstraints();
 		gbc_scrollPane_listStatus.fill = GridBagConstraints.BOTH;
 		gbc_scrollPane_listStatus.gridwidth = 3;
 		gbc_scrollPane_listStatus.gridx = 0;
 		gbc_scrollPane_listStatus.gridy = 2;
-		add(scrollPane_listStatus, gbc_scrollPane_listStatus);
+		add(scrollPaneListStatus, gbc_scrollPane_listStatus);
 
 		listStatus = new JList<String>();
-		scrollPane_listStatus.setViewportView(listStatus);
+		scrollPaneListStatus.setViewportView(listStatus);
 		listStatus.setEnabled(false);
 
 	}

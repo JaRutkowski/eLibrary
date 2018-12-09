@@ -63,13 +63,14 @@ public class TabTemplatePageEvent implements IActionForm {
 	@Override
 	public void initializeForm() {
 		reloadComboBoxLibraryTemplate();
+		registerWatchServiceListener();
 	}
 
 	private void reloadComboBoxLibraryTemplate() {
 		DefaultComboBoxModel<String> comboBoxLibraryTemplateModel = new DefaultComboBoxModel<String>();
 		Optional<SystemProperties> systemProperties = (Optional<SystemProperties>) Common
 				.findSystemPropertiesByUserDataId(LogInEvent.getWorker().getIdUserData());
-		if (systemProperties.isPresent()) {
+		if (systemProperties.isPresent() && systemProperties.get().getTemplateDirectory() != null) {
 			File[] files = new File(systemProperties.get().getTemplateDirectory()).listFiles();
 			List<String> names = Arrays.asList(files).parallelStream().map(file -> file.getName())
 					.collect(Collectors.toList());
@@ -85,6 +86,14 @@ public class TabTemplatePageEvent implements IActionForm {
 		emailForm.getPanelTemplatePage().getHtmlEditorPanel().getListStatus().setListData(messages);
 	}
 
+	private void registerWatchServiceListener() {
+		Optional<SystemProperties> systemProperties = (Optional<SystemProperties>) Common
+				.findSystemPropertiesByUserDataId(LogInEvent.getWorker().getIdUserData());
+		if (systemProperties.isPresent() && systemProperties.get().getTemplateDirectory() != null) {
+			com.javafee.common.Common.registerWatchServiceListener(this, c -> this.reloadComboBoxLibraryTemplate());
+		}
+	}
+
 	private void onClickBtnParse() {
 		emailForm.getPanelTemplatePage().getHtmlEditorPanel().getEditorPanePreview()
 				.setText(emailForm.getPanelTemplatePage().getHtmlEditorPanel().getTextAreaHTMLeditor().getText());
@@ -92,7 +101,7 @@ public class TabTemplatePageEvent implements IActionForm {
 
 		if (validator == null)
 			validator = new HTMLProcessor(htmlText);
-		else 
+		else
 			validator.setHtmlString(htmlText);
 
 		String[] messages = validator.getMessagesList(true).toArray(new String[validator.getMessagesList(true).size()]);
@@ -110,7 +119,7 @@ public class TabTemplatePageEvent implements IActionForm {
 
 		if (validator == null)
 			validator = new HTMLProcessor(htmlText);
-		else 
+		else
 			validator.setHtmlString(htmlText);
 
 		String[] messages = validator.getMessagesList(true).toArray(new String[validator.getMessagesList(true).size()]);
@@ -125,7 +134,7 @@ public class TabTemplatePageEvent implements IActionForm {
 			if (systemProperties.getTemplateDirectory() == null) {
 				if (Utils.displayConfirmDialog(com.javafee.common.SystemProperties.getInstance().getResourceBundle()
 						.getString("confirmDialog.initialTemplateLibrary"), "") == JOptionPane.YES_OPTION) {
-					File result = ((File) Utils.displayJFileChooserAndGetFile(null));
+					File result = ((File) Utils.displaySaveDialogAndGetFile(null));
 					if (result != null) {
 						try {
 							Files.write(Paths.get(result.getPath()),
@@ -139,8 +148,6 @@ public class TabTemplatePageEvent implements IActionForm {
 							HibernateUtil.getSession().update(SystemProperties.class.getName(), systemProperties);
 							HibernateUtil.commitTransaction();
 
-							reloadComboBoxLibraryTemplate();
-
 							Utils.displayOptionPane(
 									com.javafee.common.SystemProperties.getInstance().getResourceBundle()
 											.getString("tabTemplatePageEvent.savingTemplateIntoLibrarySuccess"),
@@ -153,15 +160,13 @@ public class TabTemplatePageEvent implements IActionForm {
 					}
 				}
 			} else {
-				File result = ((File) Utils.displayJFileChooserAndGetFile(systemProperties.getTemplateDirectory()));
+				File result = ((File) Utils.displaySaveDialogAndGetFile(systemProperties.getTemplateDirectory()));
 				if (result != null) {
 					try {
 						Files.write(Paths.get(result.getPath()),
 								Arrays.asList(emailForm.getPanelTemplatePage().getHtmlEditorPanel()
 										.getTextAreaHTMLeditor().getText()),
 								Charset.forName(Constans.APPLICATION_TEMPLATE_ENCODING));
-
-						reloadComboBoxLibraryTemplate();
 
 						Utils.displayOptionPane(
 								com.javafee.common.SystemProperties.getInstance().getResourceBundle()
@@ -182,10 +187,32 @@ public class TabTemplatePageEvent implements IActionForm {
 							"tabTemplatePage.validateSaveTemplateToLibraryErrorTitle"),
 					JOptionPane.WARNING_MESSAGE);
 		}
+
+		reloadComboBoxLibraryTemplate();
+		registerWatchServiceListener();
 	}
 
 	private void onClickBtnPreviewTemplateLibrary() {
+		com.javafee.hibernate.dto.common.SystemProperties systemProperties = com.javafee.hibernate.dao.common.Common
+				.checkAndGetSystemProperties(LogInEvent.getWorker().getIdUserData());
 
+		if (systemProperties.getTemplateDirectory() == null) {
+			if (Utils.displayConfirmDialog(com.javafee.common.SystemProperties.getInstance().getResourceBundle()
+					.getString("confirmDialog.loadFromTemplateLibraryNoDirectory"), "") == JOptionPane.YES_OPTION) {
+				File result = ((File) Utils.displayOpenDialogAndGetFile(null));
+
+				systemProperties.setTemplateDirectory(result.getParent());
+
+				HibernateUtil.beginTransaction();
+				HibernateUtil.getSession().update(SystemProperties.class.getName(), systemProperties);
+				HibernateUtil.commitTransaction();
+
+				fillTextAreaHTMLeditorWithFile(result);
+			}
+		} else {
+			File result = ((File) Utils.displayOpenDialogAndGetFile(systemProperties.getTemplateDirectory()));
+			fillTextAreaHTMLeditorWithFile(result);
+		}
 	}
 
 	private void onChangeComboBoxLibraryTemplate() {
@@ -197,17 +224,22 @@ public class TabTemplatePageEvent implements IActionForm {
 					.findSystemPropertiesByUserDataId(LogInEvent.getWorker().getIdUserData());
 			if (systemProperties.isPresent()) {
 				File file = new File(systemProperties.get().getTemplateDirectory() + File.separator + fileName);
-				try {
-					clearTextAreaHTMLEditor();
-					Files.lines(file.toPath()).forEach(e -> {
-						emailForm.getPanelTemplatePage().getHtmlEditorPanel().getTextAreaHTMLeditor().append(e + "\n");
-					});
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+				clearTextAreaHTMLEditor();
+				fillTextAreaHTMLeditorWithFile(file);
 			}
 		} else {
 			clearTextAreaHTMLEditor();
+		}
+	}
+
+	private void fillTextAreaHTMLeditorWithFile(File file) {
+		try {
+			emailForm.getPanelTemplatePage().getHtmlEditorPanel().getTextAreaHTMLeditor()
+					.setText(file != null && Files.lines(Paths.get(file.getPath())) != null
+							? Files.lines(Paths.get(file.getPath())).collect(Collectors.joining("\n"))
+							: "");
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 

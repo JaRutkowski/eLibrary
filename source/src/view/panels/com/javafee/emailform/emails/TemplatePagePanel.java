@@ -28,6 +28,7 @@ public class TemplatePagePanel extends JPanel {
 		setLayout(gridBagLayout);
 
 		htmlEditorPanel = new HTMLeditorPanel();
+		htmlEditorPanel.getListStatus().setVisibleRowCount(10);
 		GridBagConstraints gbc_panel = new GridBagConstraints();
 		gbc_panel.gridwidth = 2;
 		gbc_panel.insets = new Insets(5, 5, 5, 0);

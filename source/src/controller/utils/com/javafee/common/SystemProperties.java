@@ -7,7 +7,9 @@ import com.javafee.exception.RefusedSystemPropertiesLoadingException;
 import com.javafee.hibernate.dao.HibernateUtil;
 
 public class SystemProperties {
+
 	private static SystemProperties systemProperties = null;
+
 	private ResourceBundle resourceBundleLanguage = ResourceBundle.getBundle(Constans.LANGUAGE_RESOURCE_BUNDLE,
 			new Locale(Constans.APPLICATION_LANGUAGE));
 
@@ -46,4 +48,5 @@ public class SystemProperties {
 	public void setResourceBundleLanguage(Locale locale) {
 		this.resourceBundleLanguage = ResourceBundle.getBundle("messages", locale);
 	}
+
 }

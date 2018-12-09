@@ -49,7 +49,7 @@ public class Utils {
 				JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 	}
 
-	public static File displayJFileChooserAndGetFile(String directory) {
+	public static File displaySaveDialogAndGetFile(String directory) {
 		String dir = directory != null ? directory : FileSystemView.getFileSystemView().getHomeDirectory().toString();
 		JFileChooser jfc = new JFileChooser(dir);
 		jfc.addChoosableFileFilter(new FileFilter() {
@@ -74,9 +74,59 @@ public class Utils {
 			if (path.toString().toLowerCase().endsWith(Constans.APPLICATION_TEMPLATE_DIRECTORY_NAME.toLowerCase())) {
 				if (result.getAbsolutePath().toString().toLowerCase()
 						.endsWith(Constans.APPLICATION_TEMPLATE_EXTENSION.toLowerCase()))
-					result = new File(dir, result.getName());
+					result = new File(path.toString(), result.getName());
 				else
-					result = new File(dir, result.getName() + Constans.APPLICATION_TEMPLATE_EXTENSION);
+					result = new File(path.toString(), result.getName() + Constans.APPLICATION_TEMPLATE_EXTENSION);
+			} else {
+				try {
+					path = Paths.get(
+							result.getParentFile() + File.separator + Constans.APPLICATION_TEMPLATE_DIRECTORY_NAME);
+					if (!Files.exists(path)) {
+						Files.createDirectories(path);
+						if (result.getAbsolutePath().toString().toLowerCase()
+								.endsWith(Constans.APPLICATION_TEMPLATE_EXTENSION.toLowerCase()))
+							result = new File(path.toString(), result.getName());
+						else
+							result = new File(path.toString(),
+									result.getName() + Constans.APPLICATION_TEMPLATE_EXTENSION);
+					}
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		return result;
+	}
+
+	public static File displayOpenDialogAndGetFile(String directory) {
+		String dir = directory != null ? directory : FileSystemView.getFileSystemView().getHomeDirectory().toString();
+		JFileChooser jfc = new JFileChooser(dir);
+		jfc.addChoosableFileFilter(new FileFilter() {
+			public boolean accept(File f) {
+				return f.getName().toLowerCase().endsWith(Constans.APPLICATION_TEMPLATE_EXTENSION) || f.isDirectory();
+			}
+
+			public String getDescription() {
+				return Constans.APPLICATION_TEMPLATE_EXTENSION_DESCRIPTION;
+			}
+		});
+
+		File result = null;
+
+		int returnValue = jfc.showOpenDialog(null);
+
+		if (returnValue == JFileChooser.APPROVE_OPTION) {
+			result = jfc.getSelectedFile();
+
+			Path path = Paths.get(result.getParent());
+
+			if (path.toString().toLowerCase().endsWith(Constans.APPLICATION_TEMPLATE_DIRECTORY_NAME.toLowerCase())) {
+				if (result.getAbsolutePath().toString().toLowerCase()
+						.endsWith(Constans.APPLICATION_TEMPLATE_EXTENSION.toLowerCase()))
+					result = new File(path.toString(), result.getName());
+				else
+					result = new File(path.toString(), result.getName() + Constans.APPLICATION_TEMPLATE_EXTENSION);
 			} else {
 				try {
 					path = Paths.get(
