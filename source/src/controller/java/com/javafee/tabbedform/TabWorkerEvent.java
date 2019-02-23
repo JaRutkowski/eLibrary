@@ -24,7 +24,7 @@ public final class TabWorkerEvent implements IActionForm {
 	@Setter
 	private TabbedForm tabbedForm;
 
-	private static TabWorkerEvent workerEvent = null;
+	protected static TabWorkerEvent workerEvent = null;
 	private WorkerAddModEvent workerAddModEvent;
 
 	private TabWorkerEvent(TabbedForm tabbedForm) {

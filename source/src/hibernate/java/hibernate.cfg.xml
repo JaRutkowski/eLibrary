@@ -33,24 +33,38 @@
 
 		<!-- Names the annotated entity class -->
 		<mapping class="com.javafee.hibernate.dto.association.City" />
-		<mapping class="com.javafee.hibernate.dto.association.Language" />
+		<mapping
+			class="com.javafee.hibernate.dto.association.Language" />
+		<mapping
+			class="com.javafee.hibernate.dto.association.MessageType" />
 		<mapping class="com.javafee.hibernate.dto.common.UserData" />
 		<mapping class="com.javafee.hibernate.dto.common.SystemData" />
-		<mapping class="com.javafee.hibernate.dto.common.SystemProperties" />
+		<mapping
+			class="com.javafee.hibernate.dto.common.SystemProperties" />
 		<mapping class="com.javafee.hibernate.dto.library.Client" />
 		<mapping class="com.javafee.hibernate.dto.library.Worker" />
 		<mapping class="com.javafee.hibernate.dto.library.LibraryData" />
-		<mapping class="com.javafee.hibernate.dto.library.LibrarySystemData" />
-		<mapping class="com.javafee.hibernate.dto.library.LibrarySystemProperties" />
-		<mapping class="com.javafee.hibernate.dto.library.LibraryWorker" />
-		<mapping class="com.javafee.hibernate.dto.library.LibraryWorkerId" />
+		<mapping
+			class="com.javafee.hibernate.dto.library.LibrarySystemData" />
+		<mapping
+			class="com.javafee.hibernate.dto.library.LibrarySystemProperties" />
+		<mapping
+			class="com.javafee.hibernate.dto.library.LibraryWorker" />
+		<mapping
+			class="com.javafee.hibernate.dto.library.LibraryWorkerId" />
 		<mapping class="com.javafee.hibernate.dto.library.Book" />
 		<mapping class="com.javafee.hibernate.dto.library.Author" />
-		<mapping class="com.javafee.hibernate.dto.library.PublishingHouse" />
+		<mapping
+			class="com.javafee.hibernate.dto.library.PublishingHouse" />
 		<mapping class="com.javafee.hibernate.dto.library.Category" />
 		<mapping class="com.javafee.hibernate.dto.library.Volume" />
 		<mapping class="com.javafee.hibernate.dto.library.Lend" />
-		<mapping class="com.javafee.hibernate.dto.library.RawLendingData" />
+		<mapping
+			class="com.javafee.hibernate.dto.library.RawLendingData" />
 		<mapping class="com.javafee.hibernate.dto.library.Penalty" />
+		<mapping
+			class="com.javafee.hibernate.dto.common.message.Message" />
+		<mapping
+			class="com.javafee.hibernate.dto.common.message.Recipient" />
 	</session-factory>
 </hibernate-configuration>

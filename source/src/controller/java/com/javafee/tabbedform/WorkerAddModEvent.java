@@ -1,7 +1,7 @@
 package com.javafee.tabbedform;
 
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.text.ParseException;
 import java.util.Comparator;
 import java.util.Date;
@@ -39,36 +39,11 @@ public class WorkerAddModEvent {
 		this.workerTableModel = workerTableModel;
 		openWorkerAddModFrame(context);
 
-		workerAddModFrame.addWindowListener(new WindowListener() {
-
-			@Override
-			public void windowOpened(WindowEvent e) {
-			}
-
-			@Override
-			public void windowIconified(WindowEvent e) {
-			}
-
-			@Override
-			public void windowDeiconified(WindowEvent e) {
-			}
-
-			@Override
-			public void windowDeactivated(WindowEvent e) {
-			}
-
-			@Override
-			public void windowClosing(WindowEvent e) {
-			}
-
+		workerAddModFrame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosed(WindowEvent e) {
 				Params.getInstance().remove("selectedRowIndex");
 				Params.getInstance().remove("selectedWorker");
-			}
-
-			@Override
-			public void windowActivated(WindowEvent e) {
 			}
 		});
 
@@ -165,13 +140,13 @@ public class WorkerAddModEvent {
 	}
 
 	private void reloadComboBoxCity() {
-		DefaultComboBoxModel<City> comboBoxCity = new DefaultComboBoxModel<City>();
+		DefaultComboBoxModel<City> comboBoxCityModel = new DefaultComboBoxModel<City>();
 		HibernateDao<City, Integer> city = new HibernateDao<City, Integer>(City.class);
 		List<City> cityListToSort = city.findAll();
 		cityListToSort.sort(Comparator.comparing(City::getName, Comparator.nullsFirst(Comparator.naturalOrder())));
-		cityListToSort.forEach(c -> comboBoxCity.addElement(c));
+		cityListToSort.forEach(c -> comboBoxCityModel.addElement(c));
 
-		workerAddModFrame.getWorkerDataPanel().getComboBoxCity().setModel(comboBoxCity);
+		workerAddModFrame.getWorkerDataPanel().getComboBoxCity().setModel(comboBoxCityModel);
 	}
 
 	private void fillRegistrationPanel() {
@@ -182,8 +157,7 @@ public class WorkerAddModEvent {
 
 		workerAddModFrame.getWorkerDataPanel().getTextFieldDocumentNumber()
 				.setText(((Worker) Params.getInstance().get("selectedWorker")).getDocumentNumber() != null
-						? ((Worker) Params.getInstance().get("selectedWorker")).getDocumentNumber()
-								.toString()
+						? ((Worker) Params.getInstance().get("selectedWorker")).getDocumentNumber().toString()
 						: "");
 
 		workerAddModFrame.getWorkerDataPanel().getTextFieldLogin()
@@ -216,9 +190,8 @@ public class WorkerAddModEvent {
 						? ((Worker) Params.getInstance().get("selectedWorker")).getCity()
 						: null);
 
-		if (((Worker) Params.getInstance().get("selectedWorker")).getSex() != null
-				&& Constans.DATA_BASE_MALE_SIGN.toString()
-						.equals(((Worker) Params.getInstance().get("selectedWorker")).getSex().toString()))
+		if (((Worker) Params.getInstance().get("selectedWorker")).getSex() != null && Constans.DATA_BASE_MALE_SIGN
+				.toString().equals(((Worker) Params.getInstance().get("selectedWorker")).getSex().toString()))
 			workerAddModFrame.getWorkerDataPanel().getGroupRadioButtonSex()
 					.setSelected(workerAddModFrame.getWorkerDataPanel().getRadioButtonMale().getModel(), true);
 		else if (((Worker) Params.getInstance().get("selectedWorker")).getSex() != null
@@ -230,8 +203,8 @@ public class WorkerAddModEvent {
 		try {
 			workerAddModFrame.getWorkerDataPanel().getDateChooserBirthDate()
 					.setDate(((Worker) Params.getInstance().get("selectedWorker")).getBirthDate() != null
-							? Constans.APPLICATION_DATE_FORMAT.parse(Constans.APPLICATION_DATE_FORMAT.format(
-									((Worker) Params.getInstance().get("selectedWorker")).getBirthDate()))
+							? Constans.APPLICATION_DATE_FORMAT.parse(Constans.APPLICATION_DATE_FORMAT
+									.format(((Worker) Params.getInstance().get("selectedWorker")).getBirthDate()))
 							: null);
 		} catch (ParseException e) {
 			e.printStackTrace();

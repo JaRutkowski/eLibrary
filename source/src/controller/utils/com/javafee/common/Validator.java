@@ -103,18 +103,17 @@ public final class Validator {
 	public static boolean validateBookFilter(Author author, Category category, PublishingHouse publishingHouse) {
 		return author == null && category == null && publishingHouse == null ? false : true;
 	}
-	
+
 	public static boolean validateInventoryNumberExist(String inventoryNumber) {
 		Volume existingInventoryNumberVolume = (Volume) HibernateUtil.getSession()
 				.getNamedQuery("Volume.checkIfInventoryNumberExist").setParameter("inventoryNumber", inventoryNumber)
 				.uniqueResult();
 		return existingInventoryNumberVolume != null ? true : false;
 	}
-	
+
 	public static boolean validateIsbnNumberExist(String isbnNumber) {
-		Book existingIsbnNumber = (Book) HibernateUtil.getSession()
-				.getNamedQuery("Book.checkIfIsbnNumberExist").setParameter("isbnNumber", isbnNumber)
-				.uniqueResult();
+		Book existingIsbnNumber = (Book) HibernateUtil.getSession().getNamedQuery("Book.checkIfIsbnNumberExist")
+				.setParameter("isbnNumber", isbnNumber).uniqueResult();
 		return existingIsbnNumber != null ? true : false;
 	}
 }

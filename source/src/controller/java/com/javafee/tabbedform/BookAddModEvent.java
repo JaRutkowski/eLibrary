@@ -1,14 +1,14 @@
 package com.javafee.tabbedform;
 
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import com.javafee.common.Constans.Context;
 import com.javafee.common.Constans;
+import com.javafee.common.Constans.Context;
 import com.javafee.common.Params;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
@@ -35,36 +35,11 @@ public class BookAddModEvent {
 		this.bookTableModel = bookTableModel;
 		openBookAddModFrame(context);
 
-		bookAddModFrame.addWindowListener(new WindowListener() {
-
-			@Override
-			public void windowOpened(WindowEvent e) {
-			}
-
-			@Override
-			public void windowIconified(WindowEvent e) {
-			}
-
-			@Override
-			public void windowDeiconified(WindowEvent e) {
-			}
-
-			@Override
-			public void windowDeactivated(WindowEvent e) {
-			}
-
-			@Override
-			public void windowClosing(WindowEvent e) {
-			}
-
+		bookAddModFrame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosed(WindowEvent e) {
 				Params.getInstance().remove("selectedRowIndex");
 				Params.getInstance().remove("selectedBook");
-			}
-
-			@Override
-			public void windowActivated(WindowEvent e) {
 			}
 		});
 

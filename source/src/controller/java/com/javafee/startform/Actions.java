@@ -2,16 +2,16 @@ package com.javafee.startform;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.text.MessageFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.AbstractMap.SimpleEntry;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
 import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
@@ -22,16 +22,18 @@ import com.javafee.common.IRegistrationForm;
 import com.javafee.common.Params;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
+import com.javafee.emailform.MailSenderEvent;
 import com.javafee.exception.LogGuiException;
 import com.javafee.exception.RefusedLogInException;
 import com.javafee.exception.RefusedRegistrationException;
 import com.javafee.hibernate.dao.HibernateDao;
 import com.javafee.hibernate.dao.HibernateUtil;
 import com.javafee.hibernate.dto.association.City;
+import com.javafee.hibernate.dto.association.MessageType;
 import com.javafee.hibernate.dto.common.UserData;
+import com.javafee.hibernate.dto.common.message.Recipient;
 import com.javafee.hibernate.dto.library.Client;
 import com.javafee.hibernate.dto.library.Worker;
-import com.javafee.mail.MailSender;
 import com.javafee.startform.RegistrationEvent.RegistrationFailureCause;
 
 public class Actions implements IRegistrationForm {
@@ -56,6 +58,7 @@ public class Actions implements IRegistrationForm {
 
 		// FIXME #4 Fix adding key listener.
 		// FIXME #5 Mail template for restoring password
+		// FIXME #6 No Internet connection - alert (email)
 
 		startForm.getLogInPanel().getBtnForgotPassword().addActionListener(e -> onClickBtnForgotPassword());
 		startForm.getBtnLogIn().addActionListener(e -> onClickBtnLogIn());
@@ -70,13 +73,16 @@ public class Actions implements IRegistrationForm {
 	}
 
 	private void reloadComboBoxCity() {
-		DefaultComboBoxModel<City> comboBoxCity = new DefaultComboBoxModel<City>();
+		DefaultComboBoxModel<City> comboBoxCityModel = new DefaultComboBoxModel<City>();
 		HibernateDao<City, Integer> city = new HibernateDao<City, Integer>(City.class);
 		List<City> cityListToSort = city.findAll();
+		// TODO Check another forms
+		// cityListToSort.add(null);
+		// cityListToSort.sort(Comparator.nullsFirst(Comparator.comparing(City::getName)));
 		cityListToSort.sort(Comparator.comparing(City::getName, Comparator.nullsFirst(Comparator.naturalOrder())));
-		cityListToSort.forEach(c -> comboBoxCity.addElement(c));
+		cityListToSort.forEach(c -> comboBoxCityModel.addElement(c));
 
-		startForm.getRegistrationPanel().getComboBoxCity().setModel(comboBoxCity);
+		startForm.getRegistrationPanel().getComboBoxCity().setModel(comboBoxCityModel);
 	}
 
 	private void onClickBtnForgotPassword() {
@@ -92,7 +98,7 @@ public class Actions implements IRegistrationForm {
 				HibernateUtil.getSession().update(UserData.class.getName(), userData);
 				HibernateUtil.commitTransaction();
 
-				sendMailWithPassword(generatedPassword, userData.getEMail());
+				sendMailWithPassword(generatedPassword, userData);
 				Params.getInstance().remove("USER_DATA");
 
 				Utils.displayOptionPane(
@@ -289,19 +295,44 @@ public class Actions implements IRegistrationForm {
 		startForm.getFrame().pack();
 	}
 
-	private void sendMailWithPassword(String generatedPassword, String recipient) {
-		MailSender ms = new MailSender();
-		Message message = new MimeMessage(ms.getSession());
+	private void sendMailWithPassword(String generatedPassword, UserData recipient) {
+		List<SimpleEntry<Message.RecipientType, UserData>> recipientArg = new ArrayList<SimpleEntry<Message.RecipientType, UserData>>();
+		recipientArg.add(new SimpleEntry<Message.RecipientType, UserData>(Message.RecipientType.TO, recipient));
+		String subject = SystemProperties.getInstance().getResourceBundle()
+				.getString("startForm.forgotPasswordEmailSubject");
+		String content = MessageFormat.format(
+				SystemProperties.getInstance().getResourceBundle().getString("startForm.forgotPasswordEmailContent"),
+				generatedPassword);
 
+		if (new MailSenderEvent().control(recipientArg, subject, content))
+			createEmail(recipientArg, subject, content);
+	}
+
+	private void createEmail(List<SimpleEntry<Message.RecipientType, UserData>> recipients, String subject,
+			String text) {
 		try {
-			message.setFrom(new InternetAddress("no-reply@gmail.com"));
-			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipient));
-			message.setSubject("Przywrócenie has³a w sytemie eLibrary");
-			message.setText("Drogi u¿ytkowniku,"
-					+ "\n\nPrzywrócono Twoje has³o. Zaloguj siê do systemu korzystaj¹c z wygenerowanego przez system has³a: "
-					+ generatedPassword + "\n\n Administracja eLibrary");
-			ms.send(message);
-		} catch (MessagingException e) {
+			MessageType messageType = com.javafee.hibernate.dao.common.Common
+					.findMessageTypeByName(Constans.DATA_BASE_MESSAGE_TYPE_SYS_MESSAGE).get();
+
+			HibernateUtil.beginTransaction();
+			com.javafee.hibernate.dto.common.message.Message message = new com.javafee.hibernate.dto.common.message.Message();
+
+			message.setSender(null);
+			message.setMessageType(messageType);
+			recipients.forEach(recipient -> {
+				Recipient newRecipient = new Recipient();
+				newRecipient.setUserData(recipient.getValue());
+				newRecipient.setMessage(message);
+				message.getRecipient().add(newRecipient);
+			});
+			message.setTitle(subject);
+			message.setContent(text);
+			message.setSendDate(
+					Constans.APPLICATION_DATE_FORMAT.parse(Constans.APPLICATION_DATE_FORMAT.format(new Date())));
+
+			HibernateUtil.getSession().save(message);
+			HibernateUtil.commitTransaction();
+		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 	}

@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 
 import com.javafee.common.Constans;
 import com.javafee.common.Constans.Role;
-import com.javafee.common.Constans.Tab;
+import com.javafee.common.Constans.Tab_Accountant;
 import com.javafee.common.Constans.Tab_Client;
 import com.javafee.common.Constans.Tab_Worker;
 import com.javafee.common.IActionForm;
@@ -183,14 +183,14 @@ public class Actions implements IActionForm {
 				TabBookEvent.getInstance(tabbedForm);
 				break;
 			case TAB_LOAN_SERVICE:
-				TabLoadServiceEvent.getInstance(tabbedForm);
+				TabLoanServiceEvent.getInstance(tabbedForm);
 				break;
 			default:
 				break;
 			}
 
 		if (LogInEvent.getRole() == Role.WORKER_ACCOUNTANT)
-			switch (Tab.getByNumber(tabbedForm.getTabbedPane().getSelectedIndex())) {
+			switch (Tab_Accountant.getByNumber(tabbedForm.getTabbedPane().getSelectedIndex())) {
 			case TAB_CLIENT:
 				TabClientEvent.getInstance(tabbedForm);
 				break;
@@ -201,10 +201,10 @@ public class Actions implements IActionForm {
 				TabBookEvent.getInstance(tabbedForm);
 				break;
 			case TAB_ADM_DICTIONARY:
-				TabAdmDictioaryEvent.getInstance(tabbedForm);
+				TabAdmDictionaryEvent.getInstance(tabbedForm);
 				break;
 			case TAB_LOAN_SERVICE:
-				TabLoadServiceEvent.getInstance(tabbedForm);
+				TabLoanServiceEvent.getInstance(tabbedForm);
 				break;
 			case TAB_ADM_WORKER:
 				TabWorkerEvent.getInstance(tabbedForm);
@@ -218,6 +218,7 @@ public class Actions implements IActionForm {
 		LogInEvent.clearLogInData();
 		tabbedForm.getFrame().dispose();
 		tabbedForm = null;
+		clearEvents();
 		openStartForm();
 	}
 
@@ -227,7 +228,15 @@ public class Actions implements IActionForm {
 
 	private void openStartForm() {
 		com.javafee.startform.Actions actions = new com.javafee.startform.Actions();
-		onChangeTabbedPane();
 		actions.control();
+	}
+
+	private void clearEvents() {
+		TabClientEvent.clientEvent = null;
+		TabLibraryEvent.libraryEvent = null;
+		TabBookEvent.bookEvent = null;
+		TabLoanServiceEvent.loadServiceEvent = null;
+		TabAdmDictionaryEvent.admDictionaryEvent = null;
+		TabWorkerEvent.workerEvent = null;
 	}
 }

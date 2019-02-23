@@ -49,6 +49,7 @@ public class StartForm {
 		frame.setIconImage(
 				Toolkit.getDefaultToolkit().getImage(StartForm.class.getResource("/images/splashScreen.jpg")));
 		frame.setBounds(100, 100, 361, 543);
+		frame.setMinimumSize(Constans.START_FORM_MINIMUM_SIZE);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 41 };

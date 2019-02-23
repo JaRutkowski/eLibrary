@@ -1,7 +1,7 @@
 package com.javafee.tabbedform;
 
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 
 import javax.swing.JOptionPane;
 
@@ -35,36 +35,11 @@ public class LibraryAddModEvent {
 
 		openLibraryAddModFrame(context);
 
-		libraryAddModFrame.addWindowListener(new WindowListener() {
-
-			@Override
-			public void windowOpened(WindowEvent e) {
-			}
-
-			@Override
-			public void windowIconified(WindowEvent e) {
-			}
-
-			@Override
-			public void windowDeiconified(WindowEvent e) {
-			}
-
-			@Override
-			public void windowDeactivated(WindowEvent e) {
-			}
-
-			@Override
-			public void windowClosing(WindowEvent e) {
-			}
-
+		libraryAddModFrame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosed(WindowEvent e) {
 				Params.getInstance().remove("selectedRowIndex");
 				Params.getInstance().remove("selectedVolume");
-			}
-
-			@Override
-			public void windowActivated(WindowEvent e) {
 			}
 		});
 
@@ -94,7 +69,7 @@ public class LibraryAddModEvent {
 
 			int selectedRowIndex = libraryAddModFrame.getBookTable()
 					.convertRowIndexToModel(libraryAddModFrame.getBookTable().getSelectedRow());
-			if(Validator.validateInventoryNumberExist(libraryAddModFrame.getTextFieldInventoryNumber().getText())) {
+			if (Validator.validateInventoryNumberExist(libraryAddModFrame.getTextFieldInventoryNumber().getText())) {
 				LogGuiException.logWarning(
 						SystemProperties.getInstance().getResourceBundle()
 								.getString("libraryAddModEvent.incorrectInventoryNumberWarningTitle"),
@@ -163,7 +138,7 @@ public class LibraryAddModEvent {
 				Book selectedBook = ((BookTableModel) libraryAddModFrame.getBookTable().getModel())
 						.getBook(selectedRowIndex);
 				String inventoryNumber = libraryAddModFrame.getTextFieldInventoryNumber().getText();
-				if(Validator.validateInventoryNumberExist(inventoryNumber)) {
+				if (Validator.validateInventoryNumberExist(inventoryNumber)) {
 					LogGuiException.logWarning(
 							SystemProperties.getInstance().getResourceBundle()
 									.getString("libraryAddModEvent.incorrectInventoryNumberWarningTitle"),
@@ -226,8 +201,7 @@ public class LibraryAddModEvent {
 	private void fillTextBoxInventoryNumber() {
 		libraryAddModFrame.getTextFieldInventoryNumber()
 				.setText(((Volume) Params.getInstance().get("selectedVolume")).getInventoryNumber() != null
-						? ((Volume) Params.getInstance().get("selectedVolume")).getInventoryNumber()
-								.toString()
+						? ((Volume) Params.getInstance().get("selectedVolume")).getInventoryNumber().toString()
 						: "");
 	}
 

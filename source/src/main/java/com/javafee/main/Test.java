@@ -14,20 +14,20 @@ public class Test {
 		// Client sykanska = new Client();
 		// sykanska.setLogin("SyKanska");
 		// sykanska.setName("Sylwia");
-		// sykanska.setSurname("KaÒska");
-		// sykanska.setAddress("ul. GogoliÒska 27/14");
+		// sykanska.setSurname("Ka≈Ñska");
+		// sykanska.setAddress("ul. Gogoli≈Ñska 27/14");
 		// sykanska.setPassword("a");
 
 		// Worker makolek = new Worker();
 		// makolek.setLogin("MaKolek");
 		// makolek.setName("Marek");
-		// makolek.setSurname("Ko≥ek");
+		// makolek.setSurname("Ko≈Çek");
 		// makolek.setAddress("ul. Katowice 6B");
 		// makolek.setPassword("b");
 		// makolek.setSalary(new BigDecimal(2300));
 		//
 		// LibraryData ld = new LibraryData();
-		// ld.setAddress("ul. Wolnoúci 173");
+		// ld.setAddress("ul. Wolno≈õci 173");
 		// ld.setBranch("Filia nr 11");
 		// HibernateUtil.getSession().save(ld);
 		//
@@ -41,12 +41,12 @@ public class Test {
 		// Worker testWorker = new Worker();
 		// testWorker.setLogin("MiMichalski");
 		// testWorker.setPassword("MiMichalski");
-		// testWorker.setName("Micha≥");
+		// testWorker.setName("Micha≈Ç");
 		// testWorker.setSurname("Michalski");
 		// testWorker.setSex('M');
 		// testWorker.setPeselNumber("88121318933");
 		// testWorker.setRegistered(false);
-		// testWorker.setAddress("ul. Koúciuszki 6B/12");
+		// testWorker.setAddress("ul. Ko≈õciuszki 6B/12");
 		// testWorker.setSalary(BigDecimal.valueOf(2100.55));
 
 		// testLibData
@@ -54,7 +54,7 @@ public class Test {
 		// LibraryData testLibData = new LibraryData();
 		// testLibData.setName("Miejska Biblioteka Publiczna w Zabrzu");
 		// testLibData.setBranch("Filia 11");
-		// testLibData.setAddress("ul. Wolnoúci 177");
+		// testLibData.setAddress("ul. Wolno≈õci 177");
 		// HibernateUtil.getSession().save(testLibData);
 
 		// testLibData1

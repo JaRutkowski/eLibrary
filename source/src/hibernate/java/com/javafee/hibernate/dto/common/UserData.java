@@ -33,7 +33,7 @@ import lombok.Data;
 @Table(name = "com_user_data", uniqueConstraints = { @UniqueConstraint(columnNames = { "login", "pesel" }) })
 @Inheritance(strategy = InheritanceType.JOINED)
 @SequenceGenerator(name = "seq_com_user_data", sequenceName = "seq_com_user_data", allocationSize = 1)
-public abstract class UserData {
+public class UserData {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_com_user_data")
 	@Column(name = "id_user_data", unique = false, nullable = false, insertable = true, updatable = true)
@@ -76,4 +76,16 @@ public abstract class UserData {
 	@ManyToOne(cascade = {}, fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_city", unique = false, nullable = true, insertable = true, updatable = true)
 	private City city;
+
+	@Override
+	public String toString() {
+		String result = "";
+		if (surname != null && name == null)
+			result = surname;
+		else if (surname == null && name != null)
+			result = name;
+		else if (surname != null && name != null)
+			result = surname + " " + name;
+		return result;
+	}
 }

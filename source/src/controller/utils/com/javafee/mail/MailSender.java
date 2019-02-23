@@ -27,13 +27,16 @@ public class MailSender {
 		this.createSession();
 	}
 
-	public void send(Message message) {
+	public boolean send(Message message) {
+		boolean result = false;
 		try {
 			Transport.send(message);
-			Logger.getLogger("app").info("Wys≥ano e-mail");
+			result = true;
+			Logger.getLogger("app").info("Wys≈Çano e-mail");
 		} catch (MessagingException e) {
 			throw new RuntimeException(e);
 		}
+		return result;
 	}
 
 	public void config(String sslTrust, Boolean auth, Boolean starttlsEnable, String host, String port) {

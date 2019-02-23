@@ -21,7 +21,7 @@ import lombok.Data;
 @Table(name = "com_system_properties")
 @Inheritance(strategy = InheritanceType.JOINED)
 @SequenceGenerator(name = "seq_com_system_properties", sequenceName = "seq_com_system_properties", allocationSize = 1)
-public abstract class SystemProperties {
+public class SystemProperties {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_com_system_properties")
 	@Column(name = "id_system_properties", unique = false, nullable = false, insertable = true, updatable = true)
@@ -33,4 +33,11 @@ public abstract class SystemProperties {
 
 	@Column(name = "font_size", unique = false, nullable = true, insertable = true, updatable = true, length = 2)
 	private Integer fontSize;
+
+	@Column(name = "template_directory", unique = false, nullable = true, insertable = true, updatable = true, length = 80)
+	private String templateDirectory;
+
+	@OneToOne
+	@JoinColumn(name = "id_user_data")
+	private UserData userData;
 }

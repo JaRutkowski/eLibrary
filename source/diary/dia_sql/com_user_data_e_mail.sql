@@ -1,0 +1,1 @@
+ALTER TABLE public.com_user_data ADD e_mail varchar(80) NULL;

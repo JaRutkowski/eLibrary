@@ -10,6 +10,7 @@ import com.javafee.common.IActionForm;
 import com.javafee.common.Params;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
+import com.javafee.emailform.Actions;
 import com.javafee.exception.LogGuiException;
 import com.javafee.exception.RefusedClientsEventLoadingException;
 import com.javafee.hibernate.dao.HibernateUtil;
@@ -25,8 +26,10 @@ public final class TabClientEvent implements IActionForm {
 	@Setter
 	private TabbedForm tabbedForm;
 
-	private static TabClientEvent clientEvent = null;
+	protected static TabClientEvent clientEvent = null;
 	private ClientAddModEvent clientAddModEvent;
+
+	private com.javafee.emailform.Actions action = null;
 
 	private TabClientEvent(TabbedForm tabbedForm) {
 		this.control(tabbedForm);
@@ -55,6 +58,28 @@ public final class TabClientEvent implements IActionForm {
 			if (!e.getValueIsAdjusting())
 				onClientTableListSelectionChange();
 		});
+
+		tabbedForm.getPanelClient().getMessageAndAlertPanel().getBtnContact()
+				.addActionListener(e -> onClickBtnContact());
+	}
+
+	private void onClickBtnContact() {
+		// TODO getSelectedClient() - consider using onChangeSelectedEvent
+		if (tabbedForm.getPanelClient().getClientTable().getSelectedRow() != -1) {
+			int selectedRowIndex = tabbedForm.getPanelClient().getClientTable()
+					.convertRowIndexToModel(tabbedForm.getPanelClient().getClientTable().getSelectedRow());
+
+			if (selectedRowIndex != -1) {
+				Client selectedClient = ((ClientTableModel) tabbedForm.getPanelClient().getClientTable().getModel())
+						.getClient(selectedRowIndex);
+
+				Params.getInstance().add("selectedClient", selectedClient);
+			}
+		}
+
+		if (action == null)
+			action = new Actions();
+		action.control();
 	}
 
 	@Override

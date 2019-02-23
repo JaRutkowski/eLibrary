@@ -5,9 +5,12 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
+import com.javafee.emailform.TabTemplatePageEvent;
 import com.javafee.hibernate.dto.library.Client;
 import com.javafee.hibernate.dto.library.Worker;
+import com.javafee.watchservice.WatchServiceListener;
 
 import edu.vt.middleware.password.AlphabeticalSequenceRule;
 import edu.vt.middleware.password.CharacterCharacteristicsRule;
@@ -29,6 +32,9 @@ import edu.vt.middleware.password.UppercaseCharacterRule;
 import edu.vt.middleware.password.WhitespaceRule;
 
 public final class Common {
+
+	private static WatchServiceListener w = null;
+
 	public static final String createMd5(String password) {
 		String md5 = null;
 		if (password != null)
@@ -105,6 +111,11 @@ public final class Common {
 		return result;
 	}
 
+	@SuppressWarnings("unchecked")
+	public static <T> void prepareBlankComboBoxElement(List<T> comboBoxDataList) {
+		comboBoxDataList.add((T) Constans.APPLICATION_COMBO_BOX_BLANK_OBJECT);
+	}
+
 	public static boolean isAdmin(Worker worker) {
 		return Constans.DATA_BASE_ADMIN_LOGIN.equals(worker.getLogin())
 				&& Constans.DATA_BASE_ADMIN_PASSWORD.equals(worker.getPassword()) ? true : false;
@@ -114,4 +125,15 @@ public final class Common {
 		return Constans.DATA_BASE_ADMIN_LOGIN.equals(client.getLogin())
 				&& Constans.DATA_BASE_ADMIN_PASSWORD.equals(client.getPassword()) ? true : false;
 	}
+
+	public static void registerWatchServiceListener(TabTemplatePageEvent tabTemplatePageEvent,
+			Consumer<TabTemplatePageEvent> c) {
+		w = new WatchServiceListener();
+		w.initialize(tabTemplatePageEvent, c);
+	}
+
+	public static void unregisterWatchDirectory() {
+		w.destroy();
+	}
+
 }
