@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -54,7 +55,8 @@ public class Message {
 	@Column(name = "title", unique = false, nullable = true, insertable = true, updatable = true, length = 100)
 	private String title;
 
-	@Column(name = "content", unique = false, nullable = true, insertable = true, updatable = true, length = 1200)
+	@Column(name = "content", unique = false, nullable = true, insertable = true, updatable = true)
+	@Lob
 	private String content;
 
 	@Temporal(TemporalType.DATE)
