@@ -79,9 +79,12 @@ public class BookAddModEvent {
 								.getString("bookAddModEvent.incorrectIsbnNumberWarning1"));
 			} else if (bookAddModFrame.getBookDataPanel().getTextFieldIsbnNumber().getText()
 					.length() == Constans.DATA_BASE_ISBN_NUMBER_LENGTH) {
-				getSelectedAuthors().forEach(e -> bookShallowClone.getAuthor().add(e));
-				getSelectedCategories().forEach(e -> bookShallowClone.getCategory().add(e));
-				getSelectedPublishingHouses().forEach(e -> bookShallowClone.getPublishingHouse().add(e));
+				if (getSelectedAuthors() != null)
+					getSelectedAuthors().forEach(e -> bookShallowClone.getAuthor().add(e));
+				if (getSelectedCategories() != null)
+					getSelectedCategories().forEach(e -> bookShallowClone.getCategory().add(e));
+				if (getSelectedPublishingHouses() != null)
+					getSelectedPublishingHouses().forEach(e -> bookShallowClone.getPublishingHouse().add(e));
 				bookShallowClone.setTitle(bookAddModFrame.getBookDataPanel().getTextFieldTitle().getText());
 				bookShallowClone.setIsbnNumber(bookAddModFrame.getBookDataPanel().getTextFieldIsbnNumber().getText());
 				bookShallowClone.setNumberOfPage(
@@ -154,9 +157,12 @@ public class BookAddModEvent {
 			} else if (isbnNumber.length() == Constans.DATA_BASE_ISBN_NUMBER_LENGTH) {
 				HibernateUtil.beginTransaction();
 				Book book = new Book();
-				authorList.forEach(e -> book.getAuthor().add(e));
-				categoryList.forEach(e -> book.getCategory().add(e));
-				publishingHouseList.forEach(e -> book.getPublishingHouse().add(e));
+				if (authorList != null)
+					authorList.forEach(e -> book.getAuthor().add(e));
+				if (categoryList != null)
+					categoryList.forEach(e -> book.getCategory().add(e));
+				if (publishingHouseList != null)
+					publishingHouseList.forEach(e -> book.getPublishingHouse().add(e));
 				book.setTitle(title);
 				book.setIsbnNumber(isbnNumber);
 				book.setNumberOfPage(numberOfPage);
