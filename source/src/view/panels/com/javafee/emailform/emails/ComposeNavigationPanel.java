@@ -32,6 +32,7 @@ public class ComposeNavigationPanel extends JPanel {
 		btnAddAttachment.setIcon(
 				new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnAddAttachment-ico.png"))
 						.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
+		btnAddAttachment.setEnabled(false);
 		add(btnAddAttachment);
 
 		btnSaveAsDraft = new JButton(
