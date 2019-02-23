@@ -31,13 +31,14 @@
 						</goals>
 						<configuration>
 							<sources>
-								<source>src/hibernate/java</source>
-								<source>src/view/forms</source>
-								<source>src/view/panels</source>
-								<source>src/view/utils</source>
-								<source>src/controller/java</source>
-								<source>src/controller/utils</source>
-								<source>resources</source>
+								<source>source/src/main/java</source>
+								<source>source/src/hibernate/java</source>
+								<source>source/src/view/forms</source>
+								<source>source/src/view/panels</source>
+								<source>source/src/view/utils</source>
+								<source>source/src/controller/java</source>
+								<source>source/src/controller/utils</source>
+								<source>source/resources</source>
 							</sources>
 						</configuration>
 					</execution>
