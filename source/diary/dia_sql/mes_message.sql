@@ -4,7 +4,7 @@
 
 CREATE TABLE public.mes_message (
 	id_message int4 NOT NULL,
-	content varchar(1200) NULL,
+	content text NULL,
 	is_draft bool NULL,
 	send_date date NULL,
 	title varchar(100) NULL,
