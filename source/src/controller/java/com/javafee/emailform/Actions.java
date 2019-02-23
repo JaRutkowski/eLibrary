@@ -89,6 +89,12 @@ public class Actions implements IActionForm {
 		default:
 			break;
 		}
+		
+		setEnableMenu(Tab_Email.getByNumber(emailForm.getTabbedPane().getSelectedIndex()));
+	}
+	
+	private void setEnableMenu(Tab_Email tabEmail) {
+		emailForm.getMenuBar().setVisible(tabEmail == Tab_Email.TAB_CREATE_PAGE);
 	}
 
 	private void onChangeTabbedPane() {
@@ -103,7 +109,7 @@ public class Actions implements IActionForm {
 			if (systemProperties.getTemplateDirectory() == null) {
 				if (Utils.displayConfirmDialog(com.javafee.common.SystemProperties.getInstance().getResourceBundle()
 						.getString("confirmDialog.initialTemplateLibrary"), "") == JOptionPane.YES_OPTION) {
-					File result = ((File) Utils.displaySaveDialogAndGetFile(null));
+					File result = Utils.displaySaveDialogAndGetFile(null);
 					if (result != null) {
 						try {
 							Files.write(Paths.get(result.getPath()),
@@ -130,7 +136,7 @@ public class Actions implements IActionForm {
 					}
 				}
 			} else {
-				File result = ((File) Utils.displaySaveDialogAndGetFile(systemProperties.getTemplateDirectory()));
+				File result = Utils.displaySaveDialogAndGetFile(systemProperties.getTemplateDirectory());
 				if (result != null) {
 					try {
 						Files.write(Paths.get(result.getPath()),
@@ -165,7 +171,7 @@ public class Actions implements IActionForm {
 		if (systemProperties.getTemplateDirectory() == null) {
 			if (Utils.displayConfirmDialog(com.javafee.common.SystemProperties.getInstance().getResourceBundle()
 					.getString("confirmDialog.loadFromTemplateLibraryNoDirectory"), "") == JOptionPane.YES_OPTION) {
-				File result = ((File) Utils.displayOpenDialogAndGetFile(null));
+				File result = Utils.displayOpenDialogAndGetFile(null);
 
 				systemProperties.setTemplateDirectory(result.getParent());
 
@@ -176,7 +182,7 @@ public class Actions implements IActionForm {
 				fillEditorPaneContentWithFile(result);
 			}
 		} else {
-			File result = ((File) Utils.displayOpenDialogAndGetFile(systemProperties.getTemplateDirectory()));
+			File result = Utils.displayOpenDialogAndGetFile(systemProperties.getTemplateDirectory());
 			fillEditorPaneContentWithFile(result);
 		}
 	}

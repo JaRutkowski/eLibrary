@@ -38,10 +38,10 @@ public class HTMLeditorPanel extends JPanel {
 
 	public HTMLeditorPanel() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[] { 338, 0, 372, 0 };
+		gridBagLayout.columnWidths = new int[] { 359, 51, 366, 0 };
 		gridBagLayout.rowHeights = new int[] { 228, 292, 100, 0 };
 		gridBagLayout.columnWeights = new double[] { 1.0, 0.0, 1.0, Double.MIN_VALUE };
-		gridBagLayout.rowWeights = new double[] { 1.0, 0.0, 1.0, Double.MIN_VALUE };
+		gridBagLayout.rowWeights = new double[] { 1.0, 0.0, 0.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
 
 		JPanel htmlEditorPanel = new JPanel();
@@ -74,12 +74,14 @@ public class HTMLeditorPanel extends JPanel {
 		scrollPane.setViewportView(textAreaHTMLeditor);
 
 		btnParse = new JButton();
+		btnParse.setToolTipText(
+				SystemProperties.getInstance().getResourceBundle().getString("htmlEditor.btnCompileTooltip"));
 		btnParse.setIcon(
 				new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnRoundParse-ico.png"))
 						.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
-		gbc_btnNewButton.anchor = GridBagConstraints.SOUTH;
-		gbc_btnNewButton.insets = new Insets(0, 0, 5, 5);
+		gbc_btnNewButton.fill = GridBagConstraints.VERTICAL;
+		gbc_btnNewButton.insets = new Insets(5, 0, 5, 5);
 		gbc_btnNewButton.gridx = 1;
 		gbc_btnNewButton.gridy = 0;
 		add(btnParse, gbc_btnNewButton);
@@ -115,13 +117,14 @@ public class HTMLeditorPanel extends JPanel {
 		scrollPane_1.setViewportView(editorPanePreview);
 
 		btnValidate = new JButton();
+		btnValidate.setToolTipText(
+				SystemProperties.getInstance().getResourceBundle().getString("htmlEditor.btnVerifyTooltip"));
 		btnValidate
 				.setIcon(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/button-bulb-ico.png"))
 						.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
 		GridBagConstraints gbc_btnNewButton1 = new GridBagConstraints();
-		gbc_btnNewButton1.anchor = GridBagConstraints.NORTH;
-		gbc_btnNewButton1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnNewButton1.insets = new Insets(0, 0, 5, 5);
+		gbc_btnNewButton1.fill = GridBagConstraints.BOTH;
+		gbc_btnNewButton1.insets = new Insets(0, 0, 10, 5);
 		gbc_btnNewButton1.gridx = 1;
 		gbc_btnNewButton1.gridy = 1;
 		add(btnValidate, gbc_btnNewButton1);
