@@ -110,7 +110,7 @@ public class Actions implements IActionForm {
 			tabbedForm.pack();
 		}
 
-		if (LogInEvent.getRole() == Role.WORKER_ACCOUNTANT) {
+		if (LogInEvent.getRole() == Role.WORKER_ACCOUNTANT || LogInEvent.getRole() == Role.ADMIN) {
 			tabbedForm.getTabbedPane().addTab(
 					SystemProperties.getInstance().getResourceBundle().getString("tabbedForm.tabClientTitle"), null,
 					tabbedForm.getPanelClient(), null);
@@ -189,7 +189,7 @@ public class Actions implements IActionForm {
 				break;
 			}
 
-		if (LogInEvent.getRole() == Role.WORKER_ACCOUNTANT)
+		if (LogInEvent.getRole() == Role.WORKER_ACCOUNTANT || LogInEvent.getRole() == Role.ADMIN)
 			switch (Tab_Accountant.getByNumber(tabbedForm.getTabbedPane().getSelectedIndex())) {
 			case TAB_CLIENT:
 				TabClientEvent.getInstance(tabbedForm);
