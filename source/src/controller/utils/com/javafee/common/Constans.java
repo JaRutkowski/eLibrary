@@ -280,6 +280,7 @@ public final class Constans {
 	public static final Character DATA_BASE_MALE_SIGN = 'M';
 	public static final Character DATA_BASE_FEMALE_SIGN = 'F';
 	public static final Boolean DATA_BASE_REGISTER_DEFAULT_FLAG = false;
+	public static final Integer DATA_BASE_ADMIN_ID = 0;
 	public static final String DATA_BASE_ADMIN_LOGIN = "admin";
 	public static final String DATA_BASE_ADMIN_PASSWORD = "f7e3c24e1a04758097f69be41aa3cf18";
 	public static final Integer DATA_BASE_INVENTORY_NUMBER_LENGTH = 13;

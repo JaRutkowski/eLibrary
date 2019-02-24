@@ -104,7 +104,8 @@ public class Actions implements IActionForm {
 	private void onClickMenuSaveAsTemplate() {
 		if (validate()) {
 			com.javafee.hibernate.dto.common.SystemProperties systemProperties = Common
-					.checkAndGetSystemProperties(LogInEvent.getWorker().getIdUserData());
+					.checkAndGetSystemProperties(LogInEvent.getWorker() != null ? LogInEvent.getWorker().getIdUserData()
+							: Constans.DATA_BASE_ADMIN_ID);
 
 			if (systemProperties.getTemplateDirectory() == null) {
 				if (Utils.displayConfirmDialog(com.javafee.common.SystemProperties.getInstance().getResourceBundle()
@@ -166,7 +167,8 @@ public class Actions implements IActionForm {
 
 	private void onClickMenuLoadTemplate() {
 		com.javafee.hibernate.dto.common.SystemProperties systemProperties = com.javafee.hibernate.dao.common.Common
-				.checkAndGetSystemProperties(LogInEvent.getWorker().getIdUserData());
+				.checkAndGetSystemProperties(LogInEvent.getWorker() != null ? LogInEvent.getWorker().getIdUserData()
+						: Constans.DATA_BASE_ADMIN_ID);
 
 		if (systemProperties.getTemplateDirectory() == null) {
 			if (Utils.displayConfirmDialog(com.javafee.common.SystemProperties.getInstance().getResourceBundle()

@@ -90,13 +90,21 @@ public class TabDraftPageEvent implements IMessageForm {
 		reloadComboBoxRecipient();
 	}
 
+	@SuppressWarnings("unchecked")
 	private void reloadComboBoxRecipient() {
 		DefaultComboBoxModel<UserData> comboBoxRecipientModel = new DefaultComboBoxModel<UserData>();
 
-		@SuppressWarnings("unchecked")
-		List<UserData> userDataListToSort = (List<UserData>) HibernateUtil.getSession()
-				.createQuery(Query.TabOutboxPageEventQuery.DISTINCT_DRAFT_MESSAGE_RECIPIENT_BY_SENDER_LOGIN.getValue()). //
-				setParameter("login", LogInEvent.getWorker().getLogin()).list();
+		List<UserData> userDataListToSort = null;
+
+		if (LogInEvent.getWorker() != null)
+			userDataListToSort = (List<UserData>) HibernateUtil.getSession().createQuery(
+					Query.TabOutboxPageEventQuery.DISTINCT_DRAFT_MESSAGE_RECIPIENT_BY_SENDER_LOGIN.getValue()). //
+					setParameter("login", LogInEvent.getWorker().getLogin()).list();
+		else
+			userDataListToSort = (List<UserData>) HibernateUtil.getSession()
+					.createQuery(Query.TabOutboxPageEventQuery.DISTINCT_DRAFT_MESSAGE_RECIPIENT_ALL.getValue()). //
+					list();
+
 		Common.prepareBlankComboBoxElement(userDataListToSort);
 		userDataListToSort.sort(Comparator.nullsFirst(Comparator.comparing(UserData::getSurname)));
 		userDataListToSort.forEach(ud -> comboBoxRecipientModel.addElement(ud));
@@ -104,10 +112,15 @@ public class TabDraftPageEvent implements IMessageForm {
 	}
 
 	private void reloadDraftTable() {
-		List<Object> parameters = new ArrayList<Object>();
-		parameters.add(LogInEvent.getWorker().getLogin());
-		((DraftTableModel) emailForm.getPanelDraftPage().getDraftTable().getModel()) //
-				.reloadData(Query.TabOutboxPageEventQuery.DRAFT_MESSAGE_BY_SENDER_LOGIN.getValue(), parameters);
+		if (LogInEvent.getWorker() != null) {
+			List<Object> parameters = new ArrayList<Object>();
+			parameters.add(LogInEvent.getWorker().getLogin());
+			((DraftTableModel) emailForm.getPanelDraftPage().getDraftTable().getModel()) //
+					.reloadData(Query.TabOutboxPageEventQuery.DRAFT_MESSAGE_BY_SENDER_LOGIN.getValue(), parameters);
+		} else {
+			((DraftTableModel) emailForm.getPanelDraftPage().getDraftTable().getModel()) //
+					.reloadData();
+		}
 	}
 
 	private void onClickBtnModify() {
@@ -190,16 +203,28 @@ public class TabDraftPageEvent implements IMessageForm {
 		List<Object> parameters = new ArrayList<Object>();
 		if (recipientUserData != null) {
 			parameters.add(recipientUserData);
-			parameters.add(LogInEvent.getWorker().getLogin());
-			((DraftTableModel) emailForm.getPanelDraftPage().getDraftTable().getModel()) //
-					.reloadData(
-							Query.TabOutboxPageEventQuery.DISTINCT_DRAFT_MESSAGE_BY_RECIPIENT_USER_DATA_AND_SENDER_LOGIN
-									.getValue(),
-							parameters);
+			if (LogInEvent.getWorker() != null) {
+				parameters.add(LogInEvent.getWorker().getLogin());
+				((DraftTableModel) emailForm.getPanelDraftPage().getDraftTable().getModel()) //
+						.reloadData(
+								Query.TabOutboxPageEventQuery.DISTINCT_DRAFT_MESSAGE_BY_RECIPIENT_USER_DATA_AND_SENDER_LOGIN
+										.getValue(),
+								parameters);
+			} else {
+				((DraftTableModel) emailForm.getPanelDraftPage().getDraftTable().getModel()) //
+						.reloadData(
+								Query.TabOutboxPageEventQuery.DISTINCT_DRAFT_MESSAGE_BY_RECIPIENT_USER_DATA.getValue(),
+								parameters);
+			}
 		} else {
-			parameters.add(LogInEvent.getWorker().getLogin());
-			((DraftTableModel) emailForm.getPanelDraftPage().getDraftTable().getModel()) //
-					.reloadData(Query.TabOutboxPageEventQuery.DRAFT_MESSAGE_BY_SENDER_LOGIN.getValue(), parameters);
+			if (LogInEvent.getWorker() != null) {
+				parameters.add(LogInEvent.getWorker().getLogin());
+				((DraftTableModel) emailForm.getPanelDraftPage().getDraftTable().getModel()) //
+						.reloadData(Query.TabOutboxPageEventQuery.DRAFT_MESSAGE_BY_SENDER_LOGIN.getValue(), parameters);
+			} else {
+				((DraftTableModel) emailForm.getPanelDraftPage().getDraftTable().getModel()) //
+						.reloadData();
+			}
 		}
 	}
 
