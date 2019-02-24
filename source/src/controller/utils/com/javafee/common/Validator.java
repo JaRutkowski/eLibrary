@@ -111,9 +111,15 @@ public final class Validator {
 		return existingInventoryNumberVolume != null ? true : false;
 	}
 
-	public static boolean validateIsbnNumberExist(String isbnNumber) {
-		Book existingIsbnNumber = (Book) HibernateUtil.getSession().getNamedQuery("Book.checkIfIsbnNumberExist")
-				.setParameter("isbnNumber", isbnNumber).uniqueResult();
+	public static boolean validateIsbnNumberExist(Integer idBook, String isbnNumber) {
+		Book existingIsbnNumber = null;
+		if (idBook != null)
+			existingIsbnNumber = (Book) HibernateUtil.getSession()
+					.getNamedQuery("Book.checkWithComparingIdIfIsbnNumberExist").setParameter("idBook", idBook)
+					.setParameter("isbnNumber", isbnNumber).uniqueResult();
+		else
+			existingIsbnNumber = (Book) HibernateUtil.getSession().getNamedQuery("Book.checkIfIsbnNumberExist")
+					.setParameter("isbnNumber", isbnNumber).uniqueResult();
 		return existingIsbnNumber != null ? true : false;
 	}
 }

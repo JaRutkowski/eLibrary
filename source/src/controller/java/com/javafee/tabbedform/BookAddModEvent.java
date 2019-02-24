@@ -70,8 +70,8 @@ public class BookAddModEvent {
 			bookShallowClone.getAuthor().clear();
 			bookShallowClone.getCategory().clear();
 			bookShallowClone.getPublishingHouse().clear();
-			if (Validator
-					.validateIsbnNumberExist(bookAddModFrame.getBookDataPanel().getTextFieldIsbnNumber().getText())) {
+			if (Validator.validateIsbnNumberExist(bookShallowClone.getIdBook(),
+					bookAddModFrame.getBookDataPanel().getTextFieldIsbnNumber().getText())) {
 				LogGuiException.logWarning(
 						SystemProperties.getInstance().getResourceBundle()
 								.getString("bookAddModEvent.incorrectIsbnNumberWarningTitle"),
@@ -148,7 +148,7 @@ public class BookAddModEvent {
 			Integer numberOfTomes = !"".equals(bookAddModFrame.getBookDataPanel().getTextFieldNumberOfTomes().getText())
 					? Integer.parseInt(bookAddModFrame.getBookDataPanel().getTextFieldNumberOfTomes().getText())
 					: null;
-			if (Validator.validateIsbnNumberExist(isbnNumber)) {
+			if (Validator.validateIsbnNumberExist(null, isbnNumber)) {
 				LogGuiException.logWarning(
 						SystemProperties.getInstance().getResourceBundle()
 								.getString("bookAddModEvent.incorrectIsbnNumberWarningTitle"),
