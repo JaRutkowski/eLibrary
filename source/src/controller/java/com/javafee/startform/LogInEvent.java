@@ -61,6 +61,7 @@ public final class LogInEvent {
 				.setParameter("login", login).uniqueResult();
 		worker = (Worker) HibernateUtil.getSession().getNamedQuery("Worker.checkIfWorkerLoginExist")
 				.setParameter("login", login).uniqueResult();
+		isAdmin = Common.isAdmin(login, password);
 
 		if (client != null) {
 			isAdmin = Common.isAdmin(client);
@@ -73,10 +74,10 @@ public final class LogInEvent {
 				} else
 					Params.getInstance().add("NOT_REGISTERED", LogInFailureCause.NOT_REGISTERED);
 			}
+		} else if (worker == null && isAdmin) {
+			role = Role.ADMIN;
+			result = true;
 		} else if (worker != null) {
-			isAdmin = Common.isAdmin(worker);
-			if (isAdmin)
-				role = Role.ADMIN;
 			if (checkLoginAndPassword(password)) {
 				if (worker.getRegistered()) {
 					if (checkIfHired(worker)) {
@@ -88,7 +89,6 @@ public final class LogInEvent {
 				} else
 					Params.getInstance().add("NOT_REGISTERED", LogInFailureCause.NOT_REGISTERED);
 			}
-
 		} else
 			Params.getInstance().add("NO_USER", LogInFailureCause.NO_USER);
 

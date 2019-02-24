@@ -116,6 +116,11 @@ public final class Common {
 		comboBoxDataList.add((T) Constans.APPLICATION_COMBO_BOX_BLANK_OBJECT);
 	}
 
+	public static boolean isAdmin(String login, String password) {
+		return Constans.DATA_BASE_ADMIN_LOGIN.equals(login)
+				&& Constans.DATA_BASE_ADMIN_PASSWORD.equals(Common.createMd5(password)) ? true : false;
+	}
+
 	public static boolean isAdmin(Worker worker) {
 		return Constans.DATA_BASE_ADMIN_LOGIN.equals(worker.getLogin())
 				&& Constans.DATA_BASE_ADMIN_PASSWORD.equals(worker.getPassword()) ? true : false;

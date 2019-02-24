@@ -89,10 +89,10 @@ public class Actions implements IActionForm {
 		default:
 			break;
 		}
-		
+
 		setEnableMenu(Tab_Email.getByNumber(emailForm.getTabbedPane().getSelectedIndex()));
 	}
-	
+
 	private void setEnableMenu(Tab_Email tabEmail) {
 		emailForm.getMenuBar().setVisible(tabEmail == Tab_Email.TAB_CREATE_PAGE);
 	}
