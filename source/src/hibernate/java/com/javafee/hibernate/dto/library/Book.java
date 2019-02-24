@@ -25,7 +25,8 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(exclude = { "author", "publishingHouse", "category", "volume" })
 @Entity
-@NamedQueries({ @NamedQuery(name = "Book.checkIfIsbnNumberExist", query = "from Book where isbnNumber = :isbnNumber") })
+@NamedQueries({ @NamedQuery(name = "Book.checkIfIsbnNumberExist", query = "from Book where isbnNumber = :isbnNumber"),
+		@NamedQuery(name = "Book.checkWithComparingIdIfIsbnNumberExist", query = "from Book where idBook != :idBook and isbnNumber = :isbnNumber") })
 @Table(name = "lib_book")
 @SequenceGenerator(name = "seq_lib_book", sequenceName = "seq_lib_book", allocationSize = 1)
 public class Book implements Cloneable {
