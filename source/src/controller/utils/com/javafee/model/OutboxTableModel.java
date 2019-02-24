@@ -26,7 +26,8 @@ public class OutboxTableModel extends DraftTableModel {
 
 	@SuppressWarnings("unchecked")
 	protected void prepareHibernateDao() {
-		this.messages = HibernateUtil.getSession().createQuery("from Message").list();
+		this.messages = HibernateUtil.getSession()
+				.createQuery("from Message mes where mes.isDraft is null or mes.isDraft is false").list();
 	}
 
 	@Override

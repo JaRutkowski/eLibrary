@@ -68,8 +68,8 @@ public class TabTemplatePageEvent implements IActionForm {
 
 	private void reloadComboBoxLibraryTemplate() {
 		DefaultComboBoxModel<String> comboBoxLibraryTemplateModel = new DefaultComboBoxModel<String>();
-		Optional<SystemProperties> systemProperties = (Optional<SystemProperties>) Common
-				.findSystemPropertiesByUserDataId(LogInEvent.getWorker().getIdUserData());
+		Optional<SystemProperties> systemProperties = Common.findSystemPropertiesByUserDataId(
+				LogInEvent.getWorker() != null ? LogInEvent.getWorker().getIdUserData() : Constans.DATA_BASE_ADMIN_ID);
 		if (systemProperties.isPresent() && systemProperties.get().getTemplateDirectory() != null) {
 			File[] files = new File(systemProperties.get().getTemplateDirectory()).listFiles();
 			List<String> names = Arrays.asList(files).parallelStream().map(file -> file.getName())
@@ -87,8 +87,8 @@ public class TabTemplatePageEvent implements IActionForm {
 	}
 
 	private void registerWatchServiceListener() {
-		Optional<SystemProperties> systemProperties = (Optional<SystemProperties>) Common
-				.findSystemPropertiesByUserDataId(LogInEvent.getWorker().getIdUserData());
+		Optional<SystemProperties> systemProperties = Common.findSystemPropertiesByUserDataId(
+				LogInEvent.getWorker() != null ? LogInEvent.getWorker().getIdUserData() : Constans.DATA_BASE_ADMIN_ID);
 		if (systemProperties.isPresent() && systemProperties.get().getTemplateDirectory() != null) {
 			com.javafee.common.Common.registerWatchServiceListener(this, c -> this.reloadComboBoxLibraryTemplate());
 		}
@@ -129,7 +129,8 @@ public class TabTemplatePageEvent implements IActionForm {
 	private void onClickBtnSaveTemplateToLibrary() {
 		if (validate()) {
 			SystemProperties systemProperties = Common
-					.checkAndGetSystemProperties(LogInEvent.getWorker().getIdUserData());
+					.checkAndGetSystemProperties(LogInEvent.getWorker() != null ? LogInEvent.getWorker().getIdUserData()
+							: Constans.DATA_BASE_ADMIN_ID);
 
 			if (systemProperties.getTemplateDirectory() == null) {
 				if (Utils.displayConfirmDialog(com.javafee.common.SystemProperties.getInstance().getResourceBundle()
@@ -194,7 +195,8 @@ public class TabTemplatePageEvent implements IActionForm {
 
 	private void onClickBtnPreviewTemplateLibrary() {
 		com.javafee.hibernate.dto.common.SystemProperties systemProperties = com.javafee.hibernate.dao.common.Common
-				.checkAndGetSystemProperties(LogInEvent.getWorker().getIdUserData());
+				.checkAndGetSystemProperties(LogInEvent.getWorker() != null ? LogInEvent.getWorker().getIdUserData()
+						: Constans.DATA_BASE_ADMIN_ID);
 
 		if (systemProperties.getTemplateDirectory() == null) {
 			if (Utils.displayConfirmDialog(com.javafee.common.SystemProperties.getInstance().getResourceBundle()
@@ -220,8 +222,9 @@ public class TabTemplatePageEvent implements IActionForm {
 				.getComboBoxLibraryTemplate().getSelectedItem();
 
 		if (fileName != null) {
-			Optional<SystemProperties> systemProperties = (Optional<SystemProperties>) Common
-					.findSystemPropertiesByUserDataId(LogInEvent.getWorker().getIdUserData());
+			Optional<SystemProperties> systemProperties = Common.findSystemPropertiesByUserDataId(
+					LogInEvent.getWorker() != null ? LogInEvent.getWorker().getIdUserData()
+							: Constans.DATA_BASE_ADMIN_ID);
 			if (systemProperties.isPresent()) {
 				File file = new File(systemProperties.get().getTemplateDirectory() + File.separator + fileName);
 				clearTextAreaHTMLEditor();

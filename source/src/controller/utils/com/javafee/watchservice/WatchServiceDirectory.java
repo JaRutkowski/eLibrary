@@ -10,6 +10,7 @@ import java.nio.file.WatchService;
 import java.util.Optional;
 import java.util.function.Consumer;
 
+import com.javafee.common.Constans;
 import com.javafee.emailform.TabTemplatePageEvent;
 import com.javafee.hibernate.dto.common.SystemProperties;
 import com.javafee.startform.LogInEvent;
@@ -34,9 +35,10 @@ public class WatchServiceDirectory implements Runnable {
 	public void run() {
 		while (running) {
 			try {
-				Optional<SystemProperties> systemProperties = (Optional<SystemProperties>) //
-				com.javafee.hibernate.dao.common.Common
-						.findSystemPropertiesByUserDataId(LogInEvent.getWorker().getIdUserData());
+				Optional<SystemProperties> systemProperties = com.javafee.hibernate.dao.common.Common
+						.findSystemPropertiesByUserDataId(
+								LogInEvent.getWorker() != null ? LogInEvent.getWorker().getIdUserData()
+										: Constans.DATA_BASE_ADMIN_ID);
 				if (systemProperties.isPresent()) {
 					WatchService watchService;
 					watchService = FileSystems.getDefault().newWatchService();

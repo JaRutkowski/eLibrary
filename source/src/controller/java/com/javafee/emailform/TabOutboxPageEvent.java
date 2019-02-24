@@ -98,13 +98,21 @@ public class TabOutboxPageEvent implements IMessageForm {
 		reloadComboBoxRecipient();
 	}
 
+	@SuppressWarnings("unchecked")
 	private void reloadComboBoxRecipient() {
 		DefaultComboBoxModel<UserData> comboBoxRecipientModel = new DefaultComboBoxModel<UserData>();
 
-		@SuppressWarnings("unchecked")
-		List<UserData> userDataListToSort = (List<UserData>) HibernateUtil.getSession()
-				.createQuery(Query.TabOutboxPageEventQuery.DISTINCT_MESSAGE_RECIPIENT_BY_SENDER_LOGIN.getValue()). //
-				setParameter("login", LogInEvent.getWorker().getLogin()).list();
+		List<UserData> userDataListToSort = null;
+
+		if (LogInEvent.getWorker() != null)
+			userDataListToSort = (List<UserData>) HibernateUtil.getSession()
+					.createQuery(Query.TabOutboxPageEventQuery.DISTINCT_MESSAGE_RECIPIENT_BY_SENDER_LOGIN.getValue()). //
+					setParameter("login", LogInEvent.getWorker().getLogin()).list();
+		else
+			userDataListToSort = (List<UserData>) HibernateUtil.getSession()
+					.createQuery(Query.TabOutboxPageEventQuery.DISTINCT_MESSAGE_RECIPIENT_ALL.getValue()). //
+					list();
+
 		Common.prepareBlankComboBoxElement(userDataListToSort);
 		userDataListToSort.sort(Comparator.nullsFirst(Comparator.comparing(UserData::getSurname)));
 		userDataListToSort.forEach(ud -> comboBoxRecipientModel.addElement(ud));
@@ -112,10 +120,15 @@ public class TabOutboxPageEvent implements IMessageForm {
 	}
 
 	private void reloadOutboxTable() {
-		List<Object> parameters = new ArrayList<Object>();
-		parameters.add(LogInEvent.getWorker().getLogin());
-		((OutboxTableModel) emailForm.getPanelOutboxPage().getOutboxTable().getModel()) //
-				.reloadData(Query.TabOutboxPageEventQuery.MESSAGE_BY_SENDER_LOGIN.getValue(), parameters);
+		if (LogInEvent.getWorker() != null) {
+			List<Object> parameters = new ArrayList<Object>();
+			parameters.add(LogInEvent.getWorker().getLogin());
+			((OutboxTableModel) emailForm.getPanelOutboxPage().getOutboxTable().getModel()) //
+					.reloadData(Query.TabOutboxPageEventQuery.MESSAGE_BY_SENDER_LOGIN.getValue(), parameters);
+		} else {
+			((OutboxTableModel) emailForm.getPanelOutboxPage().getOutboxTable().getModel()) //
+					.reloadData();
+		}
 	}
 
 	private void onClickBtnPreview() {
@@ -198,14 +211,26 @@ public class TabOutboxPageEvent implements IMessageForm {
 		List<Object> parameters = new ArrayList<Object>();
 		if (recipientUserData != null) {
 			parameters.add(recipientUserData);
-			parameters.add(LogInEvent.getWorker().getLogin());
-			((OutboxTableModel) emailForm.getPanelOutboxPage().getOutboxTable().getModel()) //
-					.reloadData(Query.TabOutboxPageEventQuery.DISTINCT_MESSAGE_BY_RECIPIENT_USER_DATA_AND_SENDER_LOGIN
-							.getValue(), parameters);
+			if (LogInEvent.getWorker() != null) {
+				parameters.add(LogInEvent.getWorker().getLogin());
+				((OutboxTableModel) emailForm.getPanelOutboxPage().getOutboxTable().getModel()) //
+						.reloadData(
+								Query.TabOutboxPageEventQuery.DISTINCT_MESSAGE_BY_RECIPIENT_USER_DATA_AND_SENDER_LOGIN
+										.getValue(),
+								parameters);
+			} else {
+				((OutboxTableModel) emailForm.getPanelOutboxPage().getOutboxTable().getModel()) //
+						.reloadData(Query.TabOutboxPageEventQuery.DISTINCT_MESSAGE_BY_RECIPIENT_USER_DATA.getValue(),
+								parameters);
+			}
 		} else {
-			parameters.add(LogInEvent.getWorker().getLogin());
-			((OutboxTableModel) emailForm.getPanelOutboxPage().getOutboxTable().getModel()) //
-					.reloadData(Query.TabOutboxPageEventQuery.MESSAGE_BY_SENDER_LOGIN.getValue(), parameters);
+			if (LogInEvent.getWorker() != null) {
+				parameters.add(LogInEvent.getWorker().getLogin());
+				((OutboxTableModel) emailForm.getPanelOutboxPage().getOutboxTable().getModel()) //
+						.reloadData(Query.TabOutboxPageEventQuery.MESSAGE_BY_SENDER_LOGIN.getValue(), parameters);
+			} else
+				((OutboxTableModel) emailForm.getPanelOutboxPage().getOutboxTable().getModel()) //
+						.reloadData();
 		}
 	}
 
