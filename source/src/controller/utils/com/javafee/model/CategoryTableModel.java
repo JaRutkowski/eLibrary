@@ -91,6 +91,11 @@ public class CategoryTableModel extends AbstractTableModel {
 		return false;
 	}
 
+	public void reloadData() {
+		prepareHibernateDao();
+		fireTableDataChanged();
+	}
+
 	@Override
 	public void fireTableChanged(TableModelEvent e) {
 		super.fireTableChanged(e);

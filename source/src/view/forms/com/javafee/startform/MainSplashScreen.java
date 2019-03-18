@@ -18,7 +18,7 @@ import com.javafee.common.SystemProperties;
 class MainSplashScreen extends JWindow {
 	private static final long serialVersionUID = 1L;
 
-	private static MainSplashScreen mainSplashScreen = null;
+	private static MainSplashScreen mainSplashScreen;
 
 	private MainSplashScreen(String filename, final Frame f, int waitTime) {
 		super(f);
@@ -51,12 +51,11 @@ class MainSplashScreen extends JWindow {
 			@Override
 			public void run() {
 				try {
+					setVisible(true);
 					SystemProperties.getInstance().initializeSystem();
 					Thread.sleep(pause);
 					SwingUtilities.invokeAndWait(closerRunner);
-				} catch (InvocationTargetException e) {
-					e.printStackTrace();
-				} catch (InterruptedException e) {
+				} catch (InvocationTargetException | InterruptedException e) {
 					e.printStackTrace();
 				}
 			}
@@ -75,6 +74,6 @@ class MainSplashScreen extends JWindow {
 	}
 
 	public static Boolean isNull() {
-		return mainSplashScreen != null ? false : true;
+		return mainSplashScreen == null;
 	}
 }
