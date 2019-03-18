@@ -5,7 +5,10 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.PersistenceException;
 import javax.swing.JOptionPane;
+
+import org.hibernate.exception.ConstraintViolationException;
 
 import com.javafee.common.Constans;
 import com.javafee.common.Constans.Context;
@@ -31,6 +34,8 @@ public class BookAddModEvent {
 
 	private BookTableModel bookTableModel;
 
+	private Context context;
+
 	public void control(Context context, BookTableModel bookTableModel) {
 		this.bookTableModel = bookTableModel;
 		openBookAddModFrame(context);
@@ -44,6 +49,7 @@ public class BookAddModEvent {
 		});
 
 		bookAddModFrame.getCockpitConfirmationPanel().getBtnAccept().addActionListener(e -> onClickBtnAccept(context));
+		bookAddModFrame.getBtnRefreshTables().addActionListener(e -> onClickBtnRefreshTables());
 	}
 
 	private void onClickBtnAccept(Context context) {
@@ -61,6 +67,13 @@ public class BookAddModEvent {
 		} else if (context == Context.MODIFICATION) {
 			modificateBook();
 		}
+	}
+
+	private void onClickBtnRefreshTables() {
+		if (this.context == Context.MODIFICATION)
+			reloadTablesWithBookData();
+		else
+			reloadTablesData();
 	}
 
 	private void modificateBook() {
@@ -114,9 +127,6 @@ public class BookAddModEvent {
 								"bookAddModEvent.updatingBookSuccessTitle"),
 						JOptionPane.INFORMATION_MESSAGE);
 
-				Params.getInstance().remove("selectedBook");
-				Params.getInstance().remove("selectedRowIndex");
-
 				bookAddModFrame.dispose();
 			} else {
 				LogGuiException.logWarning(
@@ -131,6 +141,13 @@ public class BookAddModEvent {
 							.getString("bookAddModEvent.savingBookParseErrorTitle"),
 					SystemProperties.getInstance().getResourceBundle()
 							.getString("bookAddModEvent.savingBookParseError"),
+					e);
+		} catch (ConstraintViolationException e) {
+			LogGuiException.logError(
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("bookAddModEvent.savingBookConstraintViolationErrorTitle"),
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("bookAddModEvent.savingBookConstraintViolationError"),
 					e);
 		}
 	}
@@ -194,6 +211,13 @@ public class BookAddModEvent {
 					SystemProperties.getInstance().getResourceBundle()
 							.getString("bookAddModEvent.savingBookParseError"),
 					e);
+		} catch (PersistenceException e) {
+			LogGuiException.logError(
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("bookAddModEvent.savingBookConstraintViolationErrorTitle"),
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("bookAddModEvent.savingBookConstraintViolationError"),
+					e);
 		}
 	}
 
@@ -222,9 +246,10 @@ public class BookAddModEvent {
 	private void openBookAddModFrame(Context context) {
 		if (bookAddModFrame == null || (bookAddModFrame != null && !bookAddModFrame.isDisplayable())) {
 			bookAddModFrame = new BookAddModFrame();
-			if (context == Context.MODIFICATION) {
+			this.context = context;
+			if (this.context == Context.MODIFICATION) {
 				fillBookDataPanel();
-				reloadTables();
+				reloadTablesWithBookData();
 			}
 			bookAddModFrame.setVisible(true);
 		} else {
@@ -232,32 +257,41 @@ public class BookAddModEvent {
 		}
 	}
 
-	private void reloadTables() {
+	private void reloadTablesWithBookData() {
 		List<Integer> authorIndexes = new ArrayList<Integer>();
 		List<Integer> categoryIndexes = new ArrayList<Integer>();
 		List<Integer> publishingHouseIndexes = new ArrayList<Integer>();
 
-		((Book) Params.getInstance().get("selectedBook")).getAuthor().forEach(e -> authorIndexes
-				.add(((AuthorTableModel) bookAddModFrame.getAuthorTable().getModel()).getAuthors().indexOf(e)));
-		authorIndexes.forEach(e -> bookAddModFrame.getAuthorTable().addRowSelectionInterval(e, e));
-		((Book) Params.getInstance().get("selectedBook")).getCategory().forEach(e -> categoryIndexes
-				.add(((CategoryTableModel) bookAddModFrame.getCategoryTable().getModel()).getCategories().indexOf(e)));
-		categoryIndexes.forEach(e -> bookAddModFrame.getCategoryTable().addRowSelectionInterval(e, e));
-		((Book) Params.getInstance().get("selectedBook")).getPublishingHouse()
-				.forEach(e -> publishingHouseIndexes
-						.add(((PublishingHouseTableModel) bookAddModFrame.getPublishingHouseTable().getModel())
-								.getPublishingHouses().indexOf(e)));
-		publishingHouseIndexes.forEach(e -> bookAddModFrame.getPublishingHouseTable().addRowSelectionInterval(e, e));
+		if (Params.getInstance().get("selectedBook") != null) {
+			((Book) Params.getInstance().get("selectedBook")).getAuthor().forEach(e -> authorIndexes
+					.add(((AuthorTableModel) bookAddModFrame.getAuthorTable().getModel()).getAuthors().indexOf(e)));
+			authorIndexes.forEach(e -> bookAddModFrame.getAuthorTable().addRowSelectionInterval(e, e));
+			((Book) Params.getInstance().get("selectedBook")).getCategory().forEach(e -> categoryIndexes.add(
+					((CategoryTableModel) bookAddModFrame.getCategoryTable().getModel()).getCategories().indexOf(e)));
+			categoryIndexes.forEach(e -> bookAddModFrame.getCategoryTable().addRowSelectionInterval(e, e));
+			((Book) Params.getInstance().get("selectedBook")).getPublishingHouse()
+					.forEach(e -> publishingHouseIndexes
+							.add(((PublishingHouseTableModel) bookAddModFrame.getPublishingHouseTable().getModel())
+									.getPublishingHouses().indexOf(e)));
+			publishingHouseIndexes
+					.forEach(e -> bookAddModFrame.getPublishingHouseTable().addRowSelectionInterval(e, e));
+		}
+	}
+
+	private void reloadTablesData() {
+		((AuthorTableModel) bookAddModFrame.getAuthorTable().getModel()).reloadData();
+		((CategoryTableModel) bookAddModFrame.getCategoryTable().getModel()).reloadData();
+		((PublishingHouseTableModel) bookAddModFrame.getPublishingHouseTable().getModel()).reloadData();
 	}
 
 	private void fillBookDataPanel() {
 		bookAddModFrame.getBookDataPanel().getTextFieldTitle()
 				.setText(((Book) Params.getInstance().get("selectedBook")).getTitle() != null
-						? ((Book) Params.getInstance().get("selectedBook")).getTitle().toString()
+						? ((Book) Params.getInstance().get("selectedBook")).getTitle()
 						: "");
 		bookAddModFrame.getBookDataPanel().getTextFieldIsbnNumber()
 				.setText(((Book) Params.getInstance().get("selectedBook")).getIsbnNumber() != null
-						? ((Book) Params.getInstance().get("selectedBook")).getIsbnNumber().toString()
+						? ((Book) Params.getInstance().get("selectedBook")).getIsbnNumber()
 						: "");
 		bookAddModFrame.getBookDataPanel().getTextFieldNumberOfPage()
 				.setText(((Book) Params.getInstance().get("selectedBook")).getNumberOfPage() != null

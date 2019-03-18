@@ -231,7 +231,7 @@ public final class Constans {
 	}
 
 	public static final int MAIN_SPLASH_SCREEN_DURATION = 1000;
-	public static final String MAIN_SPLASH_SCREEN_IMAGE = "resources/images/splashScreen.jpg";
+	public static final String MAIN_SPLASH_SCREEN_IMAGE = "source/resources/images/splashScreen.jpg";
 
 	public static final String APPLICATION_NAME = "e-library";
 	public static String APPLICATION_LANGUAGE = "pl";

@@ -2,9 +2,12 @@ package com.javafee.tabbedform.books.frames;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.Toolkit;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -17,6 +20,7 @@ import com.javafee.common.Utils;
 import com.javafee.model.AuthorTableModel;
 import com.javafee.model.CategoryTableModel;
 import com.javafee.model.PublishingHouseTableModel;
+import com.javafee.startform.RegistrationPanel;
 import com.javafee.uniform.CockpitConfirmationPanel;
 
 import lombok.Getter;
@@ -40,6 +44,8 @@ public class BookAddModFrame extends JFrame {
 	private JScrollPane scrollPane_publishingHouse;
 	@Getter
 	private JTable publishingHouseTable;
+	@Getter
+	private JButton btnRefreshTables;
 
 	public BookAddModFrame() {
 		setBackground(Utils.getApplicationColor());
@@ -52,26 +58,37 @@ public class BookAddModFrame extends JFrame {
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
 		gbl_contentPane.columnWidths = new int[] { 29, 197, 0 };
-		gbl_contentPane.rowHeights = new int[] { 119, 140, 119, 22, 0 };
+		gbl_contentPane.rowHeights = new int[] { 0, 119, 140, 119, 22, 0 };
 		gbl_contentPane.columnWeights = new double[] { 1.0, 1.0, Double.MIN_VALUE };
-		gbl_contentPane.rowWeights = new double[] { 1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE };
+		gbl_contentPane.rowWeights = new double[] { 0.0, 1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE };
 		contentPane.setLayout(gbl_contentPane);
 
 		bookDataPanel = new BookDataPanel();
 		GridBagConstraints gbc_bookDataPanel = new GridBagConstraints();
-		gbc_bookDataPanel.gridheight = 3;
+		gbc_bookDataPanel.gridheight = 4;
 		gbc_bookDataPanel.insets = new Insets(0, 0, 5, 5);
 		gbc_bookDataPanel.fill = GridBagConstraints.BOTH;
 		gbc_bookDataPanel.gridx = 0;
 		gbc_bookDataPanel.gridy = 0;
 		contentPane.add(bookDataPanel, gbc_bookDataPanel);
 
+		btnRefreshTables = new JButton();
+		btnRefreshTables
+				.setIcon(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnReload-ico.png"))
+						.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
+		GridBagConstraints gbc_btnRefreshTables = new GridBagConstraints();
+		gbc_btnRefreshTables.anchor = GridBagConstraints.EAST;
+		gbc_btnRefreshTables.insets = new Insets(0, 0, 5, 0);
+		gbc_btnRefreshTables.gridx = 1;
+		gbc_btnRefreshTables.gridy = 0;
+		contentPane.add(btnRefreshTables, gbc_btnRefreshTables);
+
 		scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.insets = new Insets(0, 0, 5, 0);
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
 		gbc_scrollPane.gridx = 1;
-		gbc_scrollPane.gridy = 0;
+		gbc_scrollPane.gridy = 1;
 		contentPane.add(scrollPane, gbc_scrollPane);
 
 		authorTable = new JTable();
@@ -88,7 +105,7 @@ public class BookAddModFrame extends JFrame {
 		gbc_scrollPane_categoryTable.insets = new Insets(0, 0, 5, 0);
 		gbc_scrollPane_categoryTable.fill = GridBagConstraints.BOTH;
 		gbc_scrollPane_categoryTable.gridx = 1;
-		gbc_scrollPane_categoryTable.gridy = 1;
+		gbc_scrollPane_categoryTable.gridy = 2;
 		contentPane.add(scrollPane_categoryTable, gbc_scrollPane_categoryTable);
 
 		categoryTable = new JTable();
@@ -105,7 +122,7 @@ public class BookAddModFrame extends JFrame {
 		gbc_scrollPane_publishingHouse.insets = new Insets(0, 0, 5, 0);
 		gbc_scrollPane_publishingHouse.fill = GridBagConstraints.BOTH;
 		gbc_scrollPane_publishingHouse.gridx = 1;
-		gbc_scrollPane_publishingHouse.gridy = 2;
+		gbc_scrollPane_publishingHouse.gridy = 3;
 		contentPane.add(scrollPane_publishingHouse, gbc_scrollPane_publishingHouse);
 
 		publishingHouseTable = new JTable();
@@ -120,10 +137,9 @@ public class BookAddModFrame extends JFrame {
 		cockpitConfirmationPanel = new CockpitConfirmationPanel();
 		GridBagConstraints gbc_cockpitConfirmationPanel = new GridBagConstraints();
 		gbc_cockpitConfirmationPanel.gridwidth = 2;
-		gbc_cockpitConfirmationPanel.insets = new Insets(0, 0, 0, 5);
 		gbc_cockpitConfirmationPanel.fill = GridBagConstraints.BOTH;
 		gbc_cockpitConfirmationPanel.gridx = 0;
-		gbc_cockpitConfirmationPanel.gridy = 3;
+		gbc_cockpitConfirmationPanel.gridy = 4;
 		contentPane.add(cockpitConfirmationPanel, gbc_cockpitConfirmationPanel);
 	}
 }
