@@ -127,9 +127,6 @@ public class BookAddModEvent {
 								"bookAddModEvent.updatingBookSuccessTitle"),
 						JOptionPane.INFORMATION_MESSAGE);
 
-				// Params.getInstance().remove("selectedBook");
-				// Params.getInstance().remove("selectedRowIndex");
-
 				bookAddModFrame.dispose();
 			} else {
 				LogGuiException.logWarning(
