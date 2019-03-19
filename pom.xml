@@ -9,7 +9,8 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<postgresql.driver.version>42.1.4</postgresql.driver.version>
-		<org.hibernate.version>5.2.13.Final</org.hibernate.version>
+		<org.hibernate.version>5.4.1.Final</org.hibernate.version>
+		<org.reflections.version>0.9.10</org.reflections.version>
 		<sonar.maven.plugin.version>3.4.0.905</sonar.maven.plugin.version>
 		<jaxb.api.version>2.2.11</jaxb.api.version>
 		<jaxb.core.version>2.2.11</jaxb.core.version>
@@ -67,6 +68,11 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
 			<version>${org.hibernate.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.reflections</groupId>
+			<artifactId>reflections</artifactId>
+			<version>${org.reflections.version}</version>
 		</dependency>
 		<!-- Java 6 = JAX-B Version 2.0 -->
 		<!-- Java 7 = JAX-B Version 2.2.3 -->

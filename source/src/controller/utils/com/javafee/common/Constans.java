@@ -277,6 +277,10 @@ public final class Constans {
 
 	public static final String LANGUAGE_RESOURCE_BUNDLE = "messages";
 
+	public static final String DATA_BASE_PACKAGE_TO_SCAN = "com.javafee.hibernate.dto";
+	public static final String DATA_BASE_URL = "127.0.0.1:5432/library";
+	public static final String DATA_BASE_USER = "postgres";
+	public static final String DATA_BASE_PASSWORD = "admin123";
 	public static final Character DATA_BASE_MALE_SIGN = 'M';
 	public static final Character DATA_BASE_FEMALE_SIGN = 'F';
 	public static final Boolean DATA_BASE_REGISTER_DEFAULT_FLAG = false;
