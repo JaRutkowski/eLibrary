@@ -353,7 +353,14 @@ public class Actions implements IRegistrationForm {
 
 	private boolean validateForgotPassword() {
 		boolean result = false;
-		if (startForm.getLogInPanel().getTextFieldLogin().getText().isEmpty())
+		if (Common.checkInternetConnectivity())
+			JOptionPane.showMessageDialog(startForm.getFrame(),
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("startForm.validateForgotPasswordError4"),
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("startForm.validateForgotPassword4Title"),
+					JOptionPane.ERROR_MESSAGE);
+		else if (startForm.getLogInPanel().getTextFieldLogin().getText().isEmpty())
 			JOptionPane.showMessageDialog(startForm.getFrame(),
 					SystemProperties.getInstance().getResourceBundle()
 							.getString("startForm.validateForgotPasswordError1"),
@@ -366,58 +373,42 @@ public class Actions implements IRegistrationForm {
 			Worker worker = (Worker) HibernateUtil.getSession().getNamedQuery("Worker.checkIfWorkerLoginExist")
 					.setParameter("login", startForm.getLogInPanel().getTextFieldLogin().getText()).uniqueResult();
 
-			if (client != null && worker != null) {
+			if (client == null && worker == null)
 				JOptionPane.showMessageDialog(startForm.getFrame(),
 						SystemProperties.getInstance().getResourceBundle()
-								.getString("startForm.validateForgotPasswordError1"),
+								.getString("startForm.validateForgotPasswordError5"),
 						SystemProperties.getInstance().getResourceBundle()
-								.getString("startForm.validateForgotPassword1Title"),
+								.getString("startForm.validateForgotPassword5Title"),
 						JOptionPane.ERROR_MESSAGE);
-			} else {
-				if (client != null) {
-					if (Common.isAdmin(client))
-						JOptionPane.showMessageDialog(startForm.getFrame(),
-								SystemProperties.getInstance().getResourceBundle()
-										.getString("startForm.validateForgotPasswordError2"),
-								SystemProperties.getInstance().getResourceBundle().getString(
-										"startForm.validateForgotPassword1Title"),
-								JOptionPane.ERROR_MESSAGE);
-					else {
-						if (client.getEMail() != null) {
-							Params.getInstance().add("USER_DATA", client);
-							result = true;
-						} else
-							JOptionPane.showMessageDialog(startForm.getFrame(),
-									SystemProperties.getInstance().getResourceBundle()
-											.getString("startForm.validateForgotPasswordError3"),
-									SystemProperties.getInstance().getResourceBundle().getString(
-											"startForm.validateForgotPassword1Title"),
-									JOptionPane.ERROR_MESSAGE);
-					}
-				} else if (worker != null) {
-					if (Common.isAdmin(worker))
-						JOptionPane.showMessageDialog(startForm.getFrame(),
-								SystemProperties.getInstance().getResourceBundle()
-										.getString("startForm.validateForgotPasswordError2"),
-								SystemProperties.getInstance().getResourceBundle().getString(
-										"startForm.validateForgotPassword1Title"),
-								JOptionPane.ERROR_MESSAGE);
-					else {
-						if (worker.getEMail() != null) {
-							Params.getInstance().add("USER_DATA", worker);
-							result = true;
-						} else
-							JOptionPane.showMessageDialog(startForm.getFrame(),
-									SystemProperties.getInstance().getResourceBundle()
-											.getString("startForm.validateForgotPasswordError3"),
-									SystemProperties.getInstance().getResourceBundle().getString(
-											"startForm.validateForgotPassword1Title"),
-									JOptionPane.ERROR_MESSAGE);
-					}
-				}
+			else {
+				if (client != null)
+					result = validateAdministratorPrivilegesAndEmail(client);
+				else if (worker != null)
+					result = validateAdministratorPrivilegesAndEmail(worker);
 			}
 		}
+		return result;
+	}
 
+	private boolean validateAdministratorPrivilegesAndEmail(UserData userData) {
+		boolean result = false;
+		if (Common.isAdmin(userData))
+			JOptionPane.showMessageDialog(startForm.getFrame(),
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("startForm.validateForgotPasswordError2"),
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("startForm.validateForgotPassword1Title"),
+					JOptionPane.ERROR_MESSAGE);
+		else if (userData.getEMail() != null) {
+			Params.getInstance().add("USER_DATA", userData);
+			result = true;
+		} else
+			JOptionPane.showMessageDialog(startForm.getFrame(),
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("startForm.validateForgotPasswordError3"),
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("startForm.validateForgotPassword1Title"),
+					JOptionPane.ERROR_MESSAGE);
 		return result;
 	}
 

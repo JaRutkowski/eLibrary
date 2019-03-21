@@ -1,13 +1,16 @@
 package com.javafee.common;
 
+import java.io.IOException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
 import com.javafee.emailform.TabTemplatePageEvent;
+import com.javafee.hibernate.dto.common.UserData;
 import com.javafee.hibernate.dto.library.Client;
 import com.javafee.hibernate.dto.library.Worker;
 import com.javafee.watchservice.WatchServiceListener;
@@ -118,17 +121,22 @@ public final class Common {
 
 	public static boolean isAdmin(String login, String password) {
 		return Constans.DATA_BASE_ADMIN_LOGIN.equals(login)
-				&& Constans.DATA_BASE_ADMIN_PASSWORD.equals(Common.createMd5(password)) ? true : false;
+				&& Constans.DATA_BASE_ADMIN_PASSWORD.equals(Common.createMd5(password));
 	}
 
 	public static boolean isAdmin(Worker worker) {
 		return Constans.DATA_BASE_ADMIN_LOGIN.equals(worker.getLogin())
-				&& Constans.DATA_BASE_ADMIN_PASSWORD.equals(worker.getPassword()) ? true : false;
+				&& Constans.DATA_BASE_ADMIN_PASSWORD.equals(worker.getPassword());
 	}
 
 	public static boolean isAdmin(Client client) {
 		return Constans.DATA_BASE_ADMIN_LOGIN.equals(client.getLogin())
-				&& Constans.DATA_BASE_ADMIN_PASSWORD.equals(client.getPassword()) ? true : false;
+				&& Constans.DATA_BASE_ADMIN_PASSWORD.equals(client.getPassword());
+	}
+
+	public static boolean isAdmin(UserData userData) {
+		return Constans.DATA_BASE_ADMIN_LOGIN.equals(userData.getLogin())
+				&& Constans.DATA_BASE_ADMIN_PASSWORD.equals(userData.getPassword());
 	}
 
 	public static void registerWatchServiceListener(TabTemplatePageEvent tabTemplatePageEvent,
@@ -139,6 +147,16 @@ public final class Common {
 
 	public static void unregisterWatchDirectory() {
 		w.destroy();
+	}
+
+	public static boolean checkInternetConnectivity() {
+		Process process;
+		try {
+			process = java.lang.Runtime.getRuntime().exec("ping www.geeksforgeeks.org");
+			return process.waitFor(100, TimeUnit.MILLISECONDS);
+		} catch (IOException | InterruptedException e) {
+			return false;
+		}
 	}
 
 }
