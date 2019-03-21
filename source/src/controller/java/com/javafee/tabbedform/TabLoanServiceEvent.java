@@ -38,8 +38,8 @@ public class TabLoanServiceEvent implements IActionForm {
 	}
 
 	public static TabLoanServiceEvent getInstance(TabbedForm tabbedForm) {
-		((VolumeTableModel) tabbedForm.getLoanServicePanel_new().getVolumeLoanTable().getModel()).reloadData();
-		((ClientTableModel) tabbedForm.getLoanServicePanel_new().getClientTable().getModel()).reloadData();
+		((VolumeTableModel) tabbedForm.getPanelLoanService().getVolumeLoanTable().getModel()).reloadData();
+		((ClientTableModel) tabbedForm.getPanelLoanService().getClientTable().getModel()).reloadData();
 		if (loadServiceEvent == null) {
 			loadServiceEvent = new TabLoanServiceEvent(tabbedForm);
 		} else
@@ -51,35 +51,35 @@ public class TabLoanServiceEvent implements IActionForm {
 		setTabbedForm(tabbedForm);
 		initializeForm();
 
-		tabbedForm.getLoanServicePanel_new().getBtnLoan().addActionListener(e -> {
+		tabbedForm.getPanelLoanService().getBtnLoan().addActionListener(e -> {
 			try {
 				prepareReservation();
 			} catch (ParseException e1) {
 				e1.printStackTrace();
 			}
 		});
-		tabbedForm.getLoanServicePanel_new().getBtnReservation().addActionListener(e -> onClickBtnReservation());
-		tabbedForm.getLoanServicePanel_new().getBtnProlongation().addActionListener(e -> onClickBtnProlongation());
-		tabbedForm.getLoanServicePanel_new().getBtnReturn().addActionListener(e -> onClickBtnReturn());
-		tabbedForm.getLoanServicePanel_new().getBtnPenalty().addActionListener(e -> onClickBtnPenalty());
-		tabbedForm.getLoanServicePanel_new().getLoanTable().getSelectionModel().addListSelectionListener(e -> {
+		tabbedForm.getPanelLoanService().getBtnReservation().addActionListener(e -> onClickBtnReservation());
+		tabbedForm.getPanelLoanService().getBtnProlongation().addActionListener(e -> onClickBtnProlongation());
+		tabbedForm.getPanelLoanService().getBtnReturn().addActionListener(e -> onClickBtnReturn());
+		tabbedForm.getPanelLoanService().getBtnPenalty().addActionListener(e -> onClickBtnPenalty());
+		tabbedForm.getPanelLoanService().getLoanTable().getSelectionModel().addListSelectionListener(e -> {
 			if (!e.getValueIsAdjusting())
 				onClientTableListSelectionChange();
 		});
-		tabbedForm.getLoanServicePanel_new().getLoanTable().getModel().addTableModelListener(e -> onTableLoanChanged());
-		tabbedForm.getLoanServicePanel_new().getBtnCancelReservation()
+		tabbedForm.getPanelLoanService().getLoanTable().getModel().addTableModelListener(e -> onTableLoanChanged());
+		tabbedForm.getPanelLoanService().getBtnCancelReservation()
 				.addActionListener(e -> onClickBtnCancelReservation());
 
 	}
 
 	private void onClickBtnCancelReservation() {
-		if (tabbedForm.getLoanServicePanel_new().getReservationTable().getSelectedRow() != -1) {
-			int selectedRowIndex = tabbedForm.getLoanServicePanel_new().getReservationTable().convertRowIndexToModel(
-					tabbedForm.getLoanServicePanel_new().getReservationTable().getSelectedRow());
+		if (tabbedForm.getPanelLoanService().getReservationTable().getSelectedRow() != -1) {
+			int selectedRowIndex = tabbedForm.getPanelLoanService().getReservationTable()
+					.convertRowIndexToModel(tabbedForm.getPanelLoanService().getReservationTable().getSelectedRow());
 
 			if (selectedRowIndex != -1) {
-				Lend selectedLend = ((LoanReservationTableModel) tabbedForm.getLoanServicePanel_new()
-						.getReservationTable().getModel()).getLend(selectedRowIndex);
+				Lend selectedLend = ((LoanReservationTableModel) tabbedForm.getPanelLoanService().getReservationTable()
+						.getModel()).getLend(selectedRowIndex);
 				selectedLend.setReservationClient(null);
 				selectedLend.getVolume().setIsReserve(false);
 
@@ -87,9 +87,9 @@ public class TabLoanServiceEvent implements IActionForm {
 				HibernateUtil.getSession().update(Lend.class.getName(), selectedLend);
 				HibernateUtil.commitTransaction();
 
-				((LoanReservationTableModel) tabbedForm.getLoanServicePanel_new().getReservationTable().getModel())
+				((LoanReservationTableModel) tabbedForm.getPanelLoanService().getReservationTable().getModel())
 						.reloadData();
-				((LoanTableModel) tabbedForm.getLoanServicePanel_new().getLoanTable().getModel()).reloadData();
+				((LoanTableModel) tabbedForm.getPanelLoanService().getLoanTable().getModel()).reloadData();
 
 				JOptionPane.showMessageDialog(tabbedForm.getFrame(),
 						SystemProperties.getInstance().getResourceBundle()
@@ -108,27 +108,27 @@ public class TabLoanServiceEvent implements IActionForm {
 	}
 
 	private void onTableLoanChanged() {
-		if (((LoanTableModel) tabbedForm.getLoanServicePanel_new().getLoanTable().getModel()).getLends().isEmpty()) {
-			tabbedForm.getLoanServicePanel_new().getBtnProlongation().setEnabled(false);
-			tabbedForm.getLoanServicePanel_new().getBtnReturn().setEnabled(false);
-			tabbedForm.getLoanServicePanel_new().getBtnReservation().setEnabled(false);
-			tabbedForm.getLoanServicePanel_new().getBtnPenalty().setEnabled(false);
+		if (((LoanTableModel) tabbedForm.getPanelLoanService().getLoanTable().getModel()).getLends().isEmpty()) {
+			tabbedForm.getPanelLoanService().getBtnProlongation().setEnabled(false);
+			tabbedForm.getPanelLoanService().getBtnReturn().setEnabled(false);
+			tabbedForm.getPanelLoanService().getBtnReservation().setEnabled(false);
+			tabbedForm.getPanelLoanService().getBtnPenalty().setEnabled(false);
 		} else {
-			tabbedForm.getLoanServicePanel_new().getBtnProlongation().setEnabled(true);
-			tabbedForm.getLoanServicePanel_new().getBtnReturn().setEnabled(true);
-			tabbedForm.getLoanServicePanel_new().getBtnReservation().setEnabled(true);
-			tabbedForm.getLoanServicePanel_new().getBtnPenalty().setEnabled(true);
+			tabbedForm.getPanelLoanService().getBtnProlongation().setEnabled(true);
+			tabbedForm.getPanelLoanService().getBtnReturn().setEnabled(true);
+			tabbedForm.getPanelLoanService().getBtnReservation().setEnabled(true);
+			tabbedForm.getPanelLoanService().getBtnPenalty().setEnabled(true);
 		}
 	}
 
 	private void onClientTableListSelectionChange() {
-		if (tabbedForm.getLoanServicePanel_new().getLoanTable().getSelectedRow() != -1
-				&& tabbedForm.getLoanServicePanel_new().getLoanTable().convertRowIndexToModel(
-						tabbedForm.getLoanServicePanel_new().getLoanTable().getSelectedRow()) != -1) {
+		if (tabbedForm.getPanelLoanService().getLoanTable().getSelectedRow() != -1
+				&& tabbedForm.getPanelLoanService().getLoanTable().convertRowIndexToModel(
+						tabbedForm.getPanelLoanService().getLoanTable().getSelectedRow()) != -1) {
 			if (calculatePenalty() == new BigDecimal(0).doubleValue())
-				tabbedForm.getLoanServicePanel_new().getBtnPenalty().setEnabled(false);
+				tabbedForm.getPanelLoanService().getBtnPenalty().setEnabled(false);
 			else
-				tabbedForm.getLoanServicePanel_new().getBtnPenalty().setEnabled(true);
+				tabbedForm.getPanelLoanService().getBtnPenalty().setEnabled(true);
 		}
 	}
 
@@ -139,7 +139,7 @@ public class TabLoanServiceEvent implements IActionForm {
 
 	@SuppressWarnings("deprecation")
 	private void onClickBtnProlongation() {
-		final JTable jTable = tabbedForm.getLoanServicePanel_new().getLoanTable();
+		final JTable jTable = tabbedForm.getPanelLoanService().getLoanTable();
 		if (jTable.convertRowIndexToModel(jTable.getSelectedRow()) != -1) {
 			Lend lend = ((LoanTableModel) jTable.getModel())
 					.getLend(jTable.convertRowIndexToModel(jTable.getSelectedRow()));
@@ -186,9 +186,9 @@ public class TabLoanServiceEvent implements IActionForm {
 				HibernateUtil.getSession().update(Lend.class.getName(), lend);
 				HibernateUtil.commitTransaction();
 
-				((LoanTableModel) tabbedForm.getLoanServicePanel_new().getLoanTable().getModel())
-						.setLend(tabbedForm.getLoanServicePanel_new().getLoanTable().getSelectedRow(), lend);
-				((LoanTableModel) tabbedForm.getLoanServicePanel_new().getLoanTable().getModel()).reloadData();
+				((LoanTableModel) tabbedForm.getPanelLoanService().getLoanTable().getModel())
+						.setLend(tabbedForm.getPanelLoanService().getLoanTable().getSelectedRow(), lend);
+				((LoanTableModel) tabbedForm.getPanelLoanService().getLoanTable().getModel()).reloadData();
 			} else {
 				JOptionPane.showMessageDialog(tabbedForm.getFrame(),
 						SystemProperties.getInstance().getResourceBundle()
@@ -210,12 +210,12 @@ public class TabLoanServiceEvent implements IActionForm {
 
 	private double calculatePenalty() {
 		int diffMonth = 0;
-		if (tabbedForm.getLoanServicePanel_new().getLoanTable().getSelectedRow() != -1) {
-			int selectedRowIndex = tabbedForm.getLoanServicePanel_new().getLoanTable()
-					.convertRowIndexToModel(tabbedForm.getLoanServicePanel_new().getLoanTable().getSelectedRow());
+		if (tabbedForm.getPanelLoanService().getLoanTable().getSelectedRow() != -1) {
+			int selectedRowIndex = tabbedForm.getPanelLoanService().getLoanTable()
+					.convertRowIndexToModel(tabbedForm.getPanelLoanService().getLoanTable().getSelectedRow());
 
 			if (selectedRowIndex != -1) {
-				Lend selectedLend = ((LoanTableModel) tabbedForm.getLoanServicePanel_new().getLoanTable().getModel())
+				Lend selectedLend = ((LoanTableModel) tabbedForm.getPanelLoanService().getLoanTable().getModel())
 						.getLend(selectedRowIndex);
 
 				Date returnDate = selectedLend.getReturnedDate();
@@ -236,14 +236,14 @@ public class TabLoanServiceEvent implements IActionForm {
 	}
 
 	private void prepareReservation() throws ParseException {
-		int selectedClientRow = tabbedForm.getLoanServicePanel_new().getClientTable().getSelectedRow();
-		int selectedVolumeRow = tabbedForm.getLoanServicePanel_new().getVolumeLoanTable().getSelectedRow();
+		int selectedClientRow = tabbedForm.getPanelLoanService().getClientTable().getSelectedRow();
+		int selectedVolumeRow = tabbedForm.getPanelLoanService().getVolumeLoanTable().getSelectedRow();
 
 		if (selectedClientRow != -1 && selectedVolumeRow != -1) {
 
-			final Client selectedClient = ((ClientTableModel) tabbedForm.getLoanServicePanel_new().getClientTable()
+			final Client selectedClient = ((ClientTableModel) tabbedForm.getPanelLoanService().getClientTable()
 					.getModel()).getClient(selectedClientRow);
-			final Volume selectedVolume = ((VolumeTableModel) tabbedForm.getLoanServicePanel_new().getVolumeLoanTable()
+			final Volume selectedVolume = ((VolumeTableModel) tabbedForm.getPanelLoanService().getVolumeLoanTable()
 					.getModel()).getVolume(selectedVolumeRow);
 
 			HibernateUtil.beginTransaction();
@@ -263,12 +263,12 @@ public class TabLoanServiceEvent implements IActionForm {
 
 			changeStatusVolumeISLended(selectedVolume);
 
-			final LoanTableModel vtm = (LoanTableModel) tabbedForm.getLoanServicePanel_new().getLoanTable().getModel();
+			final LoanTableModel vtm = (LoanTableModel) tabbedForm.getPanelLoanService().getLoanTable().getModel();
 			vtm.add(loan);
 
-			((VolumeTableModel) tabbedForm.getLoanServicePanel_new().getVolumeLoanTable().getModel())
+			((VolumeTableModel) tabbedForm.getPanelLoanService().getVolumeLoanTable().getModel())
 					.remove(loan.getVolume());
-			((VolumeTableModel) tabbedForm.getLoanServicePanel_new().getVolumeLoanTable().getModel())
+			((VolumeTableModel) tabbedForm.getPanelLoanService().getVolumeLoanTable().getModel())
 					.fireTableDataChanged();
 
 			JOptionPane.showMessageDialog(tabbedForm.getFrame(),
@@ -317,9 +317,9 @@ public class TabLoanServiceEvent implements IActionForm {
 			HibernateUtil.getSession().delete(lend);
 			HibernateUtil.commitTransaction();
 
-			((LoanTableModel) tabbedForm.getLoanServicePanel_new().getLoanTable().getModel()).delete(lend);
-			((LoanTableModel) tabbedForm.getLoanServicePanel_new().getLoanTable().getModel()).fireTableDataChanged();
-			((VolumeTableModel) tabbedForm.getLoanServicePanel_new().getVolumeLoanTable().getModel()).reloadData();
+			((LoanTableModel) tabbedForm.getPanelLoanService().getLoanTable().getModel()).delete(lend);
+			((LoanTableModel) tabbedForm.getPanelLoanService().getLoanTable().getModel()).fireTableDataChanged();
+			((VolumeTableModel) tabbedForm.getPanelLoanService().getVolumeLoanTable().getModel()).reloadData();
 
 			JOptionPane.showMessageDialog(tabbedForm.getFrame(),
 					SystemProperties.getInstance().getResourceBundle()
@@ -335,8 +335,8 @@ public class TabLoanServiceEvent implements IActionForm {
 			HibernateUtil.getSession().save(lend);
 			HibernateUtil.commitTransaction();
 
-			((LoanTableModel) tabbedForm.getLoanServicePanel_new().getLoanTable().getModel()).reloadData();
-			((LoanReservationTableModel) tabbedForm.getLoanServicePanel_new().getReservationTable().getModel())
+			((LoanTableModel) tabbedForm.getPanelLoanService().getLoanTable().getModel()).reloadData();
+			((LoanReservationTableModel) tabbedForm.getPanelLoanService().getReservationTable().getModel())
 					.reloadData();
 
 			JOptionPane.showMessageDialog(tabbedForm.getFrame(),
@@ -359,11 +359,10 @@ public class TabLoanServiceEvent implements IActionForm {
 			HibernateUtil.getSession().delete(lend);
 			HibernateUtil.commitTransaction();
 
-			((VolumeTableModel) tabbedForm.getLoanServicePanel_new().getVolumeLoanTable().getModel())
-					.add(lend.getVolume());
-			((LoanTableModel) tabbedForm.getLoanServicePanel_new().getLoanTable().getModel()).delete(lend);
-			((LoanTableModel) tabbedForm.getLoanServicePanel_new().getLoanTable().getModel()).reloadData();
-			((VolumeTableModel) tabbedForm.getLoanServicePanel_new().getVolumeLoanTable().getModel()).reloadData();
+			((VolumeTableModel) tabbedForm.getPanelLoanService().getVolumeLoanTable().getModel()).add(lend.getVolume());
+			((LoanTableModel) tabbedForm.getPanelLoanService().getLoanTable().getModel()).delete(lend);
+			((LoanTableModel) tabbedForm.getPanelLoanService().getLoanTable().getModel()).reloadData();
+			((VolumeTableModel) tabbedForm.getPanelLoanService().getVolumeLoanTable().getModel()).reloadData();
 			JOptionPane.showMessageDialog(tabbedForm.getFrame(), "Kara została spłacona", "Spłacona",
 					JOptionPane.INFORMATION_MESSAGE);
 		} else {
@@ -375,7 +374,7 @@ public class TabLoanServiceEvent implements IActionForm {
 	}
 
 	private Lend getLendClicked() {
-		final JTable jTable = tabbedForm.getLoanServicePanel_new().getLoanTable();
+		final JTable jTable = tabbedForm.getPanelLoanService().getLoanTable();
 		final Lend lend = ((LoanTableModel) jTable.getModel())
 				.getLend(jTable.convertRowIndexToModel(jTable.getSelectedRow()));
 
@@ -383,17 +382,17 @@ public class TabLoanServiceEvent implements IActionForm {
 	}
 
 	private void onClickBtnReservation() {
-		if (tabbedForm.getLoanServicePanel_new().getClientTable().getSelectedRow() != -1
-				&& tabbedForm.getLoanServicePanel_new().getLoanTable().getSelectedRow() != -1) {
-			int selectedClientRowIndex = tabbedForm.getLoanServicePanel_new().getClientTable()
-					.convertRowIndexToModel(tabbedForm.getLoanServicePanel_new().getClientTable().getSelectedRow());
-			int selectedLoanRowIndex = tabbedForm.getLoanServicePanel_new().getLoanTable()
-					.convertRowIndexToModel(tabbedForm.getLoanServicePanel_new().getLoanTable().getSelectedRow());
+		if (tabbedForm.getPanelLoanService().getClientTable().getSelectedRow() != -1
+				&& tabbedForm.getPanelLoanService().getLoanTable().getSelectedRow() != -1) {
+			int selectedClientRowIndex = tabbedForm.getPanelLoanService().getClientTable()
+					.convertRowIndexToModel(tabbedForm.getPanelLoanService().getClientTable().getSelectedRow());
+			int selectedLoanRowIndex = tabbedForm.getPanelLoanService().getLoanTable()
+					.convertRowIndexToModel(tabbedForm.getPanelLoanService().getLoanTable().getSelectedRow());
 			if (selectedClientRowIndex != -1 && selectedLoanRowIndex != -1) {
-				Client selectedClient = ((ClientTableModel) tabbedForm.getLoanServicePanel_new().getClientTable()
+				Client selectedClient = ((ClientTableModel) tabbedForm.getPanelLoanService().getClientTable()
 						.getModel()).getClient(selectedClientRowIndex);
 				Client clientShallowClone = (Client) selectedClient.clone();
-				Lend selectedLoan = ((LoanTableModel) tabbedForm.getLoanServicePanel_new().getLoanTable().getModel())
+				Lend selectedLoan = ((LoanTableModel) tabbedForm.getPanelLoanService().getLoanTable().getModel())
 						.getLend(selectedLoanRowIndex);
 				Lend lendShallowClone = (Lend) selectedLoan.clone();
 
@@ -404,21 +403,21 @@ public class TabLoanServiceEvent implements IActionForm {
 						lendShallowClone.setReservationClient(clientShallowClone);
 
 						HibernateUtil.beginTransaction();
-						HibernateUtil.getSession().evict(
-								((ClientTableModel) tabbedForm.getLoanServicePanel_new().getClientTable().getModel())
+						HibernateUtil.getSession()
+								.evict(((ClientTableModel) tabbedForm.getPanelLoanService().getClientTable().getModel())
 										.getClient(selectedClientRowIndex));
 						HibernateUtil.getSession()
-								.evict(((LoanTableModel) tabbedForm.getLoanServicePanel_new().getLoanTable().getModel())
+								.evict(((LoanTableModel) tabbedForm.getPanelLoanService().getLoanTable().getModel())
 										.getLend(selectedLoanRowIndex));
 						HibernateUtil.getSession().update(Lend.class.getName(), lendShallowClone);
 						HibernateUtil.commitTransaction();
 
-						((LoanTableModel) tabbedForm.getLoanServicePanel_new().getLoanTable().getModel())
+						((LoanTableModel) tabbedForm.getPanelLoanService().getLoanTable().getModel())
 								.setLend(selectedLoanRowIndex, lendShallowClone);
-						((LoanTableModel) tabbedForm.getLoanServicePanel_new().getLoanTable().getModel())
+						((LoanTableModel) tabbedForm.getPanelLoanService().getLoanTable().getModel())
 								.fireTableDataChanged();
-						((LoanReservationTableModel) tabbedForm.getLoanServicePanel_new().getReservationTable()
-								.getModel()).reloadData();
+						((LoanReservationTableModel) tabbedForm.getPanelLoanService().getReservationTable().getModel())
+								.reloadData();
 
 						Utils.displayOptionPane(
 								SystemProperties.getInstance().getResourceBundle()

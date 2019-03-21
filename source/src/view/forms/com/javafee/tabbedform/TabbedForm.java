@@ -48,7 +48,7 @@ public class TabbedForm {
 	@Getter
 	private AdmDictionaryPanel panelAdmDictionary;
 	@Getter
-	private LoanServicePanel loanServicePanel_new;
+	private LoanServicePanel panelLoanService;
 
 	@Getter
 	private JLabel lblLogInInformation;
@@ -63,6 +63,8 @@ public class TabbedForm {
 	private JLabel lblTime;
 	@Getter
 	private JComboBox<String> comboBoxLanguage;
+	@Getter
+	private JLabel lblInternetConnectivityStatus;
 
 	public TabbedForm() {
 		initialize();
@@ -130,7 +132,7 @@ public class TabbedForm {
 		GridBagConstraints gbc_comboBoxLanguage = new GridBagConstraints();
 		gbc_comboBoxLanguage.fill = GridBagConstraints.VERTICAL;
 		gbc_comboBoxLanguage.anchor = GridBagConstraints.EAST;
-		gbc_comboBoxLanguage.insets = new Insets(5, 0, 5, 5);
+		gbc_comboBoxLanguage.insets = new Insets(5, 0, 5, 0);
 		gbc_comboBoxLanguage.gridx = 12;
 		gbc_comboBoxLanguage.gridy = 0;
 		frame.getContentPane().add(comboBoxLanguage, gbc_comboBoxLanguage);
@@ -139,7 +141,8 @@ public class TabbedForm {
 				SystemProperties.getInstance().getResourceBundle().getString("tabbedForm.lblSystemInformation"));
 		lblSystemInformation.setForeground(SystemColor.textHighlight);
 		GridBagConstraints gbc_lblSystemInformation = new GridBagConstraints();
-		gbc_lblSystemInformation.gridwidth = 13;
+		gbc_lblSystemInformation.insets = new Insets(0, 0, 0, 5);
+		gbc_lblSystemInformation.gridwidth = 12;
 		gbc_lblSystemInformation.gridx = 0;
 		gbc_lblSystemInformation.gridy = 2;
 		frame.getContentPane().add(lblSystemInformation, gbc_lblSystemInformation);
@@ -153,29 +156,21 @@ public class TabbedForm {
 		gbc_tabbedPane.gridy = 1;
 		frame.getContentPane().add(tabbedPane, gbc_tabbedPane);
 
+		lblInternetConnectivityStatus = new JLabel(
+				new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/sign-error-ico.png"))
+						.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
+		GridBagConstraints gbc_lblInternetConnectivityStatus = new GridBagConstraints();
+		gbc_lblInternetConnectivityStatus.insets = new Insets(0, 0, 2, 0);
+		gbc_lblInternetConnectivityStatus.gridx = 12;
+		gbc_lblInternetConnectivityStatus.gridy = 2;
+		frame.getContentPane().add(lblInternetConnectivityStatus, gbc_lblInternetConnectivityStatus);
+
 		panelClient = new ClientTablePanel();
-		// tabbedPane.addTab(SystemProperties.getInstance().getResourceBundle().getString("tabbedForm.tabClientTitle"),
-		// null, panelClient, null);
-
 		panelLibrary = new LibraryTablePanel();
-		// tabbedPane.addTab(SystemProperties.getInstance().getResourceBundle().getString("tabbedForm.tabLibraryTitle"),
-		// null, panelLibrary, null);
-
 		panelBook = new BookTablePanel();
-		// tabbedPane.addTab(SystemProperties.getInstance().getResourceBundle().getString("tabbedForm.tabBookTitle"),
-		// null, panelBook, null);
-
-		loanServicePanel_new = new LoanServicePanel();
-		// tabbedPane.addTab(SystemProperties.getInstance().getResourceBundle().getString("tabbedForm.tabLoanServiceTitle"),
-		// null, loanServicePanel_new, null);
-
+		panelLoanService = new LoanServicePanel();
 		panelAdmDictionary = new AdmDictionaryPanel();
-		// tabbedPane.addTab(SystemProperties.getInstance().getResourceBundle().getString("tabbedForm.tabAdmDictionaryTitle"),
-		// null, panelAdmDictionary, null);
-
 		panelWorker = new WorkerTablePanel();
-		// tabbedPane.addTab(SystemProperties.getInstance().getResourceBundle().getString("tabbedForm.tabWorkerTitle"),
-		// null, panelWorker, null);
 
 		frame.pack();
 	}

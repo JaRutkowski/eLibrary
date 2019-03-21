@@ -353,7 +353,7 @@ public class Actions implements IRegistrationForm {
 
 	private boolean validateForgotPassword() {
 		boolean result = false;
-		if (Common.checkInternetConnectivity())
+		if (!Common.checkInternetConnectivity())
 			JOptionPane.showMessageDialog(startForm.getFrame(),
 					SystemProperties.getInstance().getResourceBundle()
 							.getString("startForm.validateForgotPasswordError4"),

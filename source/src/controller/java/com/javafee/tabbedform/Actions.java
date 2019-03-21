@@ -7,8 +7,10 @@ import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.swing.Icon;
 import javax.swing.JOptionPane;
 
+import com.javafee.common.Common;
 import com.javafee.common.Constans;
 import com.javafee.common.Constans.Role;
 import com.javafee.common.Constans.Tab_Accountant;
@@ -82,6 +84,7 @@ public class Actions implements IActionForm {
 		tabbedForm.getComboBoxLanguage().addItem(Constans.APPLICATION_LANGUAGE_EN);
 		start();
 		reloadLblLogInInformationDynamic();
+		registerNetworkServiceListener();
 		initializeTabbedPane();
 		reloadTabbedPane();
 	}
@@ -106,7 +109,7 @@ public class Actions implements IActionForm {
 					tabbedForm.getPanelBook(), null);
 			tabbedForm.getTabbedPane().addTab(
 					SystemProperties.getInstance().getResourceBundle().getString("tabbedForm.tabLoanServiceTitle"),
-					null, tabbedForm.getLoanServicePanel_new(), null);
+					null, tabbedForm.getPanelLoanService(), null);
 			tabbedForm.pack();
 		}
 
@@ -122,7 +125,7 @@ public class Actions implements IActionForm {
 					tabbedForm.getPanelBook(), null);
 			tabbedForm.getTabbedPane().addTab(
 					SystemProperties.getInstance().getResourceBundle().getString("tabbedForm.tabLoanServiceTitle"),
-					null, tabbedForm.getLoanServicePanel_new(), null);
+					null, tabbedForm.getPanelLoanService(), null);
 			tabbedForm.getTabbedPane().addTab(
 					SystemProperties.getInstance().getResourceBundle().getString("tabbedForm.tabAdmDictionaryTitle"),
 					null, tabbedForm.getPanelAdmDictionary(), null);
@@ -159,6 +162,10 @@ public class Actions implements IActionForm {
 		if (LogInEvent.getIsAdmin())
 			logInInformation.append(stringRole);
 		tabbedForm.getLblLogInInformation().setText(logInInformation.toString());
+	}
+
+	public void reloadLblInternetConnectivityStatus(Icon icon) {
+		tabbedForm.getLblInternetConnectivityStatus().setIcon(icon);
 	}
 
 	private void reloadTabbedPane() {
@@ -212,6 +219,10 @@ public class Actions implements IActionForm {
 			default:
 				break;
 			}
+	}
+
+	private void registerNetworkServiceListener() {
+		Common.registerNetworkServiceListener(this);
 	}
 
 	private void onClickBtnLogOut() {
