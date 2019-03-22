@@ -1,12 +1,5 @@
 package com.javafee.tabbedform;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import javax.swing.Icon;
 import javax.swing.JOptionPane;
 
@@ -24,45 +17,12 @@ import com.javafee.startform.LogInEvent;
 public class Actions implements IActionForm {
 	private TabbedForm tabbedForm = new TabbedForm();
 
-	private final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-	private int currentSecond;
-	private Calendar calendar;
-
-	private void reset() {
-		calendar = Calendar.getInstance();
-		currentSecond = calendar.get(Calendar.SECOND);
-	}
-
-	public void start() {
-		reset();
-		Timer timer = new Timer();
-		timer.scheduleAtFixedRate(new TimerTask() {
-			@Override
-			public void run() {
-				if (currentSecond == 60) {
-					reset();
-				}
-				tabbedForm.getLblTime()
-						.setText(String.format("%s:%02d ", sdf.format(calendar.getTime()), currentSecond));
-				currentSecond++;
-			}
-		}, 0, 1000);
-	}
-
 	public void control() {
 		tabbedForm.getFrame().setVisible(true);
 		initializeForm();
 
-		tabbedForm.getBtnInformation().addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-			}
-		});
-
 		tabbedForm.getBtnLogOut().addActionListener(e -> onClickBtnLogOut());
 		tabbedForm.getTabbedPane().addChangeListener(e -> onChangeTabbedPane());
-
 		tabbedForm.getComboBoxLanguage().addActionListener(e -> onChangeComboBoxLanguage());
 
 	}
@@ -82,7 +42,7 @@ public class Actions implements IActionForm {
 	public void initializeForm() {
 		tabbedForm.getComboBoxLanguage().addItem(Constans.APPLICATION_LANGUAGE_PL);
 		tabbedForm.getComboBoxLanguage().addItem(Constans.APPLICATION_LANGUAGE_EN);
-		start();
+		Common.registerTimerServiceListenerSingleton(tabbedForm.getLblTime());
 		reloadLblLogInInformationDynamic();
 		registerNetworkServiceListener();
 		initializeTabbedPane();
@@ -227,6 +187,7 @@ public class Actions implements IActionForm {
 
 	private void onClickBtnLogOut() {
 		LogInEvent.clearLogInData();
+		Common.unregisterTimerServiceListenerSingleton();
 		tabbedForm.getFrame().dispose();
 		tabbedForm = null;
 		clearEvents();
