@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import com.javafee.common.Common;
 import com.javafee.common.Constans;
 import com.javafee.common.Constans.Role;
 import com.javafee.common.IActionForm;
@@ -64,7 +65,6 @@ public final class TabClientEvent implements IActionForm {
 	}
 
 	private void onClickBtnContact() {
-		// TODO getSelectedClient() - consider using onChangeSelectedEvent
 		if (tabbedForm.getPanelClient().getClientTable().getSelectedRow() != -1) {
 			int selectedRowIndex = tabbedForm.getPanelClient().getClientTable()
 					.convertRowIndexToModel(tabbedForm.getPanelClient().getClientTable().getSelectedRow());
@@ -79,6 +79,17 @@ public final class TabClientEvent implements IActionForm {
 
 		if (action == null)
 			action = new Actions();
+
+		boolean internetConnectivity = Common.checkInternetConnectivity();
+		if (!internetConnectivity) {
+			Params.getInstance().add("NO_INTERNET_CONNVECTIVITY", internetConnectivity);
+			LogGuiException.logWarning(
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("tabClientEvent.noInternetConnectionWarningTitle"),
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("tabClientEvent.noInternetConnectionWarning"));
+		}
+
 		action.control();
 	}
 
@@ -220,7 +231,7 @@ public final class TabClientEvent implements IActionForm {
 	}
 
 	public boolean validateClientTableSelection(int index) {
-		return index > -1 ? true : false;
+		return index > -1;
 	}
 
 	public void addNow() {

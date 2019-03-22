@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import com.javafee.common.Constans;
 import com.javafee.common.Constans.Tab_Email;
 import com.javafee.common.IActionForm;
+import com.javafee.common.Params;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
 import com.javafee.hibernate.dao.HibernateUtil;
@@ -26,6 +27,7 @@ public class Actions implements IActionForm {
 
 	public void control() {
 		openEmailForm();
+		setVisibleControls();
 		initializeForm();
 
 		emailForm.getTabbedPane().addChangeListener(e -> onChangeTabbedPane());
@@ -198,6 +200,22 @@ public class Actions implements IActionForm {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	private void setVisibleControls() {
+		if (Params.getInstance().get("NO_INTERNET_CONNVECTIVITY") != null
+				&& !(boolean) Params.getInstance().get("NO_INTERNET_CONNVECTIVITY")) {
+			setNetworkControls(false);
+			Params.getInstance().remove("NO_INTERNET_CONNVECTIVITY");
+		}
+	}
+
+	private void setNetworkControls(boolean enable) {
+		emailForm.getPanelComposePage().getComposeNavigationEmailPanel().getBtnSend().setEnabled(enable);
+		emailForm.getPanelOutboxPage().getOutboxNavigationPanel().getBtnSendAgain().setEnabled(enable);
+		emailForm.getPanelDraftPage().getDraftNavigationPanel().getBtnSend().setEnabled(enable);
+		emailForm.getPanelTemplatePage().getHtmlEditorPanel().getBtnParse().setEnabled(enable);
+		emailForm.getPanelTemplatePage().getHtmlEditorPanel().getBtnValidate().setEnabled(enable);
 	}
 
 	private void clearEvent() {
