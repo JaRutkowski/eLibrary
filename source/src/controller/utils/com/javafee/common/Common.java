@@ -9,11 +9,13 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
+import com.javafee.common.networkservice.NetworkServiceListener;
+import com.javafee.common.watchservice.WatchServiceListener;
 import com.javafee.emailform.TabTemplatePageEvent;
 import com.javafee.hibernate.dto.common.UserData;
 import com.javafee.hibernate.dto.library.Client;
 import com.javafee.hibernate.dto.library.Worker;
-import com.javafee.watchservice.WatchServiceListener;
+import com.javafee.tabbedform.Actions;
 
 import edu.vt.middleware.password.AlphabeticalSequenceRule;
 import edu.vt.middleware.password.CharacterCharacteristicsRule;
@@ -36,7 +38,9 @@ import edu.vt.middleware.password.WhitespaceRule;
 
 public final class Common {
 
-	private static WatchServiceListener w = null;
+	private static WatchServiceListener watchServiceListener = null;
+
+	private static NetworkServiceListener networkServiceListener = null;
 
 	public static final String createMd5(String password) {
 		String md5 = null;
@@ -141,19 +145,28 @@ public final class Common {
 
 	public static void registerWatchServiceListener(TabTemplatePageEvent tabTemplatePageEvent,
 			Consumer<TabTemplatePageEvent> c) {
-		w = new WatchServiceListener();
-		w.initialize(tabTemplatePageEvent, c);
+		watchServiceListener = new WatchServiceListener();
+		watchServiceListener.initialize(tabTemplatePageEvent, c);
 	}
 
 	public static void unregisterWatchDirectory() {
-		w.destroy();
+		watchServiceListener.destroy();
+	}
+
+	public static void registerNetworkServiceListener(Actions actions) {
+		networkServiceListener = new NetworkServiceListener();
+		networkServiceListener.initialize(actions);
+	}
+
+	public static void unregisterNetworkDirectory() {
+		networkServiceListener.destroy();
 	}
 
 	public static boolean checkInternetConnectivity() {
 		Process process;
 		try {
 			process = java.lang.Runtime.getRuntime().exec("ping www.geeksforgeeks.org");
-			return process.waitFor(100, TimeUnit.MILLISECONDS);
+			return !process.waitFor(100, TimeUnit.MILLISECONDS);
 		} catch (IOException | InterruptedException e) {
 			return false;
 		}

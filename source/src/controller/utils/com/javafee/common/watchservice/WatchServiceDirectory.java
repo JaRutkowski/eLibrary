@@ -1,4 +1,4 @@
-package com.javafee.watchservice;
+package com.javafee.common.watchservice;
 
 import java.io.IOException;
 import java.nio.file.FileSystems;
