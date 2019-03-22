@@ -9,7 +9,10 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
+import javax.swing.JLabel;
+
 import com.javafee.common.networkservice.NetworkServiceListener;
+import com.javafee.common.timerservice.TimerServiceListener;
 import com.javafee.common.watchservice.WatchServiceListener;
 import com.javafee.emailform.TabTemplatePageEvent;
 import com.javafee.hibernate.dto.common.UserData;
@@ -41,6 +44,8 @@ public final class Common {
 	private static WatchServiceListener watchServiceListener = null;
 
 	private static NetworkServiceListener networkServiceListener = null;
+
+	private static TimerServiceListener timerServiceListener = null;
 
 	public static final String createMd5(String password) {
 		String md5 = null;
@@ -149,8 +154,9 @@ public final class Common {
 		watchServiceListener.initialize(tabTemplatePageEvent, c);
 	}
 
-	public static void unregisterWatchDirectory() {
-		watchServiceListener.destroy();
+	public static void unregisterWatchServiceListener() {
+		if (watchServiceListener != null)
+			watchServiceListener.destroy();
 	}
 
 	public static void registerNetworkServiceListener(Actions actions) {
@@ -158,8 +164,20 @@ public final class Common {
 		networkServiceListener.initialize(actions);
 	}
 
-	public static void unregisterNetworkDirectory() {
-		networkServiceListener.destroy();
+	public static void unregisterNetworkServiceListener() {
+		if (networkServiceListener != null)
+			networkServiceListener.destroy();
+	}
+
+	public static void registerTimerServiceListenerSingleton(JLabel label) {
+		if (timerServiceListener == null)
+			timerServiceListener = new TimerServiceListener();
+		timerServiceListener.initialize(label);
+	}
+
+	public static void unregisterTimerServiceListenerSingleton() {
+		if (timerServiceListener != null)
+			timerServiceListener.destroy();
 	}
 
 	public static boolean checkInternetConnectivity() {

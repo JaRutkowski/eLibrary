@@ -239,6 +239,7 @@ public final class Constans {
 	public static final String APPLICATION_LANGUAGE_EN = "en";
 	public static final int APPLICATION_NETWORK_SERVICE_LISTENER_DURATION = 2;
 	public static final Object APPLICATION_COMBO_BOX_BLANK_OBJECT = null;
+	public static final SimpleDateFormat APPLICATION_TIME_FORMAT = new SimpleDateFormat("HH:mm");
 	public static final SimpleDateFormat APPLICATION_DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
 	public static final SimpleDateFormat APPLICATION_DATE_TIME_FORMAT = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
 	public static final String APPLICATION_CURRENCY = "PLN";

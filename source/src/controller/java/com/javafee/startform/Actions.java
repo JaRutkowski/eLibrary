@@ -1,7 +1,5 @@
 package com.javafee.startform;
 
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.text.MessageFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -49,17 +47,6 @@ public class Actions implements IRegistrationForm {
 		else
 			startForm.getFrame().setVisible(true);
 
-		startForm.getFrame().addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowOpened(WindowEvent e) {
-				super.windowOpened(e);
-			}
-		});
-
-		// FIXME #4 Fix adding key listener.
-		// FIXME #5 Mail template for restoring password
-		// FIXME #6 No Internet connection - alert (email)
-
 		startForm.getLogInPanel().getBtnForgotPassword().addActionListener(e -> onClickBtnForgotPassword());
 		startForm.getBtnLogIn().addActionListener(e -> onClickBtnLogIn());
 		startForm.getBtnRegistrationMode().addActionListener(e -> onClickBtnRegistrationMode());
@@ -76,9 +63,6 @@ public class Actions implements IRegistrationForm {
 		DefaultComboBoxModel<City> comboBoxCityModel = new DefaultComboBoxModel<City>();
 		HibernateDao<City, Integer> city = new HibernateDao<City, Integer>(City.class);
 		List<City> cityListToSort = city.findAll();
-		// TODO Check another forms
-		// cityListToSort.add(null);
-		// cityListToSort.sort(Comparator.nullsFirst(Comparator.comparing(City::getName)));
 		cityListToSort.sort(Comparator.comparing(City::getName, Comparator.nullsFirst(Comparator.naturalOrder())));
 		cityListToSort.forEach(c -> comboBoxCityModel.addElement(c));
 
