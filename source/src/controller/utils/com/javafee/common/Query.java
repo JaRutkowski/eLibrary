@@ -10,7 +10,8 @@ public class Query {
 		MESSAGE_BY_MESSAGE_TYPE(
 				"from Message mes where mes.messageType = ?0 and (mes.isDraft is null or mes.isDraft is false)"), //
 		DRAFT_MESSAGE_BY_MESSAGE_TYPE("from Message mes where mes.messageType = ?0 and mes.isDraft is true"), //
-		MESSAGE_BY_SENDER_LOGIN_AND_MESSAGE_TYPE("from Message mes where mes.sender.login = ?0 and mes.messageType = ?1"), //
+		MESSAGE_BY_SENDER_LOGIN_AND_MESSAGE_TYPE(
+				"from Message mes where mes.sender.login = ?0 and mes.messageType = ?1"), //
 		DISTINCT_MESSAGE_RECIPIENT_ALL(
 				"select distinct rec.userData from Recipient rec where rec.message.isDraft is null or rec.message.isDraft is false"), //
 		DISTINCT_MESSAGE_RECIPIENT_BY_SENDER_LOGIN(
