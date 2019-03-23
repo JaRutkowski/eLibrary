@@ -82,7 +82,7 @@ public class TabDraftPageEvent implements IMessageForm {
 	public void initializeForm() {
 		reloadComboBoxRecipient();
 		reloadDraftTable();
-		switchPerspectiveToAdm(LogInEvent.getRole() == Role.WORKER_ACCOUNTANT);
+		switchPerspectiveToAdm(LogInEvent.getRole() == Role.WORKER_ACCOUNTANT || LogInEvent.getRole() == Role.ADMIN);
 	}
 
 	public void onTabDraftOpen() {

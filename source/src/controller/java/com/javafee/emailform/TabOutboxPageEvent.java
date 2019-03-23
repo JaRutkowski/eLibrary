@@ -90,7 +90,7 @@ public class TabOutboxPageEvent implements IMessageForm {
 	public void initializeForm() {
 		reloadComboBoxRecipient();
 		reloadOutboxTable();
-		switchPerspectiveToAdm(LogInEvent.getRole() == Role.WORKER_ACCOUNTANT);
+		switchPerspectiveToAdm(LogInEvent.getRole() == Role.WORKER_ACCOUNTANT || LogInEvent.getRole() == Role.ADMIN);
 	}
 
 	public void onTabOutboxOpen() {
