@@ -32,7 +32,7 @@ public class MailSenderEvent {
 	}
 
 	private void setMessage(List<SimpleEntry<Message.RecipientType, UserData>> recipients, String subject,
-			String text) {
+	                        String text) {
 		try {
 			message = new MimeMessage(mailSender.getSession());
 			message.setFrom(new InternetAddress(Constans.APPLICATION_EMAIL));

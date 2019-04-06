@@ -23,8 +23,8 @@ public class PublishingHouseTableModel extends AbstractTableModel {
 	public PublishingHouseTableModel() {
 		super();
 		this.prepareHibernateDao();
-		this.columns = new String[] { SystemProperties.getInstance().getResourceBundle()
-				.getString("publishingHouseTableModel.publishingHouseNameCol") };
+		this.columns = new String[]{SystemProperties.getInstance().getResourceBundle()
+				.getString("publishingHouseTableModel.publishingHouseNameCol")};
 	}
 
 	public PublishingHouse getPublishingHouse(int index) {
@@ -70,10 +70,10 @@ public class PublishingHouseTableModel extends AbstractTableModel {
 	public Object getValueAt(int row, int col) {
 		PublishingHouse publishingHouse = publishingHouses.get(row);
 		switch (PublishingHouseTableColumn.getByNumber(col)) {
-		case COL_NAME:
-			return publishingHouse.getName();
-		default:
-			return null;
+			case COL_NAME:
+				return publishingHouse.getName();
+			default:
+				return null;
 		}
 	}
 

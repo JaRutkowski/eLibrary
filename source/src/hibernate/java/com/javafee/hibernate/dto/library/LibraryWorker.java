@@ -18,8 +18,8 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(exclude = "pk")
 @NamedQuery(name = "LibraryWorker.checkIfLibraryWorkerHiredExist", query = "from LibraryWorker where pk.worker.idUserData = :idWorker")
 @Table(name = "lib_library_worker")
-@AssociationOverrides({ @AssociationOverride(name = "pk.worker", joinColumns = @JoinColumn(name = "id_worker")),
-		@AssociationOverride(name = "pk.libraryData", joinColumns = @JoinColumn(name = "id_library_data")) })
+@AssociationOverrides({@AssociationOverride(name = "pk.worker", joinColumns = @JoinColumn(name = "id_worker")),
+		@AssociationOverride(name = "pk.libraryData", joinColumns = @JoinColumn(name = "id_library_data"))})
 public class LibraryWorker {
 	@EmbeddedId
 	private LibraryWorkerId pk = new LibraryWorkerId();

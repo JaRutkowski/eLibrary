@@ -24,11 +24,11 @@ public class BookTableModel extends AbstractTableModel {
 	public BookTableModel() {
 		super();
 		this.prepareHibernateDao();
-		this.columns = new String[] {
+		this.columns = new String[]{
 				SystemProperties.getInstance().getResourceBundle().getString("bookTableModel.titleCol"),
 				SystemProperties.getInstance().getResourceBundle().getString("bookTableModel.isbnNumberCol"),
 				SystemProperties.getInstance().getResourceBundle().getString("bookTableModel.numberOfPageCol"),
-				SystemProperties.getInstance().getResourceBundle().getString("bookTableModel.numberOfTomesCol") };
+				SystemProperties.getInstance().getResourceBundle().getString("bookTableModel.numberOfTomesCol")};
 	}
 
 	public void setBooks(List<Book> books) {
@@ -78,16 +78,16 @@ public class BookTableModel extends AbstractTableModel {
 	public Object getValueAt(int row, int col) {
 		Book book = books.get(row);
 		switch (BookTableColumn.getByNumber(col)) {
-		case COL_TITLE:
-			return book.getTitle();
-		case COL_ISBN_NUMBER:
-			return book.getIsbnNumber();
-		case COL_NUMBER_OF_PAGES:
-			return book.getNumberOfPage();
-		case COL_NUMBER_OF_TOMES:
-			return book.getNumberOfTomes();
-		default:
-			return null;
+			case COL_TITLE:
+				return book.getTitle();
+			case COL_ISBN_NUMBER:
+				return book.getIsbnNumber();
+			case COL_NUMBER_OF_PAGES:
+				return book.getNumberOfPage();
+			case COL_NUMBER_OF_TOMES:
+				return book.getNumberOfTomes();
+			default:
+				return null;
 		}
 	}
 
@@ -97,17 +97,17 @@ public class BookTableModel extends AbstractTableModel {
 		Book bookShallowClone = (Book) book.clone();
 
 		switch (BookTableColumn.getByNumber(col)) {
-		case COL_TITLE:
-			bookShallowClone.setTitle(value.toString());
-			break;
-		case COL_ISBN_NUMBER:
-			bookShallowClone.setIsbnNumber(value.toString());
-		case COL_NUMBER_OF_PAGES:
-			bookShallowClone.setNumberOfPage((Integer) value);
-			break;
-		case COL_NUMBER_OF_TOMES:
-			bookShallowClone.setNumberOfTomes((Integer) value);
-			break;
+			case COL_TITLE:
+				bookShallowClone.setTitle(value.toString());
+				break;
+			case COL_ISBN_NUMBER:
+				bookShallowClone.setIsbnNumber(value.toString());
+			case COL_NUMBER_OF_PAGES:
+				bookShallowClone.setNumberOfPage((Integer) value);
+				break;
+			case COL_NUMBER_OF_TOMES:
+				bookShallowClone.setNumberOfTomes((Integer) value);
+				break;
 		}
 
 		this.fireTableRowsUpdated(row, row);

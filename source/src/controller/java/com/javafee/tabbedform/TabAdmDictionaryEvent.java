@@ -125,39 +125,39 @@ public class TabAdmDictionaryEvent implements IActionForm {
 		try {
 			HibernateUtil.beginTransaction();
 			switch (pressedRadioButton) {
-			case Constans.RADIO_BUTTON_AUTHOR:
-				Author author = new Author();
-				author.setName(admDictionaryPanel.getTextFieldAuthorName().getText() != null
-						? admDictionaryPanel.getTextFieldAuthorName().getText()
-						: null);
-				author.setNickname(admDictionaryPanel.getTextFieldAuthorNickname().getText() != null
-						? admDictionaryPanel.getTextFieldAuthorNickname().getText()
-						: null);
-				author.setSurname(admDictionaryPanel.getTextFieldAuthorSurname().getText() != null
-						? admDictionaryPanel.getTextFieldAuthorSurname().getText()
-						: null);
-				author.setBirthDate(admDictionaryPanel.getDateChooserBirthDate().getDate() != null
-						? admDictionaryPanel.getDateChooserBirthDate().getDate()
-						: null);
-				resultObjectToSave = author;
-				reloadComboBoxAuthor();
-				break;
-			case Constans.RADIO_BUTTON_CATEGORY:
-				final Category category = new Category();
-				category.setName(admDictionaryPanel.getTextFieldCategoryName().getText() != null
-						? tabbedForm.getPanelAdmDictionary().getTextFieldCategoryName().getText()
-						: null);
-				resultObjectToSave = category;
-				reloadComboBoxCategory();
-				break;
-			case Constans.RADIO_BUTTON_PUBLISHING_HOUSE:
-				final PublishingHouse publishingHouse = new PublishingHouse();
-				publishingHouse.setName(admDictionaryPanel.getTextFieldPublishingHouseName().getText() != null
-						? admDictionaryPanel.getTextFieldPublishingHouseName().getText().toString()
-						: null);
-				resultObjectToSave = publishingHouse;
-				reloadComboBoxPublishingHouse();
-				break;
+				case Constans.RADIO_BUTTON_AUTHOR:
+					Author author = new Author();
+					author.setName(admDictionaryPanel.getTextFieldAuthorName().getText() != null
+							? admDictionaryPanel.getTextFieldAuthorName().getText()
+							: null);
+					author.setNickname(admDictionaryPanel.getTextFieldAuthorNickname().getText() != null
+							? admDictionaryPanel.getTextFieldAuthorNickname().getText()
+							: null);
+					author.setSurname(admDictionaryPanel.getTextFieldAuthorSurname().getText() != null
+							? admDictionaryPanel.getTextFieldAuthorSurname().getText()
+							: null);
+					author.setBirthDate(admDictionaryPanel.getDateChooserBirthDate().getDate() != null
+							? admDictionaryPanel.getDateChooserBirthDate().getDate()
+							: null);
+					resultObjectToSave = author;
+					reloadComboBoxAuthor();
+					break;
+				case Constans.RADIO_BUTTON_CATEGORY:
+					final Category category = new Category();
+					category.setName(admDictionaryPanel.getTextFieldCategoryName().getText() != null
+							? tabbedForm.getPanelAdmDictionary().getTextFieldCategoryName().getText()
+							: null);
+					resultObjectToSave = category;
+					reloadComboBoxCategory();
+					break;
+				case Constans.RADIO_BUTTON_PUBLISHING_HOUSE:
+					final PublishingHouse publishingHouse = new PublishingHouse();
+					publishingHouse.setName(admDictionaryPanel.getTextFieldPublishingHouseName().getText() != null
+							? admDictionaryPanel.getTextFieldPublishingHouseName().getText().toString()
+							: null);
+					resultObjectToSave = publishingHouse;
+					reloadComboBoxPublishingHouse();
+					break;
 			}
 			HibernateUtil.getSession().save(resultObjectToSave);
 			HibernateUtil.commitTransaction();
@@ -178,107 +178,107 @@ public class TabAdmDictionaryEvent implements IActionForm {
 		final AdmDictionaryPanel admDictionaryPanel = tabbedForm.getPanelAdmDictionary();
 		try {
 			switch (pressedRadioButton) {
-			case Constans.RADIO_BUTTON_AUTHOR:
-				final Author authorClicked = ((Author) admDictionaryPanel.getComboBoxAuthor().getSelectedItem());
-				final NativeQuery<Author> authorQuery = HibernateUtil.getSession()
-						.createNativeQuery("select * from lib_book_author where id_author = :idAuthor")
-						.addEntity(Book.class).setParameter("idAuthor", authorClicked.getIdAuthor());
-				final List<Author> resultAuthor = authorQuery.list();
+				case Constans.RADIO_BUTTON_AUTHOR:
+					final Author authorClicked = ((Author) admDictionaryPanel.getComboBoxAuthor().getSelectedItem());
+					final NativeQuery<Author> authorQuery = HibernateUtil.getSession()
+							.createNativeQuery("select * from lib_book_author where id_author = :idAuthor")
+							.addEntity(Book.class).setParameter("idAuthor", authorClicked.getIdAuthor());
+					final List<Author> resultAuthor = authorQuery.list();
 
-				if (resultAuthor.isEmpty()) {
-					HibernateUtil.beginTransaction();
-					authorClicked.setIdAuthor(authorClicked.getIdAuthor());
-					authorClicked.setName(admDictionaryPanel.getTextFieldAuthorName().getText() != null
-							? admDictionaryPanel.getTextFieldAuthorName().getText()
-							: null);
-					authorClicked.setNickname(admDictionaryPanel.getTextFieldAuthorNickname().getText() != null
-							? admDictionaryPanel.getTextFieldAuthorNickname().getText()
-							: null);
-					authorClicked.setSurname(admDictionaryPanel.getTextFieldAuthorSurname().getText() != null
-							? admDictionaryPanel.getTextFieldAuthorSurname().getText()
-							: null);
-					authorClicked.setBirthDate(admDictionaryPanel.getDateChooserBirthDate().getDate() != null
-							? admDictionaryPanel.getDateChooserBirthDate().getDate()
-							: null);
-					HibernateUtil.getSession().update(authorClicked);
-					HibernateUtil.commitTransaction();
-					reloadComboBoxAuthor();
-					JOptionPane.showMessageDialog(admDictionaryPanel,
-							SystemProperties.getInstance().getResourceBundle()
-									.getString("tabDictionaryEvent.modifyDictionaryElementSuccess"),
-							SystemProperties.getInstance().getResourceBundle()
-									.getString("tabDictionaryEvent.modifyDictionaryElementSuccessTitle"),
-							JOptionPane.INFORMATION_MESSAGE);
-				} else
-					LogGuiException.logError(
-							SystemProperties.getInstance().getResourceBundle()
-									.getString("tabDictionaryEvent.modifyDictionaryElementWarningTitle"),
-							SystemProperties.getInstance().getResourceBundle()
-									.getString("tabDictionaryEvent.modifyDictionaryElementWarning"));
-				fillDictionaryData(Constans.RADIO_BUTTON_AUTHOR);
-				break;
-			case Constans.RADIO_BUTTON_CATEGORY:
-				final Category categoryClicked = ((Category) admDictionaryPanel.getComboBoxCategory()
-						.getSelectedItem());
-				final NativeQuery<Category> categoryQuery = HibernateUtil.getSession()
-						.createNativeQuery("select * from lib_book_category where id_category = :idCategory")
-						.setParameter("idCategory", categoryClicked.getIdCategory());
-				final List<Category> resultCategory = categoryQuery.list();
+					if (resultAuthor.isEmpty()) {
+						HibernateUtil.beginTransaction();
+						authorClicked.setIdAuthor(authorClicked.getIdAuthor());
+						authorClicked.setName(admDictionaryPanel.getTextFieldAuthorName().getText() != null
+								? admDictionaryPanel.getTextFieldAuthorName().getText()
+								: null);
+						authorClicked.setNickname(admDictionaryPanel.getTextFieldAuthorNickname().getText() != null
+								? admDictionaryPanel.getTextFieldAuthorNickname().getText()
+								: null);
+						authorClicked.setSurname(admDictionaryPanel.getTextFieldAuthorSurname().getText() != null
+								? admDictionaryPanel.getTextFieldAuthorSurname().getText()
+								: null);
+						authorClicked.setBirthDate(admDictionaryPanel.getDateChooserBirthDate().getDate() != null
+								? admDictionaryPanel.getDateChooserBirthDate().getDate()
+								: null);
+						HibernateUtil.getSession().update(authorClicked);
+						HibernateUtil.commitTransaction();
+						reloadComboBoxAuthor();
+						JOptionPane.showMessageDialog(admDictionaryPanel,
+								SystemProperties.getInstance().getResourceBundle()
+										.getString("tabDictionaryEvent.modifyDictionaryElementSuccess"),
+								SystemProperties.getInstance().getResourceBundle()
+										.getString("tabDictionaryEvent.modifyDictionaryElementSuccessTitle"),
+								JOptionPane.INFORMATION_MESSAGE);
+					} else
+						LogGuiException.logError(
+								SystemProperties.getInstance().getResourceBundle()
+										.getString("tabDictionaryEvent.modifyDictionaryElementWarningTitle"),
+								SystemProperties.getInstance().getResourceBundle()
+										.getString("tabDictionaryEvent.modifyDictionaryElementWarning"));
+					fillDictionaryData(Constans.RADIO_BUTTON_AUTHOR);
+					break;
+				case Constans.RADIO_BUTTON_CATEGORY:
+					final Category categoryClicked = ((Category) admDictionaryPanel.getComboBoxCategory()
+							.getSelectedItem());
+					final NativeQuery<Category> categoryQuery = HibernateUtil.getSession()
+							.createNativeQuery("select * from lib_book_category where id_category = :idCategory")
+							.setParameter("idCategory", categoryClicked.getIdCategory());
+					final List<Category> resultCategory = categoryQuery.list();
 
-				if (resultCategory.isEmpty()) {
-					HibernateUtil.beginTransaction();
-					categoryClicked.setIdCategory(categoryClicked.getIdCategory());
-					categoryClicked.setName(admDictionaryPanel.getTextFieldCategoryName().getText() != null
-							? tabbedForm.getPanelAdmDictionary().getTextFieldCategoryName().getText()
-							: null);
-					HibernateUtil.getSession().update(categoryClicked);
-					HibernateUtil.commitTransaction();
-					reloadComboBoxCategory();
-					JOptionPane.showMessageDialog(admDictionaryPanel,
-							SystemProperties.getInstance().getResourceBundle()
-									.getString("tabDictionaryEvent.modifyDictionaryElementSuccess"),
-							SystemProperties.getInstance().getResourceBundle()
-									.getString("tabDictionaryEvent.modifyDictionaryElementSuccessTitle"),
-							JOptionPane.INFORMATION_MESSAGE);
-				} else
-					LogGuiException.logError(
-							SystemProperties.getInstance().getResourceBundle()
-									.getString("tabDictionaryEvent.modifyDictionaryElementWarningTitle"),
-							SystemProperties.getInstance().getResourceBundle()
-									.getString("tabDictionaryEvent.modifyDictionaryElementWarning"));
-				fillDictionaryData(Constans.RADIO_BUTTON_CATEGORY);
-				break;
-			case Constans.RADIO_BUTTON_PUBLISHING_HOUSE:
-				final PublishingHouse publishingClicked = ((PublishingHouse) admDictionaryPanel
-						.getComboBoxPublishingHouse().getSelectedItem());
-				final NativeQuery<PublishingHouse> publishingHouseQuery = HibernateUtil.getSession()
-						.createNativeQuery("select * from lib_book_publishing_house where id_publishing_house = :idP")
-						.setParameter("idP", publishingClicked.getIdPublishingHouse());
-				final List<PublishingHouse> resultPuBlishinHouse = publishingHouseQuery.list();
+					if (resultCategory.isEmpty()) {
+						HibernateUtil.beginTransaction();
+						categoryClicked.setIdCategory(categoryClicked.getIdCategory());
+						categoryClicked.setName(admDictionaryPanel.getTextFieldCategoryName().getText() != null
+								? tabbedForm.getPanelAdmDictionary().getTextFieldCategoryName().getText()
+								: null);
+						HibernateUtil.getSession().update(categoryClicked);
+						HibernateUtil.commitTransaction();
+						reloadComboBoxCategory();
+						JOptionPane.showMessageDialog(admDictionaryPanel,
+								SystemProperties.getInstance().getResourceBundle()
+										.getString("tabDictionaryEvent.modifyDictionaryElementSuccess"),
+								SystemProperties.getInstance().getResourceBundle()
+										.getString("tabDictionaryEvent.modifyDictionaryElementSuccessTitle"),
+								JOptionPane.INFORMATION_MESSAGE);
+					} else
+						LogGuiException.logError(
+								SystemProperties.getInstance().getResourceBundle()
+										.getString("tabDictionaryEvent.modifyDictionaryElementWarningTitle"),
+								SystemProperties.getInstance().getResourceBundle()
+										.getString("tabDictionaryEvent.modifyDictionaryElementWarning"));
+					fillDictionaryData(Constans.RADIO_BUTTON_CATEGORY);
+					break;
+				case Constans.RADIO_BUTTON_PUBLISHING_HOUSE:
+					final PublishingHouse publishingClicked = ((PublishingHouse) admDictionaryPanel
+							.getComboBoxPublishingHouse().getSelectedItem());
+					final NativeQuery<PublishingHouse> publishingHouseQuery = HibernateUtil.getSession()
+							.createNativeQuery("select * from lib_book_publishing_house where id_publishing_house = :idP")
+							.setParameter("idP", publishingClicked.getIdPublishingHouse());
+					final List<PublishingHouse> resultPuBlishinHouse = publishingHouseQuery.list();
 
-				if (resultPuBlishinHouse.isEmpty()) {
-					HibernateUtil.beginTransaction();
-					publishingClicked.setIdPublishingHouse(publishingClicked.getIdPublishingHouse());
-					publishingClicked.setName(admDictionaryPanel.getTextFieldPublishingHouseName().getText() != null
-							? admDictionaryPanel.getTextFieldPublishingHouseName().getText().toString()
-							: null);
-					HibernateUtil.getSession().update(publishingClicked);
-					HibernateUtil.commitTransaction();
-					reloadComboBoxPublishingHouse();
-					JOptionPane.showMessageDialog(admDictionaryPanel,
-							SystemProperties.getInstance().getResourceBundle()
-									.getString("tabDictionaryEvent.modifyDictionaryElementSuccess"),
-							SystemProperties.getInstance().getResourceBundle()
-									.getString("tabDictionaryEvent.modifyDictionaryElementSuccessTitle"),
-							JOptionPane.INFORMATION_MESSAGE);
-				} else
-					LogGuiException.logError(
-							SystemProperties.getInstance().getResourceBundle()
-									.getString("tabDictionaryEvent.modifyDictionaryElementWarningTitle"),
-							SystemProperties.getInstance().getResourceBundle()
-									.getString("tabDictionaryEvent.modifyDictionaryElementWarning"));
-				fillDictionaryData(Constans.RADIO_BUTTON_PUBLISHING_HOUSE);
-				break;
+					if (resultPuBlishinHouse.isEmpty()) {
+						HibernateUtil.beginTransaction();
+						publishingClicked.setIdPublishingHouse(publishingClicked.getIdPublishingHouse());
+						publishingClicked.setName(admDictionaryPanel.getTextFieldPublishingHouseName().getText() != null
+								? admDictionaryPanel.getTextFieldPublishingHouseName().getText().toString()
+								: null);
+						HibernateUtil.getSession().update(publishingClicked);
+						HibernateUtil.commitTransaction();
+						reloadComboBoxPublishingHouse();
+						JOptionPane.showMessageDialog(admDictionaryPanel,
+								SystemProperties.getInstance().getResourceBundle()
+										.getString("tabDictionaryEvent.modifyDictionaryElementSuccess"),
+								SystemProperties.getInstance().getResourceBundle()
+										.getString("tabDictionaryEvent.modifyDictionaryElementSuccessTitle"),
+								JOptionPane.INFORMATION_MESSAGE);
+					} else
+						LogGuiException.logError(
+								SystemProperties.getInstance().getResourceBundle()
+										.getString("tabDictionaryEvent.modifyDictionaryElementWarningTitle"),
+								SystemProperties.getInstance().getResourceBundle()
+										.getString("tabDictionaryEvent.modifyDictionaryElementWarning"));
+					fillDictionaryData(Constans.RADIO_BUTTON_PUBLISHING_HOUSE);
+					break;
 			}
 		} catch (NumberFormatException | IllegalStateException | RollbackException e) {
 			e.printStackTrace();
@@ -291,107 +291,107 @@ public class TabAdmDictionaryEvent implements IActionForm {
 
 		try {
 			switch (pressedRadioButton) {
-			case Constans.RADIO_BUTTON_AUTHOR:
-				if (Utils.displayConfirmDialog(
-						SystemProperties.getInstance().getResourceBundle().getString("confirmDialog.deleteMessage"),
-						"") == JOptionPane.YES_OPTION) {
-					final Author author = ((Author) admDictionaryPanel.getComboBoxAuthor().getSelectedItem());
+				case Constans.RADIO_BUTTON_AUTHOR:
+					if (Utils.displayConfirmDialog(
+							SystemProperties.getInstance().getResourceBundle().getString("confirmDialog.deleteMessage"),
+							"") == JOptionPane.YES_OPTION) {
+						final Author author = ((Author) admDictionaryPanel.getComboBoxAuthor().getSelectedItem());
 
-					final NativeQuery<Author> authorQuery = HibernateUtil.getSession()
-							.createNativeQuery("select * from lib_book_author where id_author = :idAuthor")
-							.addEntity(Book.class).setParameter("idAuthor", author.getIdAuthor());
-					final List<Author> resultAuthor = authorQuery.list();
+						final NativeQuery<Author> authorQuery = HibernateUtil.getSession()
+								.createNativeQuery("select * from lib_book_author where id_author = :idAuthor")
+								.addEntity(Book.class).setParameter("idAuthor", author.getIdAuthor());
+						final List<Author> resultAuthor = authorQuery.list();
 
-					if (resultAuthor.isEmpty()) {
-						admDictionaryPanel.getComboBoxAuthor().removeItem(author);
+						if (resultAuthor.isEmpty()) {
+							admDictionaryPanel.getComboBoxAuthor().removeItem(author);
 
-						HibernateUtil.beginTransaction();
-						HibernateUtil.getSession().delete(author);
-						HibernateUtil.commitTransaction();
-						reloadComboBoxAuthor();
-						fillDictionaryData(Constans.RADIO_BUTTON_AUTHOR);
-						JOptionPane.showMessageDialog(tabbedForm.getFrame(),
-								SystemProperties.getInstance().getResourceBundle()
-										.getString("tabDictionaryEvent.deleteDictionaryElementSuccess"),
-								SystemProperties.getInstance().getResourceBundle()
-										.getString("tabDictionaryEvent.deleteDictionaryElementSuccessTitle"),
-								JOptionPane.INFORMATION_MESSAGE);
-					} else
-						LogGuiException.logError(
-								SystemProperties.getInstance().getResourceBundle()
-										.getString("tabDictionaryEvent.deleteDictionaryElementWarning"),
-								SystemProperties.getInstance().getResourceBundle()
-										.getString("tabDictionaryEvent.deleteDictionaryElementWarningTitle"));
-				}
-				break;
-			case Constans.RADIO_BUTTON_CATEGORY:
-				if (Utils.displayConfirmDialog(
-						SystemProperties.getInstance().getResourceBundle().getString("confirmDialog.deleteMessage"),
-						"") == JOptionPane.YES_OPTION) {
-					final Category category = ((Category) admDictionaryPanel.getComboBoxCategory().getSelectedItem());
-					final NativeQuery<Category> categoryQuery = HibernateUtil.getSession()
-							.createNativeQuery("select * from lib_book_category where id_category = :idCategory")
-							.setParameter("idCategory", category.getIdCategory());
-					final List<Category> resultCategory = categoryQuery.list();
+							HibernateUtil.beginTransaction();
+							HibernateUtil.getSession().delete(author);
+							HibernateUtil.commitTransaction();
+							reloadComboBoxAuthor();
+							fillDictionaryData(Constans.RADIO_BUTTON_AUTHOR);
+							JOptionPane.showMessageDialog(tabbedForm.getFrame(),
+									SystemProperties.getInstance().getResourceBundle()
+											.getString("tabDictionaryEvent.deleteDictionaryElementSuccess"),
+									SystemProperties.getInstance().getResourceBundle()
+											.getString("tabDictionaryEvent.deleteDictionaryElementSuccessTitle"),
+									JOptionPane.INFORMATION_MESSAGE);
+						} else
+							LogGuiException.logError(
+									SystemProperties.getInstance().getResourceBundle()
+											.getString("tabDictionaryEvent.deleteDictionaryElementWarning"),
+									SystemProperties.getInstance().getResourceBundle()
+											.getString("tabDictionaryEvent.deleteDictionaryElementWarningTitle"));
+					}
+					break;
+				case Constans.RADIO_BUTTON_CATEGORY:
+					if (Utils.displayConfirmDialog(
+							SystemProperties.getInstance().getResourceBundle().getString("confirmDialog.deleteMessage"),
+							"") == JOptionPane.YES_OPTION) {
+						final Category category = ((Category) admDictionaryPanel.getComboBoxCategory().getSelectedItem());
+						final NativeQuery<Category> categoryQuery = HibernateUtil.getSession()
+								.createNativeQuery("select * from lib_book_category where id_category = :idCategory")
+								.setParameter("idCategory", category.getIdCategory());
+						final List<Category> resultCategory = categoryQuery.list();
 
-					if (resultCategory.isEmpty()) {
-						admDictionaryPanel.getComboBoxCategory().removeItem(category);
+						if (resultCategory.isEmpty()) {
+							admDictionaryPanel.getComboBoxCategory().removeItem(category);
 
-						HibernateUtil.beginTransaction();
-						HibernateUtil.getSession().delete(category);
-						HibernateUtil.commitTransaction();
-						reloadComboBoxCategory();
-						fillDictionaryData(Constans.RADIO_BUTTON_CATEGORY);
-						JOptionPane.showMessageDialog(tabbedForm.getFrame(),
-								SystemProperties.getInstance().getResourceBundle()
-										.getString("tabDictionaryEvent.deleteDictionaryElementSuccess"),
-								SystemProperties.getInstance().getResourceBundle()
-										.getString("tabDictionaryEvent.deleteDictionaryElementSuccessTitle"),
-								JOptionPane.INFORMATION_MESSAGE);
-					} else
-						JOptionPane.showMessageDialog(tabbedForm.getFrame(),
-								SystemProperties.getInstance().getResourceBundle()
-										.getString("tabDictionaryEvent.deleteDictionaryElementWarning"),
-								SystemProperties.getInstance().getResourceBundle()
-										.getString("tabDictionaryEvent.deleteDictionaryElementWarningTitle"),
-								JOptionPane.ERROR_MESSAGE);
-				}
-				break;
-			case Constans.RADIO_BUTTON_PUBLISHING_HOUSE:
-				if (Utils.displayConfirmDialog(
-						SystemProperties.getInstance().getResourceBundle().getString("confirmDialog.deleteMessage"),
-						"") == JOptionPane.YES_OPTION) {
-					final PublishingHouse publishingHouse = ((PublishingHouse) admDictionaryPanel
-							.getComboBoxPublishingHouse().getSelectedItem());
-					final NativeQuery<PublishingHouse> publishingHouseQuery = HibernateUtil.getSession()
-							.createNativeQuery(
-									"select * from lib_book_publishing_house where id_publishing_house = :idP")
-							.setParameter("idP", publishingHouse.getIdPublishingHouse());
-					final List<PublishingHouse> resultPuBlishinHouse = publishingHouseQuery.list();
+							HibernateUtil.beginTransaction();
+							HibernateUtil.getSession().delete(category);
+							HibernateUtil.commitTransaction();
+							reloadComboBoxCategory();
+							fillDictionaryData(Constans.RADIO_BUTTON_CATEGORY);
+							JOptionPane.showMessageDialog(tabbedForm.getFrame(),
+									SystemProperties.getInstance().getResourceBundle()
+											.getString("tabDictionaryEvent.deleteDictionaryElementSuccess"),
+									SystemProperties.getInstance().getResourceBundle()
+											.getString("tabDictionaryEvent.deleteDictionaryElementSuccessTitle"),
+									JOptionPane.INFORMATION_MESSAGE);
+						} else
+							JOptionPane.showMessageDialog(tabbedForm.getFrame(),
+									SystemProperties.getInstance().getResourceBundle()
+											.getString("tabDictionaryEvent.deleteDictionaryElementWarning"),
+									SystemProperties.getInstance().getResourceBundle()
+											.getString("tabDictionaryEvent.deleteDictionaryElementWarningTitle"),
+									JOptionPane.ERROR_MESSAGE);
+					}
+					break;
+				case Constans.RADIO_BUTTON_PUBLISHING_HOUSE:
+					if (Utils.displayConfirmDialog(
+							SystemProperties.getInstance().getResourceBundle().getString("confirmDialog.deleteMessage"),
+							"") == JOptionPane.YES_OPTION) {
+						final PublishingHouse publishingHouse = ((PublishingHouse) admDictionaryPanel
+								.getComboBoxPublishingHouse().getSelectedItem());
+						final NativeQuery<PublishingHouse> publishingHouseQuery = HibernateUtil.getSession()
+								.createNativeQuery(
+										"select * from lib_book_publishing_house where id_publishing_house = :idP")
+								.setParameter("idP", publishingHouse.getIdPublishingHouse());
+						final List<PublishingHouse> resultPuBlishinHouse = publishingHouseQuery.list();
 
-					if (resultPuBlishinHouse.isEmpty()) {
-						HibernateUtil.beginTransaction();
+						if (resultPuBlishinHouse.isEmpty()) {
+							HibernateUtil.beginTransaction();
 
-						HibernateUtil.getSession().delete(publishingHouse);
-						HibernateUtil.commitTransaction();
-						reloadComboBoxPublishingHouse();
-						fillDictionaryData(Constans.RADIO_BUTTON_PUBLISHING_HOUSE);
-						JOptionPane.showMessageDialog(tabbedForm.getFrame(),
-								SystemProperties.getInstance().getResourceBundle()
-										.getString("tabDictionaryEvent.deleteDictionaryElementSuccess"),
-								SystemProperties.getInstance().getResourceBundle()
-										.getString("tabDictionaryEvent.deleteDictionaryElementSuccessTitle"),
-								JOptionPane.INFORMATION_MESSAGE);
+							HibernateUtil.getSession().delete(publishingHouse);
+							HibernateUtil.commitTransaction();
+							reloadComboBoxPublishingHouse();
+							fillDictionaryData(Constans.RADIO_BUTTON_PUBLISHING_HOUSE);
+							JOptionPane.showMessageDialog(tabbedForm.getFrame(),
+									SystemProperties.getInstance().getResourceBundle()
+											.getString("tabDictionaryEvent.deleteDictionaryElementSuccess"),
+									SystemProperties.getInstance().getResourceBundle()
+											.getString("tabDictionaryEvent.deleteDictionaryElementSuccessTitle"),
+									JOptionPane.INFORMATION_MESSAGE);
 
-					} else
-						JOptionPane.showMessageDialog(tabbedForm.getFrame(),
-								SystemProperties.getInstance().getResourceBundle()
-										.getString("tabDictionaryEvent.deleteDictionaryElementWarning"),
-								SystemProperties.getInstance().getResourceBundle()
-										.getString("tabDictionaryEvent.deleteDictionaryElementWarningTitle"),
-								JOptionPane.ERROR_MESSAGE);
-				}
-				break;
+						} else
+							JOptionPane.showMessageDialog(tabbedForm.getFrame(),
+									SystemProperties.getInstance().getResourceBundle()
+											.getString("tabDictionaryEvent.deleteDictionaryElementWarning"),
+									SystemProperties.getInstance().getResourceBundle()
+											.getString("tabDictionaryEvent.deleteDictionaryElementWarningTitle"),
+									JOptionPane.ERROR_MESSAGE);
+					}
+					break;
 			}
 		} catch (NumberFormatException | IllegalStateException | RollbackException e) {
 			e.printStackTrace();
@@ -412,66 +412,66 @@ public class TabAdmDictionaryEvent implements IActionForm {
 
 	private void fillDictionaryData(String pressedRadioButton) {
 		switch (pressedRadioButton) {
-		case Constans.RADIO_BUTTON_AUTHOR:
-			Author author = (Author) tabbedForm.getPanelAdmDictionary().getComboBoxAuthor().getSelectedItem() != null
-					? (Author) tabbedForm.getPanelAdmDictionary().getComboBoxAuthor().getSelectedItem()
-					: null;
-			if (author != null) {
-				tabbedForm.getPanelAdmDictionary().getTextFieldAuthorName().setText(author.getName());
-				tabbedForm.getPanelAdmDictionary().getTextFieldAuthorNickname().setText(author.getNickname());
-				tabbedForm.getPanelAdmDictionary().getTextFieldAuthorSurname().setText(author.getSurname());
-				tabbedForm.getPanelAdmDictionary().getDateChooserBirthDate().setDate(author.getBirthDate());
-			}
-			break;
-		case Constans.RADIO_BUTTON_CATEGORY:
-			Category category = (Category) tabbedForm.getPanelAdmDictionary().getComboBoxCategory()
-					.getSelectedItem() != null
-							? (Category) tabbedForm.getPanelAdmDictionary().getComboBoxCategory().getSelectedItem()
-							: null;
-			if (category != null)
-				tabbedForm.getPanelAdmDictionary().getTextFieldCategoryName().setText(category.getName());
-			break;
-		case Constans.RADIO_BUTTON_PUBLISHING_HOUSE:
-			PublishingHouse publishingHouse = (PublishingHouse) tabbedForm.getPanelAdmDictionary()
-					.getComboBoxPublishingHouse().getSelectedItem() != null
-							? (PublishingHouse) tabbedForm.getPanelAdmDictionary().getComboBoxPublishingHouse()
-									.getSelectedItem()
-							: null;
-			if (publishingHouse != null)
-				tabbedForm.getPanelAdmDictionary().getTextFieldPublishingHouseName().setText(publishingHouse.getName());
-			break;
+			case Constans.RADIO_BUTTON_AUTHOR:
+				Author author = (Author) tabbedForm.getPanelAdmDictionary().getComboBoxAuthor().getSelectedItem() != null
+						? (Author) tabbedForm.getPanelAdmDictionary().getComboBoxAuthor().getSelectedItem()
+						: null;
+				if (author != null) {
+					tabbedForm.getPanelAdmDictionary().getTextFieldAuthorName().setText(author.getName());
+					tabbedForm.getPanelAdmDictionary().getTextFieldAuthorNickname().setText(author.getNickname());
+					tabbedForm.getPanelAdmDictionary().getTextFieldAuthorSurname().setText(author.getSurname());
+					tabbedForm.getPanelAdmDictionary().getDateChooserBirthDate().setDate(author.getBirthDate());
+				}
+				break;
+			case Constans.RADIO_BUTTON_CATEGORY:
+				Category category = (Category) tabbedForm.getPanelAdmDictionary().getComboBoxCategory()
+						.getSelectedItem() != null
+						? (Category) tabbedForm.getPanelAdmDictionary().getComboBoxCategory().getSelectedItem()
+						: null;
+				if (category != null)
+					tabbedForm.getPanelAdmDictionary().getTextFieldCategoryName().setText(category.getName());
+				break;
+			case Constans.RADIO_BUTTON_PUBLISHING_HOUSE:
+				PublishingHouse publishingHouse = (PublishingHouse) tabbedForm.getPanelAdmDictionary()
+						.getComboBoxPublishingHouse().getSelectedItem() != null
+						? (PublishingHouse) tabbedForm.getPanelAdmDictionary().getComboBoxPublishingHouse()
+						.getSelectedItem()
+						: null;
+				if (publishingHouse != null)
+					tabbedForm.getPanelAdmDictionary().getTextFieldPublishingHouseName().setText(publishingHouse.getName());
+				break;
 		}
 	}
 
 	private void switchRadioButtonsEnable(String pressedRadioButton) {
 		switch (pressedRadioButton) {
-		case Constans.RADIO_BUTTON_AUTHOR:
-			this.pressedRadioButton = Constans.RADIO_BUTTON_AUTHOR;
-			tabbedForm.getPanelAdmDictionary().getTextFieldAuthorName().setEnabled(true);
-			tabbedForm.getPanelAdmDictionary().getTextFieldAuthorNickname().setEnabled(true);
-			tabbedForm.getPanelAdmDictionary().getTextFieldAuthorSurname().setEnabled(true);
-			tabbedForm.getPanelAdmDictionary().getDateChooserBirthDate().setEnabled(true);
-			tabbedForm.getPanelAdmDictionary().getTextFieldCategoryName().setEnabled(false);
-			tabbedForm.getPanelAdmDictionary().getTextFieldPublishingHouseName().setEnabled(false);
-			break;
-		case Constans.RADIO_BUTTON_CATEGORY:
-			this.pressedRadioButton = Constans.RADIO_BUTTON_CATEGORY;
-			tabbedForm.getPanelAdmDictionary().getTextFieldAuthorName().setEnabled(false);
-			tabbedForm.getPanelAdmDictionary().getTextFieldAuthorNickname().setEnabled(false);
-			tabbedForm.getPanelAdmDictionary().getTextFieldAuthorSurname().setEnabled(false);
-			tabbedForm.getPanelAdmDictionary().getDateChooserBirthDate().setEnabled(false);
-			tabbedForm.getPanelAdmDictionary().getTextFieldCategoryName().setEnabled(true);
-			tabbedForm.getPanelAdmDictionary().getTextFieldPublishingHouseName().setEnabled(false);
-			break;
-		case Constans.RADIO_BUTTON_PUBLISHING_HOUSE:
-			this.pressedRadioButton = Constans.RADIO_BUTTON_PUBLISHING_HOUSE;
-			tabbedForm.getPanelAdmDictionary().getTextFieldAuthorName().setEnabled(false);
-			tabbedForm.getPanelAdmDictionary().getTextFieldAuthorNickname().setEnabled(false);
-			tabbedForm.getPanelAdmDictionary().getTextFieldAuthorSurname().setEnabled(false);
-			tabbedForm.getPanelAdmDictionary().getDateChooserBirthDate().setEnabled(false);
-			tabbedForm.getPanelAdmDictionary().getTextFieldCategoryName().setEnabled(false);
-			tabbedForm.getPanelAdmDictionary().getTextFieldPublishingHouseName().setEnabled(true);
-			break;
+			case Constans.RADIO_BUTTON_AUTHOR:
+				this.pressedRadioButton = Constans.RADIO_BUTTON_AUTHOR;
+				tabbedForm.getPanelAdmDictionary().getTextFieldAuthorName().setEnabled(true);
+				tabbedForm.getPanelAdmDictionary().getTextFieldAuthorNickname().setEnabled(true);
+				tabbedForm.getPanelAdmDictionary().getTextFieldAuthorSurname().setEnabled(true);
+				tabbedForm.getPanelAdmDictionary().getDateChooserBirthDate().setEnabled(true);
+				tabbedForm.getPanelAdmDictionary().getTextFieldCategoryName().setEnabled(false);
+				tabbedForm.getPanelAdmDictionary().getTextFieldPublishingHouseName().setEnabled(false);
+				break;
+			case Constans.RADIO_BUTTON_CATEGORY:
+				this.pressedRadioButton = Constans.RADIO_BUTTON_CATEGORY;
+				tabbedForm.getPanelAdmDictionary().getTextFieldAuthorName().setEnabled(false);
+				tabbedForm.getPanelAdmDictionary().getTextFieldAuthorNickname().setEnabled(false);
+				tabbedForm.getPanelAdmDictionary().getTextFieldAuthorSurname().setEnabled(false);
+				tabbedForm.getPanelAdmDictionary().getDateChooserBirthDate().setEnabled(false);
+				tabbedForm.getPanelAdmDictionary().getTextFieldCategoryName().setEnabled(true);
+				tabbedForm.getPanelAdmDictionary().getTextFieldPublishingHouseName().setEnabled(false);
+				break;
+			case Constans.RADIO_BUTTON_PUBLISHING_HOUSE:
+				this.pressedRadioButton = Constans.RADIO_BUTTON_PUBLISHING_HOUSE;
+				tabbedForm.getPanelAdmDictionary().getTextFieldAuthorName().setEnabled(false);
+				tabbedForm.getPanelAdmDictionary().getTextFieldAuthorNickname().setEnabled(false);
+				tabbedForm.getPanelAdmDictionary().getTextFieldAuthorSurname().setEnabled(false);
+				tabbedForm.getPanelAdmDictionary().getDateChooserBirthDate().setEnabled(false);
+				tabbedForm.getPanelAdmDictionary().getTextFieldCategoryName().setEnabled(false);
+				tabbedForm.getPanelAdmDictionary().getTextFieldPublishingHouseName().setEnabled(true);
+				break;
 		}
 	}
 }

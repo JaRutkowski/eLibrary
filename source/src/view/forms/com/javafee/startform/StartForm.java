@@ -1,12 +1,6 @@
 package com.javafee.startform;
 
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Image;
-import java.awt.Insets;
-import java.awt.SystemColor;
-import java.awt.Toolkit;
+import java.awt.*;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -52,10 +46,10 @@ public class StartForm {
 		frame.setMinimumSize(Constans.START_FORM_MINIMUM_SIZE);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[] { 41 };
-		gridBagLayout.rowHeights = new int[] { 14, 0, 0, 0, 0, 0, 0, 0 };
-		gridBagLayout.columnWeights = new double[] { 1.0 };
-		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 1.0, Double.MIN_VALUE };
+		gridBagLayout.columnWidths = new int[]{41};
+		gridBagLayout.rowHeights = new int[]{14, 0, 0, 0, 0, 0, 0, 0};
+		gridBagLayout.columnWeights = new double[]{1.0};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
 		frame.getContentPane().setLayout(gridBagLayout);
 
 		JLabel lblHello = new JLabel(
@@ -71,7 +65,7 @@ public class StartForm {
 		logInPanel = new LogInPanel();
 		logInPanel.setToolTipText("");
 		GridBagLayout gridBagLayout_1 = (GridBagLayout) logInPanel.getLayout();
-		gridBagLayout_1.columnWidths = new int[] { 74, 124 };
+		gridBagLayout_1.columnWidths = new int[]{74, 124};
 		GridBagConstraints gbc_logInPanel = new GridBagConstraints();
 		gbc_logInPanel.insets = new Insets(20, 20, 5, 20);
 		gbc_logInPanel.fill = GridBagConstraints.HORIZONTAL;
@@ -108,7 +102,7 @@ public class StartForm {
 
 		registrationPanel = new RegistrationPanel();
 		GridBagLayout gridBagLayout_2 = (GridBagLayout) registrationPanel.getLayout();
-		gridBagLayout_2.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
+		gridBagLayout_2.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
 		registrationPanel.setVisible(false);
 
 		navigationPanel = new NavigationPanel();

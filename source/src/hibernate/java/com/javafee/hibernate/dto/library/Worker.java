@@ -22,8 +22,8 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Entity
-@NamedQueries({ @NamedQuery(name = "Worker.checkIfWorkerLoginExist", query = "from Worker where login = :login"),
-		@NamedQuery(name = "Worker.checkWithComparingIdIfClientLoginExist", query = "from Worker where login = :login and id != :id") })
+@NamedQueries({@NamedQuery(name = "Worker.checkIfWorkerLoginExist", query = "from Worker where login = :login"),
+		@NamedQuery(name = "Worker.checkWithComparingIdIfClientLoginExist", query = "from Worker where login = :login and id != :id")})
 @Table(name = "lib_worker")
 @PrimaryKeyJoinColumn(name = "id_worker", referencedColumnName = "id_user_data")
 public class Worker extends UserData implements Cloneable {

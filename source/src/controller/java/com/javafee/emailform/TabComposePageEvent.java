@@ -91,13 +91,13 @@ public class TabComposePageEvent implements IActionForm {
 	private void onTabComposeOpen() {
 		if (Params.getInstance().contains("MESSAGE_TO_PREVIEW")) {
 			com.javafee.hibernate.dto.common.message.Message messageToPreview = ((com.javafee.hibernate.dto.common.message.Message) //
-			Params.getInstance().get("MESSAGE_TO_PREVIEW"));
+					Params.getInstance().get("MESSAGE_TO_PREVIEW"));
 			fillComposePagePanel(messageToPreview);
 			Params.getInstance().remove("MESSAGE_TO_PREVIEW");
 		}
 		if (Params.getInstance().contains("DRAFT_TO_MODIFY")) {
 			com.javafee.hibernate.dto.common.message.Message messageToPreview = ((com.javafee.hibernate.dto.common.message.Message) //
-			Params.getInstance().get("DRAFT_TO_MODIFY"));
+					Params.getInstance().get("DRAFT_TO_MODIFY"));
 			fillComposePagePanel(messageToPreview);
 		}
 	}
@@ -247,7 +247,7 @@ public class TabComposePageEvent implements IActionForm {
 	}
 
 	private void createEmail(List<SimpleEntry<Message.RecipientType, UserData>> recipients, String subject,
-			String text) {
+	                         String text) {
 		try {
 			MessageType messageType = com.javafee.hibernate.dao.common.Common
 					.findMessageTypeByName(Constans.DATA_BASE_MESSAGE_TYPE_USR_MESSAGE).get();
@@ -288,7 +288,7 @@ public class TabComposePageEvent implements IActionForm {
 	}
 
 	private void updateDraft(List<SimpleEntry<Message.RecipientType, UserData>> recipients, String subject, String text,
-			boolean isSendContext) {
+	                         boolean isSendContext) {
 		try {
 			com.javafee.hibernate.dto.common.message.Message messageShallowClone = (com.javafee.hibernate.dto.common.message.Message) Params
 					.getInstance().get("DRAFT_TO_MODIFY");
@@ -339,7 +339,7 @@ public class TabComposePageEvent implements IActionForm {
 	}
 
 	private void createDraft(List<SimpleEntry<Message.RecipientType, UserData>> recipients, String subject,
-			String text) {
+	                         String text) {
 		try {
 			MessageType messageType = com.javafee.hibernate.dao.common.Common
 					.findMessageTypeByName(Constans.DATA_BASE_MESSAGE_TYPE_USR_MESSAGE).get();

@@ -34,20 +34,20 @@ public class VolumeTableLoanModel extends VolumeTableModel {
 	public Object getValueAt(int row, int col) {
 		Volume volume = volumes.get(row);
 		switch (VolumeTableColumn.getByNumber(col)) {
-		case COL_IS_RESERVERD:
-			return volume.getIsReserve()
-					? SystemProperties.getInstance().getResourceBundle()
-							.getString("volumeTableModel.isReadigRoomTrueVal")
-					: SystemProperties.getInstance().getResourceBundle()
-							.getString("volumeTableModel.isReadigRoomFalseVal");
-		case COL_IS_LOANED:
-			return volume.getIsLended()
-					? SystemProperties.getInstance().getResourceBundle()
-							.getString("volumeTableModel.isReadigRoomTrueVal")
-					: SystemProperties.getInstance().getResourceBundle()
-							.getString("volumeTableModel.isReadigRoomFalseVal");
-		default:
-			return super.getValueAt(row, col);
+			case COL_IS_RESERVERD:
+				return volume.getIsReserve()
+						? SystemProperties.getInstance().getResourceBundle()
+						.getString("volumeTableModel.isReadigRoomTrueVal")
+						: SystemProperties.getInstance().getResourceBundle()
+						.getString("volumeTableModel.isReadigRoomFalseVal");
+			case COL_IS_LOANED:
+				return volume.getIsLended()
+						? SystemProperties.getInstance().getResourceBundle()
+						.getString("volumeTableModel.isReadigRoomTrueVal")
+						: SystemProperties.getInstance().getResourceBundle()
+						.getString("volumeTableModel.isReadigRoomFalseVal");
+			default:
+				return super.getValueAt(row, col);
 		}
 	}
 }

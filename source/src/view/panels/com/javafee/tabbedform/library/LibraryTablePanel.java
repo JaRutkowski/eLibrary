@@ -1,8 +1,6 @@
 package com.javafee.tabbedform.library;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.awt.*;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -39,10 +37,10 @@ public class LibraryTablePanel extends JPanel {
 	public LibraryTablePanel() {
 		setBackground(Utils.getApplicationColor());
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[] { 477, 0 };
-		gridBagLayout.rowHeights = new int[] { 284, 0, 312, 0, 0 };
-		gridBagLayout.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
-		gridBagLayout.rowWeights = new double[] { 1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE };
+		gridBagLayout.columnWidths = new int[]{477, 0};
+		gridBagLayout.rowHeights = new int[]{284, 0, 312, 0, 0};
+		gridBagLayout.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 
 		panelLoan = new JPanel();
@@ -57,10 +55,10 @@ public class LibraryTablePanel extends JPanel {
 		gbc_panelLoan.gridy = 0;
 		add(panelLoan, gbc_panelLoan);
 		GridBagLayout gbl_panelLoan = new GridBagLayout();
-		gbl_panelLoan.columnWidths = new int[] { 477, 0 };
-		gbl_panelLoan.rowHeights = new int[] { 284, 0 };
-		gbl_panelLoan.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
-		gbl_panelLoan.rowWeights = new double[] { 1.0, Double.MIN_VALUE };
+		gbl_panelLoan.columnWidths = new int[]{477, 0};
+		gbl_panelLoan.rowHeights = new int[]{284, 0};
+		gbl_panelLoan.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+		gbl_panelLoan.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 		panelLoan.setLayout(gbl_panelLoan);
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -100,10 +98,10 @@ public class LibraryTablePanel extends JPanel {
 		gbc_panelReadingRoom.gridy = 2;
 		add(panelReadingRoom, gbc_panelReadingRoom);
 		GridBagLayout gbl_panelReadingRoom = new GridBagLayout();
-		gbl_panelReadingRoom.columnWidths = new int[] { 477, 0 };
-		gbl_panelReadingRoom.rowHeights = new int[] { 312, 0 };
-		gbl_panelReadingRoom.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
-		gbl_panelReadingRoom.rowWeights = new double[] { 1.0, Double.MIN_VALUE };
+		gbl_panelReadingRoom.columnWidths = new int[]{477, 0};
+		gbl_panelReadingRoom.rowHeights = new int[]{312, 0};
+		gbl_panelReadingRoom.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+		gbl_panelReadingRoom.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 		panelReadingRoom.setLayout(gbl_panelReadingRoom);
 
 		scrollPane_readingRoom = new JScrollPane();

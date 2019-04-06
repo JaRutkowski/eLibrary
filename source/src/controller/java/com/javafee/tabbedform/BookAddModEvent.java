@@ -103,12 +103,12 @@ public class BookAddModEvent {
 				bookShallowClone.setNumberOfPage(
 						!"".equals(bookAddModFrame.getBookDataPanel().getTextFieldNumberOfPage().getText())
 								? Integer.parseInt(
-										bookAddModFrame.getBookDataPanel().getTextFieldNumberOfPage().getText())
+								bookAddModFrame.getBookDataPanel().getTextFieldNumberOfPage().getText())
 								: null);
 				bookShallowClone.setNumberOfTomes(
 						!"".equals(bookAddModFrame.getBookDataPanel().getTextFieldNumberOfTomes().getText())
 								? Integer.parseInt(
-										bookAddModFrame.getBookDataPanel().getTextFieldNumberOfTomes().getText())
+								bookAddModFrame.getBookDataPanel().getTextFieldNumberOfTomes().getText())
 								: null);
 
 				HibernateUtil.beginTransaction();

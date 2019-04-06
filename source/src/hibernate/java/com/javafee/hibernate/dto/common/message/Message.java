@@ -49,7 +49,7 @@ public class Message {
 	@JoinColumn(name = "id_message_type", unique = false, nullable = true, insertable = true, updatable = true)
 	private MessageType messageType;
 
-	@OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "message")
+	@OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "message")
 	private Set<Recipient> recipient = new HashSet<Recipient>(0);
 
 	@Column(name = "title", unique = false, nullable = true, insertable = true, updatable = true, length = 100)

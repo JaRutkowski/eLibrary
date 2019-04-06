@@ -1,8 +1,6 @@
 package com.javafee.emailform;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
@@ -56,10 +54,10 @@ public class EmailForm {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(Utils.getApplicationColor());
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[] { 0, 0, 0 };
-		gridBagLayout.rowHeights = new int[] { 0, 0, 0 };
-		gridBagLayout.columnWeights = new double[] { 0.0, 1.0, Double.MIN_VALUE };
-		gridBagLayout.rowWeights = new double[] { 0.0, 1.0, Double.MIN_VALUE };
+		gridBagLayout.columnWidths = new int[]{0, 0, 0};
+		gridBagLayout.rowHeights = new int[]{0, 0, 0};
+		gridBagLayout.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
 		frame.setMinimumSize(Constans.EMAIL_FORM_MINIMUM_SIZE);
 		frame.getContentPane().setLayout(gridBagLayout);
 		frame.setTitle(Constans.APPLICATION_NAME);

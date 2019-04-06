@@ -1,6 +1,6 @@
 package com.javafee.common.networkservice;
 
-import java.awt.Image;
+import java.awt.*;
 
 import javax.swing.ImageIcon;
 

@@ -1,10 +1,6 @@
 package com.javafee.tabbedform.books.frames;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Image;
-import java.awt.Insets;
-import java.awt.Toolkit;
+import java.awt.*;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -57,10 +53,10 @@ public class BookAddModFrame extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[] { 29, 197, 0 };
-		gbl_contentPane.rowHeights = new int[] { 0, 119, 140, 119, 22, 0 };
-		gbl_contentPane.columnWeights = new double[] { 1.0, 1.0, Double.MIN_VALUE };
-		gbl_contentPane.rowWeights = new double[] { 0.0, 1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE };
+		gbl_contentPane.columnWidths = new int[]{29, 197, 0};
+		gbl_contentPane.rowHeights = new int[]{0, 119, 140, 119, 22, 0};
+		gbl_contentPane.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
+		gbl_contentPane.rowWeights = new double[]{0.0, 1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
 
 		bookDataPanel = new BookDataPanel();

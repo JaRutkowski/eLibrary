@@ -94,7 +94,7 @@ public class Test {
 
 		Worker worker = (Worker) HibernateUtil.getSession().getNamedQuery("Worker.checkIfWorkerLoginExist")
 				.setParameter("login", "MiMichalski").uniqueResult();
-		@SuppressWarnings({ "unused" })
+		@SuppressWarnings({"unused"})
 		LibraryWorker libraryWorker = (LibraryWorker) HibernateUtil.getSession()
 				.getNamedQuery("LibraryWorker.checkIfLibraryWorkerHiredExist")
 				.setParameter("idWorker", worker.getIdUserData()).uniqueResult();

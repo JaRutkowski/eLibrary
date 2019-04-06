@@ -1,7 +1,6 @@
 package com.javafee.tabbedform.loanservice;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import java.awt.*;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -23,10 +22,10 @@ public class VolumeTablePanel extends JPanel {
 	public VolumeTablePanel() {
 		setBackground(Utils.getApplicationColor());
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[] { 50, 0 };
-		gridBagLayout.rowHeights = new int[] { 0, 0 };
-		gridBagLayout.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
-		gridBagLayout.rowWeights = new double[] { 1.0, Double.MIN_VALUE };
+		gridBagLayout.columnWidths = new int[]{50, 0};
+		gridBagLayout.rowHeights = new int[]{0, 0};
+		gridBagLayout.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 
 		JScrollPane scrollPane = new JScrollPane();

@@ -1,8 +1,6 @@
 package com.javafee.uniform;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.awt.*;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -32,10 +30,10 @@ public class TemplateManagementPanel extends JPanel {
 						.getString("htmlEditor.templateManagementBorderTitle"),
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		GridBagLayout gbl_panel = new GridBagLayout();
-		gbl_panel.columnWidths = new int[] { 99, 393, 0 };
-		gbl_panel.rowHeights = new int[] { 0, 0, 0, 0 };
-		gbl_panel.columnWeights = new double[] { 1.0, 1.0, Double.MIN_VALUE };
-		gbl_panel.rowWeights = new double[] { 0.0, 0.0, 0.0, Double.MIN_VALUE };
+		gbl_panel.columnWidths = new int[]{99, 393, 0};
+		gbl_panel.rowHeights = new int[]{0, 0, 0, 0};
+		gbl_panel.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
+		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gbl_panel);
 
 		lblChooseTemplate = new JLabel(

@@ -156,11 +156,11 @@ public class Actions implements IRegistrationForm {
 			try {
 				Character sex = startForm.getRegistrationPanel().getGroupRadioButtonSex().getSelection() != null
 						? startForm.getRegistrationPanel().getGroupRadioButtonSex().getSelection().getActionCommand()
-								.charAt(0)
+						.charAt(0)
 						: null;
 				Date birthDate = startForm.getRegistrationPanel().getDateChooserBirthDate().getDate() != null
 						? new SimpleDateFormat("dd-MM-yyyy").parse(new SimpleDateFormat("dd-MM-yyyy")
-								.format(startForm.getRegistrationPanel().getDateChooserBirthDate().getDate()))
+						.format(startForm.getRegistrationPanel().getDateChooserBirthDate().getDate()))
 						: null;
 
 				if (birthDate == null) {
@@ -293,7 +293,7 @@ public class Actions implements IRegistrationForm {
 	}
 
 	private void createEmail(List<SimpleEntry<Message.RecipientType, UserData>> recipients, String subject,
-			String text) {
+	                         String text) {
 		try {
 			MessageType messageType = com.javafee.hibernate.dao.common.Common
 					.findMessageTypeByName(Constans.DATA_BASE_MESSAGE_TYPE_SYS_MESSAGE).get();

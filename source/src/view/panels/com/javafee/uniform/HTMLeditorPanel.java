@@ -1,10 +1,6 @@
 package com.javafee.uniform;
 
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Image;
-import java.awt.Insets;
+import java.awt.*;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -38,10 +34,10 @@ public class HTMLeditorPanel extends JPanel {
 
 	public HTMLeditorPanel() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[] { 359, 51, 366, 0 };
-		gridBagLayout.rowHeights = new int[] { 228, 292, 100, 0 };
-		gridBagLayout.columnWeights = new double[] { 1.0, 0.0, 1.0, Double.MIN_VALUE };
-		gridBagLayout.rowWeights = new double[] { 1.0, 0.0, 0.0, Double.MIN_VALUE };
+		gridBagLayout.columnWidths = new int[]{359, 51, 366, 0};
+		gridBagLayout.rowHeights = new int[]{228, 292, 100, 0};
+		gridBagLayout.columnWeights = new double[]{1.0, 0.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{1.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 
 		JPanel htmlEditorPanel = new JPanel();
@@ -56,10 +52,10 @@ public class HTMLeditorPanel extends JPanel {
 		gbc_htmlEditorPanel.gridy = 0;
 		add(htmlEditorPanel, gbc_htmlEditorPanel);
 		GridBagLayout gbl_htmlEditorPanel = new GridBagLayout();
-		gbl_htmlEditorPanel.columnWidths = new int[] { 189, 0 };
-		gbl_htmlEditorPanel.rowHeights = new int[] { 0, 0 };
-		gbl_htmlEditorPanel.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
-		gbl_htmlEditorPanel.rowWeights = new double[] { 1.0, Double.MIN_VALUE };
+		gbl_htmlEditorPanel.columnWidths = new int[]{189, 0};
+		gbl_htmlEditorPanel.rowHeights = new int[]{0, 0};
+		gbl_htmlEditorPanel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+		gbl_htmlEditorPanel.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 		htmlEditorPanel.setLayout(gbl_htmlEditorPanel);
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -98,10 +94,10 @@ public class HTMLeditorPanel extends JPanel {
 		gbc_previewPanel.gridy = 0;
 		add(previewPanel, gbc_previewPanel);
 		GridBagLayout gbl_previewPanel = new GridBagLayout();
-		gbl_previewPanel.columnWidths = new int[] { 228, 0 };
-		gbl_previewPanel.rowHeights = new int[] { 0, 0 };
-		gbl_previewPanel.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
-		gbl_previewPanel.rowWeights = new double[] { 1.0, Double.MIN_VALUE };
+		gbl_previewPanel.columnWidths = new int[]{228, 0};
+		gbl_previewPanel.rowHeights = new int[]{0, 0};
+		gbl_previewPanel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+		gbl_previewPanel.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 		previewPanel.setLayout(gbl_previewPanel);
 
 		JScrollPane scrollPane_1 = new JScrollPane();

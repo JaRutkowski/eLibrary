@@ -1,8 +1,6 @@
 package com.javafee.tabbedform.books;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.awt.*;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -27,10 +25,10 @@ public class BookTablePanel extends JPanel {
 	public BookTablePanel() {
 		setBackground(Utils.getApplicationColor());
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[] { 477, 0 };
-		gridBagLayout.rowHeights = new int[] { 284, 0, 0 };
-		gridBagLayout.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
-		gridBagLayout.rowWeights = new double[] { 1.0, 1.0, Double.MIN_VALUE };
+		gridBagLayout.columnWidths = new int[]{477, 0};
+		gridBagLayout.rowHeights = new int[]{284, 0, 0};
+		gridBagLayout.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 
 		JScrollPane scrollPane = new JScrollPane();

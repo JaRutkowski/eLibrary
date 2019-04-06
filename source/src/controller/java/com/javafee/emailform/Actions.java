@@ -76,20 +76,20 @@ public class Actions implements IActionForm {
 
 	private void reloadTabbedPane() {
 		switch (Tab_Email.getByNumber(emailForm.getTabbedPane().getSelectedIndex())) {
-		case TAB_CREATE_PAGE:
-			TabComposePageEvent.getInstance(emailForm);
-			break;
-		case TAB_SENDED_PAGE:
-			TabOutboxPageEvent.getInstance(emailForm);
-			break;
-		case TAB_DRAFT_PAGE:
-			TabDraftPageEvent.getInstance(emailForm);
-			break;
-		case TAB_TEMPLATE_PAGE:
-			TabTemplatePageEvent.getInstance(emailForm);
-			break;
-		default:
-			break;
+			case TAB_CREATE_PAGE:
+				TabComposePageEvent.getInstance(emailForm);
+				break;
+			case TAB_SENDED_PAGE:
+				TabOutboxPageEvent.getInstance(emailForm);
+				break;
+			case TAB_DRAFT_PAGE:
+				TabDraftPageEvent.getInstance(emailForm);
+				break;
+			case TAB_TEMPLATE_PAGE:
+				TabTemplatePageEvent.getInstance(emailForm);
+				break;
+			default:
+				break;
 		}
 
 		setEnableMenu(Tab_Email.getByNumber(emailForm.getTabbedPane().getSelectedIndex()));

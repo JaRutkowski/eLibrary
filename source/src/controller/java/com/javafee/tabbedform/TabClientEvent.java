@@ -216,7 +216,7 @@ public final class TabClientEvent implements IActionForm {
 	private void onClientTableListSelectionChange() {
 		if (tabbedForm.getPanelClient().getClientTable().getSelectedRow() != -1
 				&& tabbedForm.getPanelClient().getClientTable()
-						.convertRowIndexToModel(tabbedForm.getPanelClient().getClientTable().getSelectedRow()) != -1)
+				.convertRowIndexToModel(tabbedForm.getPanelClient().getClientTable().getSelectedRow()) != -1)
 			reloadChckbxIsRegistered(
 					(SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.registeredTrueVal"))
 							.equals(tabbedForm.getPanelClient().getClientTable().getModel().getValueAt(

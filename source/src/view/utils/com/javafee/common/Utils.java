@@ -1,6 +1,6 @@
 package com.javafee.common;
 
-import java.awt.Color;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -43,8 +43,8 @@ public class Utils {
 	}
 
 	public static int displayConfirmDialog(String message, String title) {
-		Object[] options = { SystemProperties.getInstance().getResourceBundle().getString("confirmDialog.yes"),
-				SystemProperties.getInstance().getResourceBundle().getString("confirmDialog.no") };
+		Object[] options = {SystemProperties.getInstance().getResourceBundle().getString("confirmDialog.yes"),
+				SystemProperties.getInstance().getResourceBundle().getString("confirmDialog.no")};
 		return JOptionPane.showOptionDialog(null, message, title, JOptionPane.YES_NO_OPTION,
 				JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 	}

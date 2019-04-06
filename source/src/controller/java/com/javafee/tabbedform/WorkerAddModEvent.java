@@ -196,7 +196,7 @@ public class WorkerAddModEvent {
 					.setSelected(workerAddModFrame.getWorkerDataPanel().getRadioButtonMale().getModel(), true);
 		else if (((Worker) Params.getInstance().get("selectedWorker")).getSex() != null
 				&& Constans.DATA_BASE_FEMALE_SIGN.toString()
-						.equals(((Worker) Params.getInstance().get("selectedWorker")).getSex().toString()))
+				.equals(((Worker) Params.getInstance().get("selectedWorker")).getSex().toString()))
 			workerAddModFrame.getWorkerDataPanel().getGroupRadioButtonSex()
 					.setSelected(workerAddModFrame.getWorkerDataPanel().getRadioButtonFemale().getModel(), true);
 
@@ -204,7 +204,7 @@ public class WorkerAddModEvent {
 			workerAddModFrame.getWorkerDataPanel().getDateChooserBirthDate()
 					.setDate(((Worker) Params.getInstance().get("selectedWorker")).getBirthDate() != null
 							? Constans.APPLICATION_DATE_FORMAT.parse(Constans.APPLICATION_DATE_FORMAT
-									.format(((Worker) Params.getInstance().get("selectedWorker")).getBirthDate()))
+							.format(((Worker) Params.getInstance().get("selectedWorker")).getBirthDate()))
 							: null);
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -217,11 +217,11 @@ public class WorkerAddModEvent {
 			try {
 				Character sex = workerAddModFrame.getWorkerDataPanel().getGroupRadioButtonSex().getSelection() != null
 						? workerAddModFrame.getWorkerDataPanel().getGroupRadioButtonSex().getSelection()
-								.getActionCommand().charAt(0)
+						.getActionCommand().charAt(0)
 						: null;
 				Date birthDate = workerAddModFrame.getWorkerDataPanel().getDateChooserBirthDate().getDate() != null
 						? Constans.APPLICATION_DATE_FORMAT.parse(Constans.APPLICATION_DATE_FORMAT
-								.format(workerAddModFrame.getWorkerDataPanel().getDateChooserBirthDate().getDate()))
+						.format(workerAddModFrame.getWorkerDataPanel().getDateChooserBirthDate().getDate()))
 						: null;
 
 				RegistrationEvent.forceClearRegistrationEvenet();
@@ -234,7 +234,7 @@ public class WorkerAddModEvent {
 				if (result) {
 					if (!"".equals(workerAddModFrame.getWorkerDataPanel().getTextFieldPeselNumber().getText())
 							&& workerAddModFrame.getWorkerDataPanel().getTextFieldPeselNumber().getText()
-									.length() != Constans.DATA_BASE_PESEL_NUMBER_LENGHT) {
+							.length() != Constans.DATA_BASE_PESEL_NUMBER_LENGHT) {
 						Utils.displayOptionPane(
 								SystemProperties.getInstance().getResourceBundle()
 										.getString("clientAddModEvent.updatingClientPeselError"),
@@ -322,9 +322,7 @@ public class WorkerAddModEvent {
 						SystemProperties.getInstance().getResourceBundle()
 								.getString("startForm.registrationSuccess2Title"),
 						JOptionPane.INFORMATION_MESSAGE);
-		} else
-
-		{
+		} else {
 			Utils.displayOptionPane(
 					SystemProperties.getInstance().getResourceBundle()
 							.getString("clientAddModEvent.updatingClientError"),

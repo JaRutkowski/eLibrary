@@ -208,7 +208,7 @@ public final class TabWorkerEvent implements IActionForm {
 	private void onClientTableListSelectionChange() {
 		if (tabbedForm.getPanelWorker().getWorkerTable().getSelectedRow() != -1
 				&& tabbedForm.getPanelWorker().getWorkerTable()
-						.convertRowIndexToModel(tabbedForm.getPanelWorker().getWorkerTable().getSelectedRow()) != -1) {
+				.convertRowIndexToModel(tabbedForm.getPanelWorker().getWorkerTable().getSelectedRow()) != -1) {
 			reloadChckbxIsRegistered(
 					(SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.registeredTrueVal"))
 							.equals(tabbedForm.getPanelWorker().getWorkerTable().getModel().getValueAt(

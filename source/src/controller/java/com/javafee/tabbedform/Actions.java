@@ -131,53 +131,53 @@ public class Actions implements IActionForm {
 	private void reloadTabbedPane() {
 		if (LogInEvent.getRole() == Role.CLIENT)
 			switch (Tab_Client.getByNumber(tabbedForm.getTabbedPane().getSelectedIndex())) {
-			case TAB_LIBRARY:
-				TabLibraryEvent.getInstance(tabbedForm);
-				break;
-			default:
-				break;
+				case TAB_LIBRARY:
+					TabLibraryEvent.getInstance(tabbedForm);
+					break;
+				default:
+					break;
 			}
 
 		if (LogInEvent.getRole() == Role.WORKER_LIBRARIAN)
 			switch (Tab_Worker.getByNumber(tabbedForm.getTabbedPane().getSelectedIndex())) {
-			case TAB_CLIENT:
-				TabClientEvent.getInstance(tabbedForm);
-				break;
-			case TAB_LIBRARY:
-				TabLibraryEvent.getInstance(tabbedForm);
-				break;
-			case TAB_BOOK:
-				TabBookEvent.getInstance(tabbedForm);
-				break;
-			case TAB_LOAN_SERVICE:
-				TabLoanServiceEvent.getInstance(tabbedForm);
-				break;
-			default:
-				break;
+				case TAB_CLIENT:
+					TabClientEvent.getInstance(tabbedForm);
+					break;
+				case TAB_LIBRARY:
+					TabLibraryEvent.getInstance(tabbedForm);
+					break;
+				case TAB_BOOK:
+					TabBookEvent.getInstance(tabbedForm);
+					break;
+				case TAB_LOAN_SERVICE:
+					TabLoanServiceEvent.getInstance(tabbedForm);
+					break;
+				default:
+					break;
 			}
 
 		if (LogInEvent.getRole() == Role.WORKER_ACCOUNTANT || LogInEvent.getRole() == Role.ADMIN)
 			switch (Tab_Accountant.getByNumber(tabbedForm.getTabbedPane().getSelectedIndex())) {
-			case TAB_CLIENT:
-				TabClientEvent.getInstance(tabbedForm);
-				break;
-			case TAB_LIBRARY:
-				TabLibraryEvent.getInstance(tabbedForm);
-				break;
-			case TAB_BOOK:
-				TabBookEvent.getInstance(tabbedForm);
-				break;
-			case TAB_ADM_DICTIONARY:
-				TabAdmDictionaryEvent.getInstance(tabbedForm);
-				break;
-			case TAB_LOAN_SERVICE:
-				TabLoanServiceEvent.getInstance(tabbedForm);
-				break;
-			case TAB_ADM_WORKER:
-				TabWorkerEvent.getInstance(tabbedForm);
-				break;
-			default:
-				break;
+				case TAB_CLIENT:
+					TabClientEvent.getInstance(tabbedForm);
+					break;
+				case TAB_LIBRARY:
+					TabLibraryEvent.getInstance(tabbedForm);
+					break;
+				case TAB_BOOK:
+					TabBookEvent.getInstance(tabbedForm);
+					break;
+				case TAB_ADM_DICTIONARY:
+					TabAdmDictionaryEvent.getInstance(tabbedForm);
+					break;
+				case TAB_LOAN_SERVICE:
+					TabLoanServiceEvent.getInstance(tabbedForm);
+					break;
+				case TAB_ADM_WORKER:
+					TabWorkerEvent.getInstance(tabbedForm);
+					break;
+				default:
+					break;
 			}
 	}
 

@@ -1,9 +1,6 @@
 package com.javafee.tabbedform.library.frames;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.Toolkit;
+import java.awt.*;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -42,10 +39,10 @@ public class LibraryAddModFrame extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[] { 97, 345, 0 };
-		gbl_contentPane.rowHeights = new int[] { 317, 0, 22, 0 };
-		gbl_contentPane.columnWeights = new double[] { 1.0, 1.0, Double.MIN_VALUE };
-		gbl_contentPane.rowWeights = new double[] { 1.0, 0.0, 1.0, Double.MIN_VALUE };
+		gbl_contentPane.columnWidths = new int[]{97, 345, 0};
+		gbl_contentPane.rowHeights = new int[]{317, 0, 22, 0};
+		gbl_contentPane.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
+		gbl_contentPane.rowWeights = new double[]{1.0, 0.0, 1.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
 
 		scrollPane = new JScrollPane();

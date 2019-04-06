@@ -15,13 +15,13 @@ public class OutboxTableModel extends DraftTableModel {
 	public OutboxTableModel() {
 		super();
 		this.prepareHibernateDao();
-		this.columns = new String[] {
+		this.columns = new String[]{
 				SystemProperties.getInstance().getResourceBundle().getString("outboxTableModel.recipientSimpleDataCol"),
 				SystemProperties.getInstance().getResourceBundle().getString("outboxTableModel.recipientEmailCol"),
 				SystemProperties.getInstance().getResourceBundle().getString("outboxTableModel.topicCol"),
 				SystemProperties.getInstance().getResourceBundle().getString("outboxTableModel.contentCol"),
 				SystemProperties.getInstance().getResourceBundle().getString("outboxTableModel.senderSimpleDataCol"),
-				SystemProperties.getInstance().getResourceBundle().getString("outboxTableModel.dateCol") };
+				SystemProperties.getInstance().getResourceBundle().getString("outboxTableModel.dateCol")};
 	}
 
 	@SuppressWarnings("unchecked")
@@ -34,30 +34,30 @@ public class OutboxTableModel extends DraftTableModel {
 	public Object getValueAt(int row, int col) {
 		Message message = messages.get(row);
 		switch (OutboxTableColumn.getByNumber(col)) {
-		case COL_RECIPIENT_SIMPLE_DATA:
-			return message.getRecipient();
-		case COL_RECIPIENT_EMAIL:
-			AtomicInteger counter = new AtomicInteger(1);
-			StringBuilder recipientsEmails = new StringBuilder("[");
-			message.getRecipient().forEach(recipient -> {
-				recipientsEmails.append(recipient.getUserData().getEMail());
-				if (counter.get() != message.getRecipient().size())
-					recipientsEmails.append(",");
-			});
-			recipientsEmails.append("]");
-			return recipientsEmails.toString();
-		case COL_TOPIC:
-			return message.getTitle();
-		case COL_CONTENT:
-			return message.getContent();
-		case COL_SENDER_SIMPLE_DATA:
-			return message.getSender() != null ? message.getSender().getSurname() + " " + message.getSender().getName()
-					: "System";
-		case COL_DATE:
-			return message.getSendDate() != null ? Constans.APPLICATION_DATE_FORMAT.format(message.getSendDate())
-					: null;
-		default:
-			return null;
+			case COL_RECIPIENT_SIMPLE_DATA:
+				return message.getRecipient();
+			case COL_RECIPIENT_EMAIL:
+				AtomicInteger counter = new AtomicInteger(1);
+				StringBuilder recipientsEmails = new StringBuilder("[");
+				message.getRecipient().forEach(recipient -> {
+					recipientsEmails.append(recipient.getUserData().getEMail());
+					if (counter.get() != message.getRecipient().size())
+						recipientsEmails.append(",");
+				});
+				recipientsEmails.append("]");
+				return recipientsEmails.toString();
+			case COL_TOPIC:
+				return message.getTitle();
+			case COL_CONTENT:
+				return message.getContent();
+			case COL_SENDER_SIMPLE_DATA:
+				return message.getSender() != null ? message.getSender().getSurname() + " " + message.getSender().getName()
+						: "System";
+			case COL_DATE:
+				return message.getSendDate() != null ? Constans.APPLICATION_DATE_FORMAT.format(message.getSendDate())
+						: null;
+			default:
+				return null;
 
 		}
 	}

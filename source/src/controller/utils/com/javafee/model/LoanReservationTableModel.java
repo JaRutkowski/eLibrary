@@ -21,7 +21,7 @@ public class LoanReservationTableModel extends AbstractTableModel {
 	public LoanReservationTableModel() {
 		super();
 		this.prepareHibernateDao();
-		this.columns = new String[] {
+		this.columns = new String[]{
 				SystemProperties.getInstance().getResourceBundle().getString("loanTableModel.clientCol"),
 				SystemProperties.getInstance().getResourceBundle().getString("loanTableModel.clientPeselNumberCol"),
 				SystemProperties.getInstance().getResourceBundle().getString("loanTableModel.clientDocumentNumberCol"),
@@ -29,7 +29,7 @@ public class LoanReservationTableModel extends AbstractTableModel {
 				SystemProperties.getInstance().getResourceBundle().getString("loanTableModel.volumeBookIsbnNumberCol"),
 				SystemProperties.getInstance().getResourceBundle().getString("loanTableModel.volumeInventoryNumberCol"),
 				SystemProperties.getInstance().getResourceBundle().getString("loanTableModel.lendDateCol"),
-				SystemProperties.getInstance().getResourceBundle().getString("loanTableModel.returnDateCol") };
+				SystemProperties.getInstance().getResourceBundle().getString("loanTableModel.returnDateCol")};
 	}
 
 	public Lend getLend(int index) {
@@ -88,24 +88,24 @@ public class LoanReservationTableModel extends AbstractTableModel {
 		Lend lend = lends.get(row);
 
 		switch (LendTableColumn.getByNumber(col)) {
-		case COL_CLIENT_BASIC_DATA:
-			return lend.getReservationClient();
-		case COL_CLIENT_PESEL_NUMBER:
-			return lend.getReservationClient().getPeselNumber();
-		case COL_CLIENT_DOCUMENT_NUMBER:
-			return lend.getReservationClient().getDocumentNumber();
-		case COL_VOLUME_BOOK_TITLE:
-			return lend.getVolume().getBook();
-		case COL_VOLUME_BOOK_ISBN_NUMBER:
-			return lend.getVolume().getBook().getIsbnNumber();
-		case COL_VOLUME_INVENTORY_NUMBER:
-			return lend.getVolume().getInventoryNumber();
-		case COL_LEND_DATE:
-			return Constans.APPLICATION_DATE_FORMAT.format(lend.getLendDate());
-		case COL_RETURNED_DATE:
-			return Constans.APPLICATION_DATE_FORMAT.format(lend.getReturnedDate());
-		default:
-			return null;
+			case COL_CLIENT_BASIC_DATA:
+				return lend.getReservationClient();
+			case COL_CLIENT_PESEL_NUMBER:
+				return lend.getReservationClient().getPeselNumber();
+			case COL_CLIENT_DOCUMENT_NUMBER:
+				return lend.getReservationClient().getDocumentNumber();
+			case COL_VOLUME_BOOK_TITLE:
+				return lend.getVolume().getBook();
+			case COL_VOLUME_BOOK_ISBN_NUMBER:
+				return lend.getVolume().getBook().getIsbnNumber();
+			case COL_VOLUME_INVENTORY_NUMBER:
+				return lend.getVolume().getInventoryNumber();
+			case COL_LEND_DATE:
+				return Constans.APPLICATION_DATE_FORMAT.format(lend.getLendDate());
+			case COL_RETURNED_DATE:
+				return Constans.APPLICATION_DATE_FORMAT.format(lend.getReturnedDate());
+			default:
+				return null;
 		}
 	}
 

@@ -201,7 +201,7 @@ public class ClientAddModEvent {
 					.setSelected(clientAddModFrame.getClientDataPanel().getRadioButtonMale().getModel(), true);
 		else if (((Client) Params.getInstance().get("selectedClient")).getSex() != null
 				&& Constans.DATA_BASE_FEMALE_SIGN.toString()
-						.equals(((Client) Params.getInstance().get("selectedClient")).getSex().toString()))
+				.equals(((Client) Params.getInstance().get("selectedClient")).getSex().toString()))
 			clientAddModFrame.getClientDataPanel().getGroupRadioButtonSex()
 					.setSelected(clientAddModFrame.getClientDataPanel().getRadioButtonFemale().getModel(), true);
 
@@ -209,7 +209,7 @@ public class ClientAddModEvent {
 			clientAddModFrame.getClientDataPanel().getDateChooserBirthDate()
 					.setDate(((Client) Params.getInstance().get("selectedClient")).getBirthDate() != null
 							? Constans.APPLICATION_DATE_FORMAT.parse(Constans.APPLICATION_DATE_FORMAT
-									.format(((Client) Params.getInstance().get("selectedClient")).getBirthDate()))
+							.format(((Client) Params.getInstance().get("selectedClient")).getBirthDate()))
 							: null);
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -221,11 +221,11 @@ public class ClientAddModEvent {
 			try {
 				Character sex = clientAddModFrame.getClientDataPanel().getGroupRadioButtonSex().getSelection() != null
 						? clientAddModFrame.getClientDataPanel().getGroupRadioButtonSex().getSelection()
-								.getActionCommand().charAt(0)
+						.getActionCommand().charAt(0)
 						: null;
 				Date birthDate = clientAddModFrame.getClientDataPanel().getDateChooserBirthDate().getDate() != null
 						? Constans.APPLICATION_DATE_FORMAT.parse(Constans.APPLICATION_DATE_FORMAT
-								.format(clientAddModFrame.getClientDataPanel().getDateChooserBirthDate().getDate()))
+						.format(clientAddModFrame.getClientDataPanel().getDateChooserBirthDate().getDate()))
 						: null;
 
 				RegistrationEvent.forceClearRegistrationEvenet();
@@ -239,7 +239,7 @@ public class ClientAddModEvent {
 				if (result) {
 					if (!"".equals(clientAddModFrame.getClientDataPanel().getTextFieldPeselNumber().getText())
 							&& clientAddModFrame.getClientDataPanel().getTextFieldPeselNumber().getText()
-									.length() != Constans.DATA_BASE_PESEL_NUMBER_LENGHT) {
+							.length() != Constans.DATA_BASE_PESEL_NUMBER_LENGHT) {
 						Utils.displayOptionPane(
 								SystemProperties.getInstance().getResourceBundle()
 										.getString("clientAddModEvent.updatingClientPeselError"),

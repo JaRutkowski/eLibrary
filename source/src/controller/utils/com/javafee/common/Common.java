@@ -149,7 +149,7 @@ public final class Common {
 	}
 
 	public static void registerWatchServiceListener(TabTemplatePageEvent tabTemplatePageEvent,
-			Consumer<TabTemplatePageEvent> c) {
+	                                                Consumer<TabTemplatePageEvent> c) {
 		watchServiceListener = new WatchServiceListener();
 		watchServiceListener.initialize(tabTemplatePageEvent, c);
 	}

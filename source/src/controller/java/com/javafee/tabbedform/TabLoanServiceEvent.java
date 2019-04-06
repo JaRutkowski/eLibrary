@@ -124,7 +124,7 @@ public class TabLoanServiceEvent implements IActionForm {
 	private void onClientTableListSelectionChange() {
 		if (tabbedForm.getPanelLoanService().getLoanTable().getSelectedRow() != -1
 				&& tabbedForm.getPanelLoanService().getLoanTable().convertRowIndexToModel(
-						tabbedForm.getPanelLoanService().getLoanTable().getSelectedRow()) != -1) {
+				tabbedForm.getPanelLoanService().getLoanTable().getSelectedRow()) != -1) {
 			if (calculatePenalty() == new BigDecimal(0).doubleValue())
 				tabbedForm.getPanelLoanService().getBtnPenalty().setEnabled(false);
 			else
