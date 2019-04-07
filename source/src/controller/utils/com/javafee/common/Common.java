@@ -130,8 +130,11 @@ public final class Common {
 	}
 
 	public static Integer clearMessagesRecipientData(Integer idUserData) {
-		return HibernateUtil.getSession().createQuery("update Recipient set userData = null where userData.idUserData = ?0")
+		HibernateUtil.beginTransaction();
+		Integer recordsUpdatedCount = HibernateUtil.getSession().createQuery("update Recipient set userData = null where userData.idUserData = ?0")
 				.setParameter(0, idUserData).executeUpdate();
+		HibernateUtil.commitTransaction();
+		return recordsUpdatedCount;
 	}
 
 	public static boolean isAdmin(String login, String password) {

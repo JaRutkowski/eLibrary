@@ -40,7 +40,10 @@ public class OutboxTableModel extends DraftTableModel {
 				AtomicInteger counter = new AtomicInteger(1);
 				StringBuilder recipientsEmails = new StringBuilder("[");
 				message.getRecipient().forEach(recipient -> {
-					recipientsEmails.append(recipient.getUserData().getEMail());
+					if (recipient.getUserData() != null)
+						recipientsEmails.append(recipient.getUserData().getEMail());
+					else
+						recipientsEmails.append(SystemProperties.getInstance().getResourceBundle().getString("outboxTableModel.deletedUserAlias"));
 					if (counter.get() != message.getRecipient().size())
 						recipientsEmails.append(",");
 				});

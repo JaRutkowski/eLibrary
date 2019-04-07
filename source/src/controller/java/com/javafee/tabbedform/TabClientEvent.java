@@ -153,7 +153,7 @@ public final class TabClientEvent implements IActionForm {
 					if (Utils.displayConfirmDialog(
 							SystemProperties.getInstance().getResourceBundle().getString("confirmDialog.deleteMessage"),
 							"") == JOptionPane.YES_OPTION) {
-						if(!Validator.validateIfUserCorrespondenceExists(selectedClient.getIdUserData())) {
+						if (!Validator.validateIfUserCorrespondenceExists(selectedClient.getIdUserData())) {
 							HibernateUtil.beginTransaction();
 							HibernateUtil.getSession().delete(selectedClient);
 							HibernateUtil.commitTransaction();
@@ -163,11 +163,17 @@ public final class TabClientEvent implements IActionForm {
 							if (Utils.displayConfirmDialog(
 									SystemProperties.getInstance().getResourceBundle().getString("confirmDialog.clearClientCorrespondenceData"),
 									"") == JOptionPane.YES_OPTION) {
-								if(Common.clearMessagesRecipientData(selectedClient.getIdUserData()) > 0)
+								if (Common.clearMessagesRecipientData(selectedClient.getIdUserData()) > 0) {
+									HibernateUtil.beginTransaction();
+									HibernateUtil.getSession().delete(selectedClient);
+									HibernateUtil.commitTransaction();
+									((ClientTableModel) tabbedForm.getPanelClient().getClientTable().getModel())
+											.remove(selectedClient);
 									JOptionPane.showMessageDialog(tabbedForm.getFrame(),
 											SystemProperties.getInstance().getResourceBundle().getString("tabClientEvent.deleteClientSuccess"),
 											SystemProperties.getInstance().getResourceBundle().getString("tabClientEvent.deleteClientSuccessTitle"),
 											JOptionPane.INFORMATION_MESSAGE);
+								}
 							}
 						}
 					}
