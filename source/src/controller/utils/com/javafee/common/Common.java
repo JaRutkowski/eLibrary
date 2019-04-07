@@ -15,6 +15,7 @@ import com.javafee.common.networkservice.NetworkServiceListener;
 import com.javafee.common.timerservice.TimerServiceListener;
 import com.javafee.common.watchservice.WatchServiceListener;
 import com.javafee.emailform.TabTemplatePageEvent;
+import com.javafee.hibernate.dao.HibernateUtil;
 import com.javafee.hibernate.dto.common.UserData;
 import com.javafee.hibernate.dto.library.Client;
 import com.javafee.hibernate.dto.library.Worker;
@@ -126,6 +127,11 @@ public final class Common {
 	@SuppressWarnings("unchecked")
 	public static <T> void prepareBlankComboBoxElement(List<T> comboBoxDataList) {
 		comboBoxDataList.add((T) Constans.APPLICATION_COMBO_BOX_BLANK_OBJECT);
+	}
+
+	public static Integer clearMessagesRecipientData(Integer idUserData) {
+		return HibernateUtil.getSession().createQuery("update Recipient set userData = null where userData.idUserData = ?0")
+				.setParameter(0, idUserData).executeUpdate();
 	}
 
 	public static boolean isAdmin(String login, String password) {

@@ -4,10 +4,12 @@ import java.util.List;
 
 import com.javafee.hibernate.dao.HibernateUtil;
 import com.javafee.hibernate.dto.common.UserData;
+import com.javafee.hibernate.dto.common.message.Recipient;
 import com.javafee.hibernate.dto.library.Author;
 import com.javafee.hibernate.dto.library.Book;
 import com.javafee.hibernate.dto.library.Category;
 import com.javafee.hibernate.dto.library.Client;
+import com.javafee.hibernate.dto.library.Lend;
 import com.javafee.hibernate.dto.library.PublishingHouse;
 import com.javafee.hibernate.dto.library.Volume;
 import com.javafee.hibernate.dto.library.Worker;
@@ -121,5 +123,22 @@ public final class Validator {
 			existingIsbnNumber = (Book) HibernateUtil.getSession().getNamedQuery("Book.checkIfIsbnNumberExist")
 					.setParameter("isbnNumber", isbnNumber).uniqueResult();
 		return existingIsbnNumber != null ? true : false;
+	}
+
+	public static boolean validateIfClientLendsExists(Integer idUserData) {
+		List<Lend> lends = HibernateUtil.getSession().createQuery("from Lend as len join fetch len.client")
+				.list();
+
+		boolean lendClientExist = false;
+		for (Lend l : lends)
+			if (l.getClient().getIdUserData() == idUserData)
+				lendClientExist = true;
+		return lendClientExist;
+	}
+
+	public static boolean validateIfUserCorrespondenceExists(Integer idUserData) {
+		List<Recipient> recipients = HibernateUtil.getSession().createQuery("from Recipient as rec where userData.idUserData = ?0")
+				.setParameter(0, idUserData).list();
+		return !recipients.isEmpty();
 	}
 }
