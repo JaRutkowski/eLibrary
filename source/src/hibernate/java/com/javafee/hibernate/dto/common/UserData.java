@@ -2,6 +2,7 @@ package com.javafee.hibernate.dto.common;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -76,6 +78,9 @@ public class UserData {
 	@ManyToOne(cascade = {}, fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_city", unique = false, nullable = true, insertable = true, updatable = true)
 	private City city;
+
+	@OneToOne(mappedBy = "userData", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private SystemProperties systemProperties;
 
 	@Override
 	public String toString() {

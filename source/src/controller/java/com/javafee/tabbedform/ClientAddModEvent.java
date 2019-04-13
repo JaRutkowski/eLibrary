@@ -10,9 +10,9 @@ import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
-import com.javafee.common.Constans;
-import com.javafee.common.Constans.Context;
-import com.javafee.common.Constans.Role;
+import com.javafee.common.Constants;
+import com.javafee.common.Constants.Context;
+import com.javafee.common.Constants.Role;
 import com.javafee.common.Params;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
@@ -89,17 +89,15 @@ public class ClientAddModEvent {
 		if (clientAddModFrame.getClientDataPanel().getRadioButtonMale().isSelected()
 				|| clientAddModFrame.getClientDataPanel().getRadioButtonFemale().isSelected())
 			clientShallowClone.setSex(clientAddModFrame.getClientDataPanel().getRadioButtonMale().isSelected()
-					? Constans.DATA_BASE_MALE_SIGN
-					: Constans.DATA_BASE_FEMALE_SIGN);
+					? Constants.DATA_BASE_MALE_SIGN
+					: Constants.DATA_BASE_FEMALE_SIGN);
 		clientShallowClone
-				.setBirthDate(clientAddModFrame.getClientDataPanel().getDateChooserBirthDate().getDate() != null
-						? clientAddModFrame.getClientDataPanel().getDateChooserBirthDate().getDate()
-						: null);
+				.setBirthDate(clientAddModFrame.getClientDataPanel().getDateChooserBirthDate().getDate());
 		clientShallowClone.setEMail(clientAddModFrame.getClientDataPanel().getTextFieldEMail().getText());
 		clientShallowClone.setLogin(clientAddModFrame.getClientDataPanel().getTextFieldLogin().getText());
 
 		if (!"".equals(clientShallowClone.getPeselNumber())
-				&& clientShallowClone.getPeselNumber().length() != Constans.DATA_BASE_PESEL_NUMBER_LENGHT) {
+				&& clientShallowClone.getPeselNumber().length() != Constants.DATA_BASE_PESEL_NUMBER_LENGHT) {
 			Utils.displayOptionPane(
 					SystemProperties.getInstance().getResourceBundle()
 							.getString("clientAddModEvent.updatingClientPeselError"),
@@ -157,50 +155,48 @@ public class ClientAddModEvent {
 	private void fillRegistrationPanel() {
 		clientAddModFrame.getClientDataPanel().getTextFieldPeselNumber()
 				.setText(((Client) Params.getInstance().get("selectedClient")).getPeselNumber() != null
-						? ((Client) Params.getInstance().get("selectedClient")).getPeselNumber().toString()
+						? ((Client) Params.getInstance().get("selectedClient")).getPeselNumber()
 						: "");
 
 		clientAddModFrame.getClientDataPanel().getTextFieldDocumentNumber()
 				.setText(((Client) Params.getInstance().get("selectedClient")).getDocumentNumber() != null
-						? ((Client) Params.getInstance().get("selectedClient")).getDocumentNumber().toString()
+						? ((Client) Params.getInstance().get("selectedClient")).getDocumentNumber()
 						: "");
 
 		clientAddModFrame.getClientDataPanel().getTextFieldLogin()
 				.setText(((Client) Params.getInstance().get("selectedClient")).getLogin() != null
-						? ((Client) Params.getInstance().get("selectedClient")).getLogin().toString()
+						? ((Client) Params.getInstance().get("selectedClient")).getLogin()
 						: "");
 
 		clientAddModFrame.getClientDataPanel().getTextFieldEMail()
 				.setText(((Client) Params.getInstance().get("selectedClient")).getEMail() != null
-						? ((Client) Params.getInstance().get("selectedClient")).getEMail().toString()
+						? ((Client) Params.getInstance().get("selectedClient")).getEMail()
 						: "");
 
 		clientAddModFrame.getClientDataPanel().getTextFieldName()
 				.setText(((Client) Params.getInstance().get("selectedClient")).getName() != null
-						? ((Client) Params.getInstance().get("selectedClient")).getName().toString()
+						? ((Client) Params.getInstance().get("selectedClient")).getName()
 						: "");
 
 		clientAddModFrame.getClientDataPanel().getTextFieldSurname()
 				.setText(((Client) Params.getInstance().get("selectedClient")).getSurname() != null
-						? ((Client) Params.getInstance().get("selectedClient")).getSurname().toString()
+						? ((Client) Params.getInstance().get("selectedClient")).getSurname()
 						: "");
 
 		clientAddModFrame.getClientDataPanel().getTextFieldAddress()
 				.setText(((Client) Params.getInstance().get("selectedClient")).getAddress() != null
-						? ((Client) Params.getInstance().get("selectedClient")).getAddress().toString()
+						? ((Client) Params.getInstance().get("selectedClient")).getAddress()
 						: "");
 
 		clientAddModFrame.getClientDataPanel().getComboBoxCity()
-				.setSelectedItem(((Client) Params.getInstance().get("selectedClient")).getCity() != null
-						? ((Client) Params.getInstance().get("selectedClient")).getCity()
-						: null);
+				.setSelectedItem(((Client) Params.getInstance().get("selectedClient")).getCity());
 
-		if (((Client) Params.getInstance().get("selectedClient")).getSex() != null && Constans.DATA_BASE_MALE_SIGN
+		if (((Client) Params.getInstance().get("selectedClient")).getSex() != null && Constants.DATA_BASE_MALE_SIGN
 				.toString().equals(((Client) Params.getInstance().get("selectedClient")).getSex().toString()))
 			clientAddModFrame.getClientDataPanel().getGroupRadioButtonSex()
 					.setSelected(clientAddModFrame.getClientDataPanel().getRadioButtonMale().getModel(), true);
 		else if (((Client) Params.getInstance().get("selectedClient")).getSex() != null
-				&& Constans.DATA_BASE_FEMALE_SIGN.toString()
+				&& Constants.DATA_BASE_FEMALE_SIGN.toString()
 				.equals(((Client) Params.getInstance().get("selectedClient")).getSex().toString()))
 			clientAddModFrame.getClientDataPanel().getGroupRadioButtonSex()
 					.setSelected(clientAddModFrame.getClientDataPanel().getRadioButtonFemale().getModel(), true);
@@ -208,7 +204,7 @@ public class ClientAddModEvent {
 		try {
 			clientAddModFrame.getClientDataPanel().getDateChooserBirthDate()
 					.setDate(((Client) Params.getInstance().get("selectedClient")).getBirthDate() != null
-							? Constans.APPLICATION_DATE_FORMAT.parse(Constans.APPLICATION_DATE_FORMAT
+							? Constants.APPLICATION_DATE_FORMAT.parse(Constants.APPLICATION_DATE_FORMAT
 							.format(((Client) Params.getInstance().get("selectedClient")).getBirthDate()))
 							: null);
 		} catch (ParseException e) {
@@ -224,7 +220,7 @@ public class ClientAddModEvent {
 						.getActionCommand().charAt(0)
 						: null;
 				Date birthDate = clientAddModFrame.getClientDataPanel().getDateChooserBirthDate().getDate() != null
-						? Constans.APPLICATION_DATE_FORMAT.parse(Constans.APPLICATION_DATE_FORMAT
+						? Constants.APPLICATION_DATE_FORMAT.parse(Constants.APPLICATION_DATE_FORMAT
 						.format(clientAddModFrame.getClientDataPanel().getDateChooserBirthDate().getDate()))
 						: null;
 
@@ -239,7 +235,7 @@ public class ClientAddModEvent {
 				if (result) {
 					if (!"".equals(clientAddModFrame.getClientDataPanel().getTextFieldPeselNumber().getText())
 							&& clientAddModFrame.getClientDataPanel().getTextFieldPeselNumber().getText()
-							.length() != Constans.DATA_BASE_PESEL_NUMBER_LENGHT) {
+							.length() != Constants.DATA_BASE_PESEL_NUMBER_LENGHT) {
 						Utils.displayOptionPane(
 								SystemProperties.getInstance().getResourceBundle()
 										.getString("clientAddModEvent.updatingClientPeselError"),

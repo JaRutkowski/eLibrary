@@ -6,8 +6,8 @@ import java.util.List;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.AbstractTableModel;
 
-import com.javafee.common.Constans;
-import com.javafee.common.Constans.ClientTableColumn;
+import com.javafee.common.Constants;
+import com.javafee.common.Constants.ClientTableColumn;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Validator;
 import com.javafee.exception.LogGuiException;
@@ -102,16 +102,16 @@ public class ClientTableModel extends AbstractTableModel {
 				return client.getCity() != null ? client.getCity().getName() : null;
 			case COL_SEX:
 				if (client.getSex() != null) {
-					if (Constans.DATA_BASE_MALE_SIGN.toString().equals(client.getSex().toString()))
+					if (Constants.DATA_BASE_MALE_SIGN.toString().equals(client.getSex().toString()))
 						return SystemProperties.getInstance().getResourceBundle()
 								.getString("clientTableModel.registeredMaleVal");
-					else if (Constans.DATA_BASE_FEMALE_SIGN.toString().equals(client.getSex().toString()))
+					else if (Constants.DATA_BASE_FEMALE_SIGN.toString().equals(client.getSex().toString()))
 						return SystemProperties.getInstance().getResourceBundle()
 								.getString("clientTableModel.registeredFemaleVal");
 				} else
 					return null;
 			case COL_BIRTH_DATE:
-				return client.getBirthDate() != null ? Constans.APPLICATION_DATE_FORMAT.format(client.getBirthDate())
+				return client.getBirthDate() != null ? Constants.APPLICATION_DATE_FORMAT.format(client.getBirthDate())
 						: null;
 			case COL_REGISTERED:
 				return client.getRegistered()

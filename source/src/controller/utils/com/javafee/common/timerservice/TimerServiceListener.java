@@ -6,7 +6,7 @@ import java.util.TimerTask;
 
 import javax.swing.JLabel;
 
-import com.javafee.common.Constans;
+import com.javafee.common.Constants;
 
 public class TimerServiceListener implements ITimerService {
 
@@ -23,7 +23,7 @@ public class TimerServiceListener implements ITimerService {
 			public void run() {
 				if (currentSecond == 60)
 					reset();
-				label.setText(String.format("%s:%02d ", Constans.APPLICATION_TIME_FORMAT.format(calendar.getTime()),
+				label.setText(String.format("%s:%02d ", Constants.APPLICATION_TIME_FORMAT.format(calendar.getTime()),
 						currentSecond));
 				currentSecond++;
 			}

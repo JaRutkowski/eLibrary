@@ -54,11 +54,11 @@ public class Utils {
 		JFileChooser jfc = new JFileChooser(dir);
 		jfc.addChoosableFileFilter(new FileFilter() {
 			public boolean accept(File f) {
-				return f.getName().toLowerCase().endsWith(Constans.APPLICATION_TEMPLATE_EXTENSION) || f.isDirectory();
+				return f.getName().toLowerCase().endsWith(Constants.APPLICATION_TEMPLATE_EXTENSION) || f.isDirectory();
 			}
 
 			public String getDescription() {
-				return Constans.APPLICATION_TEMPLATE_EXTENSION_DESCRIPTION;
+				return Constants.APPLICATION_TEMPLATE_EXTENSION_DESCRIPTION;
 			}
 		});
 
@@ -71,24 +71,24 @@ public class Utils {
 
 			Path path = Paths.get(result.getParent());
 
-			if (path.toString().toLowerCase().endsWith(Constans.APPLICATION_TEMPLATE_DIRECTORY_NAME.toLowerCase())) {
-				if (result.getAbsolutePath().toString().toLowerCase()
-						.endsWith(Constans.APPLICATION_TEMPLATE_EXTENSION.toLowerCase()))
+			if (path.toString().toLowerCase().endsWith(Constants.APPLICATION_TEMPLATE_DIRECTORY_NAME.toLowerCase())) {
+				if (result.getAbsolutePath().toLowerCase()
+						.endsWith(Constants.APPLICATION_TEMPLATE_EXTENSION.toLowerCase()))
 					result = new File(path.toString(), result.getName());
 				else
-					result = new File(path.toString(), result.getName() + Constans.APPLICATION_TEMPLATE_EXTENSION);
+					result = new File(path.toString(), result.getName() + Constants.APPLICATION_TEMPLATE_EXTENSION);
 			} else {
 				try {
 					path = Paths.get(
-							result.getParentFile() + File.separator + Constans.APPLICATION_TEMPLATE_DIRECTORY_NAME);
+							result.getParentFile() + File.separator + Constants.APPLICATION_TEMPLATE_DIRECTORY_NAME);
 					if (!Files.exists(path)) {
 						Files.createDirectories(path);
-						if (result.getAbsolutePath().toString().toLowerCase()
-								.endsWith(Constans.APPLICATION_TEMPLATE_EXTENSION.toLowerCase()))
+						if (result.getAbsolutePath().toLowerCase()
+								.endsWith(Constants.APPLICATION_TEMPLATE_EXTENSION.toLowerCase()))
 							result = new File(path.toString(), result.getName());
 						else
 							result = new File(path.toString(),
-									result.getName() + Constans.APPLICATION_TEMPLATE_EXTENSION);
+									result.getName() + Constants.APPLICATION_TEMPLATE_EXTENSION);
 					}
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -104,11 +104,11 @@ public class Utils {
 		JFileChooser jfc = new JFileChooser(dir);
 		jfc.addChoosableFileFilter(new FileFilter() {
 			public boolean accept(File f) {
-				return f.getName().toLowerCase().endsWith(Constans.APPLICATION_TEMPLATE_EXTENSION) || f.isDirectory();
+				return f.getName().toLowerCase().endsWith(Constants.APPLICATION_TEMPLATE_EXTENSION) || f.isDirectory();
 			}
 
 			public String getDescription() {
-				return Constans.APPLICATION_TEMPLATE_EXTENSION_DESCRIPTION;
+				return Constants.APPLICATION_TEMPLATE_EXTENSION_DESCRIPTION;
 			}
 		});
 
@@ -121,24 +121,24 @@ public class Utils {
 
 			Path path = Paths.get(result.getParent());
 
-			if (path.toString().toLowerCase().endsWith(Constans.APPLICATION_TEMPLATE_DIRECTORY_NAME.toLowerCase())) {
-				if (result.getAbsolutePath().toString().toLowerCase()
-						.endsWith(Constans.APPLICATION_TEMPLATE_EXTENSION.toLowerCase()))
+			if (path.toString().toLowerCase().endsWith(Constants.APPLICATION_TEMPLATE_DIRECTORY_NAME.toLowerCase())) {
+				if (result.getAbsolutePath().toLowerCase()
+						.endsWith(Constants.APPLICATION_TEMPLATE_EXTENSION.toLowerCase()))
 					result = new File(path.toString(), result.getName());
 				else
-					result = new File(path.toString(), result.getName() + Constans.APPLICATION_TEMPLATE_EXTENSION);
+					result = new File(path.toString(), result.getName() + Constants.APPLICATION_TEMPLATE_EXTENSION);
 			} else {
 				try {
 					path = Paths.get(
-							result.getParentFile() + File.separator + Constans.APPLICATION_TEMPLATE_DIRECTORY_NAME);
+							result.getParentFile() + File.separator + Constants.APPLICATION_TEMPLATE_DIRECTORY_NAME);
 					if (!Files.exists(path)) {
 						Files.createDirectories(path);
-						if (result.getAbsolutePath().toString().toLowerCase()
-								.endsWith(Constans.APPLICATION_TEMPLATE_EXTENSION.toLowerCase()))
+						if (result.getAbsolutePath().toLowerCase()
+								.endsWith(Constants.APPLICATION_TEMPLATE_EXTENSION.toLowerCase()))
 							result = new File(path.toString(), result.getName());
 						else
 							result = new File(path.toString(),
-									result.getName() + Constans.APPLICATION_TEMPLATE_EXTENSION);
+									result.getName() + Constants.APPLICATION_TEMPLATE_EXTENSION);
 					}
 				} catch (IOException e) {
 					e.printStackTrace();

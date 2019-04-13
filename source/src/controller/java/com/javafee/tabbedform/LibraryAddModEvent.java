@@ -5,8 +5,8 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JOptionPane;
 
-import com.javafee.common.Constans;
-import com.javafee.common.Constans.Context;
+import com.javafee.common.Constants;
+import com.javafee.common.Constants.Context;
 import com.javafee.common.Params;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
@@ -76,7 +76,7 @@ public class LibraryAddModEvent {
 						SystemProperties.getInstance().getResourceBundle()
 								.getString("libraryAddModEvent.incorrectInventoryNumberWarning1"));
 			} else if (libraryAddModFrame.getTextFieldInventoryNumber().getText()
-					.length() == Constans.DATA_BASE_INVENTORY_NUMBER_LENGTH) {
+					.length() == Constants.DATA_BASE_INVENTORY_NUMBER_LENGTH) {
 
 				Book selectedBook = ((BookTableModel) libraryAddModFrame.getBookTable().getModel())
 						.getBook(selectedRowIndex);
@@ -144,7 +144,7 @@ public class LibraryAddModEvent {
 									.getString("libraryAddModEvent.incorrectInventoryNumberWarningTitle"),
 							SystemProperties.getInstance().getResourceBundle()
 									.getString("libraryAddModEvent.incorrectInventoryNumberWarning1"));
-				} else if (inventoryNumber.length() == Constans.DATA_BASE_INVENTORY_NUMBER_LENGTH) {
+				} else if (inventoryNumber.length() == Constants.DATA_BASE_INVENTORY_NUMBER_LENGTH) {
 					HibernateUtil.beginTransaction();
 					Volume volume = new Volume();
 					volume.setBook(selectedBook);
@@ -201,7 +201,7 @@ public class LibraryAddModEvent {
 	private void fillTextBoxInventoryNumber() {
 		libraryAddModFrame.getTextFieldInventoryNumber()
 				.setText(((Volume) Params.getInstance().get("selectedVolume")).getInventoryNumber() != null
-						? ((Volume) Params.getInstance().get("selectedVolume")).getInventoryNumber().toString()
+						? ((Volume) Params.getInstance().get("selectedVolume")).getInventoryNumber()
 						: "");
 	}
 

@@ -20,20 +20,12 @@ import lombok.EqualsAndHashCode;
 @Table(name = "lib_library_worker")
 @AssociationOverrides({@AssociationOverride(name = "pk.worker", joinColumns = @JoinColumn(name = "id_worker")),
 		@AssociationOverride(name = "pk.libraryData", joinColumns = @JoinColumn(name = "id_library_data"))})
-public class LibraryWorker {
+public class LibraryWorker implements Cloneable {
 	@EmbeddedId
 	private LibraryWorkerId pk = new LibraryWorkerId();
 
 	@Column(name = "is_accountant", unique = false, nullable = true, insertable = true, updatable = true)
 	private Boolean isAccountant;
-
-	public LibraryWorkerId getPk() {
-		return pk;
-	}
-
-	public void setPk(LibraryWorkerId pk) {
-		this.pk = pk;
-	}
 
 	@Transient
 	public Worker getWorker() {
@@ -44,12 +36,18 @@ public class LibraryWorker {
 		getPk().setWorker(worker);
 	}
 
-	@Transient
-	public LibraryData getLibData() {
-		return getPk().getLibraryData();
+	public void setLibraryData(LibraryData libraryData) {
+		getPk().setLibraryData(libraryData);
 	}
 
-	public void setLibData(LibraryData libraryData) {
-		getPk().setLibraryData(libraryData);
+	@Override
+	public Object clone() {
+		Object result = null;
+		try {
+			result = super.clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 }

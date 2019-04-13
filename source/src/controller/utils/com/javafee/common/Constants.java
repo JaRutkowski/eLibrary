@@ -10,7 +10,7 @@ import javax.swing.KeyStroke;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-public final class Constans {
+public final class Constants {
 	@Getter
 	@AllArgsConstructor
 	public enum Tab_Client {
@@ -222,11 +222,11 @@ public final class Constans {
 	}
 
 	public enum Role {
-		ADMIN, WORKER_ACCOUNTANT, WORKER_LIBRARIAN, CLIENT;
+		ADMIN, WORKER_ACCOUNTANT, WORKER_LIBRARIAN, CLIENT
 	}
 
 	public enum Context {
-		ADDITION, MODIFICATION, CANCELED, LOAN, READING_ROOM;
+		ADDITION, MODIFICATION, CANCELED, LOAN, READING_ROOM
 	}
 
 	public static final int MAIN_SPLASH_SCREEN_DURATION = 1000;
@@ -294,6 +294,8 @@ public final class Constans {
 	public static final String DATA_BASE_MESSAGE_TYPE_USR_MESSAGE = "usr_message";
 	public static final String DATA_BASE_MESSAGE_TYPE_SYS_MESSAGE = "sys_message";
 	public static final String DATA_BASE_MESSAGE_TYPE_SYS_NOTIFICATION = "sys_notifiaction";
+	public static final String DATA_BASE_DELETED_MESSAGE_RECIPIENT_VALUE = "null";
+	public static final String DATA_BASE_DELETED_MESSAGE_SENDER_VALUE = "null";
 
 	public static double PENALTY_VALUE = 0.60;
 }

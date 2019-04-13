@@ -35,13 +35,29 @@ public class Worker extends UserData implements Cloneable {
 
 	@Override
 	public Object clone() {
-		Object result = null;
+		Worker result = null;
 		try {
-			result = super.clone();
+			result = (Worker) super.clone();
+			for (LibraryWorker e : ((Worker) super.clone()).getLibraryWorker()) {
+				result.getLibraryWorker().add((LibraryWorker) e.clone());
+			}
+
 		} catch (CloneNotSupportedException e) {
 			e.printStackTrace();
 		}
 		return result;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (o == this) {
+			return true;
+		}
+		if (!(o instanceof Worker)) {
+			return false;
+		}
+		Worker cc = (Worker) o;
+		return cc.getIdUserData() == getIdUserData();
 	}
 
 	@Override

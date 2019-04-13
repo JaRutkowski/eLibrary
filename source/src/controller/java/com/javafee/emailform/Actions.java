@@ -12,8 +12,8 @@ import java.util.stream.Collectors;
 
 import javax.swing.JOptionPane;
 
-import com.javafee.common.Constans;
-import com.javafee.common.Constans.Tab_Email;
+import com.javafee.common.Constants;
+import com.javafee.common.Constants.Tab_Email;
 import com.javafee.common.IActionForm;
 import com.javafee.common.Params;
 import com.javafee.common.SystemProperties;
@@ -107,7 +107,7 @@ public class Actions implements IActionForm {
 		if (validate()) {
 			com.javafee.hibernate.dto.common.SystemProperties systemProperties = Common
 					.checkAndGetSystemProperties(LogInEvent.getWorker() != null ? LogInEvent.getWorker().getIdUserData()
-							: Constans.DATA_BASE_ADMIN_ID);
+							: Constants.DATA_BASE_ADMIN_ID);
 
 			if (systemProperties.getTemplateDirectory() == null) {
 				if (Utils.displayConfirmDialog(com.javafee.common.SystemProperties.getInstance().getResourceBundle()
@@ -117,7 +117,7 @@ public class Actions implements IActionForm {
 						try {
 							Files.write(Paths.get(result.getPath()),
 									Arrays.asList(emailForm.getPanelComposePage().getEditorPaneContent().getText()),
-									Charset.forName(Constans.APPLICATION_TEMPLATE_ENCODING));
+									Charset.forName(Constants.APPLICATION_TEMPLATE_ENCODING));
 
 							systemProperties.setTemplateDirectory(result.getParent());
 
@@ -144,7 +144,7 @@ public class Actions implements IActionForm {
 					try {
 						Files.write(Paths.get(result.getPath()),
 								Arrays.asList(emailForm.getPanelComposePage().getEditorPaneContent().getText()),
-								Charset.forName(Constans.APPLICATION_TEMPLATE_ENCODING));
+								Charset.forName(Constants.APPLICATION_TEMPLATE_ENCODING));
 
 						Utils.displayOptionPane(
 								com.javafee.common.SystemProperties.getInstance().getResourceBundle()
@@ -170,7 +170,7 @@ public class Actions implements IActionForm {
 	private void onClickMenuLoadTemplate() {
 		com.javafee.hibernate.dto.common.SystemProperties systemProperties = com.javafee.hibernate.dao.common.Common
 				.checkAndGetSystemProperties(LogInEvent.getWorker() != null ? LogInEvent.getWorker().getIdUserData()
-						: Constans.DATA_BASE_ADMIN_ID);
+						: Constants.DATA_BASE_ADMIN_ID);
 
 		if (systemProperties.getTemplateDirectory() == null) {
 			if (Utils.displayConfirmDialog(com.javafee.common.SystemProperties.getInstance().getResourceBundle()

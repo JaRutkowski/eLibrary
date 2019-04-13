@@ -10,13 +10,13 @@ import javax.mail.Transport;
 
 import org.apache.log4j.Logger;
 
-import com.javafee.common.Constans;
+import com.javafee.common.Constants;
 
 import lombok.Getter;
 
 public class MailSender {
-	private final String username = Constans.APPLICATION_EMAIL;
-	private final String password = Constans.APPLICATION_EMAIL_PASSWORD;
+	private final String username = Constants.APPLICATION_EMAIL;
+	private final String password = Constants.APPLICATION_EMAIL_PASSWORD;
 	@Getter
 	private Properties properties;
 	@Getter

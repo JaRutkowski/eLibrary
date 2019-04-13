@@ -3,8 +3,8 @@ package com.javafee.tabbedform;
 import javax.swing.JOptionPane;
 
 import com.javafee.common.Common;
-import com.javafee.common.Constans;
-import com.javafee.common.Constans.Role;
+import com.javafee.common.Constants;
+import com.javafee.common.Constants.Role;
 import com.javafee.common.IActionForm;
 import com.javafee.common.Params;
 import com.javafee.common.SystemProperties;
@@ -106,7 +106,7 @@ public final class TabClientEvent implements IActionForm {
 	private void onClickBtnAdd() {
 		if (clientAddModEvent == null)
 			clientAddModEvent = new ClientAddModEvent();
-		clientAddModEvent.control(Constans.Context.ADDITION,
+		clientAddModEvent.control(Constants.Context.ADDITION,
 				(ClientTableModel) tabbedForm.getPanelClient().getClientTable().getModel());
 	}
 
@@ -124,7 +124,7 @@ public final class TabClientEvent implements IActionForm {
 
 				if (clientAddModEvent == null)
 					clientAddModEvent = new ClientAddModEvent();
-				clientAddModEvent.control(Constans.Context.MODIFICATION,
+				clientAddModEvent.control(Constants.Context.MODIFICATION,
 						(ClientTableModel) tabbedForm.getPanelClient().getClientTable().getModel());
 			}
 		} else {
@@ -226,7 +226,7 @@ public final class TabClientEvent implements IActionForm {
 							.equals(tabbedForm.getPanelClient().getClientTable().getModel().getValueAt(
 									tabbedForm.getPanelClient().getClientTable().convertRowIndexToModel(
 											tabbedForm.getPanelClient().getClientTable().getSelectedRow()),
-									Constans.ClientTableColumn.COL_REGISTERED.getValue())) ? true : false);
+									Constants.ClientTableColumn.COL_REGISTERED.getValue())));
 	}
 
 	private void switchPerspectiveToAdm(boolean isAdminOrAccountant) {

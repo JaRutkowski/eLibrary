@@ -5,8 +5,8 @@ import java.util.List;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.AbstractTableModel;
 
-import com.javafee.common.Constans;
-import com.javafee.common.Constans.AuthorTableColumn;
+import com.javafee.common.Constants;
+import com.javafee.common.Constants.AuthorTableColumn;
 import com.javafee.common.SystemProperties;
 import com.javafee.hibernate.dao.HibernateDao;
 import com.javafee.hibernate.dao.HibernateUtil;
@@ -78,7 +78,7 @@ public class AuthorTableModel extends AbstractTableModel {
 			case COL_SURNAME:
 				return author.getSurname();
 			case COL_BIRTH_DATE:
-				return author.getBirthDate() != null ? Constans.APPLICATION_DATE_FORMAT.format(author.getBirthDate())
+				return author.getBirthDate() != null ? Constants.APPLICATION_DATE_FORMAT.format(author.getBirthDate())
 						: null;
 			default:
 				return null;

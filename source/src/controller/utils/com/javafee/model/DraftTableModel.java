@@ -8,7 +8,7 @@ import javax.swing.table.AbstractTableModel;
 
 import org.hibernate.query.Query;
 
-import com.javafee.common.Constans.OutboxTableColumn;
+import com.javafee.common.Constants.OutboxTableColumn;
 import com.javafee.common.SystemProperties;
 import com.javafee.hibernate.dao.HibernateUtil;
 import com.javafee.hibernate.dto.common.message.Message;
@@ -90,7 +90,10 @@ public class DraftTableModel extends AbstractTableModel {
 				AtomicInteger counter = new AtomicInteger(1);
 				StringBuilder recipientsEmails = new StringBuilder("[");
 				message.getRecipient().forEach(recipient -> {
-					recipientsEmails.append(recipient.getUserData().getEMail());
+					if (recipient.getUserData() != null)
+						recipientsEmails.append(recipient.getUserData().getEMail());
+					else
+						recipientsEmails.append(SystemProperties.getInstance().getResourceBundle().getString("outboxTableModel.deletedUserAlias"));
 					if (counter.get() != message.getRecipient().size())
 						recipientsEmails.append(",");
 				});

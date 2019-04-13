@@ -33,7 +33,7 @@ public class Test {
 		//
 		// LibraryWorker lw = new LibraryWorker();
 		// lw.setIsAccountant(true);
-		// lw.setLibData(ld);
+		// lw.setLibraryData(ld);
 		// lw.setWorker(makolek);
 
 		// testWorker
@@ -69,14 +69,14 @@ public class Test {
 		// -------------------------------------------------------------------------------------------------
 		// LibraryWorker libraryWorker = new LibraryWorker();
 		// libraryWorker.setWorker(testWorker);
-		// libraryWorker.setLibData(testLibData);
+		// libraryWorker.setLibraryData(testLibData);
 		// libraryWorker.setIsAccountant(false);
 
 		// second employment of testWorker in testLibData1 accountant
 		// -------------------------------------------------------------------------------------------------
 		// LibraryWorker libraryWorker1 = new LibraryWorker();
 		// libraryWorker1.setWorker(testWorker);
-		// libraryWorker1.setLibData(testLibData1);
+		// libraryWorker1.setLibraryData(testLibData1);
 		// libraryWorker1.setIsAccountant(true);
 		//
 		// testWorker.getLibraryWorker().add(libraryWorker);

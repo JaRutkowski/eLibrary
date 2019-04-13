@@ -4,7 +4,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import com.javafee.common.Constans;
+import com.javafee.common.Constants;
 import com.javafee.tabbedform.Actions;
 
 public class NetworkServiceListener implements INetworkService {
@@ -18,8 +18,8 @@ public class NetworkServiceListener implements INetworkService {
 	public void initialize(Actions actions) {
 		runnable = new NetworkConnectionCheckerService();
 		runnable.setActions(actions);
-		scheduler.scheduleAtFixedRate(runnable, Constans.APPLICATION_NETWORK_SERVICE_LISTENER_DURATION,
-				Constans.APPLICATION_NETWORK_SERVICE_LISTENER_DURATION, TimeUnit.SECONDS);
+		scheduler.scheduleAtFixedRate(runnable, Constants.APPLICATION_NETWORK_SERVICE_LISTENER_DURATION,
+				Constants.APPLICATION_NETWORK_SERVICE_LISTENER_DURATION, TimeUnit.SECONDS);
 	}
 
 	@Override

@@ -9,7 +9,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JTabbedPane;
 
-import com.javafee.common.Constans;
+import com.javafee.common.Constants;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
 import com.javafee.emailform.emails.ComposePagePanel;
@@ -58,9 +58,9 @@ public class EmailForm {
 		gridBagLayout.rowHeights = new int[]{0, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		frame.setMinimumSize(Constans.EMAIL_FORM_MINIMUM_SIZE);
+		frame.setMinimumSize(Constants.EMAIL_FORM_MINIMUM_SIZE);
 		frame.getContentPane().setLayout(gridBagLayout);
-		frame.setTitle(Constans.APPLICATION_NAME);
+		frame.setTitle(Constants.APPLICATION_NAME);
 		frame.setIconImage(
 				Toolkit.getDefaultToolkit().getImage(StartForm.class.getResource("/images/splashScreen.jpg")));
 		frame.setBounds(100, 100, 576, 424);
@@ -83,19 +83,19 @@ public class EmailForm {
 		menuSaveAsTemplate = new JMenuItem(
 				SystemProperties.getInstance().getResourceBundle().getString("emailForm.menuItemSaveAsTemplateTitle"),
 				KeyEvent.VK_CONTROL);
-		menuSaveAsTemplate.setAccelerator(Constans.SHURTCUT_SAVE_TEMPLATE);
+		menuSaveAsTemplate.setAccelerator(Constants.SHURTCUT_SAVE_TEMPLATE);
 		menuTemplate.add(menuSaveAsTemplate);
 
 		menuLoadTemplate = new JMenuItem(
 				SystemProperties.getInstance().getResourceBundle().getString("emailForm.menuItemLoadTemplateTitle"),
 				KeyEvent.VK_CONTROL);
-		menuLoadTemplate.setAccelerator(Constans.SHURTCUT_LOAD_TEMPLATE);
+		menuLoadTemplate.setAccelerator(Constants.SHURTCUT_LOAD_TEMPLATE);
 		menuTemplate.add(menuLoadTemplate);
 
 		menuManageTemplate = new JMenuItem(
 				SystemProperties.getInstance().getResourceBundle().getString("emailForm.menuItemManageTemplateTitle"),
 				KeyEvent.VK_CONTROL);
-		menuManageTemplate.setAccelerator(Constans.SHURTCUT_MANAGE_TEMPLATE);
+		menuManageTemplate.setAccelerator(Constants.SHURTCUT_MANAGE_TEMPLATE);
 		menuTemplate.add(menuManageTemplate);
 
 		frame.setJMenuBar(menuBar);

@@ -4,12 +4,14 @@ import java.util.stream.Collectors;
 
 import javax.swing.JOptionPane;
 
-import com.javafee.common.Constans;
-import com.javafee.common.Constans.Role;
+import com.javafee.common.Common;
+import com.javafee.common.Constants;
+import com.javafee.common.Constants.Role;
 import com.javafee.common.IActionForm;
 import com.javafee.common.Params;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
+import com.javafee.common.Validator;
 import com.javafee.exception.LogGuiException;
 import com.javafee.exception.RefusedWorkerEventLoadingException;
 import com.javafee.hibernate.dao.HibernateUtil;
@@ -84,7 +86,7 @@ public final class TabWorkerEvent implements IActionForm {
 	private void onClickBtnAdd() {
 		if (workerAddModEvent == null)
 			workerAddModEvent = new WorkerAddModEvent();
-		workerAddModEvent.control(Constans.Context.ADDITION,
+		workerAddModEvent.control(Constants.Context.ADDITION,
 				(WorkerTableModel) tabbedForm.getPanelWorker().getWorkerTable().getModel());
 
 	}
@@ -103,7 +105,7 @@ public final class TabWorkerEvent implements IActionForm {
 
 				if (workerAddModEvent == null)
 					workerAddModEvent = new WorkerAddModEvent();
-				workerAddModEvent.control(Constans.Context.MODIFICATION,
+				workerAddModEvent.control(Constants.Context.MODIFICATION,
 						(WorkerTableModel) tabbedForm.getPanelWorker().getWorkerTable().getModel());
 			}
 		} else {
@@ -119,27 +121,43 @@ public final class TabWorkerEvent implements IActionForm {
 		if (tabbedForm.getPanelWorker().getWorkerTable().getSelectedRow() != -1) {
 			int selectedRowIndex = tabbedForm.getPanelWorker().getWorkerTable()
 					.convertRowIndexToModel(tabbedForm.getPanelWorker().getWorkerTable().getSelectedRow());
-
-			if (Utils.displayConfirmDialog(
-					SystemProperties.getInstance().getResourceBundle().getString("confirmDialog.deleteMessage"),
-					"") == JOptionPane.YES_OPTION) {
-				if (selectedRowIndex != -1) {
-					Worker selectedWorker = ((WorkerTableModel) tabbedForm.getPanelWorker().getWorkerTable().getModel())
-							.getWorker(selectedRowIndex);
-
-					HibernateUtil.beginTransaction();
-					HibernateUtil.getSession().delete(selectedWorker);
-					HibernateUtil.commitTransaction();
-					((WorkerTableModel) tabbedForm.getPanelWorker().getWorkerTable().getModel()).remove(selectedWorker);
-
+			if (selectedRowIndex != -1) {
+				Worker selectedWorker = ((WorkerTableModel) tabbedForm.getPanelWorker().getWorkerTable().getModel())
+						.getWorker(selectedRowIndex);
+				if (Utils.displayConfirmDialog(
+						SystemProperties.getInstance().getResourceBundle().getString("confirmDialog.deleteMessage"),
+						"") == JOptionPane.YES_OPTION) {
+					if (!Validator.validateIfUserCorrespondenceExists(selectedWorker.getIdUserData())) {
+						HibernateUtil.beginTransaction();
+						HibernateUtil.getSession().delete(selectedWorker);
+						HibernateUtil.commitTransaction();
+						((WorkerTableModel) tabbedForm.getPanelWorker().getWorkerTable().getModel()).remove(((WorkerTableModel) tabbedForm.getPanelWorker().getWorkerTable().getModel())
+								.getWorker(selectedRowIndex));
+					} else {
+						if (Utils.displayConfirmDialog(
+								SystemProperties.getInstance().getResourceBundle().getString("confirmDialog.clearWorkerCorrespondenceData"),
+								"") == JOptionPane.YES_OPTION) {
+							if (Common.clearMessagesSenderData(selectedWorker.getIdUserData()) > 0) {
+								HibernateUtil.beginTransaction();
+								HibernateUtil.getSession().delete(selectedWorker);
+								HibernateUtil.commitTransaction();
+								((WorkerTableModel) tabbedForm.getPanelWorker().getWorkerTable().getModel()).remove(((WorkerTableModel) tabbedForm.getPanelWorker().getWorkerTable().getModel())
+										.getWorker(selectedRowIndex));
+								JOptionPane.showMessageDialog(tabbedForm.getFrame(),
+										SystemProperties.getInstance().getResourceBundle().getString("tabWorkerEvent.deleteWorkerSuccess"),
+										SystemProperties.getInstance().getResourceBundle().getString("tabWorkerEvent.deleteWorkerSuccessTitle"),
+										JOptionPane.INFORMATION_MESSAGE);
+							}
+						}
+					}
 				}
 			}
 		} else {
 			LogGuiException.logWarning(
 					SystemProperties.getInstance().getResourceBundle()
-							.getString("tabClientEvent.notSelectedClientWarningTitle"),
+							.getString("tabWorkerEvent.notSelectedWorkerWarningTitle"),
 					SystemProperties.getInstance().getResourceBundle()
-							.getString("tabClientEvent.notSelectedClientWarning"));
+							.getString("tabWorkerEvent.notSelectedWorkerWarning"));
 		}
 	}
 
@@ -213,7 +231,7 @@ public final class TabWorkerEvent implements IActionForm {
 					(SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.registeredTrueVal"))
 							.equals(tabbedForm.getPanelWorker().getWorkerTable().getModel().getValueAt(
 									tabbedForm.getPanelWorker().getWorkerTable().getSelectedRow(),
-									Constans.ClientTableColumn.COL_REGISTERED.getValue())) ? true : false);
+									Constants.ClientTableColumn.COL_REGISTERED.getValue())));
 			LibraryWorker libraryWorker = checkIfHired(
 					((WorkerTableModel) tabbedForm.getPanelWorker().getWorkerTable().getModel())
 							.getWorker(tabbedForm.getPanelWorker().getWorkerTable().convertRowIndexToModel(
@@ -228,10 +246,10 @@ public final class TabWorkerEvent implements IActionForm {
 	}
 
 	public boolean validateClientTableSelection(int index) {
-		return index > -1 ? true : false;
+		return index > -1;
 	}
 
 	public boolean validatePasswordFieldIsEmpty() {
-		return tabbedForm.getPanelWorker().getWorkerDataPanel().getPasswordField().getPassword() != null ? false : true;
+		return tabbedForm.getPanelWorker().getWorkerDataPanel().getPasswordField().getPassword() == null;
 	}
 }

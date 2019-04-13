@@ -8,8 +8,8 @@ import java.util.List;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.AbstractTableModel;
 
-import com.javafee.common.Constans;
-import com.javafee.common.Constans.LendTableColumn;
+import com.javafee.common.Constants;
+import com.javafee.common.Constants.LendTableColumn;
 import com.javafee.common.SystemProperties;
 import com.javafee.hibernate.dao.HibernateUtil;
 import com.javafee.hibernate.dto.library.Lend;
@@ -96,9 +96,9 @@ public class LoanTableModel extends AbstractTableModel {
 			case COL_VOLUME_INVENTORY_NUMBER:
 				return lend.getVolume().getInventoryNumber();
 			case COL_LEND_DATE:
-				return Constans.APPLICATION_DATE_FORMAT.format(lend.getLendDate());
+				return Constants.APPLICATION_DATE_FORMAT.format(lend.getLendDate());
 			case COL_RETURNED_DATE:
-				return Constans.APPLICATION_DATE_FORMAT.format(lend.getReturnedDate());
+				return Constants.APPLICATION_DATE_FORMAT.format(lend.getReturnedDate());
 			case COL_PENALTY:
 				return calculatePenalty(lend.getReturnedDate());
 			default:
@@ -119,7 +119,7 @@ public class LoanTableModel extends AbstractTableModel {
 			diffMonth = diffYear * 12 + endCalendar.get(Calendar.MONTH) - startCalendar.get(Calendar.MONTH);
 		}
 
-		return diffMonth * Constans.PENALTY_VALUE;
+		return diffMonth * Constants.PENALTY_VALUE;
 	}
 
 	@Override

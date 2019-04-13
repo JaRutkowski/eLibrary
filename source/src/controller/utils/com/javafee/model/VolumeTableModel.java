@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.AbstractTableModel;
 
-import com.javafee.common.Constans.VolumeTableColumn;
+import com.javafee.common.Constants.VolumeTableColumn;
 import com.javafee.common.SystemProperties;
 import com.javafee.hibernate.dao.HibernateUtil;
 import com.javafee.hibernate.dto.library.Volume;

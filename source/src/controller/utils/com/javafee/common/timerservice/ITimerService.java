@@ -4,8 +4,8 @@ import javax.swing.JLabel;
 
 public interface ITimerService {
 
-	public void initialize(JLabel label);
+	void initialize(JLabel label);
 
-	public void destroy();
+	void destroy();
 
 }

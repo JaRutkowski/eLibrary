@@ -14,7 +14,7 @@ import javax.mail.Message;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
-import com.javafee.common.Constans;
+import com.javafee.common.Constants;
 import com.javafee.common.IActionForm;
 import com.javafee.common.Params;
 import com.javafee.common.SystemProperties;
@@ -158,7 +158,7 @@ public class TabComposePageEvent implements IActionForm {
 		if (Params.getInstance().get("selectedClient") != null && //
 				((Client) Params.getInstance().get("selectedClient")).getEMail() != null)
 			emailForm.getPanelComposePage().getComboBoxTo()
-					.setSelectedItem((Client) Params.getInstance().get("selectedClient"));
+					.setSelectedItem(Params.getInstance().get("selectedClient"));
 	}
 
 	private void onClickBtnAddAttachment() {
@@ -250,7 +250,7 @@ public class TabComposePageEvent implements IActionForm {
 	                         String text) {
 		try {
 			MessageType messageType = com.javafee.hibernate.dao.common.Common
-					.findMessageTypeByName(Constans.DATA_BASE_MESSAGE_TYPE_USR_MESSAGE).get();
+					.findMessageTypeByName(Constants.DATA_BASE_MESSAGE_TYPE_USR_MESSAGE).get();
 
 			HibernateUtil.beginTransaction();
 			com.javafee.hibernate.dto.common.message.Message message = new com.javafee.hibernate.dto.common.message.Message();
@@ -272,7 +272,7 @@ public class TabComposePageEvent implements IActionForm {
 			message.setTitle(subject);
 			message.setContent(text);
 			message.setSendDate(
-					Constans.APPLICATION_DATE_FORMAT.parse(Constans.APPLICATION_DATE_FORMAT.format(new Date())));
+					Constants.APPLICATION_DATE_FORMAT.parse(Constants.APPLICATION_DATE_FORMAT.format(new Date())));
 
 			HibernateUtil.getSession().save(message);
 			HibernateUtil.commitTransaction();
@@ -312,7 +312,7 @@ public class TabComposePageEvent implements IActionForm {
 			messageShallowClone.setTitle(subject);
 			messageShallowClone.setContent(text);
 			messageShallowClone.setSendDate(
-					Constans.APPLICATION_DATE_FORMAT.parse(Constans.APPLICATION_DATE_FORMAT.format(new Date())));
+					Constants.APPLICATION_DATE_FORMAT.parse(Constants.APPLICATION_DATE_FORMAT.format(new Date())));
 
 			HibernateUtil.beginTransaction();
 			HibernateUtil.getSession().update(Message.class.getName(), messageShallowClone);
@@ -342,7 +342,7 @@ public class TabComposePageEvent implements IActionForm {
 	                         String text) {
 		try {
 			MessageType messageType = com.javafee.hibernate.dao.common.Common
-					.findMessageTypeByName(Constans.DATA_BASE_MESSAGE_TYPE_USR_MESSAGE).get();
+					.findMessageTypeByName(Constants.DATA_BASE_MESSAGE_TYPE_USR_MESSAGE).get();
 
 			HibernateUtil.beginTransaction();
 			com.javafee.hibernate.dto.common.message.Message message = new com.javafee.hibernate.dto.common.message.Message();
@@ -365,7 +365,7 @@ public class TabComposePageEvent implements IActionForm {
 			message.setTitle(subject);
 			message.setContent(text);
 			message.setSendDate(
-					Constans.APPLICATION_DATE_FORMAT.parse(Constans.APPLICATION_DATE_FORMAT.format(new Date())));
+					Constants.APPLICATION_DATE_FORMAT.parse(Constants.APPLICATION_DATE_FORMAT.format(new Date())));
 
 			HibernateUtil.getSession().save(message);
 			HibernateUtil.commitTransaction();

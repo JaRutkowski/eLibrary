@@ -10,7 +10,7 @@ import java.util.Objects;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
-import com.javafee.common.Constans;
+import com.javafee.common.Constants;
 import com.javafee.common.IActionForm;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
@@ -229,10 +229,10 @@ public class TabLoanServiceEvent implements IActionForm {
 					int diffYear = endCalendar.get(Calendar.YEAR) - startCalendar.get(Calendar.YEAR);
 					diffMonth = diffYear * 12 + endCalendar.get(Calendar.MONTH) - startCalendar.get(Calendar.MONTH);
 				}
-				System.out.println(diffMonth * Constans.PENALTY_VALUE);
+				System.out.println(diffMonth * Constants.PENALTY_VALUE);
 			}
 		}
-		return diffMonth * Constans.PENALTY_VALUE;
+		return diffMonth * Constants.PENALTY_VALUE;
 	}
 
 	private void prepareReservation() throws ParseException {
@@ -247,8 +247,8 @@ public class TabLoanServiceEvent implements IActionForm {
 					.getModel()).getVolume(selectedVolumeRow);
 
 			HibernateUtil.beginTransaction();
-			final Date lendDate = Constans.APPLICATION_DATE_FORMAT
-					.parse(Constans.APPLICATION_DATE_FORMAT.format(new Date()));
+			final Date lendDate = Constants.APPLICATION_DATE_FORMAT
+					.parse(Constants.APPLICATION_DATE_FORMAT.format(new Date()));
 			final Calendar cal = Calendar.getInstance();
 			cal.add(Calendar.MONTH, 1);
 
@@ -306,7 +306,7 @@ public class TabLoanServiceEvent implements IActionForm {
 		if (calculatePenalty() != new BigDecimal(0).doubleValue()) {
 			JOptionPane.showMessageDialog(tabbedForm.getFrame(),
 					SystemProperties.getInstance().getResourceBundle().getString("loanServicePanel.penaltyError") + " "
-							+ calculatePenalty() + Constans.APPLICATION_CURRENCY,
+							+ calculatePenalty() + Constants.APPLICATION_CURRENCY,
 					SystemProperties.getInstance().getResourceBundle().getString("loanServicePanel.penaltyErrorTitle"),
 					JOptionPane.ERROR_MESSAGE);
 

@@ -4,8 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 import com.javafee.common.Common;
-import com.javafee.common.Constans;
-import com.javafee.common.Constans.Role;
+import com.javafee.common.Constants;
+import com.javafee.common.Constants.Role;
 import com.javafee.common.Params;
 import com.javafee.exception.RefusedRegistrationException;
 import com.javafee.hibernate.dao.HibernateUtil;
@@ -114,7 +114,7 @@ public class RegistrationEvent {
 				worker.setLogin(login);
 				worker.setEMail(eMail);
 				worker.setPassword(Common.createMd5(password));
-				worker.setRegistered(Constans.DATA_BASE_REGISTER_DEFAULT_FLAG);
+				worker.setRegistered(Constants.DATA_BASE_REGISTER_DEFAULT_FLAG);
 				HibernateUtil.getSession().save(worker);
 				HibernateUtil.commitTransaction();
 
@@ -133,9 +133,9 @@ public class RegistrationEvent {
 					HibernateUtil.commitTransaction();
 
 					HibernateUtil.beginTransaction();
-					lWorker.setLibData(libDataAdm);
+					lWorker.setLibraryData(libDataAdm);
 				} else
-					lWorker.setLibData(libData.get(0));
+					lWorker.setLibraryData(libData.get(0));
 				worker.getLibraryWorker().add(lWorker);
 				HibernateUtil.getSession().save(lWorker);
 				resultUserData = worker;
@@ -155,7 +155,7 @@ public class RegistrationEvent {
 				client.setLogin(login);
 				client.setEMail(eMail);
 				client.setPassword(Common.createMd5(password));
-				client.setRegistered(Constans.DATA_BASE_REGISTER_DEFAULT_FLAG);
+				client.setRegistered(Constants.DATA_BASE_REGISTER_DEFAULT_FLAG);
 				HibernateUtil.getSession().save(client);
 				resultUserData = client;
 				break;

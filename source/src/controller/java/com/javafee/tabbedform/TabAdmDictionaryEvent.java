@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 
 import org.hibernate.query.NativeQuery;
 
-import com.javafee.common.Constans;
+import com.javafee.common.Constants;
 import com.javafee.common.IActionForm;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
@@ -29,7 +29,7 @@ public class TabAdmDictionaryEvent implements IActionForm {
 	@Setter
 	private TabbedForm tabbedForm;
 
-	private String pressedRadioButton = Constans.RADIO_BUTTON_AUTHOR;
+	private String pressedRadioButton = Constants.RADIO_BUTTON_AUTHOR;
 
 	protected static TabAdmDictionaryEvent admDictionaryEvent = null;
 
@@ -49,16 +49,16 @@ public class TabAdmDictionaryEvent implements IActionForm {
 		setTabbedForm(tabbedForm);
 		initializeForm();
 
-		fillDictionaryData(Constans.RADIO_BUTTON_AUTHOR);
-		fillDictionaryData(Constans.RADIO_BUTTON_CATEGORY);
-		fillDictionaryData(Constans.RADIO_BUTTON_PUBLISHING_HOUSE);
+		fillDictionaryData(Constants.RADIO_BUTTON_AUTHOR);
+		fillDictionaryData(Constants.RADIO_BUTTON_CATEGORY);
+		fillDictionaryData(Constants.RADIO_BUTTON_PUBLISHING_HOUSE);
 
 		tabbedForm.getPanelAdmDictionary().getRadioButtonAuthor()
-				.addActionListener(e -> switchRadioButtonsEnable(Constans.RADIO_BUTTON_AUTHOR));
+				.addActionListener(e -> switchRadioButtonsEnable(Constants.RADIO_BUTTON_AUTHOR));
 		tabbedForm.getPanelAdmDictionary().getRadioButtonCategory()
-				.addActionListener(e -> switchRadioButtonsEnable(Constans.RADIO_BUTTON_CATEGORY));
+				.addActionListener(e -> switchRadioButtonsEnable(Constants.RADIO_BUTTON_CATEGORY));
 		tabbedForm.getPanelAdmDictionary().getRadioButtonPublishingHouse()
-				.addActionListener(e -> switchRadioButtonsEnable(Constans.RADIO_BUTTON_PUBLISHING_HOUSE));
+				.addActionListener(e -> switchRadioButtonsEnable(Constants.RADIO_BUTTON_PUBLISHING_HOUSE));
 		tabbedForm.getPanelAdmDictionary().getComboBoxAuthor().addActionListener(e -> onChangeComboBoxAuthor());
 		tabbedForm.getPanelAdmDictionary().getComboBoxCategory().addActionListener(e -> onChangeComboBoxCategory());
 		tabbedForm.getPanelAdmDictionary().getComboBoxPublishingHouse()
@@ -125,24 +125,16 @@ public class TabAdmDictionaryEvent implements IActionForm {
 		try {
 			HibernateUtil.beginTransaction();
 			switch (pressedRadioButton) {
-				case Constans.RADIO_BUTTON_AUTHOR:
+				case Constants.RADIO_BUTTON_AUTHOR:
 					Author author = new Author();
-					author.setName(admDictionaryPanel.getTextFieldAuthorName().getText() != null
-							? admDictionaryPanel.getTextFieldAuthorName().getText()
-							: null);
-					author.setNickname(admDictionaryPanel.getTextFieldAuthorNickname().getText() != null
-							? admDictionaryPanel.getTextFieldAuthorNickname().getText()
-							: null);
-					author.setSurname(admDictionaryPanel.getTextFieldAuthorSurname().getText() != null
-							? admDictionaryPanel.getTextFieldAuthorSurname().getText()
-							: null);
-					author.setBirthDate(admDictionaryPanel.getDateChooserBirthDate().getDate() != null
-							? admDictionaryPanel.getDateChooserBirthDate().getDate()
-							: null);
+					author.setName(admDictionaryPanel.getTextFieldAuthorName().getText());
+					author.setNickname(admDictionaryPanel.getTextFieldAuthorNickname().getText());
+					author.setSurname(admDictionaryPanel.getTextFieldAuthorSurname().getText());
+					author.setBirthDate(admDictionaryPanel.getDateChooserBirthDate().getDate());
 					resultObjectToSave = author;
 					reloadComboBoxAuthor();
 					break;
-				case Constans.RADIO_BUTTON_CATEGORY:
+				case Constants.RADIO_BUTTON_CATEGORY:
 					final Category category = new Category();
 					category.setName(admDictionaryPanel.getTextFieldCategoryName().getText() != null
 							? tabbedForm.getPanelAdmDictionary().getTextFieldCategoryName().getText()
@@ -150,10 +142,10 @@ public class TabAdmDictionaryEvent implements IActionForm {
 					resultObjectToSave = category;
 					reloadComboBoxCategory();
 					break;
-				case Constans.RADIO_BUTTON_PUBLISHING_HOUSE:
+				case Constants.RADIO_BUTTON_PUBLISHING_HOUSE:
 					final PublishingHouse publishingHouse = new PublishingHouse();
 					publishingHouse.setName(admDictionaryPanel.getTextFieldPublishingHouseName().getText() != null
-							? admDictionaryPanel.getTextFieldPublishingHouseName().getText().toString()
+							? admDictionaryPanel.getTextFieldPublishingHouseName().getText()
 							: null);
 					resultObjectToSave = publishingHouse;
 					reloadComboBoxPublishingHouse();
@@ -178,7 +170,7 @@ public class TabAdmDictionaryEvent implements IActionForm {
 		final AdmDictionaryPanel admDictionaryPanel = tabbedForm.getPanelAdmDictionary();
 		try {
 			switch (pressedRadioButton) {
-				case Constans.RADIO_BUTTON_AUTHOR:
+				case Constants.RADIO_BUTTON_AUTHOR:
 					final Author authorClicked = ((Author) admDictionaryPanel.getComboBoxAuthor().getSelectedItem());
 					final NativeQuery<Author> authorQuery = HibernateUtil.getSession()
 							.createNativeQuery("select * from lib_book_author where id_author = :idAuthor")
@@ -188,18 +180,10 @@ public class TabAdmDictionaryEvent implements IActionForm {
 					if (resultAuthor.isEmpty()) {
 						HibernateUtil.beginTransaction();
 						authorClicked.setIdAuthor(authorClicked.getIdAuthor());
-						authorClicked.setName(admDictionaryPanel.getTextFieldAuthorName().getText() != null
-								? admDictionaryPanel.getTextFieldAuthorName().getText()
-								: null);
-						authorClicked.setNickname(admDictionaryPanel.getTextFieldAuthorNickname().getText() != null
-								? admDictionaryPanel.getTextFieldAuthorNickname().getText()
-								: null);
-						authorClicked.setSurname(admDictionaryPanel.getTextFieldAuthorSurname().getText() != null
-								? admDictionaryPanel.getTextFieldAuthorSurname().getText()
-								: null);
-						authorClicked.setBirthDate(admDictionaryPanel.getDateChooserBirthDate().getDate() != null
-								? admDictionaryPanel.getDateChooserBirthDate().getDate()
-								: null);
+						authorClicked.setName(admDictionaryPanel.getTextFieldAuthorName().getText());
+						authorClicked.setNickname(admDictionaryPanel.getTextFieldAuthorNickname().getText());
+						authorClicked.setSurname(admDictionaryPanel.getTextFieldAuthorSurname().getText());
+						authorClicked.setBirthDate(admDictionaryPanel.getDateChooserBirthDate().getDate());
 						HibernateUtil.getSession().update(authorClicked);
 						HibernateUtil.commitTransaction();
 						reloadComboBoxAuthor();
@@ -215,9 +199,9 @@ public class TabAdmDictionaryEvent implements IActionForm {
 										.getString("tabDictionaryEvent.modifyDictionaryElementWarningTitle"),
 								SystemProperties.getInstance().getResourceBundle()
 										.getString("tabDictionaryEvent.modifyDictionaryElementWarning"));
-					fillDictionaryData(Constans.RADIO_BUTTON_AUTHOR);
+					fillDictionaryData(Constants.RADIO_BUTTON_AUTHOR);
 					break;
-				case Constans.RADIO_BUTTON_CATEGORY:
+				case Constants.RADIO_BUTTON_CATEGORY:
 					final Category categoryClicked = ((Category) admDictionaryPanel.getComboBoxCategory()
 							.getSelectedItem());
 					final NativeQuery<Category> categoryQuery = HibernateUtil.getSession()
@@ -246,9 +230,9 @@ public class TabAdmDictionaryEvent implements IActionForm {
 										.getString("tabDictionaryEvent.modifyDictionaryElementWarningTitle"),
 								SystemProperties.getInstance().getResourceBundle()
 										.getString("tabDictionaryEvent.modifyDictionaryElementWarning"));
-					fillDictionaryData(Constans.RADIO_BUTTON_CATEGORY);
+					fillDictionaryData(Constants.RADIO_BUTTON_CATEGORY);
 					break;
-				case Constans.RADIO_BUTTON_PUBLISHING_HOUSE:
+				case Constants.RADIO_BUTTON_PUBLISHING_HOUSE:
 					final PublishingHouse publishingClicked = ((PublishingHouse) admDictionaryPanel
 							.getComboBoxPublishingHouse().getSelectedItem());
 					final NativeQuery<PublishingHouse> publishingHouseQuery = HibernateUtil.getSession()
@@ -260,7 +244,7 @@ public class TabAdmDictionaryEvent implements IActionForm {
 						HibernateUtil.beginTransaction();
 						publishingClicked.setIdPublishingHouse(publishingClicked.getIdPublishingHouse());
 						publishingClicked.setName(admDictionaryPanel.getTextFieldPublishingHouseName().getText() != null
-								? admDictionaryPanel.getTextFieldPublishingHouseName().getText().toString()
+								? admDictionaryPanel.getTextFieldPublishingHouseName().getText()
 								: null);
 						HibernateUtil.getSession().update(publishingClicked);
 						HibernateUtil.commitTransaction();
@@ -277,7 +261,7 @@ public class TabAdmDictionaryEvent implements IActionForm {
 										.getString("tabDictionaryEvent.modifyDictionaryElementWarningTitle"),
 								SystemProperties.getInstance().getResourceBundle()
 										.getString("tabDictionaryEvent.modifyDictionaryElementWarning"));
-					fillDictionaryData(Constans.RADIO_BUTTON_PUBLISHING_HOUSE);
+					fillDictionaryData(Constants.RADIO_BUTTON_PUBLISHING_HOUSE);
 					break;
 			}
 		} catch (NumberFormatException | IllegalStateException | RollbackException e) {
@@ -291,7 +275,7 @@ public class TabAdmDictionaryEvent implements IActionForm {
 
 		try {
 			switch (pressedRadioButton) {
-				case Constans.RADIO_BUTTON_AUTHOR:
+				case Constants.RADIO_BUTTON_AUTHOR:
 					if (Utils.displayConfirmDialog(
 							SystemProperties.getInstance().getResourceBundle().getString("confirmDialog.deleteMessage"),
 							"") == JOptionPane.YES_OPTION) {
@@ -309,7 +293,7 @@ public class TabAdmDictionaryEvent implements IActionForm {
 							HibernateUtil.getSession().delete(author);
 							HibernateUtil.commitTransaction();
 							reloadComboBoxAuthor();
-							fillDictionaryData(Constans.RADIO_BUTTON_AUTHOR);
+							fillDictionaryData(Constants.RADIO_BUTTON_AUTHOR);
 							JOptionPane.showMessageDialog(tabbedForm.getFrame(),
 									SystemProperties.getInstance().getResourceBundle()
 											.getString("tabDictionaryEvent.deleteDictionaryElementSuccess"),
@@ -324,7 +308,7 @@ public class TabAdmDictionaryEvent implements IActionForm {
 											.getString("tabDictionaryEvent.deleteDictionaryElementWarningTitle"));
 					}
 					break;
-				case Constans.RADIO_BUTTON_CATEGORY:
+				case Constants.RADIO_BUTTON_CATEGORY:
 					if (Utils.displayConfirmDialog(
 							SystemProperties.getInstance().getResourceBundle().getString("confirmDialog.deleteMessage"),
 							"") == JOptionPane.YES_OPTION) {
@@ -341,7 +325,7 @@ public class TabAdmDictionaryEvent implements IActionForm {
 							HibernateUtil.getSession().delete(category);
 							HibernateUtil.commitTransaction();
 							reloadComboBoxCategory();
-							fillDictionaryData(Constans.RADIO_BUTTON_CATEGORY);
+							fillDictionaryData(Constants.RADIO_BUTTON_CATEGORY);
 							JOptionPane.showMessageDialog(tabbedForm.getFrame(),
 									SystemProperties.getInstance().getResourceBundle()
 											.getString("tabDictionaryEvent.deleteDictionaryElementSuccess"),
@@ -357,7 +341,7 @@ public class TabAdmDictionaryEvent implements IActionForm {
 									JOptionPane.ERROR_MESSAGE);
 					}
 					break;
-				case Constans.RADIO_BUTTON_PUBLISHING_HOUSE:
+				case Constants.RADIO_BUTTON_PUBLISHING_HOUSE:
 					if (Utils.displayConfirmDialog(
 							SystemProperties.getInstance().getResourceBundle().getString("confirmDialog.deleteMessage"),
 							"") == JOptionPane.YES_OPTION) {
@@ -375,7 +359,7 @@ public class TabAdmDictionaryEvent implements IActionForm {
 							HibernateUtil.getSession().delete(publishingHouse);
 							HibernateUtil.commitTransaction();
 							reloadComboBoxPublishingHouse();
-							fillDictionaryData(Constans.RADIO_BUTTON_PUBLISHING_HOUSE);
+							fillDictionaryData(Constants.RADIO_BUTTON_PUBLISHING_HOUSE);
 							JOptionPane.showMessageDialog(tabbedForm.getFrame(),
 									SystemProperties.getInstance().getResourceBundle()
 											.getString("tabDictionaryEvent.deleteDictionaryElementSuccess"),
@@ -399,23 +383,21 @@ public class TabAdmDictionaryEvent implements IActionForm {
 	}
 
 	private void onChangeComboBoxAuthor() {
-		fillDictionaryData(Constans.RADIO_BUTTON_AUTHOR);
+		fillDictionaryData(Constants.RADIO_BUTTON_AUTHOR);
 	}
 
 	private void onChangeComboBoxCategory() {
-		fillDictionaryData(Constans.RADIO_BUTTON_CATEGORY);
+		fillDictionaryData(Constants.RADIO_BUTTON_CATEGORY);
 	}
 
 	private void onChangeComboBoxPublishingHouse() {
-		fillDictionaryData(Constans.RADIO_BUTTON_PUBLISHING_HOUSE);
+		fillDictionaryData(Constants.RADIO_BUTTON_PUBLISHING_HOUSE);
 	}
 
 	private void fillDictionaryData(String pressedRadioButton) {
 		switch (pressedRadioButton) {
-			case Constans.RADIO_BUTTON_AUTHOR:
-				Author author = (Author) tabbedForm.getPanelAdmDictionary().getComboBoxAuthor().getSelectedItem() != null
-						? (Author) tabbedForm.getPanelAdmDictionary().getComboBoxAuthor().getSelectedItem()
-						: null;
+			case Constants.RADIO_BUTTON_AUTHOR:
+				Author author = (Author) tabbedForm.getPanelAdmDictionary().getComboBoxAuthor().getSelectedItem();
 				if (author != null) {
 					tabbedForm.getPanelAdmDictionary().getTextFieldAuthorName().setText(author.getName());
 					tabbedForm.getPanelAdmDictionary().getTextFieldAuthorNickname().setText(author.getNickname());
@@ -423,20 +405,14 @@ public class TabAdmDictionaryEvent implements IActionForm {
 					tabbedForm.getPanelAdmDictionary().getDateChooserBirthDate().setDate(author.getBirthDate());
 				}
 				break;
-			case Constans.RADIO_BUTTON_CATEGORY:
-				Category category = (Category) tabbedForm.getPanelAdmDictionary().getComboBoxCategory()
-						.getSelectedItem() != null
-						? (Category) tabbedForm.getPanelAdmDictionary().getComboBoxCategory().getSelectedItem()
-						: null;
+			case Constants.RADIO_BUTTON_CATEGORY:
+				Category category = (Category) tabbedForm.getPanelAdmDictionary().getComboBoxCategory().getSelectedItem();
 				if (category != null)
 					tabbedForm.getPanelAdmDictionary().getTextFieldCategoryName().setText(category.getName());
 				break;
-			case Constans.RADIO_BUTTON_PUBLISHING_HOUSE:
-				PublishingHouse publishingHouse = (PublishingHouse) tabbedForm.getPanelAdmDictionary()
-						.getComboBoxPublishingHouse().getSelectedItem() != null
-						? (PublishingHouse) tabbedForm.getPanelAdmDictionary().getComboBoxPublishingHouse()
-						.getSelectedItem()
-						: null;
+			case Constants.RADIO_BUTTON_PUBLISHING_HOUSE:
+				PublishingHouse publishingHouse = (PublishingHouse) tabbedForm.getPanelAdmDictionary().getComboBoxPublishingHouse()
+						.getSelectedItem();
 				if (publishingHouse != null)
 					tabbedForm.getPanelAdmDictionary().getTextFieldPublishingHouseName().setText(publishingHouse.getName());
 				break;
@@ -445,8 +421,8 @@ public class TabAdmDictionaryEvent implements IActionForm {
 
 	private void switchRadioButtonsEnable(String pressedRadioButton) {
 		switch (pressedRadioButton) {
-			case Constans.RADIO_BUTTON_AUTHOR:
-				this.pressedRadioButton = Constans.RADIO_BUTTON_AUTHOR;
+			case Constants.RADIO_BUTTON_AUTHOR:
+				this.pressedRadioButton = Constants.RADIO_BUTTON_AUTHOR;
 				tabbedForm.getPanelAdmDictionary().getTextFieldAuthorName().setEnabled(true);
 				tabbedForm.getPanelAdmDictionary().getTextFieldAuthorNickname().setEnabled(true);
 				tabbedForm.getPanelAdmDictionary().getTextFieldAuthorSurname().setEnabled(true);
@@ -454,8 +430,8 @@ public class TabAdmDictionaryEvent implements IActionForm {
 				tabbedForm.getPanelAdmDictionary().getTextFieldCategoryName().setEnabled(false);
 				tabbedForm.getPanelAdmDictionary().getTextFieldPublishingHouseName().setEnabled(false);
 				break;
-			case Constans.RADIO_BUTTON_CATEGORY:
-				this.pressedRadioButton = Constans.RADIO_BUTTON_CATEGORY;
+			case Constants.RADIO_BUTTON_CATEGORY:
+				this.pressedRadioButton = Constants.RADIO_BUTTON_CATEGORY;
 				tabbedForm.getPanelAdmDictionary().getTextFieldAuthorName().setEnabled(false);
 				tabbedForm.getPanelAdmDictionary().getTextFieldAuthorNickname().setEnabled(false);
 				tabbedForm.getPanelAdmDictionary().getTextFieldAuthorSurname().setEnabled(false);
@@ -463,8 +439,8 @@ public class TabAdmDictionaryEvent implements IActionForm {
 				tabbedForm.getPanelAdmDictionary().getTextFieldCategoryName().setEnabled(true);
 				tabbedForm.getPanelAdmDictionary().getTextFieldPublishingHouseName().setEnabled(false);
 				break;
-			case Constans.RADIO_BUTTON_PUBLISHING_HOUSE:
-				this.pressedRadioButton = Constans.RADIO_BUTTON_PUBLISHING_HOUSE;
+			case Constants.RADIO_BUTTON_PUBLISHING_HOUSE:
+				this.pressedRadioButton = Constants.RADIO_BUTTON_PUBLISHING_HOUSE;
 				tabbedForm.getPanelAdmDictionary().getTextFieldAuthorName().setEnabled(false);
 				tabbedForm.getPanelAdmDictionary().getTextFieldAuthorNickname().setEnabled(false);
 				tabbedForm.getPanelAdmDictionary().getTextFieldAuthorSurname().setEnabled(false);

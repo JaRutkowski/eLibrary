@@ -8,7 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.WindowConstants;
 
-import com.javafee.common.Constans;
+import com.javafee.common.Constants;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
 import com.javafee.uniform.NavigationPanel;
@@ -39,11 +39,11 @@ public class StartForm {
 		Utils.setLookAndFeel();
 		frame = new JFrame();
 		frame.getContentPane().setBackground(Utils.getApplicationColor());
-		frame.setTitle(Constans.APPLICATION_NAME);
+		frame.setTitle(Constants.APPLICATION_NAME);
 		frame.setIconImage(
 				Toolkit.getDefaultToolkit().getImage(StartForm.class.getResource("/images/splashScreen.jpg")));
 		frame.setBounds(100, 100, 361, 543);
-		frame.setMinimumSize(Constans.START_FORM_MINIMUM_SIZE);
+		frame.setMinimumSize(Constants.START_FORM_MINIMUM_SIZE);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{41};
