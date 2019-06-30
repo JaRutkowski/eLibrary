@@ -20,6 +20,7 @@ import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
 import com.javafee.hibernate.dao.HibernateUtil;
 import com.javafee.hibernate.dao.common.Common;
+import com.javafee.hibernate.dto.common.UserData;
 import com.javafee.startform.LogInEvent;
 
 public class Actions implements IActionForm {
@@ -120,11 +121,10 @@ public class Actions implements IActionForm {
 									Charset.forName(Constants.APPLICATION_TEMPLATE_ENCODING));
 
 							systemProperties.setTemplateDirectory(result.getParent());
+							LogInEvent.getWorker().setSystemProperties(systemProperties);
 
 							HibernateUtil.beginTransaction();
-							HibernateUtil.getSession().update(
-									com.javafee.hibernate.dto.common.SystemProperties.class.getName(),
-									systemProperties);
+							HibernateUtil.getSession().update(UserData.class.getName(), LogInEvent.getWorker());
 							HibernateUtil.commitTransaction();
 
 							Utils.displayOptionPane(

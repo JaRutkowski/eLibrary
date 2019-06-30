@@ -80,13 +80,13 @@ public class Common {
 
 	public static SystemProperties checkAndGetSystemProperties(final int userDataId) {
 		Optional<SystemProperties> systemProperties = Common.findSystemPropertiesByUserDataId(userDataId);
-		SystemProperties result = null;
+		SystemProperties result;
 
 		if (!systemProperties.isPresent()) {
 			UserData userData = Common.findUserDataById(userDataId).get();
 			HibernateUtil.beginTransaction();
 			result = new SystemProperties();
-			result.setUserData(userData);
+			userData.setSystemProperties(result);
 
 			HibernateUtil.getSession().save(result);
 			HibernateUtil.commitTransaction();

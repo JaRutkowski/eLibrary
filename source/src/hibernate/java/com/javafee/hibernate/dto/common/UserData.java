@@ -79,7 +79,8 @@ public class UserData {
 	@JoinColumn(name = "id_city", unique = false, nullable = true, insertable = true, updatable = true)
 	private City city;
 
-	@OneToOne(mappedBy = "userData", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "id_system_properties")
 	private SystemProperties systemProperties;
 
 	@Override

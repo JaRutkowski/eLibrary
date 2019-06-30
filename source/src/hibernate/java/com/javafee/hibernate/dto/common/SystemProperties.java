@@ -1,8 +1,8 @@
 package com.javafee.hibernate.dto.common;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -38,7 +38,6 @@ public class SystemProperties {
 	@Column(name = "template_directory", unique = false, nullable = true, insertable = true, updatable = true, length = 80)
 	private String templateDirectory;
 
-	@OneToOne(fetch = FetchType.LAZY, orphanRemoval = true)
-	@JoinColumn(name = "id_user_data")
+	@OneToOne(mappedBy = "systemProperties", cascade = CascadeType.ALL)
 	private UserData userData;
 }

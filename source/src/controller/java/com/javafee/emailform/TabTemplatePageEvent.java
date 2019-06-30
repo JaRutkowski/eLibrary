@@ -21,6 +21,7 @@ import com.javafee.common.Utils;
 import com.javafee.hibernate.dao.HibernateUtil;
 import com.javafee.hibernate.dao.common.Common;
 import com.javafee.hibernate.dto.common.SystemProperties;
+import com.javafee.hibernate.dto.common.UserData;
 import com.javafee.startform.LogInEvent;
 
 import lombok.Setter;
@@ -144,9 +145,10 @@ public class TabTemplatePageEvent implements IActionForm {
 									Charset.forName(Constants.APPLICATION_TEMPLATE_ENCODING));
 
 							systemProperties.setTemplateDirectory(result.getParent());
+							LogInEvent.getWorker().setSystemProperties(systemProperties);
 
 							HibernateUtil.beginTransaction();
-							HibernateUtil.getSession().update(SystemProperties.class.getName(), systemProperties);
+							HibernateUtil.getSession().update(UserData.class.getName(), LogInEvent.getWorker());
 							HibernateUtil.commitTransaction();
 
 							Utils.displayOptionPane(
