@@ -12,14 +12,15 @@ import java.util.stream.Collectors;
 
 import javax.swing.JOptionPane;
 
-import com.javafee.common.Constans;
-import com.javafee.common.Constans.Tab_Email;
+import com.javafee.common.Constants;
+import com.javafee.common.Constants.Tab_Email;
 import com.javafee.common.IActionForm;
 import com.javafee.common.Params;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
 import com.javafee.hibernate.dao.HibernateUtil;
 import com.javafee.hibernate.dao.common.Common;
+import com.javafee.hibernate.dto.common.UserData;
 import com.javafee.startform.LogInEvent;
 
 public class Actions implements IActionForm {
@@ -76,20 +77,20 @@ public class Actions implements IActionForm {
 
 	private void reloadTabbedPane() {
 		switch (Tab_Email.getByNumber(emailForm.getTabbedPane().getSelectedIndex())) {
-		case TAB_CREATE_PAGE:
-			TabComposePageEvent.getInstance(emailForm);
-			break;
-		case TAB_SENDED_PAGE:
-			TabOutboxPageEvent.getInstance(emailForm);
-			break;
-		case TAB_DRAFT_PAGE:
-			TabDraftPageEvent.getInstance(emailForm);
-			break;
-		case TAB_TEMPLATE_PAGE:
-			TabTemplatePageEvent.getInstance(emailForm);
-			break;
-		default:
-			break;
+			case TAB_CREATE_PAGE:
+				TabComposePageEvent.getInstance(emailForm);
+				break;
+			case TAB_SENDED_PAGE:
+				TabOutboxPageEvent.getInstance(emailForm);
+				break;
+			case TAB_DRAFT_PAGE:
+				TabDraftPageEvent.getInstance(emailForm);
+				break;
+			case TAB_TEMPLATE_PAGE:
+				TabTemplatePageEvent.getInstance(emailForm);
+				break;
+			default:
+				break;
 		}
 
 		setEnableMenu(Tab_Email.getByNumber(emailForm.getTabbedPane().getSelectedIndex()));
@@ -107,7 +108,7 @@ public class Actions implements IActionForm {
 		if (validate()) {
 			com.javafee.hibernate.dto.common.SystemProperties systemProperties = Common
 					.checkAndGetSystemProperties(LogInEvent.getWorker() != null ? LogInEvent.getWorker().getIdUserData()
-							: Constans.DATA_BASE_ADMIN_ID);
+							: Constants.DATA_BASE_ADMIN_ID);
 
 			if (systemProperties.getTemplateDirectory() == null) {
 				if (Utils.displayConfirmDialog(com.javafee.common.SystemProperties.getInstance().getResourceBundle()
@@ -117,14 +118,13 @@ public class Actions implements IActionForm {
 						try {
 							Files.write(Paths.get(result.getPath()),
 									Arrays.asList(emailForm.getPanelComposePage().getEditorPaneContent().getText()),
-									Charset.forName(Constans.APPLICATION_TEMPLATE_ENCODING));
+									Charset.forName(Constants.APPLICATION_TEMPLATE_ENCODING));
 
 							systemProperties.setTemplateDirectory(result.getParent());
+							LogInEvent.getWorker().setSystemProperties(systemProperties);
 
 							HibernateUtil.beginTransaction();
-							HibernateUtil.getSession().update(
-									com.javafee.hibernate.dto.common.SystemProperties.class.getName(),
-									systemProperties);
+							HibernateUtil.getSession().update(UserData.class.getName(), LogInEvent.getWorker());
 							HibernateUtil.commitTransaction();
 
 							Utils.displayOptionPane(
@@ -144,7 +144,7 @@ public class Actions implements IActionForm {
 					try {
 						Files.write(Paths.get(result.getPath()),
 								Arrays.asList(emailForm.getPanelComposePage().getEditorPaneContent().getText()),
-								Charset.forName(Constans.APPLICATION_TEMPLATE_ENCODING));
+								Charset.forName(Constants.APPLICATION_TEMPLATE_ENCODING));
 
 						Utils.displayOptionPane(
 								com.javafee.common.SystemProperties.getInstance().getResourceBundle()
@@ -170,7 +170,7 @@ public class Actions implements IActionForm {
 	private void onClickMenuLoadTemplate() {
 		com.javafee.hibernate.dto.common.SystemProperties systemProperties = com.javafee.hibernate.dao.common.Common
 				.checkAndGetSystemProperties(LogInEvent.getWorker() != null ? LogInEvent.getWorker().getIdUserData()
-						: Constans.DATA_BASE_ADMIN_ID);
+						: Constants.DATA_BASE_ADMIN_ID);
 
 		if (systemProperties.getTemplateDirectory() == null) {
 			if (Utils.displayConfirmDialog(com.javafee.common.SystemProperties.getInstance().getResourceBundle()

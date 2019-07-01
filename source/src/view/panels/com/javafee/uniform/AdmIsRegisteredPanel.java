@@ -1,9 +1,6 @@
 package com.javafee.uniform;
 
-import java.awt.Color;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.awt.*;
 
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
@@ -30,10 +27,10 @@ public class AdmIsRegisteredPanel extends JPanel {
 						.getString("admIsRegisteredPanel.admIsRegisteredPanelBorderTitle"),
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[] { 0, 161, 0 };
-		gridBagLayout.rowHeights = new int[] { 0, 0 };
-		gridBagLayout.columnWeights = new double[] { 0.0, 1.0, Double.MIN_VALUE };
-		gridBagLayout.rowWeights = new double[] { 1.0, Double.MIN_VALUE };
+		gridBagLayout.columnWidths = new int[]{0, 161, 0};
+		gridBagLayout.rowHeights = new int[]{0, 0};
+		gridBagLayout.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 
 		chckbxIsRegistered = new JCheckBox(SystemProperties.getInstance().getResourceBundle()
@@ -48,7 +45,7 @@ public class AdmIsRegisteredPanel extends JPanel {
 
 		decisionPanel = new DecisionPanel();
 		GridBagLayout gridBagLayout_1 = (GridBagLayout) decisionPanel.getLayout();
-		gridBagLayout_1.columnWeights = new double[] { 0.0, 0.0 };
+		gridBagLayout_1.columnWeights = new double[]{0.0, 0.0};
 		GridBagConstraints gbc_decisionPanel = new GridBagConstraints();
 		gbc_decisionPanel.fill = GridBagConstraints.HORIZONTAL;
 		gbc_decisionPanel.gridx = 1;

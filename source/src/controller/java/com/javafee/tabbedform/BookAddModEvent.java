@@ -10,8 +10,8 @@ import javax.swing.JOptionPane;
 
 import org.hibernate.exception.ConstraintViolationException;
 
-import com.javafee.common.Constans;
-import com.javafee.common.Constans.Context;
+import com.javafee.common.Constants;
+import com.javafee.common.Constants.Context;
 import com.javafee.common.Params;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
@@ -91,7 +91,7 @@ public class BookAddModEvent {
 						SystemProperties.getInstance().getResourceBundle()
 								.getString("bookAddModEvent.incorrectIsbnNumberWarning1"));
 			} else if (bookAddModFrame.getBookDataPanel().getTextFieldIsbnNumber().getText()
-					.length() == Constans.DATA_BASE_ISBN_NUMBER_LENGTH) {
+					.length() == Constants.DATA_BASE_ISBN_NUMBER_LENGTH) {
 				if (getSelectedAuthors() != null)
 					getSelectedAuthors().forEach(e -> bookShallowClone.getAuthor().add(e));
 				if (getSelectedCategories() != null)
@@ -103,12 +103,12 @@ public class BookAddModEvent {
 				bookShallowClone.setNumberOfPage(
 						!"".equals(bookAddModFrame.getBookDataPanel().getTextFieldNumberOfPage().getText())
 								? Integer.parseInt(
-										bookAddModFrame.getBookDataPanel().getTextFieldNumberOfPage().getText())
+								bookAddModFrame.getBookDataPanel().getTextFieldNumberOfPage().getText())
 								: null);
 				bookShallowClone.setNumberOfTomes(
 						!"".equals(bookAddModFrame.getBookDataPanel().getTextFieldNumberOfTomes().getText())
 								? Integer.parseInt(
-										bookAddModFrame.getBookDataPanel().getTextFieldNumberOfTomes().getText())
+								bookAddModFrame.getBookDataPanel().getTextFieldNumberOfTomes().getText())
 								: null);
 
 				HibernateUtil.beginTransaction();
@@ -171,7 +171,7 @@ public class BookAddModEvent {
 								.getString("bookAddModEvent.incorrectIsbnNumberWarningTitle"),
 						SystemProperties.getInstance().getResourceBundle()
 								.getString("bookAddModEvent.incorrectIsbnNumberWarning1"));
-			} else if (isbnNumber.length() == Constans.DATA_BASE_ISBN_NUMBER_LENGTH) {
+			} else if (isbnNumber.length() == Constants.DATA_BASE_ISBN_NUMBER_LENGTH) {
 				HibernateUtil.beginTransaction();
 				Book book = new Book();
 				if (authorList != null)

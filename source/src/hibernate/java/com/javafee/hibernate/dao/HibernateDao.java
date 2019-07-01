@@ -23,7 +23,7 @@ public class HibernateDao<T, Id extends Serializable> implements GenericDao<T, I
 	}
 
 	@Override
-	@SuppressWarnings({ "unchecked", "deprecation" })
+	@SuppressWarnings({"unchecked", "deprecation"})
 	public List<T> findByExample(T exampleInstance, String[] excludeProperty) {
 		Criteria crit = HibernateUtil.getSession().createCriteria(persistentClass);
 		Example example = Example.create(exampleInstance);
@@ -34,7 +34,7 @@ public class HibernateDao<T, Id extends Serializable> implements GenericDao<T, I
 	}
 
 	@Override
-	@SuppressWarnings({ "unchecked", "deprecation" })
+	@SuppressWarnings({"unchecked", "deprecation"})
 	public List<T> findAll(int startIndex, int fetchSize) {
 		Criteria crit = HibernateUtil.getSession().createCriteria(persistentClass);
 		crit.setFirstResult(startIndex);
@@ -43,7 +43,7 @@ public class HibernateDao<T, Id extends Serializable> implements GenericDao<T, I
 	}
 
 	@Override
-	@SuppressWarnings({ "unchecked", "deprecation" })
+	@SuppressWarnings({"unchecked", "deprecation"})
 	public List<T> findAll() {
 		Criteria crit = HibernateUtil.getSession().createCriteria(persistentClass);
 		return crit.list();

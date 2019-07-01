@@ -8,7 +8,7 @@ import javax.swing.table.AbstractTableModel;
 
 import org.hibernate.query.Query;
 
-import com.javafee.common.Constans.OutboxTableColumn;
+import com.javafee.common.Constants.OutboxTableColumn;
 import com.javafee.common.SystemProperties;
 import com.javafee.hibernate.dao.HibernateUtil;
 import com.javafee.hibernate.dto.common.message.Message;
@@ -23,11 +23,11 @@ public class DraftTableModel extends AbstractTableModel {
 	public DraftTableModel() {
 		super();
 		this.prepareHibernateDao();
-		this.columns = new String[] {
+		this.columns = new String[]{
 				SystemProperties.getInstance().getResourceBundle().getString("outboxTableModel.recipientSimpleDataCol"),
 				SystemProperties.getInstance().getResourceBundle().getString("outboxTableModel.recipientEmailCol"),
 				SystemProperties.getInstance().getResourceBundle().getString("outboxTableModel.topicCol"),
-				SystemProperties.getInstance().getResourceBundle().getString("outboxTableModel.contentCol") };
+				SystemProperties.getInstance().getResourceBundle().getString("outboxTableModel.contentCol")};
 	}
 
 	public Message getMessage(int index) {
@@ -84,24 +84,27 @@ public class DraftTableModel extends AbstractTableModel {
 	public Object getValueAt(int row, int col) {
 		Message message = messages.get(row);
 		switch (OutboxTableColumn.getByNumber(col)) {
-		case COL_RECIPIENT_SIMPLE_DATA:
-			return message.getRecipient();
-		case COL_RECIPIENT_EMAIL:
-			AtomicInteger counter = new AtomicInteger(1);
-			StringBuilder recipientsEmails = new StringBuilder("[");
-			message.getRecipient().forEach(recipient -> {
-				recipientsEmails.append(recipient.getUserData().getEMail());
-				if (counter.get() != message.getRecipient().size())
-					recipientsEmails.append(",");
-			});
-			recipientsEmails.append("]");
-			return recipientsEmails.toString();
-		case COL_TOPIC:
-			return message.getTitle();
-		case COL_CONTENT:
-			return message.getContent();
-		default:
-			return null;
+			case COL_RECIPIENT_SIMPLE_DATA:
+				return message.getRecipient();
+			case COL_RECIPIENT_EMAIL:
+				AtomicInteger counter = new AtomicInteger(1);
+				StringBuilder recipientsEmails = new StringBuilder("[");
+				message.getRecipient().forEach(recipient -> {
+					if (recipient.getUserData() != null)
+						recipientsEmails.append(recipient.getUserData().getEMail());
+					else
+						recipientsEmails.append(SystemProperties.getInstance().getResourceBundle().getString("outboxTableModel.deletedUserAlias"));
+					if (counter.get() != message.getRecipient().size())
+						recipientsEmails.append(",");
+				});
+				recipientsEmails.append("]");
+				return recipientsEmails.toString();
+			case COL_TOPIC:
+				return message.getTitle();
+			case COL_CONTENT:
+				return message.getContent();
+			default:
+				return null;
 
 		}
 	}

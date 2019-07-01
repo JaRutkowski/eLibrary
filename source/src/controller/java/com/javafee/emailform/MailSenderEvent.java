@@ -10,7 +10,7 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import com.javafee.common.Constans;
+import com.javafee.common.Constants;
 import com.javafee.hibernate.dto.common.UserData;
 import com.javafee.hibernate.dto.common.message.Recipient;
 import com.javafee.mail.MailSender;
@@ -32,10 +32,10 @@ public class MailSenderEvent {
 	}
 
 	private void setMessage(List<SimpleEntry<Message.RecipientType, UserData>> recipients, String subject,
-			String text) {
+	                        String text) {
 		try {
 			message = new MimeMessage(mailSender.getSession());
-			message.setFrom(new InternetAddress(Constans.APPLICATION_EMAIL));
+			message.setFrom(new InternetAddress(Constants.APPLICATION_EMAIL));
 			recipients.forEach(recipient -> {
 				try {
 					if (Message.RecipientType.TO.equals(recipient.getKey()))
@@ -64,7 +64,7 @@ public class MailSenderEvent {
 	private void setMessage(Set<Recipient> recipients, String subject, String text) {
 		try {
 			message = new MimeMessage(mailSender.getSession());
-			message.setFrom(new InternetAddress(Constans.APPLICATION_EMAIL));
+			message.setFrom(new InternetAddress(Constants.APPLICATION_EMAIL));
 			recipients.forEach(recipient -> {
 				try {
 					if (recipient.getIsBCC() == null && recipient.getIsCC() == null)

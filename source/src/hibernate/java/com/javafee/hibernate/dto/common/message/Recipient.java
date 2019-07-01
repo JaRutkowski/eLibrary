@@ -44,7 +44,7 @@ public class Recipient {
 
 	@Override
 	public String toString() {
-		return userData.toString();
+		return userData != null ? userData.toString() : "";
 	}
 
 }

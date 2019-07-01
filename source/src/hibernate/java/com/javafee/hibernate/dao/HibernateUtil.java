@@ -18,7 +18,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Environment;
 import org.reflections.Reflections;
 
-import com.javafee.common.Constans;
+import com.javafee.common.Constants;
 
 import lombok.Getter;
 
@@ -38,9 +38,9 @@ public class HibernateUtil {
 
 			Map<String, String> settings = new HashMap<>();
 			settings.put(Environment.DRIVER, "org.postgresql.Driver");
-			settings.put(Environment.URL, "jdbc:postgresql://" + Constans.DATA_BASE_URL);
-			settings.put(Environment.USER, Constans.DATA_BASE_USER);
-			settings.put(Environment.PASS, Constans.DATA_BASE_PASSWORD);
+			settings.put(Environment.URL, "jdbc:postgresql://" + Constants.DATA_BASE_URL);
+			settings.put(Environment.USER, Constants.DATA_BASE_USER);
+			settings.put(Environment.PASS, Constants.DATA_BASE_PASSWORD);
 			settings.put(Environment.DIALECT, "org.hibernate.dialect.PostgreSQL9Dialect");
 			settings.put(Environment.CACHE_PROVIDER_CONFIG, "org.hibernate.cache.internal.NoCacheProvider");
 			settings.put(Environment.HBM2DDL_AUTO, "update");
@@ -49,7 +49,7 @@ public class HibernateUtil {
 			registryBuilder.applySettings(settings);
 			registry = registryBuilder.build();
 
-			Reflections reflections = new Reflections(Constans.DATA_BASE_PACKAGE_TO_SCAN);
+			Reflections reflections = new Reflections(Constants.DATA_BASE_PACKAGE_TO_SCAN);
 			Set<Class<?>> classes = reflections.getTypesAnnotatedWith(javax.persistence.Entity.class);
 
 			MetadataSources sources = new MetadataSources(registry);

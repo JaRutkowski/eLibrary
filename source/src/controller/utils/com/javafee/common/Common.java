@@ -11,10 +11,13 @@ import java.util.function.Consumer;
 
 import javax.swing.JLabel;
 
+import org.hibernate.resource.transaction.spi.TransactionStatus;
+
 import com.javafee.common.networkservice.NetworkServiceListener;
 import com.javafee.common.timerservice.TimerServiceListener;
 import com.javafee.common.watchservice.WatchServiceListener;
 import com.javafee.emailform.TabTemplatePageEvent;
+import com.javafee.hibernate.dao.HibernateUtil;
 import com.javafee.hibernate.dto.common.UserData;
 import com.javafee.hibernate.dto.library.Client;
 import com.javafee.hibernate.dto.library.Worker;
@@ -71,14 +74,14 @@ public final class Common {
 		rules.add(new UppercaseCharacterRule(1));
 		rules.add(new LowercaseCharacterRule(1));
 
-		return generator.generatePassword(Constans.APPLICATION_GENERATE_PASSWORD_LENGTH, rules);
+		return generator.generatePassword(Constants.APPLICATION_GENERATE_PASSWORD_LENGTH, rules);
 	}
 
 	public static final boolean checkPasswordStrenght(String password) {
 		boolean result = false;
 		// password must be between 8 and 16 chars long
-		LengthRule lengthRule = new LengthRule(Constans.APPLICATION_MIN_PASSWORD_LENGTH,
-				Constans.APPLICATION_MAX_PASSWORD_LENGTH);
+		LengthRule lengthRule = new LengthRule(Constants.APPLICATION_MIN_PASSWORD_LENGTH,
+				Constants.APPLICATION_MAX_PASSWORD_LENGTH);
 		// don't allow whitespace
 		WhitespaceRule whitespaceRule = new WhitespaceRule();
 		// control allowed characters
@@ -125,31 +128,48 @@ public final class Common {
 
 	@SuppressWarnings("unchecked")
 	public static <T> void prepareBlankComboBoxElement(List<T> comboBoxDataList) {
-		comboBoxDataList.add((T) Constans.APPLICATION_COMBO_BOX_BLANK_OBJECT);
+		comboBoxDataList.add((T) Constants.APPLICATION_COMBO_BOX_BLANK_OBJECT);
+	}
+
+	public static Integer clearMessagesRecipientData(Integer idUserData) {
+		HibernateUtil.beginTransaction();
+		Integer recordsUpdatedCount = HibernateUtil.getSession().createQuery("update Recipient set userData = " + Constants.DATA_BASE_DELETED_MESSAGE_RECIPIENT_VALUE + " where userData.idUserData = ?0")
+				.setParameter(0, idUserData).executeUpdate();
+		HibernateUtil.commitTransaction();
+		return recordsUpdatedCount;
+	}
+
+	public static Integer clearMessagesSenderData(Integer idUserData) {
+		if (HibernateUtil.getSession().getTransaction().getStatus() != TransactionStatus.ACTIVE)
+			HibernateUtil.beginTransaction();
+		Integer recordsUpdatedCount = HibernateUtil.getSession().createQuery("update Message set sender = " + Constants.DATA_BASE_DELETED_MESSAGE_SENDER_VALUE + " where sender.idUserData = ?0")
+				.setParameter(0, idUserData).executeUpdate();
+		HibernateUtil.commitTransaction();
+		return recordsUpdatedCount;
 	}
 
 	public static boolean isAdmin(String login, String password) {
-		return Constans.DATA_BASE_ADMIN_LOGIN.equals(login)
-				&& Constans.DATA_BASE_ADMIN_PASSWORD.equals(Common.createMd5(password));
+		return Constants.DATA_BASE_ADMIN_LOGIN.equals(login)
+				&& Constants.DATA_BASE_ADMIN_PASSWORD.equals(Common.createMd5(password));
 	}
 
 	public static boolean isAdmin(Worker worker) {
-		return Constans.DATA_BASE_ADMIN_LOGIN.equals(worker.getLogin())
-				&& Constans.DATA_BASE_ADMIN_PASSWORD.equals(worker.getPassword());
+		return Constants.DATA_BASE_ADMIN_LOGIN.equals(worker.getLogin())
+				&& Constants.DATA_BASE_ADMIN_PASSWORD.equals(worker.getPassword());
 	}
 
 	public static boolean isAdmin(Client client) {
-		return Constans.DATA_BASE_ADMIN_LOGIN.equals(client.getLogin())
-				&& Constans.DATA_BASE_ADMIN_PASSWORD.equals(client.getPassword());
+		return Constants.DATA_BASE_ADMIN_LOGIN.equals(client.getLogin())
+				&& Constants.DATA_BASE_ADMIN_PASSWORD.equals(client.getPassword());
 	}
 
 	public static boolean isAdmin(UserData userData) {
-		return Constans.DATA_BASE_ADMIN_LOGIN.equals(userData.getLogin())
-				&& Constans.DATA_BASE_ADMIN_PASSWORD.equals(userData.getPassword());
+		return Constants.DATA_BASE_ADMIN_LOGIN.equals(userData.getLogin())
+				&& Constants.DATA_BASE_ADMIN_PASSWORD.equals(userData.getPassword());
 	}
 
 	public static void registerWatchServiceListener(TabTemplatePageEvent tabTemplatePageEvent,
-			Consumer<TabTemplatePageEvent> c) {
+	                                                Consumer<TabTemplatePageEvent> c) {
 		watchServiceListener = new WatchServiceListener();
 		watchServiceListener.initialize(tabTemplatePageEvent, c);
 	}

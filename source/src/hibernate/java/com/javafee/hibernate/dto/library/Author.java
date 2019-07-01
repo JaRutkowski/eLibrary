@@ -42,7 +42,7 @@ public class Author implements Cloneable {
 	@Column(name = "birth_date", unique = false, nullable = true, insertable = true, updatable = true, length = 13)
 	private Date birthDate;
 
-	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, mappedBy = "author")
+	@ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, mappedBy = "author")
 	private Set<Book> book = new HashSet<Book>(0);
 
 	@Override

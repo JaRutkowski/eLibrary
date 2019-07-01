@@ -10,9 +10,9 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 import com.javafee.common.Common;
-import com.javafee.common.Constans;
-import com.javafee.common.Constans.Role;
-import com.javafee.common.Constans.Tab_Email;
+import com.javafee.common.Constants;
+import com.javafee.common.Constants.Role;
+import com.javafee.common.Constants.Tab_Email;
 import com.javafee.common.IMessageForm;
 import com.javafee.common.Params;
 import com.javafee.common.Query;
@@ -137,7 +137,7 @@ public class TabDraftPageEvent implements IMessageForm {
 		if (emailForm.getPanelDraftPage().getCheckShowOnlySystemCorrespondence().isSelected()) {
 			List<Object> parameters = new ArrayList<Object>();
 			MessageType messageType = com.javafee.hibernate.dao.common.Common
-					.findMessageTypeByName(Constans.DATA_BASE_MESSAGE_TYPE_SYS_MESSAGE).get();
+					.findMessageTypeByName(Constants.DATA_BASE_MESSAGE_TYPE_SYS_MESSAGE).get();
 			parameters.add(messageType);
 			((DraftTableModel) emailForm.getPanelDraftPage().getDraftTable().getModel()) //
 					.reloadData(Query.TabOutboxPageEventQuery.DRAFT_MESSAGE_BY_MESSAGE_TYPE.getValue(), parameters);

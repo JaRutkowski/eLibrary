@@ -8,8 +8,8 @@ import java.util.List;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.AbstractTableModel;
 
-import com.javafee.common.Constans;
-import com.javafee.common.Constans.LendTableColumn;
+import com.javafee.common.Constants;
+import com.javafee.common.Constants.LendTableColumn;
 import com.javafee.common.SystemProperties;
 import com.javafee.hibernate.dao.HibernateUtil;
 import com.javafee.hibernate.dto.library.Lend;
@@ -26,7 +26,7 @@ public class LoanTableModel extends AbstractTableModel {
 	public LoanTableModel() {
 		super();
 		this.prepareHibernateDao();
-		this.columns = new String[] {
+		this.columns = new String[]{
 				SystemProperties.getInstance().getResourceBundle().getString("loanTableModel.clientCol"),
 				SystemProperties.getInstance().getResourceBundle().getString("loanTableModel.clientPeselNumberCol"),
 				SystemProperties.getInstance().getResourceBundle().getString("loanTableModel.clientDocumentNumberCol"),
@@ -35,7 +35,7 @@ public class LoanTableModel extends AbstractTableModel {
 				SystemProperties.getInstance().getResourceBundle().getString("loanTableModel.volumeInventoryNumberCol"),
 				SystemProperties.getInstance().getResourceBundle().getString("loanTableModel.lendDateCol"),
 				SystemProperties.getInstance().getResourceBundle().getString("loanTableModel.returnDateCol"),
-				SystemProperties.getInstance().getResourceBundle().getString("loanTableModel.penaltyCol") };
+				SystemProperties.getInstance().getResourceBundle().getString("loanTableModel.penaltyCol")};
 	}
 
 	public Lend getLend(int index) {
@@ -83,26 +83,26 @@ public class LoanTableModel extends AbstractTableModel {
 		Lend lend = lends.get(row);
 
 		switch (LendTableColumn.getByNumber(col)) {
-		case COL_CLIENT_BASIC_DATA:
-			return lend.getClient();
-		case COL_CLIENT_PESEL_NUMBER:
-			return lend.getClient().getPeselNumber();
-		case COL_CLIENT_DOCUMENT_NUMBER:
-			return lend.getClient().getDocumentNumber();
-		case COL_VOLUME_BOOK_TITLE:
-			return lend.getVolume().getBook();
-		case COL_VOLUME_BOOK_ISBN_NUMBER:
-			return lend.getVolume().getBook().getIsbnNumber();
-		case COL_VOLUME_INVENTORY_NUMBER:
-			return lend.getVolume().getInventoryNumber();
-		case COL_LEND_DATE:
-			return Constans.APPLICATION_DATE_FORMAT.format(lend.getLendDate());
-		case COL_RETURNED_DATE:
-			return Constans.APPLICATION_DATE_FORMAT.format(lend.getReturnedDate());
-		case COL_PENALTY:
-			return calculatePenalty(lend.getReturnedDate());
-		default:
-			return null;
+			case COL_CLIENT_BASIC_DATA:
+				return lend.getClient();
+			case COL_CLIENT_PESEL_NUMBER:
+				return lend.getClient().getPeselNumber();
+			case COL_CLIENT_DOCUMENT_NUMBER:
+				return lend.getClient().getDocumentNumber();
+			case COL_VOLUME_BOOK_TITLE:
+				return lend.getVolume().getBook();
+			case COL_VOLUME_BOOK_ISBN_NUMBER:
+				return lend.getVolume().getBook().getIsbnNumber();
+			case COL_VOLUME_INVENTORY_NUMBER:
+				return lend.getVolume().getInventoryNumber();
+			case COL_LEND_DATE:
+				return Constants.APPLICATION_DATE_FORMAT.format(lend.getLendDate());
+			case COL_RETURNED_DATE:
+				return Constants.APPLICATION_DATE_FORMAT.format(lend.getReturnedDate());
+			case COL_PENALTY:
+				return calculatePenalty(lend.getReturnedDate());
+			default:
+				return null;
 		}
 	}
 
@@ -119,7 +119,7 @@ public class LoanTableModel extends AbstractTableModel {
 			diffMonth = diffYear * 12 + endCalendar.get(Calendar.MONTH) - startCalendar.get(Calendar.MONTH);
 		}
 
-		return diffMonth * Constans.PENALTY_VALUE;
+		return diffMonth * Constants.PENALTY_VALUE;
 	}
 
 	@Override

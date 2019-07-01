@@ -29,7 +29,7 @@ public class PublishingHouse {
 	@Column(name = "name", unique = false, nullable = true, insertable = true, updatable = true, length = 200)
 	private String name;
 
-	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, mappedBy = "publishingHouse")
+	@ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, mappedBy = "publishingHouse")
 	private Set<Book> book = new HashSet<Book>(0);
 
 	@Override

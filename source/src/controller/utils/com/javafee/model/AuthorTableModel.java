@@ -5,8 +5,8 @@ import java.util.List;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.AbstractTableModel;
 
-import com.javafee.common.Constans;
-import com.javafee.common.Constans.AuthorTableColumn;
+import com.javafee.common.Constants;
+import com.javafee.common.Constants.AuthorTableColumn;
 import com.javafee.common.SystemProperties;
 import com.javafee.hibernate.dao.HibernateDao;
 import com.javafee.hibernate.dao.HibernateUtil;
@@ -24,10 +24,10 @@ public class AuthorTableModel extends AbstractTableModel {
 	public AuthorTableModel() {
 		super();
 		this.prepareHibernateDao();
-		this.columns = new String[] {
+		this.columns = new String[]{
 				SystemProperties.getInstance().getResourceBundle().getString("authorTableModel.authorNameCol"),
 				SystemProperties.getInstance().getResourceBundle().getString("authorTableModel.authorSurnameCol"),
-				SystemProperties.getInstance().getResourceBundle().getString("authorTableModel.authorBirthDateCol") };
+				SystemProperties.getInstance().getResourceBundle().getString("authorTableModel.authorBirthDateCol")};
 	}
 
 	public Author getAuthor(int index) {
@@ -73,15 +73,15 @@ public class AuthorTableModel extends AbstractTableModel {
 	public Object getValueAt(int row, int col) {
 		Author author = authors.get(row);
 		switch (AuthorTableColumn.getByNumber(col)) {
-		case COL_NAME:
-			return author.getName();
-		case COL_SURNAME:
-			return author.getSurname();
-		case COL_BIRTH_DATE:
-			return author.getBirthDate() != null ? Constans.APPLICATION_DATE_FORMAT.format(author.getBirthDate())
-					: null;
-		default:
-			return null;
+			case COL_NAME:
+				return author.getName();
+			case COL_SURNAME:
+				return author.getSurname();
+			case COL_BIRTH_DATE:
+				return author.getBirthDate() != null ? Constants.APPLICATION_DATE_FORMAT.format(author.getBirthDate())
+						: null;
+			default:
+				return null;
 		}
 	}
 

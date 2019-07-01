@@ -4,11 +4,11 @@ import javax.swing.Icon;
 import javax.swing.JOptionPane;
 
 import com.javafee.common.Common;
-import com.javafee.common.Constans;
-import com.javafee.common.Constans.Role;
-import com.javafee.common.Constans.Tab_Accountant;
-import com.javafee.common.Constans.Tab_Client;
-import com.javafee.common.Constans.Tab_Worker;
+import com.javafee.common.Constants;
+import com.javafee.common.Constants.Role;
+import com.javafee.common.Constants.Tab_Accountant;
+import com.javafee.common.Constants.Tab_Client;
+import com.javafee.common.Constants.Tab_Worker;
 import com.javafee.common.IActionForm;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
@@ -31,7 +31,7 @@ public class Actions implements IActionForm {
 		if (Utils.displayConfirmDialog(
 				SystemProperties.getInstance().getResourceBundle().getString("confirmDialog.languageChange"),
 				"") == JOptionPane.YES_OPTION) {
-			Constans.APPLICATION_LANGUAGE = (String) tabbedForm.getComboBoxLanguage().getSelectedItem();
+			Constants.APPLICATION_LANGUAGE = (String) tabbedForm.getComboBoxLanguage().getSelectedItem();
 			SystemProperties.getInstance()
 					.setResourceBundleLanguage((String) tabbedForm.getComboBoxLanguage().getSelectedItem());
 			onClickBtnLogOut();
@@ -40,8 +40,8 @@ public class Actions implements IActionForm {
 
 	@Override
 	public void initializeForm() {
-		tabbedForm.getComboBoxLanguage().addItem(Constans.APPLICATION_LANGUAGE_PL);
-		tabbedForm.getComboBoxLanguage().addItem(Constans.APPLICATION_LANGUAGE_EN);
+		tabbedForm.getComboBoxLanguage().addItem(Constants.APPLICATION_LANGUAGE_PL);
+		tabbedForm.getComboBoxLanguage().addItem(Constants.APPLICATION_LANGUAGE_EN);
 		Common.registerTimerServiceListenerSingleton(tabbedForm.getLblTime());
 		reloadLblLogInInformationDynamic();
 		registerNetworkServiceListener();
@@ -102,22 +102,22 @@ public class Actions implements IActionForm {
 		Role role = LogInEvent.getRole();
 		String stringRole = null;
 		if (role == Role.CLIENT)
-			stringRole = Constans.CLIENT;
+			stringRole = Constants.CLIENT;
 		else if (role == Role.ADMIN)
-			stringRole = Constans.ROLE_ADMIN;
+			stringRole = Constants.ROLE_ADMIN;
 		else if (role == Role.WORKER_ACCOUNTANT)
-			stringRole = Constans.WORKER_ACCOUNTANT;
+			stringRole = Constants.WORKER_ACCOUNTANT;
 		else if (role == Role.WORKER_LIBRARIAN)
-			stringRole = Constans.WORKER_LIBRARIAN;
+			stringRole = Constants.WORKER_LIBRARIAN;
 
 		if (LogInEvent.getWorker() != null)
 			logInInformation.append(
 					LogInEvent.getWorker().getName() + " " + LogInEvent.getWorker().getSurname() + ", " + stringRole
-							+ " [" + Constans.APPLICATION_DATE_TIME_FORMAT.format(LogInEvent.getLogInDate()) + "]");
+							+ " [" + Constants.APPLICATION_DATE_TIME_FORMAT.format(LogInEvent.getLogInDate()) + "]");
 		else if (LogInEvent.getClient() != null)
 			logInInformation.append(
 					LogInEvent.getClient().getName() + " " + LogInEvent.getClient().getSurname() + ", " + stringRole
-							+ " [" + Constans.APPLICATION_DATE_TIME_FORMAT.format(LogInEvent.getLogInDate()) + "]");
+							+ " [" + Constants.APPLICATION_DATE_TIME_FORMAT.format(LogInEvent.getLogInDate()) + "]");
 
 		if (LogInEvent.getIsAdmin())
 			logInInformation.append(stringRole);
@@ -131,53 +131,53 @@ public class Actions implements IActionForm {
 	private void reloadTabbedPane() {
 		if (LogInEvent.getRole() == Role.CLIENT)
 			switch (Tab_Client.getByNumber(tabbedForm.getTabbedPane().getSelectedIndex())) {
-			case TAB_LIBRARY:
-				TabLibraryEvent.getInstance(tabbedForm);
-				break;
-			default:
-				break;
+				case TAB_LIBRARY:
+					TabLibraryEvent.getInstance(tabbedForm);
+					break;
+				default:
+					break;
 			}
 
 		if (LogInEvent.getRole() == Role.WORKER_LIBRARIAN)
 			switch (Tab_Worker.getByNumber(tabbedForm.getTabbedPane().getSelectedIndex())) {
-			case TAB_CLIENT:
-				TabClientEvent.getInstance(tabbedForm);
-				break;
-			case TAB_LIBRARY:
-				TabLibraryEvent.getInstance(tabbedForm);
-				break;
-			case TAB_BOOK:
-				TabBookEvent.getInstance(tabbedForm);
-				break;
-			case TAB_LOAN_SERVICE:
-				TabLoanServiceEvent.getInstance(tabbedForm);
-				break;
-			default:
-				break;
+				case TAB_CLIENT:
+					TabClientEvent.getInstance(tabbedForm);
+					break;
+				case TAB_LIBRARY:
+					TabLibraryEvent.getInstance(tabbedForm);
+					break;
+				case TAB_BOOK:
+					TabBookEvent.getInstance(tabbedForm);
+					break;
+				case TAB_LOAN_SERVICE:
+					TabLoanServiceEvent.getInstance(tabbedForm);
+					break;
+				default:
+					break;
 			}
 
 		if (LogInEvent.getRole() == Role.WORKER_ACCOUNTANT || LogInEvent.getRole() == Role.ADMIN)
 			switch (Tab_Accountant.getByNumber(tabbedForm.getTabbedPane().getSelectedIndex())) {
-			case TAB_CLIENT:
-				TabClientEvent.getInstance(tabbedForm);
-				break;
-			case TAB_LIBRARY:
-				TabLibraryEvent.getInstance(tabbedForm);
-				break;
-			case TAB_BOOK:
-				TabBookEvent.getInstance(tabbedForm);
-				break;
-			case TAB_ADM_DICTIONARY:
-				TabAdmDictionaryEvent.getInstance(tabbedForm);
-				break;
-			case TAB_LOAN_SERVICE:
-				TabLoanServiceEvent.getInstance(tabbedForm);
-				break;
-			case TAB_ADM_WORKER:
-				TabWorkerEvent.getInstance(tabbedForm);
-				break;
-			default:
-				break;
+				case TAB_CLIENT:
+					TabClientEvent.getInstance(tabbedForm);
+					break;
+				case TAB_LIBRARY:
+					TabLibraryEvent.getInstance(tabbedForm);
+					break;
+				case TAB_BOOK:
+					TabBookEvent.getInstance(tabbedForm);
+					break;
+				case TAB_ADM_DICTIONARY:
+					TabAdmDictionaryEvent.getInstance(tabbedForm);
+					break;
+				case TAB_LOAN_SERVICE:
+					TabLoanServiceEvent.getInstance(tabbedForm);
+					break;
+				case TAB_ADM_WORKER:
+					TabWorkerEvent.getInstance(tabbedForm);
+					break;
+				default:
+					break;
 			}
 	}
 

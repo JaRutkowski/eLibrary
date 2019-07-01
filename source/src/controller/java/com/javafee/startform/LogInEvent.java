@@ -3,7 +3,7 @@ package com.javafee.startform;
 import java.util.Date;
 
 import com.javafee.common.Common;
-import com.javafee.common.Constans.Role;
+import com.javafee.common.Constants.Role;
 import com.javafee.common.Params;
 import com.javafee.exception.RefusedLogInException;
 import com.javafee.hibernate.dao.HibernateUtil;
@@ -101,7 +101,7 @@ public final class LogInEvent {
 		libraryWorker = (LibraryWorker) HibernateUtil.getSession()
 				.getNamedQuery("LibraryWorker.checkIfLibraryWorkerHiredExist")
 				.setParameter("idWorker", worker.getIdUserData()).uniqueResult();
-		return libraryWorker != null ? true : false;
+		return libraryWorker != null;
 	}
 
 	private static boolean checkLoginAndPassword(String password) {

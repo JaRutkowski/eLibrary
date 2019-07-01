@@ -1,25 +1,22 @@
 package com.javafee.tabbedform;
 
-import java.util.List;
-
 import javax.swing.JOptionPane;
 
 import com.javafee.common.Common;
-import com.javafee.common.Constans;
-import com.javafee.common.Constans.Role;
+import com.javafee.common.Constants;
+import com.javafee.common.Constants.Role;
 import com.javafee.common.IActionForm;
 import com.javafee.common.Params;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
+import com.javafee.common.Validator;
 import com.javafee.emailform.Actions;
 import com.javafee.exception.LogGuiException;
 import com.javafee.exception.RefusedClientsEventLoadingException;
 import com.javafee.hibernate.dao.HibernateUtil;
 import com.javafee.hibernate.dto.library.Client;
-import com.javafee.hibernate.dto.library.Lend;
 import com.javafee.model.ClientTableModel;
 import com.javafee.startform.LogInEvent;
-import com.javafee.startform.RegistrationEvent;
 
 import lombok.Setter;
 
@@ -109,7 +106,7 @@ public final class TabClientEvent implements IActionForm {
 	private void onClickBtnAdd() {
 		if (clientAddModEvent == null)
 			clientAddModEvent = new ClientAddModEvent();
-		clientAddModEvent.control(Constans.Context.ADDITION,
+		clientAddModEvent.control(Constants.Context.ADDITION,
 				(ClientTableModel) tabbedForm.getPanelClient().getClientTable().getModel());
 	}
 
@@ -127,7 +124,7 @@ public final class TabClientEvent implements IActionForm {
 
 				if (clientAddModEvent == null)
 					clientAddModEvent = new ClientAddModEvent();
-				clientAddModEvent.control(Constans.Context.MODIFICATION,
+				clientAddModEvent.control(Constants.Context.MODIFICATION,
 						(ClientTableModel) tabbedForm.getPanelClient().getClientTable().getModel());
 			}
 		} else {
@@ -143,35 +140,42 @@ public final class TabClientEvent implements IActionForm {
 		if (tabbedForm.getPanelClient().getClientTable().getSelectedRow() != -1) {
 			int selectedRowIndex = tabbedForm.getPanelClient().getClientTable()
 					.convertRowIndexToModel(tabbedForm.getPanelClient().getClientTable().getSelectedRow());
-
-			if (Utils.displayConfirmDialog(
-					SystemProperties.getInstance().getResourceBundle().getString("confirmDialog.deleteMessage"),
-					"") == JOptionPane.YES_OPTION) {
-				if (selectedRowIndex != -1) {
-					Client selectedClient = ((ClientTableModel) tabbedForm.getPanelClient().getClientTable().getModel())
-							.getClient(selectedRowIndex);
-
-					@SuppressWarnings("unchecked")
-					List<Lend> lends = HibernateUtil.getSession().createQuery("from Lend as len join fetch len.client")
-							.list();
-					boolean lendClientExist = false;
-					for (Lend l : lends) {
-						if (l.getClient().getIdUserData() == selectedClient.getIdUserData())
-							lendClientExist = true;
-					}
-
-					if (lendClientExist) {
-						LogGuiException.logWarning(
-								SystemProperties.getInstance().getResourceBundle()
-										.getString("tabClientEvent.existingClientLendErrorTitle"),
-								SystemProperties.getInstance().getResourceBundle()
-										.getString("tabClientEvent.existingClientLendError"));
-					} else {
-						HibernateUtil.beginTransaction();
-						HibernateUtil.getSession().delete(selectedClient);
-						HibernateUtil.commitTransaction();
-						((ClientTableModel) tabbedForm.getPanelClient().getClientTable().getModel())
-								.remove(selectedClient);
+			if (selectedRowIndex != -1) {
+				Client selectedClient = ((ClientTableModel) tabbedForm.getPanelClient().getClientTable().getModel())
+						.getClient(selectedRowIndex);
+				if (Validator.validateIfClientLendsExists(selectedClient.getIdUserData())) {
+					LogGuiException.logWarning(
+							SystemProperties.getInstance().getResourceBundle()
+									.getString("tabClientEvent.existingClientLendErrorTitle"),
+							SystemProperties.getInstance().getResourceBundle()
+									.getString("tabClientEvent.existingClientLendError"));
+				} else {
+					if (Utils.displayConfirmDialog(
+							SystemProperties.getInstance().getResourceBundle().getString("confirmDialog.deleteMessage"),
+							"") == JOptionPane.YES_OPTION) {
+						if (!Validator.validateIfUserCorrespondenceExists(selectedClient.getIdUserData())) {
+							HibernateUtil.beginTransaction();
+							HibernateUtil.getSession().delete(selectedClient);
+							HibernateUtil.commitTransaction();
+							((ClientTableModel) tabbedForm.getPanelClient().getClientTable().getModel())
+									.remove(selectedClient);
+						} else {
+							if (Utils.displayConfirmDialog(
+									SystemProperties.getInstance().getResourceBundle().getString("confirmDialog.clearClientCorrespondenceData"),
+									"") == JOptionPane.YES_OPTION) {
+								if (Common.clearMessagesRecipientData(selectedClient.getIdUserData()) > 0) {
+									HibernateUtil.beginTransaction();
+									HibernateUtil.getSession().delete(selectedClient);
+									HibernateUtil.commitTransaction();
+									((ClientTableModel) tabbedForm.getPanelClient().getClientTable().getModel())
+											.remove(selectedClient);
+									JOptionPane.showMessageDialog(tabbedForm.getFrame(),
+											SystemProperties.getInstance().getResourceBundle().getString("tabClientEvent.deleteClientSuccess"),
+											SystemProperties.getInstance().getResourceBundle().getString("tabClientEvent.deleteClientSuccessTitle"),
+											JOptionPane.INFORMATION_MESSAGE);
+								}
+							}
+						}
 					}
 				}
 			}
@@ -216,13 +220,13 @@ public final class TabClientEvent implements IActionForm {
 	private void onClientTableListSelectionChange() {
 		if (tabbedForm.getPanelClient().getClientTable().getSelectedRow() != -1
 				&& tabbedForm.getPanelClient().getClientTable()
-						.convertRowIndexToModel(tabbedForm.getPanelClient().getClientTable().getSelectedRow()) != -1)
+				.convertRowIndexToModel(tabbedForm.getPanelClient().getClientTable().getSelectedRow()) != -1)
 			reloadChckbxIsRegistered(
 					(SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.registeredTrueVal"))
 							.equals(tabbedForm.getPanelClient().getClientTable().getModel().getValueAt(
 									tabbedForm.getPanelClient().getClientTable().convertRowIndexToModel(
 											tabbedForm.getPanelClient().getClientTable().getSelectedRow()),
-									Constans.ClientTableColumn.COL_REGISTERED.getValue())) ? true : false);
+									Constants.ClientTableColumn.COL_REGISTERED.getValue())));
 	}
 
 	private void switchPerspectiveToAdm(boolean isAdminOrAccountant) {
@@ -232,11 +236,6 @@ public final class TabClientEvent implements IActionForm {
 
 	public boolean validateClientTableSelection(int index) {
 		return index > -1;
-	}
-
-	public void addNow() {
-		ClientTableModel ctm = (ClientTableModel) tabbedForm.getPanelClient().getClientTable().getModel();
-		ctm.add((Client) RegistrationEvent.userData);
 	}
 
 	private static class View {

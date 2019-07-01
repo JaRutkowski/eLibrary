@@ -1,7 +1,6 @@
 package com.javafee.emailform.emails;
 
-import java.awt.GridLayout;
-import java.awt.Image;
+import java.awt.*;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;

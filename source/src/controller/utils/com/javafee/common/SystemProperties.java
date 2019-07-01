@@ -10,8 +10,8 @@ public class SystemProperties {
 
 	private static SystemProperties systemProperties = null;
 
-	private ResourceBundle resourceBundleLanguage = ResourceBundle.getBundle(Constans.LANGUAGE_RESOURCE_BUNDLE,
-			new Locale(Constans.APPLICATION_LANGUAGE));
+	private ResourceBundle resourceBundleLanguage = ResourceBundle.getBundle(Constants.LANGUAGE_RESOURCE_BUNDLE,
+			new Locale(Constants.APPLICATION_LANGUAGE));
 
 	private SystemProperties() {
 	}

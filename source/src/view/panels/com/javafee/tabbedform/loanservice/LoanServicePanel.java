@@ -1,9 +1,6 @@
 package com.javafee.tabbedform.loanservice;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Image;
-import java.awt.Insets;
+import java.awt.*;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -61,10 +58,10 @@ public class LoanServicePanel extends JPanel {
 	public LoanServicePanel() {
 		setBackground(Utils.getApplicationColor());
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[] { 751, 64, 0, 165, 0 };
-		gridBagLayout.rowHeights = new int[] { 189, 0, 0, 0, 0, 0, 0 };
-		gridBagLayout.columnWeights = new double[] { 1.0, 1.0, 0.0, 0.0, Double.MIN_VALUE };
-		gridBagLayout.rowWeights = new double[] { 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, Double.MIN_VALUE };
+		gridBagLayout.columnWidths = new int[]{751, 64, 0, 165, 0};
+		gridBagLayout.rowHeights = new int[]{189, 0, 0, 0, 0, 0, 0};
+		gridBagLayout.columnWeights = new double[]{1.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{1.0, 0.0, 1.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 
 		panel = new JPanel();
@@ -79,10 +76,10 @@ public class LoanServicePanel extends JPanel {
 		gbc_panel.gridy = 0;
 		add(panel, gbc_panel);
 		GridBagLayout gbl_panel = new GridBagLayout();
-		gbl_panel.columnWidths = new int[] { 425, 0 };
-		gbl_panel.rowHeights = new int[] { 189, 0 };
-		gbl_panel.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
-		gbl_panel.rowWeights = new double[] { 1.0, Double.MIN_VALUE };
+		gbl_panel.columnWidths = new int[]{425, 0};
+		gbl_panel.rowHeights = new int[]{189, 0};
+		gbl_panel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+		gbl_panel.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
 
 		scrollPaneClient = new JScrollPane();
@@ -115,10 +112,10 @@ public class LoanServicePanel extends JPanel {
 		gbc_volumePanel.gridy = 0;
 		add(volumePanel, gbc_volumePanel);
 		GridBagLayout gbl_volumePanel = new GridBagLayout();
-		gbl_volumePanel.columnWidths = new int[] { 64, 0, 0 };
-		gbl_volumePanel.rowHeights = new int[] { 189, 0 };
-		gbl_volumePanel.columnWeights = new double[] { 1.0, 0.0, Double.MIN_VALUE };
-		gbl_volumePanel.rowWeights = new double[] { 1.0, Double.MIN_VALUE };
+		gbl_volumePanel.columnWidths = new int[]{64, 0, 0};
+		gbl_volumePanel.rowHeights = new int[]{189, 0};
+		gbl_volumePanel.columnWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
+		gbl_volumePanel.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 		volumePanel.setLayout(gbl_volumePanel);
 
 		JScrollPane scrollPane_loanTable_2 = new JScrollPane();
@@ -165,10 +162,10 @@ public class LoanServicePanel extends JPanel {
 		gbc_loanPanel.gridy = 2;
 		add(loanPanel, gbc_loanPanel);
 		GridBagLayout gbl_loanPanel = new GridBagLayout();
-		gbl_loanPanel.columnWidths = new int[] { 751, 64, 0, 165, 95, 0 };
-		gbl_loanPanel.rowHeights = new int[] { 0, 0 };
-		gbl_loanPanel.columnWeights = new double[] { 1.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
-		gbl_loanPanel.rowWeights = new double[] { 1.0, Double.MIN_VALUE };
+		gbl_loanPanel.columnWidths = new int[]{751, 64, 0, 165, 95, 0};
+		gbl_loanPanel.rowHeights = new int[]{0, 0};
+		gbl_loanPanel.columnWeights = new double[]{1.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_loanPanel.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 		loanPanel.setLayout(gbl_loanPanel);
 
 		scrollPane_loanTable_1 = new JScrollPane();
@@ -248,10 +245,10 @@ public class LoanServicePanel extends JPanel {
 		gbc_reservationPanel.gridy = 4;
 		add(reservationPanel, gbc_reservationPanel);
 		GridBagLayout gbl_reservationPanel = new GridBagLayout();
-		gbl_reservationPanel.columnWidths = new int[] { 751, 64, 0, 165, 0 };
-		gbl_reservationPanel.rowHeights = new int[] { 0, 0 };
-		gbl_reservationPanel.columnWeights = new double[] { 1.0, 1.0, 0.0, 0.0, Double.MIN_VALUE };
-		gbl_reservationPanel.rowWeights = new double[] { 1.0, Double.MIN_VALUE };
+		gbl_reservationPanel.columnWidths = new int[]{751, 64, 0, 165, 0};
+		gbl_reservationPanel.rowHeights = new int[]{0, 0};
+		gbl_reservationPanel.columnWeights = new double[]{1.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_reservationPanel.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 		reservationPanel.setLayout(gbl_reservationPanel);
 
 		scrollPane_reservationTable = new JScrollPane();

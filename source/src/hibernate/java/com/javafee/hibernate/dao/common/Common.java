@@ -7,6 +7,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
+import org.hibernate.resource.transaction.spi.TransactionStatus;
 
 import com.javafee.hibernate.dao.HibernateUtil;
 import com.javafee.hibernate.dto.association.MessageType;
@@ -79,13 +80,13 @@ public class Common {
 
 	public static SystemProperties checkAndGetSystemProperties(final int userDataId) {
 		Optional<SystemProperties> systemProperties = Common.findSystemPropertiesByUserDataId(userDataId);
-		SystemProperties result = null;
+		SystemProperties result;
 
 		if (!systemProperties.isPresent()) {
 			UserData userData = Common.findUserDataById(userDataId).get();
 			HibernateUtil.beginTransaction();
 			result = new SystemProperties();
-			result.setUserData(userData);
+			userData.setSystemProperties(result);
 
 			HibernateUtil.getSession().save(result);
 			HibernateUtil.commitTransaction();
@@ -99,6 +100,8 @@ public class Common {
 		Optional<MessageType> messageType = Optional.empty();
 
 		try {
+			if (HibernateUtil.getSession().getTransaction().getStatus() != TransactionStatus.ACTIVE)
+				HibernateUtil.getSession().beginTransaction();
 			CriteriaBuilder cb = HibernateUtil.getEntityManager().getCriteriaBuilder();
 			CriteriaQuery<MessageType> criteria = cb.createQuery(MessageType.class);
 			Root<MessageType> messageTypeRoot = criteria.from(MessageType.class);
@@ -108,6 +111,7 @@ public class Common {
 					.ofNullable(!HibernateUtil.getEntityManager().createQuery(criteria).getResultList().isEmpty()
 							? HibernateUtil.getEntityManager().createQuery(criteria).getResultList().get(0)
 							: null);
+			HibernateUtil.getSession().getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

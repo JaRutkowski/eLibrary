@@ -1,8 +1,6 @@
 package com.javafee.tabbedform.clients;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.awt.*;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -33,10 +31,10 @@ public class ClientTablePanel extends JPanel {
 	public ClientTablePanel() {
 		setBackground(Utils.getApplicationColor());
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[] { 417, 16, 0 };
-		gridBagLayout.rowHeights = new int[] { 0, 76, 38, 0 };
-		gridBagLayout.columnWeights = new double[] { 1.0, 1.0, Double.MIN_VALUE };
-		gridBagLayout.rowWeights = new double[] { 1.0, 0.0, 0.0, Double.MIN_VALUE };
+		gridBagLayout.columnWidths = new int[]{417, 16, 0};
+		gridBagLayout.rowHeights = new int[]{0, 76, 38, 0};
+		gridBagLayout.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{1.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 
 		JScrollPane scrollPane = new JScrollPane();

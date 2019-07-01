@@ -6,8 +6,8 @@ import com.javafee.emailform.TabTemplatePageEvent;
 
 public interface IWatchService {
 
-	public void initialize(TabTemplatePageEvent tabTemplatePageEvent, Consumer<TabTemplatePageEvent> c);
+	void initialize(TabTemplatePageEvent tabTemplatePageEvent, Consumer<TabTemplatePageEvent> c);
 
-	public void destroy();
+	void destroy();
 
 }

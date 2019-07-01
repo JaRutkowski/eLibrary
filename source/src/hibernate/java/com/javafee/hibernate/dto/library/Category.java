@@ -29,7 +29,7 @@ public class Category {
 	@Column(name = "name", unique = false, nullable = true, insertable = true, updatable = true, length = 200)
 	private String name;
 
-	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, mappedBy = "category")
+	@ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, mappedBy = "category")
 	private Set<Book> book = new HashSet<Book>(0);
 
 	@Override

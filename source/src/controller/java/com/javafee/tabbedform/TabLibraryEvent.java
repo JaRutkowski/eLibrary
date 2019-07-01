@@ -2,9 +2,9 @@ package com.javafee.tabbedform;
 
 import javax.swing.JOptionPane;
 
-import com.javafee.common.Constans;
-import com.javafee.common.Constans.Context;
-import com.javafee.common.Constans.Role;
+import com.javafee.common.Constants;
+import com.javafee.common.Constants.Context;
+import com.javafee.common.Constants.Role;
 import com.javafee.common.IActionForm;
 import com.javafee.common.Params;
 import com.javafee.common.SystemProperties;
@@ -143,7 +143,7 @@ public class TabLibraryEvent implements IActionForm {
 
 				if (libraryAddModEvent == null)
 					libraryAddModEvent = new LibraryAddModEvent();
-				libraryAddModEvent.control(Constans.Context.MODIFICATION, Context.READING_ROOM,
+				libraryAddModEvent.control(Constants.Context.MODIFICATION, Context.READING_ROOM,
 						(VolumeTableModel) tabbedForm.getPanelLibrary().getReadingRoomVolumeTable().getModel());
 
 			}
@@ -173,7 +173,7 @@ public class TabLibraryEvent implements IActionForm {
 
 					if (libraryAddModEvent == null)
 						libraryAddModEvent = new LibraryAddModEvent();
-					libraryAddModEvent.control(Constans.Context.MODIFICATION, Context.LOAN,
+					libraryAddModEvent.control(Constants.Context.MODIFICATION, Context.LOAN,
 							(VolumeTableModel) tabbedForm.getPanelLibrary().getLoanVolumeTable().getModel());
 				} else {
 					LogGuiException.logWarning(
@@ -196,14 +196,14 @@ public class TabLibraryEvent implements IActionForm {
 	private void onClickBtnAddVolumeLoan() {
 		if (libraryAddModEvent == null)
 			libraryAddModEvent = new LibraryAddModEvent();
-		libraryAddModEvent.control(Constans.Context.ADDITION, Constans.Context.LOAN,
+		libraryAddModEvent.control(Constants.Context.ADDITION, Constants.Context.LOAN,
 				(VolumeTableModel) tabbedForm.getPanelLibrary().getLoanVolumeTable().getModel());
 	}
 
 	private void onClickBtnAddVolumeReadingRoom() {
 		if (libraryAddModEvent == null)
 			libraryAddModEvent = new LibraryAddModEvent();
-		libraryAddModEvent.control(Constans.Context.ADDITION, Constans.Context.READING_ROOM,
+		libraryAddModEvent.control(Constants.Context.ADDITION, Constants.Context.READING_ROOM,
 				(VolumeTableReadingRoomModel) tabbedForm.getPanelLibrary().getReadingRoomVolumeTable().getModel());
 
 	}

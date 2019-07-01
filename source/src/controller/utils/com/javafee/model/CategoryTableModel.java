@@ -5,7 +5,7 @@ import java.util.List;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.AbstractTableModel;
 
-import com.javafee.common.Constans.CategoryTableColumn;
+import com.javafee.common.Constants.CategoryTableColumn;
 import com.javafee.common.SystemProperties;
 import com.javafee.hibernate.dao.HibernateDao;
 import com.javafee.hibernate.dao.HibernateUtil;
@@ -23,8 +23,8 @@ public class CategoryTableModel extends AbstractTableModel {
 	public CategoryTableModel() {
 		super();
 		this.prepareHibernateDao();
-		this.columns = new String[] {
-				SystemProperties.getInstance().getResourceBundle().getString("categoryTableModel.categoryNameCol") };
+		this.columns = new String[]{
+				SystemProperties.getInstance().getResourceBundle().getString("categoryTableModel.categoryNameCol")};
 	}
 
 	public Category getCategory(int index) {
@@ -70,10 +70,10 @@ public class CategoryTableModel extends AbstractTableModel {
 	public Object getValueAt(int row, int col) {
 		Category category = categories.get(row);
 		switch (CategoryTableColumn.getByNumber(col)) {
-		case COL_NAME:
-			return category.getName();
-		default:
-			return null;
+			case COL_NAME:
+				return category.getName();
+			default:
+				return null;
 		}
 	}
 

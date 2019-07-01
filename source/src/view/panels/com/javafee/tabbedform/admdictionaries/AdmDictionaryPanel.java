@@ -1,8 +1,6 @@
 package com.javafee.tabbedform.admdictionaries;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.awt.*;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
@@ -11,7 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-import com.javafee.common.Constans;
+import com.javafee.common.Constants;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
 import com.javafee.hibernate.dto.library.Author;
@@ -60,10 +58,10 @@ public class AdmDictionaryPanel extends JPanel {
 	public AdmDictionaryPanel() {
 		setBackground(Utils.getApplicationColor());
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[] { 30, 128, 0, 0, 0, 0, 0 };
-		gridBagLayout.rowHeights = new int[] { 0, 0, 26, 0, 0, 0, 0, 0, 0 };
-		gridBagLayout.columnWeights = new double[] { 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE };
-		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+		gridBagLayout.columnWidths = new int[]{30, 128, 0, 0, 0, 0, 0};
+		gridBagLayout.rowHeights = new int[]{0, 0, 26, 0, 0, 0, 0, 0, 0};
+		gridBagLayout.columnWeights = new double[]{1.0, 1.0, 1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 
 		JLabel lblAuthor = new JLabel(
@@ -222,7 +220,7 @@ public class AdmDictionaryPanel extends JPanel {
 		add(lblAuthorBirthDate, gbc_lblAuthorBirthDate);
 
 		dateChooserBirthDate = new JDateChooser();
-		dateChooserBirthDate.setDateFormatString(Constans.APPLICATION_DATE_FORMAT.toPattern());
+		dateChooserBirthDate.setDateFormatString(Constants.APPLICATION_DATE_FORMAT.toPattern());
 		GridBagConstraints gbc_dateChooserBirthDate = new GridBagConstraints();
 		gbc_dateChooserBirthDate.anchor = GridBagConstraints.NORTH;
 		gbc_dateChooserBirthDate.insets = new Insets(0, 0, 5, 5);
@@ -234,7 +232,7 @@ public class AdmDictionaryPanel extends JPanel {
 		radioButtonAuthor = new JRadioButton();
 		radioButtonAuthor.setBackground(Utils.getApplicationColor());
 		radioButtonAuthor.setSelected(true);
-		radioButtonAuthor.setActionCommand(Constans.RADIO_BUTTON_AUTHOR);
+		radioButtonAuthor.setActionCommand(Constants.RADIO_BUTTON_AUTHOR);
 		GridBagConstraints gbc_radioButtonAuthor = new GridBagConstraints();
 		gbc_radioButtonAuthor.gridwidth = 2;
 		gbc_radioButtonAuthor.insets = new Insets(0, 0, 5, 5);
@@ -244,7 +242,7 @@ public class AdmDictionaryPanel extends JPanel {
 
 		radioButtonCategory = new JRadioButton();
 		radioButtonCategory.setBackground(Utils.getApplicationColor());
-		radioButtonCategory.setActionCommand(Constans.RADIO_BUTTON_CATEGORY);
+		radioButtonCategory.setActionCommand(Constants.RADIO_BUTTON_CATEGORY);
 		GridBagConstraints gbc_radioButtonCategory = new GridBagConstraints();
 		gbc_radioButtonCategory.gridwidth = 2;
 		gbc_radioButtonCategory.insets = new Insets(0, 0, 5, 5);
@@ -254,7 +252,7 @@ public class AdmDictionaryPanel extends JPanel {
 
 		radioButtonPublishingHouse = new JRadioButton();
 		radioButtonPublishingHouse.setBackground(Utils.getApplicationColor());
-		radioButtonPublishingHouse.setActionCommand(Constans.RADIO_BUTTON_PUBLISHING_HOUSE);
+		radioButtonPublishingHouse.setActionCommand(Constants.RADIO_BUTTON_PUBLISHING_HOUSE);
 		GridBagConstraints gbc_radioButtonPublishingHouse = new GridBagConstraints();
 		gbc_radioButtonPublishingHouse.gridwidth = 2;
 		gbc_radioButtonPublishingHouse.insets = new Insets(0, 0, 5, 0);

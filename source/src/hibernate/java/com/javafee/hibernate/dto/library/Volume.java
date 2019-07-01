@@ -25,8 +25,8 @@ import lombok.Data;
 @Data
 @Entity
 @NamedQueries({
-		@NamedQuery(name = "Volume.checkIfInventoryNumberExist", query = "from Volume where inventoryNumber = :inventoryNumber") })
-@Table(name = "lib_volume", uniqueConstraints = { @UniqueConstraint(columnNames = { "inventory_number" }) })
+		@NamedQuery(name = "Volume.checkIfInventoryNumberExist", query = "from Volume where inventoryNumber = :inventoryNumber")})
+@Table(name = "lib_volume", uniqueConstraints = {@UniqueConstraint(columnNames = {"inventory_number"})})
 @SequenceGenerator(name = "seq_lib_volume", sequenceName = "seq_lib_volume", allocationSize = 1)
 public class Volume implements Cloneable {
 	@Id
@@ -53,7 +53,7 @@ public class Volume implements Cloneable {
 	@JoinColumn(name = "id_book")
 	private Book book;
 
-	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.REFRESH }, fetch = FetchType.LAZY, mappedBy = "volume")
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.LAZY, mappedBy = "volume")
 	private Set<Lend> lend = new HashSet<Lend>(0);
 
 	@Column(name = "penalty_value", unique = false, nullable = true, insertable = true, updatable = true, precision = 9, scale = 2)

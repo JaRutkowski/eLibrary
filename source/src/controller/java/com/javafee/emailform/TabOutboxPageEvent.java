@@ -13,9 +13,9 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 import com.javafee.common.Common;
-import com.javafee.common.Constans;
-import com.javafee.common.Constans.Role;
-import com.javafee.common.Constans.Tab_Email;
+import com.javafee.common.Constants;
+import com.javafee.common.Constants.Role;
+import com.javafee.common.Constants.Tab_Email;
 import com.javafee.common.IMessageForm;
 import com.javafee.common.Params;
 import com.javafee.common.Query;
@@ -145,7 +145,7 @@ public class TabOutboxPageEvent implements IMessageForm {
 		if (emailForm.getPanelOutboxPage().getCheckShowOnlySystemCorrespondence().isSelected()) {
 			List<Object> parameters = new ArrayList<Object>();
 			MessageType messageType = com.javafee.hibernate.dao.common.Common
-					.findMessageTypeByName(Constans.DATA_BASE_MESSAGE_TYPE_SYS_MESSAGE).get();
+					.findMessageTypeByName(Constants.DATA_BASE_MESSAGE_TYPE_SYS_MESSAGE).get();
 			parameters.add(messageType);
 			((OutboxTableModel) emailForm.getPanelOutboxPage().getOutboxTable().getModel()) //
 					.reloadData(Query.TabOutboxPageEventQuery.MESSAGE_BY_MESSAGE_TYPE.getValue(), parameters);
@@ -237,7 +237,7 @@ public class TabOutboxPageEvent implements IMessageForm {
 	private void createEmail(Set<Recipient> recipients, String subject, String text) {
 		try {
 			MessageType messageType = com.javafee.hibernate.dao.common.Common
-					.findMessageTypeByName(Constans.DATA_BASE_MESSAGE_TYPE_USR_MESSAGE).get();
+					.findMessageTypeByName(Constants.DATA_BASE_MESSAGE_TYPE_USR_MESSAGE).get();
 
 			HibernateUtil.beginTransaction();
 			com.javafee.hibernate.dto.common.message.Message message = new com.javafee.hibernate.dto.common.message.Message();
@@ -259,7 +259,7 @@ public class TabOutboxPageEvent implements IMessageForm {
 			message.setTitle(subject);
 			message.setContent(text);
 			message.setSendDate(
-					Constans.APPLICATION_DATE_FORMAT.parse(Constans.APPLICATION_DATE_FORMAT.format(new Date())));
+					Constants.APPLICATION_DATE_FORMAT.parse(Constants.APPLICATION_DATE_FORMAT.format(new Date())));
 
 			HibernateUtil.getSession().save(message);
 			HibernateUtil.commitTransaction();

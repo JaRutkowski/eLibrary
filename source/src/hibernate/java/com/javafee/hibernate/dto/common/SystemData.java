@@ -19,7 +19,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "com_system_data", uniqueConstraints = { @UniqueConstraint(columnNames = { "license_number" }) })
+@Table(name = "com_system_data", uniqueConstraints = {@UniqueConstraint(columnNames = {"license_number"})})
 @Inheritance(strategy = InheritanceType.JOINED)
 @SequenceGenerator(name = "seq_com_system_data", sequenceName = "seq_com_system_data", allocationSize = 1)
 public abstract class SystemData {

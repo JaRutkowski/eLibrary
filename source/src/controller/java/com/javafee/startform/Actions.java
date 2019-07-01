@@ -14,8 +14,8 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 import com.javafee.common.Common;
-import com.javafee.common.Constans;
-import com.javafee.common.Constans.Role;
+import com.javafee.common.Constants;
+import com.javafee.common.Constants.Role;
 import com.javafee.common.IRegistrationForm;
 import com.javafee.common.Params;
 import com.javafee.common.SystemProperties;
@@ -42,8 +42,8 @@ public class Actions implements IRegistrationForm {
 
 	public void control() {
 		if (MainSplashScreen.isNull())
-			MainSplashScreen.getInstance(Constans.MAIN_SPLASH_SCREEN_IMAGE, startForm.getFrame(),
-					Constans.MAIN_SPLASH_SCREEN_DURATION);
+			MainSplashScreen.getInstance(Constants.MAIN_SPLASH_SCREEN_IMAGE, startForm.getFrame(),
+					Constants.MAIN_SPLASH_SCREEN_DURATION);
 		else
 			startForm.getFrame().setVisible(true);
 
@@ -156,11 +156,11 @@ public class Actions implements IRegistrationForm {
 			try {
 				Character sex = startForm.getRegistrationPanel().getGroupRadioButtonSex().getSelection() != null
 						? startForm.getRegistrationPanel().getGroupRadioButtonSex().getSelection().getActionCommand()
-								.charAt(0)
+						.charAt(0)
 						: null;
 				Date birthDate = startForm.getRegistrationPanel().getDateChooserBirthDate().getDate() != null
 						? new SimpleDateFormat("dd-MM-yyyy").parse(new SimpleDateFormat("dd-MM-yyyy")
-								.format(startForm.getRegistrationPanel().getDateChooserBirthDate().getDate()))
+						.format(startForm.getRegistrationPanel().getDateChooserBirthDate().getDate()))
 						: null;
 
 				if (birthDate == null) {
@@ -293,10 +293,10 @@ public class Actions implements IRegistrationForm {
 	}
 
 	private void createEmail(List<SimpleEntry<Message.RecipientType, UserData>> recipients, String subject,
-			String text) {
+	                         String text) {
 		try {
 			MessageType messageType = com.javafee.hibernate.dao.common.Common
-					.findMessageTypeByName(Constans.DATA_BASE_MESSAGE_TYPE_SYS_MESSAGE).get();
+					.findMessageTypeByName(Constants.DATA_BASE_MESSAGE_TYPE_SYS_MESSAGE).get();
 
 			HibernateUtil.beginTransaction();
 			com.javafee.hibernate.dto.common.message.Message message = new com.javafee.hibernate.dto.common.message.Message();
@@ -312,7 +312,7 @@ public class Actions implements IRegistrationForm {
 			message.setTitle(subject);
 			message.setContent(text);
 			message.setSendDate(
-					Constans.APPLICATION_DATE_FORMAT.parse(Constans.APPLICATION_DATE_FORMAT.format(new Date())));
+					Constants.APPLICATION_DATE_FORMAT.parse(Constants.APPLICATION_DATE_FORMAT.format(new Date())));
 
 			HibernateUtil.getSession().save(message);
 			HibernateUtil.commitTransaction();

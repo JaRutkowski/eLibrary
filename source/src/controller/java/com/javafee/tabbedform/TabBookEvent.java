@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import com.javafee.common.Constans;
+import com.javafee.common.Constants;
 import com.javafee.common.IActionForm;
 import com.javafee.common.Params;
 import com.javafee.common.SystemProperties;
@@ -51,7 +51,7 @@ public class TabBookEvent implements IActionForm {
 	private void onClickBtnAdd() {
 		if (bookAddModEvent == null)
 			bookAddModEvent = new BookAddModEvent();
-		bookAddModEvent.control(Constans.Context.ADDITION,
+		bookAddModEvent.control(Constants.Context.ADDITION,
 				(BookTableModel) tabbedForm.getPanelBook().getBookTable().getModel());
 	}
 
@@ -68,7 +68,7 @@ public class TabBookEvent implements IActionForm {
 
 				if (bookAddModEvent == null)
 					bookAddModEvent = new BookAddModEvent();
-				bookAddModEvent.control(Constans.Context.MODIFICATION,
+				bookAddModEvent.control(Constants.Context.MODIFICATION,
 						(BookTableModel) tabbedForm.getPanelBook().getBookTable().getModel());
 
 			}

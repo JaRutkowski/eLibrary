@@ -1,10 +1,6 @@
 package com.javafee.startform;
 
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Image;
-import java.awt.Insets;
+import java.awt.*;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -17,7 +13,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
-import com.javafee.common.Constans;
+import com.javafee.common.Constants;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
 import com.javafee.hibernate.dto.association.City;
@@ -67,11 +63,11 @@ public class RegistrationPanel extends JPanel {
 						.getString("registrationPanel.registrationPanelBorderTitle"),
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[] { 100, 130, 198, 0 };
-		gridBagLayout.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-		gridBagLayout.columnWeights = new double[] { 0.0, 1.0, 1.0, Double.MIN_VALUE };
-		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-				Double.MIN_VALUE };
+		gridBagLayout.columnWidths = new int[]{100, 130, 198, 0};
+		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+				Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 
 		JLabel lblPesel = new JLabel(
@@ -211,7 +207,7 @@ public class RegistrationPanel extends JPanel {
 		radioButtonFemale = new JRadioButton(
 				SystemProperties.getInstance().getResourceBundle().getString("registrationPanel.radioButtonFemale"));
 		radioButtonFemale.setBackground(Utils.getApplicationColor());
-		radioButtonFemale.setActionCommand(Constans.DATA_BASE_FEMALE_SIGN.toString());
+		radioButtonFemale.setActionCommand(Constants.DATA_BASE_FEMALE_SIGN.toString());
 		GridBagConstraints gbc_radioButtonFemale = new GridBagConstraints();
 		gbc_radioButtonFemale.anchor = GridBagConstraints.WEST;
 		gbc_radioButtonFemale.insets = new Insets(0, 0, 5, 5);
@@ -222,7 +218,7 @@ public class RegistrationPanel extends JPanel {
 		radioButtonMale = new JRadioButton(
 				SystemProperties.getInstance().getResourceBundle().getString("registrationPanel.radioButtonMale"));
 		radioButtonMale.setBackground(Utils.getApplicationColor());
-		radioButtonMale.setActionCommand(Constans.DATA_BASE_MALE_SIGN.toString());
+		radioButtonMale.setActionCommand(Constants.DATA_BASE_MALE_SIGN.toString());
 		GridBagConstraints gbc_radioButtonMale = new GridBagConstraints();
 		gbc_radioButtonMale.anchor = GridBagConstraints.WEST;
 		gbc_radioButtonMale.insets = new Insets(0, 0, 5, 0);
@@ -245,7 +241,7 @@ public class RegistrationPanel extends JPanel {
 		add(lblBirthDate, gbc_lblBirthDate);
 
 		dateChooserBirthDate = new JDateChooser();
-		dateChooserBirthDate.setDateFormatString(Constans.APPLICATION_DATE_FORMAT.toPattern());
+		dateChooserBirthDate.setDateFormatString(Constants.APPLICATION_DATE_FORMAT.toPattern());
 		GridBagConstraints gbc_dateChooserBirthDate = new GridBagConstraints();
 		gbc_dateChooserBirthDate.gridwidth = 2;
 		gbc_dateChooserBirthDate.insets = new Insets(0, 0, 5, 0);

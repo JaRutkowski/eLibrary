@@ -14,13 +14,14 @@ import java.util.stream.Collectors;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
-import com.javafee.common.Constans;
+import com.javafee.common.Constants;
 import com.javafee.common.HTMLProcessor;
 import com.javafee.common.IActionForm;
 import com.javafee.common.Utils;
 import com.javafee.hibernate.dao.HibernateUtil;
 import com.javafee.hibernate.dao.common.Common;
 import com.javafee.hibernate.dto.common.SystemProperties;
+import com.javafee.hibernate.dto.common.UserData;
 import com.javafee.startform.LogInEvent;
 
 import lombok.Setter;
@@ -69,7 +70,7 @@ public class TabTemplatePageEvent implements IActionForm {
 	private void reloadComboBoxLibraryTemplate() {
 		DefaultComboBoxModel<String> comboBoxLibraryTemplateModel = new DefaultComboBoxModel<String>();
 		Optional<SystemProperties> systemProperties = Common.findSystemPropertiesByUserDataId(
-				LogInEvent.getWorker() != null ? LogInEvent.getWorker().getIdUserData() : Constans.DATA_BASE_ADMIN_ID);
+				LogInEvent.getWorker() != null ? LogInEvent.getWorker().getIdUserData() : Constants.DATA_BASE_ADMIN_ID);
 		if (systemProperties.isPresent() && systemProperties.get().getTemplateDirectory() != null) {
 			File[] files = new File(systemProperties.get().getTemplateDirectory()).listFiles();
 			List<String> names = Arrays.asList(files).parallelStream().map(file -> file.getName())
@@ -88,7 +89,7 @@ public class TabTemplatePageEvent implements IActionForm {
 
 	private void registerWatchServiceListener() {
 		Optional<SystemProperties> systemProperties = Common.findSystemPropertiesByUserDataId(
-				LogInEvent.getWorker() != null ? LogInEvent.getWorker().getIdUserData() : Constans.DATA_BASE_ADMIN_ID);
+				LogInEvent.getWorker() != null ? LogInEvent.getWorker().getIdUserData() : Constants.DATA_BASE_ADMIN_ID);
 		if (systemProperties.isPresent() && systemProperties.get().getTemplateDirectory() != null) {
 			com.javafee.common.Common.registerWatchServiceListener(this, c -> this.reloadComboBoxLibraryTemplate());
 		}
@@ -108,9 +109,9 @@ public class TabTemplatePageEvent implements IActionForm {
 		reloadListStatus(messages);
 
 		emailForm.getPanelTemplatePage().getHtmlEditorPanel().getTextAreaHTMLeditor()
-				.setText(validator.getHtmlString().toString());
+				.setText(validator.getHtmlString());
 		emailForm.getPanelTemplatePage().getHtmlEditorPanel().getEditorPanePreview()
-				.setText(validator.getHtmlString().toString());
+				.setText(validator.getHtmlString());
 
 	}
 
@@ -130,23 +131,24 @@ public class TabTemplatePageEvent implements IActionForm {
 		if (validate()) {
 			SystemProperties systemProperties = Common
 					.checkAndGetSystemProperties(LogInEvent.getWorker() != null ? LogInEvent.getWorker().getIdUserData()
-							: Constans.DATA_BASE_ADMIN_ID);
+							: Constants.DATA_BASE_ADMIN_ID);
 
 			if (systemProperties.getTemplateDirectory() == null) {
 				if (Utils.displayConfirmDialog(com.javafee.common.SystemProperties.getInstance().getResourceBundle()
 						.getString("confirmDialog.initialTemplateLibrary"), "") == JOptionPane.YES_OPTION) {
-					File result = ((File) Utils.displaySaveDialogAndGetFile(null));
+					File result = Utils.displaySaveDialogAndGetFile(null);
 					if (result != null) {
 						try {
 							Files.write(Paths.get(result.getPath()),
 									Arrays.asList(emailForm.getPanelTemplatePage().getHtmlEditorPanel()
 											.getTextAreaHTMLeditor().getText()),
-									Charset.forName(Constans.APPLICATION_TEMPLATE_ENCODING));
+									Charset.forName(Constants.APPLICATION_TEMPLATE_ENCODING));
 
 							systemProperties.setTemplateDirectory(result.getParent());
+							LogInEvent.getWorker().setSystemProperties(systemProperties);
 
 							HibernateUtil.beginTransaction();
-							HibernateUtil.getSession().update(SystemProperties.class.getName(), systemProperties);
+							HibernateUtil.getSession().update(UserData.class.getName(), LogInEvent.getWorker());
 							HibernateUtil.commitTransaction();
 
 							Utils.displayOptionPane(
@@ -161,13 +163,13 @@ public class TabTemplatePageEvent implements IActionForm {
 					}
 				}
 			} else {
-				File result = ((File) Utils.displaySaveDialogAndGetFile(systemProperties.getTemplateDirectory()));
+				File result = Utils.displaySaveDialogAndGetFile(systemProperties.getTemplateDirectory());
 				if (result != null) {
 					try {
 						Files.write(Paths.get(result.getPath()),
 								Arrays.asList(emailForm.getPanelTemplatePage().getHtmlEditorPanel()
 										.getTextAreaHTMLeditor().getText()),
-								Charset.forName(Constans.APPLICATION_TEMPLATE_ENCODING));
+								Charset.forName(Constants.APPLICATION_TEMPLATE_ENCODING));
 
 						Utils.displayOptionPane(
 								com.javafee.common.SystemProperties.getInstance().getResourceBundle()
@@ -196,12 +198,12 @@ public class TabTemplatePageEvent implements IActionForm {
 	private void onClickBtnPreviewTemplateLibrary() {
 		com.javafee.hibernate.dto.common.SystemProperties systemProperties = com.javafee.hibernate.dao.common.Common
 				.checkAndGetSystemProperties(LogInEvent.getWorker() != null ? LogInEvent.getWorker().getIdUserData()
-						: Constans.DATA_BASE_ADMIN_ID);
+						: Constants.DATA_BASE_ADMIN_ID);
 
 		if (systemProperties.getTemplateDirectory() == null) {
 			if (Utils.displayConfirmDialog(com.javafee.common.SystemProperties.getInstance().getResourceBundle()
 					.getString("confirmDialog.loadFromTemplateLibraryNoDirectory"), "") == JOptionPane.YES_OPTION) {
-				File result = ((File) Utils.displayOpenDialogAndGetFile(null));
+				File result = Utils.displayOpenDialogAndGetFile(null);
 
 				systemProperties.setTemplateDirectory(result.getParent());
 
@@ -212,7 +214,7 @@ public class TabTemplatePageEvent implements IActionForm {
 				fillTextAreaHTMLeditorWithFile(result);
 			}
 		} else {
-			File result = ((File) Utils.displayOpenDialogAndGetFile(systemProperties.getTemplateDirectory()));
+			File result = Utils.displayOpenDialogAndGetFile(systemProperties.getTemplateDirectory());
 			fillTextAreaHTMLeditorWithFile(result);
 		}
 	}
@@ -224,7 +226,7 @@ public class TabTemplatePageEvent implements IActionForm {
 		if (fileName != null) {
 			Optional<SystemProperties> systemProperties = Common.findSystemPropertiesByUserDataId(
 					LogInEvent.getWorker() != null ? LogInEvent.getWorker().getIdUserData()
-							: Constans.DATA_BASE_ADMIN_ID);
+							: Constants.DATA_BASE_ADMIN_ID);
 			if (systemProperties.isPresent()) {
 				File file = new File(systemProperties.get().getTemplateDirectory() + File.separator + fileName);
 				clearTextAreaHTMLEditor();

@@ -9,7 +9,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
-@EqualsAndHashCode(exclude = { "worker", "libraryData" })
+@EqualsAndHashCode(exclude = {"worker", "libraryData"})
 @Embeddable
 public class LibraryWorkerId implements Serializable {
 	private static final long serialVersionUID = 9005724542871956989L;

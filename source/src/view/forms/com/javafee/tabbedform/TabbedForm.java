@@ -1,12 +1,6 @@
 package com.javafee.tabbedform;
 
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Image;
-import java.awt.Insets;
-import java.awt.SystemColor;
-import java.awt.Toolkit;
+import java.awt.*;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -17,7 +11,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
-import com.javafee.common.Constans;
+import com.javafee.common.Constants;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
 import com.javafee.startform.RegistrationPanel;
@@ -74,17 +68,17 @@ public class TabbedForm {
 		Utils.setLookAndFeel();
 		frame = new JFrame();
 		frame.getContentPane().setBackground(Utils.getApplicationColor());
-		frame.setTitle(Constans.APPLICATION_NAME);
+		frame.setTitle(Constants.APPLICATION_NAME);
 		frame.setIconImage(
 				Toolkit.getDefaultToolkit().getImage(StartForm.class.getResource("/images/splashScreen.jpg")));
 		frame.setBounds(100, 100, 626, 100);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[] { 67, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-		gridBagLayout.rowHeights = new int[] { 0, 0, 0, 0 };
-		gridBagLayout.columnWeights = new double[] { 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-				Double.MIN_VALUE };
-		gridBagLayout.rowWeights = new double[] { 0.0, 1.0, 0.0, Double.MIN_VALUE };
+		gridBagLayout.columnWidths = new int[]{67, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0};
+		gridBagLayout.columnWeights = new double[]{1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+				Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
 		frame.getContentPane().setLayout(gridBagLayout);
 
 		lblLogInInformation = new JLabel(

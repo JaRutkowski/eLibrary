@@ -5,7 +5,7 @@ import java.util.List;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.AbstractTableModel;
 
-import com.javafee.common.Constans.PublishingHouseTableColumn;
+import com.javafee.common.Constants.PublishingHouseTableColumn;
 import com.javafee.common.SystemProperties;
 import com.javafee.hibernate.dao.HibernateDao;
 import com.javafee.hibernate.dao.HibernateUtil;
@@ -23,8 +23,8 @@ public class PublishingHouseTableModel extends AbstractTableModel {
 	public PublishingHouseTableModel() {
 		super();
 		this.prepareHibernateDao();
-		this.columns = new String[] { SystemProperties.getInstance().getResourceBundle()
-				.getString("publishingHouseTableModel.publishingHouseNameCol") };
+		this.columns = new String[]{SystemProperties.getInstance().getResourceBundle()
+				.getString("publishingHouseTableModel.publishingHouseNameCol")};
 	}
 
 	public PublishingHouse getPublishingHouse(int index) {
@@ -70,10 +70,10 @@ public class PublishingHouseTableModel extends AbstractTableModel {
 	public Object getValueAt(int row, int col) {
 		PublishingHouse publishingHouse = publishingHouses.get(row);
 		switch (PublishingHouseTableColumn.getByNumber(col)) {
-		case COL_NAME:
-			return publishingHouse.getName();
-		default:
-			return null;
+			case COL_NAME:
+				return publishingHouse.getName();
+			default:
+				return null;
 		}
 	}
 
