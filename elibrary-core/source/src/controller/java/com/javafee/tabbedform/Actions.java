@@ -22,16 +22,10 @@ public class Actions implements IActionForm {
 		tabbedForm.getFrame().setVisible(true);
 		initializeForm();
 
-		tabbedForm.getBtnLogOut().addActionListener(e -> onClickBtnLogOut());
 		tabbedForm.getTabbedPane().addChangeListener(e -> onChangeTabbedPane());
+		tabbedForm.getBtnSettings().addActionListener(e -> onClickBtnSettings());
+		tabbedForm.getBtnLogOut().addActionListener(e -> onClickBtnLogOut());
 		tabbedForm.getComboBoxLanguage().addActionListener(e -> onChangeComboBoxLanguage());
-		tabbedForm.getBtnInformation().setEnabled(true);
-		tabbedForm.getBtnInformation().addActionListener(e -> onClickBtnInformation());
-	}
-
-	private void onClickBtnInformation() {
-		SettingsForm window = new SettingsForm();
-		window.getFrame().setVisible(true);
 	}
 
 	private void onChangeComboBoxLanguage() {
@@ -199,6 +193,12 @@ public class Actions implements IActionForm {
 		tabbedForm = null;
 		clearEvents();
 		openStartForm();
+	}
+
+	private void onClickBtnSettings() {
+		//TODO Action handling
+		SettingsForm window = new SettingsForm();
+		window.getFrame().setVisible(true);
 	}
 
 	private void onChangeTabbedPane() {

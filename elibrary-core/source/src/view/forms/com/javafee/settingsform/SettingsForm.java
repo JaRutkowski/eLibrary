@@ -13,6 +13,9 @@ public class SettingsForm extends BaseForm {
 	@Getter
 	private JPanel settingsPanel;
 
+	/**
+	 * @wbp.parser.entryPoint
+	 */
 	public void initialize() {
 		super.initialize();
 		frame.setBounds(100, 100, 450, 300);

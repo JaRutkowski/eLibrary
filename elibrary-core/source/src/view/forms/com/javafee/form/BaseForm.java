@@ -14,8 +14,6 @@ public class BaseForm implements IBaseForm {
 	@Getter
 	public JFrame frame;
 
-	// Eclipse WindowsBuilder needs no args constructor with
-	// initialize method call for all child classes
 	public BaseForm() {
 		initialize();
 	}

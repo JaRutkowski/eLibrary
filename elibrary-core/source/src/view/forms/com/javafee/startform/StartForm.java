@@ -28,6 +28,9 @@ public class StartForm extends BaseForm {
 	private JButton btnRegistrationMode;
 	private JLabel lblSystemInformation;
 
+	/**
+	 * @wbp.parser.entryPoint
+	 */
 	public void initialize() {
 		super.initialize();
 		frame.setBounds(100, 100, 361, 543);

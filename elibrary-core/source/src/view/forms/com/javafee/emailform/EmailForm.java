@@ -15,8 +15,8 @@ import com.javafee.emailform.emails.ComposePagePanel;
 import com.javafee.emailform.emails.DraftPagePanel;
 import com.javafee.emailform.emails.OutboxMailPagePanel;
 import com.javafee.emailform.emails.TemplatePagePanel;
-import com.javafee.startform.StartForm;
 import com.javafee.form.BaseForm;
+import com.javafee.startform.StartForm;
 
 import lombok.Getter;
 
@@ -42,6 +42,9 @@ public class EmailForm extends BaseForm {
 	@Getter
 	private JMenuItem menuManageTemplate;
 
+	/**
+	 * @wbp.parser.entryPoint
+	 */
 	public void initialize() {
 		super.initialize();
 		GridBagLayout gridBagLayout = new GridBagLayout();
