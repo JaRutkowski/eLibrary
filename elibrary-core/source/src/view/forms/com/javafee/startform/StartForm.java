@@ -4,20 +4,17 @@ import java.awt.*;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.WindowConstants;
 
 import com.javafee.common.Constants;
 import com.javafee.common.SystemProperties;
-import com.javafee.common.Utils;
+import com.javafee.form.BaseForm;
 import com.javafee.uniform.NavigationPanel;
 
 import lombok.Getter;
 
-public class StartForm {
-	@Getter
-	private JFrame frame;
+public class StartForm extends BaseForm {
 	@Getter
 	private LogInPanel logInPanel;
 	@Getter
@@ -31,17 +28,8 @@ public class StartForm {
 	private JButton btnRegistrationMode;
 	private JLabel lblSystemInformation;
 
-	public StartForm() {
-		initialize();
-	}
-
 	public void initialize() {
-		Utils.setLookAndFeel();
-		frame = new JFrame();
-		frame.getContentPane().setBackground(Utils.getApplicationColor());
-		frame.setTitle(Constants.APPLICATION_NAME);
-		frame.setIconImage(
-				Toolkit.getDefaultToolkit().getImage(StartForm.class.getResource("/images/splashScreen.jpg")));
+		super.initialize();
 		frame.setBounds(100, 100, 361, 543);
 		frame.setMinimumSize(Constants.START_FORM_MINIMUM_SIZE);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

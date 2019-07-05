@@ -11,19 +11,16 @@ import javax.swing.JTabbedPane;
 
 import com.javafee.common.Constants;
 import com.javafee.common.SystemProperties;
-import com.javafee.common.Utils;
 import com.javafee.emailform.emails.ComposePagePanel;
 import com.javafee.emailform.emails.DraftPagePanel;
 import com.javafee.emailform.emails.OutboxMailPagePanel;
 import com.javafee.emailform.emails.TemplatePagePanel;
 import com.javafee.startform.StartForm;
+import com.javafee.form.BaseForm;
 
 import lombok.Getter;
 
-public class EmailForm {
-	@Getter
-	private JFrame frame;
-
+public class EmailForm extends BaseForm {
 	@Getter
 	private JTabbedPane tabbedPane;
 	@Getter
@@ -45,14 +42,8 @@ public class EmailForm {
 	@Getter
 	private JMenuItem menuManageTemplate;
 
-	public EmailForm() {
-		initialize();
-	}
-
-	private void initialize() {
-		Utils.setLookAndFeel();
-		frame = new JFrame();
-		frame.getContentPane().setBackground(Utils.getApplicationColor());
+	public void initialize() {
+		super.initialize();
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0};

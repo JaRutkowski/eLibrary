@@ -5,30 +5,24 @@ import java.awt.*;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
-import com.javafee.common.Constants;
 import com.javafee.common.SystemProperties;
-import com.javafee.common.Utils;
 import com.javafee.startform.RegistrationPanel;
-import com.javafee.startform.StartForm;
 import com.javafee.tabbedform.admdictionaries.AdmDictionaryPanel;
 import com.javafee.tabbedform.admworkers.WorkerTablePanel;
 import com.javafee.tabbedform.books.BookTablePanel;
 import com.javafee.tabbedform.clients.ClientTablePanel;
 import com.javafee.tabbedform.library.LibraryTablePanel;
 import com.javafee.tabbedform.loanservice.LoanServicePanel;
+import com.javafee.form.BaseForm;
 
 import lombok.Getter;
 
-public class TabbedForm {
-	@Getter
-	private JFrame frame;
-
+public class TabbedForm extends BaseForm {
 	@Getter
 	private JTabbedPane tabbedPane;
 	@Getter
@@ -60,17 +54,8 @@ public class TabbedForm {
 	@Getter
 	private JLabel lblInternetConnectivityStatus;
 
-	public TabbedForm() {
-		initialize();
-	}
-
-	private void initialize() {
-		Utils.setLookAndFeel();
-		frame = new JFrame();
-		frame.getContentPane().setBackground(Utils.getApplicationColor());
-		frame.setTitle(Constants.APPLICATION_NAME);
-		frame.setIconImage(
-				Toolkit.getDefaultToolkit().getImage(StartForm.class.getResource("/images/splashScreen.jpg")));
+	public void initialize() {
+		super.initialize();
 		frame.setBounds(100, 100, 626, 100);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		GridBagLayout gridBagLayout = new GridBagLayout();

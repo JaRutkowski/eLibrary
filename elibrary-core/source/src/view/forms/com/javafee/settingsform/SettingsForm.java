@@ -5,30 +5,16 @@ import java.awt.*;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import com.javafee.common.Constants;
-import com.javafee.common.Utils;
-import com.javafee.startform.StartForm;
+import com.javafee.form.BaseForm;
 
 import lombok.Getter;
 
-public class SettingsForm {
-	@Getter
-	private JFrame frame;
-
+public class SettingsForm extends BaseForm {
 	@Getter
 	private JPanel settingsPanel;
 
-	public SettingsForm() {
-		initialize();
-	}
-
-	private void initialize() {
-		Utils.setLookAndFeel();
-		frame = new JFrame();
-		frame.getContentPane().setBackground(Utils.getApplicationColor());
-		frame.setTitle(Constants.APPLICATION_NAME);
-		frame.setIconImage(
-				Toolkit.getDefaultToolkit().getImage(StartForm.class.getResource("/images/splashScreen.jpg")));
+	public void initialize() {
+		super.initialize();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
@@ -47,5 +33,4 @@ public class SettingsForm {
 		gbc_settingsPanel.gridy = 0;
 		frame.getContentPane().add(settingsPanel, gbc_settingsPanel);
 	}
-
 }
