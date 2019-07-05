@@ -1,18 +1,5 @@
 package com.javafee.common;
 
-import com.javafee.common.networkservice.NetworkServiceListener;
-import com.javafee.common.timerservice.TimerServiceListener;
-import com.javafee.common.watchservice.WatchServiceListener;
-import com.javafee.emailform.TabTemplatePageEvent;
-import com.javafee.tabbedform.Actions;
-import edu.vt.middleware.password.*;
-import com.javafee.hibernate.dao.HibernateUtil;
-import com.javafee.hibernate.dto.common.UserData;
-import com.javafee.hibernate.dto.library.Client;
-import com.javafee.hibernate.dto.library.Worker;
-import org.hibernate.resource.transaction.spi.TransactionStatus;
-
-import javax.swing.*;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -21,6 +8,39 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
+
+import javax.swing.JLabel;
+
+import org.hibernate.resource.transaction.spi.TransactionStatus;
+
+import com.javafee.common.networkservice.NetworkServiceListener;
+import com.javafee.common.timerservice.TimerServiceListener;
+import com.javafee.common.watchservice.WatchServiceListener;
+import com.javafee.emailform.TabTemplatePageEvent;
+import com.javafee.hibernate.dao.HibernateUtil;
+import com.javafee.hibernate.dto.common.UserData;
+import com.javafee.hibernate.dto.library.Client;
+import com.javafee.hibernate.dto.library.Worker;
+import com.javafee.tabbedform.Actions;
+
+import edu.vt.middleware.password.AlphabeticalSequenceRule;
+import edu.vt.middleware.password.CharacterCharacteristicsRule;
+import edu.vt.middleware.password.CharacterRule;
+import edu.vt.middleware.password.DigitCharacterRule;
+import edu.vt.middleware.password.LengthRule;
+import edu.vt.middleware.password.LowercaseCharacterRule;
+import edu.vt.middleware.password.NonAlphanumericCharacterRule;
+import edu.vt.middleware.password.NumericalSequenceRule;
+import edu.vt.middleware.password.Password;
+import edu.vt.middleware.password.PasswordData;
+import edu.vt.middleware.password.PasswordGenerator;
+import edu.vt.middleware.password.PasswordValidator;
+import edu.vt.middleware.password.QwertySequenceRule;
+import edu.vt.middleware.password.RepeatCharacterRegexRule;
+import edu.vt.middleware.password.Rule;
+import edu.vt.middleware.password.RuleResult;
+import edu.vt.middleware.password.UppercaseCharacterRule;
+import edu.vt.middleware.password.WhitespaceRule;
 
 public final class Common {
 

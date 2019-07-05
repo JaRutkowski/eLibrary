@@ -1,13 +1,14 @@
 package com.javafee.common;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
 import java.util.stream.Stream;
+
+import javax.swing.KeyStroke;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 public final class Constants {
 	@Getter

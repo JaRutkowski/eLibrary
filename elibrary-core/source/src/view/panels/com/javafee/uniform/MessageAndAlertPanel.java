@@ -1,13 +1,18 @@
 package com.javafee.uniform;
 
+import java.awt.*;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.UIManager;
+import javax.swing.border.TitledBorder;
+
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
 import com.javafee.startform.RegistrationPanel;
-import lombok.Getter;
 
-import javax.swing.*;
-import javax.swing.border.TitledBorder;
-import java.awt.*;
+import lombok.Getter;
 
 public class MessageAndAlertPanel extends JPanel {
 	private static final long serialVersionUID = 1L;

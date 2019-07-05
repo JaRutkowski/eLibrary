@@ -1,15 +1,20 @@
 package com.javafee.tabbedform.clients;
 
+import java.awt.*;
+
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+
 import com.javafee.common.Utils;
 import com.javafee.model.ClientTableModel;
 import com.javafee.uniform.AdmIsRegisteredPanel;
 import com.javafee.uniform.CockpitEditionPanel;
 import com.javafee.uniform.MessageAndAlertPanel;
+
 import lombok.Getter;
 import net.coderazzi.filters.gui.TableFilterHeader;
-
-import javax.swing.*;
-import java.awt.*;
 
 public class ClientTablePanel extends JPanel {
 	private static final long serialVersionUID = 1L;

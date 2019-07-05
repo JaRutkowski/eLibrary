@@ -1,21 +1,5 @@
 package com.javafee.emailform;
 
-import com.javafee.common.Constants;
-import com.javafee.common.HTMLProcessor;
-import com.javafee.common.IActionForm;
-import com.javafee.common.Utils;
-
-
-
-
-import com.javafee.startform.LogInEvent;
-import com.javafee.hibernate.dao.HibernateUtil;
-import com.javafee.hibernate.dao.common.Common;
-import com.javafee.hibernate.dto.common.SystemProperties;
-import com.javafee.hibernate.dto.common.UserData;
-import lombok.Setter;
-
-import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -26,6 +10,21 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+
+import com.javafee.common.Constants;
+import com.javafee.common.HTMLProcessor;
+import com.javafee.common.IActionForm;
+import com.javafee.common.Utils;
+import com.javafee.hibernate.dao.HibernateUtil;
+import com.javafee.hibernate.dao.common.Common;
+import com.javafee.hibernate.dto.common.SystemProperties;
+import com.javafee.hibernate.dto.common.UserData;
+import com.javafee.startform.LogInEvent;
+
+import lombok.Setter;
 
 public class TabTemplatePageEvent implements IActionForm {
 	@Setter

@@ -1,13 +1,19 @@
 package com.javafee.startform;
 
+import java.awt.*;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.WindowConstants;
+
 import com.javafee.common.Constants;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
 import com.javafee.uniform.NavigationPanel;
-import lombok.Getter;
 
-import javax.swing.*;
-import java.awt.*;
+import lombok.Getter;
 
 public class StartForm {
 	@Getter

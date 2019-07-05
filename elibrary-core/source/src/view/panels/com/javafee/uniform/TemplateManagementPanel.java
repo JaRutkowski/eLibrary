@@ -1,11 +1,16 @@
 package com.javafee.uniform;
 
-import com.javafee.common.SystemProperties;
-import lombok.Getter;
-
-import javax.swing.*;
-import javax.swing.border.TitledBorder;
 import java.awt.*;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.border.TitledBorder;
+
+import com.javafee.common.SystemProperties;
+
+import lombok.Getter;
 
 public class TemplateManagementPanel extends JPanel {
 

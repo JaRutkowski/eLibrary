@@ -1,8 +1,8 @@
 package com.javafee.main;
 
-import com.javafee.startform.Actions;
+import javax.swing.SwingUtilities;
 
-import javax.swing.*;
+import com.javafee.startform.Actions;
 
 public class Library {
 	public static void main(String[] args) {

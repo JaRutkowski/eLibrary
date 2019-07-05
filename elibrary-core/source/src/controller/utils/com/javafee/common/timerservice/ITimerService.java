@@ -1,6 +1,6 @@
 package com.javafee.common.timerservice;
 
-import javax.swing.*;
+import javax.swing.JLabel;
 
 public interface ITimerService {
 

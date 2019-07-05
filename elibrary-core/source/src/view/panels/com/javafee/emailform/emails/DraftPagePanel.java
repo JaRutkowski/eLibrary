@@ -1,15 +1,22 @@
 package com.javafee.emailform.emails;
 
-import com.javafee.common.SystemProperties;
+import java.awt.*;
 
-import com.javafee.model.DraftTableModel;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.border.TitledBorder;
+
+import com.javafee.common.SystemProperties;
 import com.javafee.hibernate.dto.common.UserData;
+import com.javafee.model.DraftTableModel;
+
 import lombok.Getter;
 import net.coderazzi.filters.gui.TableFilterHeader;
-
-import javax.swing.*;
-import javax.swing.border.TitledBorder;
-import java.awt.*;
 
 public class DraftPagePanel extends JPanel {
 

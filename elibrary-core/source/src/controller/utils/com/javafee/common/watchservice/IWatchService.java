@@ -1,8 +1,8 @@
 package com.javafee.common.watchservice;
 
-import com.javafee.emailform.TabTemplatePageEvent;
-
 import java.util.function.Consumer;
+
+import com.javafee.emailform.TabTemplatePageEvent;
 
 public interface IWatchService {
 

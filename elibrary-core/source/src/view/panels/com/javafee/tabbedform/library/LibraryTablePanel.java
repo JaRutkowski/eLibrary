@@ -1,16 +1,21 @@
 package com.javafee.tabbedform.library;
 
+import java.awt.*;
+
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.border.TitledBorder;
+
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
 import com.javafee.model.VolumeTableLoanModel;
 import com.javafee.model.VolumeTableReadingRoomModel;
 import com.javafee.uniform.CockpitEditionPanel;
+
 import lombok.Getter;
 import net.coderazzi.filters.gui.TableFilterHeader;
-
-import javax.swing.*;
-import javax.swing.border.TitledBorder;
-import java.awt.*;
 
 public class LibraryTablePanel extends JPanel {
 	private static final long serialVersionUID = 1L;

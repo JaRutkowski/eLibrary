@@ -1,12 +1,16 @@
 package com.javafee.startform;
 
-import com.javafee.common.SystemProperties;
-
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.lang.reflect.InvocationTargetException;
+
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JWindow;
+import javax.swing.SwingUtilities;
+
+import com.javafee.common.SystemProperties;
 
 class MainSplashScreen extends JWindow {
 	private static final long serialVersionUID = 1L;

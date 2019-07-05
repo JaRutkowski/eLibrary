@@ -1,8 +1,9 @@
 package com.javafee.exception;
 
-import org.apache.log4j.Logger;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 
-import javax.swing.*;
+import org.apache.log4j.Logger;
 
 public class LogGuiException {
 	private static final Logger logger = Logger.getLogger(LogGuiException.class.getName());

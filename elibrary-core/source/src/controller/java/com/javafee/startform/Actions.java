@@ -1,13 +1,27 @@
 package com.javafee.startform;
 
-import com.javafee.common.*;
+import java.text.MessageFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.AbstractMap.SimpleEntry;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+
+import com.javafee.common.Constants;
 import com.javafee.common.Constants.Role;
+import com.javafee.common.IRegistrationForm;
+import com.javafee.common.Params;
+import com.javafee.common.SystemProperties;
+import com.javafee.common.Utils;
 import com.javafee.emailform.MailSenderEvent;
 import com.javafee.exception.LogGuiException;
 import com.javafee.exception.RefusedLogInException;
 import com.javafee.exception.RefusedRegistrationException;
-
-import com.javafee.startform.RegistrationEvent.RegistrationFailureCause;
 import com.javafee.hibernate.dao.HibernateDao;
 import com.javafee.hibernate.dao.HibernateUtil;
 import com.javafee.hibernate.dao.common.Common;
@@ -18,16 +32,7 @@ import com.javafee.hibernate.dto.common.message.Message;
 import com.javafee.hibernate.dto.common.message.Recipient;
 import com.javafee.hibernate.dto.library.Client;
 import com.javafee.hibernate.dto.library.Worker;
-
-import javax.swing.*;
-import java.text.MessageFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.AbstractMap.SimpleEntry;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
+import com.javafee.startform.RegistrationEvent.RegistrationFailureCause;
 
 public class Actions implements IRegistrationForm {
 	private StartForm startForm = new StartForm();

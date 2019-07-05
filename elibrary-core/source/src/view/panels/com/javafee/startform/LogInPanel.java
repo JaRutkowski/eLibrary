@@ -1,12 +1,18 @@
 package com.javafee.startform;
 
+import java.awt.*;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
+
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
-import lombok.Getter;
 
-import javax.swing.*;
-import javax.swing.border.TitledBorder;
-import java.awt.*;
+import lombok.Getter;
 
 public class LogInPanel extends JPanel {
 	private static final long serialVersionUID = 1L;

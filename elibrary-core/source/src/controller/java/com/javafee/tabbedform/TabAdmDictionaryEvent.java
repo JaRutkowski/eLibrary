@@ -1,31 +1,29 @@
 package com.javafee.tabbedform;
 
+import java.util.Comparator;
+import java.util.List;
+
+import javax.persistence.RollbackException;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+
+import org.hibernate.query.NativeQuery;
+
 import com.javafee.common.Constants;
 import com.javafee.common.IActionForm;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
 import com.javafee.exception.LogGuiException;
 import com.javafee.exception.RefusedAdmDictionaryEventLoadingException;
-
-
-
-
-
-
-import com.javafee.tabbedform.admdictionaries.AdmDictionaryPanel;
 import com.javafee.hibernate.dao.HibernateDao;
 import com.javafee.hibernate.dao.HibernateUtil;
 import com.javafee.hibernate.dto.library.Author;
 import com.javafee.hibernate.dto.library.Book;
 import com.javafee.hibernate.dto.library.Category;
 import com.javafee.hibernate.dto.library.PublishingHouse;
-import lombok.Setter;
-import org.hibernate.query.NativeQuery;
+import com.javafee.tabbedform.admdictionaries.AdmDictionaryPanel;
 
-import javax.persistence.RollbackException;
-import javax.swing.*;
-import java.util.Comparator;
-import java.util.List;
+import lombok.Setter;
 
 public class TabAdmDictionaryEvent implements IActionForm {
 	@Setter

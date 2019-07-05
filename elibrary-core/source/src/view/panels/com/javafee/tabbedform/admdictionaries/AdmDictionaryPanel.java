@@ -1,20 +1,24 @@
 package com.javafee.tabbedform.admdictionaries;
 
+import java.awt.*;
+
+import javax.swing.ButtonGroup;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+
 import com.javafee.common.Constants;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
-
-
-
-import com.javafee.uniform.CockpitEditionPanel;
-import com.toedter.calendar.JDateChooser;
 import com.javafee.hibernate.dto.library.Author;
 import com.javafee.hibernate.dto.library.Category;
 import com.javafee.hibernate.dto.library.PublishingHouse;
-import lombok.Getter;
+import com.javafee.uniform.CockpitEditionPanel;
+import com.toedter.calendar.JDateChooser;
 
-import javax.swing.*;
-import java.awt.*;
+import lombok.Getter;
 
 public class AdmDictionaryPanel extends JPanel {
 	private static final long serialVersionUID = 1L;

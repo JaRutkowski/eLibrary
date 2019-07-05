@@ -1,11 +1,13 @@
 package com.javafee.emailform.emails;
 
+import java.awt.*;
+
+import javax.swing.JPanel;
+
 import com.javafee.uniform.HTMLeditorPanel;
 import com.javafee.uniform.TemplateManagementPanel;
-import lombok.Getter;
 
-import javax.swing.*;
-import java.awt.*;
+import lombok.Getter;
 
 public class TemplatePagePanel extends JPanel {
 	private static final long serialVersionUID = 1L;

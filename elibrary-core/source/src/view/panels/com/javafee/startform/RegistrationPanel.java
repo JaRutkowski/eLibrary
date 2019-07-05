@@ -1,15 +1,25 @@
 package com.javafee.startform;
 
+import java.awt.*;
+
+import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
+
 import com.javafee.common.Constants;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
-import com.toedter.calendar.JDateChooser;
 import com.javafee.hibernate.dto.association.City;
-import lombok.Getter;
+import com.toedter.calendar.JDateChooser;
 
-import javax.swing.*;
-import javax.swing.border.TitledBorder;
-import java.awt.*;
+import lombok.Getter;
 
 public class RegistrationPanel extends JPanel {
 	private static final long serialVersionUID = 1L;

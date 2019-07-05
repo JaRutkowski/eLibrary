@@ -1,5 +1,16 @@
 package com.javafee.tabbedform;
 
+import java.awt.*;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTabbedPane;
+import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
+
 import com.javafee.common.Constants;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
@@ -11,10 +22,8 @@ import com.javafee.tabbedform.books.BookTablePanel;
 import com.javafee.tabbedform.clients.ClientTablePanel;
 import com.javafee.tabbedform.library.LibraryTablePanel;
 import com.javafee.tabbedform.loanservice.LoanServicePanel;
-import lombok.Getter;
 
-import javax.swing.*;
-import java.awt.*;
+import lombok.Getter;
 
 public class TabbedForm {
 	@Getter

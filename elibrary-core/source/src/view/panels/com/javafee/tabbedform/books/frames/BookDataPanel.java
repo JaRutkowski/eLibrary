@@ -1,12 +1,16 @@
 package com.javafee.tabbedform.books.frames;
 
+import java.awt.*;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
+
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
-import lombok.Getter;
 
-import javax.swing.*;
-import javax.swing.border.TitledBorder;
-import java.awt.*;
+import lombok.Getter;
 
 public class BookDataPanel extends JPanel {
 	private static final long serialVersionUID = 1L;

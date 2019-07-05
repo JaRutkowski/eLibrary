@@ -1,17 +1,20 @@
 package com.javafee.common;
 
 
-
-
-
+import java.util.List;
 
 import com.javafee.hibernate.dao.HibernateUtil;
 import com.javafee.hibernate.dto.common.UserData;
 import com.javafee.hibernate.dto.common.message.Message;
 import com.javafee.hibernate.dto.common.message.Recipient;
-import com.javafee.hibernate.dto.library.*;
-
-import java.util.List;
+import com.javafee.hibernate.dto.library.Author;
+import com.javafee.hibernate.dto.library.Book;
+import com.javafee.hibernate.dto.library.Category;
+import com.javafee.hibernate.dto.library.Client;
+import com.javafee.hibernate.dto.library.Lend;
+import com.javafee.hibernate.dto.library.PublishingHouse;
+import com.javafee.hibernate.dto.library.Volume;
+import com.javafee.hibernate.dto.library.Worker;
 
 public final class Validator {
 	@SuppressWarnings("unchecked")

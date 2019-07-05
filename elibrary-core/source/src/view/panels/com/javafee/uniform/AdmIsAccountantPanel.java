@@ -1,12 +1,16 @@
 package com.javafee.uniform;
 
+import java.awt.*;
+
+import javax.swing.JCheckBox;
+import javax.swing.JPanel;
+import javax.swing.UIManager;
+import javax.swing.border.TitledBorder;
+
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
-import lombok.Getter;
 
-import javax.swing.*;
-import javax.swing.border.TitledBorder;
-import java.awt.*;
+import lombok.Getter;
 
 public class AdmIsAccountantPanel extends JPanel {
 	private static final long serialVersionUID = 1L;

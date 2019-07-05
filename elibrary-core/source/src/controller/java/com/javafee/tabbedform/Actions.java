@@ -1,13 +1,19 @@
 package com.javafee.tabbedform;
 
-import com.javafee.common.*;
+import javax.swing.Icon;
+import javax.swing.JOptionPane;
+
+import com.javafee.common.Common;
+import com.javafee.common.Constants;
 import com.javafee.common.Constants.Role;
 import com.javafee.common.Constants.Tab_Accountant;
 import com.javafee.common.Constants.Tab_Client;
 import com.javafee.common.Constants.Tab_Worker;
+import com.javafee.common.IActionForm;
+import com.javafee.common.SystemProperties;
+import com.javafee.common.Utils;
+import com.javafee.settingsform.SettingsForm;
 import com.javafee.startform.LogInEvent;
-
-import javax.swing.*;
 
 public class Actions implements IActionForm {
 	private TabbedForm tabbedForm = new TabbedForm();
@@ -19,7 +25,13 @@ public class Actions implements IActionForm {
 		tabbedForm.getBtnLogOut().addActionListener(e -> onClickBtnLogOut());
 		tabbedForm.getTabbedPane().addChangeListener(e -> onChangeTabbedPane());
 		tabbedForm.getComboBoxLanguage().addActionListener(e -> onChangeComboBoxLanguage());
+		tabbedForm.getBtnInformation().setEnabled(true);
+		tabbedForm.getBtnInformation().addActionListener(e -> onClickBtnInformation());
+	}
 
+	private void onClickBtnInformation() {
+		SettingsForm window = new SettingsForm();
+		window.getFrame().setVisible(true);
 	}
 
 	private void onChangeComboBoxLanguage() {

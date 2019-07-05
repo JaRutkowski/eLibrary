@@ -1,11 +1,15 @@
 package com.javafee.emailform.emails;
 
+import java.awt.*;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+
 import com.javafee.common.SystemProperties;
 import com.javafee.startform.RegistrationPanel;
-import lombok.Getter;
 
-import javax.swing.*;
-import java.awt.*;
+import lombok.Getter;
 
 public class ComposeNavigationPanel extends JPanel {
 	private static final long serialVersionUID = 1L;

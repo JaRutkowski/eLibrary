@@ -1,14 +1,20 @@
 package com.javafee.emailform.emails;
 
+import java.awt.*;
+
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JEditorPane;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
+
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
-
 import com.javafee.hibernate.dto.library.Client;
-import lombok.Getter;
 
-import javax.swing.*;
-import javax.swing.border.TitledBorder;
-import java.awt.*;
+import lombok.Getter;
 
 public class ComposePagePanel extends JPanel {
 	private static final long serialVersionUID = 1L;

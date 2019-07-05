@@ -1,17 +1,17 @@
 package com.javafee.model;
 
-import com.javafee.common.Constants.OutboxTableColumn;
-import com.javafee.common.SystemProperties;
-
-
-import com.javafee.hibernate.dao.HibernateUtil;
-import com.javafee.hibernate.dto.common.message.Message;
-import org.hibernate.query.Query;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.AbstractTableModel;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
+
+import org.hibernate.query.Query;
+
+import com.javafee.common.Constants.OutboxTableColumn;
+import com.javafee.common.SystemProperties;
+import com.javafee.hibernate.dao.HibernateUtil;
+import com.javafee.hibernate.dto.common.message.Message;
 
 public class DraftTableModel extends AbstractTableModel {
 

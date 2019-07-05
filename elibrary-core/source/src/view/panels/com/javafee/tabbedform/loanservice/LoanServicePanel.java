@@ -1,5 +1,15 @@
 package com.javafee.tabbedform.loanservice;
 
+import java.awt.*;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.border.TitledBorder;
+
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
 import com.javafee.model.LoanReservationTableModel;
@@ -7,12 +17,9 @@ import com.javafee.model.LoanTableModel;
 import com.javafee.model.RegisteredClientTableModel;
 import com.javafee.model.VolumeTableModel;
 import com.javafee.startform.RegistrationPanel;
+
 import lombok.Getter;
 import net.coderazzi.filters.gui.TableFilterHeader;
-
-import javax.swing.*;
-import javax.swing.border.TitledBorder;
-import java.awt.*;
 
 public class LoanServicePanel extends JPanel {
 	private static final long serialVersionUID = 1L;

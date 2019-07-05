@@ -1,5 +1,14 @@
 package com.javafee.emailform;
 
+import java.awt.*;
+import java.awt.event.KeyEvent;
+
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JTabbedPane;
+
 import com.javafee.common.Constants;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
@@ -8,11 +17,8 @@ import com.javafee.emailform.emails.DraftPagePanel;
 import com.javafee.emailform.emails.OutboxMailPagePanel;
 import com.javafee.emailform.emails.TemplatePagePanel;
 import com.javafee.startform.StartForm;
-import lombok.Getter;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.KeyEvent;
+import lombok.Getter;
 
 public class EmailForm {
 	@Getter

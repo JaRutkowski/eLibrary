@@ -1,28 +1,32 @@
 package com.javafee.emailform;
 
-import com.javafee.common.*;
-import com.javafee.common.Constants.Role;
-import com.javafee.common.Constants.Tab_Email;
-import com.javafee.exception.LogGuiException;
-
-
-
-
-import com.javafee.model.DraftTableModel;
-import com.javafee.startform.LogInEvent;
-import com.javafee.hibernate.dao.HibernateUtil;
-import com.javafee.hibernate.dao.common.Common;
-import com.javafee.hibernate.dto.association.MessageType;
-import com.javafee.hibernate.dto.common.UserData;
-import com.javafee.hibernate.dto.common.message.Message;
-import lombok.Setter;
-
-import javax.swing.*;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+
+import com.javafee.common.Constants;
+import com.javafee.common.Constants.Role;
+import com.javafee.common.Constants.Tab_Email;
+import com.javafee.common.IMessageForm;
+import com.javafee.common.Params;
+import com.javafee.common.Query;
+import com.javafee.common.SystemProperties;
+import com.javafee.common.Utils;
+import com.javafee.exception.LogGuiException;
+import com.javafee.hibernate.dao.HibernateUtil;
+import com.javafee.hibernate.dao.common.Common;
+import com.javafee.hibernate.dto.association.MessageType;
+import com.javafee.hibernate.dto.common.UserData;
+import com.javafee.hibernate.dto.common.message.Message;
+import com.javafee.model.DraftTableModel;
+import com.javafee.startform.LogInEvent;
+
+import lombok.Setter;
 
 public class TabDraftPageEvent implements IMessageForm {
 	@Setter

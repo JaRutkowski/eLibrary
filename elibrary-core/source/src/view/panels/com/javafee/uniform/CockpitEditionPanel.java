@@ -1,12 +1,16 @@
 package com.javafee.uniform;
 
+import java.awt.*;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
 import com.javafee.startform.RegistrationPanel;
-import lombok.Getter;
 
-import javax.swing.*;
-import java.awt.*;
+import lombok.Getter;
 
 public class CockpitEditionPanel extends JPanel {
 	private static final long serialVersionUID = 1L;

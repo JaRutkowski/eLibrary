@@ -1,11 +1,13 @@
 package com.javafee.startform;
 
+import java.util.Date;
+import java.util.List;
+
 import com.javafee.common.Common;
 import com.javafee.common.Constants;
 import com.javafee.common.Constants.Role;
 import com.javafee.common.Params;
 import com.javafee.exception.RefusedRegistrationException;
-
 import com.javafee.hibernate.dao.HibernateUtil;
 import com.javafee.hibernate.dto.association.City;
 import com.javafee.hibernate.dto.common.UserData;
@@ -13,10 +15,8 @@ import com.javafee.hibernate.dto.library.Client;
 import com.javafee.hibernate.dto.library.LibraryData;
 import com.javafee.hibernate.dto.library.LibraryWorker;
 import com.javafee.hibernate.dto.library.Worker;
-import lombok.Getter;
 
-import java.util.Date;
-import java.util.List;
+import lombok.Getter;
 
 public class RegistrationEvent {
 	private static RegistrationEvent registrationEvent = null;
@@ -33,8 +33,8 @@ public class RegistrationEvent {
 	}
 
 	public static RegistrationEvent getInstance(String peselNumber, String documentNumber, String name, String surname,
-												String address, City city, Character sex, Date birthDate, String login, String eMail, String password,
-												Role role) throws RefusedRegistrationException {
+	                                            String address, City city, Character sex, Date birthDate, String login, String eMail, String password,
+	                                            Role role) throws RefusedRegistrationException {
 		if (checkRegistration(login, password, peselNumber, role)) {
 			registrationEvent = new RegistrationEvent();
 			registrationDate = new Date();

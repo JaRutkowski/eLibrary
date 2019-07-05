@@ -1,17 +1,26 @@
 package com.javafee.tabbedform.books.frames;
 
+import java.awt.*;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.WindowConstants;
+import javax.swing.border.EmptyBorder;
+
 import com.javafee.common.Utils;
 import com.javafee.model.AuthorTableModel;
 import com.javafee.model.CategoryTableModel;
 import com.javafee.model.PublishingHouseTableModel;
 import com.javafee.startform.RegistrationPanel;
 import com.javafee.uniform.CockpitConfirmationPanel;
+
 import lombok.Getter;
 import net.coderazzi.filters.gui.TableFilterHeader;
-
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import java.awt.*;
 
 public class BookAddModFrame extends JFrame {
 	private static final long serialVersionUID = 1L;

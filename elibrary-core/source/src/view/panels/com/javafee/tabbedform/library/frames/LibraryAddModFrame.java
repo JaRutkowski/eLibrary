@@ -1,14 +1,23 @@
 package com.javafee.tabbedform.library.frames;
 
+import java.awt.*;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.WindowConstants;
+import javax.swing.border.EmptyBorder;
+
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
 import com.javafee.model.BookTableModel;
 import com.javafee.uniform.CockpitConfirmationPanel;
-import net.coderazzi.filters.gui.TableFilterHeader;
 
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import java.awt.*;
+import net.coderazzi.filters.gui.TableFilterHeader;
 
 public class LibraryAddModFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
