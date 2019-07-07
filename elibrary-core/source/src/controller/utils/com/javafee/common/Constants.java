@@ -13,6 +13,24 @@ import lombok.Getter;
 public final class Constants {
 	@Getter
 	@AllArgsConstructor
+	public enum Panel_Settings {
+		GENERAL_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuGeneral")),
+		THEME_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuTheme")),
+		FONT_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuFont")),
+		ACCOUNT_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuAccount")),
+		DATA_CHANGE_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuDataChange")),
+		PASSWORD_CHANGE_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuPasswordChange"));
+
+		private final String name;
+
+		public static Panel_Settings getByName(String panelSettingsSelectedName) {
+			return Stream.of(Panel_Settings.values()).filter(item -> item.getName().equals(panelSettingsSelectedName))
+					.findFirst().get();
+		}
+	}
+
+	@Getter
+	@AllArgsConstructor
 	public enum Tab_Client {
 		TAB_LIBRARY(0);
 
@@ -219,6 +237,10 @@ public final class Constants {
 			return Stream.of(OutboxTableColumn.values())
 					.filter(item -> item.getValue().equals(outboxTableSelectedIndex)).findFirst().get();
 		}
+	}
+
+	public enum Button_Type {
+		ACCEPT, DENY
 	}
 
 	public enum Role {

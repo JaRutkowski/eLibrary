@@ -12,11 +12,12 @@ import com.javafee.common.Constants.Tab_Worker;
 import com.javafee.common.IActionForm;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
-import com.javafee.settingsform.SettingsForm;
 import com.javafee.startform.LogInEvent;
 
 public class Actions implements IActionForm {
 	private TabbedForm tabbedForm = new TabbedForm();
+
+	private com.javafee.settingsform.Actions action = null;
 
 	public void control() {
 		tabbedForm.getFrame().setVisible(true);
@@ -196,13 +197,17 @@ public class Actions implements IActionForm {
 	}
 
 	private void onClickBtnSettings() {
-		//TODO Action handling
-		SettingsForm window = new SettingsForm();
-		window.getFrame().setVisible(true);
+		openSettingsForm();
 	}
 
 	private void onChangeTabbedPane() {
 		reloadTabbedPane();
+	}
+
+	private void openSettingsForm() {
+		if (action == null)
+			action = new com.javafee.settingsform.Actions();
+		action.control();
 	}
 
 	private void openStartForm() {

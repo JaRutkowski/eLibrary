@@ -56,7 +56,6 @@ public final class TabClientEvent implements IActionForm {
 			if (!e.getValueIsAdjusting())
 				onClientTableListSelectionChange();
 		});
-
 		tabbedForm.getPanelClient().getMessageAndAlertPanel().getBtnContact()
 				.addActionListener(e -> onClickBtnContact());
 	}

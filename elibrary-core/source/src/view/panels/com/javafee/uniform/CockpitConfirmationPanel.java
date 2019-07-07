@@ -2,13 +2,12 @@ package com.javafee.uniform;
 
 import java.awt.*;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import com.javafee.common.SystemProperties;
+import com.javafee.common.Constants.Button_Type;
 import com.javafee.common.Utils;
-import com.javafee.startform.RegistrationPanel;
+import com.javafee.unicomponent.jbutton.CustomJButtonFactory;
 
 import lombok.Getter;
 
@@ -27,10 +26,7 @@ public class CockpitConfirmationPanel extends JPanel {
 		gridBagLayout.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 
-		btnAccept = new JButton(
-				SystemProperties.getInstance().getResourceBundle().getString("cockpitConfirmationPanel.btnAccept"));
-		btnAccept.setIcon(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnAccept-ico.png"))
-				.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
+		btnAccept = CustomJButtonFactory.createAcceptJButton(Button_Type.ACCEPT);
 		GridBagConstraints gbc_btnAccept = new GridBagConstraints();
 		gbc_btnAccept.anchor = GridBagConstraints.NORTH;
 		gbc_btnAccept.fill = GridBagConstraints.HORIZONTAL;
