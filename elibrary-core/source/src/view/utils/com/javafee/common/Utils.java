@@ -15,6 +15,8 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileSystemView;
 
+import com.javafee.startform.LogInEvent;
+
 public class Utils {
 	public static void setLookAndFeel() {
 		try {
@@ -32,6 +34,19 @@ public class Utils {
 
 	public static Color getApplicationColor() {
 		return new Color(237, 245, 248);
+	}
+
+	public static Color getApplicationUserDefineColor() {
+		String color = LogInEvent.getUserData() != null && LogInEvent.getUserData().getSystemProperties() != null ? LogInEvent.getUserData().getSystemProperties().getColor() : null;
+		Color userDefineColor = null;
+
+		if ("".equals(color) || color == null)
+			userDefineColor = getApplicationColor();
+		else {
+			String[] rgb = color.split(",");
+			userDefineColor = new Color(Integer.parseInt(rgb[0]), Integer.parseInt(rgb[1]), Integer.parseInt(rgb[2]));
+		}
+		return userDefineColor;
 	}
 
 	public static void displayOptionPane(String message, String title, int messageType) {

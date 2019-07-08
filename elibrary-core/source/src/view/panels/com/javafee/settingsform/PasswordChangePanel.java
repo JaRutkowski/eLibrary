@@ -9,6 +9,7 @@ import javax.swing.JPasswordField;
 
 import com.javafee.common.Constants.Button_Type;
 import com.javafee.common.SystemProperties;
+import com.javafee.common.Utils;
 import com.javafee.unicomponent.jbutton.CustomJButtonFactory;
 
 import lombok.Getter;
@@ -24,8 +25,9 @@ public class PasswordChangePanel extends JPanel {
 	private JButton btnAccept;
 
 	public PasswordChangePanel() {
+		setBackground(Utils.getApplicationUserDefineColor());
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{200, 350, 0};
+		gridBagLayout.columnWidths = new int[]{0, 200, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
@@ -34,14 +36,14 @@ public class PasswordChangePanel extends JPanel {
 		JLabel lblOldPassword = new JLabel(SystemProperties.getInstance().getResourceBundle().getString("passwordChangePanel.lblOldPassword"));
 		GridBagConstraints gbc_lblOldPassword = new GridBagConstraints();
 		gbc_lblOldPassword.anchor = GridBagConstraints.EAST;
-		gbc_lblOldPassword.insets = new Insets(0, 0, 5, 5);
+		gbc_lblOldPassword.insets = new Insets(5, 0, 5, 5);
 		gbc_lblOldPassword.gridx = 0;
 		gbc_lblOldPassword.gridy = 0;
 		add(lblOldPassword, gbc_lblOldPassword);
 		
 		passwordFieldOld = new JPasswordField();
 		GridBagConstraints gbc_oldPasswordField = new GridBagConstraints();
-		gbc_oldPasswordField.insets = new Insets(0, 0, 5, 0);
+		gbc_oldPasswordField.insets = new Insets(5, 0, 5, 0);
 		gbc_oldPasswordField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_oldPasswordField.gridx = 1;
 		gbc_oldPasswordField.gridy = 0;
@@ -66,7 +68,7 @@ public class PasswordChangePanel extends JPanel {
 		JLabel lblConfirmNewPassword = new JLabel(SystemProperties.getInstance().getResourceBundle().getString("passwordChangePanel.lblConfirmNewPassword"));
 		GridBagConstraints gbc_lblConfirmNewPassword = new GridBagConstraints();
 		gbc_lblConfirmNewPassword.anchor = GridBagConstraints.EAST;
-		gbc_lblConfirmNewPassword.insets = new Insets(0, 0, 5, 5);
+		gbc_lblConfirmNewPassword.insets = new Insets(0, 5, 5, 5);
 		gbc_lblConfirmNewPassword.gridx = 0;
 		gbc_lblConfirmNewPassword.gridy = 3;
 		add(lblConfirmNewPassword, gbc_lblConfirmNewPassword);
@@ -84,7 +86,5 @@ public class PasswordChangePanel extends JPanel {
 		gbc_btnNewButton.gridx = 1;
 		gbc_btnNewButton.gridy = 4;
 		add(btnAccept, gbc_btnNewButton);
-
 	}
-
 }

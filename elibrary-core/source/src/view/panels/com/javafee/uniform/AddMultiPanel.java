@@ -22,7 +22,7 @@ public class AddMultiPanel extends JPanel {
 	private JButton btnCheckList;
 
 	public AddMultiPanel() {
-		setBackground(Utils.getApplicationColor());
+		setBackground(Utils.getApplicationUserDefineColor());
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0};

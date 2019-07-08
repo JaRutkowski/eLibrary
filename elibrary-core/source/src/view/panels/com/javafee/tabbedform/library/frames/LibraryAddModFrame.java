@@ -30,7 +30,7 @@ public class LibraryAddModFrame extends JFrame {
 	private JTextField textFieldInventoryNumber;
 
 	public LibraryAddModFrame() {
-		setBackground(Utils.getApplicationColor());
+		setBackground(Utils.getApplicationUserDefineColor());
 		setIconImage(
 				Toolkit.getDefaultToolkit().getImage(LibraryAddModFrame.class.getResource("/images/splashScreen.jpg")));
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);

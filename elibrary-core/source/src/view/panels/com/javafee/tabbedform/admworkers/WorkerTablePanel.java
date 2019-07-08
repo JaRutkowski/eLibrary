@@ -32,7 +32,7 @@ public class WorkerTablePanel extends JPanel {
 	private AdmIsAccountantPanel admIsAccountantPanel;
 
 	public WorkerTablePanel() {
-		setBackground(Utils.getApplicationColor());
+		setBackground(Utils.getApplicationUserDefineColor());
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{394, 413, 0};
 		gridBagLayout.rowHeights = new int[]{0, 275, 0, 0, 0};

@@ -48,6 +48,7 @@ public class ComposePagePanel extends JPanel {
 
 	public ComposePagePanel() {
 		Utils.setLookAndFeel();
+		setBackground(Utils.getApplicationUserDefineColor());
 		setBorder(new TitledBorder(null,
 				SystemProperties.getInstance().getResourceBundle()
 						.getString("composePagePanel.composePagePanelBorderTitle"),

@@ -56,7 +56,7 @@ public class AdmDictionaryPanel extends JPanel {
 	private JComboBox<PublishingHouse> comboBoxPublishingHouse;
 
 	public AdmDictionaryPanel() {
-		setBackground(Utils.getApplicationColor());
+		setBackground(Utils.getApplicationUserDefineColor());
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{30, 128, 0, 0, 0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 26, 0, 0, 0, 0, 0, 0};

@@ -34,7 +34,7 @@ public class AdmBookDataPanel extends JPanel {
 	private JButton btnClear;
 
 	public AdmBookDataPanel() {
-		setBackground(Utils.getApplicationColor());
+		setBackground(Utils.getApplicationUserDefineColor());
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{27, 313, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};

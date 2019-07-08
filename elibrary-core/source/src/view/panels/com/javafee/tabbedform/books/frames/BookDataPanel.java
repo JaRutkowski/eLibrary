@@ -25,7 +25,7 @@ public class BookDataPanel extends JPanel {
 	private JTextField textFieldNumberOfTomes;
 
 	public BookDataPanel() {
-		setBackground(Utils.getApplicationColor());
+		setBackground(Utils.getApplicationUserDefineColor());
 		setBorder(new TitledBorder(null,
 				SystemProperties.getInstance().getResourceBundle().getString("bookDataPanel.bookDataPanelBorderTitle"),
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));

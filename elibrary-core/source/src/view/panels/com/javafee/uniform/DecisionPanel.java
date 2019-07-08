@@ -18,7 +18,7 @@ public class DecisionPanel extends JPanel {
 	private JButton btnAccept;
 
 	public DecisionPanel() {
-		setBackground(Utils.getApplicationColor());
+		setBackground(Utils.getApplicationUserDefineColor());
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0};

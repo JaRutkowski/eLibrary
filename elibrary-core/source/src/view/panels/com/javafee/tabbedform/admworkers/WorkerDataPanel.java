@@ -7,6 +7,6 @@ public class WorkerDataPanel extends RegistrationPanel {
 	private static final long serialVersionUID = 1L;
 
 	public WorkerDataPanel() {
-		setBackground(Utils.getApplicationColor());
+		setBackground(Utils.getApplicationUserDefineColor());
 	}
 }

@@ -7,6 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import com.javafee.common.SystemProperties;
+import com.javafee.common.Utils;
 import com.javafee.startform.RegistrationPanel;
 
 import lombok.Getter;
@@ -23,6 +24,7 @@ public class DraftNavigationPanel extends JPanel {
 	private JButton btnDelete;
 
 	public DraftNavigationPanel() {
+		setBackground(Utils.getApplicationUserDefineColor());
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0};

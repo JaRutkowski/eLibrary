@@ -21,7 +21,7 @@ public class AdmIsRegisteredPanel extends JPanel {
 	private DecisionPanel decisionPanel;
 
 	public AdmIsRegisteredPanel() {
-		setBackground(Utils.getApplicationColor());
+		setBackground(Utils.getApplicationUserDefineColor());
 		setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"),
 				SystemProperties.getInstance().getResourceBundle()
 						.getString("admIsRegisteredPanel.admIsRegisteredPanelBorderTitle"),

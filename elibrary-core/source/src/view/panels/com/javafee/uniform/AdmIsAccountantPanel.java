@@ -21,7 +21,7 @@ public class AdmIsAccountantPanel extends JPanel {
 	private DecisionPanel decisionPanel;
 
 	public AdmIsAccountantPanel() {
-		setBackground(Utils.getApplicationColor());
+		setBackground(Utils.getApplicationUserDefineColor());
 		setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"),
 				SystemProperties.getInstance().getResourceBundle()
 						.getString("admIsAccountantPanel.admIsAccountantPanelBorderTitle"),

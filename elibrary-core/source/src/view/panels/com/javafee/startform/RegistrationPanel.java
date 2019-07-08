@@ -57,7 +57,7 @@ public class RegistrationPanel extends JPanel {
 	private JLabel lblEMail;
 
 	public RegistrationPanel() {
-		setBackground(Utils.getApplicationColor());
+		setBackground(Utils.getApplicationUserDefineColor());
 		setBorder(new TitledBorder(null,
 				SystemProperties.getInstance().getResourceBundle()
 						.getString("registrationPanel.registrationPanelBorderTitle"),

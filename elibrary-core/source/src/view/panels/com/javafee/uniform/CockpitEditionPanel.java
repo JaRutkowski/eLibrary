@@ -23,7 +23,7 @@ public class CockpitEditionPanel extends JPanel {
 	private JButton btnDelete;
 
 	public CockpitEditionPanel() {
-		setBackground(Utils.getApplicationColor());
+		setBackground(Utils.getApplicationUserDefineColor());
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0};

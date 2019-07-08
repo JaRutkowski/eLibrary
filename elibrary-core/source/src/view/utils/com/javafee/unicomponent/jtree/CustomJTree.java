@@ -19,7 +19,7 @@ public class CustomJTree extends JTree {
 		setSelectionModel(isSingleSelection);
 		setCustomCellRenderer();
 
-		setBackground(Utils.getApplicationColor());
+		setBackground(Utils.getApplicationUserDefineColor());
 	}
 
 	private DefaultMutableTreeNode createNodes(List<Object> nodes) {

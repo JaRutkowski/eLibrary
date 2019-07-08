@@ -35,7 +35,7 @@ public class LibraryTablePanel extends JPanel {
 	private JPanel panelReadingRoom;
 
 	public LibraryTablePanel() {
-		setBackground(Utils.getApplicationColor());
+		setBackground(Utils.getApplicationUserDefineColor());
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{477, 0};
 		gridBagLayout.rowHeights = new int[]{284, 0, 312, 0, 0};

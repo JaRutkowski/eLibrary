@@ -10,6 +10,7 @@ import com.javafee.common.Constants.Tab_Accountant;
 import com.javafee.common.Constants.Tab_Client;
 import com.javafee.common.Constants.Tab_Worker;
 import com.javafee.common.IActionForm;
+import com.javafee.common.Params;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
 import com.javafee.startform.LogInEvent;
@@ -17,7 +18,7 @@ import com.javafee.startform.LogInEvent;
 public class Actions implements IActionForm {
 	private TabbedForm tabbedForm = new TabbedForm();
 
-	private com.javafee.settingsform.Actions action = null;
+	private com.javafee.settingsform.Actions actionSettings = null;
 
 	public void control() {
 		tabbedForm.getFrame().setVisible(true);
@@ -205,9 +206,11 @@ public class Actions implements IActionForm {
 	}
 
 	private void openSettingsForm() {
-		if (action == null)
-			action = new com.javafee.settingsform.Actions();
-		action.control();
+		if(Params.getInstance().get("TABBED_FORM") != null)
+			Params.getInstance().add("TABBED_FORM", tabbedForm);
+		if (actionSettings == null)
+			actionSettings = new com.javafee.settingsform.Actions();
+		actionSettings.control();
 	}
 
 	private void openStartForm() {
@@ -222,5 +225,6 @@ public class Actions implements IActionForm {
 		TabLoanServiceEvent.loadServiceEvent = null;
 		TabAdmDictionaryEvent.admDictionaryEvent = null;
 		TabWorkerEvent.workerEvent = null;
+		//actionSettings = null;
 	}
 }

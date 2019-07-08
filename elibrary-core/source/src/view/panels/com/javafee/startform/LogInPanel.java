@@ -27,7 +27,7 @@ public class LogInPanel extends JPanel {
 	private JButton btnForgotPassword;
 
 	public LogInPanel() {
-		setBackground(Utils.getApplicationColor());
+		setBackground(Utils.getApplicationUserDefineColor());
 		setBorder(new TitledBorder(null,
 				SystemProperties.getInstance().getResourceBundle().getString("logInPanel.logInPanelBorderTitle"),
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));

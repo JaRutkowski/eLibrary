@@ -56,7 +56,7 @@ public class LoanServicePanel extends JPanel {
 	private JButton btnCancelReservation;
 
 	public LoanServicePanel() {
-		setBackground(Utils.getApplicationColor());
+		setBackground(Utils.getApplicationUserDefineColor());
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{751, 64, 0, 165, 0};
 		gridBagLayout.rowHeights = new int[]{189, 0, 0, 0, 0, 0, 0};

@@ -21,7 +21,7 @@ public class MessageAndAlertPanel extends JPanel {
 	private JButton btnContact;
 
 	public MessageAndAlertPanel() {
-		setBackground(Utils.getApplicationColor());
+		setBackground(Utils.getApplicationUserDefineColor());
 		setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"),
 				SystemProperties.getInstance().getResourceBundle()
 						.getString("messageAndAlertPanel.messageAndAlertPanelBorderTitle"),

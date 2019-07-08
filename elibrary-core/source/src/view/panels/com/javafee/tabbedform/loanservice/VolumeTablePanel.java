@@ -20,7 +20,7 @@ public class VolumeTablePanel extends JPanel {
 	private JTable volumeTable;
 
 	public VolumeTablePanel() {
-		setBackground(Utils.getApplicationColor());
+		setBackground(Utils.getApplicationUserDefineColor());
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{50, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0};

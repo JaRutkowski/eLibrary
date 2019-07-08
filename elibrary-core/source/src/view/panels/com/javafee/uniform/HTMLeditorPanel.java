@@ -12,6 +12,7 @@ import javax.swing.JTextArea;
 import javax.swing.border.TitledBorder;
 
 import com.javafee.common.SystemProperties;
+import com.javafee.common.Utils;
 import com.javafee.startform.RegistrationPanel;
 
 import lombok.Getter;
@@ -33,6 +34,7 @@ public class HTMLeditorPanel extends JPanel {
 	private JScrollPane scrollPaneListStatus;
 
 	public HTMLeditorPanel() {
+		setBackground(Utils.getApplicationUserDefineColor());
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{359, 51, 366, 0};
 		gridBagLayout.rowHeights = new int[]{228, 292, 100, 0};

@@ -12,6 +12,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
 
 import com.javafee.common.SystemProperties;
+import com.javafee.common.Utils;
 import com.javafee.hibernate.dto.common.UserData;
 import com.javafee.model.OutboxTableModel;
 
@@ -34,6 +35,7 @@ public class OutboxMailPagePanel extends JPanel {
 	private JComboBox<UserData> comboBoxRecipient;
 
 	public OutboxMailPagePanel() {
+		setBackground(Utils.getApplicationUserDefineColor());
 		setBorder(new TitledBorder(null,
 				SystemProperties.getInstance().getResourceBundle()
 						.getString("outboxMailPanel.outboxMailPanelBorderTitle"),

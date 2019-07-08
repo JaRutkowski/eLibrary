@@ -44,7 +44,7 @@ public class BookAddModFrame extends JFrame {
 	private JButton btnRefreshTables;
 
 	public BookAddModFrame() {
-		setBackground(Utils.getApplicationColor());
+		setBackground(Utils.getApplicationUserDefineColor());
 		setIconImage(
 				Toolkit.getDefaultToolkit().getImage(BookAddModFrame.class.getResource("/images/splashScreen.jpg")));
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);

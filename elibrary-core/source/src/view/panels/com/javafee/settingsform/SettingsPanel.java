@@ -7,7 +7,10 @@ import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import com.javafee.common.Constants;
 import com.javafee.common.SystemProperties;
+import com.javafee.common.Utils;
+import com.javafee.startform.LogInEvent;
 import com.javafee.unicomponent.jtree.CustomJTree;
 
 import lombok.Getter;
@@ -17,12 +20,16 @@ public class SettingsPanel extends JPanel {
 	private CustomJTree treeMenu;
 	@Getter
 	private JPanel contentPanel;
+
+	@Getter
+	private ThemePanel themePanel;
 	@Getter
 	private PasswordChangePanel passwordChangePanel;
 
 	private GridBagConstraints gbc_panel;
 
 	public SettingsPanel() {
+		setBackground(Utils.getApplicationUserDefineColor());
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{200, 350, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0};
@@ -48,6 +55,7 @@ public class SettingsPanel extends JPanel {
 		gbc_panel.gridy = 0;
 		add(contentPanel, gbc_panel);
 
+		themePanel = new ThemePanel();
 		passwordChangePanel = new PasswordChangePanel();
 	}
 
@@ -79,7 +87,8 @@ public class SettingsPanel extends JPanel {
 		accountNodes.add(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuPasswordChange"));
 
 		nodes.add(generalNodes);
-		nodes.add(accountNodes);
+		if(LogInEvent.getRole() != Constants.Role.ADMIN)
+			nodes.add(accountNodes);
 
 		return nodes;
 	}

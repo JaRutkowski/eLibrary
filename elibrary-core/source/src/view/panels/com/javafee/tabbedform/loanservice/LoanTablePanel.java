@@ -20,7 +20,7 @@ public class LoanTablePanel extends JPanel {
 	private JTable loanTable;
 
 	public LoanTablePanel() {
-		setBackground(Utils.getApplicationColor());
+		setBackground(Utils.getApplicationUserDefineColor());
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{200, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0};

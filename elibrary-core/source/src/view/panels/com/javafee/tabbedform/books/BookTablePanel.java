@@ -23,7 +23,7 @@ public class BookTablePanel extends JPanel {
 	private CockpitEditionPanel cockpitEditionPanelBook;
 
 	public BookTablePanel() {
-		setBackground(Utils.getApplicationColor());
+		setBackground(Utils.getApplicationUserDefineColor());
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{477, 0};
 		gridBagLayout.rowHeights = new int[]{284, 0, 0};

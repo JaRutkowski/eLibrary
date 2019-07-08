@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
 import com.javafee.common.SystemProperties;
+import com.javafee.common.Utils;
 
 import lombok.Getter;
 
@@ -25,6 +26,7 @@ public class TemplateManagementPanel extends JPanel {
 	private JButton btnPreviewTemplateLibrary;
 
 	public TemplateManagementPanel() {
+		setBackground(Utils.getApplicationUserDefineColor());
 		setBorder(new TitledBorder(null,
 				SystemProperties.getInstance().getResourceBundle()
 						.getString("htmlEditor.templateManagementBorderTitle"),

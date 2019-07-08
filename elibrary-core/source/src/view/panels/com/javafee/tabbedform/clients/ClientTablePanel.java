@@ -29,7 +29,7 @@ public class ClientTablePanel extends JPanel {
 	private MessageAndAlertPanel messageAndAlertPanel;
 
 	public ClientTablePanel() {
-		setBackground(Utils.getApplicationColor());
+		setBackground(Utils.getApplicationUserDefineColor());
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{417, 16, 0};
 		gridBagLayout.rowHeights = new int[]{0, 76, 38, 0};
