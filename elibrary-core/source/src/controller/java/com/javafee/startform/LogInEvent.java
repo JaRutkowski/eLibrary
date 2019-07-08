@@ -7,6 +7,7 @@ import com.javafee.common.Constants.Role;
 import com.javafee.common.Params;
 import com.javafee.exception.RefusedLogInException;
 import com.javafee.hibernate.dao.HibernateUtil;
+import com.javafee.hibernate.dto.common.UserData;
 import com.javafee.hibernate.dto.library.Client;
 import com.javafee.hibernate.dto.library.LibraryWorker;
 import com.javafee.hibernate.dto.library.Worker;
@@ -24,6 +25,8 @@ public final class LogInEvent {
 	private static Worker worker;
 	@Getter
 	private static LibraryWorker libraryWorker;
+	@Getter
+	public static UserData userData;
 	@Getter
 	private static Boolean isAdmin;
 	@Getter
@@ -45,16 +48,6 @@ public final class LogInEvent {
 		return logInEvent;
 	}
 
-	public Object getUser() {
-		Object user = null;
-		if (role == Role.CLIENT)
-			user = client;
-		else if (role == Role.WORKER_ACCOUNTANT || role == Role.WORKER_LIBRARIAN)
-			user = worker;
-
-		return user;
-	}
-
 	private static boolean checkLogAndRole(String login, String password) {
 		boolean result = false;
 		client = (Client) HibernateUtil.getSession().getNamedQuery("Client.checkIfClientLoginExist")
@@ -70,6 +63,7 @@ public final class LogInEvent {
 			if (checkLoginAndPassword(password)) {
 				if (client.getRegistered()) {
 					role = Role.CLIENT;
+					userData = client;
 					result = true;
 				} else
 					Params.getInstance().add("NOT_REGISTERED", LogInFailureCause.NOT_REGISTERED);
@@ -83,6 +77,7 @@ public final class LogInEvent {
 					if (checkIfHired(worker)) {
 						if (libraryWorker.getIsAccountant() != null)
 							role = libraryWorker.getIsAccountant() ? Role.WORKER_ACCOUNTANT : Role.WORKER_LIBRARIAN;
+						userData = worker;
 						result = true;
 					} else
 						Params.getInstance().add("NOT_HIRED", LogInFailureCause.NOT_HIRED);

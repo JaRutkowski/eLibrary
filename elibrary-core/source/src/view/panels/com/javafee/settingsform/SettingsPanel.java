@@ -53,8 +53,8 @@ public class SettingsPanel extends JPanel {
 
 	public void reloadContentPanel(SettingsForm settingsForm, JPanel contentPanel) {
 		remove(this.contentPanel);
-		this.contentPanel = contentPanel;
 
+		this.contentPanel = contentPanel;
 		gbc_panel = new GridBagConstraints();
 		gbc_panel.fill = GridBagConstraints.BOTH;
 		gbc_panel.gridx = 1;

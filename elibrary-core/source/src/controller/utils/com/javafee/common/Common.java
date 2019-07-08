@@ -11,6 +11,7 @@ import java.util.function.Consumer;
 
 import javax.swing.JLabel;
 
+import lombok.extern.java.Log;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
 
 import com.javafee.common.networkservice.NetworkServiceListener;
@@ -42,6 +43,7 @@ import edu.vt.middleware.password.RuleResult;
 import edu.vt.middleware.password.UppercaseCharacterRule;
 import edu.vt.middleware.password.WhitespaceRule;
 
+@Log
 public final class Common {
 
 	private static WatchServiceListener watchServiceListener = null;
@@ -77,7 +79,7 @@ public final class Common {
 		return generator.generatePassword(Constants.APPLICATION_GENERATE_PASSWORD_LENGTH, rules);
 	}
 
-	public static final boolean checkPasswordStrenght(String password) {
+	public static final boolean checkPasswordStrength(String password) {
 		boolean result = false;
 		// password must be between 8 and 16 chars long
 		LengthRule lengthRule = new LengthRule(Constants.APPLICATION_MIN_PASSWORD_LENGTH,
@@ -119,7 +121,7 @@ public final class Common {
 		RuleResult ruleResult = validator.validate(passwordData);
 
 		if (ruleResult.isValid()) {
-			System.out.println("Valid password");
+			log.info("Valid password");
 			result = true;
 		}
 

@@ -72,7 +72,7 @@ public class Actions implements IRegistrationForm {
 	private void onClickBtnForgotPassword() {
 		if (validateForgotPassword()) {
 			if (Utils.displayConfirmDialog(
-					SystemProperties.getInstance().getResourceBundle().getString("confirmDialog.forgotPassword"),
+					SystemProperties.getInstance().getResourceBundle().getString("confirmDialog.continueQuestion"),
 					"") == JOptionPane.YES_OPTION) {
 				UserData userData = (UserData) Params.getInstance().get("USER_DATA");
 				String generatedPassword = com.javafee.common.Common.generatePassword();
@@ -128,7 +128,7 @@ public class Actions implements IRegistrationForm {
 						SystemProperties.getInstance().getResourceBundle().getString("startForm.logInErrorTitle"),
 						errorBuilder.toString(), e);
 
-				clearLogInFailsInParams();
+				clearLogInFailsParams();
 			}
 
 			if (logInEvent != null) {
@@ -141,7 +141,7 @@ public class Actions implements IRegistrationForm {
 		}
 	}
 
-	private void clearLogInFailsInParams() {
+	private void clearLogInFailsParams() {
 		Params.getInstance().remove("NO_USER");
 		Params.getInstance().remove("BAD_PASSWORD");
 		Params.getInstance().remove("NOT_REGISTERED");

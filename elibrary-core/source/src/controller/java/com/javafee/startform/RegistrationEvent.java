@@ -59,7 +59,7 @@ public class RegistrationEvent {
 				if (worker != null)
 					Params.getInstance().add("ALREADY_REGISTERED", RegistrationFailureCause.ALREADY_REGISTERED);
 				else {
-					if (Common.checkPasswordStrenght(password))
+					if (Common.checkPasswordStrength(password))
 						result = true;
 					else
 						Params.getInstance().add("WEAK_PASSWORD", RegistrationFailureCause.WEAK_PASSWORD);
@@ -79,7 +79,7 @@ public class RegistrationEvent {
 					// Params.getInstance().add("ALREADY_REGISTERED",
 					// RegistrationFailureCause.ALREADY_REGISTERED);
 				else {
-					if (Common.checkPasswordStrenght(password))
+					if (Common.checkPasswordStrength(password))
 						result = true;
 					else
 						Params.getInstance().add("WEAK_PASSWORD", RegistrationFailureCause.WEAK_PASSWORD);
