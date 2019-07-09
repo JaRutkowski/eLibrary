@@ -87,6 +87,7 @@ public final class LogInEvent {
 		} else
 			Params.getInstance().add("NO_USER", LogInFailureCause.NO_USER);
 
+
 		return result;
 	}
 

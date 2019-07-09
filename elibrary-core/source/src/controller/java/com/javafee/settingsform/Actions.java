@@ -46,7 +46,7 @@ public class Actions implements IActionForm {
 
 	private void reloadContentPanel() {
 		DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) settingsForm.getSettingsPanel().getTreeMenu().getLastSelectedPathComponent();
-		if (LogInEvent.getRole() == Constants.Role.CLIENT || LogInEvent.getRole() == Constants.Role.WORKER_LIBRARIAN) {
+		if (LogInEvent.getRole() == Constants.Role.CLIENT || LogInEvent.getRole() == Constants.Role.WORKER_LIBRARIAN || LogInEvent.getRole() == Constants.Role.WORKER_ACCOUNTANT) {
 			if (selectedNode != null && selectedNode.getUserObject() != null) {
 				switch (Panel_Settings.getByName((String) selectedNode.getUserObject())) {
 					case GENERAL_PANEL:

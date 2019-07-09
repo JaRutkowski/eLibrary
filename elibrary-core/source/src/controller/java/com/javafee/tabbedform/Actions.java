@@ -206,7 +206,7 @@ public class Actions implements IActionForm {
 	}
 
 	private void openSettingsForm() {
-		if(Params.getInstance().get("TABBED_FORM") != null)
+		if(!Params.getInstance().contains("TABBED_FORM"))
 			Params.getInstance().add("TABBED_FORM", tabbedForm);
 		if (actionSettings == null)
 			actionSettings = new com.javafee.settingsform.Actions();
