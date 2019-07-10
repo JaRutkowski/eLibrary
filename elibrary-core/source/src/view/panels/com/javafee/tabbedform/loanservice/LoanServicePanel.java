@@ -65,7 +65,7 @@ public class LoanServicePanel extends JPanel {
 		setLayout(gridBagLayout);
 
 		panel = new JPanel();
-		panel.setBackground(Utils.getApplicationColor());
+		panel.setBackground(Utils.getApplicationUserDefineColor());
 		panel.setBorder(new TitledBorder(null,
 				SystemProperties.getInstance().getResourceBundle().getString("loanTablePanel.tableClientTitle"),
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -100,7 +100,7 @@ public class LoanServicePanel extends JPanel {
 		scrollPaneClient.setViewportView(clientTable);
 
 		volumePanel = new JPanel();
-		volumePanel.setBackground(Utils.getApplicationColor());
+		volumePanel.setBackground(Utils.getApplicationUserDefineColor());
 		volumePanel.setBorder(new TitledBorder(null,
 				SystemProperties.getInstance().getResourceBundle().getString("loanServicePanel.volumePanelTitle"),
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -150,7 +150,7 @@ public class LoanServicePanel extends JPanel {
 		add(btnLoan, gbc_btnLoan);
 
 		loanPanel = new JPanel();
-		loanPanel.setBackground(Utils.getApplicationColor());
+		loanPanel.setBackground(Utils.getApplicationUserDefineColor());
 		loanPanel.setBorder(new TitledBorder(null,
 				SystemProperties.getInstance().getResourceBundle().getString("loanServicePanel.loanPanelTitle"),
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -233,7 +233,7 @@ public class LoanServicePanel extends JPanel {
 		add(btnPenalty, gbc_btnPenalty);
 
 		reservationPanel = new JPanel();
-		reservationPanel.setBackground(Utils.getApplicationColor());
+		reservationPanel.setBackground(Utils.getApplicationUserDefineColor());
 		reservationPanel.setBorder(new TitledBorder(null,
 				SystemProperties.getInstance().getResourceBundle().getString("loanServicePanel.reservationPanelTitle"),
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));

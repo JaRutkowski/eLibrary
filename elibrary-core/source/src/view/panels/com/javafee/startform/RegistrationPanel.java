@@ -206,7 +206,7 @@ public class RegistrationPanel extends JPanel {
 
 		radioButtonFemale = new JRadioButton(
 				SystemProperties.getInstance().getResourceBundle().getString("registrationPanel.radioButtonFemale"));
-		radioButtonFemale.setBackground(Utils.getApplicationColor());
+		radioButtonFemale.setBackground(Utils.getApplicationUserDefineColor());
 		radioButtonFemale.setActionCommand(Constants.DATA_BASE_FEMALE_SIGN.toString());
 		GridBagConstraints gbc_radioButtonFemale = new GridBagConstraints();
 		gbc_radioButtonFemale.anchor = GridBagConstraints.WEST;
@@ -217,7 +217,7 @@ public class RegistrationPanel extends JPanel {
 
 		radioButtonMale = new JRadioButton(
 				SystemProperties.getInstance().getResourceBundle().getString("registrationPanel.radioButtonMale"));
-		radioButtonMale.setBackground(Utils.getApplicationColor());
+		radioButtonMale.setBackground(Utils.getApplicationUserDefineColor());
 		radioButtonMale.setActionCommand(Constants.DATA_BASE_MALE_SIGN.toString());
 		GridBagConstraints gbc_radioButtonMale = new GridBagConstraints();
 		gbc_radioButtonMale.anchor = GridBagConstraints.WEST;

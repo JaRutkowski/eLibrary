@@ -48,6 +48,7 @@ public class DraftPagePanel extends JPanel {
 
 		checkShowOnlySystemCorrespondence = new JCheckBox(SystemProperties.getInstance().getResourceBundle()
 				.getString("outboxMailPanel.chckbxShowOnlySystemCorrespondence"));
+		checkShowOnlySystemCorrespondence.setBackground(Utils.getApplicationUserDefineColor());
 		GridBagConstraints gbc_checkShowOnlySystemCorrespondence = new GridBagConstraints();
 		gbc_checkShowOnlySystemCorrespondence.anchor = GridBagConstraints.WEST;
 		gbc_checkShowOnlySystemCorrespondence.insets = new Insets(0, 0, 5, 5);

@@ -35,7 +35,7 @@ public class AdmIsRegisteredPanel extends JPanel {
 
 		chckbxIsRegistered = new JCheckBox(SystemProperties.getInstance().getResourceBundle()
 				.getString("admIsRegisteredPanel.chckbxIsRegistered"));
-		chckbxIsRegistered.setBackground(Utils.getApplicationColor());
+		chckbxIsRegistered.setBackground(Utils.getApplicationUserDefineColor());
 		GridBagConstraints gbc_chckbxIsRegistered = new GridBagConstraints();
 		gbc_chckbxIsRegistered.fill = GridBagConstraints.HORIZONTAL;
 		gbc_chckbxIsRegistered.insets = new Insets(0, 0, 0, 5);

@@ -35,7 +35,7 @@ public class AdmIsAccountantPanel extends JPanel {
 
 		chckbxIsAccountant = new JCheckBox(SystemProperties.getInstance().getResourceBundle()
 				.getString("admIsAccountantPanel.chckbxIsAccountant"));
-		chckbxIsAccountant.setBackground(Utils.getApplicationColor());
+		chckbxIsAccountant.setBackground(Utils.getApplicationUserDefineColor());
 		GridBagConstraints gbc_chckbxIsAccountant = new GridBagConstraints();
 		gbc_chckbxIsAccountant.fill = GridBagConstraints.HORIZONTAL;
 		gbc_chckbxIsAccountant.insets = new Insets(0, 0, 0, 5);

@@ -44,7 +44,7 @@ public class LibraryTablePanel extends JPanel {
 		setLayout(gridBagLayout);
 
 		panelLoan = new JPanel();
-		panelLoan.setBackground(Utils.getApplicationColor());
+		panelLoan.setBackground(Utils.getApplicationUserDefineColor());
 		panelLoan.setBorder(new TitledBorder(null,
 				SystemProperties.getInstance().getResourceBundle().getString("libraryTablePanel.panelLoanTitle"),
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -87,7 +87,7 @@ public class LibraryTablePanel extends JPanel {
 		add(cockpitEditionPanelLoan, gbc_ce_panelLoan);
 
 		panelReadingRoom = new JPanel();
-		panelReadingRoom.setBackground(Utils.getApplicationColor());
+		panelReadingRoom.setBackground(Utils.getApplicationUserDefineColor());
 		panelReadingRoom.setBorder(new TitledBorder(null,
 				SystemProperties.getInstance().getResourceBundle().getString("libraryTablePanel.panelReadingRoomTitle"),
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));

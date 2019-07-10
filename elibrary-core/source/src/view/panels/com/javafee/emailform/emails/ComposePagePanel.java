@@ -77,6 +77,7 @@ public class ComposePagePanel extends JPanel {
 
 		chckbxCC = new JCheckBox(
 				SystemProperties.getInstance().getResourceBundle().getString("composePagePanel.chckbxCC"));
+		chckbxCC.setBackground(Utils.getApplicationUserDefineColor());
 		GridBagConstraints gbc_chckbxCC = new GridBagConstraints();
 		gbc_chckbxCC.insets = new Insets(0, 0, 5, 5);
 		gbc_chckbxCC.gridx = 2;
@@ -85,6 +86,7 @@ public class ComposePagePanel extends JPanel {
 
 		chckbxBCC = new JCheckBox(
 				SystemProperties.getInstance().getResourceBundle().getString("composePagePanel.chckbxBCC"));
+		chckbxBCC.setBackground(Utils.getApplicationUserDefineColor());
 		GridBagConstraints gbc_chckbxBCC = new GridBagConstraints();
 		gbc_chckbxBCC.insets = new Insets(0, 0, 5, 0);
 		gbc_chckbxBCC.gridx = 3;

@@ -230,7 +230,7 @@ public class AdmDictionaryPanel extends JPanel {
 		add(dateChooserBirthDate, gbc_dateChooserBirthDate);
 
 		radioButtonAuthor = new JRadioButton();
-		radioButtonAuthor.setBackground(Utils.getApplicationColor());
+		radioButtonAuthor.setBackground(Utils.getApplicationUserDefineColor());
 		radioButtonAuthor.setSelected(true);
 		radioButtonAuthor.setActionCommand(Constants.RADIO_BUTTON_AUTHOR);
 		GridBagConstraints gbc_radioButtonAuthor = new GridBagConstraints();
@@ -241,7 +241,7 @@ public class AdmDictionaryPanel extends JPanel {
 		add(radioButtonAuthor, gbc_radioButtonAuthor);
 
 		radioButtonCategory = new JRadioButton();
-		radioButtonCategory.setBackground(Utils.getApplicationColor());
+		radioButtonCategory.setBackground(Utils.getApplicationUserDefineColor());
 		radioButtonCategory.setActionCommand(Constants.RADIO_BUTTON_CATEGORY);
 		GridBagConstraints gbc_radioButtonCategory = new GridBagConstraints();
 		gbc_radioButtonCategory.gridwidth = 2;
@@ -251,7 +251,7 @@ public class AdmDictionaryPanel extends JPanel {
 		add(radioButtonCategory, gbc_radioButtonCategory);
 
 		radioButtonPublishingHouse = new JRadioButton();
-		radioButtonPublishingHouse.setBackground(Utils.getApplicationColor());
+		radioButtonPublishingHouse.setBackground(Utils.getApplicationUserDefineColor());
 		radioButtonPublishingHouse.setActionCommand(Constants.RADIO_BUTTON_PUBLISHING_HOUSE);
 		GridBagConstraints gbc_radioButtonPublishingHouse = new GridBagConstraints();
 		gbc_radioButtonPublishingHouse.gridwidth = 2;

@@ -46,6 +46,7 @@ public class HTMLeditorPanel extends JPanel {
 		htmlEditorPanel.setBorder(new TitledBorder(null,
 				SystemProperties.getInstance().getResourceBundle().getString("htmlEditor.htmlEditorPanelBorderTitle"),
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		htmlEditorPanel.setBackground(Utils.getApplicationUserDefineColor());
 		GridBagConstraints gbc_htmlEditorPanel = new GridBagConstraints();
 		gbc_htmlEditorPanel.gridheight = 2;
 		gbc_htmlEditorPanel.insets = new Insets(0, 0, 5, 5);
@@ -88,6 +89,7 @@ public class HTMLeditorPanel extends JPanel {
 		previewPanel.setBorder(new TitledBorder(null,
 				SystemProperties.getInstance().getResourceBundle().getString("htmlEditor.previewPanelBorderTitle"),
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		previewPanel.setBackground(Utils.getApplicationUserDefineColor());
 		GridBagConstraints gbc_previewPanel = new GridBagConstraints();
 		gbc_previewPanel.gridheight = 2;
 		gbc_previewPanel.insets = new Insets(0, 5, 5, 5);
