@@ -188,7 +188,7 @@ public class Actions implements IActionForm {
 		Common.registerNetworkServiceListener(this);
 	}
 
-	private void onClickBtnLogOut() {
+	public void onClickBtnLogOut() {
 		LogInEvent.clearLogInData();
 		Common.unregisterTimerServiceListenerSingleton();
 		tabbedForm.getFrame().dispose();
@@ -206,8 +206,8 @@ public class Actions implements IActionForm {
 	}
 
 	private void openSettingsForm() {
-		if(!Params.getInstance().contains("TABBED_FORM"))
-			Params.getInstance().add("TABBED_FORM", tabbedForm);
+		if(!Params.getInstance().contains("TABBED_FORM_ACTIONS"))
+			Params.getInstance().add("TABBED_FORM_ACTIONS", this);
 		if (actionSettings == null)
 			actionSettings = new com.javafee.settingsform.Actions();
 		actionSettings.control();

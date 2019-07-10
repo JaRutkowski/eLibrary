@@ -61,7 +61,7 @@ public class Common {
         Optional<SystemProperties> systemProperties = Optional.empty();
 
         try {
-            CriteriaBuilder cb = HibernateUtil.getEntityManager().getCriteriaBuilder();
+            CriteriaBuilder cb = HibernateUtil.createAndGetEntityManager().getCriteriaBuilder();
             CriteriaQuery<SystemProperties> criteria = cb.createQuery(SystemProperties.class);
             Root<SystemProperties> systemPropertiesRoot = criteria.from(SystemProperties.class);
             criteria.select(systemPropertiesRoot);
@@ -87,8 +87,8 @@ public class Common {
             HibernateUtil.beginTransaction();
             result = new SystemProperties();
             userData.setSystemProperties(result);
-            
-            HibernateUtil.getSession().merge(userData);
+
+            HibernateUtil.getSession().save(result);
             HibernateUtil.commitTransaction();
         } else
             result = Common.findSystemPropertiesByUserDataId(userDataId).get();
@@ -100,8 +100,7 @@ public class Common {
         Optional<MessageType> messageType = Optional.empty();
 
         try {
-            HibernateUtil.beginTransaction();
-            CriteriaBuilder cb = HibernateUtil.getEntityManager().getCriteriaBuilder();
+            CriteriaBuilder cb = HibernateUtil.createAndGetEntityManager().getCriteriaBuilder();
             CriteriaQuery<MessageType> criteria = cb.createQuery(MessageType.class);
             Root<MessageType> messageTypeRoot = criteria.from(MessageType.class);
             criteria.select(messageTypeRoot);
@@ -110,7 +109,6 @@ public class Common {
                     .ofNullable(!HibernateUtil.getEntityManager().createQuery(criteria).getResultList().isEmpty()
                             ? HibernateUtil.getEntityManager().createQuery(criteria).getResultList().get(0)
                             : null);
-            HibernateUtil.commitTransaction();
         } catch (Exception e) {
             log.severe(e.getMessage());
         }

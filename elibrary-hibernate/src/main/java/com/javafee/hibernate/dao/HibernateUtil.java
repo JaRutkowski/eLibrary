@@ -13,6 +13,7 @@ import org.hibernate.cfg.Environment;
 import org.reflections.Reflections;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -25,7 +26,7 @@ public class HibernateUtil {
     @Getter
     private static final Session session;
     @Getter
-    private static final EntityManager entityManager;
+    private static EntityManager entityManager;
     @Getter
     private static final StandardServiceRegistry registry;
 
@@ -71,7 +72,16 @@ public class HibernateUtil {
         session.getTransaction().commit();
     }
 
+    public static void rollbackTransaction() {
+        session.getTransaction().rollback();
+    }
+
     public static void closeSession() {
         session.close();
+    }
+
+    public static EntityManager createAndGetEntityManager() {
+        entityManager = getSessionFactory().createEntityManager();
+        return  entityManager;
     }
 }

@@ -107,6 +107,7 @@ public class Actions implements IActionForm {
 	}
 
 	private void clearEvent() {
+		ThemePanelEvent.themePanelEvent = null;
 		PasswordChangePanelEvent.passwordChangePanelEvent = null;
 	}
 }

@@ -3,8 +3,9 @@ package com.javafee.settingsform;
 import com.javafee.common.*;
 import com.javafee.hibernate.dao.HibernateUtil;
 import com.javafee.hibernate.dao.common.Common;
+import com.javafee.hibernate.dto.common.UserData;
 import com.javafee.startform.LogInEvent;
-import com.javafee.tabbedform.TabbedForm;
+import com.javafee.tabbedform.Actions;
 import lombok.Setter;
 
 import javax.swing.*;
@@ -52,32 +53,32 @@ public class ThemePanelEvent implements IActionForm {
                 "") == JOptionPane.YES_OPTION) {
             StringBuilder applicationColor = new StringBuilder().append(color.getRed()).append(",")
                     .append(color.getGreen()).append(",").append(color.getBlue());
+            boolean systemPropertiesAlreadyExists = LogInEvent.getUserData().getSystemProperties() != null;
 
             com.javafee.hibernate.dto.common.SystemProperties systemProperties = Common
                     .checkAndGetSystemProperties(LogInEvent.getUserData() != null ? LogInEvent.getUserData().getIdUserData()
                             : Constants.DATA_BASE_ADMIN_ID);
-            LogInEvent.getUserData().setSystemProperties(systemProperties);
 
-            systemProperties.setColor(applicationColor.toString());
             HibernateUtil.beginTransaction();
-            HibernateUtil.getSession().update(LogInEvent.getUserData());
+            if (!systemPropertiesAlreadyExists) {
+                systemProperties.setColor(applicationColor.toString());
+                LogInEvent.getUserData().setSystemProperties(systemProperties);
+                HibernateUtil.getSession().update(UserData.class.getName(), LogInEvent.getUserData());
+            } else {
+                LogInEvent.getUserData().getSystemProperties().setColor(applicationColor.toString());
+                HibernateUtil.getSession().update(SystemProperties.class.getName(), LogInEvent.getUserData().getSystemProperties());
+            }
+
             HibernateUtil.commitTransaction();
 
-            onClickBtnLogOut();
+            delegateLogOutActionExecution();
         }
     }
 
-    private void onClickBtnLogOut() {
-        LogInEvent.clearLogInData();
+    private void delegateLogOutActionExecution() {
         settingsForm.getFrame().dispose();
         settingsForm = null;
-        ((TabbedForm) Params.getInstance().get("TABBED_FORM")).getFrame().dispose();
-        Params.getInstance().remove("TABBED_FORM");
-        openStartForm();
-    }
-
-    private void openStartForm() {
-        com.javafee.startform.Actions actions = new com.javafee.startform.Actions();
-        actions.control();
+        ((Actions) Params.getInstance().get("TABBED_FORM_ACTIONS")).onClickBtnLogOut();
+        Params.getInstance().remove("TABBED_FORM_ACTIONS");
     }
 }
