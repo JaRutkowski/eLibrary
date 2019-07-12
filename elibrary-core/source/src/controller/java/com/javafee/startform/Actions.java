@@ -150,6 +150,9 @@ public class Actions implements IRegistrationForm {
 
 	@Override
 	public void onClickBtnRegisterNow() {
+		// test
+
+		// test
 		reloadRegistrationPanel();
 		if (validateRegistration()) {
 			switchPerspectiveToRegistrationOrLogIn(false);

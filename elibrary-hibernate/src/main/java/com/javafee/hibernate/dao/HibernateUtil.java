@@ -82,6 +82,6 @@ public class HibernateUtil {
 
     public static EntityManager createAndGetEntityManager() {
         entityManager = getSessionFactory().createEntityManager();
-        return  entityManager;
+        return entityManager;
     }
 }
