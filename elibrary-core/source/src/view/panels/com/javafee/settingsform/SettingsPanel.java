@@ -24,6 +24,8 @@ public class SettingsPanel extends JPanel {
 	@Getter
 	private ThemePanel themePanel;
 	@Getter
+	private PersonalDataChangePanel personalDataChangePanel;
+	@Getter
 	private PasswordChangePanel passwordChangePanel;
 
 	private GridBagConstraints gbc_panel;
@@ -56,6 +58,7 @@ public class SettingsPanel extends JPanel {
 		add(contentPanel, gbc_panel);
 
 		themePanel = new ThemePanel();
+		personalDataChangePanel = new PersonalDataChangePanel();
 		passwordChangePanel = new PasswordChangePanel();
 	}
 

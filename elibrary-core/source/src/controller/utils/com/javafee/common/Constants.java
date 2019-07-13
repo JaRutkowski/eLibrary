@@ -18,7 +18,7 @@ public final class Constants {
 		THEME_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuTheme")),
 		FONT_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuFont")),
 		ACCOUNT_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuAccount")),
-		DATA_CHANGE_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuDataChange")),
+		PERSONAL_DATA_CHANGE_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuDataChange")),
 		PASSWORD_CHANGE_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuPasswordChange"));
 
 		private final String name;

@@ -74,9 +74,7 @@ public class ThemePanelEvent implements IActionForm {
 				LogInEvent.getUserData().getSystemProperties().setColor(applicationColor.toString());
 				HibernateUtil.getSession().update(SystemProperties.class.getName(), LogInEvent.getUserData().getSystemProperties());
 			}
-
 			HibernateUtil.commitTransaction();
-
 			delegateLogOutActionExecution();
 		}
 	}

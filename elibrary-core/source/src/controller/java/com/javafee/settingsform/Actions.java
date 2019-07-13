@@ -62,8 +62,9 @@ public class Actions implements IActionForm {
 					case ACCOUNT_PANEL:
 						System.out.println("account");
 						break;
-					case DATA_CHANGE_PANEL:
-						System.out.println("data change");
+					case PERSONAL_DATA_CHANGE_PANEL:
+						settingsForm.getSettingsPanel().reloadContentPanel(settingsForm, settingsForm.getSettingsPanel().getPersonalDataChangePanel());
+						PersonalDataChangePanelEvent.getInstance(settingsForm);
 						break;
 					case PASSWORD_CHANGE_PANEL:
 						settingsForm.getSettingsPanel().reloadContentPanel(settingsForm, settingsForm.getSettingsPanel().getPasswordChangePanel());
@@ -89,7 +90,7 @@ public class Actions implements IActionForm {
 					case ACCOUNT_PANEL:
 						System.out.println("account");
 						break;
-					case DATA_CHANGE_PANEL:
+					case PERSONAL_DATA_CHANGE_PANEL:
 						System.out.println("data change");
 						break;
 				}
@@ -108,6 +109,7 @@ public class Actions implements IActionForm {
 
 	private void clearEvent() {
 		ThemePanelEvent.themePanelEvent = null;
+		PersonalDataChangePanelEvent.personalDataChangePanelEvent = null;
 		PasswordChangePanelEvent.passwordChangePanelEvent = null;
 	}
 }
