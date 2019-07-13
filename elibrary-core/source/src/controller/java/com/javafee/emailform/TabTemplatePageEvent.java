@@ -14,6 +14,8 @@ import java.util.stream.Collectors;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
+import org.oxbow.swingbits.util.Strings;
+
 import com.javafee.common.Constants;
 import com.javafee.common.HTMLProcessor;
 import com.javafee.common.IActionForm;
@@ -25,7 +27,6 @@ import com.javafee.hibernate.dto.common.UserData;
 import com.javafee.startform.LogInEvent;
 
 import lombok.Setter;
-import org.oxbow.swingbits.util.Strings;
 
 public class TabTemplatePageEvent implements IActionForm {
 	@Setter
@@ -148,10 +149,10 @@ public class TabTemplatePageEvent implements IActionForm {
 
 							if (!systemPropertiesAlreadyExists) {
 								systemProperties.setTemplateDirectory(result.getParent());
-								LogInEvent.getWorker().setSystemProperties(systemProperties);
+								LogInEvent.getUserData().setSystemProperties(systemProperties);
 
 								HibernateUtil.beginTransaction();
-								HibernateUtil.getSession().update(UserData.class.getName(), LogInEvent.getWorker());
+								HibernateUtil.getSession().update(UserData.class.getName(), LogInEvent.getUserData());
 								HibernateUtil.commitTransaction();
 							} else {
 								HibernateUtil.beginTransaction();

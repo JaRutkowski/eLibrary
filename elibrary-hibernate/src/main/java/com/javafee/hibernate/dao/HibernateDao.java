@@ -1,13 +1,13 @@
 package com.javafee.hibernate.dao;
 
-import org.hibernate.Criteria;
-import org.hibernate.HibernateException;
-import org.hibernate.criterion.Example;
-
 import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
+import org.hibernate.criterion.Example;
 
 public class HibernateDao<T, Id extends Serializable> implements GenericDao<T, Id> {
 

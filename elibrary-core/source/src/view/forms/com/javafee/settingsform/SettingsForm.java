@@ -30,7 +30,7 @@ public class SettingsForm extends BaseForm {
 
 		settingsPanel = new SettingsPanel();
 		GridBagLayout gridBagLayout_1 = (GridBagLayout) settingsPanel.getLayout();
-		gridBagLayout_1.columnWidths = new int[] {181, 181};
+		gridBagLayout_1.columnWidths = new int[]{181, 181};
 		GridBagConstraints gbc_settingsPanel = new GridBagConstraints();
 		gbc_settingsPanel.insets = new Insets(0, 0, 0, 5);
 		gbc_settingsPanel.fill = GridBagConstraints.BOTH;

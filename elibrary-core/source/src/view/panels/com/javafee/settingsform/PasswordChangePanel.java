@@ -32,7 +32,7 @@ public class PasswordChangePanel extends JPanel {
 		gridBagLayout.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
-		
+
 		JLabel lblOldPassword = new JLabel(SystemProperties.getInstance().getResourceBundle().getString("passwordChangePanel.lblOldPassword"));
 		GridBagConstraints gbc_lblOldPassword = new GridBagConstraints();
 		gbc_lblOldPassword.anchor = GridBagConstraints.EAST;
@@ -40,7 +40,7 @@ public class PasswordChangePanel extends JPanel {
 		gbc_lblOldPassword.gridx = 0;
 		gbc_lblOldPassword.gridy = 0;
 		add(lblOldPassword, gbc_lblOldPassword);
-		
+
 		passwordFieldOld = new JPasswordField();
 		GridBagConstraints gbc_oldPasswordField = new GridBagConstraints();
 		gbc_oldPasswordField.insets = new Insets(5, 0, 5, 0);
@@ -48,7 +48,7 @@ public class PasswordChangePanel extends JPanel {
 		gbc_oldPasswordField.gridx = 1;
 		gbc_oldPasswordField.gridy = 0;
 		add(passwordFieldOld, gbc_oldPasswordField);
-		
+
 		JLabel lblNewPassword = new JLabel(SystemProperties.getInstance().getResourceBundle().getString("passwordChangePanel.lblNewPassword"));
 		GridBagConstraints gbc_lblNewPassword = new GridBagConstraints();
 		gbc_lblNewPassword.anchor = GridBagConstraints.EAST;
@@ -56,7 +56,7 @@ public class PasswordChangePanel extends JPanel {
 		gbc_lblNewPassword.gridx = 0;
 		gbc_lblNewPassword.gridy = 2;
 		add(lblNewPassword, gbc_lblNewPassword);
-		
+
 		passwordFieldNew = new JPasswordField();
 		GridBagConstraints gbc_newPasswordField = new GridBagConstraints();
 		gbc_newPasswordField.insets = new Insets(0, 0, 5, 0);
@@ -64,7 +64,7 @@ public class PasswordChangePanel extends JPanel {
 		gbc_newPasswordField.gridx = 1;
 		gbc_newPasswordField.gridy = 2;
 		add(passwordFieldNew, gbc_newPasswordField);
-		
+
 		JLabel lblConfirmNewPassword = new JLabel(SystemProperties.getInstance().getResourceBundle().getString("passwordChangePanel.lblConfirmNewPassword"));
 		GridBagConstraints gbc_lblConfirmNewPassword = new GridBagConstraints();
 		gbc_lblConfirmNewPassword.anchor = GridBagConstraints.EAST;
@@ -72,7 +72,7 @@ public class PasswordChangePanel extends JPanel {
 		gbc_lblConfirmNewPassword.gridx = 0;
 		gbc_lblConfirmNewPassword.gridy = 3;
 		add(lblConfirmNewPassword, gbc_lblConfirmNewPassword);
-		
+
 		passwordFieldConfirmNew = new JPasswordField();
 		GridBagConstraints gbc_confirmNewPasswordField = new GridBagConstraints();
 		gbc_confirmNewPasswordField.insets = new Insets(0, 0, 5, 0);

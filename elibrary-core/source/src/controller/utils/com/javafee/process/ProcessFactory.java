@@ -1,7 +1,9 @@
 package com.javafee.process;
 
+import java.lang.reflect.InvocationTargetException;
+
 public class ProcessFactory {
-    public static Process create(Class c) throws IllegalAccessException, InstantiationException {
-        return (Process) c.newInstance();
-    }
+	public static Process create(Class c) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+		return (Process) c.getDeclaredConstructor().newInstance();
+	}
 }

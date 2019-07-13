@@ -11,7 +11,6 @@ import java.util.function.Consumer;
 
 import javax.swing.JLabel;
 
-import lombok.extern.java.Log;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
 
 import com.javafee.common.networkservice.NetworkServiceListener;
@@ -42,6 +41,7 @@ import edu.vt.middleware.password.Rule;
 import edu.vt.middleware.password.RuleResult;
 import edu.vt.middleware.password.UppercaseCharacterRule;
 import edu.vt.middleware.password.WhitespaceRule;
+import lombok.extern.java.Log;
 
 @Log
 public final class Common {

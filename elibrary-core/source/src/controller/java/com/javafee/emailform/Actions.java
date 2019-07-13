@@ -123,10 +123,10 @@ public class Actions implements IActionForm {
 
 							if (!systemPropertiesAlreadyExists) {
 								systemProperties.setTemplateDirectory(result.getParent());
-								LogInEvent.getWorker().setSystemProperties(systemProperties);
+								LogInEvent.getUserData().setSystemProperties(systemProperties);
 
 								HibernateUtil.beginTransaction();
-								HibernateUtil.getSession().update(UserData.class.getName(), LogInEvent.getWorker());
+								HibernateUtil.getSession().update(UserData.class.getName(), LogInEvent.getUserData());
 								HibernateUtil.commitTransaction();
 							} else {
 								HibernateUtil.beginTransaction();

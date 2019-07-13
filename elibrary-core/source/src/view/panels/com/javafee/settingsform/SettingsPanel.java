@@ -87,7 +87,7 @@ public class SettingsPanel extends JPanel {
 		accountNodes.add(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuPasswordChange"));
 
 		nodes.add(generalNodes);
-		if(LogInEvent.getRole() != Constants.Role.ADMIN)
+		if (LogInEvent.getRole() != Constants.Role.ADMIN)
 			nodes.add(accountNodes);
 
 		return nodes;
