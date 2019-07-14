@@ -208,6 +208,11 @@ public class Actions implements IActionForm {
 	private void openSettingsForm() {
 		if (!Params.getInstance().contains("TABBED_FORM_ACTIONS"))
 			Params.getInstance().add("TABBED_FORM_ACTIONS", this);
+		if (LogInEvent.getRole() != Role.CLIENT
+				&& !Params.getInstance().contains("TABBED_FORM_TABLE_MODEL")
+				&& tabbedForm.getTabbedPane().getSelectedIndex() == Tab_Accountant.TAB_ADM_WORKER.getValue())
+			Params.getInstance().add("TABBED_FORM_TABLE_MODEL", tabbedForm.getPanelWorker().getWorkerTable().getModel());
+
 		if (actionSettings == null)
 			actionSettings = new com.javafee.settingsform.Actions();
 		actionSettings.control();

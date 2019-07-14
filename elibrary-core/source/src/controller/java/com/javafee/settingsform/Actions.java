@@ -8,6 +8,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import com.javafee.common.Constants;
 import com.javafee.common.Constants.Panel_Settings;
 import com.javafee.common.IActionForm;
+import com.javafee.common.Params;
 import com.javafee.startform.LogInEvent;
 
 public class Actions implements IActionForm {
@@ -22,6 +23,8 @@ public class Actions implements IActionForm {
 		settingsForm.getFrame().addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosed(WindowEvent e) {
+				if(Params.getInstance().contains("TABBED_FORM_ACTIONS"))
+					Params.getInstance().remove("TABBED_FORM_ACTIONS");
 				settingsForm.getFrame().dispose();
 				settingsForm = null;
 				clearEvent();

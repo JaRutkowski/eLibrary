@@ -4,12 +4,15 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 import org.hibernate.resource.transaction.spi.TransactionStatus;
 
@@ -18,9 +21,11 @@ import com.javafee.common.timerservice.TimerServiceListener;
 import com.javafee.common.watchservice.WatchServiceListener;
 import com.javafee.emailform.TabTemplatePageEvent;
 import com.javafee.hibernate.dao.HibernateUtil;
+import com.javafee.hibernate.dto.association.City;
 import com.javafee.hibernate.dto.common.UserData;
 import com.javafee.hibernate.dto.library.Client;
 import com.javafee.hibernate.dto.library.Worker;
+import com.javafee.startform.RegistrationPanel;
 import com.javafee.tabbedform.Actions;
 
 import edu.vt.middleware.password.AlphabeticalSequenceRule;
@@ -133,6 +138,38 @@ public final class Common {
 		comboBoxDataList.add((T) Constants.APPLICATION_COMBO_BOX_BLANK_OBJECT);
 	}
 
+	public static void fillUserDataPanel(RegistrationPanel registrationPanel, UserData userData) {
+		// Pesel number
+		registrationPanel.getTextFieldPeselNumber().setText(userData.getPeselNumber() != null ? userData.getPeselNumber() : "");
+		// Document number
+		registrationPanel.getTextFieldDocumentNumber().setText(userData.getDocumentNumber() != null ? userData.getDocumentNumber() : "");
+		// Login
+		registrationPanel.getTextFieldLogin().setText(userData.getLogin() != null ? userData.getLogin() : "");
+		// Email
+		registrationPanel.getTextFieldEMail().setText(userData.getEMail() != null ? userData.getEMail() : "");
+		// Name
+		registrationPanel.getTextFieldName().setText(userData.getName() != null ? userData.getName() : "");
+		// Surname
+		registrationPanel.getTextFieldSurname().setText(userData.getSurname() != null ? userData.getSurname() : "");
+		// Address
+		registrationPanel.getTextFieldAddress().setText(userData.getAddress() != null ? userData.getAddress() : "");
+		// City
+		registrationPanel.getComboBoxCity().setSelectedItem(userData.getCity());
+		// Sex
+		if (userData.getSex() != null && Constants.DATA_BASE_MALE_SIGN.toString().equals(userData.getSex().toString()))
+			registrationPanel.getGroupRadioButtonSex().setSelected(registrationPanel.getRadioButtonMale().getModel(), true);
+		else if (userData.getSex() != null && Constants.DATA_BASE_FEMALE_SIGN.toString().equals(userData.getSex().toString()))
+			registrationPanel.getGroupRadioButtonSex().setSelected(registrationPanel.getRadioButtonFemale().getModel(), true);
+		// Birth date
+		try {
+			registrationPanel.getDateChooserBirthDate().setDate(userData.getBirthDate() != null
+					? Constants.APPLICATION_DATE_FORMAT.parse(Constants.APPLICATION_DATE_FORMAT.format(userData.getBirthDate()))
+					: null);
+		} catch (ParseException e) {
+			log.severe(e.getMessage());
+		}
+	}
+
 	public static Integer clearMessagesRecipientData(Integer idUserData) {
 		HibernateUtil.beginTransaction();
 		Integer recordsUpdatedCount = HibernateUtil.getSession().createQuery("update Recipient set userData = " + Constants.DATA_BASE_DELETED_MESSAGE_RECIPIENT_VALUE + " where userData.idUserData = ?0")
@@ -170,6 +207,16 @@ public final class Common {
 				&& Constants.DATA_BASE_ADMIN_PASSWORD.equals(userData.getPassword());
 	}
 
+	public static boolean checkInternetConnectivity() {
+		Process process;
+		try {
+			process = java.lang.Runtime.getRuntime().exec("ping www.geeksforgeeks.org");
+			return !process.waitFor(100, TimeUnit.MILLISECONDS);
+		} catch (IOException | InterruptedException e) {
+			return false;
+		}
+	}
+
 	public static void registerWatchServiceListener(TabTemplatePageEvent tabTemplatePageEvent,
 	                                                Consumer<TabTemplatePageEvent> c) {
 		watchServiceListener = new WatchServiceListener();
@@ -201,15 +248,4 @@ public final class Common {
 		if (timerServiceListener != null)
 			timerServiceListener.destroy();
 	}
-
-	public static boolean checkInternetConnectivity() {
-		Process process;
-		try {
-			process = java.lang.Runtime.getRuntime().exec("ping www.geeksforgeeks.org");
-			return !process.waitFor(100, TimeUnit.MILLISECONDS);
-		} catch (IOException | InterruptedException e) {
-			return false;
-		}
-	}
-
 }
