@@ -9,6 +9,7 @@ import com.javafee.common.Constants;
 import com.javafee.common.Constants.Panel_Settings;
 import com.javafee.common.IActionForm;
 import com.javafee.common.Params;
+import com.javafee.common.SystemProperties;
 import com.javafee.startform.LogInEvent;
 
 public class Actions implements IActionForm {
@@ -23,7 +24,7 @@ public class Actions implements IActionForm {
 		settingsForm.getFrame().addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosed(WindowEvent e) {
-				if(Params.getInstance().contains("TABBED_FORM_ACTIONS"))
+				if (Params.getInstance().contains("TABBED_FORM_ACTIONS"))
 					Params.getInstance().remove("TABBED_FORM_ACTIONS");
 				settingsForm.getFrame().dispose();
 				settingsForm = null;
@@ -53,7 +54,11 @@ public class Actions implements IActionForm {
 			if (selectedNode != null && selectedNode.getUserObject() != null) {
 				switch (Panel_Settings.getByName((String) selectedNode.getUserObject())) {
 					case GENERAL_PANEL:
-						System.out.println("general");
+						settingsForm.getSettingsPanel().reloadContentPanel(settingsForm, settingsForm.getSettingsPanel()
+								.reloadAndGetInformationPanel(
+										SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuGeneralTitle"),
+										SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuGeneralDescription"),
+										SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuGeneralMenuItems")));
 						break;
 					case THEME_PANEL:
 						settingsForm.getSettingsPanel().reloadContentPanel(settingsForm, settingsForm.getSettingsPanel().getThemePanel());
@@ -63,7 +68,11 @@ public class Actions implements IActionForm {
 						System.out.println("font");
 						break;
 					case ACCOUNT_PANEL:
-						System.out.println("account");
+						settingsForm.getSettingsPanel().reloadContentPanel(settingsForm, settingsForm.getSettingsPanel()
+								.reloadAndGetInformationPanel(
+										SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuAccountTitle"),
+										SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuAccountDescription"),
+										SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuAccountMenuItems")));
 						break;
 					case PERSONAL_DATA_CHANGE_PANEL:
 						settingsForm.getSettingsPanel().reloadContentPanel(settingsForm, settingsForm.getSettingsPanel().getPersonalDataChangePanel());
@@ -73,6 +82,8 @@ public class Actions implements IActionForm {
 						settingsForm.getSettingsPanel().reloadContentPanel(settingsForm, settingsForm.getSettingsPanel().getPasswordChangePanel());
 						PasswordChangePanelEvent.getInstance(settingsForm);
 						break;
+					default:
+						break;
 				}
 			}
 		}
@@ -81,7 +92,11 @@ public class Actions implements IActionForm {
 			if (selectedNode != null && selectedNode.getUserObject() != null) {
 				switch (Panel_Settings.getByName((String) selectedNode.getUserObject())) {
 					case GENERAL_PANEL:
-						System.out.println("general");
+						settingsForm.getSettingsPanel().reloadContentPanel(settingsForm, settingsForm.getSettingsPanel()
+								.reloadAndGetInformationPanel(
+										SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuGeneralTitle"),
+										SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuGeneralDescription"),
+										SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuGeneralMenuItems")));
 						break;
 					case THEME_PANEL:
 						settingsForm.getSettingsPanel().reloadContentPanel(settingsForm, settingsForm.getSettingsPanel().getThemePanel());
@@ -91,10 +106,16 @@ public class Actions implements IActionForm {
 						System.out.println("font");
 						break;
 					case ACCOUNT_PANEL:
-						System.out.println("account");
+						settingsForm.getSettingsPanel().reloadContentPanel(settingsForm, settingsForm.getSettingsPanel()
+								.reloadAndGetInformationPanel(
+										SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuAccountTitle"),
+										SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuAccountDescription"),
+										SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuAccountMenuItems")));
 						break;
 					case PERSONAL_DATA_CHANGE_PANEL:
-						System.out.println("data change");
+						System.out.println("personal data");
+						break;
+					default:
 						break;
 				}
 			}

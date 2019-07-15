@@ -22,6 +22,7 @@ public class SettingsPanel extends BasePanel {
 	@Getter
 	private JPanel contentPanel;
 
+	private InformationPanel informationPanel;
 	@Getter
 	private ThemePanel themePanel;
 	@Getter
@@ -58,6 +59,7 @@ public class SettingsPanel extends BasePanel {
 		gbc_panel.gridy = 0;
 		add(contentPanel, gbc_panel);
 
+		informationPanel = new InformationPanel();
 		themePanel = new ThemePanel();
 		personalDataChangePanel = new PersonalDataChangePanel();
 		passwordChangePanel = new PasswordChangePanel();
@@ -74,6 +76,11 @@ public class SettingsPanel extends BasePanel {
 		add(this.contentPanel, gbc_panel);
 
 		settingsForm.getFrame().pack();
+	}
+
+	public JPanel reloadAndGetInformationPanel(String title, String description, String menuItems) {
+		informationPanel.reloadLblTextContent(title, description, menuItems);
+		return informationPanel;
 	}
 
 	private List<Object> constructTreeMenuNodes() {

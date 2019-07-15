@@ -11,7 +11,7 @@ public class InformationPanel extends BasePanel {
 	private JLabel lblDescription;
 	private JLabel lblMenuItems;
 
-	public InformationPanel(String lblTitleText, String lblDescriptionText, String lblMenuItemsText) {
+	public InformationPanel() {
 		super();
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0};
@@ -20,24 +20,30 @@ public class InformationPanel extends BasePanel {
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
-		lblTitle = new JLabel(lblTitleText);
+		lblTitle = new JLabel();
 		GridBagConstraints gbc_lblTitle = new GridBagConstraints();
 		gbc_lblTitle.insets = new Insets(0, 0, 5, 0);
 		gbc_lblTitle.gridx = 0;
 		gbc_lblTitle.gridy = 0;
 		add(lblTitle, gbc_lblTitle);
 		
-		lblDescription = new JLabel(lblDescriptionText);
+		lblDescription = new JLabel();
 		GridBagConstraints gbc_lblDescription = new GridBagConstraints();
 		gbc_lblDescription.insets = new Insets(0, 0, 5, 0);
 		gbc_lblDescription.gridx = 0;
 		gbc_lblDescription.gridy = 1;
 		add(lblDescription, gbc_lblDescription);
 		
-		lblMenuItems = new JLabel(lblMenuItemsText);
+		lblMenuItems = new JLabel();
 		GridBagConstraints gbc_lblMenuItems = new GridBagConstraints();
 		gbc_lblMenuItems.gridx = 0;
 		gbc_lblMenuItems.gridy = 2;
 		add(lblMenuItems, gbc_lblMenuItems);
+	}
+
+	public void reloadLblTextContent(String lblTitleText, String lblDescriptionText, String lblMenuItemsText) {
+		lblTitle.setText(lblTitleText);
+		lblDescription.setText(lblDescriptionText);
+		lblMenuItems.setText(lblMenuItemsText);
 	}
 }

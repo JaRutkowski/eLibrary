@@ -14,6 +14,7 @@ public final class Constants {
 	@Getter
 	@AllArgsConstructor
 	public enum Panel_Settings {
+		ROOT(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuRoot")),
 		GENERAL_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuGeneral")),
 		THEME_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuTheme")),
 		FONT_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuFont")),
