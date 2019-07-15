@@ -6,12 +6,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import com.javafee.common.BasePanel;
 import com.javafee.common.Utils;
 import com.javafee.startform.RegistrationPanel;
 
 import lombok.Getter;
 
-public class AddMultiPanel extends JPanel {
+public class AddMultiPanel extends BasePanel {
 	private static final long serialVersionUID = 1L;
 
 	@Getter
@@ -22,7 +23,7 @@ public class AddMultiPanel extends JPanel {
 	private JButton btnCheckList;
 
 	public AddMultiPanel() {
-		setBackground(Utils.getApplicationUserDefineColor());
+		super();
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0};

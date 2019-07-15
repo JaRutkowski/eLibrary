@@ -7,6 +7,7 @@ import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import com.javafee.common.BasePanel;
 import com.javafee.common.Constants;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
@@ -15,7 +16,7 @@ import com.javafee.unicomponent.jtree.CustomJTree;
 
 import lombok.Getter;
 
-public class SettingsPanel extends JPanel {
+public class SettingsPanel extends BasePanel {
 	@Getter
 	private CustomJTree treeMenu;
 	@Getter
@@ -31,7 +32,7 @@ public class SettingsPanel extends JPanel {
 	private GridBagConstraints gbc_panel;
 
 	public SettingsPanel() {
-		setBackground(Utils.getApplicationUserDefineColor());
+		super();
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{200, 350, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0};
@@ -77,7 +78,7 @@ public class SettingsPanel extends JPanel {
 
 	private List<Object> constructTreeMenuNodes() {
 		List<Object> nodes = new ArrayList<>();
-		nodes.add(null);
+		nodes.add(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuRoot"));
 
 		List<Object> generalNodes = new ArrayList<>();
 		generalNodes.add(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuGeneral"));

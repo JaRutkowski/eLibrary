@@ -7,20 +7,21 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
+import com.javafee.common.BasePanel;
 import com.javafee.common.Utils;
 import com.javafee.model.LoanTableModel;
 
 import lombok.Getter;
 import net.coderazzi.filters.gui.TableFilterHeader;
 
-public class LoanTablePanel extends JPanel {
+public class LoanTablePanel extends BasePanel {
 	private static final long serialVersionUID = 1L;
 
 	@Getter
 	private JTable loanTable;
 
 	public LoanTablePanel() {
-		setBackground(Utils.getApplicationUserDefineColor());
+		super();
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{200, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0};

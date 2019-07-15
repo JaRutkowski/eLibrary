@@ -3,22 +3,21 @@ package com.javafee.uniform;
 import java.awt.*;
 
 import javax.swing.JButton;
-import javax.swing.JPanel;
 
+import com.javafee.common.BasePanel;
 import com.javafee.common.Constants.Button_Type;
-import com.javafee.common.Utils;
 import com.javafee.unicomponent.jbutton.CustomJButtonFactory;
 
 import lombok.Getter;
 
-public class DecisionPanel extends JPanel {
+public class DecisionPanel extends BasePanel {
 	private static final long serialVersionUID = 1L;
 
 	@Getter
 	private JButton btnAccept;
 
 	public DecisionPanel() {
-		setBackground(Utils.getApplicationUserDefineColor());
+		super();
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0};
@@ -26,7 +25,7 @@ public class DecisionPanel extends JPanel {
 		gridBagLayout.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 
-		btnAccept = CustomJButtonFactory.createAcceptJButton(Button_Type.ACCEPT);
+		btnAccept = CustomJButtonFactory.createCustomJButton(Button_Type.ACCEPT);
 		GridBagConstraints gbc_btnAccept = new GridBagConstraints();
 		gbc_btnAccept.gridwidth = 2;
 		gbc_btnAccept.fill = GridBagConstraints.HORIZONTAL;

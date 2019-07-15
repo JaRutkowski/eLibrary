@@ -5,23 +5,22 @@ import java.awt.*;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 
+import com.javafee.common.BasePanel;
 import com.javafee.common.Constants.Button_Type;
 import com.javafee.common.SystemProperties;
-import com.javafee.common.Utils;
 import com.javafee.unicomponent.jbutton.CustomJButtonFactory;
 
 import lombok.Getter;
 
-public class ThemePanel extends JPanel {
+public class ThemePanel extends BasePanel {
 	@Getter
 	private JColorChooser colorChooser;
 	@Getter
 	private JButton btnAccept;
 
 	public ThemePanel() {
-		setBackground(Utils.getApplicationUserDefineColor());
+		super();
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0};
@@ -44,7 +43,7 @@ public class ThemePanel extends JPanel {
 		gbc_colorChooser.gridy = 1;
 		add(colorChooser, gbc_colorChooser);
 
-		btnAccept = CustomJButtonFactory.createAcceptJButton(Button_Type.ACCEPT);
+		btnAccept = CustomJButtonFactory.createCustomJButton(Button_Type.ACCEPT);
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.gridx = 0;
 		gbc_btnNewButton.gridy = 2;

@@ -15,8 +15,7 @@ import com.javafee.emailform.emails.ComposePagePanel;
 import com.javafee.emailform.emails.DraftPagePanel;
 import com.javafee.emailform.emails.OutboxMailPagePanel;
 import com.javafee.emailform.emails.TemplatePagePanel;
-import com.javafee.form.BaseForm;
-import com.javafee.startform.StartForm;
+import com.javafee.common.BaseForm;
 
 import lombok.Getter;
 
@@ -54,9 +53,6 @@ public class EmailForm extends BaseForm {
 		gridBagLayout.rowWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
 		frame.setMinimumSize(Constants.EMAIL_FORM_MINIMUM_SIZE);
 		frame.getContentPane().setLayout(gridBagLayout);
-		frame.setTitle(Constants.APPLICATION_NAME);
-		frame.setIconImage(
-				Toolkit.getDefaultToolkit().getImage(StartForm.class.getResource("/images/splashScreen.jpg")));
 		frame.setBounds(100, 100, 576, 424);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 

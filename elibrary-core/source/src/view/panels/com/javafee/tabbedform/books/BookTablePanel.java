@@ -7,6 +7,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
+import com.javafee.common.BasePanel;
 import com.javafee.common.Utils;
 import com.javafee.model.BookTableModel;
 import com.javafee.uniform.CockpitEditionPanel;
@@ -14,7 +15,7 @@ import com.javafee.uniform.CockpitEditionPanel;
 import lombok.Getter;
 import net.coderazzi.filters.gui.TableFilterHeader;
 
-public class BookTablePanel extends JPanel {
+public class BookTablePanel extends BasePanel {
 	private static final long serialVersionUID = 1L;
 
 	@Getter
@@ -23,7 +24,7 @@ public class BookTablePanel extends JPanel {
 	private CockpitEditionPanel cockpitEditionPanelBook;
 
 	public BookTablePanel() {
-		setBackground(Utils.getApplicationUserDefineColor());
+		super();
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{477, 0};
 		gridBagLayout.rowHeights = new int[]{284, 0, 0};

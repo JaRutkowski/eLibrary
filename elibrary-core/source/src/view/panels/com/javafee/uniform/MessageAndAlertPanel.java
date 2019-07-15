@@ -8,20 +8,21 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 
+import com.javafee.common.BasePanel;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
 import com.javafee.startform.RegistrationPanel;
 
 import lombok.Getter;
 
-public class MessageAndAlertPanel extends JPanel {
+public class MessageAndAlertPanel extends BasePanel {
 	private static final long serialVersionUID = 1L;
 
 	@Getter
 	private JButton btnContact;
 
 	public MessageAndAlertPanel() {
-		setBackground(Utils.getApplicationUserDefineColor());
+		super();
 		setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"),
 				SystemProperties.getInstance().getResourceBundle()
 						.getString("messageAndAlertPanel.messageAndAlertPanelBorderTitle"),

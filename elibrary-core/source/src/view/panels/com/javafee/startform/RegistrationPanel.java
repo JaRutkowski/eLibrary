@@ -13,6 +13,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
+import com.javafee.common.BasePanel;
 import com.javafee.common.Constants;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
@@ -21,7 +22,7 @@ import com.toedter.calendar.JDateChooser;
 
 import lombok.Getter;
 
-public class RegistrationPanel extends JPanel {
+public class RegistrationPanel extends BasePanel {
 	private static final long serialVersionUID = 1L;
 
 	@Getter
@@ -57,7 +58,7 @@ public class RegistrationPanel extends JPanel {
 	private JLabel lblEMail;
 
 	public RegistrationPanel() {
-		setBackground(Utils.getApplicationUserDefineColor());
+		super();
 		setBorder(new TitledBorder(null,
 				SystemProperties.getInstance().getResourceBundle()
 						.getString("registrationPanel.registrationPanelBorderTitle"),

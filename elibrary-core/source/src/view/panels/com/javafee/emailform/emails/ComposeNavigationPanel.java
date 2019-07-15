@@ -6,13 +6,14 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import com.javafee.common.BasePanel;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
 import com.javafee.startform.RegistrationPanel;
 
 import lombok.Getter;
 
-public class ComposeNavigationPanel extends JPanel {
+public class ComposeNavigationPanel extends BasePanel {
 	private static final long serialVersionUID = 1L;
 
 	@Getter
@@ -25,7 +26,7 @@ public class ComposeNavigationPanel extends JPanel {
 	private JButton btnClear;
 
 	public ComposeNavigationPanel() {
-		setBackground(Utils.getApplicationUserDefineColor());
+		super();
 		setLayout(new GridLayout(0, 2, 0, 0));
 
 		btnAddAttachment = new JButton(SystemProperties.getInstance().getResourceBundle()

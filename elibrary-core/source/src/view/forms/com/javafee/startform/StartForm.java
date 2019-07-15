@@ -9,7 +9,7 @@ import javax.swing.WindowConstants;
 
 import com.javafee.common.Constants;
 import com.javafee.common.SystemProperties;
-import com.javafee.form.BaseForm;
+import com.javafee.common.BaseForm;
 import com.javafee.uniform.NavigationPanel;
 
 import lombok.Getter;

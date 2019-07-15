@@ -10,13 +10,14 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
+import com.javafee.common.BasePanel;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
 import com.javafee.hibernate.dto.library.Client;
 
 import lombok.Getter;
 
-public class ComposePagePanel extends JPanel {
+public class ComposePagePanel extends BasePanel {
 	private static final long serialVersionUID = 1L;
 
 	private JLabel lblTo;
@@ -47,8 +48,8 @@ public class ComposePagePanel extends JPanel {
 	private ComposeNavigationPanel composeNavigationEmailPanel;
 
 	public ComposePagePanel() {
+		super();
 		Utils.setLookAndFeel();
-		setBackground(Utils.getApplicationUserDefineColor());
 		setBorder(new TitledBorder(null,
 				SystemProperties.getInstance().getResourceBundle()
 						.getString("composePagePanel.composePagePanelBorderTitle"),

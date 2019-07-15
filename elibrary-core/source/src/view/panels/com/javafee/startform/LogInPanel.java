@@ -9,12 +9,13 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
+import com.javafee.common.BasePanel;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
 
 import lombok.Getter;
 
-public class LogInPanel extends JPanel {
+public class LogInPanel extends BasePanel {
 	private static final long serialVersionUID = 1L;
 
 	private JLabel lblLogin;
@@ -27,7 +28,7 @@ public class LogInPanel extends JPanel {
 	private JButton btnForgotPassword;
 
 	public LogInPanel() {
-		setBackground(Utils.getApplicationUserDefineColor());
+		super();
 		setBorder(new TitledBorder(null,
 				SystemProperties.getInstance().getResourceBundle().getString("logInPanel.logInPanelBorderTitle"),
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));

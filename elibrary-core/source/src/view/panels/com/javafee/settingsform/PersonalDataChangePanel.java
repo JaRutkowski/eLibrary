@@ -4,19 +4,20 @@ import java.awt.*;
 
 import javax.swing.JPanel;
 
+import com.javafee.common.BasePanel;
 import com.javafee.common.Utils;
 import com.javafee.uniform.CockpitConfirmationPanel;
 
 import lombok.Getter;
 
-public class PersonalDataChangePanel extends JPanel {
+public class PersonalDataChangePanel extends BasePanel {
 	@Getter
 	private PersonalDataPanel personalDataPanel;
 	@Getter
 	private CockpitConfirmationPanel cockpitConfirmationPanel;
 
 	public PersonalDataChangePanel() {
-		setBackground(Utils.getApplicationUserDefineColor());
+		super();
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0};

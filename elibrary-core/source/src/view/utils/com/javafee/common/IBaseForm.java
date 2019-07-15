@@ -1,4 +1,4 @@
-package com.javafee.form;
+package com.javafee.common;
 
 public interface IBaseForm {
 	void initialize();

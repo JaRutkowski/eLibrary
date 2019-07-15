@@ -11,6 +11,7 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
 
+import com.javafee.common.BasePanel;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
 import com.javafee.hibernate.dto.common.UserData;
@@ -19,7 +20,7 @@ import com.javafee.model.OutboxTableModel;
 import lombok.Getter;
 import net.coderazzi.filters.gui.TableFilterHeader;
 
-public class OutboxMailPagePanel extends JPanel {
+public class OutboxMailPagePanel extends BasePanel {
 	private static final long serialVersionUID = 1L;
 
 	@Getter
@@ -35,7 +36,7 @@ public class OutboxMailPagePanel extends JPanel {
 	private JComboBox<UserData> comboBoxRecipient;
 
 	public OutboxMailPagePanel() {
-		setBackground(Utils.getApplicationUserDefineColor());
+		super();
 		setBorder(new TitledBorder(null,
 				SystemProperties.getInstance().getResourceBundle()
 						.getString("outboxMailPanel.outboxMailPanelBorderTitle"),

@@ -6,13 +6,14 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import com.javafee.common.BasePanel;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
 import com.javafee.startform.RegistrationPanel;
 
 import lombok.Getter;
 
-public class OutboxNavigationPanel extends JPanel {
+public class OutboxNavigationPanel extends BasePanel {
 
 	private static final long serialVersionUID = 170626561363626778L;
 
@@ -24,7 +25,7 @@ public class OutboxNavigationPanel extends JPanel {
 	private JButton btnDelete;
 
 	public OutboxNavigationPanel() {
-		setBackground(Utils.getApplicationUserDefineColor());
+		super();
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0};

@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import com.javafee.common.BasePanel;
 import com.javafee.common.Constants;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
@@ -20,7 +21,7 @@ import com.toedter.calendar.JDateChooser;
 
 import lombok.Getter;
 
-public class AdmDictionaryPanel extends JPanel {
+public class AdmDictionaryPanel extends BasePanel {
 	private static final long serialVersionUID = 1L;
 	@Getter
 	private CockpitEditionPanel cockpitEditionPanel;
@@ -56,7 +57,7 @@ public class AdmDictionaryPanel extends JPanel {
 	private JComboBox<PublishingHouse> comboBoxPublishingHouse;
 
 	public AdmDictionaryPanel() {
-		setBackground(Utils.getApplicationUserDefineColor());
+		super();
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{30, 128, 0, 0, 0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 26, 0, 0, 0, 0, 0, 0};

@@ -8,12 +8,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
+import com.javafee.common.BasePanel;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
 
 import lombok.Getter;
 
-public class TemplateManagementPanel extends JPanel {
+public class TemplateManagementPanel extends BasePanel {
 
 	private static final long serialVersionUID = 6611305505467123577L;
 
@@ -26,7 +27,7 @@ public class TemplateManagementPanel extends JPanel {
 	private JButton btnPreviewTemplateLibrary;
 
 	public TemplateManagementPanel() {
-		setBackground(Utils.getApplicationUserDefineColor());
+		super();
 		setBorder(new TitledBorder(null,
 				SystemProperties.getInstance().getResourceBundle()
 						.getString("htmlEditor.templateManagementBorderTitle"),

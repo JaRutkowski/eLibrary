@@ -9,7 +9,7 @@ import com.javafee.common.Constants.Button_Type;
 import com.javafee.common.SystemProperties;
 
 public final class CustomJButtonFactory {
-	public static final CustomBaseJButton createAcceptJButton(Button_Type button_type) {
+	public static final CustomBaseJButton createCustomJButton(Button_Type button_type) {
 		String resourceImageName = null, resourceStringName = null;
 		switch (button_type) {
 			case ACCEPT:

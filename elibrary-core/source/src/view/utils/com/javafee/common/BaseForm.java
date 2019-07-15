@@ -1,11 +1,9 @@
-package com.javafee.form;
+package com.javafee.common;
 
 import java.awt.*;
 
 import javax.swing.JFrame;
 
-import com.javafee.common.Constants;
-import com.javafee.common.Utils;
 import com.javafee.startform.StartForm;
 
 import lombok.Getter;

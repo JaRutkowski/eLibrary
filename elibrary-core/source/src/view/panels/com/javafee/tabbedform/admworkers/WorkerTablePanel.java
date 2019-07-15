@@ -7,6 +7,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
+import com.javafee.common.BasePanel;
 import com.javafee.common.Utils;
 import com.javafee.model.WorkerTableModel;
 import com.javafee.uniform.AdmIsAccountantPanel;
@@ -16,7 +17,7 @@ import com.javafee.uniform.CockpitEditionPanel;
 import lombok.Getter;
 import net.coderazzi.filters.gui.TableFilterHeader;
 
-public class WorkerTablePanel extends JPanel {
+public class WorkerTablePanel extends BasePanel {
 	private static final long serialVersionUID = 1L;
 
 	@Getter
@@ -32,7 +33,7 @@ public class WorkerTablePanel extends JPanel {
 	private AdmIsAccountantPanel admIsAccountantPanel;
 
 	public WorkerTablePanel() {
-		setBackground(Utils.getApplicationUserDefineColor());
+		super();
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{394, 413, 0};
 		gridBagLayout.rowHeights = new int[]{0, 275, 0, 0, 0};

@@ -103,8 +103,8 @@ public class PersonalDataChangePanelEvent implements IActionForm {
 				HibernateUtil.getSession().update(UserData.class.getName(), userData);
 				HibernateUtil.commitTransaction();
 
-				if(roleWorker)
-					((WorkerTableModel)Params.getInstance().get("TABBED_FORM_TABLE_MODEL")).fireTableDataChanged();
+				if(roleWorker && Params.getInstance().get("TABBED_FORM_TABLE_MODEL") != null)
+						((WorkerTableModel)Params.getInstance().get("TABBED_FORM_TABLE_MODEL")).fireTableDataChanged();
 
 				Utils.displayOptionPane(
 						SystemProperties.getInstance().getResourceBundle()

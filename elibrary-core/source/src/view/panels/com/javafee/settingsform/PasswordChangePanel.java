@@ -4,17 +4,16 @@ import java.awt.*;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 
+import com.javafee.common.BasePanel;
 import com.javafee.common.Constants.Button_Type;
 import com.javafee.common.SystemProperties;
-import com.javafee.common.Utils;
 import com.javafee.unicomponent.jbutton.CustomJButtonFactory;
 
 import lombok.Getter;
 
-public class PasswordChangePanel extends JPanel {
+public class PasswordChangePanel extends BasePanel {
 	@Getter
 	private JPasswordField passwordFieldOld;
 	@Getter
@@ -25,7 +24,7 @@ public class PasswordChangePanel extends JPanel {
 	private JButton btnAccept;
 
 	public PasswordChangePanel() {
-		setBackground(Utils.getApplicationUserDefineColor());
+		super();
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 200, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0};
@@ -81,7 +80,7 @@ public class PasswordChangePanel extends JPanel {
 		gbc_confirmNewPasswordField.gridy = 3;
 		add(passwordFieldConfirmNew, gbc_confirmNewPasswordField);
 
-		btnAccept = CustomJButtonFactory.createAcceptJButton(Button_Type.ACCEPT);
+		btnAccept = CustomJButtonFactory.createCustomJButton(Button_Type.ACCEPT);
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.gridx = 1;
 		gbc_btnNewButton.gridy = 4;

@@ -8,6 +8,7 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
 
+import com.javafee.common.BasePanel;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
 import com.javafee.model.VolumeTableLoanModel;
@@ -17,7 +18,7 @@ import com.javafee.uniform.CockpitEditionPanel;
 import lombok.Getter;
 import net.coderazzi.filters.gui.TableFilterHeader;
 
-public class LibraryTablePanel extends JPanel {
+public class LibraryTablePanel extends BasePanel {
 	private static final long serialVersionUID = 1L;
 
 	@Getter
@@ -35,7 +36,7 @@ public class LibraryTablePanel extends JPanel {
 	private JPanel panelReadingRoom;
 
 	public LibraryTablePanel() {
-		setBackground(Utils.getApplicationUserDefineColor());
+		super();
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{477, 0};
 		gridBagLayout.rowHeights = new int[]{284, 0, 312, 0, 0};

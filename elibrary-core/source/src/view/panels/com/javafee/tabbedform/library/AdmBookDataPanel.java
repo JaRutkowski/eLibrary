@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import com.javafee.common.BasePanel;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
 import com.javafee.startform.RegistrationPanel;
@@ -15,7 +16,7 @@ import com.javafee.uniform.CockpitEditionPanel;
 
 import lombok.Getter;
 
-public class AdmBookDataPanel extends JPanel {
+public class AdmBookDataPanel extends BasePanel {
 	private static final long serialVersionUID = 1L;
 
 	@Getter
@@ -34,7 +35,7 @@ public class AdmBookDataPanel extends JPanel {
 	private JButton btnClear;
 
 	public AdmBookDataPanel() {
-		setBackground(Utils.getApplicationUserDefineColor());
+		super();
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{27, 313, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};

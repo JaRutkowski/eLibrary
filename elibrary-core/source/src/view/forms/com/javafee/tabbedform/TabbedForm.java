@@ -11,7 +11,7 @@ import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
 import com.javafee.common.SystemProperties;
-import com.javafee.form.BaseForm;
+import com.javafee.common.BaseForm;
 import com.javafee.startform.RegistrationPanel;
 import com.javafee.tabbedform.admdictionaries.AdmDictionaryPanel;
 import com.javafee.tabbedform.admworkers.WorkerTablePanel;

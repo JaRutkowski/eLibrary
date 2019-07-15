@@ -10,6 +10,7 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
 
+import com.javafee.common.BasePanel;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
 import com.javafee.model.LoanReservationTableModel;
@@ -21,7 +22,7 @@ import com.javafee.startform.RegistrationPanel;
 import lombok.Getter;
 import net.coderazzi.filters.gui.TableFilterHeader;
 
-public class LoanServicePanel extends JPanel {
+public class LoanServicePanel extends BasePanel {
 	private static final long serialVersionUID = 1L;
 	private JScrollPane scrollPaneClient;
 	@Getter
@@ -56,7 +57,7 @@ public class LoanServicePanel extends JPanel {
 	private JButton btnCancelReservation;
 
 	public LoanServicePanel() {
-		setBackground(Utils.getApplicationUserDefineColor());
+		super();
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{751, 64, 0, 165, 0};
 		gridBagLayout.rowHeights = new int[]{189, 0, 0, 0, 0, 0, 0};

@@ -11,6 +11,7 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
 
+import com.javafee.common.BasePanel;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
 import com.javafee.hibernate.dto.common.UserData;
@@ -19,7 +20,7 @@ import com.javafee.model.DraftTableModel;
 import lombok.Getter;
 import net.coderazzi.filters.gui.TableFilterHeader;
 
-public class DraftPagePanel extends JPanel {
+public class DraftPagePanel extends BasePanel {
 
 	private static final long serialVersionUID = -4830782403871579783L;
 
@@ -34,7 +35,7 @@ public class DraftPagePanel extends JPanel {
 	private JComboBox<UserData> comboBoxRecipient;
 
 	public DraftPagePanel() {
-		setBackground(Utils.getApplicationUserDefineColor());
+		super();
 		setBorder(new TitledBorder(null,
 				SystemProperties.getInstance().getResourceBundle()
 						.getString("draftPagePanel.draftPagePanelBorderTitle"),

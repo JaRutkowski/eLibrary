@@ -4,7 +4,7 @@ import java.awt.*;
 
 import javax.swing.JFrame;
 
-import com.javafee.form.BaseForm;
+import com.javafee.common.BaseForm;
 
 import lombok.Getter;
 

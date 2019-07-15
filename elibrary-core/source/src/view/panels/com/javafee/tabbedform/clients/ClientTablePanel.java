@@ -7,6 +7,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
+import com.javafee.common.BasePanel;
 import com.javafee.common.Utils;
 import com.javafee.model.ClientTableModel;
 import com.javafee.uniform.AdmIsRegisteredPanel;
@@ -16,7 +17,7 @@ import com.javafee.uniform.MessageAndAlertPanel;
 import lombok.Getter;
 import net.coderazzi.filters.gui.TableFilterHeader;
 
-public class ClientTablePanel extends JPanel {
+public class ClientTablePanel extends BasePanel {
 	private static final long serialVersionUID = 1L;
 
 	@Getter
@@ -29,7 +30,7 @@ public class ClientTablePanel extends JPanel {
 	private MessageAndAlertPanel messageAndAlertPanel;
 
 	public ClientTablePanel() {
-		setBackground(Utils.getApplicationUserDefineColor());
+		super();
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{417, 16, 0};
 		gridBagLayout.rowHeights = new int[]{0, 76, 38, 0};

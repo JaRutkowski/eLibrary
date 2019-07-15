@@ -4,13 +4,14 @@ import java.awt.*;
 
 import javax.swing.JPanel;
 
+import com.javafee.common.BasePanel;
 import com.javafee.common.Utils;
 import com.javafee.uniform.HTMLeditorPanel;
 import com.javafee.uniform.TemplateManagementPanel;
 
 import lombok.Getter;
 
-public class TemplatePagePanel extends JPanel {
+public class TemplatePagePanel extends BasePanel {
 	private static final long serialVersionUID = 1L;
 
 	@Getter
@@ -19,7 +20,7 @@ public class TemplatePagePanel extends JPanel {
 	private TemplateManagementPanel templateManagementPanel;
 
 	public TemplatePagePanel() {
-		setBackground(Utils.getApplicationUserDefineColor());
+		super();
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{168, 771, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0};
