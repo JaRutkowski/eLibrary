@@ -39,6 +39,7 @@ public class InformationPanel extends BasePanel {
 		lblMenuItems = new JLabel();
 		GridBagConstraints gbc_lblMenuItems = new GridBagConstraints();
 		gbc_lblMenuItems.anchor = GridBagConstraints.WEST;
+		gbc_lblMenuItems.insets = new Insets(0, 5, 5, 5);
 		gbc_lblMenuItems.gridx = 0;
 		gbc_lblMenuItems.gridy = 2;
 		add(lblMenuItems, gbc_lblMenuItems);
