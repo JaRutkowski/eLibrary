@@ -22,20 +22,23 @@ public class InformationPanel extends BasePanel {
 		
 		lblTitle = new JLabel();
 		GridBagConstraints gbc_lblTitle = new GridBagConstraints();
-		gbc_lblTitle.insets = new Insets(0, 0, 5, 0);
+		gbc_lblTitle.anchor = GridBagConstraints.WEST;
+		gbc_lblTitle.insets = new Insets(5, 5, 5, 0);
 		gbc_lblTitle.gridx = 0;
 		gbc_lblTitle.gridy = 0;
 		add(lblTitle, gbc_lblTitle);
 		
 		lblDescription = new JLabel();
 		GridBagConstraints gbc_lblDescription = new GridBagConstraints();
-		gbc_lblDescription.insets = new Insets(0, 0, 5, 0);
+		gbc_lblDescription.anchor = GridBagConstraints.WEST;
+		gbc_lblDescription.insets = new Insets(0, 5, 5, 5);
 		gbc_lblDescription.gridx = 0;
 		gbc_lblDescription.gridy = 1;
 		add(lblDescription, gbc_lblDescription);
 		
 		lblMenuItems = new JLabel();
 		GridBagConstraints gbc_lblMenuItems = new GridBagConstraints();
+		gbc_lblMenuItems.anchor = GridBagConstraints.WEST;
 		gbc_lblMenuItems.gridx = 0;
 		gbc_lblMenuItems.gridy = 2;
 		add(lblMenuItems, gbc_lblMenuItems);
