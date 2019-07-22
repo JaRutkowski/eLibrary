@@ -19,7 +19,7 @@ public class BaseForm implements IBaseForm {
 	public void initialize() {
 		Utils.setLookAndFeel();
 		frame = new JFrame();
-		frame.getContentPane().setBackground(Utils.getApplicationUserDefineColor());
+		frame.getContentPane().setBackground(Utils.getApplicationUserDefinedColor());
 		frame.setTitle(Constants.APPLICATION_NAME);
 		frame.setIconImage(
 				Toolkit.getDefaultToolkit().getImage(StartForm.class.getResource("/images/splashScreen.jpg")));

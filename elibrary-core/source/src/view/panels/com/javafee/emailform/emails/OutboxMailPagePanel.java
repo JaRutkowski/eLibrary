@@ -5,7 +5,6 @@ import java.awt.*;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -16,6 +15,12 @@ import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
 import com.javafee.hibernate.dto.common.UserData;
 import com.javafee.model.OutboxTableModel;
+import com.javafee.unicomponent.border.CustomTitledBorder;
+import com.javafee.unicomponent.jcheckbox.CustomJCheckBox;
+import com.javafee.unicomponent.jcombobox.CustomJComboBox;
+import com.javafee.unicomponent.jlabel.CustomJLabel;
+import com.javafee.unicomponent.jtable.CustomJTable;
+import com.javafee.unicomponent.tablefilterheader.CustomTableFilterHeader;
 
 import lombok.Getter;
 import net.coderazzi.filters.gui.TableFilterHeader;
@@ -37,10 +42,10 @@ public class OutboxMailPagePanel extends BasePanel {
 
 	public OutboxMailPagePanel() {
 		super();
-		setBorder(new TitledBorder(null,
+		setBorder(new CustomTitledBorder(null,
 				SystemProperties.getInstance().getResourceBundle()
 						.getString("outboxMailPanel.outboxMailPanelBorderTitle"),
-				TitledBorder.LEADING, TitledBorder.TOP, null, null));
+				TitledBorder.LEADING, CustomTitledBorder.TOP, null, null));
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0};
@@ -48,9 +53,9 @@ public class OutboxMailPagePanel extends BasePanel {
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 
-		checkShowOnlySystemCorrespondence = new JCheckBox(SystemProperties.getInstance().getResourceBundle()
+		checkShowOnlySystemCorrespondence = new CustomJCheckBox(SystemProperties.getInstance().getResourceBundle()
 				.getString("outboxMailPanel.chckbxShowOnlySystemCorrespondence"));
-		checkShowOnlySystemCorrespondence.setBackground(Utils.getApplicationUserDefineColor());
+		checkShowOnlySystemCorrespondence.setBackground(Utils.getApplicationUserDefinedColor());
 		GridBagConstraints gbc_checkShowOnlySystemCorrespondence = new GridBagConstraints();
 		gbc_checkShowOnlySystemCorrespondence.anchor = GridBagConstraints.WEST;
 		gbc_checkShowOnlySystemCorrespondence.insets = new Insets(0, 0, 5, 5);
@@ -58,7 +63,7 @@ public class OutboxMailPagePanel extends BasePanel {
 		gbc_checkShowOnlySystemCorrespondence.gridy = 0;
 		add(checkShowOnlySystemCorrespondence, gbc_checkShowOnlySystemCorrespondence);
 
-		lblRecipient = new JLabel(
+		lblRecipient = new CustomJLabel(
 				SystemProperties.getInstance().getResourceBundle().getString("outboxMailPanel.lblRecipient"));
 		GridBagConstraints gbc_lblRecipient = new GridBagConstraints();
 		gbc_lblRecipient.anchor = GridBagConstraints.EAST;
@@ -67,7 +72,7 @@ public class OutboxMailPagePanel extends BasePanel {
 		gbc_lblRecipient.gridy = 0;
 		add(lblRecipient, gbc_lblRecipient);
 
-		comboBoxRecipient = new JComboBox<UserData>();
+		comboBoxRecipient = new CustomJComboBox<UserData>();
 		GridBagConstraints gbc_comboBoxRecipient = new GridBagConstraints();
 		gbc_comboBoxRecipient.insets = new Insets(0, 0, 5, 0);
 		gbc_comboBoxRecipient.fill = GridBagConstraints.HORIZONTAL;
@@ -75,7 +80,7 @@ public class OutboxMailPagePanel extends BasePanel {
 		gbc_comboBoxRecipient.gridy = 0;
 		add(comboBoxRecipient, gbc_comboBoxRecipient);
 
-		chckbxShowOnlyMyCorrespondence = new JCheckBox(SystemProperties.getInstance().getResourceBundle()
+		chckbxShowOnlyMyCorrespondence = new CustomJCheckBox(SystemProperties.getInstance().getResourceBundle()
 				.getString("outboxMailPanel.chckbxShowOnlyMyCorrespondence"));
 		chckbxShowOnlyMyCorrespondence.setVisible(false);
 		GridBagConstraints gbc_chckbxShowOnlyMyCorrespondence = new GridBagConstraints();
@@ -94,9 +99,9 @@ public class OutboxMailPagePanel extends BasePanel {
 		gbc_scrollPane.gridy = 2;
 		add(scrollPane, gbc_scrollPane);
 
-		outboxTable = new JTable();
+		outboxTable = new CustomJTable();
 		@SuppressWarnings("unused")
-		TableFilterHeader tableFilterHeader = new TableFilterHeader(outboxTable);
+		TableFilterHeader CustomTableFilterHeader = new CustomTableFilterHeader(outboxTable);
 		outboxTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		outboxTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		outboxTable.setModel(new OutboxTableModel());

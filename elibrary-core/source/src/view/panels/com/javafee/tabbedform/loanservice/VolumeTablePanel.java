@@ -2,14 +2,14 @@ package com.javafee.tabbedform.loanservice;
 
 import java.awt.*;
 
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
 import com.javafee.common.BasePanel;
-import com.javafee.common.Utils;
 import com.javafee.model.VolumeTableModel;
+import com.javafee.unicomponent.jtable.CustomJTable;
+import com.javafee.unicomponent.tablefilterheader.CustomTableFilterHeader;
 
 import lombok.Getter;
 import net.coderazzi.filters.gui.TableFilterHeader;
@@ -36,9 +36,9 @@ public class VolumeTablePanel extends BasePanel {
 		gbc_scrollPane.gridy = 0;
 		add(scrollPane, gbc_scrollPane);
 
-		volumeTable = new JTable();
+		volumeTable = new CustomJTable();
 		@SuppressWarnings("unused")
-		TableFilterHeader tableFilterHeader = new TableFilterHeader(volumeTable);
+		TableFilterHeader customTableFilterHeader = new CustomTableFilterHeader(volumeTable);
 		volumeTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		volumeTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		volumeTable.setModel(new VolumeTableModel());

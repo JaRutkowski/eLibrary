@@ -65,7 +65,8 @@ public class Actions implements IActionForm {
 						ThemePanelEvent.getInstance(settingsForm);
 						break;
 					case FONT_PANEL:
-						System.out.println("font");
+						settingsForm.getSettingsPanel().reloadContentPanel(settingsForm, settingsForm.getSettingsPanel().getFontPanel());
+						FontPanelEvent.getInstance(settingsForm);
 						break;
 					case ACCOUNT_PANEL:
 						settingsForm.getSettingsPanel().reloadContentPanel(settingsForm, settingsForm.getSettingsPanel()
@@ -103,7 +104,8 @@ public class Actions implements IActionForm {
 						ThemePanelEvent.getInstance(settingsForm);
 						break;
 					case FONT_PANEL:
-						System.out.println("font");
+						settingsForm.getSettingsPanel().reloadContentPanel(settingsForm, settingsForm.getSettingsPanel().getFontPanel());
+						FontPanelEvent.getInstance(settingsForm);
 						break;
 					case ACCOUNT_PANEL:
 						settingsForm.getSettingsPanel().reloadContentPanel(settingsForm, settingsForm.getSettingsPanel()
@@ -111,9 +113,6 @@ public class Actions implements IActionForm {
 										SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuAccountTitle"),
 										SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuAccountDescription"),
 										SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuAccountMenuItems")));
-						break;
-					case PERSONAL_DATA_CHANGE_PANEL:
-						System.out.println("personal data");
 						break;
 					default:
 						break;
@@ -133,6 +132,7 @@ public class Actions implements IActionForm {
 
 	private void clearEvent() {
 		ThemePanelEvent.themePanelEvent = null;
+		FontPanelEvent.fontPanelEvent = null;
 		PersonalDataChangePanelEvent.personalDataChangePanelEvent = null;
 		PasswordChangePanelEvent.passwordChangePanelEvent = null;
 	}

@@ -10,6 +10,7 @@ import com.javafee.common.BasePanel;
 import com.javafee.common.Constants.Button_Type;
 import com.javafee.common.SystemProperties;
 import com.javafee.unicomponent.jbutton.CustomJButtonFactory;
+import com.javafee.unicomponent.jlabel.CustomJLabel;
 
 import lombok.Getter;
 
@@ -28,7 +29,7 @@ public class ThemePanel extends BasePanel {
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 
-		JLabel lblChooseAppTheme = new JLabel(SystemProperties.getInstance().getResourceBundle().getString("themePanel.lblChooseAppTheme"));
+		JLabel lblChooseAppTheme = new CustomJLabel(SystemProperties.getInstance().getResourceBundle().getString("themePanel.lblChooseAppTheme"));
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.anchor = GridBagConstraints.WEST;
 		gbc_lblNewLabel.insets = new Insets(5, 5, 5, 0);

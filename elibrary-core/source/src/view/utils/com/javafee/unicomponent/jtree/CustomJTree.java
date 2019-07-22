@@ -19,7 +19,8 @@ public class CustomJTree extends JTree {
 		setSelectionModel(isSingleSelection);
 		setCustomCellRenderer();
 
-		setBackground(Utils.getApplicationUserDefineColor());
+		setBackground(Utils.getApplicationUserDefinedColor());
+		setFont(Utils.getApplicationUserDefinedFont());
 	}
 
 	private DefaultMutableTreeNode createNodes(List<Object> nodes) {
@@ -51,7 +52,7 @@ public class CustomJTree extends JTree {
 		renderer.setClosedIcon(icon);
 		renderer.setOpenIcon(icon);
 		renderer.setLeafIcon(icon);
-		renderer.setBackgroundSelectionColor(Utils.getApplicationUserDefineColor());
-		renderer.setBackgroundNonSelectionColor(Utils.getApplicationUserDefineColor());
+		renderer.setBackgroundSelectionColor(Utils.getApplicationUserDefinedColor());
+		renderer.setBackgroundNonSelectionColor(Utils.getApplicationUserDefinedColor());
 	}
 }

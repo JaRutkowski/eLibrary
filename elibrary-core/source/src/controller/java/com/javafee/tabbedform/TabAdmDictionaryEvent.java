@@ -144,9 +144,7 @@ public class TabAdmDictionaryEvent implements IActionForm {
 					break;
 				case Constants.RADIO_BUTTON_PUBLISHING_HOUSE:
 					final PublishingHouse publishingHouse = new PublishingHouse();
-					publishingHouse.setName(admDictionaryPanel.getTextFieldPublishingHouseName().getText() != null
-							? admDictionaryPanel.getTextFieldPublishingHouseName().getText()
-							: null);
+					publishingHouse.setName(admDictionaryPanel.getTextFieldPublishingHouseName().getText());
 					resultObjectToSave = publishingHouse;
 					reloadComboBoxPublishingHouse();
 					break;
@@ -243,9 +241,7 @@ public class TabAdmDictionaryEvent implements IActionForm {
 					if (resultPuBlishinHouse.isEmpty()) {
 						HibernateUtil.beginTransaction();
 						publishingClicked.setIdPublishingHouse(publishingClicked.getIdPublishingHouse());
-						publishingClicked.setName(admDictionaryPanel.getTextFieldPublishingHouseName().getText() != null
-								? admDictionaryPanel.getTextFieldPublishingHouseName().getText()
-								: null);
+						publishingClicked.setName(admDictionaryPanel.getTextFieldPublishingHouseName().getText());
 						HibernateUtil.getSession().update(publishingClicked);
 						HibernateUtil.commitTransaction();
 						reloadComboBoxPublishingHouse();

@@ -1,10 +1,11 @@
 package com.javafee.settingsform;
 
-import com.javafee.common.BasePanel;
-import java.awt.GridBagLayout;
+import java.awt.*;
+
 import javax.swing.JLabel;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
+
+import com.javafee.common.BasePanel;
+import com.javafee.unicomponent.jlabel.CustomJLabel;
 
 public class InformationPanel extends BasePanel {
 	private JLabel lblTitle;
@@ -19,24 +20,24 @@ public class InformationPanel extends BasePanel {
 		gridBagLayout.columnWeights = new double[]{0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
-		
-		lblTitle = new JLabel();
+
+		lblTitle = new CustomJLabel();
 		GridBagConstraints gbc_lblTitle = new GridBagConstraints();
 		gbc_lblTitle.anchor = GridBagConstraints.WEST;
 		gbc_lblTitle.insets = new Insets(5, 5, 5, 0);
 		gbc_lblTitle.gridx = 0;
 		gbc_lblTitle.gridy = 0;
 		add(lblTitle, gbc_lblTitle);
-		
-		lblDescription = new JLabel();
+
+		lblDescription = new CustomJLabel();
 		GridBagConstraints gbc_lblDescription = new GridBagConstraints();
 		gbc_lblDescription.anchor = GridBagConstraints.WEST;
 		gbc_lblDescription.insets = new Insets(0, 5, 5, 5);
 		gbc_lblDescription.gridx = 0;
 		gbc_lblDescription.gridy = 1;
 		add(lblDescription, gbc_lblDescription);
-		
-		lblMenuItems = new JLabel();
+
+		lblMenuItems = new CustomJLabel();
 		GridBagConstraints gbc_lblMenuItems = new GridBagConstraints();
 		gbc_lblMenuItems.anchor = GridBagConstraints.WEST;
 		gbc_lblMenuItems.insets = new Insets(0, 5, 5, 5);

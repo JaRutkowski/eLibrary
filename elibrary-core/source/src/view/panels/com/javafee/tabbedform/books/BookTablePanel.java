@@ -2,14 +2,14 @@ package com.javafee.tabbedform.books;
 
 import java.awt.*;
 
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
 import com.javafee.common.BasePanel;
-import com.javafee.common.Utils;
 import com.javafee.model.BookTableModel;
+import com.javafee.unicomponent.jtable.CustomJTable;
+import com.javafee.unicomponent.tablefilterheader.CustomTableFilterHeader;
 import com.javafee.uniform.CockpitEditionPanel;
 
 import lombok.Getter;
@@ -40,9 +40,9 @@ public class BookTablePanel extends BasePanel {
 		gbc_scrollPane.gridy = 0;
 		add(scrollPane, gbc_scrollPane);
 
-		bookTable = new JTable();
+		bookTable = new CustomJTable();
 		@SuppressWarnings("unused")
-		TableFilterHeader tableFilterHeader = new TableFilterHeader(bookTable);
+		TableFilterHeader customTableFilterHeader = new CustomTableFilterHeader(bookTable);
 		bookTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		bookTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		bookTable.setModel(new BookTableModel());

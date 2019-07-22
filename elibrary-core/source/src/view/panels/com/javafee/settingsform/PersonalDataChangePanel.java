@@ -2,10 +2,7 @@ package com.javafee.settingsform;
 
 import java.awt.*;
 
-import javax.swing.JPanel;
-
 import com.javafee.common.BasePanel;
-import com.javafee.common.Utils;
 import com.javafee.uniform.CockpitConfirmationPanel;
 
 import lombok.Getter;

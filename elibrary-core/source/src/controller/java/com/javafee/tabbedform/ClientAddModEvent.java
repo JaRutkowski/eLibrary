@@ -14,7 +14,6 @@ import com.javafee.common.Common;
 import com.javafee.common.Constants;
 import com.javafee.common.Constants.Context;
 import com.javafee.common.Constants.Role;
-import com.javafee.common.IRegistrationForm;
 import com.javafee.common.Params;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;

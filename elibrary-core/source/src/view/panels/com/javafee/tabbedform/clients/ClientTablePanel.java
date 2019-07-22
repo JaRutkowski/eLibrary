@@ -2,14 +2,14 @@ package com.javafee.tabbedform.clients;
 
 import java.awt.*;
 
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
 import com.javafee.common.BasePanel;
-import com.javafee.common.Utils;
 import com.javafee.model.ClientTableModel;
+import com.javafee.unicomponent.jtable.CustomJTable;
+import com.javafee.unicomponent.tablefilterheader.CustomTableFilterHeader;
 import com.javafee.uniform.AdmIsRegisteredPanel;
 import com.javafee.uniform.CockpitEditionPanel;
 import com.javafee.uniform.MessageAndAlertPanel;
@@ -47,9 +47,9 @@ public class ClientTablePanel extends BasePanel {
 		gbc_scrollPane.gridy = 0;
 		add(scrollPane, gbc_scrollPane);
 
-		clientTable = new JTable();
+		clientTable = new CustomJTable();
 		@SuppressWarnings("unused")
-		TableFilterHeader tableFilterHeader = new TableFilterHeader(clientTable);
+		TableFilterHeader customTableFilterHeader = new CustomTableFilterHeader(clientTable);
 		clientTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		clientTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		clientTable.setModel(new ClientTableModel());

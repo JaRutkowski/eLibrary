@@ -2,14 +2,14 @@ package com.javafee.tabbedform.admworkers;
 
 import java.awt.*;
 
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
 import com.javafee.common.BasePanel;
-import com.javafee.common.Utils;
 import com.javafee.model.WorkerTableModel;
+import com.javafee.unicomponent.jtable.CustomJTable;
+import com.javafee.unicomponent.tablefilterheader.CustomTableFilterHeader;
 import com.javafee.uniform.AdmIsAccountantPanel;
 import com.javafee.uniform.AdmIsRegisteredPanel;
 import com.javafee.uniform.CockpitEditionPanel;
@@ -51,9 +51,9 @@ public class WorkerTablePanel extends BasePanel {
 		gbc_scrollPane.gridy = 0;
 		add(scrollPane, gbc_scrollPane);
 
-		workerTable = new JTable();
+		workerTable = new CustomJTable();
 		@SuppressWarnings("unused")
-		TableFilterHeader tableFilterHeader = new TableFilterHeader(workerTable);
+		TableFilterHeader customTableFilterHeader = new CustomTableFilterHeader(workerTable);
 		workerTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		workerTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		workerTable.setModel(new WorkerTableModel());
@@ -61,10 +61,10 @@ public class WorkerTablePanel extends BasePanel {
 		scrollPane.setViewportView(workerTable);
 
 		// workerDataPanel = new WorkerDataPanel();
-		// workerDataPanel.setBorder(new TitledBorder(null,
+		// workerDataPanel.setBorder(new CustomTitledBorder(null,
 		// SystemProperties.getInstance().getResourceBundle().getString("workerTablePanel.workerDataPanelBorderTitle"),
-		// TitledBorder.LEADING,
-		// TitledBorder.TOP, null, null));
+		// CustomTitledBorder.LEADING,
+		// CustomTitledBorder.TOP, null, null));
 		// GridBagConstraints gbc_workerDataPanel = new GridBagConstraints();
 		// gbc_workerDataPanel.gridheight = 2;
 		// gbc_workerDataPanel.insets = new Insets(0, 0, 5, 0);

@@ -35,6 +35,9 @@ public class SystemProperties {
 	@Column(name = "color", unique = false, nullable = true, insertable = true, updatable = true, length = 11)
 	private String color;
 
+	@Column(name = "font_name", unique = false, nullable = true, insertable = true, updatable = true, length = 80)
+	private String fontName;
+
 	@Column(name = "font_size", unique = false, nullable = true, insertable = true, updatable = true, length = 2)
 	private Integer fontSize;
 

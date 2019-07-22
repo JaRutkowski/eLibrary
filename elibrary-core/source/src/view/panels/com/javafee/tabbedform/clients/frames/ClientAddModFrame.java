@@ -23,7 +23,7 @@ public class ClientAddModFrame extends JFrame {
 	private CockpitConfirmationPanel cockpitConfirmationPanel;
 
 	public ClientAddModFrame() {
-		setBackground(Utils.getApplicationUserDefineColor());
+		setBackground(Utils.getApplicationUserDefinedColor());
 		setIconImage(
 				Toolkit.getDefaultToolkit().getImage(ClientAddModFrame.class.getResource("/images/splashScreen.jpg")));
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);

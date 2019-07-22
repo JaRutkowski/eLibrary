@@ -14,6 +14,7 @@
 		<jaxb.core.version>2.2.11</jaxb.core.version>
 		<jaxb.impl.version>2.2.11</jaxb.impl.version>
 		<jcalendar.version>1.4</jcalendar.version>
+		<jfontchooser.version>1.0.5-3</jfontchooser.version>
 	</properties>
 	<build>
 		<plugins>
@@ -93,6 +94,12 @@
 			<groupId>com.toedter</groupId>
 			<artifactId>jcalendar</artifactId>
 			<version>${jcalendar.version}</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.rover12421.opensource/JFontChooser -->
+		<dependency>
+			<groupId>com.rover12421.opensource</groupId>
+			<artifactId>JFontChooser</artifactId>
+			<version>${jfontchooser.version}</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/edu.vt.middleware/vt-password -->
 		<dependency>

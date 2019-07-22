@@ -4,11 +4,10 @@ import java.awt.*;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JPanel;
 
 import com.javafee.common.BasePanel;
-import com.javafee.common.Utils;
 import com.javafee.startform.RegistrationPanel;
+import com.javafee.unicomponent.jbutton.CustomJButton;
 
 import lombok.Getter;
 
@@ -31,7 +30,7 @@ public class AddMultiPanel extends BasePanel {
 		gridBagLayout.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 
-		btnAddToList = new JButton("");
+		btnAddToList = new CustomJButton("");
 		btnAddToList.setOpaque(false);
 		btnAddToList.setContentAreaFilled(false);
 		btnAddToList.setBorderPainted(false);
@@ -44,7 +43,7 @@ public class AddMultiPanel extends BasePanel {
 		gbc_btnAddToList.gridy = 0;
 		add(btnAddToList, gbc_btnAddToList);
 
-		btnRemoveFromList = new JButton("");
+		btnRemoveFromList = new CustomJButton("");
 		btnRemoveFromList.setOpaque(false);
 		btnRemoveFromList.setContentAreaFilled(false);
 		btnRemoveFromList.setBorderPainted(false);
@@ -57,7 +56,7 @@ public class AddMultiPanel extends BasePanel {
 		gbc_btnRemoveFromList.gridy = 0;
 		add(btnRemoveFromList, gbc_btnRemoveFromList);
 
-		btnCheckList = new JButton("");
+		btnCheckList = new CustomJButton("");
 		btnCheckList.setOpaque(false);
 		btnCheckList.setContentAreaFilled(false);
 		btnCheckList.setBorderPainted(false);

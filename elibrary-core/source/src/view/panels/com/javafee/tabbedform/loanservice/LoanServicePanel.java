@@ -18,6 +18,10 @@ import com.javafee.model.LoanTableModel;
 import com.javafee.model.RegisteredClientTableModel;
 import com.javafee.model.VolumeTableModel;
 import com.javafee.startform.RegistrationPanel;
+import com.javafee.unicomponent.border.CustomTitledBorder;
+import com.javafee.unicomponent.jbutton.CustomJButton;
+import com.javafee.unicomponent.jtable.CustomJTable;
+import com.javafee.unicomponent.tablefilterheader.CustomTableFilterHeader;
 
 import lombok.Getter;
 import net.coderazzi.filters.gui.TableFilterHeader;
@@ -66,10 +70,10 @@ public class LoanServicePanel extends BasePanel {
 		setLayout(gridBagLayout);
 
 		panel = new JPanel();
-		panel.setBackground(Utils.getApplicationUserDefineColor());
-		panel.setBorder(new TitledBorder(null,
+		panel.setBackground(Utils.getApplicationUserDefinedColor());
+		panel.setBorder(new CustomTitledBorder(null,
 				SystemProperties.getInstance().getResourceBundle().getString("loanTablePanel.tableClientTitle"),
-				TitledBorder.LEADING, TitledBorder.TOP, null, null));
+				TitledBorder.LEADING, CustomTitledBorder.TOP, null, null));
 		GridBagConstraints gbc_panel = new GridBagConstraints();
 		gbc_panel.fill = GridBagConstraints.BOTH;
 		gbc_panel.insets = new Insets(0, 0, 5, 5);
@@ -90,10 +94,10 @@ public class LoanServicePanel extends BasePanel {
 		gbc_scrollPaneClient.gridy = 0;
 		panel.add(scrollPaneClient, gbc_scrollPaneClient);
 
-		clientTable = new JTable();
+		clientTable = new CustomJTable();
 		scrollPaneClient.setViewportView(clientTable);
 		@SuppressWarnings("unused")
-		TableFilterHeader tableFilterHeader = new TableFilterHeader(clientTable);
+		TableFilterHeader customTableFilterHeader = new CustomTableFilterHeader(clientTable);
 		clientTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		clientTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		clientTable.setModel(new RegisteredClientTableModel());
@@ -101,10 +105,10 @@ public class LoanServicePanel extends BasePanel {
 		scrollPaneClient.setViewportView(clientTable);
 
 		volumePanel = new JPanel();
-		volumePanel.setBackground(Utils.getApplicationUserDefineColor());
-		volumePanel.setBorder(new TitledBorder(null,
+		volumePanel.setBackground(Utils.getApplicationUserDefinedColor());
+		volumePanel.setBorder(new CustomTitledBorder(null,
 				SystemProperties.getInstance().getResourceBundle().getString("loanServicePanel.volumePanelTitle"),
-				TitledBorder.LEADING, TitledBorder.TOP, null, null));
+				TitledBorder.LEADING, CustomTitledBorder.TOP, null, null));
 		GridBagConstraints gbc_volumePanel = new GridBagConstraints();
 		gbc_volumePanel.fill = GridBagConstraints.BOTH;
 		gbc_volumePanel.gridwidth = 3;
@@ -128,19 +132,19 @@ public class LoanServicePanel extends BasePanel {
 		gbc_scrollPane_loanTable_2.gridy = 0;
 		volumePanel.add(scrollPane_loanTable_2, gbc_scrollPane_loanTable_2);
 
-		volumeLoanTable = new JTable();
+		volumeLoanTable = new CustomJTable();
 		scrollPane_loanTable_2.setViewportView(volumeLoanTable);
 		@SuppressWarnings("unused")
-		TableFilterHeader tableFilterHeader_volumeLoanTable = new TableFilterHeader(volumeLoanTable);
+		TableFilterHeader customTableFilterHeader_volumeLoanTable = new CustomTableFilterHeader(volumeLoanTable);
 		volumeLoanTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		volumeLoanTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		volumeLoanTable.setModel(new VolumeTableModel());
 		volumeLoanTable.setAutoCreateRowSorter(true);
 		scrollPane_loanTable_2.setViewportView(volumeLoanTable);
 		@SuppressWarnings("unused")
-		TableFilterHeader tableFilterHeader_loanTable = new TableFilterHeader(volumeLoanTable);
+		TableFilterHeader customTableFilterHeader_loanTable = new CustomTableFilterHeader(volumeLoanTable);
 
-		btnLoan = new JButton(SystemProperties.getInstance().getResourceBundle().getString("loanServicePanel.btnLoan"));
+		btnLoan = new CustomJButton(SystemProperties.getInstance().getResourceBundle().getString("loanServicePanel.btnLoan"));
 		btnLoan.setIcon(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnAddToList-ico.png"))
 				.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
 		GridBagConstraints gbc_btnLoan = new GridBagConstraints();
@@ -151,10 +155,10 @@ public class LoanServicePanel extends BasePanel {
 		add(btnLoan, gbc_btnLoan);
 
 		loanPanel = new JPanel();
-		loanPanel.setBackground(Utils.getApplicationUserDefineColor());
-		loanPanel.setBorder(new TitledBorder(null,
+		loanPanel.setBackground(Utils.getApplicationUserDefinedColor());
+		loanPanel.setBorder(new CustomTitledBorder(null,
 				SystemProperties.getInstance().getResourceBundle().getString("loanServicePanel.loanPanelTitle"),
-				TitledBorder.LEADING, TitledBorder.TOP, null, null));
+				TitledBorder.LEADING, CustomTitledBorder.TOP, null, null));
 		GridBagConstraints gbc_loanPanel = new GridBagConstraints();
 		gbc_loanPanel.fill = GridBagConstraints.BOTH;
 		gbc_loanPanel.gridwidth = 4;
@@ -178,7 +182,7 @@ public class LoanServicePanel extends BasePanel {
 		gbc_scrollPane_loanTable_1.gridy = 0;
 		loanPanel.add(scrollPane_loanTable_1, gbc_scrollPane_loanTable_1);
 
-		loanTable = new JTable();
+		loanTable = new CustomJTable();
 		scrollPane_loanTable_1.setViewportView(loanTable);
 		loanTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		loanTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
@@ -187,7 +191,7 @@ public class LoanServicePanel extends BasePanel {
 		scrollPane_loanTable_1.setViewportView(loanTable);
 		scrollPane_loanTable_1.setViewportView(loanTable);
 
-		btnReservation = new JButton(
+		btnReservation = new CustomJButton(
 				SystemProperties.getInstance().getResourceBundle().getString("loanServicePanel.btnReservation"));
 		btnReservation
 				.setIcon(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnAdd-ico.png"))
@@ -199,7 +203,7 @@ public class LoanServicePanel extends BasePanel {
 		gbc_btnReservation.gridy = 3;
 		add(btnReservation, gbc_btnReservation);
 
-		btnProlongation = new JButton(
+		btnProlongation = new CustomJButton(
 				SystemProperties.getInstance().getResourceBundle().getString("loanServicePanel.btnProlongation"));
 		btnProlongation
 				.setIcon(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnReload-ico.png"))
@@ -211,7 +215,7 @@ public class LoanServicePanel extends BasePanel {
 		gbc_btnProlongation.gridy = 3;
 		add(btnProlongation, gbc_btnProlongation);
 
-		btnReturn = new JButton(
+		btnReturn = new CustomJButton(
 				SystemProperties.getInstance().getResourceBundle().getString("loanServicePanel.btnReturn"));
 		btnReturn.setIcon(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnClear-ico.png"))
 				.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
@@ -222,7 +226,7 @@ public class LoanServicePanel extends BasePanel {
 		gbc_btnReturn.gridy = 3;
 		add(btnReturn, gbc_btnReturn);
 
-		btnPenalty = new JButton(
+		btnPenalty = new CustomJButton(
 				SystemProperties.getInstance().getResourceBundle().getString("loanServicePanel.btnPenalty"));
 		btnPenalty.setIcon(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnAdd-ico.png"))
 				.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
@@ -234,10 +238,10 @@ public class LoanServicePanel extends BasePanel {
 		add(btnPenalty, gbc_btnPenalty);
 
 		reservationPanel = new JPanel();
-		reservationPanel.setBackground(Utils.getApplicationUserDefineColor());
-		reservationPanel.setBorder(new TitledBorder(null,
+		reservationPanel.setBackground(Utils.getApplicationUserDefinedColor());
+		reservationPanel.setBorder(new CustomTitledBorder(null,
 				SystemProperties.getInstance().getResourceBundle().getString("loanServicePanel.reservationPanelTitle"),
-				TitledBorder.LEADING, TitledBorder.TOP, null, null));
+				TitledBorder.LEADING, CustomTitledBorder.TOP, null, null));
 		GridBagConstraints gbc_reservationPanel = new GridBagConstraints();
 		gbc_reservationPanel.insets = new Insets(0, 0, 5, 0);
 		gbc_reservationPanel.fill = GridBagConstraints.BOTH;
@@ -261,14 +265,14 @@ public class LoanServicePanel extends BasePanel {
 		gbc_scrollPane_reservationTable.gridy = 0;
 		reservationPanel.add(scrollPane_reservationTable, gbc_scrollPane_reservationTable);
 
-		reservationTable = new JTable();
+		reservationTable = new CustomJTable();
 		scrollPane_reservationTable.setViewportView(reservationTable);
 		reservationTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		reservationTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		reservationTable.setModel(new LoanReservationTableModel()); // TODO Change to ReservationTableModel()
 		reservationTable.setAutoCreateRowSorter(true);
 
-		btnCancelReservation = new JButton(
+		btnCancelReservation = new CustomJButton(
 				SystemProperties.getInstance().getResourceBundle().getString("loanServicePanel.btnCancelReservation"));
 		btnCancelReservation
 				.setIcon(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnDelete-ico.png"))

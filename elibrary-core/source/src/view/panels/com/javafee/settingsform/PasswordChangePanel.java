@@ -10,6 +10,8 @@ import com.javafee.common.BasePanel;
 import com.javafee.common.Constants.Button_Type;
 import com.javafee.common.SystemProperties;
 import com.javafee.unicomponent.jbutton.CustomJButtonFactory;
+import com.javafee.unicomponent.jlabel.CustomJLabel;
+import com.javafee.unicomponent.jpasswordfield.CustomJPasswordField;
 
 import lombok.Getter;
 
@@ -32,7 +34,7 @@ public class PasswordChangePanel extends BasePanel {
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 
-		JLabel lblOldPassword = new JLabel(SystemProperties.getInstance().getResourceBundle().getString("passwordChangePanel.lblOldPassword"));
+		JLabel lblOldPassword = new CustomJLabel(SystemProperties.getInstance().getResourceBundle().getString("passwordChangePanel.lblOldPassword"));
 		GridBagConstraints gbc_lblOldPassword = new GridBagConstraints();
 		gbc_lblOldPassword.anchor = GridBagConstraints.EAST;
 		gbc_lblOldPassword.insets = new Insets(5, 0, 5, 5);
@@ -40,7 +42,7 @@ public class PasswordChangePanel extends BasePanel {
 		gbc_lblOldPassword.gridy = 0;
 		add(lblOldPassword, gbc_lblOldPassword);
 
-		passwordFieldOld = new JPasswordField();
+		passwordFieldOld = new CustomJPasswordField();
 		GridBagConstraints gbc_oldPasswordField = new GridBagConstraints();
 		gbc_oldPasswordField.insets = new Insets(5, 0, 5, 0);
 		gbc_oldPasswordField.fill = GridBagConstraints.HORIZONTAL;
@@ -48,7 +50,7 @@ public class PasswordChangePanel extends BasePanel {
 		gbc_oldPasswordField.gridy = 0;
 		add(passwordFieldOld, gbc_oldPasswordField);
 
-		JLabel lblNewPassword = new JLabel(SystemProperties.getInstance().getResourceBundle().getString("passwordChangePanel.lblNewPassword"));
+		JLabel lblNewPassword = new CustomJLabel(SystemProperties.getInstance().getResourceBundle().getString("passwordChangePanel.lblNewPassword"));
 		GridBagConstraints gbc_lblNewPassword = new GridBagConstraints();
 		gbc_lblNewPassword.anchor = GridBagConstraints.EAST;
 		gbc_lblNewPassword.insets = new Insets(0, 0, 5, 5);
@@ -56,7 +58,7 @@ public class PasswordChangePanel extends BasePanel {
 		gbc_lblNewPassword.gridy = 2;
 		add(lblNewPassword, gbc_lblNewPassword);
 
-		passwordFieldNew = new JPasswordField();
+		passwordFieldNew = new CustomJPasswordField();
 		GridBagConstraints gbc_newPasswordField = new GridBagConstraints();
 		gbc_newPasswordField.insets = new Insets(0, 0, 5, 0);
 		gbc_newPasswordField.fill = GridBagConstraints.HORIZONTAL;
@@ -64,7 +66,7 @@ public class PasswordChangePanel extends BasePanel {
 		gbc_newPasswordField.gridy = 2;
 		add(passwordFieldNew, gbc_newPasswordField);
 
-		JLabel lblConfirmNewPassword = new JLabel(SystemProperties.getInstance().getResourceBundle().getString("passwordChangePanel.lblConfirmNewPassword"));
+		JLabel lblConfirmNewPassword = new CustomJLabel(SystemProperties.getInstance().getResourceBundle().getString("passwordChangePanel.lblConfirmNewPassword"));
 		GridBagConstraints gbc_lblConfirmNewPassword = new GridBagConstraints();
 		gbc_lblConfirmNewPassword.anchor = GridBagConstraints.EAST;
 		gbc_lblConfirmNewPassword.insets = new Insets(0, 5, 5, 5);
@@ -72,7 +74,7 @@ public class PasswordChangePanel extends BasePanel {
 		gbc_lblConfirmNewPassword.gridy = 3;
 		add(lblConfirmNewPassword, gbc_lblConfirmNewPassword);
 
-		passwordFieldConfirmNew = new JPasswordField();
+		passwordFieldConfirmNew = new CustomJPasswordField();
 		GridBagConstraints gbc_confirmNewPasswordField = new GridBagConstraints();
 		gbc_confirmNewPasswordField.insets = new Insets(0, 0, 5, 0);
 		gbc_confirmNewPasswordField.fill = GridBagConstraints.HORIZONTAL;

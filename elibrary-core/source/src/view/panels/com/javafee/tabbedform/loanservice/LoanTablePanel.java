@@ -2,14 +2,14 @@ package com.javafee.tabbedform.loanservice;
 
 import java.awt.*;
 
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
 import com.javafee.common.BasePanel;
-import com.javafee.common.Utils;
 import com.javafee.model.LoanTableModel;
+import com.javafee.unicomponent.jtable.CustomJTable;
+import com.javafee.unicomponent.tablefilterheader.CustomTableFilterHeader;
 
 import lombok.Getter;
 import net.coderazzi.filters.gui.TableFilterHeader;
@@ -36,9 +36,9 @@ public class LoanTablePanel extends BasePanel {
 		gbc_scrollPane.gridy = 0;
 		add(scrollPane, gbc_scrollPane);
 
-		loanTable = new JTable();
+		loanTable = new CustomJTable();
 		@SuppressWarnings("unused")
-		TableFilterHeader tableFilterHeader = new TableFilterHeader(loanTable);
+		TableFilterHeader customTableFilterHeader = new CustomTableFilterHeader(loanTable);
 		loanTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		loanTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		loanTable.setModel(new LoanTableModel());

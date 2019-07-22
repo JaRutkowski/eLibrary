@@ -21,7 +21,6 @@ import com.javafee.hibernate.dto.library.Client;
 import com.javafee.hibernate.dto.library.Worker;
 import com.javafee.model.WorkerTableModel;
 import com.javafee.startform.LogInEvent;
-import com.javafee.tabbedform.Actions;
 
 import lombok.Setter;
 
@@ -103,8 +102,8 @@ public class PersonalDataChangePanelEvent implements IActionForm {
 				HibernateUtil.getSession().update(UserData.class.getName(), userData);
 				HibernateUtil.commitTransaction();
 
-				if(roleWorker && Params.getInstance().get("TABBED_FORM_TABLE_MODEL") != null)
-						((WorkerTableModel)Params.getInstance().get("TABBED_FORM_TABLE_MODEL")).fireTableDataChanged();
+				if (roleWorker && Params.getInstance().get("TABBED_FORM_TABLE_MODEL") != null)
+					((WorkerTableModel) Params.getInstance().get("TABBED_FORM_TABLE_MODEL")).fireTableDataChanged();
 
 				Utils.displayOptionPane(
 						SystemProperties.getInstance().getResourceBundle()

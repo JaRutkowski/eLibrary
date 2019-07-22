@@ -4,12 +4,11 @@ import java.awt.*;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JPanel;
 
 import com.javafee.common.BasePanel;
 import com.javafee.common.SystemProperties;
-import com.javafee.common.Utils;
 import com.javafee.startform.RegistrationPanel;
+import com.javafee.unicomponent.jbutton.CustomJButton;
 
 import lombok.Getter;
 
@@ -33,10 +32,9 @@ public class DraftNavigationPanel extends BasePanel {
 		gridBagLayout.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 
-		btnModify = new JButton(
+		btnModify = new CustomJButton(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnModify-ico.png"))
+				.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)),
 				SystemProperties.getInstance().getResourceBundle().getString("draftNavigationPanel.btnModify"));
-		btnModify.setIcon(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnModify-ico.png"))
-				.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
 		GridBagConstraints gbc_btnPreview = new GridBagConstraints();
 		gbc_btnPreview.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnPreview.insets = new Insets(0, 0, 0, 5);
@@ -44,10 +42,9 @@ public class DraftNavigationPanel extends BasePanel {
 		gbc_btnPreview.gridy = 0;
 		add(btnModify, gbc_btnPreview);
 
-		btnSend = new JButton(
+		btnSend = new CustomJButton(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnSend-ico.png"))
+				.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)),
 				SystemProperties.getInstance().getResourceBundle().getString("draftNavigationPanel.btnSend"));
-		btnSend.setIcon(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnSend-ico.png"))
-				.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
 		GridBagConstraints gbc_btnSendAgain = new GridBagConstraints();
 		gbc_btnSendAgain.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnSendAgain.insets = new Insets(0, 0, 0, 5);
@@ -55,10 +52,9 @@ public class DraftNavigationPanel extends BasePanel {
 		gbc_btnSendAgain.gridy = 0;
 		add(btnSend, gbc_btnSendAgain);
 
-		btnDelete = new JButton(
+		btnDelete = new CustomJButton(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnDelete-ico.png"))
+				.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)),
 				SystemProperties.getInstance().getResourceBundle().getString("draftNavigationPanel.btnDelete"));
-		btnDelete.setIcon(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnDelete-ico.png"))
-				.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
 		GridBagConstraints gbc_btnRemove = new GridBagConstraints();
 		gbc_btnRemove.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnRemove.gridx = 2;

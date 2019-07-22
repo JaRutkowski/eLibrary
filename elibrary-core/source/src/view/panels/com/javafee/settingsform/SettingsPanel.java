@@ -6,11 +6,11 @@ import java.util.List;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTree;
 
 import com.javafee.common.BasePanel;
 import com.javafee.common.Constants;
 import com.javafee.common.SystemProperties;
-import com.javafee.common.Utils;
 import com.javafee.startform.LogInEvent;
 import com.javafee.unicomponent.jtree.CustomJTree;
 
@@ -18,13 +18,15 @@ import lombok.Getter;
 
 public class SettingsPanel extends BasePanel {
 	@Getter
-	private CustomJTree treeMenu;
+	private JTree treeMenu;
 	@Getter
 	private JPanel contentPanel;
 
 	private InformationPanel informationPanel;
 	@Getter
 	private ThemePanel themePanel;
+	@Getter
+	private FontPanel fontPanel;
 	@Getter
 	private PersonalDataChangePanel personalDataChangePanel;
 	@Getter
@@ -61,6 +63,7 @@ public class SettingsPanel extends BasePanel {
 
 		informationPanel = new InformationPanel();
 		themePanel = new ThemePanel();
+		fontPanel = new FontPanel();
 		personalDataChangePanel = new PersonalDataChangePanel();
 		passwordChangePanel = new PasswordChangePanel();
 	}

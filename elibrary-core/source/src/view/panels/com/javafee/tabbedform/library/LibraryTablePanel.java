@@ -13,6 +13,9 @@ import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
 import com.javafee.model.VolumeTableLoanModel;
 import com.javafee.model.VolumeTableReadingRoomModel;
+import com.javafee.unicomponent.border.CustomTitledBorder;
+import com.javafee.unicomponent.jtable.CustomJTable;
+import com.javafee.unicomponent.tablefilterheader.CustomTableFilterHeader;
 import com.javafee.uniform.CockpitEditionPanel;
 
 import lombok.Getter;
@@ -45,10 +48,10 @@ public class LibraryTablePanel extends BasePanel {
 		setLayout(gridBagLayout);
 
 		panelLoan = new JPanel();
-		panelLoan.setBackground(Utils.getApplicationUserDefineColor());
-		panelLoan.setBorder(new TitledBorder(null,
+		panelLoan.setBackground(Utils.getApplicationUserDefinedColor());
+		panelLoan.setBorder(new CustomTitledBorder(null,
 				SystemProperties.getInstance().getResourceBundle().getString("libraryTablePanel.panelLoanTitle"),
-				TitledBorder.LEADING, TitledBorder.TOP, null, null));
+				TitledBorder.LEADING, CustomTitledBorder.TOP, null, null));
 		GridBagConstraints gbc_panelLoan = new GridBagConstraints();
 		gbc_panelLoan.fill = GridBagConstraints.BOTH;
 		gbc_panelLoan.insets = new Insets(0, 0, 5, 0);
@@ -69,9 +72,9 @@ public class LibraryTablePanel extends BasePanel {
 		gbc_scrollPane.gridy = 0;
 		panelLoan.add(scrollPane, gbc_scrollPane);
 
-		loanVolumeTable = new JTable();
+		loanVolumeTable = new CustomJTable();
 		@SuppressWarnings("unused")
-		TableFilterHeader tableFilterHeader = new TableFilterHeader(loanVolumeTable);
+		TableFilterHeader customTableFilterHeader = new CustomTableFilterHeader(loanVolumeTable);
 		loanVolumeTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		loanVolumeTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		loanVolumeTable.setModel(new VolumeTableLoanModel());
@@ -88,10 +91,10 @@ public class LibraryTablePanel extends BasePanel {
 		add(cockpitEditionPanelLoan, gbc_ce_panelLoan);
 
 		panelReadingRoom = new JPanel();
-		panelReadingRoom.setBackground(Utils.getApplicationUserDefineColor());
-		panelReadingRoom.setBorder(new TitledBorder(null,
+		panelReadingRoom.setBackground(Utils.getApplicationUserDefinedColor());
+		panelReadingRoom.setBorder(new CustomTitledBorder(null,
 				SystemProperties.getInstance().getResourceBundle().getString("libraryTablePanel.panelReadingRoomTitle"),
-				TitledBorder.LEADING, TitledBorder.TOP, null, null));
+				TitledBorder.LEADING, CustomTitledBorder.TOP, null, null));
 		GridBagConstraints gbc_panelReadingRoom = new GridBagConstraints();
 		gbc_panelReadingRoom.fill = GridBagConstraints.BOTH;
 		gbc_panelReadingRoom.insets = new Insets(0, 0, 5, 0);
@@ -112,9 +115,9 @@ public class LibraryTablePanel extends BasePanel {
 		gbc_scrollPane_readingRoom.gridy = 0;
 		panelReadingRoom.add(scrollPane_readingRoom, gbc_scrollPane_readingRoom);
 
-		readingRoomVolumeTable = new JTable();
+		readingRoomVolumeTable = new CustomJTable();
 		@SuppressWarnings("unused")
-		TableFilterHeader tableFilterHeader_readingRoom = new TableFilterHeader(readingRoomVolumeTable);
+		TableFilterHeader customTableFilterHeader_readingRoom = new CustomTableFilterHeader(readingRoomVolumeTable);
 		readingRoomVolumeTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		readingRoomVolumeTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		readingRoomVolumeTable.setModel(new VolumeTableReadingRoomModel());

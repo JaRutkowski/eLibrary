@@ -17,6 +17,9 @@ import com.javafee.model.AuthorTableModel;
 import com.javafee.model.CategoryTableModel;
 import com.javafee.model.PublishingHouseTableModel;
 import com.javafee.startform.RegistrationPanel;
+import com.javafee.unicomponent.jbutton.CustomJButton;
+import com.javafee.unicomponent.jtable.CustomJTable;
+import com.javafee.unicomponent.tablefilterheader.CustomTableFilterHeader;
 import com.javafee.uniform.CockpitConfirmationPanel;
 
 import lombok.Getter;
@@ -44,7 +47,7 @@ public class BookAddModFrame extends JFrame {
 	private JButton btnRefreshTables;
 
 	public BookAddModFrame() {
-		setBackground(Utils.getApplicationUserDefineColor());
+		setBackground(Utils.getApplicationUserDefinedColor());
 		setIconImage(
 				Toolkit.getDefaultToolkit().getImage(BookAddModFrame.class.getResource("/images/splashScreen.jpg")));
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -68,7 +71,7 @@ public class BookAddModFrame extends JFrame {
 		gbc_bookDataPanel.gridy = 0;
 		contentPane.add(bookDataPanel, gbc_bookDataPanel);
 
-		btnRefreshTables = new JButton();
+		btnRefreshTables = new CustomJButton();
 		btnRefreshTables
 				.setIcon(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnReload-ico.png"))
 						.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
@@ -87,9 +90,9 @@ public class BookAddModFrame extends JFrame {
 		gbc_scrollPane.gridy = 1;
 		contentPane.add(scrollPane, gbc_scrollPane);
 
-		authorTable = new JTable();
+		authorTable = new CustomJTable();
 		@SuppressWarnings("unused")
-		TableFilterHeader tableFilterHeader = new TableFilterHeader(authorTable);
+		TableFilterHeader customTableFilterHeader = new CustomTableFilterHeader(authorTable);
 		authorTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		authorTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		authorTable.setModel(new AuthorTableModel());
@@ -104,9 +107,9 @@ public class BookAddModFrame extends JFrame {
 		gbc_scrollPane_categoryTable.gridy = 2;
 		contentPane.add(scrollPane_categoryTable, gbc_scrollPane_categoryTable);
 
-		categoryTable = new JTable();
+		categoryTable = new CustomJTable();
 		@SuppressWarnings("unused")
-		TableFilterHeader tableCategoryFilterHeader = new TableFilterHeader(categoryTable);
+		TableFilterHeader tableCategoryFilterHeader = new CustomTableFilterHeader(categoryTable);
 		categoryTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		categoryTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		categoryTable.setModel(new CategoryTableModel());
@@ -121,9 +124,9 @@ public class BookAddModFrame extends JFrame {
 		gbc_scrollPane_publishingHouse.gridy = 3;
 		contentPane.add(scrollPane_publishingHouse, gbc_scrollPane_publishingHouse);
 
-		publishingHouseTable = new JTable();
+		publishingHouseTable = new CustomJTable();
 		@SuppressWarnings("unused")
-		TableFilterHeader tablePublishingHouseFilterHeader = new TableFilterHeader(publishingHouseTable);
+		TableFilterHeader tablePublishingHouseFilterHeader = new CustomTableFilterHeader(publishingHouseTable);
 		publishingHouseTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		publishingHouseTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		publishingHouseTable.setModel(new PublishingHouseTableModel());

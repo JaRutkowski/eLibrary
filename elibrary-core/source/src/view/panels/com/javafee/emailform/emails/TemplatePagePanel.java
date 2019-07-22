@@ -2,10 +2,7 @@ package com.javafee.emailform.emails;
 
 import java.awt.*;
 
-import javax.swing.JPanel;
-
 import com.javafee.common.BasePanel;
-import com.javafee.common.Utils;
 import com.javafee.uniform.HTMLeditorPanel;
 import com.javafee.uniform.TemplateManagementPanel;
 

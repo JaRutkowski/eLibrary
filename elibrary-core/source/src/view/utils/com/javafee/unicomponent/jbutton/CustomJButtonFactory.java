@@ -9,7 +9,7 @@ import com.javafee.common.Constants.Button_Type;
 import com.javafee.common.SystemProperties;
 
 public final class CustomJButtonFactory {
-	public static final CustomBaseJButton createCustomJButton(Button_Type button_type) {
+	public static final CustomJButton createCustomJButton(Button_Type button_type) {
 		String resourceImageName = null, resourceStringName = null;
 		switch (button_type) {
 			case ACCEPT:
@@ -25,7 +25,7 @@ public final class CustomJButtonFactory {
 				.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH));
 		String text = SystemProperties.getInstance().getResourceBundle().getString(resourceStringName);
 
-		CustomBaseJButtonFactory<CustomBaseJButton> customBaseJButtonFactory = CustomBaseJButton::new;
-		return customBaseJButtonFactory.create(icon, text);
+		ICustomJButtonFactory<CustomJButton> customJButtonFactory = CustomJButton::new;
+		return customJButtonFactory.create(icon, text);
 	}
 }

@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.stream.Stream;
 
 import javax.swing.KeyStroke;
+import javax.swing.UIManager;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -259,6 +260,8 @@ public final class Constants {
 	public static String APPLICATION_LANGUAGE = "pl";
 	public static final String APPLICATION_LANGUAGE_PL = "pl";
 	public static final String APPLICATION_LANGUAGE_EN = "en";
+	public static final Color APPLICATION_DEFAULT_COLOR = new Color(237, 245, 248);
+	public static final Font APPLICATION_DEFAULT_FONT = UIManager.getDefaults().getFont("TabbedPane.font");
 	public static final int APPLICATION_NETWORK_SERVICE_LISTENER_DURATION = 2;
 	public static final Object APPLICATION_COMBO_BOX_BLANK_OBJECT = null;
 	public static final SimpleDateFormat APPLICATION_TIME_FORMAT = new SimpleDateFormat("HH:mm");

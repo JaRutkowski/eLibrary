@@ -24,7 +24,7 @@ public class WorkerAddModFrame extends JFrame {
 	private CockpitConfirmationPanel cockpitConfirmationPanel;
 
 	public WorkerAddModFrame() {
-		setBackground(Utils.getApplicationUserDefineColor());
+		setBackground(Utils.getApplicationUserDefinedColor());
 		setIconImage(
 				Toolkit.getDefaultToolkit().getImage(WorkerAddModFrame.class.getResource("/images/splashScreen.jpg")));
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);

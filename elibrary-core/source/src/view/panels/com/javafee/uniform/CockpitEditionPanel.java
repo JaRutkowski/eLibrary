@@ -4,12 +4,11 @@ import java.awt.*;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JPanel;
 
 import com.javafee.common.BasePanel;
 import com.javafee.common.SystemProperties;
-import com.javafee.common.Utils;
 import com.javafee.startform.RegistrationPanel;
+import com.javafee.unicomponent.jbutton.CustomJButton;
 
 import lombok.Getter;
 
@@ -32,10 +31,9 @@ public class CockpitEditionPanel extends BasePanel {
 		gridBagLayout.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 
-		btnAdd = new JButton(
+		btnAdd = new CustomJButton(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnAdd-ico.png"))
+				.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)),
 				SystemProperties.getInstance().getResourceBundle().getString("cockpitEditionPanel.btnAdd"));
-		btnAdd.setIcon(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnAdd-ico.png"))
-				.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
 		GridBagConstraints gbc_btnAdd = new GridBagConstraints();
 		gbc_btnAdd.anchor = GridBagConstraints.NORTH;
 		gbc_btnAdd.fill = GridBagConstraints.HORIZONTAL;
@@ -44,10 +42,9 @@ public class CockpitEditionPanel extends BasePanel {
 		gbc_btnAdd.gridy = 0;
 		add(btnAdd, gbc_btnAdd);
 
-		btnModify = new JButton(
+		btnModify = new CustomJButton(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnModify-ico.png"))
+				.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)),
 				SystemProperties.getInstance().getResourceBundle().getString("cockpitEditionPanel.btnModify"));
-		btnModify.setIcon(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnModify-ico.png"))
-				.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
 		GridBagConstraints gbc_btnModify = new GridBagConstraints();
 		gbc_btnModify.anchor = GridBagConstraints.NORTH;
 		gbc_btnModify.fill = GridBagConstraints.HORIZONTAL;
@@ -56,10 +53,9 @@ public class CockpitEditionPanel extends BasePanel {
 		gbc_btnModify.gridy = 0;
 		add(btnModify, gbc_btnModify);
 
-		btnDelete = new JButton(
+		btnDelete = new CustomJButton(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnDelete-ico.png"))
+				.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)),
 				SystemProperties.getInstance().getResourceBundle().getString("cockpitEditionPanel.btnDelete"));
-		btnDelete.setIcon(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnDelete-ico.png"))
-				.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
 		GridBagConstraints gbc_btnDelete = new GridBagConstraints();
 		gbc_btnDelete.anchor = GridBagConstraints.NORTH;
 		gbc_btnDelete.fill = GridBagConstraints.HORIZONTAL;

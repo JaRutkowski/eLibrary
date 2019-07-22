@@ -6,7 +6,6 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JEditorPane;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
@@ -14,6 +13,12 @@ import com.javafee.common.BasePanel;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
 import com.javafee.hibernate.dto.library.Client;
+import com.javafee.unicomponent.border.CustomTitledBorder;
+import com.javafee.unicomponent.jcheckbox.CustomJCheckBox;
+import com.javafee.unicomponent.jcombobox.CustomJComboBox;
+import com.javafee.unicomponent.jeditorpane.CustomJEditorPane;
+import com.javafee.unicomponent.jlabel.CustomJLabel;
+import com.javafee.unicomponent.jtextfield.CustomJTextField;
 
 import lombok.Getter;
 
@@ -50,10 +55,10 @@ public class ComposePagePanel extends BasePanel {
 	public ComposePagePanel() {
 		super();
 		Utils.setLookAndFeel();
-		setBorder(new TitledBorder(null,
+		setBorder(new CustomTitledBorder(null,
 				SystemProperties.getInstance().getResourceBundle()
 						.getString("composePagePanel.composePagePanelBorderTitle"),
-				TitledBorder.LEADING, TitledBorder.TOP, null, null));
+				TitledBorder.LEADING, CustomTitledBorder.TOP, null, null));
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{37, 300, 0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 200, 0, 0};
@@ -61,14 +66,14 @@ public class ComposePagePanel extends BasePanel {
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 
-		lblTo = new JLabel(SystemProperties.getInstance().getResourceBundle().getString("composePagePanel.lblTo"));
+		lblTo = new CustomJLabel(SystemProperties.getInstance().getResourceBundle().getString("composePagePanel.lblTo"));
 		GridBagConstraints gbc_lblTo = new GridBagConstraints();
 		gbc_lblTo.insets = new Insets(0, 5, 5, 5);
 		gbc_lblTo.gridx = 0;
 		gbc_lblTo.gridy = 0;
 		add(lblTo, gbc_lblTo);
 
-		comboBoxTo = new JComboBox<Client>();
+		comboBoxTo = new CustomJComboBox<Client>();
 		GridBagConstraints gbc_comboBoxTo = new GridBagConstraints();
 		gbc_comboBoxTo.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBoxTo.fill = GridBagConstraints.HORIZONTAL;
@@ -76,32 +81,32 @@ public class ComposePagePanel extends BasePanel {
 		gbc_comboBoxTo.gridy = 0;
 		add(comboBoxTo, gbc_comboBoxTo);
 
-		chckbxCC = new JCheckBox(
+		chckbxCC = new CustomJCheckBox(
 				SystemProperties.getInstance().getResourceBundle().getString("composePagePanel.chckbxCC"));
-		chckbxCC.setBackground(Utils.getApplicationUserDefineColor());
+		chckbxCC.setBackground(Utils.getApplicationUserDefinedColor());
 		GridBagConstraints gbc_chckbxCC = new GridBagConstraints();
 		gbc_chckbxCC.insets = new Insets(0, 0, 5, 5);
 		gbc_chckbxCC.gridx = 2;
 		gbc_chckbxCC.gridy = 0;
 		add(chckbxCC, gbc_chckbxCC);
 
-		chckbxBCC = new JCheckBox(
+		chckbxBCC = new CustomJCheckBox(
 				SystemProperties.getInstance().getResourceBundle().getString("composePagePanel.chckbxBCC"));
-		chckbxBCC.setBackground(Utils.getApplicationUserDefineColor());
+		chckbxBCC.setBackground(Utils.getApplicationUserDefinedColor());
 		GridBagConstraints gbc_chckbxBCC = new GridBagConstraints();
 		gbc_chckbxBCC.insets = new Insets(0, 0, 5, 0);
 		gbc_chckbxBCC.gridx = 3;
 		gbc_chckbxBCC.gridy = 0;
 		add(chckbxBCC, gbc_chckbxBCC);
 
-		lblCC = new JLabel(SystemProperties.getInstance().getResourceBundle().getString("composePagePanel.lblCC"));
+		lblCC = new CustomJLabel(SystemProperties.getInstance().getResourceBundle().getString("composePagePanel.lblCC"));
 		GridBagConstraints gbc_lblCC = new GridBagConstraints();
 		gbc_lblCC.insets = new Insets(0, 5, 5, 5);
 		gbc_lblCC.gridx = 0;
 		gbc_lblCC.gridy = 1;
 		add(lblCC, gbc_lblCC);
 
-		comboBoxCC = new JComboBox<Client>();
+		comboBoxCC = new CustomJComboBox<Client>();
 		GridBagConstraints gbc_comboBoxCC = new GridBagConstraints();
 		gbc_comboBoxCC.gridwidth = 3;
 		gbc_comboBoxCC.insets = new Insets(0, 0, 5, 0);
@@ -110,14 +115,14 @@ public class ComposePagePanel extends BasePanel {
 		gbc_comboBoxCC.gridy = 1;
 		add(comboBoxCC, gbc_comboBoxCC);
 
-		lblBCC = new JLabel(SystemProperties.getInstance().getResourceBundle().getString("composePagePanel.lblBCC"));
+		lblBCC = new CustomJLabel(SystemProperties.getInstance().getResourceBundle().getString("composePagePanel.lblBCC"));
 		GridBagConstraints gbc_lblBCC = new GridBagConstraints();
 		gbc_lblBCC.insets = new Insets(0, 5, 5, 5);
 		gbc_lblBCC.gridx = 0;
 		gbc_lblBCC.gridy = 2;
 		add(lblBCC, gbc_lblBCC);
 
-		comboBoxBCC = new JComboBox<Client>();
+		comboBoxBCC = new CustomJComboBox<Client>();
 		GridBagConstraints gbc_comboBoxBCC = new GridBagConstraints();
 		gbc_comboBoxBCC.gridwidth = 3;
 		gbc_comboBoxBCC.insets = new Insets(0, 0, 5, 0);
@@ -126,7 +131,7 @@ public class ComposePagePanel extends BasePanel {
 		gbc_comboBoxBCC.gridy = 2;
 		add(comboBoxBCC, gbc_comboBoxBCC);
 
-		lblTopic = new JLabel(
+		lblTopic = new CustomJLabel(
 				SystemProperties.getInstance().getResourceBundle().getString("composePagePanel.lblTopic"));
 		GridBagConstraints gbc_lblTopic = new GridBagConstraints();
 		gbc_lblTopic.insets = new Insets(0, 5, 5, 5);
@@ -134,7 +139,7 @@ public class ComposePagePanel extends BasePanel {
 		gbc_lblTopic.gridy = 3;
 		add(lblTopic, gbc_lblTopic);
 
-		textFieldTopic = new JTextField();
+		textFieldTopic = new CustomJTextField();
 		GridBagConstraints gbc_textFieldTopic = new GridBagConstraints();
 		gbc_textFieldTopic.gridwidth = 3;
 		gbc_textFieldTopic.insets = new Insets(0, 0, 5, 0);
@@ -144,9 +149,8 @@ public class ComposePagePanel extends BasePanel {
 		add(textFieldTopic, gbc_textFieldTopic);
 		textFieldTopic.setColumns(10);
 
-		editorPaneContent = new JEditorPane();
+		editorPaneContent = new CustomJEditorPane();
 		editorPaneContent.setContentType("text/html");
-		editorPaneContent.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		GridBagConstraints gbc_textAreaContent = new GridBagConstraints();
 		gbc_textAreaContent.gridwidth = 3;
 		gbc_textAreaContent.insets = new Insets(0, 0, 5, 0);

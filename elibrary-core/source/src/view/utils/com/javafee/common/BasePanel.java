@@ -9,6 +9,6 @@ public class BasePanel extends JPanel implements IBasePanel {
 
 	@Override
 	public void initialize() {
-		setBackground(Utils.getApplicationUserDefineColor());
+		setBackground(Utils.getApplicationUserDefinedColor());
 	}
 }
