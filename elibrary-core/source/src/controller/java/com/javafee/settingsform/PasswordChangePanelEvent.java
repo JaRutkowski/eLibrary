@@ -53,7 +53,7 @@ public class PasswordChangePanelEvent implements IActionForm {
 	}
 
 	private void persistPasswordChange() {
-		String newPassword = String.valueOf(settingsForm.getSettingsPanel().getPasswordChangePanel().getPasswordFieldConfirmNew());
+		String newPassword = String.valueOf(settingsForm.getSettingsPanel().getPasswordChangePanel().getPasswordFieldConfirmNew().getPassword());
 		UserData userData = LogInEvent.getUserData();
 		userData.setPassword(Common.createMd5(newPassword));
 

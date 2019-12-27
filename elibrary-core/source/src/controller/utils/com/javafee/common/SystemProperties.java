@@ -25,10 +25,10 @@ public class SystemProperties {
 	}
 
 	public void initializeSystem() {
-		initializeHibenrateUtil();
+		initializeHibernateUtil();
 	}
 
-	private void initializeHibenrateUtil() {
+	private void initializeHibernateUtil() {
 		@SuppressWarnings("unused")
 		HibernateUtil hibernateUtil = new HibernateUtil();
 	}
