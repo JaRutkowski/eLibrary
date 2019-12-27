@@ -1,23 +1,28 @@
 package com.javafee.emailform;
 
+import java.awt.*;
+import java.awt.event.KeyEvent;
+
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JTabbedPane;
+
+import com.javafee.common.BaseForm;
 import com.javafee.common.Constants;
 import com.javafee.common.SystemProperties;
-import com.javafee.common.Utils;
 import com.javafee.emailform.emails.ComposePagePanel;
 import com.javafee.emailform.emails.DraftPagePanel;
 import com.javafee.emailform.emails.OutboxMailPagePanel;
 import com.javafee.emailform.emails.TemplatePagePanel;
-import com.javafee.startform.StartForm;
+import com.javafee.unicomponent.jmenubar.CustomJMenu;
+import com.javafee.unicomponent.jmenubar.CustomJMenuItem;
+import com.javafee.unicomponent.jtabbedpane.CustomJTabbedPane;
+
 import lombok.Getter;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.KeyEvent;
-
-public class EmailForm {
-	@Getter
-	private JFrame frame;
-
+public class EmailForm extends BaseForm {
 	@Getter
 	private JTabbedPane tabbedPane;
 	@Getter
@@ -39,14 +44,11 @@ public class EmailForm {
 	@Getter
 	private JMenuItem menuManageTemplate;
 
-	public EmailForm() {
-		initialize();
-	}
-
-	private void initialize() {
-		Utils.setLookAndFeel();
-		frame = new JFrame();
-		frame.getContentPane().setBackground(Utils.getApplicationColor());
+	/**
+	 * @wbp.parser.entryPoint
+	 */
+	public void initialize() {
+		super.initialize();
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0};
@@ -54,13 +56,10 @@ public class EmailForm {
 		gridBagLayout.rowWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
 		frame.setMinimumSize(Constants.EMAIL_FORM_MINIMUM_SIZE);
 		frame.getContentPane().setLayout(gridBagLayout);
-		frame.setTitle(Constants.APPLICATION_NAME);
-		frame.setIconImage(
-				Toolkit.getDefaultToolkit().getImage(StartForm.class.getResource("/images/splashScreen.jpg")));
 		frame.setBounds(100, 100, 576, 424);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane = new CustomJTabbedPane(JTabbedPane.TOP);
 		GridBagConstraints gbc_tabbedPane = new GridBagConstraints();
 		gbc_tabbedPane.gridheight = 2;
 		gbc_tabbedPane.gridwidth = 2;
@@ -70,23 +69,23 @@ public class EmailForm {
 		frame.getContentPane().add(tabbedPane, gbc_tabbedPane);
 
 		menuBar = new JMenuBar();
-		menuTemplate = new JMenu(
+		menuTemplate = new CustomJMenu(
 				SystemProperties.getInstance().getResourceBundle().getString("emailForm.menuTemplateTitle"));
 		menuBar.add(menuTemplate);
 
-		menuSaveAsTemplate = new JMenuItem(
+		menuSaveAsTemplate = new CustomJMenuItem(
 				SystemProperties.getInstance().getResourceBundle().getString("emailForm.menuItemSaveAsTemplateTitle"),
 				KeyEvent.VK_CONTROL);
 		menuSaveAsTemplate.setAccelerator(Constants.SHURTCUT_SAVE_TEMPLATE);
 		menuTemplate.add(menuSaveAsTemplate);
 
-		menuLoadTemplate = new JMenuItem(
+		menuLoadTemplate = new CustomJMenuItem(
 				SystemProperties.getInstance().getResourceBundle().getString("emailForm.menuItemLoadTemplateTitle"),
 				KeyEvent.VK_CONTROL);
 		menuLoadTemplate.setAccelerator(Constants.SHURTCUT_LOAD_TEMPLATE);
 		menuTemplate.add(menuLoadTemplate);
 
-		menuManageTemplate = new JMenuItem(
+		menuManageTemplate = new CustomJMenuItem(
 				SystemProperties.getInstance().getResourceBundle().getString("emailForm.menuItemManageTemplateTitle"),
 				KeyEvent.VK_CONTROL);
 		menuManageTemplate.setAccelerator(Constants.SHURTCUT_MANAGE_TEMPLATE);

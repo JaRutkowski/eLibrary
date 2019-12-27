@@ -1,8 +1,12 @@
 package com.javafee.hibernate.dto.library;
 
-import com.javafee.hibernate.dto.common.UserData;
+import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 
-import javax.persistence.*;
+import com.javafee.hibernate.dto.common.UserData;
 
 @Entity
 @NamedQueries({@NamedQuery(name = "Client.checkIfClientLoginExist", query = "from Client where login = :login"),

@@ -1,11 +1,11 @@
 package com.javafee.common.networkservice;
 
-import com.javafee.common.Constants;
-import com.javafee.tabbedform.Actions;
-
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+
+import com.javafee.common.Constants;
+import com.javafee.tabbedform.Actions;
 
 public class NetworkServiceListener implements INetworkService {
 

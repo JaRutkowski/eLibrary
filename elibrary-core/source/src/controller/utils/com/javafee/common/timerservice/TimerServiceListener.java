@@ -1,11 +1,12 @@
 package com.javafee.common.timerservice;
 
-import com.javafee.common.Constants;
-
-import javax.swing.*;
 import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import javax.swing.JLabel;
+
+import com.javafee.common.Constants;
 
 public class TimerServiceListener implements ITimerService {
 

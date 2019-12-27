@@ -1,14 +1,28 @@
 package com.javafee.uniform;
 
-import com.javafee.common.SystemProperties;
-import com.javafee.startform.RegistrationPanel;
-import lombok.Getter;
-
-import javax.swing.*;
-import javax.swing.border.TitledBorder;
 import java.awt.*;
 
-public class HTMLeditorPanel extends JPanel {
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JEditorPane;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.border.TitledBorder;
+
+import com.javafee.common.BasePanel;
+import com.javafee.common.SystemProperties;
+import com.javafee.common.Utils;
+import com.javafee.startform.RegistrationPanel;
+import com.javafee.unicomponent.border.CustomTitledBorder;
+import com.javafee.unicomponent.jbutton.CustomJButton;
+import com.javafee.unicomponent.jeditorpane.CustomJEditorPane;
+import com.javafee.unicomponent.jtextarea.CustomJTextArea;
+
+import lombok.Getter;
+
+public class HTMLeditorPanel extends BasePanel {
 
 	private static final long serialVersionUID = -7643308432142313985L;
 
@@ -25,6 +39,7 @@ public class HTMLeditorPanel extends JPanel {
 	private JScrollPane scrollPaneListStatus;
 
 	public HTMLeditorPanel() {
+		super();
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{359, 51, 366, 0};
 		gridBagLayout.rowHeights = new int[]{228, 292, 100, 0};
@@ -33,9 +48,10 @@ public class HTMLeditorPanel extends JPanel {
 		setLayout(gridBagLayout);
 
 		JPanel htmlEditorPanel = new JPanel();
-		htmlEditorPanel.setBorder(new TitledBorder(null,
+		htmlEditorPanel.setBorder(new CustomTitledBorder(null,
 				SystemProperties.getInstance().getResourceBundle().getString("htmlEditor.htmlEditorPanelBorderTitle"),
-				TitledBorder.LEADING, TitledBorder.TOP, null, null));
+				TitledBorder.LEADING, CustomTitledBorder.TOP, null, null));
+		htmlEditorPanel.setBackground(Utils.getApplicationUserDefinedColor());
 		GridBagConstraints gbc_htmlEditorPanel = new GridBagConstraints();
 		gbc_htmlEditorPanel.gridheight = 2;
 		gbc_htmlEditorPanel.insets = new Insets(0, 0, 5, 5);
@@ -57,11 +73,10 @@ public class HTMLeditorPanel extends JPanel {
 		gbc_scrollPane.gridy = 0;
 		htmlEditorPanel.add(scrollPane, gbc_scrollPane);
 
-		textAreaHTMLeditor = new JTextArea();
-		textAreaHTMLeditor.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		textAreaHTMLeditor = new CustomJTextArea();
 		scrollPane.setViewportView(textAreaHTMLeditor);
 
-		btnParse = new JButton();
+		btnParse = new CustomJButton();
 		btnParse.setToolTipText(
 				SystemProperties.getInstance().getResourceBundle().getString("htmlEditor.btnCompileTooltip"));
 		btnParse.setIcon(
@@ -75,9 +90,10 @@ public class HTMLeditorPanel extends JPanel {
 		add(btnParse, gbc_btnNewButton);
 
 		JPanel previewPanel = new JPanel();
-		previewPanel.setBorder(new TitledBorder(null,
+		previewPanel.setBorder(new CustomTitledBorder(null,
 				SystemProperties.getInstance().getResourceBundle().getString("htmlEditor.previewPanelBorderTitle"),
-				TitledBorder.LEADING, TitledBorder.TOP, null, null));
+				TitledBorder.LEADING, CustomTitledBorder.TOP, null, null));
+		previewPanel.setBackground(Utils.getApplicationUserDefinedColor());
 		GridBagConstraints gbc_previewPanel = new GridBagConstraints();
 		gbc_previewPanel.gridheight = 2;
 		gbc_previewPanel.insets = new Insets(0, 5, 5, 5);
@@ -99,12 +115,11 @@ public class HTMLeditorPanel extends JPanel {
 		gbc_scrollPane_1.gridy = 0;
 		previewPanel.add(scrollPane_1, gbc_scrollPane_1);
 
-		editorPanePreview = new JEditorPane();
+		editorPanePreview = new CustomJEditorPane();
 		editorPanePreview.setContentType("text/html");
-		editorPanePreview.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		scrollPane_1.setViewportView(editorPanePreview);
 
-		btnValidate = new JButton();
+		btnValidate = new CustomJButton();
 		btnValidate.setToolTipText(
 				SystemProperties.getInstance().getResourceBundle().getString("htmlEditor.btnVerifyTooltip"));
 		btnValidate

@@ -1,25 +1,32 @@
 package com.javafee.tabbedform;
 
-import com.javafee.common.Constants;
+import java.awt.*;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JTabbedPane;
+import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
+
+import com.javafee.common.BaseForm;
 import com.javafee.common.SystemProperties;
-import com.javafee.common.Utils;
 import com.javafee.startform.RegistrationPanel;
-import com.javafee.startform.StartForm;
 import com.javafee.tabbedform.admdictionaries.AdmDictionaryPanel;
 import com.javafee.tabbedform.admworkers.WorkerTablePanel;
 import com.javafee.tabbedform.books.BookTablePanel;
 import com.javafee.tabbedform.clients.ClientTablePanel;
 import com.javafee.tabbedform.library.LibraryTablePanel;
 import com.javafee.tabbedform.loanservice.LoanServicePanel;
+import com.javafee.unicomponent.jbutton.CustomJButton;
+import com.javafee.unicomponent.jcombobox.CustomJComboBox;
+import com.javafee.unicomponent.jlabel.CustomJLabel;
+import com.javafee.unicomponent.jtabbedpane.CustomJTabbedPane;
+
 import lombok.Getter;
 
-import javax.swing.*;
-import java.awt.*;
-
-public class TabbedForm {
-	@Getter
-	private JFrame frame;
-
+public class TabbedForm extends BaseForm {
 	@Getter
 	private JTabbedPane tabbedPane;
 	@Getter
@@ -42,6 +49,8 @@ public class TabbedForm {
 	@Getter
 	private JButton btnInformation;
 	@Getter
+	private JButton btnSettings;
+	@Getter
 	private JButton btnLogOut;
 
 	@Getter
@@ -51,17 +60,11 @@ public class TabbedForm {
 	@Getter
 	private JLabel lblInternetConnectivityStatus;
 
-	public TabbedForm() {
-		initialize();
-	}
-
-	private void initialize() {
-		Utils.setLookAndFeel();
-		frame = new JFrame();
-		frame.getContentPane().setBackground(Utils.getApplicationColor());
-		frame.setTitle(Constants.APPLICATION_NAME);
-		frame.setIconImage(
-				Toolkit.getDefaultToolkit().getImage(StartForm.class.getResource("/images/splashScreen.jpg")));
+	/**
+	 * @wbp.parser.entryPoint
+	 */
+	public void initialize() {
+		super.initialize();
 		frame.setBounds(100, 100, 626, 100);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -72,7 +75,7 @@ public class TabbedForm {
 		gridBagLayout.rowWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
 		frame.getContentPane().setLayout(gridBagLayout);
 
-		lblLogInInformation = new JLabel(
+		lblLogInInformation = new CustomJLabel(
 				SystemProperties.getInstance().getResourceBundle().getString("tabbedForm.lblLogInInformation"));
 		GridBagConstraints gbc_lblLogInInformation = new GridBagConstraints();
 		gbc_lblLogInInformation.anchor = GridBagConstraints.WEST;
@@ -81,8 +84,7 @@ public class TabbedForm {
 		gbc_lblLogInInformation.gridy = 0;
 		frame.getContentPane().add(lblLogInInformation, gbc_lblLogInInformation);
 
-		lblTime = new JLabel("New label");
-		lblTime.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblTime = new CustomJLabel("New label");
 		GridBagConstraints gbc_lblTime = new GridBagConstraints();
 		gbc_lblTime.gridwidth = 5;
 		gbc_lblTime.insets = new Insets(5, 0, 5, 5);
@@ -90,7 +92,7 @@ public class TabbedForm {
 		gbc_lblTime.gridy = 0;
 		frame.getContentPane().add(lblTime, gbc_lblTime);
 
-		btnInformation = new JButton(
+		btnInformation = new CustomJButton(
 				SystemProperties.getInstance().getResourceBundle().getString("tabbedForm.btnInformation"));
 		btnInformation.setIcon(
 				new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnInformation-ico.png"))
@@ -103,26 +105,36 @@ public class TabbedForm {
 		gbc_btnInformation.gridy = 0;
 		frame.getContentPane().add(btnInformation, gbc_btnInformation);
 
-		btnLogOut = new JButton(SystemProperties.getInstance().getResourceBundle().getString("tabbedForm.btnLogOut"));
+		btnSettings = new CustomJButton("");
+		btnSettings.setIcon(new ImageIcon(new ImageIcon(TabbedForm.class.getResource("/images/btnSettings-ico.png"))
+				.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
+		GridBagConstraints gbc_btnSettings = new GridBagConstraints();
+		gbc_btnSettings.anchor = GridBagConstraints.EAST;
+		gbc_btnSettings.insets = new Insets(5, 0, 5, 5);
+		gbc_btnSettings.gridx = 11;
+		gbc_btnSettings.gridy = 0;
+		frame.getContentPane().add(btnSettings, gbc_btnSettings);
+
+		btnLogOut = new CustomJButton(SystemProperties.getInstance().getResourceBundle().getString("tabbedForm.btnLogOut"));
 		btnLogOut.setIcon(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnLogOut-ico.png"))
 				.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
 		GridBagConstraints gbc_btnLogOut = new GridBagConstraints();
 		gbc_btnLogOut.anchor = GridBagConstraints.EAST;
 		gbc_btnLogOut.insets = new Insets(5, 0, 5, 5);
-		gbc_btnLogOut.gridx = 10;
+		gbc_btnLogOut.gridx = 12;
 		gbc_btnLogOut.gridy = 0;
 		frame.getContentPane().add(btnLogOut, gbc_btnLogOut);
 
-		comboBoxLanguage = new JComboBox<String>();
+		comboBoxLanguage = new CustomJComboBox<>();
 		GridBagConstraints gbc_comboBoxLanguage = new GridBagConstraints();
 		gbc_comboBoxLanguage.fill = GridBagConstraints.VERTICAL;
 		gbc_comboBoxLanguage.anchor = GridBagConstraints.EAST;
 		gbc_comboBoxLanguage.insets = new Insets(5, 0, 5, 0);
-		gbc_comboBoxLanguage.gridx = 12;
+		gbc_comboBoxLanguage.gridx = 14;
 		gbc_comboBoxLanguage.gridy = 0;
 		frame.getContentPane().add(comboBoxLanguage, gbc_comboBoxLanguage);
 
-		lblSystemInformation = new JLabel(
+		lblSystemInformation = new CustomJLabel(
 				SystemProperties.getInstance().getResourceBundle().getString("tabbedForm.lblSystemInformation"));
 		lblSystemInformation.setForeground(SystemColor.textHighlight);
 		GridBagConstraints gbc_lblSystemInformation = new GridBagConstraints();
@@ -132,21 +144,21 @@ public class TabbedForm {
 		gbc_lblSystemInformation.gridy = 2;
 		frame.getContentPane().add(lblSystemInformation, gbc_lblSystemInformation);
 
-		tabbedPane = new JTabbedPane(SwingConstants.TOP);
+		tabbedPane = new CustomJTabbedPane(SwingConstants.TOP);
 		GridBagConstraints gbc_tabbedPane = new GridBagConstraints();
 		gbc_tabbedPane.insets = new Insets(0, 0, 5, 0);
-		gbc_tabbedPane.gridwidth = 13;
+		gbc_tabbedPane.gridwidth = 15;
 		gbc_tabbedPane.fill = GridBagConstraints.BOTH;
 		gbc_tabbedPane.gridx = 0;
 		gbc_tabbedPane.gridy = 1;
 		frame.getContentPane().add(tabbedPane, gbc_tabbedPane);
 
-		lblInternetConnectivityStatus = new JLabel(
+		lblInternetConnectivityStatus = new CustomJLabel(
 				new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/sign-error-ico.png"))
 						.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
 		GridBagConstraints gbc_lblInternetConnectivityStatus = new GridBagConstraints();
 		gbc_lblInternetConnectivityStatus.insets = new Insets(0, 0, 2, 0);
-		gbc_lblInternetConnectivityStatus.gridx = 12;
+		gbc_lblInternetConnectivityStatus.gridx = 14;
 		gbc_lblInternetConnectivityStatus.gridy = 2;
 		frame.getContentPane().add(lblInternetConnectivityStatus, gbc_lblInternetConnectivityStatus);
 

@@ -1,22 +1,5 @@
 package com.javafee.emailform;
 
-import com.javafee.common.Constants;
-import com.javafee.common.IActionForm;
-import com.javafee.common.Params;
-import com.javafee.common.SystemProperties;
-import com.javafee.exception.LogGuiException;
-import com.javafee.startform.LogInEvent;
-import com.javafee.hibernate.dao.HibernateDao;
-import com.javafee.hibernate.dao.HibernateUtil;
-import com.javafee.hibernate.dao.common.Common;
-import com.javafee.hibernate.dto.association.MessageType;
-import com.javafee.hibernate.dto.common.UserData;
-import com.javafee.hibernate.dto.common.message.Message;
-import com.javafee.hibernate.dto.common.message.Recipient;
-import com.javafee.hibernate.dto.library.Client;
-import lombok.Setter;
-
-import javax.swing.*;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.text.ParseException;
@@ -26,6 +9,26 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+
+import com.javafee.common.Constants;
+import com.javafee.common.IActionForm;
+import com.javafee.common.Params;
+import com.javafee.common.SystemProperties;
+import com.javafee.exception.LogGuiException;
+import com.javafee.hibernate.dao.HibernateDao;
+import com.javafee.hibernate.dao.HibernateUtil;
+import com.javafee.hibernate.dao.common.Common;
+import com.javafee.hibernate.dto.association.MessageType;
+import com.javafee.hibernate.dto.common.UserData;
+import com.javafee.hibernate.dto.common.message.Message;
+import com.javafee.hibernate.dto.common.message.Recipient;
+import com.javafee.hibernate.dto.library.Client;
+import com.javafee.startform.LogInEvent;
+
+import lombok.Setter;
 
 public class TabComposePageEvent implements IActionForm {
 	@Setter

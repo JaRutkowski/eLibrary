@@ -1,21 +1,25 @@
 package com.javafee.uniform;
 
-import com.javafee.common.SystemProperties;
-import com.javafee.common.Utils;
-import com.javafee.startform.RegistrationPanel;
-import lombok.Getter;
-
-import javax.swing.*;
 import java.awt.*;
 
-public class NavigationPanel extends JPanel {
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+
+import com.javafee.common.BasePanel;
+import com.javafee.common.SystemProperties;
+import com.javafee.startform.RegistrationPanel;
+import com.javafee.unicomponent.jbutton.CustomJButton;
+
+import lombok.Getter;
+
+public class NavigationPanel extends BasePanel {
 	private static final long serialVersionUID = 1L;
 
 	@Getter
 	private JButton btnBack;
 
 	public NavigationPanel() {
-		setBackground(Utils.getApplicationColor());
+		super();
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0};
@@ -23,9 +27,9 @@ public class NavigationPanel extends JPanel {
 		gridBagLayout.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 
-		btnBack = new JButton(SystemProperties.getInstance().getResourceBundle().getString("navigationPanel.btnBack"));
-		btnBack.setIcon(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnBack-ico.png"))
-				.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
+		btnBack = new CustomJButton(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnBack-ico.png"))
+				.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)),
+				SystemProperties.getInstance().getResourceBundle().getString("navigationPanel.btnBack"));
 		GridBagConstraints gbc_btnBack = new GridBagConstraints();
 		gbc_btnBack.anchor = GridBagConstraints.NORTHWEST;
 		gbc_btnBack.gridx = 0;

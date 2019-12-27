@@ -1,31 +1,29 @@
 package com.javafee.tabbedform;
 
+import java.util.Comparator;
+import java.util.List;
+
+import javax.persistence.RollbackException;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+
+import org.hibernate.query.NativeQuery;
+
 import com.javafee.common.Constants;
 import com.javafee.common.IActionForm;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
 import com.javafee.exception.LogGuiException;
 import com.javafee.exception.RefusedAdmDictionaryEventLoadingException;
-
-
-
-
-
-
-import com.javafee.tabbedform.admdictionaries.AdmDictionaryPanel;
 import com.javafee.hibernate.dao.HibernateDao;
 import com.javafee.hibernate.dao.HibernateUtil;
 import com.javafee.hibernate.dto.library.Author;
 import com.javafee.hibernate.dto.library.Book;
 import com.javafee.hibernate.dto.library.Category;
 import com.javafee.hibernate.dto.library.PublishingHouse;
-import lombok.Setter;
-import org.hibernate.query.NativeQuery;
+import com.javafee.tabbedform.admdictionaries.AdmDictionaryPanel;
 
-import javax.persistence.RollbackException;
-import javax.swing.*;
-import java.util.Comparator;
-import java.util.List;
+import lombok.Setter;
 
 public class TabAdmDictionaryEvent implements IActionForm {
 	@Setter
@@ -146,9 +144,7 @@ public class TabAdmDictionaryEvent implements IActionForm {
 					break;
 				case Constants.RADIO_BUTTON_PUBLISHING_HOUSE:
 					final PublishingHouse publishingHouse = new PublishingHouse();
-					publishingHouse.setName(admDictionaryPanel.getTextFieldPublishingHouseName().getText() != null
-							? admDictionaryPanel.getTextFieldPublishingHouseName().getText()
-							: null);
+					publishingHouse.setName(admDictionaryPanel.getTextFieldPublishingHouseName().getText());
 					resultObjectToSave = publishingHouse;
 					reloadComboBoxPublishingHouse();
 					break;
@@ -245,9 +241,7 @@ public class TabAdmDictionaryEvent implements IActionForm {
 					if (resultPuBlishinHouse.isEmpty()) {
 						HibernateUtil.beginTransaction();
 						publishingClicked.setIdPublishingHouse(publishingClicked.getIdPublishingHouse());
-						publishingClicked.setName(admDictionaryPanel.getTextFieldPublishingHouseName().getText() != null
-								? admDictionaryPanel.getTextFieldPublishingHouseName().getText()
-								: null);
+						publishingClicked.setName(admDictionaryPanel.getTextFieldPublishingHouseName().getText());
 						HibernateUtil.getSession().update(publishingClicked);
 						HibernateUtil.commitTransaction();
 						reloadComboBoxPublishingHouse();

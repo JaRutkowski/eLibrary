@@ -1,21 +1,5 @@
 package com.javafee.emailform;
 
-import com.javafee.common.Constants;
-import com.javafee.common.HTMLProcessor;
-import com.javafee.common.IActionForm;
-import com.javafee.common.Utils;
-
-
-
-
-import com.javafee.startform.LogInEvent;
-import com.javafee.hibernate.dao.HibernateUtil;
-import com.javafee.hibernate.dao.common.Common;
-import com.javafee.hibernate.dto.common.SystemProperties;
-import com.javafee.hibernate.dto.common.UserData;
-import lombok.Setter;
-
-import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -26,6 +10,23 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+
+import org.oxbow.swingbits.util.Strings;
+
+import com.javafee.common.Constants;
+import com.javafee.common.HTMLProcessor;
+import com.javafee.common.IActionForm;
+import com.javafee.common.Utils;
+import com.javafee.hibernate.dao.HibernateUtil;
+import com.javafee.hibernate.dao.common.Common;
+import com.javafee.hibernate.dto.common.SystemProperties;
+import com.javafee.hibernate.dto.common.UserData;
+import com.javafee.startform.LogInEvent;
+
+import lombok.Setter;
 
 public class TabTemplatePageEvent implements IActionForm {
 	@Setter
@@ -72,7 +73,7 @@ public class TabTemplatePageEvent implements IActionForm {
 		DefaultComboBoxModel<String> comboBoxLibraryTemplateModel = new DefaultComboBoxModel<String>();
 		Optional<SystemProperties> systemProperties = Common.findSystemPropertiesByUserDataId(
 				LogInEvent.getWorker() != null ? LogInEvent.getWorker().getIdUserData() : Constants.DATA_BASE_ADMIN_ID);
-		if (systemProperties.isPresent() && systemProperties.get().getTemplateDirectory() != null) {
+		if (systemProperties.isPresent() && !Strings.isEmpty(systemProperties.get().getTemplateDirectory())) {
 			File[] files = new File(systemProperties.get().getTemplateDirectory()).listFiles();
 			List<String> names = Arrays.asList(files).parallelStream().map(file -> file.getName())
 					.collect(Collectors.toList());
@@ -91,7 +92,7 @@ public class TabTemplatePageEvent implements IActionForm {
 	private void registerWatchServiceListener() {
 		Optional<SystemProperties> systemProperties = Common.findSystemPropertiesByUserDataId(
 				LogInEvent.getWorker() != null ? LogInEvent.getWorker().getIdUserData() : Constants.DATA_BASE_ADMIN_ID);
-		if (systemProperties.isPresent() && systemProperties.get().getTemplateDirectory() != null) {
+		if (systemProperties.isPresent() && !Strings.isEmpty(systemProperties.get().getTemplateDirectory())) {
 			com.javafee.common.Common.registerWatchServiceListener(this, c -> this.reloadComboBoxLibraryTemplate());
 		}
 	}
@@ -130,11 +131,12 @@ public class TabTemplatePageEvent implements IActionForm {
 
 	private void onClickBtnSaveTemplateToLibrary() {
 		if (validate()) {
+			boolean systemPropertiesAlreadyExists = LogInEvent.getUserData().getSystemProperties() != null;
 			SystemProperties systemProperties = Common
 					.checkAndGetSystemProperties(LogInEvent.getWorker() != null ? LogInEvent.getWorker().getIdUserData()
 							: Constants.DATA_BASE_ADMIN_ID);
 
-			if (systemProperties.getTemplateDirectory() == null) {
+			if (Strings.isEmpty(systemProperties.getTemplateDirectory())) {
 				if (Utils.displayConfirmDialog(com.javafee.common.SystemProperties.getInstance().getResourceBundle()
 						.getString("confirmDialog.initialTemplateLibrary"), "") == JOptionPane.YES_OPTION) {
 					File result = Utils.displaySaveDialogAndGetFile(null);
@@ -145,12 +147,19 @@ public class TabTemplatePageEvent implements IActionForm {
 											.getTextAreaHTMLeditor().getText()),
 									Charset.forName(Constants.APPLICATION_TEMPLATE_ENCODING));
 
-							systemProperties.setTemplateDirectory(result.getParent());
-							LogInEvent.getWorker().setSystemProperties(systemProperties);
+							if (!systemPropertiesAlreadyExists) {
+								systemProperties.setTemplateDirectory(result.getParent());
+								LogInEvent.getUserData().setSystemProperties(systemProperties);
 
-							HibernateUtil.beginTransaction();
-							HibernateUtil.getSession().update(UserData.class.getName(), LogInEvent.getWorker());
-							HibernateUtil.commitTransaction();
+								HibernateUtil.beginTransaction();
+								HibernateUtil.getSession().update(UserData.class.getName(), LogInEvent.getUserData());
+								HibernateUtil.commitTransaction();
+							} else {
+								HibernateUtil.beginTransaction();
+								LogInEvent.getUserData().getSystemProperties().setTemplateDirectory(result.getParent());
+								HibernateUtil.getSession().update(SystemProperties.class.getName(), LogInEvent.getUserData().getSystemProperties());
+								HibernateUtil.commitTransaction();
+							}
 
 							Utils.displayOptionPane(
 									com.javafee.common.SystemProperties.getInstance().getResourceBundle()

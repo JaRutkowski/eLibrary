@@ -1,7 +1,13 @@
 package com.javafee.hibernate.dao;
 
-import com.javafee.hibernate.dao.common.Constants;
-import lombok.Getter;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.persistence.EntityManager;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -12,12 +18,9 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Environment;
 import org.reflections.Reflections;
 
-import javax.persistence.EntityManager;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import com.javafee.hibernate.dao.common.Constants;
+
+import lombok.Getter;
 
 public class HibernateUtil {
 	@Getter
@@ -25,7 +28,7 @@ public class HibernateUtil {
 	@Getter
 	private static final Session session;
 	@Getter
-	private static final EntityManager entityManager;
+	private static EntityManager entityManager;
 	@Getter
 	private static final StandardServiceRegistry registry;
 
@@ -63,14 +66,34 @@ public class HibernateUtil {
 	}
 
 	public static void beginTransaction() {
-		session.beginTransaction();
+		if (!session.getTransaction().isActive())
+			session.beginTransaction();
 	}
 
 	public static void commitTransaction() {
 		session.getTransaction().commit();
 	}
 
+	public static void rollbackTransaction() {
+		session.getTransaction().rollback();
+	}
+
 	public static void closeSession() {
 		session.close();
+	}
+
+	public static EntityManager createAndGetEntityManager() {
+		entityManager = getSessionFactory().createEntityManager();
+		return entityManager;
+	}
+
+	public static void beginJpaTransaction() {
+		createAndGetEntityManager();
+		entityManager.getTransaction().begin();
+	}
+
+	public static void commitJpaTransaction() {
+		entityManager.getTransaction().commit();
+		entityManager.close();
 	}
 }

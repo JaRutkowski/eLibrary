@@ -1,17 +1,31 @@
 package com.javafee.emailform.emails;
 
-import com.javafee.common.SystemProperties;
+import java.awt.*;
 
-import com.javafee.model.DraftTableModel;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.border.TitledBorder;
+
+import com.javafee.common.BasePanel;
+import com.javafee.common.SystemProperties;
+import com.javafee.common.Utils;
 import com.javafee.hibernate.dto.common.UserData;
+import com.javafee.model.DraftTableModel;
+import com.javafee.unicomponent.border.CustomTitledBorder;
+import com.javafee.unicomponent.jcheckbox.CustomJCheckBox;
+import com.javafee.unicomponent.jcombobox.CustomJComboBox;
+import com.javafee.unicomponent.jlabel.CustomJLabel;
+import com.javafee.unicomponent.jtable.CustomJTable;
+import com.javafee.unicomponent.tablefilterheader.CustomTableFilterHeader;
+
 import lombok.Getter;
 import net.coderazzi.filters.gui.TableFilterHeader;
 
-import javax.swing.*;
-import javax.swing.border.TitledBorder;
-import java.awt.*;
-
-public class DraftPagePanel extends JPanel {
+public class DraftPagePanel extends BasePanel {
 
 	private static final long serialVersionUID = -4830782403871579783L;
 
@@ -26,10 +40,11 @@ public class DraftPagePanel extends JPanel {
 	private JComboBox<UserData> comboBoxRecipient;
 
 	public DraftPagePanel() {
-		setBorder(new TitledBorder(null,
+		super();
+		setBorder(new CustomTitledBorder(null,
 				SystemProperties.getInstance().getResourceBundle()
 						.getString("draftPagePanel.draftPagePanelBorderTitle"),
-				TitledBorder.LEADING, TitledBorder.TOP, null, null));
+				TitledBorder.LEADING, CustomTitledBorder.TOP, null, null));
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0};
@@ -37,8 +52,9 @@ public class DraftPagePanel extends JPanel {
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 
-		checkShowOnlySystemCorrespondence = new JCheckBox(SystemProperties.getInstance().getResourceBundle()
+		checkShowOnlySystemCorrespondence = new CustomJCheckBox(SystemProperties.getInstance().getResourceBundle()
 				.getString("outboxMailPanel.chckbxShowOnlySystemCorrespondence"));
+		checkShowOnlySystemCorrespondence.setBackground(Utils.getApplicationUserDefinedColor());
 		GridBagConstraints gbc_checkShowOnlySystemCorrespondence = new GridBagConstraints();
 		gbc_checkShowOnlySystemCorrespondence.anchor = GridBagConstraints.WEST;
 		gbc_checkShowOnlySystemCorrespondence.insets = new Insets(0, 0, 5, 5);
@@ -46,7 +62,7 @@ public class DraftPagePanel extends JPanel {
 		gbc_checkShowOnlySystemCorrespondence.gridy = 0;
 		add(checkShowOnlySystemCorrespondence, gbc_checkShowOnlySystemCorrespondence);
 
-		lblRecipient = new JLabel(
+		lblRecipient = new CustomJLabel(
 				SystemProperties.getInstance().getResourceBundle().getString("outboxMailPanel.lblRecipient"));
 		GridBagConstraints gbc_lblRecipient = new GridBagConstraints();
 		gbc_lblRecipient.anchor = GridBagConstraints.EAST;
@@ -55,7 +71,7 @@ public class DraftPagePanel extends JPanel {
 		gbc_lblRecipient.gridy = 0;
 		add(lblRecipient, gbc_lblRecipient);
 
-		comboBoxRecipient = new JComboBox<UserData>();
+		comboBoxRecipient = new CustomJComboBox<UserData>();
 		GridBagConstraints gbc_comboBoxRecipient = new GridBagConstraints();
 		gbc_comboBoxRecipient.insets = new Insets(0, 0, 5, 0);
 		gbc_comboBoxRecipient.fill = GridBagConstraints.HORIZONTAL;
@@ -72,9 +88,9 @@ public class DraftPagePanel extends JPanel {
 		gbc_scrollPane.gridy = 2;
 		add(scrollPane, gbc_scrollPane);
 
-		draftTable = new JTable();
+		draftTable = new CustomJTable();
 		@SuppressWarnings("unused")
-		TableFilterHeader tableFilterHeader = new TableFilterHeader(draftTable);
+		TableFilterHeader customTableFilterHeader = new CustomTableFilterHeader(draftTable);
 		draftTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		draftTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		draftTable.setModel(new DraftTableModel());

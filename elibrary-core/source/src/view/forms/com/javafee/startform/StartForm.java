@@ -1,17 +1,22 @@
 package com.javafee.startform;
 
-import com.javafee.common.Constants;
-import com.javafee.common.SystemProperties;
-import com.javafee.common.Utils;
-import com.javafee.uniform.NavigationPanel;
-import lombok.Getter;
-
-import javax.swing.*;
 import java.awt.*;
 
-public class StartForm {
-	@Getter
-	private JFrame frame;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.WindowConstants;
+
+import com.javafee.common.BaseForm;
+import com.javafee.common.Constants;
+import com.javafee.common.SystemProperties;
+import com.javafee.unicomponent.jbutton.CustomJButton;
+import com.javafee.unicomponent.jlabel.CustomJLabel;
+import com.javafee.uniform.NavigationPanel;
+
+import lombok.Getter;
+
+public class StartForm extends BaseForm {
 	@Getter
 	private LogInPanel logInPanel;
 	@Getter
@@ -25,17 +30,11 @@ public class StartForm {
 	private JButton btnRegistrationMode;
 	private JLabel lblSystemInformation;
 
-	public StartForm() {
-		initialize();
-	}
-
+	/**
+	 * @wbp.parser.entryPoint
+	 */
 	public void initialize() {
-		Utils.setLookAndFeel();
-		frame = new JFrame();
-		frame.getContentPane().setBackground(Utils.getApplicationColor());
-		frame.setTitle(Constants.APPLICATION_NAME);
-		frame.setIconImage(
-				Toolkit.getDefaultToolkit().getImage(StartForm.class.getResource("/images/splashScreen.jpg")));
+		super.initialize();
 		frame.setBounds(100, 100, 361, 543);
 		frame.setMinimumSize(Constants.START_FORM_MINIMUM_SIZE);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -46,9 +45,8 @@ public class StartForm {
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
 		frame.getContentPane().setLayout(gridBagLayout);
 
-		JLabel lblHello = new JLabel(
+		JLabel lblHello = new CustomJLabel(
 				SystemProperties.getInstance().getResourceBundle().getString("startForm.lblHello"));
-		lblHello.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		GridBagConstraints gbc_lblHello = new GridBagConstraints();
 		gbc_lblHello.anchor = GridBagConstraints.WEST;
 		gbc_lblHello.insets = new Insets(5, 5, 5, 0);
@@ -67,9 +65,9 @@ public class StartForm {
 		gbc_logInPanel.gridy = 1;
 		frame.getContentPane().add(logInPanel, gbc_logInPanel);
 
-		btnLogIn = new JButton(SystemProperties.getInstance().getResourceBundle().getString("startForm.btnLogIn"));
-		btnLogIn.setIcon(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnLogIn-ico.png"))
-				.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
+		btnLogIn = new CustomJButton(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnLogIn-ico.png"))
+				.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)),
+				SystemProperties.getInstance().getResourceBundle().getString("startForm.btnLogIn"));
 		btnLogIn.setBorderPainted(true);
 		btnLogIn.setFocusPainted(true);
 		btnLogIn.setContentAreaFilled(true);
@@ -81,11 +79,9 @@ public class StartForm {
 		gbc_btnLogIn.gridy = 2;
 		frame.getContentPane().add(btnLogIn, gbc_btnLogIn);
 
-		btnRegistrationMode = new JButton(
+		btnRegistrationMode = new CustomJButton(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnRegistrationMode-ico.png"))
+				.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)),
 				SystemProperties.getInstance().getResourceBundle().getString("startForm.btnRegistration"));
-		btnRegistrationMode.setIcon(
-				new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnRegistrationMode-ico.png"))
-						.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
 		GridBagConstraints gbc_btnRegistrationMode = new GridBagConstraints();
 		gbc_btnRegistrationMode.anchor = GridBagConstraints.NORTH;
 		gbc_btnRegistrationMode.fill = GridBagConstraints.HORIZONTAL;
@@ -115,7 +111,7 @@ public class StartForm {
 		gbc_registrationPanel.gridy = 5;
 		frame.getContentPane().add(registrationPanel, gbc_registrationPanel);
 
-		lblSystemInformation = new JLabel(
+		lblSystemInformation = new CustomJLabel(
 				SystemProperties.getInstance().getResourceBundle().getString("startForm.lblSystemInformation"));
 		lblSystemInformation.setForeground(SystemColor.textHighlight);
 		GridBagConstraints gbc_lblSystemInformation = new GridBagConstraints();

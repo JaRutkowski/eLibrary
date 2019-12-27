@@ -1,13 +1,22 @@
 package com.javafee.uniform;
 
-import com.javafee.common.SystemProperties;
-import lombok.Getter;
-
-import javax.swing.*;
-import javax.swing.border.TitledBorder;
 import java.awt.*;
 
-public class TemplateManagementPanel extends JPanel {
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.border.TitledBorder;
+
+import com.javafee.common.BasePanel;
+import com.javafee.common.SystemProperties;
+import com.javafee.unicomponent.border.CustomTitledBorder;
+import com.javafee.unicomponent.jbutton.CustomJButton;
+import com.javafee.unicomponent.jcombobox.CustomJComboBox;
+import com.javafee.unicomponent.jlabel.CustomJLabel;
+
+import lombok.Getter;
+
+public class TemplateManagementPanel extends BasePanel {
 
 	private static final long serialVersionUID = 6611305505467123577L;
 
@@ -20,10 +29,11 @@ public class TemplateManagementPanel extends JPanel {
 	private JButton btnPreviewTemplateLibrary;
 
 	public TemplateManagementPanel() {
-		setBorder(new TitledBorder(null,
+		super();
+		setBorder(new CustomTitledBorder(null,
 				SystemProperties.getInstance().getResourceBundle()
 						.getString("htmlEditor.templateManagementBorderTitle"),
-				TitledBorder.LEADING, TitledBorder.TOP, null, null));
+				TitledBorder.LEADING, CustomTitledBorder.TOP, null, null));
 		GridBagLayout gbl_panel = new GridBagLayout();
 		gbl_panel.columnWidths = new int[]{99, 393, 0};
 		gbl_panel.rowHeights = new int[]{0, 0, 0, 0};
@@ -31,17 +41,17 @@ public class TemplateManagementPanel extends JPanel {
 		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gbl_panel);
 
-		lblChooseTemplate = new JLabel(
+		lblChooseTemplate = new CustomJLabel(
 				SystemProperties.getInstance().getResourceBundle().getString("htmlEditor.lblChooseTemplate"));
-		GridBagConstraints gbc_lblWybierzSzablonZ = new GridBagConstraints();
-		gbc_lblWybierzSzablonZ.fill = GridBagConstraints.VERTICAL;
-		gbc_lblWybierzSzablonZ.anchor = GridBagConstraints.EAST;
-		gbc_lblWybierzSzablonZ.insets = new Insets(0, 0, 5, 5);
-		gbc_lblWybierzSzablonZ.gridx = 0;
-		gbc_lblWybierzSzablonZ.gridy = 0;
-		add(lblChooseTemplate, gbc_lblWybierzSzablonZ);
+		GridBagConstraints gbc_lblChooseTemplate = new GridBagConstraints();
+		gbc_lblChooseTemplate.fill = GridBagConstraints.VERTICAL;
+		gbc_lblChooseTemplate.anchor = GridBagConstraints.EAST;
+		gbc_lblChooseTemplate.insets = new Insets(0, 0, 5, 5);
+		gbc_lblChooseTemplate.gridx = 0;
+		gbc_lblChooseTemplate.gridy = 0;
+		add(lblChooseTemplate, gbc_lblChooseTemplate);
 
-		comboBoxLibraryTemplate = new JComboBox<String>();
+		comboBoxLibraryTemplate = new CustomJComboBox<String>();
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
 		gbc_comboBox.fill = GridBagConstraints.BOTH;
 		gbc_comboBox.insets = new Insets(0, 0, 5, 0);
@@ -49,7 +59,7 @@ public class TemplateManagementPanel extends JPanel {
 		gbc_comboBox.gridy = 0;
 		add(comboBoxLibraryTemplate, gbc_comboBox);
 
-		btnSaveTemplateToLibrary = new JButton(
+		btnSaveTemplateToLibrary = new CustomJButton(
 				SystemProperties.getInstance().getResourceBundle().getString("htmlEditor.btnSaveTemplateToLibrary"));
 		GridBagConstraints gbc_btnNewButton11 = new GridBagConstraints();
 		gbc_btnNewButton11.fill = GridBagConstraints.BOTH;
@@ -58,7 +68,7 @@ public class TemplateManagementPanel extends JPanel {
 		gbc_btnNewButton11.gridy = 1;
 		add(btnSaveTemplateToLibrary, gbc_btnNewButton11);
 
-		btnPreviewTemplateLibrary = new JButton(
+		btnPreviewTemplateLibrary = new CustomJButton(
 				SystemProperties.getInstance().getResourceBundle().getString("htmlEditor.btnPreviewTemplateLibrary"));
 		GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
 		gbc_btnNewButton_1.fill = GridBagConstraints.BOTH;

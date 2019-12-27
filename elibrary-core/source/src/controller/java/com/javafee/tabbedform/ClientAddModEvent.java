@@ -1,32 +1,34 @@
 package com.javafee.tabbedform;
 
-import com.javafee.common.*;
-import com.javafee.common.Constants.Context;
-import com.javafee.common.Constants.Role;
-import com.javafee.exception.LogGuiException;
-import com.javafee.exception.RefusedRegistrationException;
-
-
-
-
-
-import com.javafee.model.ClientTableModel;
-import com.javafee.startform.RegistrationEvent;
-import com.javafee.startform.RegistrationEvent.RegistrationFailureCause;
-import com.javafee.tabbedform.clients.frames.ClientAddModFrame;
-import com.javafee.hibernate.dao.HibernateDao;
-import com.javafee.hibernate.dao.HibernateUtil;
-import com.javafee.hibernate.dto.association.City;
-import com.javafee.hibernate.dto.common.UserData;
-import com.javafee.hibernate.dto.library.Client;
-
-import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.ParseException;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+
+import com.javafee.common.Common;
+import com.javafee.common.Constants;
+import com.javafee.common.Constants.Context;
+import com.javafee.common.Constants.Role;
+import com.javafee.common.Params;
+import com.javafee.common.SystemProperties;
+import com.javafee.common.Utils;
+import com.javafee.common.Validator;
+import com.javafee.exception.LogGuiException;
+import com.javafee.exception.RefusedRegistrationException;
+import com.javafee.hibernate.dao.HibernateDao;
+import com.javafee.hibernate.dao.HibernateUtil;
+import com.javafee.hibernate.dto.association.City;
+import com.javafee.hibernate.dto.common.UserData;
+import com.javafee.hibernate.dto.library.Client;
+import com.javafee.model.ClientTableModel;
+import com.javafee.startform.RegistrationEvent;
+import com.javafee.startform.RegistrationEvent.RegistrationFailureCause;
+import com.javafee.tabbedform.clients.frames.ClientAddModFrame;
 
 public class ClientAddModEvent {
 
@@ -152,63 +154,7 @@ public class ClientAddModEvent {
 	}
 
 	private void fillRegistrationPanel() {
-		clientAddModFrame.getClientDataPanel().getTextFieldPeselNumber()
-				.setText(((Client) Params.getInstance().get("selectedClient")).getPeselNumber() != null
-						? ((Client) Params.getInstance().get("selectedClient")).getPeselNumber()
-						: "");
-
-		clientAddModFrame.getClientDataPanel().getTextFieldDocumentNumber()
-				.setText(((Client) Params.getInstance().get("selectedClient")).getDocumentNumber() != null
-						? ((Client) Params.getInstance().get("selectedClient")).getDocumentNumber()
-						: "");
-
-		clientAddModFrame.getClientDataPanel().getTextFieldLogin()
-				.setText(((Client) Params.getInstance().get("selectedClient")).getLogin() != null
-						? ((Client) Params.getInstance().get("selectedClient")).getLogin()
-						: "");
-
-		clientAddModFrame.getClientDataPanel().getTextFieldEMail()
-				.setText(((Client) Params.getInstance().get("selectedClient")).getEMail() != null
-						? ((Client) Params.getInstance().get("selectedClient")).getEMail()
-						: "");
-
-		clientAddModFrame.getClientDataPanel().getTextFieldName()
-				.setText(((Client) Params.getInstance().get("selectedClient")).getName() != null
-						? ((Client) Params.getInstance().get("selectedClient")).getName()
-						: "");
-
-		clientAddModFrame.getClientDataPanel().getTextFieldSurname()
-				.setText(((Client) Params.getInstance().get("selectedClient")).getSurname() != null
-						? ((Client) Params.getInstance().get("selectedClient")).getSurname()
-						: "");
-
-		clientAddModFrame.getClientDataPanel().getTextFieldAddress()
-				.setText(((Client) Params.getInstance().get("selectedClient")).getAddress() != null
-						? ((Client) Params.getInstance().get("selectedClient")).getAddress()
-						: "");
-
-		clientAddModFrame.getClientDataPanel().getComboBoxCity()
-				.setSelectedItem(((Client) Params.getInstance().get("selectedClient")).getCity());
-
-		if (((Client) Params.getInstance().get("selectedClient")).getSex() != null && Constants.DATA_BASE_MALE_SIGN
-				.toString().equals(((Client) Params.getInstance().get("selectedClient")).getSex().toString()))
-			clientAddModFrame.getClientDataPanel().getGroupRadioButtonSex()
-					.setSelected(clientAddModFrame.getClientDataPanel().getRadioButtonMale().getModel(), true);
-		else if (((Client) Params.getInstance().get("selectedClient")).getSex() != null
-				&& Constants.DATA_BASE_FEMALE_SIGN.toString()
-				.equals(((Client) Params.getInstance().get("selectedClient")).getSex().toString()))
-			clientAddModFrame.getClientDataPanel().getGroupRadioButtonSex()
-					.setSelected(clientAddModFrame.getClientDataPanel().getRadioButtonFemale().getModel(), true);
-
-		try {
-			clientAddModFrame.getClientDataPanel().getDateChooserBirthDate()
-					.setDate(((Client) Params.getInstance().get("selectedClient")).getBirthDate() != null
-							? Constants.APPLICATION_DATE_FORMAT.parse(Constants.APPLICATION_DATE_FORMAT
-							.format(((Client) Params.getInstance().get("selectedClient")).getBirthDate()))
-							: null);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+		Common.fillUserDataPanel(clientAddModFrame.getClientDataPanel(), (Client) Params.getInstance().get("selectedClient"));
 	}
 
 	private void registerNow() {

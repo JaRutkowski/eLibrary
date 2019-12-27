@@ -1,14 +1,20 @@
 package com.javafee.uniform;
 
-import com.javafee.common.SystemProperties;
-import com.javafee.common.Utils;
-import lombok.Getter;
-
-import javax.swing.*;
-import javax.swing.border.TitledBorder;
 import java.awt.*;
 
-public class AdmIsAccountantPanel extends JPanel {
+import javax.swing.JCheckBox;
+import javax.swing.UIManager;
+import javax.swing.border.TitledBorder;
+
+import com.javafee.common.BasePanel;
+import com.javafee.common.SystemProperties;
+import com.javafee.common.Utils;
+import com.javafee.unicomponent.border.CustomTitledBorder;
+import com.javafee.unicomponent.jcheckbox.CustomJCheckBox;
+
+import lombok.Getter;
+
+public class AdmIsAccountantPanel extends BasePanel {
 	private static final long serialVersionUID = 1L;
 
 	@Getter
@@ -17,11 +23,11 @@ public class AdmIsAccountantPanel extends JPanel {
 	private DecisionPanel decisionPanel;
 
 	public AdmIsAccountantPanel() {
-		setBackground(Utils.getApplicationColor());
-		setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"),
+		super();
+		setBorder(new CustomTitledBorder(UIManager.getBorder("TitledBorder.border"),
 				SystemProperties.getInstance().getResourceBundle()
 						.getString("admIsAccountantPanel.admIsAccountantPanelBorderTitle"),
-				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+				TitledBorder.LEADING, CustomTitledBorder.TOP, null, new Color(0, 0, 0)));
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 161, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0};
@@ -29,9 +35,9 @@ public class AdmIsAccountantPanel extends JPanel {
 		gridBagLayout.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 
-		chckbxIsAccountant = new JCheckBox(SystemProperties.getInstance().getResourceBundle()
+		chckbxIsAccountant = new CustomJCheckBox(SystemProperties.getInstance().getResourceBundle()
 				.getString("admIsAccountantPanel.chckbxIsAccountant"));
-		chckbxIsAccountant.setBackground(Utils.getApplicationColor());
+		chckbxIsAccountant.setBackground(Utils.getApplicationUserDefinedColor());
 		GridBagConstraints gbc_chckbxIsAccountant = new GridBagConstraints();
 		gbc_chckbxIsAccountant.fill = GridBagConstraints.HORIZONTAL;
 		gbc_chckbxIsAccountant.insets = new Insets(0, 0, 0, 5);

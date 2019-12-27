@@ -1,27 +1,44 @@
 package com.javafee.tabbedform.library.frames;
 
+import java.awt.*;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.WindowConstants;
+import javax.swing.border.EmptyBorder;
+
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
 import com.javafee.model.BookTableModel;
+import com.javafee.unicomponent.jlabel.CustomJLabel;
+import com.javafee.unicomponent.jtable.CustomJTable;
+import com.javafee.unicomponent.jtextfield.CustomJTextField;
+import com.javafee.unicomponent.tablefilterheader.CustomTableFilterHeader;
 import com.javafee.uniform.CockpitConfirmationPanel;
-import net.coderazzi.filters.gui.TableFilterHeader;
 
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import java.awt.*;
+import lombok.Getter;
+import net.coderazzi.filters.gui.TableFilterHeader;
 
 public class LibraryAddModFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 
+	@Getter
 	private JTable bookTable;
 	private JScrollPane scrollPane;
+	@Getter
 	private CockpitConfirmationPanel cockpitConfirmationPanel;
 	private JLabel lblInventoryNumber;
+	@Getter
 	private JTextField textFieldInventoryNumber;
 
 	public LibraryAddModFrame() {
-		setBackground(Utils.getApplicationColor());
+		setBackground(Utils.getApplicationUserDefinedColor());
 		setIconImage(
 				Toolkit.getDefaultToolkit().getImage(LibraryAddModFrame.class.getResource("/images/splashScreen.jpg")));
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -45,16 +62,16 @@ public class LibraryAddModFrame extends JFrame {
 		gbc_scrollPane.gridy = 0;
 		contentPane.add(scrollPane, gbc_scrollPane);
 
-		bookTable = new JTable();
+		bookTable = new CustomJTable();
 		@SuppressWarnings("unused")
-		TableFilterHeader tableFilterHeader = new TableFilterHeader(bookTable);
+		TableFilterHeader customTableFilterHeader = new CustomTableFilterHeader(bookTable);
 		bookTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		bookTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		bookTable.setModel(new BookTableModel());
 		bookTable.setAutoCreateRowSorter(true);
 		scrollPane.setViewportView(bookTable);
 
-		lblInventoryNumber = new JLabel(
+		lblInventoryNumber = new CustomJLabel(
 				SystemProperties.getInstance().getResourceBundle().getString("libraryAddModFrame.lblInventoryNumber"));
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.anchor = GridBagConstraints.WEST;
@@ -63,7 +80,7 @@ public class LibraryAddModFrame extends JFrame {
 		gbc_lblNewLabel.gridy = 1;
 		contentPane.add(lblInventoryNumber, gbc_lblNewLabel);
 
-		textFieldInventoryNumber = new JTextField();
+		textFieldInventoryNumber = new CustomJTextField();
 		GridBagConstraints gbc_textField = new GridBagConstraints();
 		gbc_textField.insets = new Insets(0, 0, 5, 0);
 		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
@@ -80,17 +97,5 @@ public class LibraryAddModFrame extends JFrame {
 		gbc_cockpitConfirmationPanel.gridx = 0;
 		gbc_cockpitConfirmationPanel.gridy = 2;
 		contentPane.add(cockpitConfirmationPanel, gbc_cockpitConfirmationPanel);
-	}
-
-	public JTable getBookTable() {
-		return bookTable;
-	}
-
-	public JTextField getTextFieldInventoryNumber() {
-		return textFieldInventoryNumber;
-	}
-
-	public CockpitConfirmationPanel getCockpitConfirmationPanel() {
-		return cockpitConfirmationPanel;
 	}
 }

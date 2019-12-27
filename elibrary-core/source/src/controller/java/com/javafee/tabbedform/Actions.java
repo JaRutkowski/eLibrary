@@ -1,25 +1,33 @@
 package com.javafee.tabbedform;
 
-import com.javafee.common.*;
+import javax.swing.Icon;
+import javax.swing.JOptionPane;
+
+import com.javafee.common.Common;
+import com.javafee.common.Constants;
 import com.javafee.common.Constants.Role;
 import com.javafee.common.Constants.Tab_Accountant;
 import com.javafee.common.Constants.Tab_Client;
 import com.javafee.common.Constants.Tab_Worker;
+import com.javafee.common.IActionForm;
+import com.javafee.common.Params;
+import com.javafee.common.SystemProperties;
+import com.javafee.common.Utils;
 import com.javafee.startform.LogInEvent;
-
-import javax.swing.*;
 
 public class Actions implements IActionForm {
 	private TabbedForm tabbedForm = new TabbedForm();
+
+	private com.javafee.settingsform.Actions actionSettings = null;
 
 	public void control() {
 		tabbedForm.getFrame().setVisible(true);
 		initializeForm();
 
-		tabbedForm.getBtnLogOut().addActionListener(e -> onClickBtnLogOut());
 		tabbedForm.getTabbedPane().addChangeListener(e -> onChangeTabbedPane());
+		tabbedForm.getBtnSettings().addActionListener(e -> onClickBtnSettings());
+		tabbedForm.getBtnLogOut().addActionListener(e -> onClickBtnLogOut());
 		tabbedForm.getComboBoxLanguage().addActionListener(e -> onChangeComboBoxLanguage());
-
 	}
 
 	private void onChangeComboBoxLanguage() {
@@ -180,7 +188,7 @@ public class Actions implements IActionForm {
 		Common.registerNetworkServiceListener(this);
 	}
 
-	private void onClickBtnLogOut() {
+	public void onClickBtnLogOut() {
 		LogInEvent.clearLogInData();
 		Common.unregisterTimerServiceListenerSingleton();
 		tabbedForm.getFrame().dispose();
@@ -189,8 +197,25 @@ public class Actions implements IActionForm {
 		openStartForm();
 	}
 
+	private void onClickBtnSettings() {
+		openSettingsForm();
+	}
+
 	private void onChangeTabbedPane() {
 		reloadTabbedPane();
+	}
+
+	private void openSettingsForm() {
+		if (!Params.getInstance().contains("TABBED_FORM_ACTIONS"))
+			Params.getInstance().add("TABBED_FORM_ACTIONS", this);
+		if (LogInEvent.getRole() != Role.CLIENT
+				&& !Params.getInstance().contains("TABBED_FORM_TABLE_MODEL")
+				&& tabbedForm.getTabbedPane().getSelectedIndex() == Tab_Accountant.TAB_ADM_WORKER.getValue())
+			Params.getInstance().add("TABBED_FORM_TABLE_MODEL", tabbedForm.getPanelWorker().getWorkerTable().getModel());
+
+		if (actionSettings == null)
+			actionSettings = new com.javafee.settingsform.Actions();
+		actionSettings.control();
 	}
 
 	private void openStartForm() {
@@ -205,5 +230,6 @@ public class Actions implements IActionForm {
 		TabLoanServiceEvent.loadServiceEvent = null;
 		TabAdmDictionaryEvent.admDictionaryEvent = null;
 		TabWorkerEvent.workerEvent = null;
+		//actionSettings = null;
 	}
 }

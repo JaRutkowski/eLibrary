@@ -1,13 +1,12 @@
 package com.javafee.model;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import com.javafee.common.Constants;
 import com.javafee.common.Constants.OutboxTableColumn;
 import com.javafee.common.SystemProperties;
 import com.javafee.hibernate.dao.HibernateUtil;
 import com.javafee.hibernate.dto.common.message.Message;
-
-
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class OutboxTableModel extends DraftTableModel {
 

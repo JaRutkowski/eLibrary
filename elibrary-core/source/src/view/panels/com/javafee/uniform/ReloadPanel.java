@@ -1,21 +1,25 @@
 package com.javafee.uniform;
 
-import com.javafee.common.SystemProperties;
-import com.javafee.common.Utils;
-import com.javafee.startform.RegistrationPanel;
-import lombok.Getter;
-
-import javax.swing.*;
 import java.awt.*;
 
-public class ReloadPanel extends JPanel {
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+
+import com.javafee.common.BasePanel;
+import com.javafee.common.SystemProperties;
+import com.javafee.startform.RegistrationPanel;
+import com.javafee.unicomponent.jbutton.CustomJButton;
+
+import lombok.Getter;
+
+public class ReloadPanel extends BasePanel {
 	private static final long serialVersionUID = 1L;
 
 	@Getter
 	private JButton btnReload;
 
 	public ReloadPanel() {
-		setBackground(Utils.getApplicationColor());
+		super();
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0};
@@ -23,7 +27,7 @@ public class ReloadPanel extends JPanel {
 		gridBagLayout.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 
-		btnReload = new JButton(SystemProperties.getInstance().getResourceBundle().getString("reloadPanel.btnReload"));
+		btnReload = new CustomJButton(SystemProperties.getInstance().getResourceBundle().getString("reloadPanel.btnReload"));
 		btnReload.setIcon(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnReload-ico.png"))
 				.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
 		GridBagConstraints gbc_btnReload = new GridBagConstraints();

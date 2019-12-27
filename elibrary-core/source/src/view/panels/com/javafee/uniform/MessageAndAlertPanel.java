@@ -1,26 +1,32 @@
 package com.javafee.uniform;
 
-import com.javafee.common.SystemProperties;
-import com.javafee.common.Utils;
-import com.javafee.startform.RegistrationPanel;
-import lombok.Getter;
-
-import javax.swing.*;
-import javax.swing.border.TitledBorder;
 import java.awt.*;
 
-public class MessageAndAlertPanel extends JPanel {
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.UIManager;
+import javax.swing.border.TitledBorder;
+
+import com.javafee.common.BasePanel;
+import com.javafee.common.SystemProperties;
+import com.javafee.startform.RegistrationPanel;
+import com.javafee.unicomponent.border.CustomTitledBorder;
+import com.javafee.unicomponent.jbutton.CustomJButton;
+
+import lombok.Getter;
+
+public class MessageAndAlertPanel extends BasePanel {
 	private static final long serialVersionUID = 1L;
 
 	@Getter
 	private JButton btnContact;
 
 	public MessageAndAlertPanel() {
-		setBackground(Utils.getApplicationColor());
-		setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"),
+		super();
+		setBorder(new CustomTitledBorder(UIManager.getBorder("TitledBorder.border"),
 				SystemProperties.getInstance().getResourceBundle()
 						.getString("messageAndAlertPanel.messageAndAlertPanelBorderTitle"),
-				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+				TitledBorder.LEADING, CustomTitledBorder.TOP, null, new Color(0, 0, 0)));
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0};
@@ -28,11 +34,10 @@ public class MessageAndAlertPanel extends JPanel {
 		gridBagLayout.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 
-		btnContact = new JButton(
-				SystemProperties.getInstance().getResourceBundle().getString("clientTablePanel.btnContact"));
-		btnContact
-				.setIcon(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnContact-ico.png"))
-						.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
+		btnContact = new CustomJButton(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnContact-ico.png"))
+				.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)),
+				SystemProperties.getInstance().getResourceBundle().getString("clientTablePanel.btnContact")
+		);
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.gridx = 0;
 		gbc_btnNewButton.gridy = 0;

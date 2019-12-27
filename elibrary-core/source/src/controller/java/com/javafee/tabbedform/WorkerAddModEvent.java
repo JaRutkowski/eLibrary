@@ -1,32 +1,34 @@
 package com.javafee.tabbedform;
 
-import com.javafee.common.*;
-import com.javafee.common.Constants.Context;
-import com.javafee.common.Constants.Role;
-import com.javafee.exception.LogGuiException;
-import com.javafee.exception.RefusedRegistrationException;
-
-
-
-
-
-import com.javafee.model.WorkerTableModel;
-import com.javafee.startform.RegistrationEvent;
-import com.javafee.startform.RegistrationEvent.RegistrationFailureCause;
-import com.javafee.tabbedform.admworkers.frames.WorkerAddModFrame;
-import com.javafee.hibernate.dao.HibernateDao;
-import com.javafee.hibernate.dao.HibernateUtil;
-import com.javafee.hibernate.dto.association.City;
-import com.javafee.hibernate.dto.common.UserData;
-import com.javafee.hibernate.dto.library.Worker;
-
-import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.ParseException;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+
+import com.javafee.common.Common;
+import com.javafee.common.Constants;
+import com.javafee.common.Constants.Context;
+import com.javafee.common.Constants.Role;
+import com.javafee.common.Params;
+import com.javafee.common.SystemProperties;
+import com.javafee.common.Utils;
+import com.javafee.common.Validator;
+import com.javafee.exception.LogGuiException;
+import com.javafee.exception.RefusedRegistrationException;
+import com.javafee.hibernate.dao.HibernateDao;
+import com.javafee.hibernate.dao.HibernateUtil;
+import com.javafee.hibernate.dto.association.City;
+import com.javafee.hibernate.dto.common.UserData;
+import com.javafee.hibernate.dto.library.Worker;
+import com.javafee.model.WorkerTableModel;
+import com.javafee.startform.RegistrationEvent;
+import com.javafee.startform.RegistrationEvent.RegistrationFailureCause;
+import com.javafee.tabbedform.admworkers.frames.WorkerAddModFrame;
 
 public class WorkerAddModEvent {
 	private WorkerAddModFrame workerAddModFrame;
@@ -147,63 +149,7 @@ public class WorkerAddModEvent {
 	}
 
 	private void fillRegistrationPanel() {
-		workerAddModFrame.getWorkerDataPanel().getTextFieldPeselNumber()
-				.setText(((Worker) Params.getInstance().get("selectedWorker")).getPeselNumber() != null
-						? ((Worker) Params.getInstance().get("selectedWorker")).getPeselNumber()
-						: "");
-
-		workerAddModFrame.getWorkerDataPanel().getTextFieldDocumentNumber()
-				.setText(((Worker) Params.getInstance().get("selectedWorker")).getDocumentNumber() != null
-						? ((Worker) Params.getInstance().get("selectedWorker")).getDocumentNumber()
-						: "");
-
-		workerAddModFrame.getWorkerDataPanel().getTextFieldLogin()
-				.setText(((Worker) Params.getInstance().get("selectedWorker")).getLogin() != null
-						? ((Worker) Params.getInstance().get("selectedWorker")).getLogin()
-						: "");
-
-		workerAddModFrame.getWorkerDataPanel().getTextFieldEMail()
-				.setText(((Worker) Params.getInstance().get("selectedWorker")).getEMail() != null
-						? ((Worker) Params.getInstance().get("selectedWorker")).getEMail()
-						: "");
-
-		workerAddModFrame.getWorkerDataPanel().getTextFieldName()
-				.setText(((Worker) Params.getInstance().get("selectedWorker")).getName() != null
-						? ((Worker) Params.getInstance().get("selectedWorker")).getName()
-						: "");
-
-		workerAddModFrame.getWorkerDataPanel().getTextFieldSurname()
-				.setText(((Worker) Params.getInstance().get("selectedWorker")).getSurname() != null
-						? ((Worker) Params.getInstance().get("selectedWorker")).getSurname()
-						: "");
-
-		workerAddModFrame.getWorkerDataPanel().getTextFieldAddress()
-				.setText(((Worker) Params.getInstance().get("selectedWorker")).getAddress() != null
-						? ((Worker) Params.getInstance().get("selectedWorker")).getAddress()
-						: "");
-
-		workerAddModFrame.getWorkerDataPanel().getComboBoxCity().getModel()
-				.setSelectedItem(((Worker) Params.getInstance().get("selectedWorker")).getCity());
-
-		if (((Worker) Params.getInstance().get("selectedWorker")).getSex() != null && Constants.DATA_BASE_MALE_SIGN
-				.toString().equals(((Worker) Params.getInstance().get("selectedWorker")).getSex().toString()))
-			workerAddModFrame.getWorkerDataPanel().getGroupRadioButtonSex()
-					.setSelected(workerAddModFrame.getWorkerDataPanel().getRadioButtonMale().getModel(), true);
-		else if (((Worker) Params.getInstance().get("selectedWorker")).getSex() != null
-				&& Constants.DATA_BASE_FEMALE_SIGN.toString()
-				.equals(((Worker) Params.getInstance().get("selectedWorker")).getSex().toString()))
-			workerAddModFrame.getWorkerDataPanel().getGroupRadioButtonSex()
-					.setSelected(workerAddModFrame.getWorkerDataPanel().getRadioButtonFemale().getModel(), true);
-
-		try {
-			workerAddModFrame.getWorkerDataPanel().getDateChooserBirthDate()
-					.setDate(((Worker) Params.getInstance().get("selectedWorker")).getBirthDate() != null
-							? Constants.APPLICATION_DATE_FORMAT.parse(Constants.APPLICATION_DATE_FORMAT
-							.format(((Worker) Params.getInstance().get("selectedWorker")).getBirthDate()))
-							: null);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+		Common.fillUserDataPanel(workerAddModFrame.getWorkerDataPanel(), (Worker) Params.getInstance().get("selectedWorker"));
 	}
 
 	@SuppressWarnings("unchecked")

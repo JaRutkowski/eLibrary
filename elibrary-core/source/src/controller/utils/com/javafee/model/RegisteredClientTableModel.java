@@ -1,10 +1,9 @@
 package com.javafee.model;
 
 
+import java.util.stream.Collectors;
 
 import com.javafee.hibernate.dao.HibernateUtil;
-
-import java.util.stream.Collectors;
 
 public class RegisteredClientTableModel extends ClientTableModel {
 	private static final long serialVersionUID = 1L;

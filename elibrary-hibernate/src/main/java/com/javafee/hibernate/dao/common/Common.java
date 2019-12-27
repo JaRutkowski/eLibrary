@@ -1,5 +1,11 @@
 package com.javafee.hibernate.dao.common;
 
+import java.util.Optional;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
 import com.javafee.hibernate.dao.HibernateUtil;
 import com.javafee.hibernate.dto.association.MessageType;
 import com.javafee.hibernate.dto.association.MessageType_;
@@ -7,23 +13,18 @@ import com.javafee.hibernate.dto.common.SystemProperties;
 import com.javafee.hibernate.dto.common.SystemProperties_;
 import com.javafee.hibernate.dto.common.UserData;
 import com.javafee.hibernate.dto.library.Client;
-import org.hibernate.Session;
-import org.hibernate.resource.transaction.spi.TransactionStatus;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-import java.util.Optional;
+import lombok.extern.java.Log;
 
+@Log
 public class Common {
 	public static Optional<Client> findClientById(final int id) {
 		Optional<Client> client = Optional.empty();
 
 		try {
-			Session session = HibernateUtil.getSessionFactory().openSession();
-			client = Optional.ofNullable(session.get(Client.class, id));
+			client = Optional.ofNullable(HibernateUtil.getSession().get(Client.class, id));
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.severe(e.getMessage());
 		}
 
 		return client;
@@ -33,10 +34,9 @@ public class Common {
 		Optional<SystemProperties> systemProperties = Optional.empty();
 
 		try {
-			Session session = HibernateUtil.getSessionFactory().openSession();
-			systemProperties = Optional.ofNullable(session.get(SystemProperties.class, id));
+			systemProperties = Optional.ofNullable(HibernateUtil.getSession().get(SystemProperties.class, id));
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.severe(e.getMessage());
 		}
 
 		return systemProperties;
@@ -46,10 +46,9 @@ public class Common {
 		Optional<UserData> userData = Optional.empty();
 
 		try {
-			Session session = HibernateUtil.getSessionFactory().openSession();
-			userData = Optional.ofNullable(session.get(UserData.class, id));
+			userData = Optional.ofNullable(HibernateUtil.getSession().get(UserData.class, id));
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.severe(e.getMessage());
 		}
 
 		return userData;
@@ -59,7 +58,7 @@ public class Common {
 		Optional<SystemProperties> systemProperties = Optional.empty();
 
 		try {
-			CriteriaBuilder cb = HibernateUtil.getEntityManager().getCriteriaBuilder();
+			CriteriaBuilder cb = HibernateUtil.createAndGetEntityManager().getCriteriaBuilder();
 			CriteriaQuery<SystemProperties> criteria = cb.createQuery(SystemProperties.class);
 			Root<SystemProperties> systemPropertiesRoot = criteria.from(SystemProperties.class);
 			criteria.select(systemPropertiesRoot);
@@ -70,7 +69,7 @@ public class Common {
 							? HibernateUtil.getEntityManager().createQuery(criteria).getResultList().get(0)
 							: null);
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.severe(e.getMessage());
 		}
 
 		return systemProperties;
@@ -82,12 +81,12 @@ public class Common {
 
 		if (!systemProperties.isPresent()) {
 			UserData userData = Common.findUserDataById(userDataId).get();
-			HibernateUtil.beginTransaction();
+			HibernateUtil.beginJpaTransaction();
 			result = new SystemProperties();
 			userData.setSystemProperties(result);
 
-			HibernateUtil.getSession().save(result);
-			HibernateUtil.commitTransaction();
+			HibernateUtil.getEntityManager().persist(result);
+			HibernateUtil.commitJpaTransaction();
 		} else
 			result = Common.findSystemPropertiesByUserDataId(userDataId).get();
 
@@ -98,9 +97,7 @@ public class Common {
 		Optional<MessageType> messageType = Optional.empty();
 
 		try {
-			if (HibernateUtil.getSession().getTransaction().getStatus() != TransactionStatus.ACTIVE)
-				HibernateUtil.getSession().beginTransaction();
-			CriteriaBuilder cb = HibernateUtil.getEntityManager().getCriteriaBuilder();
+			CriteriaBuilder cb = HibernateUtil.createAndGetEntityManager().getCriteriaBuilder();
 			CriteriaQuery<MessageType> criteria = cb.createQuery(MessageType.class);
 			Root<MessageType> messageTypeRoot = criteria.from(MessageType.class);
 			criteria.select(messageTypeRoot);
@@ -109,12 +106,10 @@ public class Common {
 					.ofNullable(!HibernateUtil.getEntityManager().createQuery(criteria).getResultList().isEmpty()
 							? HibernateUtil.getEntityManager().createQuery(criteria).getResultList().get(0)
 							: null);
-			HibernateUtil.getSession().getTransaction().commit();
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.severe(e.getMessage());
 		}
 
 		return messageType;
 	}
-
 }

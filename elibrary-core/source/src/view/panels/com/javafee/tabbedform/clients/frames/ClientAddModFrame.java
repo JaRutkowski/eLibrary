@@ -1,13 +1,17 @@
 package com.javafee.tabbedform.clients.frames;
 
+import java.awt.*;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.WindowConstants;
+import javax.swing.border.EmptyBorder;
+
 import com.javafee.common.Utils;
 import com.javafee.tabbedform.clients.ClientDataPanel;
 import com.javafee.uniform.CockpitConfirmationPanel;
-import lombok.Getter;
 
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import java.awt.*;
+import lombok.Getter;
 
 public class ClientAddModFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -19,7 +23,7 @@ public class ClientAddModFrame extends JFrame {
 	private CockpitConfirmationPanel cockpitConfirmationPanel;
 
 	public ClientAddModFrame() {
-		setBackground(Utils.getApplicationColor());
+		setBackground(Utils.getApplicationUserDefinedColor());
 		setIconImage(
 				Toolkit.getDefaultToolkit().getImage(ClientAddModFrame.class.getResource("/images/splashScreen.jpg")));
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);

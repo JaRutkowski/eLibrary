@@ -1,19 +1,24 @@
 package com.javafee.tabbedform;
 
-import com.javafee.common.*;
+import javax.swing.JOptionPane;
+
+import com.javafee.common.Common;
+import com.javafee.common.Constants;
 import com.javafee.common.Constants.Role;
+import com.javafee.common.IActionForm;
+import com.javafee.common.Params;
+import com.javafee.common.SystemProperties;
+import com.javafee.common.Utils;
+import com.javafee.common.Validator;
 import com.javafee.emailform.Actions;
 import com.javafee.exception.LogGuiException;
 import com.javafee.exception.RefusedClientsEventLoadingException;
-
-
-import com.javafee.model.ClientTableModel;
-import com.javafee.startform.LogInEvent;
 import com.javafee.hibernate.dao.HibernateUtil;
 import com.javafee.hibernate.dto.library.Client;
-import lombok.Setter;
+import com.javafee.model.ClientTableModel;
+import com.javafee.startform.LogInEvent;
 
-import javax.swing.*;
+import lombok.Setter;
 
 public final class TabClientEvent implements IActionForm {
 	@Setter
@@ -51,7 +56,6 @@ public final class TabClientEvent implements IActionForm {
 			if (!e.getValueIsAdjusting())
 				onClientTableListSelectionChange();
 		});
-
 		tabbedForm.getPanelClient().getMessageAndAlertPanel().getBtnContact()
 				.addActionListener(e -> onClickBtnContact());
 	}

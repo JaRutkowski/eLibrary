@@ -1,21 +1,27 @@
 package com.javafee.tabbedform.loanservice;
 
-import com.javafee.common.Utils;
+import java.awt.*;
+
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+
+import com.javafee.common.BasePanel;
 import com.javafee.model.VolumeTableModel;
+import com.javafee.unicomponent.jtable.CustomJTable;
+import com.javafee.unicomponent.tablefilterheader.CustomTableFilterHeader;
+
 import lombok.Getter;
 import net.coderazzi.filters.gui.TableFilterHeader;
 
-import javax.swing.*;
-import java.awt.*;
-
-public class VolumeTablePanel extends JPanel {
+public class VolumeTablePanel extends BasePanel {
 	private static final long serialVersionUID = 1L;
 
 	@Getter
 	private JTable volumeTable;
 
 	public VolumeTablePanel() {
-		setBackground(Utils.getApplicationColor());
+		super();
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{50, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0};
@@ -30,9 +36,9 @@ public class VolumeTablePanel extends JPanel {
 		gbc_scrollPane.gridy = 0;
 		add(scrollPane, gbc_scrollPane);
 
-		volumeTable = new JTable();
+		volumeTable = new CustomJTable();
 		@SuppressWarnings("unused")
-		TableFilterHeader tableFilterHeader = new TableFilterHeader(volumeTable);
+		TableFilterHeader customTableFilterHeader = new CustomTableFilterHeader(volumeTable);
 		volumeTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		volumeTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		volumeTable.setModel(new VolumeTableModel());

@@ -1,17 +1,35 @@
 package com.javafee.startform;
 
+import java.awt.*;
+
+import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPasswordField;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
+
+import com.javafee.common.BasePanel;
 import com.javafee.common.Constants;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Utils;
-import com.toedter.calendar.JDateChooser;
 import com.javafee.hibernate.dto.association.City;
+import com.javafee.unicomponent.border.CustomTitledBorder;
+import com.javafee.unicomponent.jbutton.CustomJButton;
+import com.javafee.unicomponent.jcombobox.CustomJComboBox;
+import com.javafee.unicomponent.jdatechooser.CustomJDateChooser;
+import com.javafee.unicomponent.jlabel.CustomJLabel;
+import com.javafee.unicomponent.jpasswordfield.CustomJPasswordField;
+import com.javafee.unicomponent.jradiobutton.CustomJRadioButton;
+import com.javafee.unicomponent.jtextfield.CustomJTextField;
+import com.toedter.calendar.JDateChooser;
+
 import lombok.Getter;
 
-import javax.swing.*;
-import javax.swing.border.TitledBorder;
-import java.awt.*;
-
-public class RegistrationPanel extends JPanel {
+public class RegistrationPanel extends BasePanel {
 	private static final long serialVersionUID = 1L;
 
 	@Getter
@@ -47,11 +65,11 @@ public class RegistrationPanel extends JPanel {
 	private JLabel lblEMail;
 
 	public RegistrationPanel() {
-		setBackground(Utils.getApplicationColor());
-		setBorder(new TitledBorder(null,
+		super();
+		setBorder(new CustomTitledBorder(null,
 				SystemProperties.getInstance().getResourceBundle()
 						.getString("registrationPanel.registrationPanelBorderTitle"),
-				TitledBorder.LEADING, TitledBorder.TOP, null, null));
+				TitledBorder.LEADING, CustomTitledBorder.TOP, null, null));
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{100, 130, 198, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -60,9 +78,8 @@ public class RegistrationPanel extends JPanel {
 				Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 
-		JLabel lblPesel = new JLabel(
+		JLabel lblPesel = new CustomJLabel(
 				SystemProperties.getInstance().getResourceBundle().getString("registrationPanel.lblPesel"));
-		lblPesel.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		GridBagConstraints gbc_lblPesel = new GridBagConstraints();
 		gbc_lblPesel.anchor = GridBagConstraints.WEST;
 		gbc_lblPesel.insets = new Insets(0, 0, 5, 5);
@@ -70,8 +87,7 @@ public class RegistrationPanel extends JPanel {
 		gbc_lblPesel.gridy = 0;
 		add(lblPesel, gbc_lblPesel);
 
-		textFieldPeselNumber = new JTextField();
-		textFieldPeselNumber.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		textFieldPeselNumber = new CustomJTextField();
 		GridBagConstraints gbc_textFieldPeselNumber = new GridBagConstraints();
 		gbc_textFieldPeselNumber.gridwidth = 2;
 		gbc_textFieldPeselNumber.insets = new Insets(0, 0, 5, 0);
@@ -81,9 +97,8 @@ public class RegistrationPanel extends JPanel {
 		add(textFieldPeselNumber, gbc_textFieldPeselNumber);
 		textFieldPeselNumber.setColumns(10);
 
-		JLabel lblDocumentNumber = new JLabel(
+		JLabel lblDocumentNumber = new CustomJLabel(
 				SystemProperties.getInstance().getResourceBundle().getString("registrationPanel.lblDocumentNumber"));
-		lblDocumentNumber.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		GridBagConstraints gbc_lblDocumentNumber = new GridBagConstraints();
 		gbc_lblDocumentNumber.anchor = GridBagConstraints.WEST;
 		gbc_lblDocumentNumber.insets = new Insets(0, 0, 5, 5);
@@ -91,8 +106,7 @@ public class RegistrationPanel extends JPanel {
 		gbc_lblDocumentNumber.gridy = 1;
 		add(lblDocumentNumber, gbc_lblDocumentNumber);
 
-		textFieldDocumentNumber = new JTextField();
-		textFieldDocumentNumber.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		textFieldDocumentNumber = new CustomJTextField();
 		GridBagConstraints gbc_textFieldDocumentNumber = new GridBagConstraints();
 		gbc_textFieldDocumentNumber.gridwidth = 2;
 		gbc_textFieldDocumentNumber.insets = new Insets(0, 0, 5, 0);
@@ -102,9 +116,8 @@ public class RegistrationPanel extends JPanel {
 		add(textFieldDocumentNumber, gbc_textFieldDocumentNumber);
 		textFieldDocumentNumber.setColumns(10);
 
-		JLabel lblName = new JLabel(
+		JLabel lblName = new CustomJLabel(
 				SystemProperties.getInstance().getResourceBundle().getString("registrationPanel.lblName"));
-		lblName.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		GridBagConstraints gbc_lblName = new GridBagConstraints();
 		gbc_lblName.insets = new Insets(0, 0, 5, 5);
 		gbc_lblName.anchor = GridBagConstraints.WEST;
@@ -112,8 +125,7 @@ public class RegistrationPanel extends JPanel {
 		gbc_lblName.gridy = 2;
 		add(lblName, gbc_lblName);
 
-		textFieldName = new JTextField();
-		textFieldName.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		textFieldName = new CustomJTextField();
 		GridBagConstraints gbc_textFieldName = new GridBagConstraints();
 		gbc_textFieldName.gridwidth = 2;
 		gbc_textFieldName.insets = new Insets(0, 0, 5, 0);
@@ -123,9 +135,8 @@ public class RegistrationPanel extends JPanel {
 		add(textFieldName, gbc_textFieldName);
 		textFieldName.setColumns(10);
 
-		JLabel lblSurname = new JLabel(
+		JLabel lblSurname = new CustomJLabel(
 				SystemProperties.getInstance().getResourceBundle().getString("registrationPanel.lblSurname"));
-		lblSurname.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		GridBagConstraints gbc_lblSurname = new GridBagConstraints();
 		gbc_lblSurname.anchor = GridBagConstraints.WEST;
 		gbc_lblSurname.insets = new Insets(0, 0, 5, 5);
@@ -133,8 +144,7 @@ public class RegistrationPanel extends JPanel {
 		gbc_lblSurname.gridy = 3;
 		add(lblSurname, gbc_lblSurname);
 
-		textFieldSurname = new JTextField();
-		textFieldSurname.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		textFieldSurname = new CustomJTextField();
 		GridBagConstraints gbc_textFieldSurname = new GridBagConstraints();
 		gbc_textFieldSurname.gridwidth = 2;
 		gbc_textFieldSurname.insets = new Insets(0, 0, 5, 0);
@@ -144,9 +154,8 @@ public class RegistrationPanel extends JPanel {
 		add(textFieldSurname, gbc_textFieldSurname);
 		textFieldSurname.setColumns(10);
 
-		JLabel lblAddress = new JLabel(
+		JLabel lblAddress = new CustomJLabel(
 				SystemProperties.getInstance().getResourceBundle().getString("registrationPanel.lblAddress"));
-		lblAddress.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		GridBagConstraints gbc_lblAddress = new GridBagConstraints();
 		gbc_lblAddress.anchor = GridBagConstraints.WEST;
 		gbc_lblAddress.insets = new Insets(0, 0, 5, 5);
@@ -154,8 +163,7 @@ public class RegistrationPanel extends JPanel {
 		gbc_lblAddress.gridy = 4;
 		add(lblAddress, gbc_lblAddress);
 
-		textFieldAddress = new JTextField();
-		textFieldAddress.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		textFieldAddress = new CustomJTextField();
 		GridBagConstraints gbc_textFieldAddress = new GridBagConstraints();
 		gbc_textFieldAddress.gridwidth = 2;
 		gbc_textFieldAddress.insets = new Insets(0, 0, 5, 0);
@@ -165,9 +173,8 @@ public class RegistrationPanel extends JPanel {
 		add(textFieldAddress, gbc_textFieldAddress);
 		textFieldAddress.setColumns(10);
 
-		JLabel lblCity = new JLabel(
+		JLabel lblCity = new CustomJLabel(
 				SystemProperties.getInstance().getResourceBundle().getString("registrationPanel.lblCity"));
-		lblCity.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		GridBagConstraints gbc_lblCity = new GridBagConstraints();
 		gbc_lblCity.anchor = GridBagConstraints.WEST;
 		gbc_lblCity.insets = new Insets(0, 0, 5, 5);
@@ -175,7 +182,7 @@ public class RegistrationPanel extends JPanel {
 		gbc_lblCity.gridy = 5;
 		add(lblCity, gbc_lblCity);
 
-		comboBoxCity = new JComboBox<City>();
+		comboBoxCity = new CustomJComboBox<City>();
 		GridBagConstraints gbc_comboBoxCity = new GridBagConstraints();
 		gbc_comboBoxCity.gridwidth = 2;
 		gbc_comboBoxCity.insets = new Insets(0, 0, 5, 0);
@@ -184,9 +191,8 @@ public class RegistrationPanel extends JPanel {
 		gbc_comboBoxCity.gridy = 5;
 		add(comboBoxCity, gbc_comboBoxCity);
 
-		JLabel lblSex = new JLabel(
+		JLabel lblSex = new CustomJLabel(
 				SystemProperties.getInstance().getResourceBundle().getString("registrationPanel.lblSex"));
-		lblSex.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		GridBagConstraints gbc_lblSex = new GridBagConstraints();
 		gbc_lblSex.insets = new Insets(0, 0, 5, 5);
 		gbc_lblSex.anchor = GridBagConstraints.WEST;
@@ -194,9 +200,9 @@ public class RegistrationPanel extends JPanel {
 		gbc_lblSex.gridy = 6;
 		add(lblSex, gbc_lblSex);
 
-		radioButtonFemale = new JRadioButton(
+		radioButtonFemale = new CustomJRadioButton(
 				SystemProperties.getInstance().getResourceBundle().getString("registrationPanel.radioButtonFemale"));
-		radioButtonFemale.setBackground(Utils.getApplicationColor());
+		radioButtonFemale.setBackground(Utils.getApplicationUserDefinedColor());
 		radioButtonFemale.setActionCommand(Constants.DATA_BASE_FEMALE_SIGN.toString());
 		GridBagConstraints gbc_radioButtonFemale = new GridBagConstraints();
 		gbc_radioButtonFemale.anchor = GridBagConstraints.WEST;
@@ -205,9 +211,9 @@ public class RegistrationPanel extends JPanel {
 		gbc_radioButtonFemale.gridy = 6;
 		add(radioButtonFemale, gbc_radioButtonFemale);
 
-		radioButtonMale = new JRadioButton(
+		radioButtonMale = new CustomJRadioButton(
 				SystemProperties.getInstance().getResourceBundle().getString("registrationPanel.radioButtonMale"));
-		radioButtonMale.setBackground(Utils.getApplicationColor());
+		radioButtonMale.setBackground(Utils.getApplicationUserDefinedColor());
 		radioButtonMale.setActionCommand(Constants.DATA_BASE_MALE_SIGN.toString());
 		GridBagConstraints gbc_radioButtonMale = new GridBagConstraints();
 		gbc_radioButtonMale.anchor = GridBagConstraints.WEST;
@@ -220,9 +226,8 @@ public class RegistrationPanel extends JPanel {
 		groupRadioButtonSex.add(radioButtonFemale);
 		groupRadioButtonSex.add(radioButtonMale);
 
-		JLabel lblBirthDate = new JLabel(
+		JLabel lblBirthDate = new CustomJLabel(
 				SystemProperties.getInstance().getResourceBundle().getString("registrationPanel.lblBirthDate"));
-		lblBirthDate.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		GridBagConstraints gbc_lblBirthDate = new GridBagConstraints();
 		gbc_lblBirthDate.insets = new Insets(0, 0, 5, 5);
 		gbc_lblBirthDate.anchor = GridBagConstraints.WEST;
@@ -230,7 +235,7 @@ public class RegistrationPanel extends JPanel {
 		gbc_lblBirthDate.gridy = 7;
 		add(lblBirthDate, gbc_lblBirthDate);
 
-		dateChooserBirthDate = new JDateChooser();
+		dateChooserBirthDate = new CustomJDateChooser();
 		dateChooserBirthDate.setDateFormatString(Constants.APPLICATION_DATE_FORMAT.toPattern());
 		GridBagConstraints gbc_dateChooserBirthDate = new GridBagConstraints();
 		gbc_dateChooserBirthDate.gridwidth = 2;
@@ -240,9 +245,8 @@ public class RegistrationPanel extends JPanel {
 		gbc_dateChooserBirthDate.gridy = 7;
 		add(dateChooserBirthDate, gbc_dateChooserBirthDate);
 
-		lblEMail = new JLabel(
+		lblEMail = new CustomJLabel(
 				SystemProperties.getInstance().getResourceBundle().getString("registrationPanel.lblEMail"));
-		lblEMail.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		GridBagConstraints gbc_lblEMail = new GridBagConstraints();
 		gbc_lblEMail.anchor = GridBagConstraints.WEST;
 		gbc_lblEMail.insets = new Insets(0, 0, 5, 5);
@@ -250,7 +254,7 @@ public class RegistrationPanel extends JPanel {
 		gbc_lblEMail.gridy = 8;
 		add(lblEMail, gbc_lblEMail);
 
-		textFieldEMail = new JTextField();
+		textFieldEMail = new CustomJTextField();
 		GridBagConstraints gbc_textFieldEMail = new GridBagConstraints();
 		gbc_textFieldEMail.gridwidth = 2;
 		gbc_textFieldEMail.insets = new Insets(0, 0, 5, 0);
@@ -260,9 +264,8 @@ public class RegistrationPanel extends JPanel {
 		add(textFieldEMail, gbc_textFieldEMail);
 		textFieldEMail.setColumns(10);
 
-		JLabel lblLogin = new JLabel(
+		JLabel lblLogin = new CustomJLabel(
 				SystemProperties.getInstance().getResourceBundle().getString("registrationPanel.lblLogin"));
-		lblLogin.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		GridBagConstraints gbc_lblLogin = new GridBagConstraints();
 		gbc_lblLogin.anchor = GridBagConstraints.WEST;
 		gbc_lblLogin.insets = new Insets(0, 0, 5, 5);
@@ -270,8 +273,7 @@ public class RegistrationPanel extends JPanel {
 		gbc_lblLogin.gridy = 9;
 		add(lblLogin, gbc_lblLogin);
 
-		textFieldLogin = new JTextField();
-		textFieldLogin.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		textFieldLogin = new CustomJTextField();
 		GridBagConstraints gbc_textFieldLogin = new GridBagConstraints();
 		gbc_textFieldLogin.gridwidth = 2;
 		gbc_textFieldLogin.insets = new Insets(0, 0, 5, 0);
@@ -281,9 +283,8 @@ public class RegistrationPanel extends JPanel {
 		add(textFieldLogin, gbc_textFieldLogin);
 		textFieldLogin.setColumns(10);
 
-		lblPassword = new JLabel(
+		lblPassword = new CustomJLabel(
 				SystemProperties.getInstance().getResourceBundle().getString("registrationPanel.lblPassword"));
-		lblPassword.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		GridBagConstraints gbc_lblPassword = new GridBagConstraints();
 		gbc_lblPassword.anchor = GridBagConstraints.WEST;
 		gbc_lblPassword.insets = new Insets(0, 0, 5, 5);
@@ -291,7 +292,7 @@ public class RegistrationPanel extends JPanel {
 		gbc_lblPassword.gridy = 10;
 		add(lblPassword, gbc_lblPassword);
 
-		passwordField = new JPasswordField();
+		passwordField = new CustomJPasswordField();
 		GridBagConstraints gbc_passwordField = new GridBagConstraints();
 		gbc_passwordField.gridwidth = 2;
 		gbc_passwordField.insets = new Insets(0, 0, 5, 0);
@@ -300,11 +301,9 @@ public class RegistrationPanel extends JPanel {
 		gbc_passwordField.gridy = 10;
 		add(passwordField, gbc_passwordField);
 
-		btnRegisterNow = new JButton(
+		btnRegisterNow = new CustomJButton(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnRegisterNow-ico.png"))
+				.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)),
 				SystemProperties.getInstance().getResourceBundle().getString("registrationPanel.btnRegisterNow"));
-		btnRegisterNow.setIcon(
-				new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnRegisterNow-ico.png"))
-						.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
 		GridBagConstraints gbc_btnRegisterNow = new GridBagConstraints();
 		gbc_btnRegisterNow.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnRegisterNow.gridwidth = 3;

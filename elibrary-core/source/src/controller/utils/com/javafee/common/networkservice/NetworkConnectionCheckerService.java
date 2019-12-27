@@ -1,12 +1,14 @@
 package com.javafee.common.networkservice;
 
+import java.awt.*;
+
+import javax.swing.ImageIcon;
+
 import com.javafee.common.Common;
 import com.javafee.startform.RegistrationPanel;
 import com.javafee.tabbedform.Actions;
-import lombok.Setter;
 
-import javax.swing.*;
-import java.awt.*;
+import lombok.Setter;
 
 public class NetworkConnectionCheckerService implements Runnable {
 

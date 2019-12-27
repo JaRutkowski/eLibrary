@@ -1,9 +1,21 @@
 package com.javafee.hibernate.dto.common;
 
-import com.javafee.hibernate.dto.association.Language;
-import lombok.Data;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
-import javax.persistence.*;
+import com.javafee.hibernate.dto.association.Language;
+
+import lombok.Data;
 
 @Data
 @Entity
@@ -19,6 +31,12 @@ public class SystemProperties {
 	@OneToOne
 	@JoinColumn(name = "id_language")
 	private Language language;
+
+	@Column(name = "color", unique = false, nullable = true, insertable = true, updatable = true, length = 11)
+	private String color;
+
+	@Column(name = "font_name", unique = false, nullable = true, insertable = true, updatable = true, length = 80)
+	private String fontName;
 
 	@Column(name = "font_size", unique = false, nullable = true, insertable = true, updatable = true, length = 2)
 	private Integer fontSize;

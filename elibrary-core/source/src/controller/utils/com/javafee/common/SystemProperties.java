@@ -1,11 +1,10 @@
 package com.javafee.common;
 
-import com.javafee.exception.RefusedSystemPropertiesLoadingException;
-import com.javafee.hibernate.dao.HibernateUtil;
-
-
 import java.util.Locale;
 import java.util.ResourceBundle;
+
+import com.javafee.exception.RefusedSystemPropertiesLoadingException;
+import com.javafee.hibernate.dao.HibernateUtil;
 
 public class SystemProperties {
 
@@ -26,10 +25,10 @@ public class SystemProperties {
 	}
 
 	public void initializeSystem() {
-		initializeHibenrateUtil();
+		initializeHibernateUtil();
 	}
 
-	private void initializeHibenrateUtil() {
+	private void initializeHibernateUtil() {
 		@SuppressWarnings("unused")
 		HibernateUtil hibernateUtil = new HibernateUtil();
 	}

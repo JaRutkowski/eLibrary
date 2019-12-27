@@ -1,13 +1,17 @@
 package com.javafee.tabbedform.admworkers.frames;
 
+import java.awt.*;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.WindowConstants;
+import javax.swing.border.EmptyBorder;
+
 import com.javafee.common.Utils;
 import com.javafee.tabbedform.admworkers.WorkerDataPanel;
 import com.javafee.uniform.CockpitConfirmationPanel;
-import lombok.Getter;
 
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import java.awt.*;
+import lombok.Getter;
 
 public class WorkerAddModFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -20,7 +24,7 @@ public class WorkerAddModFrame extends JFrame {
 	private CockpitConfirmationPanel cockpitConfirmationPanel;
 
 	public WorkerAddModFrame() {
-		setBackground(Utils.getApplicationColor());
+		setBackground(Utils.getApplicationUserDefinedColor());
 		setIconImage(
 				Toolkit.getDefaultToolkit().getImage(WorkerAddModFrame.class.getResource("/images/splashScreen.jpg")));
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);

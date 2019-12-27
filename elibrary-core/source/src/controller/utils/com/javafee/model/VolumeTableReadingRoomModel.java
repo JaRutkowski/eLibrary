@@ -1,10 +1,9 @@
 package com.javafee.model;
 
 
+import java.util.stream.Collectors;
 
 import com.javafee.hibernate.dao.HibernateUtil;
-
-import java.util.stream.Collectors;
 
 public class VolumeTableReadingRoomModel extends VolumeTableModel {
 	private static final long serialVersionUID = 1L;

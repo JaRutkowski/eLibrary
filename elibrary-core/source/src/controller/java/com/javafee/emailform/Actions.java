@@ -1,17 +1,5 @@
 package com.javafee.emailform;
 
-import com.javafee.common.Constants;
-import com.javafee.common.Constants.Tab_Email;
-import com.javafee.common.IActionForm;
-import com.javafee.common.Params;
-import com.javafee.common.Utils;
-import com.javafee.startform.LogInEvent;
-import com.javafee.hibernate.dao.HibernateUtil;
-import com.javafee.hibernate.dao.common.Common;
-import com.javafee.hibernate.dto.common.SystemProperties;
-import com.javafee.hibernate.dto.common.UserData;
-
-import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
@@ -21,6 +9,19 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.stream.Collectors;
+
+import javax.swing.JOptionPane;
+
+import com.javafee.common.Constants;
+import com.javafee.common.Constants.Tab_Email;
+import com.javafee.common.IActionForm;
+import com.javafee.common.Params;
+import com.javafee.common.Utils;
+import com.javafee.hibernate.dao.HibernateUtil;
+import com.javafee.hibernate.dao.common.Common;
+import com.javafee.hibernate.dto.common.SystemProperties;
+import com.javafee.hibernate.dto.common.UserData;
+import com.javafee.startform.LogInEvent;
 
 public class Actions implements IActionForm {
 	private EmailForm emailForm;
@@ -105,6 +106,7 @@ public class Actions implements IActionForm {
 
 	private void onClickMenuSaveAsTemplate() {
 		if (validate()) {
+			boolean systemPropertiesAlreadyExists = LogInEvent.getUserData().getSystemProperties() != null;
 			SystemProperties systemProperties = Common
 					.checkAndGetSystemProperties(LogInEvent.getWorker() != null ? LogInEvent.getWorker().getIdUserData()
 							: Constants.DATA_BASE_ADMIN_ID);
@@ -119,12 +121,19 @@ public class Actions implements IActionForm {
 									Arrays.asList(emailForm.getPanelComposePage().getEditorPaneContent().getText()),
 									Charset.forName(Constants.APPLICATION_TEMPLATE_ENCODING));
 
-							systemProperties.setTemplateDirectory(result.getParent());
-							LogInEvent.getWorker().setSystemProperties(systemProperties);
+							if (!systemPropertiesAlreadyExists) {
+								systemProperties.setTemplateDirectory(result.getParent());
+								LogInEvent.getUserData().setSystemProperties(systemProperties);
 
-							HibernateUtil.beginTransaction();
-							HibernateUtil.getSession().update(UserData.class.getName(), LogInEvent.getWorker());
-							HibernateUtil.commitTransaction();
+								HibernateUtil.beginTransaction();
+								HibernateUtil.getSession().update(UserData.class.getName(), LogInEvent.getUserData());
+								HibernateUtil.commitTransaction();
+							} else {
+								HibernateUtil.beginTransaction();
+								LogInEvent.getUserData().getSystemProperties().setTemplateDirectory(result.getParent());
+								HibernateUtil.getSession().update(SystemProperties.class.getName(), LogInEvent.getUserData().getSystemProperties());
+								HibernateUtil.commitTransaction();
+							}
 
 							Utils.displayOptionPane(
 									com.javafee.common.SystemProperties.getInstance().getResourceBundle()

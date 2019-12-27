@@ -1,13 +1,18 @@
 package com.javafee.emailform.emails;
 
-import com.javafee.common.SystemProperties;
-import com.javafee.startform.RegistrationPanel;
-import lombok.Getter;
-
-import javax.swing.*;
 import java.awt.*;
 
-public class ComposeNavigationPanel extends JPanel {
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+
+import com.javafee.common.BasePanel;
+import com.javafee.common.SystemProperties;
+import com.javafee.startform.RegistrationPanel;
+import com.javafee.unicomponent.jbutton.CustomJButton;
+
+import lombok.Getter;
+
+public class ComposeNavigationPanel extends BasePanel {
 	private static final long serialVersionUID = 1L;
 
 	@Getter
@@ -20,33 +25,28 @@ public class ComposeNavigationPanel extends JPanel {
 	private JButton btnClear;
 
 	public ComposeNavigationPanel() {
+		super();
 		setLayout(new GridLayout(0, 2, 0, 0));
 
-		btnAddAttachment = new JButton(SystemProperties.getInstance().getResourceBundle()
-				.getString("composeNavigationPanel.btnAddAttachment"));
-		btnAddAttachment.setIcon(
-				new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnAddAttachment-ico.png"))
-						.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
+		btnAddAttachment = new CustomJButton(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnAddAttachment-ico.png"))
+				.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)),
+				SystemProperties.getInstance().getResourceBundle().getString("composeNavigationPanel.btnAddAttachment"));
 		btnAddAttachment.setEnabled(false);
 		add(btnAddAttachment);
 
-		btnSaveAsDraft = new JButton(
+		btnSaveAsDraft = new CustomJButton(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnSaveAsDraft-ico.png"))
+				.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)),
 				SystemProperties.getInstance().getResourceBundle().getString("composeNavigationPanel.btnSaveAsDraft"));
-		btnSaveAsDraft.setIcon(
-				new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnSaveAsDraft-ico.png"))
-						.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
 		add(btnSaveAsDraft);
 
-		btnSend = new JButton(
+		btnSend = new CustomJButton(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnSend-ico.png"))
+				.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)),
 				SystemProperties.getInstance().getResourceBundle().getString("composeNavigationPanel.btnSend"));
-		btnSend.setIcon(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnSend-ico.png"))
-				.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
 		add(btnSend);
 
-		btnClear = new JButton(
+		btnClear = new CustomJButton(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnClear-ico.png"))
+				.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)),
 				SystemProperties.getInstance().getResourceBundle().getString("composeNavigationPanel.btnClear"));
-		btnClear.setIcon(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnClear-ico.png"))
-				.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
 		add(btnClear);
 	}
 }

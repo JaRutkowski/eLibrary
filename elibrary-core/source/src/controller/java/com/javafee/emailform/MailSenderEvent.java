@@ -1,18 +1,19 @@
 package com.javafee.emailform;
 
-import com.javafee.common.Constants;
-import com.javafee.mail.MailSender;
-import com.javafee.hibernate.dto.common.UserData;
-import com.javafee.hibernate.dto.common.message.Recipient;
+import java.util.AbstractMap.SimpleEntry;
+import java.util.List;
+import java.util.Set;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import java.util.AbstractMap.SimpleEntry;
-import java.util.List;
-import java.util.Set;
+
+import com.javafee.common.Constants;
+import com.javafee.hibernate.dto.common.UserData;
+import com.javafee.hibernate.dto.common.message.Recipient;
+import com.javafee.mail.MailSender;
 
 public class MailSenderEvent {
 

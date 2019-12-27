@@ -1,15 +1,23 @@
 package com.javafee.tabbedform.library;
 
-import com.javafee.common.SystemProperties;
-import com.javafee.common.Utils;
-import com.javafee.startform.RegistrationPanel;
-import com.javafee.uniform.CockpitEditionPanel;
-import lombok.Getter;
-
-import javax.swing.*;
 import java.awt.*;
 
-public class AdmBookDataPanel extends JPanel {
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+
+import com.javafee.common.BasePanel;
+import com.javafee.common.SystemProperties;
+import com.javafee.startform.RegistrationPanel;
+import com.javafee.unicomponent.jbutton.CustomJButton;
+import com.javafee.unicomponent.jlabel.CustomJLabel;
+import com.javafee.unicomponent.jtextfield.CustomJTextField;
+import com.javafee.uniform.CockpitEditionPanel;
+
+import lombok.Getter;
+
+public class AdmBookDataPanel extends BasePanel {
 	private static final long serialVersionUID = 1L;
 
 	@Getter
@@ -28,7 +36,7 @@ public class AdmBookDataPanel extends JPanel {
 	private JButton btnClear;
 
 	public AdmBookDataPanel() {
-		setBackground(Utils.getApplicationColor());
+		super();
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{27, 313, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
@@ -36,7 +44,7 @@ public class AdmBookDataPanel extends JPanel {
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 
-		JLabel lblTitle = new JLabel(
+		JLabel lblTitle = new CustomJLabel(
 				SystemProperties.getInstance().getResourceBundle().getString("bookTableModel.titleCol") + ":");
 		GridBagConstraints gbc_lblTitle = new GridBagConstraints();
 		gbc_lblTitle.anchor = GridBagConstraints.WEST;
@@ -45,7 +53,7 @@ public class AdmBookDataPanel extends JPanel {
 		gbc_lblTitle.gridy = 0;
 		add(lblTitle, gbc_lblTitle);
 
-		textFieldTitle = new JTextField();
+		textFieldTitle = new CustomJTextField();
 		GridBagConstraints gbc_textFieldTitle = new GridBagConstraints();
 		gbc_textFieldTitle.insets = new Insets(0, 0, 5, 0);
 		gbc_textFieldTitle.fill = GridBagConstraints.HORIZONTAL;
@@ -54,7 +62,7 @@ public class AdmBookDataPanel extends JPanel {
 		add(textFieldTitle, gbc_textFieldTitle);
 		textFieldTitle.setColumns(10);
 
-		lblIsbnNumber = new JLabel(
+		lblIsbnNumber = new CustomJLabel(
 				SystemProperties.getInstance().getResourceBundle().getString("bookTableModel.isbnNumberCol") + ":");
 		GridBagConstraints gbc_lblIsbnNumber = new GridBagConstraints();
 		gbc_lblIsbnNumber.anchor = GridBagConstraints.WEST;
@@ -63,7 +71,7 @@ public class AdmBookDataPanel extends JPanel {
 		gbc_lblIsbnNumber.gridy = 1;
 		add(lblIsbnNumber, gbc_lblIsbnNumber);
 
-		textFieldIsbnNumber = new JTextField();
+		textFieldIsbnNumber = new CustomJTextField();
 		GridBagConstraints gbc_textFieldIsbnNumber = new GridBagConstraints();
 		gbc_textFieldIsbnNumber.insets = new Insets(0, 0, 5, 0);
 		gbc_textFieldIsbnNumber.fill = GridBagConstraints.HORIZONTAL;
@@ -72,7 +80,7 @@ public class AdmBookDataPanel extends JPanel {
 		add(textFieldIsbnNumber, gbc_textFieldIsbnNumber);
 		textFieldIsbnNumber.setColumns(10);
 
-		JLabel lblNumberOfPage = new JLabel(
+		JLabel lblNumberOfPage = new CustomJLabel(
 				SystemProperties.getInstance().getResourceBundle().getString("bookTableModel.numberOfPageCol") + ":");
 		GridBagConstraints gbc_lblNumberOfPage = new GridBagConstraints();
 		gbc_lblNumberOfPage.anchor = GridBagConstraints.WEST;
@@ -81,7 +89,7 @@ public class AdmBookDataPanel extends JPanel {
 		gbc_lblNumberOfPage.gridy = 2;
 		add(lblNumberOfPage, gbc_lblNumberOfPage);
 
-		textFieldNumberOfPage = new JTextField();
+		textFieldNumberOfPage = new CustomJTextField();
 		GridBagConstraints gbc_textFieldNumberOfPage = new GridBagConstraints();
 		gbc_textFieldNumberOfPage.insets = new Insets(0, 0, 5, 0);
 		gbc_textFieldNumberOfPage.fill = GridBagConstraints.HORIZONTAL;
@@ -90,7 +98,7 @@ public class AdmBookDataPanel extends JPanel {
 		add(textFieldNumberOfPage, gbc_textFieldNumberOfPage);
 		textFieldNumberOfPage.setColumns(10);
 
-		JLabel lblNumberOfTomes = new JLabel(
+		JLabel lblNumberOfTomes = new CustomJLabel(
 				SystemProperties.getInstance().getResourceBundle().getString("bookTableModel.numberOfTomesCol") + ":");
 		GridBagConstraints gbc_lblNumberOfTomes = new GridBagConstraints();
 		gbc_lblNumberOfTomes.anchor = GridBagConstraints.WEST;
@@ -99,7 +107,7 @@ public class AdmBookDataPanel extends JPanel {
 		gbc_lblNumberOfTomes.gridy = 3;
 		add(lblNumberOfTomes, gbc_lblNumberOfTomes);
 
-		textFieldNumberOfTomes = new JTextField();
+		textFieldNumberOfTomes = new CustomJTextField();
 		GridBagConstraints gbc_textFieldNumberOfTomes = new GridBagConstraints();
 		gbc_textFieldNumberOfTomes.insets = new Insets(0, 0, 5, 0);
 		gbc_textFieldNumberOfTomes.fill = GridBagConstraints.HORIZONTAL;
@@ -108,7 +116,7 @@ public class AdmBookDataPanel extends JPanel {
 		add(textFieldNumberOfTomes, gbc_textFieldNumberOfTomes);
 		textFieldNumberOfTomes.setColumns(10);
 
-		btnClear = new JButton(SystemProperties.getInstance().getResourceBundle().getString("admBookData.btnClear"));
+		btnClear = new CustomJButton(SystemProperties.getInstance().getResourceBundle().getString("admBookData.btnClear"));
 		btnClear.setIcon(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnClear-ico.png"))
 				.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
 		GridBagConstraints gbc_btnClear = new GridBagConstraints();

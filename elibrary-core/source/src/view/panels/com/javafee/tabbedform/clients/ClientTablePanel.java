@@ -1,17 +1,23 @@
 package com.javafee.tabbedform.clients;
 
-import com.javafee.common.Utils;
+import java.awt.*;
+
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+
+import com.javafee.common.BasePanel;
 import com.javafee.model.ClientTableModel;
+import com.javafee.unicomponent.jtable.CustomJTable;
+import com.javafee.unicomponent.tablefilterheader.CustomTableFilterHeader;
 import com.javafee.uniform.AdmIsRegisteredPanel;
 import com.javafee.uniform.CockpitEditionPanel;
 import com.javafee.uniform.MessageAndAlertPanel;
+
 import lombok.Getter;
 import net.coderazzi.filters.gui.TableFilterHeader;
 
-import javax.swing.*;
-import java.awt.*;
-
-public class ClientTablePanel extends JPanel {
+public class ClientTablePanel extends BasePanel {
 	private static final long serialVersionUID = 1L;
 
 	@Getter
@@ -24,7 +30,7 @@ public class ClientTablePanel extends JPanel {
 	private MessageAndAlertPanel messageAndAlertPanel;
 
 	public ClientTablePanel() {
-		setBackground(Utils.getApplicationColor());
+		super();
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{417, 16, 0};
 		gridBagLayout.rowHeights = new int[]{0, 76, 38, 0};
@@ -41,9 +47,9 @@ public class ClientTablePanel extends JPanel {
 		gbc_scrollPane.gridy = 0;
 		add(scrollPane, gbc_scrollPane);
 
-		clientTable = new JTable();
+		clientTable = new CustomJTable();
 		@SuppressWarnings("unused")
-		TableFilterHeader tableFilterHeader = new TableFilterHeader(clientTable);
+		TableFilterHeader customTableFilterHeader = new CustomTableFilterHeader(clientTable);
 		clientTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		clientTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		clientTable.setModel(new ClientTableModel());

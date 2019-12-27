@@ -1,15 +1,36 @@
 package com.javafee.common;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
 import java.util.stream.Stream;
 
+import javax.swing.KeyStroke;
+import javax.swing.UIManager;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 public final class Constants {
+	@Getter
+	@AllArgsConstructor
+	public enum Panel_Settings {
+		ROOT(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuRoot")),
+		GENERAL_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuGeneral")),
+		THEME_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuTheme")),
+		FONT_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuFont")),
+		ACCOUNT_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuAccount")),
+		PERSONAL_DATA_CHANGE_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuDataChange")),
+		PASSWORD_CHANGE_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuPasswordChange"));
+
+		private final String name;
+
+		public static Panel_Settings getByName(String panelSettingsSelectedName) {
+			return Stream.of(Panel_Settings.values()).filter(item -> item.getName().equals(panelSettingsSelectedName))
+					.findFirst().get();
+		}
+	}
+
 	@Getter
 	@AllArgsConstructor
 	public enum Tab_Client {
@@ -220,6 +241,10 @@ public final class Constants {
 		}
 	}
 
+	public enum Button_Type {
+		ACCEPT, DENY
+	}
+
 	public enum Role {
 		ADMIN, WORKER_ACCOUNTANT, WORKER_LIBRARIAN, CLIENT
 	}
@@ -235,6 +260,8 @@ public final class Constants {
 	public static String APPLICATION_LANGUAGE = "pl";
 	public static final String APPLICATION_LANGUAGE_PL = "pl";
 	public static final String APPLICATION_LANGUAGE_EN = "en";
+	public static final Color APPLICATION_DEFAULT_COLOR = new Color(237, 245, 248);
+	public static final Font APPLICATION_DEFAULT_FONT = UIManager.getDefaults().getFont("TabbedPane.font");
 	public static final int APPLICATION_NETWORK_SERVICE_LISTENER_DURATION = 2;
 	public static final Object APPLICATION_COMBO_BOX_BLANK_OBJECT = null;
 	public static final SimpleDateFormat APPLICATION_TIME_FORMAT = new SimpleDateFormat("HH:mm");

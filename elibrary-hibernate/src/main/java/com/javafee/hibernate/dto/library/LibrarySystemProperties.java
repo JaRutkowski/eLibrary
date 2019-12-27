@@ -1,10 +1,10 @@
 package com.javafee.hibernate.dto.library;
 
-import com.javafee.hibernate.dto.common.SystemProperties;
-
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+
+import com.javafee.hibernate.dto.common.SystemProperties;
 
 @Entity
 @Table(name = "lib_system_properties")

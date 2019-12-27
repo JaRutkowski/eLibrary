@@ -1,25 +1,21 @@
 package com.javafee.model;
 
+import java.util.Date;
+import java.util.List;
+
+import javax.swing.event.TableModelEvent;
+import javax.swing.table.AbstractTableModel;
+
 import com.javafee.common.Constants;
 import com.javafee.common.Constants.ClientTableColumn;
 import com.javafee.common.SystemProperties;
 import com.javafee.common.Validator;
 import com.javafee.exception.LogGuiException;
-
-
-
-
-
 import com.javafee.hibernate.dao.HibernateDao;
 import com.javafee.hibernate.dao.HibernateUtil;
 import com.javafee.hibernate.dto.association.City;
 import com.javafee.hibernate.dto.library.Client;
 import com.javafee.hibernate.dto.library.Worker;
-
-import javax.swing.event.TableModelEvent;
-import javax.swing.table.AbstractTableModel;
-import java.util.Date;
-import java.util.List;
 
 public class WorkerTableModel extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;

@@ -1,12 +1,17 @@
 package com.javafee.startform;
 
-import com.javafee.common.SystemProperties;
-
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.lang.reflect.InvocationTargetException;
+
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JWindow;
+import javax.swing.SwingUtilities;
+
+import com.javafee.common.SystemProperties;
+import com.javafee.unicomponent.jlabel.CustomJLabel;
 
 class MainSplashScreen extends JWindow {
 	private static final long serialVersionUID = 1L;
@@ -15,7 +20,7 @@ class MainSplashScreen extends JWindow {
 
 	private MainSplashScreen(String filename, final Frame f, int waitTime) {
 		super(f);
-		JLabel pictureLabel = new JLabel(new ImageIcon(filename));
+		JLabel pictureLabel = new CustomJLabel(new ImageIcon(filename));
 		getContentPane().add(pictureLabel, BorderLayout.CENTER);
 		pack();
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -31,26 +36,20 @@ class MainSplashScreen extends JWindow {
 		});
 
 		final int pause = waitTime;
-		final Runnable closerRunner = new Runnable() {
-			@Override
-			public void run() {
-				setVisible(false);
-				f.setVisible(true);
-				dispose();
-			}
+		final Runnable closerRunner = () -> {
+			setVisible(false);
+			f.setVisible(true);
+			dispose();
 		};
 
-		Runnable waitRunner = new Runnable() {
-			@Override
-			public void run() {
-				try {
-					setVisible(true);
-					SystemProperties.getInstance().initializeSystem();
-					Thread.sleep(pause);
-					SwingUtilities.invokeAndWait(closerRunner);
-				} catch (InvocationTargetException | InterruptedException e) {
-					e.printStackTrace();
-				}
+		Runnable waitRunner = () -> {
+			try {
+				setVisible(true);
+				SystemProperties.getInstance().initializeSystem();
+				Thread.sleep(pause);
+				SwingUtilities.invokeAndWait(closerRunner);
+			} catch (InvocationTargetException | InterruptedException e) {
+				e.printStackTrace();
 			}
 		};
 

@@ -1,14 +1,20 @@
 package com.javafee.uniform;
 
-import com.javafee.common.SystemProperties;
-import com.javafee.common.Utils;
-import lombok.Getter;
-
-import javax.swing.*;
-import javax.swing.border.TitledBorder;
 import java.awt.*;
 
-public class AdmIsRegisteredPanel extends JPanel {
+import javax.swing.JCheckBox;
+import javax.swing.UIManager;
+import javax.swing.border.TitledBorder;
+
+import com.javafee.common.BasePanel;
+import com.javafee.common.SystemProperties;
+import com.javafee.common.Utils;
+import com.javafee.unicomponent.border.CustomTitledBorder;
+import com.javafee.unicomponent.jcheckbox.CustomJCheckBox;
+
+import lombok.Getter;
+
+public class AdmIsRegisteredPanel extends BasePanel {
 	private static final long serialVersionUID = 1L;
 
 	@Getter
@@ -17,11 +23,11 @@ public class AdmIsRegisteredPanel extends JPanel {
 	private DecisionPanel decisionPanel;
 
 	public AdmIsRegisteredPanel() {
-		setBackground(Utils.getApplicationColor());
-		setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"),
+		super();
+		setBorder(new CustomTitledBorder(UIManager.getBorder("TitledBorder.border"),
 				SystemProperties.getInstance().getResourceBundle()
 						.getString("admIsRegisteredPanel.admIsRegisteredPanelBorderTitle"),
-				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+				TitledBorder.LEADING, CustomTitledBorder.TOP, null, new Color(0, 0, 0)));
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 161, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0};
@@ -29,9 +35,9 @@ public class AdmIsRegisteredPanel extends JPanel {
 		gridBagLayout.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 
-		chckbxIsRegistered = new JCheckBox(SystemProperties.getInstance().getResourceBundle()
+		chckbxIsRegistered = new CustomJCheckBox(SystemProperties.getInstance().getResourceBundle()
 				.getString("admIsRegisteredPanel.chckbxIsRegistered"));
-		chckbxIsRegistered.setBackground(Utils.getApplicationColor());
+		chckbxIsRegistered.setBackground(Utils.getApplicationUserDefinedColor());
 		GridBagConstraints gbc_chckbxIsRegistered = new GridBagConstraints();
 		gbc_chckbxIsRegistered.fill = GridBagConstraints.HORIZONTAL;
 		gbc_chckbxIsRegistered.insets = new Insets(0, 0, 0, 5);

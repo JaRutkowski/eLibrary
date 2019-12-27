@@ -1,8 +1,5 @@
 package com.javafee.common;
 
-import javax.swing.*;
-import javax.swing.filechooser.FileFilter;
-import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -10,23 +7,56 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileSystemView;
+
+import org.oxbow.swingbits.util.Strings;
+
+import com.javafee.startform.LogInEvent;
+
 public class Utils {
 	public static void setLookAndFeel() {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (UnsupportedLookAndFeelException e) {
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
 		}
 	}
 
 	public static Color getApplicationColor() {
-		return new Color(237, 245, 248);
+		return Constants.APPLICATION_DEFAULT_COLOR;
+	}
+
+	public static Font getApplicationFont() {
+		return Constants.APPLICATION_DEFAULT_FONT;
+	}
+
+	public static Color getApplicationUserDefinedColor() {
+		String color = LogInEvent.getUserData() != null && LogInEvent.getUserData().getSystemProperties() != null ? LogInEvent.getUserData().getSystemProperties().getColor() : null;
+		Color userDefinedColor;
+		if (Strings.isEmpty(color))
+			userDefinedColor = getApplicationColor();
+		else {
+			String[] rgb = color.split(",");
+			userDefinedColor = new Color(Integer.parseInt(rgb[0]), Integer.parseInt(rgb[1]), Integer.parseInt(rgb[2]));
+		}
+		return userDefinedColor;
+	}
+
+	public static Font getApplicationUserDefinedFont() {
+		String fontName = LogInEvent.getUserData() != null && LogInEvent.getUserData().getSystemProperties() != null ? LogInEvent.getUserData().getSystemProperties().getFontName() : null;
+		Integer fontSize = LogInEvent.getUserData() != null && LogInEvent.getUserData().getSystemProperties() != null ? LogInEvent.getUserData().getSystemProperties().getFontSize() : null;
+		Font userDefinedFont;
+		if (Strings.isEmpty(fontName) && fontSize == null)
+			userDefinedFont = getApplicationFont();
+		else
+			userDefinedFont = new Font(fontName, Font.PLAIN, fontSize);
+		return userDefinedFont;
 	}
 
 	public static void displayOptionPane(String message, String title, int messageType) {

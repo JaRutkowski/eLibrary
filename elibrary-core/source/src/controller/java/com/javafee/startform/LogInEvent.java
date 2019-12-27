@@ -1,17 +1,25 @@
 package com.javafee.startform;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.Date;
+
 import com.javafee.common.Common;
+import com.javafee.common.Constants;
 import com.javafee.common.Constants.Role;
 import com.javafee.common.Params;
 import com.javafee.exception.RefusedLogInException;
 import com.javafee.hibernate.dao.HibernateUtil;
+import com.javafee.hibernate.dto.common.UserData;
 import com.javafee.hibernate.dto.library.Client;
 import com.javafee.hibernate.dto.library.LibraryWorker;
 import com.javafee.hibernate.dto.library.Worker;
+import com.javafee.process.ProcessFactory;
+import com.javafee.process.initializator.FeedAdministratorDataProcess;
+
 import lombok.Getter;
+import lombok.extern.java.Log;
 
-import java.util.Date;
-
+@Log
 public final class LogInEvent {
 	@Getter
 	private static LogInEvent logInEvent = null;
@@ -23,6 +31,8 @@ public final class LogInEvent {
 	private static Worker worker;
 	@Getter
 	private static LibraryWorker libraryWorker;
+	@Getter
+	public static UserData userData;
 	@Getter
 	private static Boolean isAdmin;
 	@Getter
@@ -36,6 +46,7 @@ public final class LogInEvent {
 	}
 
 	public static LogInEvent getInstance(String login, String password) throws RefusedLogInException {
+		initializeSystem();
 		if (checkLogAndRole(login, password)) {
 			logInEvent = new LogInEvent();
 			logInDate = new Date();
@@ -44,14 +55,12 @@ public final class LogInEvent {
 		return logInEvent;
 	}
 
-	public Object getUser() {
-		Object user = null;
-		if (role == Role.CLIENT)
-			user = client;
-		else if (role == Role.WORKER_ACCOUNTANT || role == Role.WORKER_LIBRARIAN)
-			user = worker;
-
-		return user;
+	private static void initializeSystem() {
+		try {
+			ProcessFactory.create(FeedAdministratorDataProcess.class).execute();
+		} catch (IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
+			log.severe(e.getMessage());
+		}
 	}
 
 	private static boolean checkLogAndRole(String login, String password) {
@@ -63,18 +72,21 @@ public final class LogInEvent {
 		isAdmin = Common.isAdmin(login, password);
 
 		if (client != null) {
-			isAdmin = Common.isAdmin(client);
-			if (isAdmin)
+			if (isAdmin) {
 				role = Role.ADMIN;
+				userData = com.javafee.hibernate.dao.common.Common.findUserDataById(Constants.DATA_BASE_ADMIN_ID).get();
+			}
 			if (checkLoginAndPassword(password)) {
 				if (client.getRegistered()) {
 					role = Role.CLIENT;
+					userData = client;
 					result = true;
 				} else
 					Params.getInstance().add("NOT_REGISTERED", LogInFailureCause.NOT_REGISTERED);
 			}
 		} else if (worker == null && isAdmin) {
 			role = Role.ADMIN;
+			userData = com.javafee.hibernate.dao.common.Common.findUserDataById(Constants.DATA_BASE_ADMIN_ID).get();
 			result = true;
 		} else if (worker != null) {
 			if (checkLoginAndPassword(password)) {
@@ -82,6 +94,7 @@ public final class LogInEvent {
 					if (checkIfHired(worker)) {
 						if (libraryWorker.getIsAccountant() != null)
 							role = libraryWorker.getIsAccountant() ? Role.WORKER_ACCOUNTANT : Role.WORKER_LIBRARIAN;
+						userData = worker;
 						result = true;
 					} else
 						Params.getInstance().add("NOT_HIRED", LogInFailureCause.NOT_HIRED);
@@ -90,6 +103,7 @@ public final class LogInEvent {
 			}
 		} else
 			Params.getInstance().add("NO_USER", LogInFailureCause.NO_USER);
+
 
 		return result;
 	}

@@ -1,11 +1,18 @@
 package com.javafee.mail;
 
-import com.javafee.common.Constants;
-import lombok.Getter;
+import java.util.Properties;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+
 import org.apache.log4j.Logger;
 
-import javax.mail.*;
-import java.util.Properties;
+import com.javafee.common.Constants;
+
+import lombok.Getter;
 
 public class MailSender {
 	private final String username = Constants.APPLICATION_EMAIL;

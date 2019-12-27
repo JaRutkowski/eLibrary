@@ -1,27 +1,51 @@
 package com.javafee.common;
 
-import com.javafee.common.networkservice.NetworkServiceListener;
-import com.javafee.common.timerservice.TimerServiceListener;
-import com.javafee.common.watchservice.WatchServiceListener;
-import com.javafee.emailform.TabTemplatePageEvent;
-import com.javafee.tabbedform.Actions;
-import edu.vt.middleware.password.*;
-import com.javafee.hibernate.dao.HibernateUtil;
-import com.javafee.hibernate.dto.common.UserData;
-import com.javafee.hibernate.dto.library.Client;
-import com.javafee.hibernate.dto.library.Worker;
-import org.hibernate.resource.transaction.spi.TransactionStatus;
-
-import javax.swing.*;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
+import javax.swing.JLabel;
+
+import org.hibernate.resource.transaction.spi.TransactionStatus;
+
+import com.javafee.common.networkservice.NetworkServiceListener;
+import com.javafee.common.timerservice.TimerServiceListener;
+import com.javafee.common.watchservice.WatchServiceListener;
+import com.javafee.emailform.TabTemplatePageEvent;
+import com.javafee.hibernate.dao.HibernateUtil;
+import com.javafee.hibernate.dto.common.UserData;
+import com.javafee.hibernate.dto.library.Client;
+import com.javafee.hibernate.dto.library.Worker;
+import com.javafee.startform.RegistrationPanel;
+import com.javafee.tabbedform.Actions;
+
+import edu.vt.middleware.password.AlphabeticalSequenceRule;
+import edu.vt.middleware.password.CharacterCharacteristicsRule;
+import edu.vt.middleware.password.CharacterRule;
+import edu.vt.middleware.password.DigitCharacterRule;
+import edu.vt.middleware.password.LengthRule;
+import edu.vt.middleware.password.LowercaseCharacterRule;
+import edu.vt.middleware.password.NonAlphanumericCharacterRule;
+import edu.vt.middleware.password.NumericalSequenceRule;
+import edu.vt.middleware.password.Password;
+import edu.vt.middleware.password.PasswordData;
+import edu.vt.middleware.password.PasswordGenerator;
+import edu.vt.middleware.password.PasswordValidator;
+import edu.vt.middleware.password.QwertySequenceRule;
+import edu.vt.middleware.password.RepeatCharacterRegexRule;
+import edu.vt.middleware.password.Rule;
+import edu.vt.middleware.password.RuleResult;
+import edu.vt.middleware.password.UppercaseCharacterRule;
+import edu.vt.middleware.password.WhitespaceRule;
+import lombok.extern.java.Log;
+
+@Log
 public final class Common {
 
 	private static WatchServiceListener watchServiceListener = null;
@@ -57,7 +81,7 @@ public final class Common {
 		return generator.generatePassword(Constants.APPLICATION_GENERATE_PASSWORD_LENGTH, rules);
 	}
 
-	public static final boolean checkPasswordStrenght(String password) {
+	public static final boolean checkPasswordStrength(String password) {
 		boolean result = false;
 		// password must be between 8 and 16 chars long
 		LengthRule lengthRule = new LengthRule(Constants.APPLICATION_MIN_PASSWORD_LENGTH,
@@ -99,7 +123,7 @@ public final class Common {
 		RuleResult ruleResult = validator.validate(passwordData);
 
 		if (ruleResult.isValid()) {
-			System.out.println("Valid password");
+			log.info("Valid password");
 			result = true;
 		}
 
@@ -109,6 +133,38 @@ public final class Common {
 	@SuppressWarnings("unchecked")
 	public static <T> void prepareBlankComboBoxElement(List<T> comboBoxDataList) {
 		comboBoxDataList.add((T) Constants.APPLICATION_COMBO_BOX_BLANK_OBJECT);
+	}
+
+	public static void fillUserDataPanel(RegistrationPanel registrationPanel, UserData userData) {
+		// Pesel number
+		registrationPanel.getTextFieldPeselNumber().setText(userData.getPeselNumber() != null ? userData.getPeselNumber() : "");
+		// Document number
+		registrationPanel.getTextFieldDocumentNumber().setText(userData.getDocumentNumber() != null ? userData.getDocumentNumber() : "");
+		// Login
+		registrationPanel.getTextFieldLogin().setText(userData.getLogin() != null ? userData.getLogin() : "");
+		// Email
+		registrationPanel.getTextFieldEMail().setText(userData.getEMail() != null ? userData.getEMail() : "");
+		// Name
+		registrationPanel.getTextFieldName().setText(userData.getName() != null ? userData.getName() : "");
+		// Surname
+		registrationPanel.getTextFieldSurname().setText(userData.getSurname() != null ? userData.getSurname() : "");
+		// Address
+		registrationPanel.getTextFieldAddress().setText(userData.getAddress() != null ? userData.getAddress() : "");
+		// City
+		registrationPanel.getComboBoxCity().setSelectedItem(userData.getCity());
+		// Sex
+		if (userData.getSex() != null && Constants.DATA_BASE_MALE_SIGN.toString().equals(userData.getSex().toString()))
+			registrationPanel.getGroupRadioButtonSex().setSelected(registrationPanel.getRadioButtonMale().getModel(), true);
+		else if (userData.getSex() != null && Constants.DATA_BASE_FEMALE_SIGN.toString().equals(userData.getSex().toString()))
+			registrationPanel.getGroupRadioButtonSex().setSelected(registrationPanel.getRadioButtonFemale().getModel(), true);
+		// Birth date
+		try {
+			registrationPanel.getDateChooserBirthDate().setDate(userData.getBirthDate() != null
+					? Constants.APPLICATION_DATE_FORMAT.parse(Constants.APPLICATION_DATE_FORMAT.format(userData.getBirthDate()))
+					: null);
+		} catch (ParseException e) {
+			log.severe(e.getMessage());
+		}
 	}
 
 	public static Integer clearMessagesRecipientData(Integer idUserData) {
@@ -148,6 +204,16 @@ public final class Common {
 				&& Constants.DATA_BASE_ADMIN_PASSWORD.equals(userData.getPassword());
 	}
 
+	public static boolean checkInternetConnectivity() {
+		Process process;
+		try {
+			process = java.lang.Runtime.getRuntime().exec("ping www.geeksforgeeks.org");
+			return !process.waitFor(100, TimeUnit.MILLISECONDS);
+		} catch (IOException | InterruptedException e) {
+			return false;
+		}
+	}
+
 	public static void registerWatchServiceListener(TabTemplatePageEvent tabTemplatePageEvent,
 	                                                Consumer<TabTemplatePageEvent> c) {
 		watchServiceListener = new WatchServiceListener();
@@ -179,15 +245,4 @@ public final class Common {
 		if (timerServiceListener != null)
 			timerServiceListener.destroy();
 	}
-
-	public static boolean checkInternetConnectivity() {
-		Process process;
-		try {
-			process = java.lang.Runtime.getRuntime().exec("ping www.geeksforgeeks.org");
-			return !process.waitFor(100, TimeUnit.MILLISECONDS);
-		} catch (IOException | InterruptedException e) {
-			return false;
-		}
-	}
-
 }

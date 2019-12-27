@@ -1,19 +1,22 @@
 package com.javafee.tabbedform;
 
-import com.javafee.common.*;
+import java.util.List;
+
+import javax.swing.JOptionPane;
+
+import com.javafee.common.Constants;
+import com.javafee.common.IActionForm;
+import com.javafee.common.Params;
+import com.javafee.common.SystemProperties;
+import com.javafee.common.Utils;
 import com.javafee.exception.LogGuiException;
 import com.javafee.exception.RefusedBookEventLoadingException;
-
-
-
-import com.javafee.model.BookTableModel;
 import com.javafee.hibernate.dao.HibernateUtil;
 import com.javafee.hibernate.dto.library.Book;
 import com.javafee.hibernate.dto.library.Volume;
-import lombok.Setter;
+import com.javafee.model.BookTableModel;
 
-import javax.swing.*;
-import java.util.List;
+import lombok.Setter;
 
 public class TabBookEvent implements IActionForm {
 	@Setter

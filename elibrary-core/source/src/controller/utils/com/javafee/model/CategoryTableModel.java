@@ -1,18 +1,17 @@
 package com.javafee.model;
 
-import com.javafee.common.Constants.CategoryTableColumn;
-import com.javafee.common.SystemProperties;
-
-
-
-import com.javafee.hibernate.dao.HibernateDao;
-import com.javafee.hibernate.dao.HibernateUtil;
-import com.javafee.hibernate.dto.library.Category;
-import lombok.Getter;
+import java.util.List;
 
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.AbstractTableModel;
-import java.util.List;
+
+import com.javafee.common.Constants.CategoryTableColumn;
+import com.javafee.common.SystemProperties;
+import com.javafee.hibernate.dao.HibernateDao;
+import com.javafee.hibernate.dao.HibernateUtil;
+import com.javafee.hibernate.dto.library.Category;
+
+import lombok.Getter;
 
 public class CategoryTableModel extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
