@@ -124,13 +124,20 @@ public class TabDraftPageEvent implements IMessageForm {
 	}
 
 	private void onClickBtnModify() {
-		int selectedRowIndex = emailForm.getPanelDraftPage().getDraftTable()
-				.convertRowIndexToModel(emailForm.getPanelDraftPage().getDraftTable().getSelectedRow());
-		Message selectedMessage = ((DraftTableModel) emailForm.getPanelDraftPage().getDraftTable().getModel())
-				.getMessage(selectedRowIndex);
+		if (emailForm.getPanelDraftPage().getDraftTable().getSelectedRow() != -1) {
+			int selectedRowIndex = emailForm.getPanelDraftPage().getDraftTable()
+					.convertRowIndexToModel(emailForm.getPanelDraftPage().getDraftTable().getSelectedRow());
+			Message selectedMessage = ((DraftTableModel) emailForm.getPanelDraftPage().getDraftTable().getModel())
+					.getMessage(selectedRowIndex);
 
-		Params.getInstance().add("DRAFT_TO_MODIFY", selectedMessage);
-		emailForm.getTabbedPane().setSelectedIndex(Tab_Email.TAB_CREATE_PAGE.getValue());
+			Params.getInstance().add("DRAFT_TO_MODIFY", selectedMessage);
+			emailForm.getTabbedPane().setSelectedIndex(Tab_Email.TAB_CREATE_PAGE.getValue());
+		} else
+			LogGuiException.logWarning(
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("tabOutboxPageEvent.notSelectedMessageWarningTitle"),
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("tabOutboxPageEvent.notSelectedMessageWarning"));
 	}
 
 	private void onChangeChckShowOnlySystemCorrespondence() {
