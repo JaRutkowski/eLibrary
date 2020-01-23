@@ -132,13 +132,20 @@ public class TabOutboxPageEvent implements IMessageForm {
 	}
 
 	private void onClickBtnPreview() {
-		int selectedRowIndex = emailForm.getPanelOutboxPage().getOutboxTable()
-				.convertRowIndexToModel(emailForm.getPanelOutboxPage().getOutboxTable().getSelectedRow());
-		Message selectedMessage = ((OutboxTableModel) emailForm.getPanelOutboxPage().getOutboxTable().getModel())
-				.getMessage(selectedRowIndex);
+		if (emailForm.getPanelOutboxPage().getOutboxTable().getSelectedRow() != -1) {
+			int selectedRowIndex = emailForm.getPanelOutboxPage().getOutboxTable()
+					.convertRowIndexToModel(emailForm.getPanelOutboxPage().getOutboxTable().getSelectedRow());
+			Message selectedMessage = ((OutboxTableModel) emailForm.getPanelOutboxPage().getOutboxTable().getModel())
+					.getMessage(selectedRowIndex);
 
-		Params.getInstance().add("MESSAGE_TO_PREVIEW", selectedMessage);
-		emailForm.getTabbedPane().setSelectedIndex(Tab_Email.TAB_CREATE_PAGE.getValue());
+			Params.getInstance().add("MESSAGE_TO_PREVIEW", selectedMessage);
+			emailForm.getTabbedPane().setSelectedIndex(Tab_Email.TAB_CREATE_PAGE.getValue());
+		} else
+			LogGuiException.logWarning(
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("tabOutboxPageEvent.notSelectedMessageWarningTitle"),
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("tabOutboxPageEvent.notSelectedMessageWarning"));
 	}
 
 	private void onChangeChckShowOnlySystemCorrespondence() {
