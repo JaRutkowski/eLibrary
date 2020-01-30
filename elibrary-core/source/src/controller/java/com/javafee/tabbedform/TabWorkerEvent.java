@@ -167,18 +167,16 @@ public final class TabWorkerEvent implements IActionForm {
 					.convertRowIndexToModel(tabbedForm.getPanelWorker().getWorkerTable().getSelectedRow());
 			Worker selectedClient = ((WorkerTableModel) tabbedForm.getPanelWorker().getWorkerTable().getModel())
 					.getWorker(selectedRowIndex);
-			Worker clientShallowClone = (Worker) selectedClient.clone();
 
-			clientShallowClone.setRegistered(
+			selectedClient.setRegistered(
 					tabbedForm.getPanelWorker().getAdmIsRegisteredPanel().getChckbxIsRegistered().isSelected());
 
 			HibernateUtil.beginTransaction();
-			HibernateUtil.getSession().evict(selectedClient);
-			HibernateUtil.getSession().update(Worker.class.getName(), clientShallowClone);
+			HibernateUtil.getSession().update(Worker.class.getName(), selectedClient);
 			HibernateUtil.commitTransaction();
 
 			((WorkerTableModel) tabbedForm.getPanelWorker().getWorkerTable().getModel()).setWorker(selectedRowIndex,
-					clientShallowClone);
+					selectedClient);
 			reloadClientTable();
 		} else {
 			Utils.displayOptionPane(
@@ -196,21 +194,18 @@ public final class TabWorkerEvent implements IActionForm {
 					.convertRowIndexToModel(tabbedForm.getPanelWorker().getWorkerTable().getSelectedRow());
 			Worker selectedWorker = ((WorkerTableModel) tabbedForm.getPanelWorker().getWorkerTable().getModel())
 					.getWorker(selectedRowIndex);
-			Worker workerShallowClone = (Worker) selectedWorker.clone();
-
-			LibraryWorker libraryWorker = checkIfHired(workerShallowClone);
+			LibraryWorker libraryWorker = checkIfHired(selectedWorker);
 
 			if (libraryWorker != null) {
-				workerShallowClone.getLibraryWorker().stream().collect(Collectors.toList()).get(0).setIsAccountant(
+				selectedWorker.getLibraryWorker().stream().collect(Collectors.toList()).get(0).setIsAccountant(
 						tabbedForm.getPanelWorker().getAdmIsAccountantPanel().getChckbxIsAccountant().isSelected());
 
 				HibernateUtil.beginTransaction();
-				HibernateUtil.getSession().evict(selectedWorker);
-				HibernateUtil.getSession().update(Worker.class.getName(), workerShallowClone);
+				HibernateUtil.getSession().update(Worker.class.getName(), selectedWorker);
 				HibernateUtil.commitTransaction();
 
 				((WorkerTableModel) tabbedForm.getPanelWorker().getWorkerTable().getModel()).setWorker(selectedRowIndex,
-						workerShallowClone);
+						selectedWorker);
 				reloadClientTable();
 			}
 		} else {
