@@ -7,14 +7,15 @@ import com.javafee.elibrary.core.common.Common;
 import com.javafee.elibrary.core.common.Constants;
 import com.javafee.elibrary.core.common.Constants.Role;
 import com.javafee.elibrary.core.common.Params;
+import com.javafee.elibrary.core.exception.RefusedLogInException;
+import com.javafee.elibrary.core.process.ProcessFactory;
+import com.javafee.elibrary.core.process.initializator.FeedAdministratorDataProcess;
+import com.javafee.elibrary.core.process.initializator.FeedMessageTypesProcess;
+import com.javafee.elibrary.hibernate.dao.HibernateUtil;
 import com.javafee.elibrary.hibernate.dto.common.UserData;
 import com.javafee.elibrary.hibernate.dto.library.Client;
 import com.javafee.elibrary.hibernate.dto.library.LibraryWorker;
 import com.javafee.elibrary.hibernate.dto.library.Worker;
-import com.javafee.elibrary.core.exception.RefusedLogInException;
-import com.javafee.elibrary.hibernate.dao.HibernateUtil;
-import com.javafee.elibrary.core.process.ProcessFactory;
-import com.javafee.elibrary.core.process.initializator.FeedAdministratorDataProcess;
 
 import lombok.Getter;
 import lombok.extern.java.Log;
@@ -58,6 +59,7 @@ public final class LogInEvent {
 	private static void initializeSystem() {
 		try {
 			ProcessFactory.create(FeedAdministratorDataProcess.class).execute();
+			ProcessFactory.create(FeedMessageTypesProcess.class).execute();
 		} catch (IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
 			log.severe(e.getMessage());
 		}
