@@ -4,7 +4,7 @@
 ------------------------------------------------------------------------------------------------------------------------------------------------
 #3	- RegistrationPanel - document number with document number kind (passport or id card).
 ------------------------------------------------------------------------------------------------------------------------------------------------
-#4	- com.javafee.startform.Actions - adding key action listener.
+#4	- Actions - adding key action listener.
 ------------------------------------------------------------------------------------------------------------------------------------------------
 #5	- Making editable JTable CRUD system (isCellEditable() in Table Model class and handling CRUD.
 		- desc: it have been made but due to updat'ng problems changes is been hanged.
