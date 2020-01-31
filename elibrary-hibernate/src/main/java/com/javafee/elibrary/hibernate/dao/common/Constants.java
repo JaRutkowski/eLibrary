@@ -215,7 +215,7 @@ public final class Constants {
 
 	public static final String LANGUAGE_RESOURCE_BUNDLE = "messages";
 
-	public static final String DATA_BASE_PACKAGE_TO_SCAN = "com.javafee.hibernate.dto";
+	public static final String DATA_BASE_PACKAGE_TO_SCAN = "com.javafee.elibrary.hibernate.dto";
 	public static final String DATA_BASE_URL = "127.0.0.1:5432/library";
 	public static final String DATA_BASE_USER = "postgres";
 	public static final String DATA_BASE_PASSWORD = "admin123";
