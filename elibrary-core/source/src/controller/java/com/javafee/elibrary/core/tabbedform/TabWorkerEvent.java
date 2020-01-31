@@ -178,6 +178,13 @@ public final class TabWorkerEvent implements IActionForm {
 			((WorkerTableModel) tabbedForm.getPanelWorker().getWorkerTable().getModel()).setWorker(selectedRowIndex,
 					selectedClient);
 			reloadClientTable();
+
+			Utils.displayOptionPane(
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("tabWorkerEvent.updateRegistrationStatusWorkerSuccess"),
+					SystemProperties.getInstance().getResourceBundle().getString(
+							"tabWorkerEvent.updateWorkerSuccessTitle"),
+					JOptionPane.INFORMATION_MESSAGE);
 		} else {
 			Utils.displayOptionPane(
 					SystemProperties.getInstance().getResourceBundle()
@@ -207,6 +214,13 @@ public final class TabWorkerEvent implements IActionForm {
 				((WorkerTableModel) tabbedForm.getPanelWorker().getWorkerTable().getModel()).setWorker(selectedRowIndex,
 						selectedWorker);
 				reloadClientTable();
+
+				Utils.displayOptionPane(
+						SystemProperties.getInstance().getResourceBundle()
+								.getString("tabWorkerEvent.updateAdministratorPrivilegesWorkerSuccess"),
+						SystemProperties.getInstance().getResourceBundle().getString(
+								"tabWorkerEvent.updateWorkerSuccessTitle"),
+						JOptionPane.INFORMATION_MESSAGE);
 			}
 		} else {
 			Utils.displayOptionPane(
