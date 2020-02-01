@@ -1,6 +1,7 @@
 package com.javafee.elibrary.core.unicomponent.jtable;
 
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 import com.javafee.elibrary.core.common.Utils;
 
