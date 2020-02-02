@@ -8,8 +8,8 @@ import javax.swing.JLabel;
 import com.javafee.elibrary.core.common.BasePanel;
 import com.javafee.elibrary.core.common.Constants.Button_Type;
 import com.javafee.elibrary.core.common.SystemProperties;
-import com.javafee.elibrary.core.unicomponent.jlabel.CustomJLabel;
 import com.javafee.elibrary.core.unicomponent.jbutton.CustomJButtonFactory;
+import com.javafee.elibrary.core.unicomponent.jlabel.CustomJLabel;
 
 import lombok.Getter;
 import say.swing.JFontChooser;

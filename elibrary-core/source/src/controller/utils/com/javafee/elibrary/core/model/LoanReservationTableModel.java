@@ -8,8 +8,8 @@ import javax.swing.table.AbstractTableModel;
 
 import com.javafee.elibrary.core.common.Constants;
 import com.javafee.elibrary.core.common.SystemProperties;
-import com.javafee.elibrary.hibernate.dto.library.Lend;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
+import com.javafee.elibrary.hibernate.dto.library.Lend;
 
 public class LoanReservationTableModel extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;

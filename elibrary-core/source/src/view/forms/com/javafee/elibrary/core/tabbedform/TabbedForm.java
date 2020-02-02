@@ -12,6 +12,7 @@ import javax.swing.WindowConstants;
 
 import com.javafee.elibrary.core.common.BaseForm;
 import com.javafee.elibrary.core.common.SystemProperties;
+import com.javafee.elibrary.core.startform.RegistrationPanel;
 import com.javafee.elibrary.core.tabbedform.admdictionaries.AdmDictionaryPanel;
 import com.javafee.elibrary.core.tabbedform.admworkers.WorkerTablePanel;
 import com.javafee.elibrary.core.tabbedform.books.BookTablePanel;
@@ -22,7 +23,6 @@ import com.javafee.elibrary.core.unicomponent.jbutton.CustomJButton;
 import com.javafee.elibrary.core.unicomponent.jcombobox.CustomJComboBox;
 import com.javafee.elibrary.core.unicomponent.jlabel.CustomJLabel;
 import com.javafee.elibrary.core.unicomponent.jtabbedpane.CustomJTabbedPane;
-import com.javafee.elibrary.core.startform.RegistrationPanel;
 
 import lombok.Getter;
 

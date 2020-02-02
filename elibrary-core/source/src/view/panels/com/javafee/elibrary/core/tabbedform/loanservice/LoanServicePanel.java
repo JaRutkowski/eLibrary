@@ -13,7 +13,6 @@ import javax.swing.border.TitledBorder;
 import com.javafee.elibrary.core.common.BasePanel;
 import com.javafee.elibrary.core.common.SystemProperties;
 import com.javafee.elibrary.core.common.Utils;
-import com.javafee.elibrary.core.unicomponent.jtable.CustomJTable;
 import com.javafee.elibrary.core.model.LoanReservationTableModel;
 import com.javafee.elibrary.core.model.LoanTableModel;
 import com.javafee.elibrary.core.model.RegisteredClientTableModel;
@@ -21,6 +20,7 @@ import com.javafee.elibrary.core.model.VolumeTableModel;
 import com.javafee.elibrary.core.startform.RegistrationPanel;
 import com.javafee.elibrary.core.unicomponent.border.CustomTitledBorder;
 import com.javafee.elibrary.core.unicomponent.jbutton.CustomJButton;
+import com.javafee.elibrary.core.unicomponent.jtable.CustomJTable;
 import com.javafee.elibrary.core.unicomponent.tablefilterheader.CustomTableFilterHeader;
 
 import lombok.Getter;

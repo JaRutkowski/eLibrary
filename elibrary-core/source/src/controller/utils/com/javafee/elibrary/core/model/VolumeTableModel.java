@@ -8,8 +8,8 @@ import javax.swing.table.AbstractTableModel;
 
 import com.javafee.elibrary.core.common.Constants.VolumeTableColumn;
 import com.javafee.elibrary.core.common.SystemProperties;
-import com.javafee.elibrary.hibernate.dto.library.Volume;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
+import com.javafee.elibrary.hibernate.dto.library.Volume;
 
 public class VolumeTableModel extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;

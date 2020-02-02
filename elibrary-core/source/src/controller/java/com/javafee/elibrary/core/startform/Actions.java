@@ -12,12 +12,20 @@ import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
-import com.javafee.elibrary.core.common.IRegistrationForm;
 import com.javafee.elibrary.core.common.Constants;
 import com.javafee.elibrary.core.common.Constants.Role;
+import com.javafee.elibrary.core.common.IRegistrationForm;
 import com.javafee.elibrary.core.common.Params;
 import com.javafee.elibrary.core.common.SystemProperties;
 import com.javafee.elibrary.core.common.Utils;
+import com.javafee.elibrary.core.emailform.MailSenderEvent;
+import com.javafee.elibrary.core.exception.LogGuiException;
+import com.javafee.elibrary.core.exception.RefusedLogInException;
+import com.javafee.elibrary.core.exception.RefusedRegistrationException;
+import com.javafee.elibrary.core.startform.RegistrationEvent.RegistrationFailureCause;
+import com.javafee.elibrary.hibernate.dao.HibernateDao;
+import com.javafee.elibrary.hibernate.dao.HibernateUtil;
+import com.javafee.elibrary.hibernate.dao.common.Common;
 import com.javafee.elibrary.hibernate.dto.association.City;
 import com.javafee.elibrary.hibernate.dto.association.MessageType;
 import com.javafee.elibrary.hibernate.dto.common.UserData;
@@ -25,14 +33,6 @@ import com.javafee.elibrary.hibernate.dto.common.message.Message;
 import com.javafee.elibrary.hibernate.dto.common.message.Recipient;
 import com.javafee.elibrary.hibernate.dto.library.Client;
 import com.javafee.elibrary.hibernate.dto.library.Worker;
-import com.javafee.elibrary.core.emailform.MailSenderEvent;
-import com.javafee.elibrary.core.exception.LogGuiException;
-import com.javafee.elibrary.core.exception.RefusedLogInException;
-import com.javafee.elibrary.core.exception.RefusedRegistrationException;
-import com.javafee.elibrary.hibernate.dao.HibernateDao;
-import com.javafee.elibrary.hibernate.dao.HibernateUtil;
-import com.javafee.elibrary.hibernate.dao.common.Common;
-import com.javafee.elibrary.core.startform.RegistrationEvent.RegistrationFailureCause;
 
 public class Actions implements IRegistrationForm {
 	private StartForm startForm = new StartForm();

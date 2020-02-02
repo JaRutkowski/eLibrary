@@ -13,20 +13,20 @@ import java.util.stream.Collectors;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
-import com.javafee.elibrary.core.common.IActionForm;
 import com.javafee.elibrary.core.common.Constants;
+import com.javafee.elibrary.core.common.IActionForm;
 import com.javafee.elibrary.core.common.Params;
 import com.javafee.elibrary.core.common.SystemProperties;
+import com.javafee.elibrary.core.exception.LogGuiException;
+import com.javafee.elibrary.core.startform.LogInEvent;
+import com.javafee.elibrary.hibernate.dao.HibernateDao;
+import com.javafee.elibrary.hibernate.dao.HibernateUtil;
+import com.javafee.elibrary.hibernate.dao.common.Common;
 import com.javafee.elibrary.hibernate.dto.association.MessageType;
 import com.javafee.elibrary.hibernate.dto.common.UserData;
 import com.javafee.elibrary.hibernate.dto.common.message.Message;
 import com.javafee.elibrary.hibernate.dto.common.message.Recipient;
 import com.javafee.elibrary.hibernate.dto.library.Client;
-import com.javafee.elibrary.core.exception.LogGuiException;
-import com.javafee.elibrary.hibernate.dao.HibernateDao;
-import com.javafee.elibrary.hibernate.dao.HibernateUtil;
-import com.javafee.elibrary.hibernate.dao.common.Common;
-import com.javafee.elibrary.core.startform.LogInEvent;
 
 import lombok.Setter;
 

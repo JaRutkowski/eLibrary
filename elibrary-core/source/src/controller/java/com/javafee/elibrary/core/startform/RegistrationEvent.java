@@ -7,14 +7,14 @@ import com.javafee.elibrary.core.common.Common;
 import com.javafee.elibrary.core.common.Constants;
 import com.javafee.elibrary.core.common.Constants.Role;
 import com.javafee.elibrary.core.common.Params;
+import com.javafee.elibrary.core.exception.RefusedRegistrationException;
+import com.javafee.elibrary.hibernate.dao.HibernateUtil;
 import com.javafee.elibrary.hibernate.dto.association.City;
 import com.javafee.elibrary.hibernate.dto.common.UserData;
 import com.javafee.elibrary.hibernate.dto.library.Client;
 import com.javafee.elibrary.hibernate.dto.library.LibraryData;
 import com.javafee.elibrary.hibernate.dto.library.LibraryWorker;
 import com.javafee.elibrary.hibernate.dto.library.Worker;
-import com.javafee.elibrary.core.exception.RefusedRegistrationException;
-import com.javafee.elibrary.hibernate.dao.HibernateUtil;
 
 import lombok.Getter;
 

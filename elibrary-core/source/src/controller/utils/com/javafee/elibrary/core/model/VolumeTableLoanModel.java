@@ -6,8 +6,8 @@ import java.util.stream.Collectors;
 
 import com.javafee.elibrary.core.common.Constants.VolumeTableColumn;
 import com.javafee.elibrary.core.common.SystemProperties;
-import com.javafee.elibrary.hibernate.dto.library.Volume;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
+import com.javafee.elibrary.hibernate.dto.library.Volume;
 
 public class VolumeTableLoanModel extends VolumeTableModel {
 	private static final long serialVersionUID = 1L;
