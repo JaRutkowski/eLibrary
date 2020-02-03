@@ -10,23 +10,23 @@ import javax.swing.JOptionPane;
 
 import org.hibernate.exception.ConstraintViolationException;
 
-import com.javafee.elibrary.core.common.Validator;
 import com.javafee.elibrary.core.common.Constants;
 import com.javafee.elibrary.core.common.Constants.Context;
 import com.javafee.elibrary.core.common.Params;
 import com.javafee.elibrary.core.common.SystemProperties;
 import com.javafee.elibrary.core.common.Utils;
+import com.javafee.elibrary.core.common.Validator;
+import com.javafee.elibrary.core.exception.LogGuiException;
+import com.javafee.elibrary.core.model.AuthorTableModel;
+import com.javafee.elibrary.core.model.BookTableModel;
+import com.javafee.elibrary.core.model.CategoryTableModel;
+import com.javafee.elibrary.core.model.PublishingHouseTableModel;
+import com.javafee.elibrary.core.tabbedform.books.frames.BookAddModFrame;
+import com.javafee.elibrary.hibernate.dao.HibernateUtil;
 import com.javafee.elibrary.hibernate.dto.library.Author;
 import com.javafee.elibrary.hibernate.dto.library.Book;
 import com.javafee.elibrary.hibernate.dto.library.Category;
 import com.javafee.elibrary.hibernate.dto.library.PublishingHouse;
-import com.javafee.elibrary.core.model.AuthorTableModel;
-import com.javafee.elibrary.core.tabbedform.books.frames.BookAddModFrame;
-import com.javafee.elibrary.core.exception.LogGuiException;
-import com.javafee.elibrary.hibernate.dao.HibernateUtil;
-import com.javafee.elibrary.core.model.BookTableModel;
-import com.javafee.elibrary.core.model.CategoryTableModel;
-import com.javafee.elibrary.core.model.PublishingHouseTableModel;
 
 public class BookAddModEvent {
 
@@ -53,20 +53,18 @@ public class BookAddModEvent {
 	}
 
 	private void onClickBtnAccept(Context context) {
-		if (context == Context.ADDITION) {
-			if (validateTablesSelection()) {
-				createBook();
-			} else {
-				Utils.displayOptionPane(
-						SystemProperties.getInstance().getResourceBundle()
-								.getString("bookAddModEvent.savingBookParseError"),
-						SystemProperties.getInstance().getResourceBundle()
-								.getString("bookAddModEvent.notSelectedTablesWarningTitle"),
-						JOptionPane.ERROR_MESSAGE);
-			}
-		} else if (context == Context.MODIFICATION) {
-			modificateBook();
-		}
+		boolean tablesSelectionValidation = validateTablesSelection();
+		if (context == Context.ADDITION && tablesSelectionValidation)
+			createBook();
+		else if (context == Context.MODIFICATION && tablesSelectionValidation)
+			modifyBook();
+		else
+			Utils.displayOptionPane(
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("bookAddModEvent.savingBookParseError"),
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("bookAddModEvent.notSelectedTablesWarningTitle"),
+					JOptionPane.ERROR_MESSAGE);
 	}
 
 	private void onClickBtnRefreshTables() {
@@ -76,7 +74,7 @@ public class BookAddModEvent {
 			reloadTablesData();
 	}
 
-	private void modificateBook() {
+	private void modifyBook() {
 		try {
 			Book bookShallowClone = (Book) Params.getInstance().get("selectedBook");
 
@@ -114,7 +112,7 @@ public class BookAddModEvent {
 				HibernateUtil.beginTransaction();
 				HibernateUtil.getSession()
 						.evict(bookTableModel.getBook((Integer) Params.getInstance().get("selectedRowIndex")));
-				HibernateUtil.getSession().update(Book.class.getName(), bookShallowClone);
+				HibernateUtil.getSession().saveOrUpdate(Book.class.getName(), bookShallowClone);
 				HibernateUtil.commitTransaction();
 
 				bookTableModel.setBook((Integer) Params.getInstance().get("selectedRowIndex"), bookShallowClone);
@@ -252,17 +250,17 @@ public class BookAddModEvent {
 				reloadTablesWithBookData();
 			}
 			bookAddModFrame.setVisible(true);
-		} else {
+		} else
 			bookAddModFrame.toFront();
-		}
 	}
 
 	private void reloadTablesWithBookData() {
-		List<Integer> authorIndexes = new ArrayList<Integer>();
-		List<Integer> categoryIndexes = new ArrayList<Integer>();
-		List<Integer> publishingHouseIndexes = new ArrayList<Integer>();
+		List<Integer> authorIndexes = new ArrayList<>(),
+				categoryIndexes = new ArrayList<>(),
+				publishingHouseIndexes = new ArrayList<>();
 
 		if (Params.getInstance().get("selectedBook") != null) {
+			clearTablesSelection();
 			((Book) Params.getInstance().get("selectedBook")).getAuthor().forEach(e -> authorIndexes
 					.add(((AuthorTableModel) bookAddModFrame.getAuthorTable().getModel()).getAuthors().indexOf(e)));
 			authorIndexes.forEach(e -> bookAddModFrame.getAuthorTable().addRowSelectionInterval(e, e));
@@ -274,7 +272,10 @@ public class BookAddModEvent {
 							.add(((PublishingHouseTableModel) bookAddModFrame.getPublishingHouseTable().getModel())
 									.getPublishingHouses().indexOf(e)));
 			publishingHouseIndexes
-					.forEach(e -> bookAddModFrame.getPublishingHouseTable().addRowSelectionInterval(e, e));
+					.forEach(e -> {
+						bookAddModFrame.getPublishingHouseTable().addRowSelectionInterval(e, e);
+						System.out.println(e);
+					});
 		}
 	}
 
@@ -301,6 +302,12 @@ public class BookAddModEvent {
 				.setText(((Book) Params.getInstance().get("selectedBook")).getNumberOfTomes() != null
 						? ((Book) Params.getInstance().get("selectedBook")).getNumberOfTomes().toString()
 						: "");
+	}
+
+	private void clearTablesSelection() {
+		bookAddModFrame.getAuthorTable().clearSelection();
+		bookAddModFrame.getCategoryTable().clearSelection();
+		bookAddModFrame.getPublishingHouseTable().clearSelection();
 	}
 
 	private boolean validateTablesSelection() {

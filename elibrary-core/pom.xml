@@ -1,18 +1,18 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <artifactId>elibrary-modules</artifactId>
-        <groupId>com.javafee.elibrary</groupId>
-        <version>1.0-SNAPSHOT</version>
-    </parent>
+	<parent>
+		<artifactId>elibrary-modules</artifactId>
+		<groupId>com.javafee.elibrary</groupId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
 
 	<groupId>com.javafee.elibrary</groupId>
 	<artifactId>elibrary-core</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0-SNAPSHOT</version>
+	<version>${elibrary.version}</version>
 	<name>elibrary-core</name>
 	<url>http://maven.apache.org</url>
 
@@ -21,7 +21,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>
-				<version>1.7</version>
+				<version>${org.codehaus.mojo.version}</version>
 				<executions>
 					<execution>
 						<id>add-source</id>
@@ -56,13 +56,13 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
+			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.javafee.elibrary</groupId>
 			<artifactId>elibrary-hibernate</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<version>${elibrary.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.reflections</groupId>
@@ -103,62 +103,62 @@
 		<dependency>
 			<groupId>edu.vt.middleware</groupId>
 			<artifactId>vt-password</artifactId>
-			<version>3.1.2</version>
+			<version>${edu.vt.middleware.version}</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/log4j/log4j -->
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
-			<version>1.2.17</version>
+			<version>${log4j.version}</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.bidib.org.oxbow/swingbits -->
 		<dependency>
 			<groupId>org.bidib.org.oxbow</groupId>
 			<artifactId>swingbits</artifactId>
-			<version>1.2.1</version>
+			<version>${org.bidib.org.oxbow.version}</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/net.coderazzi/tablefilter-swing -->
 		<dependency>
 			<groupId>net.coderazzi</groupId>
 			<artifactId>tablefilter-swing</artifactId>
-			<version>5.3.1</version>
+			<version>${net.coderazzi.version}</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/javax.mail/mail -->
 		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>
-			<version>1.4.7</version>
+			<version>${javax.mail.version}</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok-maven -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.16.22</version>
+			<version>${org.projectlombok.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<!-- jsoup HTML parser library @ https://jsoup.org/ -->
 		<dependency>
 			<groupId>org.jsoup</groupId>
 			<artifactId>jsoup</artifactId>
-			<version>1.11.3</version>
+			<version>${org.jsoup.version}</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpcore -->
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpcore</artifactId>
-			<version>4.4.10</version>
+			<version>${org.apache.httpcomponents.version}</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.mashape.unirest/unirest-java -->
 		<dependency>
 			<groupId>com.mashape.unirest</groupId>
 			<artifactId>unirest-java</artifactId>
-			<version>1.4.9</version>
+			<version>${com.mashape.unirest.version}</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.json/json -->
 		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
-			<version>20180813</version>
+			<version>${org.json.version}</version>
 		</dependency>
 	</dependencies>
 </project>
