@@ -13,7 +13,6 @@ import javax.swing.border.TitledBorder;
 import com.javafee.elibrary.core.common.BasePanel;
 import com.javafee.elibrary.core.common.SystemProperties;
 import com.javafee.elibrary.core.common.Utils;
-import com.javafee.elibrary.hibernate.dto.common.UserData;
 import com.javafee.elibrary.core.model.DraftTableModel;
 import com.javafee.elibrary.core.unicomponent.border.CustomTitledBorder;
 import com.javafee.elibrary.core.unicomponent.jcheckbox.CustomJCheckBox;
@@ -21,6 +20,7 @@ import com.javafee.elibrary.core.unicomponent.jcombobox.CustomJComboBox;
 import com.javafee.elibrary.core.unicomponent.jlabel.CustomJLabel;
 import com.javafee.elibrary.core.unicomponent.jtable.CustomJTable;
 import com.javafee.elibrary.core.unicomponent.tablefilterheader.CustomTableFilterHeader;
+import com.javafee.elibrary.hibernate.dto.common.UserData;
 
 import lombok.Getter;
 import net.coderazzi.filters.gui.TableFilterHeader;

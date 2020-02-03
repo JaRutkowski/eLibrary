@@ -1,10 +1,10 @@
 package com.javafee.elibrary.core.process.initializator;
 
-import com.javafee.elibrary.hibernate.dao.common.Query;
 import com.javafee.elibrary.core.process.Process;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
 import com.javafee.elibrary.hibernate.dao.common.Common;
 import com.javafee.elibrary.hibernate.dao.common.Constants;
+import com.javafee.elibrary.hibernate.dao.common.Query;
 
 import lombok.extern.java.Log;
 

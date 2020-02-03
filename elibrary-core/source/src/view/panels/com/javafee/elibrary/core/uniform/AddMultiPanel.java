@@ -6,8 +6,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 import com.javafee.elibrary.core.common.BasePanel;
-import com.javafee.elibrary.core.unicomponent.jbutton.CustomJButton;
 import com.javafee.elibrary.core.startform.RegistrationPanel;
+import com.javafee.elibrary.core.unicomponent.jbutton.CustomJButton;
 
 import lombok.Getter;
 

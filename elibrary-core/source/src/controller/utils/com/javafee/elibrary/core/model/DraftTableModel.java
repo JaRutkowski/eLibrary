@@ -8,10 +8,10 @@ import javax.swing.table.AbstractTableModel;
 
 import org.hibernate.query.Query;
 
-import com.javafee.elibrary.core.common.SystemProperties;
 import com.javafee.elibrary.core.common.Constants.OutboxTableColumn;
-import com.javafee.elibrary.hibernate.dto.common.message.Message;
+import com.javafee.elibrary.core.common.SystemProperties;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
+import com.javafee.elibrary.hibernate.dto.common.message.Message;
 
 public class DraftTableModel extends AbstractTableModel {
 

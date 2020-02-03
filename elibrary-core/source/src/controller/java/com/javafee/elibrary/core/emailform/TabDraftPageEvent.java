@@ -9,22 +9,22 @@ import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
-import com.javafee.elibrary.core.common.Query;
 import com.javafee.elibrary.core.common.Constants;
 import com.javafee.elibrary.core.common.Constants.Role;
 import com.javafee.elibrary.core.common.Constants.Tab_Email;
 import com.javafee.elibrary.core.common.IMessageForm;
 import com.javafee.elibrary.core.common.Params;
+import com.javafee.elibrary.core.common.Query;
 import com.javafee.elibrary.core.common.SystemProperties;
 import com.javafee.elibrary.core.common.Utils;
+import com.javafee.elibrary.core.exception.LogGuiException;
+import com.javafee.elibrary.core.model.DraftTableModel;
+import com.javafee.elibrary.core.startform.LogInEvent;
+import com.javafee.elibrary.hibernate.dao.HibernateUtil;
+import com.javafee.elibrary.hibernate.dao.common.Common;
 import com.javafee.elibrary.hibernate.dto.association.MessageType;
 import com.javafee.elibrary.hibernate.dto.common.UserData;
 import com.javafee.elibrary.hibernate.dto.common.message.Message;
-import com.javafee.elibrary.core.exception.LogGuiException;
-import com.javafee.elibrary.hibernate.dao.HibernateUtil;
-import com.javafee.elibrary.hibernate.dao.common.Common;
-import com.javafee.elibrary.core.model.DraftTableModel;
-import com.javafee.elibrary.core.startform.LogInEvent;
 
 import lombok.Setter;
 

@@ -4,8 +4,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import com.javafee.elibrary.core.common.Constants;
 import com.javafee.elibrary.core.common.SystemProperties;
-import com.javafee.elibrary.hibernate.dto.common.message.Message;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
+import com.javafee.elibrary.hibernate.dto.common.message.Message;
 
 public class OutboxTableModel extends DraftTableModel {
 
