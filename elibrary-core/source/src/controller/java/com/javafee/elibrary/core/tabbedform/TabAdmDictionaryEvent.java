@@ -297,11 +297,12 @@ public class TabAdmDictionaryEvent implements IActionForm {
 											.getString("tabDictionaryEvent.deleteDictionaryElementSuccessTitle"),
 									JOptionPane.INFORMATION_MESSAGE);
 						} else
-							LogGuiException.logError(
+							JOptionPane.showMessageDialog(tabbedForm.getFrame(),
 									SystemProperties.getInstance().getResourceBundle()
 											.getString("tabDictionaryEvent.deleteDictionaryElementWarning"),
 									SystemProperties.getInstance().getResourceBundle()
-											.getString("tabDictionaryEvent.deleteDictionaryElementWarningTitle"));
+											.getString("tabDictionaryEvent.deleteDictionaryElementWarningTitle"),
+									JOptionPane.ERROR_MESSAGE);
 					}
 					break;
 				case Constants.RADIO_BUTTON_CATEGORY:
