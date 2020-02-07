@@ -3,6 +3,7 @@ package com.javafee.elibrary.core.common;
 
 import java.util.List;
 
+import com.javafee.elibrary.hibernate.dao.HibernateUtil;
 import com.javafee.elibrary.hibernate.dto.common.UserData;
 import com.javafee.elibrary.hibernate.dto.common.message.Message;
 import com.javafee.elibrary.hibernate.dto.common.message.Recipient;
@@ -14,7 +15,6 @@ import com.javafee.elibrary.hibernate.dto.library.Lend;
 import com.javafee.elibrary.hibernate.dto.library.PublishingHouse;
 import com.javafee.elibrary.hibernate.dto.library.Volume;
 import com.javafee.elibrary.hibernate.dto.library.Worker;
-import com.javafee.elibrary.hibernate.dao.HibernateUtil;
 
 public final class Validator {
 	@SuppressWarnings("unchecked")

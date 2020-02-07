@@ -14,11 +14,11 @@ import javax.swing.border.TitledBorder;
 import com.javafee.elibrary.core.common.BasePanel;
 import com.javafee.elibrary.core.common.SystemProperties;
 import com.javafee.elibrary.core.common.Utils;
+import com.javafee.elibrary.core.startform.RegistrationPanel;
 import com.javafee.elibrary.core.unicomponent.border.CustomTitledBorder;
 import com.javafee.elibrary.core.unicomponent.jbutton.CustomJButton;
 import com.javafee.elibrary.core.unicomponent.jeditorpane.CustomJEditorPane;
 import com.javafee.elibrary.core.unicomponent.jtextarea.CustomJTextArea;
-import com.javafee.elibrary.core.startform.RegistrationPanel;
 
 import lombok.Getter;
 

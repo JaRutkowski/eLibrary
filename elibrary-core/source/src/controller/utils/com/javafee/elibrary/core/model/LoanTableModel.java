@@ -10,8 +10,8 @@ import javax.swing.table.AbstractTableModel;
 
 import com.javafee.elibrary.core.common.Constants;
 import com.javafee.elibrary.core.common.SystemProperties;
-import com.javafee.elibrary.hibernate.dto.library.Lend;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
+import com.javafee.elibrary.hibernate.dto.library.Lend;
 
 import lombok.Getter;
 
@@ -57,7 +57,8 @@ public class LoanTableModel extends AbstractTableModel {
 
 	@SuppressWarnings("unchecked")
 	private void prepareHibernateDao() {
-		this.lends = HibernateUtil.getSession().createQuery("from Lend as len join fetch len.volume").list();
+		this.lends = HibernateUtil.getSession().createQuery("from Lend as len join fetch len.volume " +
+				"where len.isReturned = false").list();
 	}
 
 	@SuppressWarnings("unused")
@@ -107,7 +108,6 @@ public class LoanTableModel extends AbstractTableModel {
 
 	private double calculatePenalty(Date returnDate) {
 		int diffMonth = 0;
-
 		if (new Date().after(returnDate)) {
 			Calendar startCalendar = new GregorianCalendar();
 			startCalendar.setTime(returnDate);
@@ -117,8 +117,7 @@ public class LoanTableModel extends AbstractTableModel {
 			int diffYear = endCalendar.get(Calendar.YEAR) - startCalendar.get(Calendar.YEAR);
 			diffMonth = diffYear * 12 + endCalendar.get(Calendar.MONTH) - startCalendar.get(Calendar.MONTH);
 		}
-
-		return diffMonth * Constants.PENALTY_VALUE;
+		return diffMonth * Constants.APPLICATION_PENALTY_VALUE;
 	}
 
 	@Override

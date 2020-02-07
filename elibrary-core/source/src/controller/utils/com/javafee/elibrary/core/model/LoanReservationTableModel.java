@@ -2,14 +2,15 @@ package com.javafee.elibrary.core.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.AbstractTableModel;
 
 import com.javafee.elibrary.core.common.Constants;
 import com.javafee.elibrary.core.common.SystemProperties;
-import com.javafee.elibrary.hibernate.dto.library.Lend;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
+import com.javafee.elibrary.hibernate.dto.library.Lend;
 
 public class LoanReservationTableModel extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
@@ -51,13 +52,10 @@ public class LoanReservationTableModel extends AbstractTableModel {
 
 	@SuppressWarnings("unchecked")
 	private void prepareHibernateDao() {
-		this.lends = new ArrayList<Lend>();
+		this.lends = new ArrayList<>();
 		List<Lend> lends = HibernateUtil.getSession().createQuery("from Lend as len join fetch len.volume").list();
-
-		lends.forEach(l -> {
-			if (l.getVolume().getIsLended() && l.getVolume().getIsReserve())
-				this.lends.add(l);
-		});
+		this.lends = lends.stream().filter(l -> !l.getIsReturned() && l.getVolume().getIsReserve())
+				.collect(Collectors.toList());
 	}
 
 	@SuppressWarnings("unused")

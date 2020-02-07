@@ -11,10 +11,10 @@ import javax.swing.border.TitledBorder;
 import com.javafee.elibrary.core.common.BasePanel;
 import com.javafee.elibrary.core.common.SystemProperties;
 import com.javafee.elibrary.core.common.Utils;
-import com.javafee.elibrary.core.unicomponent.jtable.CustomJTable;
-import com.javafee.elibrary.core.model.VolumeTableLoanModel;
-import com.javafee.elibrary.core.model.VolumeTableReadingRoomModel;
+import com.javafee.elibrary.core.model.VolumeLoanTableModel;
+import com.javafee.elibrary.core.model.VolumeReadingRoomTableModel;
 import com.javafee.elibrary.core.unicomponent.border.CustomTitledBorder;
+import com.javafee.elibrary.core.unicomponent.jtable.CustomJTable;
 import com.javafee.elibrary.core.unicomponent.tablefilterheader.CustomTableFilterHeader;
 import com.javafee.elibrary.core.uniform.CockpitEditionPanel;
 
@@ -77,7 +77,7 @@ public class LibraryTablePanel extends BasePanel {
 		TableFilterHeader customTableFilterHeader = new CustomTableFilterHeader(loanVolumeTable);
 		loanVolumeTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		loanVolumeTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		loanVolumeTable.setModel(new VolumeTableLoanModel());
+		loanVolumeTable.setModel(new VolumeLoanTableModel());
 		loanVolumeTable.setAutoCreateRowSorter(true);
 		scrollPane.setViewportView(loanVolumeTable);
 
@@ -120,7 +120,7 @@ public class LibraryTablePanel extends BasePanel {
 		TableFilterHeader customTableFilterHeader_readingRoom = new CustomTableFilterHeader(readingRoomVolumeTable);
 		readingRoomVolumeTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		readingRoomVolumeTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		readingRoomVolumeTable.setModel(new VolumeTableReadingRoomModel());
+		readingRoomVolumeTable.setModel(new VolumeReadingRoomTableModel());
 		readingRoomVolumeTable.setAutoCreateRowSorter(true);
 		scrollPane_readingRoom.setViewportView(readingRoomVolumeTable);
 

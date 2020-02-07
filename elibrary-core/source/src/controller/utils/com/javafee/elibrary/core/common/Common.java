@@ -17,13 +17,13 @@ import org.hibernate.resource.transaction.spi.TransactionStatus;
 import com.javafee.elibrary.core.common.networkservice.NetworkServiceListener;
 import com.javafee.elibrary.core.common.timerservice.TimerServiceListener;
 import com.javafee.elibrary.core.common.watchservice.WatchServiceListener;
+import com.javafee.elibrary.core.emailform.TabTemplatePageEvent;
+import com.javafee.elibrary.core.startform.RegistrationPanel;
+import com.javafee.elibrary.core.tabbedform.Actions;
+import com.javafee.elibrary.hibernate.dao.HibernateUtil;
 import com.javafee.elibrary.hibernate.dto.common.UserData;
 import com.javafee.elibrary.hibernate.dto.library.Client;
 import com.javafee.elibrary.hibernate.dto.library.Worker;
-import com.javafee.elibrary.core.emailform.TabTemplatePageEvent;
-import com.javafee.elibrary.core.tabbedform.Actions;
-import com.javafee.elibrary.hibernate.dao.HibernateUtil;
-import com.javafee.elibrary.core.startform.RegistrationPanel;
 
 import edu.vt.middleware.password.AlphabeticalSequenceRule;
 import edu.vt.middleware.password.CharacterCharacteristicsRule;

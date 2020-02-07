@@ -2,21 +2,21 @@ package com.javafee.elibrary.core.tabbedform;
 
 import javax.swing.JOptionPane;
 
-import com.javafee.elibrary.core.common.IActionForm;
 import com.javafee.elibrary.core.common.Constants;
 import com.javafee.elibrary.core.common.Constants.Context;
 import com.javafee.elibrary.core.common.Constants.Role;
+import com.javafee.elibrary.core.common.IActionForm;
 import com.javafee.elibrary.core.common.Params;
 import com.javafee.elibrary.core.common.SystemProperties;
 import com.javafee.elibrary.core.common.Utils;
-import com.javafee.elibrary.hibernate.dto.library.Volume;
+import com.javafee.elibrary.core.exception.LogGuiException;
 import com.javafee.elibrary.core.exception.RefusedLibraryEventLoadingException;
+import com.javafee.elibrary.core.model.VolumeLoanTableModel;
+import com.javafee.elibrary.core.model.VolumeReadingRoomTableModel;
 import com.javafee.elibrary.core.model.VolumeTableModel;
 import com.javafee.elibrary.core.startform.LogInEvent;
-import com.javafee.elibrary.core.exception.LogGuiException;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
-import com.javafee.elibrary.core.model.VolumeTableLoanModel;
-import com.javafee.elibrary.core.model.VolumeTableReadingRoomModel;
+import com.javafee.elibrary.hibernate.dto.library.Volume;
 
 import lombok.Setter;
 
@@ -32,8 +32,6 @@ public class TabLibraryEvent implements IActionForm {
 	}
 
 	public static TabLibraryEvent getInstance(TabbedForm tabbedForm) {
-		View.forceRefresh(tabbedForm, LogInEvent.getRole() == Role.CLIENT);
-		((VolumeTableLoanModel) tabbedForm.getPanelLibrary().getLoanVolumeTable().getModel()).reloadData();
 		if (libraryEvent == null) {
 			libraryEvent = new TabLibraryEvent(tabbedForm);
 		} else
@@ -59,6 +57,11 @@ public class TabLibraryEvent implements IActionForm {
 				.addActionListener(e -> onClickBtnDeleteVolumeReadingRoom());
 	}
 
+	@Override
+	public void initializeForm() {
+		switchPerspectiveToClient(LogInEvent.getRole() == Role.CLIENT);
+	}
+
 	private void onClickBtnDeleteVolumeReadingRoom() {
 		if (tabbedForm.getPanelLibrary().getReadingRoomVolumeTable().getSelectedRow() != -1) {
 			int selectedRowIndex = tabbedForm.getPanelLibrary().getReadingRoomVolumeTable()
@@ -67,14 +70,14 @@ public class TabLibraryEvent implements IActionForm {
 					SystemProperties.getInstance().getResourceBundle().getString("confirmDialog.deleteMessage"),
 					"") == JOptionPane.YES_OPTION) {
 				if (selectedRowIndex != -1) {
-					Volume selectedVolume = ((VolumeTableReadingRoomModel) tabbedForm.getPanelLibrary()
+					Volume selectedVolume = ((VolumeReadingRoomTableModel) tabbedForm.getPanelLibrary()
 							.getReadingRoomVolumeTable().getModel()).getVolume(selectedRowIndex);
 
-					if (!selectedVolume.getIsLended() && !selectedVolume.getIsReserve()) {
+					if (!checkIfVolumeIsLent(selectedVolume) && !selectedVolume.getIsReserve()) {
 						HibernateUtil.beginTransaction();
 						HibernateUtil.getSession().delete(selectedVolume);
 						HibernateUtil.commitTransaction();
-						((VolumeTableReadingRoomModel) tabbedForm.getPanelLibrary().getReadingRoomVolumeTable()
+						((VolumeReadingRoomTableModel) tabbedForm.getPanelLibrary().getReadingRoomVolumeTable()
 								.getModel()).remove(selectedVolume);
 					} else {
 						LogGuiException.logWarning(
@@ -102,14 +105,14 @@ public class TabLibraryEvent implements IActionForm {
 					SystemProperties.getInstance().getResourceBundle().getString("confirmDialog.deleteMessage"),
 					"") == JOptionPane.YES_OPTION) {
 				if (selectedRowIndex != -1) {
-					Volume selectedVolume = ((VolumeTableLoanModel) tabbedForm.getPanelLibrary().getLoanVolumeTable()
+					Volume selectedVolume = ((VolumeLoanTableModel) tabbedForm.getPanelLibrary().getLoanVolumeTable()
 							.getModel()).getVolume(selectedRowIndex);
 
-					if (!selectedVolume.getIsLended() && !selectedVolume.getIsReserve()) {
+					if (!checkIfVolumeIsLent(selectedVolume) && !selectedVolume.getIsReserve()) {
 						HibernateUtil.beginTransaction();
 						HibernateUtil.getSession().delete(selectedVolume);
 						HibernateUtil.commitTransaction();
-						((VolumeTableLoanModel) tabbedForm.getPanelLibrary().getLoanVolumeTable().getModel())
+						((VolumeLoanTableModel) tabbedForm.getPanelLibrary().getLoanVolumeTable().getModel())
 								.remove(selectedVolume);
 					} else {
 						LogGuiException.logWarning(
@@ -134,7 +137,7 @@ public class TabLibraryEvent implements IActionForm {
 			int selectedRowIndex = tabbedForm.getPanelLibrary().getReadingRoomVolumeTable()
 					.convertRowIndexToModel(tabbedForm.getPanelLibrary().getReadingRoomVolumeTable().getSelectedRow());
 			if (selectedRowIndex != -1) {
-				Volume selectedVolume = ((VolumeTableReadingRoomModel) tabbedForm.getPanelLibrary()
+				Volume selectedVolume = ((VolumeReadingRoomTableModel) tabbedForm.getPanelLibrary()
 						.getReadingRoomVolumeTable().getModel()).getVolume(selectedRowIndex);
 				Volume volumeShallowClone = (Volume) selectedVolume.clone();
 
@@ -162,11 +165,11 @@ public class TabLibraryEvent implements IActionForm {
 			int selectedRowIndex = tabbedForm.getPanelLibrary().getLoanVolumeTable()
 					.convertRowIndexToModel(tabbedForm.getPanelLibrary().getLoanVolumeTable().getSelectedRow());
 			if (selectedRowIndex != -1) {
-				Volume selectedVolume = ((VolumeTableLoanModel) tabbedForm.getPanelLibrary().getLoanVolumeTable()
+				Volume selectedVolume = ((VolumeLoanTableModel) tabbedForm.getPanelLibrary().getLoanVolumeTable()
 						.getModel()).getVolume(selectedRowIndex);
 				Volume volumeShallowClone = (Volume) selectedVolume.clone();
 
-				if (!selectedVolume.getIsLended() && !selectedVolume.getIsReserve()) {
+				if (!checkIfVolumeIsLent(selectedVolume) && !selectedVolume.getIsReserve()) {
 
 					Params.getInstance().add("selectedVolume", volumeShallowClone);
 					Params.getInstance().add("selectedRowIndex", selectedRowIndex);
@@ -204,24 +207,16 @@ public class TabLibraryEvent implements IActionForm {
 		if (libraryAddModEvent == null)
 			libraryAddModEvent = new LibraryAddModEvent();
 		libraryAddModEvent.control(Constants.Context.ADDITION, Constants.Context.READING_ROOM,
-				(VolumeTableReadingRoomModel) tabbedForm.getPanelLibrary().getReadingRoomVolumeTable().getModel());
+				(VolumeReadingRoomTableModel) tabbedForm.getPanelLibrary().getReadingRoomVolumeTable().getModel());
 
 	}
 
-	@Override
-	public void initializeForm() {
-		switchPerspectiveToClient(LogInEvent.getRole() == Role.CLIENT);
+	private boolean checkIfVolumeIsLent(Volume volume) {
+		return !volume.getLend().isEmpty() && volume.getLend().stream().filter(l -> !l.getIsReturned()).findFirst().isPresent();
 	}
 
-	private void switchPerspectiveToClient(boolean b) {
-		tabbedForm.getPanelLibrary().getCockpitEditionPanelLoan().setVisible(!b);
-		tabbedForm.getPanelLibrary().getCockpitEditionPanelReadingRoom().setVisible(!b);
-	}
-
-	private static class View {
-		private static void forceRefresh(TabbedForm tabbedForm, Boolean isClient) {
-			tabbedForm.getPanelLibrary().getCockpitEditionPanelLoan().setVisible(!isClient);
-			tabbedForm.getPanelLibrary().getCockpitEditionPanelReadingRoom().setVisible(!isClient);
-		}
+	private void switchPerspectiveToClient(boolean isClient) {
+		tabbedForm.getPanelLibrary().getCockpitEditionPanelLoan().setVisible(!isClient);
+		tabbedForm.getPanelLibrary().getCockpitEditionPanelReadingRoom().setVisible(!isClient);
 	}
 }

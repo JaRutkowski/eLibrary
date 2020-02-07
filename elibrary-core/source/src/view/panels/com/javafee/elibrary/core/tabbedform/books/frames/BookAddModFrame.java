@@ -13,12 +13,12 @@ import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
 import com.javafee.elibrary.core.common.Utils;
-import com.javafee.elibrary.core.unicomponent.jbutton.CustomJButton;
-import com.javafee.elibrary.core.unicomponent.jtable.CustomJTable;
 import com.javafee.elibrary.core.model.AuthorTableModel;
 import com.javafee.elibrary.core.model.CategoryTableModel;
 import com.javafee.elibrary.core.model.PublishingHouseTableModel;
 import com.javafee.elibrary.core.startform.RegistrationPanel;
+import com.javafee.elibrary.core.unicomponent.jbutton.CustomJButton;
+import com.javafee.elibrary.core.unicomponent.jtable.CustomJTable;
 import com.javafee.elibrary.core.unicomponent.tablefilterheader.CustomTableFilterHeader;
 import com.javafee.elibrary.core.uniform.CockpitConfirmationPanel;
 

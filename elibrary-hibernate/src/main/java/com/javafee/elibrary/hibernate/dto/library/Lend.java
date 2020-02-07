@@ -2,6 +2,7 @@ package com.javafee.elibrary.hibernate.dto.library;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,8 +17,12 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Data
+@ToString(exclude = "volume")
+@EqualsAndHashCode(exclude = "volume")
 @Entity
 @Table(name = "lib_lend")
 @SequenceGenerator(name = "seq_lib_lend", sequenceName = "seq_lib_lend", allocationSize = 1)
@@ -31,7 +36,7 @@ public class Lend implements Cloneable {
 	@JoinColumn(name = "id_client", unique = false, nullable = true, insertable = true, updatable = true)
 	private Client client = new Client();
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
 	@JoinColumn(name = "id_volume")
 	private Volume volume;
 

@@ -9,10 +9,10 @@ import javax.swing.JTextField;
 
 import com.javafee.elibrary.core.common.BasePanel;
 import com.javafee.elibrary.core.common.SystemProperties;
+import com.javafee.elibrary.core.startform.RegistrationPanel;
 import com.javafee.elibrary.core.unicomponent.jbutton.CustomJButton;
 import com.javafee.elibrary.core.unicomponent.jlabel.CustomJLabel;
 import com.javafee.elibrary.core.unicomponent.jtextfield.CustomJTextField;
-import com.javafee.elibrary.core.startform.RegistrationPanel;
 import com.javafee.elibrary.core.uniform.CockpitEditionPanel;
 
 import lombok.Getter;

@@ -10,23 +10,25 @@ import java.util.Objects;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
-import com.javafee.elibrary.core.common.IActionForm;
 import com.javafee.elibrary.core.common.Constants;
+import com.javafee.elibrary.core.common.IActionForm;
 import com.javafee.elibrary.core.common.SystemProperties;
 import com.javafee.elibrary.core.common.Utils;
-import com.javafee.elibrary.hibernate.dto.library.Client;
-import com.javafee.elibrary.hibernate.dto.library.Lend;
-import com.javafee.elibrary.hibernate.dto.library.Volume;
-import com.javafee.elibrary.core.model.VolumeTableModel;
 import com.javafee.elibrary.core.exception.LogGuiException;
 import com.javafee.elibrary.core.exception.RefusedLoanServiceEventLoadingException;
-import com.javafee.elibrary.hibernate.dao.HibernateUtil;
 import com.javafee.elibrary.core.model.ClientTableModel;
 import com.javafee.elibrary.core.model.LoanReservationTableModel;
 import com.javafee.elibrary.core.model.LoanTableModel;
+import com.javafee.elibrary.core.model.VolumeTableModel;
+import com.javafee.elibrary.hibernate.dao.HibernateUtil;
+import com.javafee.elibrary.hibernate.dto.library.Client;
+import com.javafee.elibrary.hibernate.dto.library.Lend;
+import com.javafee.elibrary.hibernate.dto.library.Volume;
 
 import lombok.Setter;
+import lombok.extern.java.Log;
 
+@Log
 public class TabLoanServiceEvent implements IActionForm {
 	@Setter
 	private TabbedForm tabbedForm;
@@ -51,13 +53,7 @@ public class TabLoanServiceEvent implements IActionForm {
 		setTabbedForm(tabbedForm);
 		initializeForm();
 
-		tabbedForm.getPanelLoanService().getBtnLoan().addActionListener(e -> {
-			try {
-				prepareReservation();
-			} catch (ParseException e1) {
-				e1.printStackTrace();
-			}
-		});
+		tabbedForm.getPanelLoanService().getBtnLoan().addActionListener(e -> onClickBtnLoan());
 		tabbedForm.getPanelLoanService().getBtnReservation().addActionListener(e -> onClickBtnReservation());
 		tabbedForm.getPanelLoanService().getBtnProlongation().addActionListener(e -> onClickBtnProlongation());
 		tabbedForm.getPanelLoanService().getBtnReturn().addActionListener(e -> onClickBtnReturn());
@@ -66,75 +62,125 @@ public class TabLoanServiceEvent implements IActionForm {
 			if (!e.getValueIsAdjusting())
 				onClientTableListSelectionChange();
 		});
-		tabbedForm.getPanelLoanService().getLoanTable().getModel().addTableModelListener(e -> onTableLoanChanged());
-		tabbedForm.getPanelLoanService().getBtnCancelReservation()
-				.addActionListener(e -> onClickBtnCancelReservation());
-
+		tabbedForm.getPanelLoanService().getLoanTable().getModel().addTableModelListener(e -> onChangeLoanTable());
+		tabbedForm.getPanelLoanService().getBtnCancelReservation().addActionListener(e -> onClickBtnCancelReservation());
 	}
 
-	private void onClickBtnCancelReservation() {
-		if (tabbedForm.getPanelLoanService().getReservationTable().getSelectedRow() != -1) {
-			int selectedRowIndex = tabbedForm.getPanelLoanService().getReservationTable()
-					.convertRowIndexToModel(tabbedForm.getPanelLoanService().getReservationTable().getSelectedRow());
+	@Override
+	public void initializeForm() {
+		onChangeLoanTable();
+	}
 
-			if (selectedRowIndex != -1) {
-				Lend selectedLend = ((LoanReservationTableModel) tabbedForm.getPanelLoanService().getReservationTable()
-						.getModel()).getLend(selectedRowIndex);
-				selectedLend.setReservationClient(null);
-				selectedLend.getVolume().setIsReserve(false);
+	private void onClickBtnLoan() {
+		int selectedClientRow = tabbedForm.getPanelLoanService().getClientTable().getSelectedRow();
+		int selectedVolumeRow = tabbedForm.getPanelLoanService().getVolumeLoanTable().getSelectedRow();
 
-				HibernateUtil.beginTransaction();
-				HibernateUtil.getSession().update(Lend.class.getName(), selectedLend);
-				HibernateUtil.commitTransaction();
+		if (selectedClientRow != -1 && selectedVolumeRow != -1) {
+			final Client selectedClient = ((ClientTableModel) tabbedForm.getPanelLoanService().getClientTable()
+					.getModel()).getClient(selectedClientRow);
+			final Volume selectedVolume = ((VolumeTableModel) tabbedForm.getPanelLoanService().getVolumeLoanTable()
+					.getModel()).getVolume(selectedVolumeRow);
 
-				((LoanReservationTableModel) tabbedForm.getPanelLoanService().getReservationTable().getModel())
-						.reloadData();
-				((LoanTableModel) tabbedForm.getPanelLoanService().getLoanTable().getModel()).reloadData();
+			final Date lendDate;
+			Lend loan = null;
+			try {
+				lendDate = Constants.APPLICATION_DATE_FORMAT.parse(Constants.APPLICATION_DATE_FORMAT.format(new Date()));
+				final Calendar cal = Calendar.getInstance();
+				cal.add(Constants.APPLICATION_PROLONGATION_PERIOD.getFirst(),
+						Constants.APPLICATION_PROLONGATION_PERIOD.getSecond().intValue());
 
-				JOptionPane.showMessageDialog(tabbedForm.getFrame(),
-						SystemProperties.getInstance().getResourceBundle()
-								.getString("tabLoanServiceEvent.reservationCancelSuccess"),
-						SystemProperties.getInstance().getResourceBundle().getString(
-								"tabLoanServiceEvent.reservationCancelSuccessTitle"),
-						JOptionPane.INFORMATION_MESSAGE);
+				loan = new Lend();
+				loan.setClient(selectedClient);
+				loan.setVolume(selectedVolume);
+				loan.setLendDate(lendDate);
+				loan.setReturnedDate(cal.getTime());
+				selectedVolume.getLend().add(loan);
+			} catch (ParseException e) {
+				log.severe(e.getMessage());
 			}
-		} else {
+
+			HibernateUtil.beginTransaction();
+			HibernateUtil.getSession().save(loan);
+			HibernateUtil.getSession().update(selectedVolume);
+			HibernateUtil.commitTransaction();
+
+			((VolumeTableModel) tabbedForm.getPanelLoanService().getVolumeLoanTable().getModel()).reloadData();
+			((LoanTableModel) tabbedForm.getPanelLoanService().getLoanTable().getModel()).reloadData();
+
+			JOptionPane.showMessageDialog(tabbedForm.getFrame(),
+					SystemProperties.getInstance().getResourceBundle().getString("tabLoanServiceEvent.loanSuccess"),
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("tabLoanServiceEvent.loanSuccessTitle"),
+					JOptionPane.INFORMATION_MESSAGE);
+		} else
+			JOptionPane.showMessageDialog(tabbedForm.getFrame(),
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("loanServicePanel.loanLackClientOrVolume"),
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("loanServicePanel.loanLackClientOrVolumeTitle"),
+					JOptionPane.ERROR_MESSAGE);
+	}
+
+	private void onClickBtnReservation() {
+		if (tabbedForm.getPanelLoanService().getClientTable().getSelectedRow() != -1
+				&& tabbedForm.getPanelLoanService().getLoanTable().getSelectedRow() != -1) {
+			int selectedClientRowIndex = tabbedForm.getPanelLoanService().getClientTable()
+					.convertRowIndexToModel(tabbedForm.getPanelLoanService().getClientTable().getSelectedRow());
+			int selectedLoanRowIndex = tabbedForm.getPanelLoanService().getLoanTable()
+					.convertRowIndexToModel(tabbedForm.getPanelLoanService().getLoanTable().getSelectedRow());
+			if (selectedClientRowIndex != -1 && selectedLoanRowIndex != -1) {
+				Client selectedClient = ((ClientTableModel) tabbedForm.getPanelLoanService().getClientTable()
+						.getModel()).getClient(selectedClientRowIndex);
+				Client clientShallowClone = (Client) selectedClient.clone();
+				Lend selectedLoan = ((LoanTableModel) tabbedForm.getPanelLoanService().getLoanTable().getModel())
+						.getLend(selectedLoanRowIndex);
+				Lend lendShallowClone = (Lend) selectedLoan.clone();
+
+				if (!selectedClient.equals(selectedLoan.getClient())) {
+					if (!selectedLoan.getVolume().getIsReserve()) {
+						lendShallowClone.getVolume().setIsReserve(true);
+						lendShallowClone.setReservationClient(clientShallowClone);
+
+						HibernateUtil.beginTransaction();
+						HibernateUtil.getSession()
+								.evict(((ClientTableModel) tabbedForm.getPanelLoanService().getClientTable().getModel())
+										.getClient(selectedClientRowIndex));
+						HibernateUtil.getSession()
+								.evict(((LoanTableModel) tabbedForm.getPanelLoanService().getLoanTable().getModel())
+										.getLend(selectedLoanRowIndex));
+						HibernateUtil.getSession().update(Lend.class.getName(), lendShallowClone);
+						HibernateUtil.commitTransaction();
+
+						((LoanTableModel) tabbedForm.getPanelLoanService().getLoanTable().getModel()).reloadData();
+						((LoanReservationTableModel) tabbedForm.getPanelLoanService().getReservationTable().getModel()).reloadData();
+
+						Utils.displayOptionPane(
+								SystemProperties.getInstance().getResourceBundle()
+										.getString("tabLoanServiceEvent.reservationSuccess"),
+								SystemProperties.getInstance().getResourceBundle()
+										.getString("tabLoanServiceEvent.reservationSuccessTitle"),
+								JOptionPane.INFORMATION_MESSAGE);
+					} else
+						JOptionPane.showMessageDialog(tabbedForm.getFrame(),
+								SystemProperties.getInstance().getResourceBundle()
+										.getString("tabLoanServiceEvent.reservationError"),
+								SystemProperties.getInstance().getResourceBundle().getString(
+										"tabLoanServiceEvent.reservationErrorTitle"),
+								JOptionPane.ERROR_MESSAGE);
+				} else
+					JOptionPane.showMessageDialog(tabbedForm.getFrame(),
+							SystemProperties.getInstance().getResourceBundle()
+									.getString("tabLoanServiceEvent.reservationError1"),
+							SystemProperties.getInstance().getResourceBundle()
+									.getString("tabLoanServiceEvent.reservationErrorTitle"),
+							JOptionPane.ERROR_MESSAGE);
+			}
+		} else
 			LogGuiException.logWarning(
 					SystemProperties.getInstance().getResourceBundle()
 							.getString("tabLoanEvent.notSelectedTablesWarningTitle"),
 					SystemProperties.getInstance().getResourceBundle()
 							.getString("tabLoanEvent.notSelectedTablesWarning"));
-		}
-	}
-
-	private void onTableLoanChanged() {
-		if (((LoanTableModel) tabbedForm.getPanelLoanService().getLoanTable().getModel()).getLends().isEmpty()) {
-			tabbedForm.getPanelLoanService().getBtnProlongation().setEnabled(false);
-			tabbedForm.getPanelLoanService().getBtnReturn().setEnabled(false);
-			tabbedForm.getPanelLoanService().getBtnReservation().setEnabled(false);
-			tabbedForm.getPanelLoanService().getBtnPenalty().setEnabled(false);
-		} else {
-			tabbedForm.getPanelLoanService().getBtnProlongation().setEnabled(true);
-			tabbedForm.getPanelLoanService().getBtnReturn().setEnabled(true);
-			tabbedForm.getPanelLoanService().getBtnReservation().setEnabled(true);
-			tabbedForm.getPanelLoanService().getBtnPenalty().setEnabled(true);
-		}
-	}
-
-	private void onClientTableListSelectionChange() {
-		if (tabbedForm.getPanelLoanService().getLoanTable().getSelectedRow() != -1
-				&& tabbedForm.getPanelLoanService().getLoanTable().convertRowIndexToModel(
-				tabbedForm.getPanelLoanService().getLoanTable().getSelectedRow()) != -1) {
-			if (calculatePenalty() == new BigDecimal(0).doubleValue())
-				tabbedForm.getPanelLoanService().getBtnPenalty().setEnabled(false);
-			else
-				tabbedForm.getPanelLoanService().getBtnPenalty().setEnabled(true);
-		}
-	}
-
-	@Override
-	public void initializeForm() {
-		onTableLoanChanged();
 	}
 
 	@SuppressWarnings("deprecation")
@@ -146,7 +192,6 @@ public class TabLoanServiceEvent implements IActionForm {
 
 			Date lendData = lend.getLendDate();
 			Date returnData = lend.getReturnedDate();
-
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(lendData);
 
@@ -167,7 +212,6 @@ public class TabLoanServiceEvent implements IActionForm {
 				deadLine.setMonth(deadLine.getMonth() + 3);
 
 			Boolean error = false;
-
 			if (returnData.getMonth() == 11) {
 				returnData.setMonth(0);
 				returnData.setYear(returnData.getYear() + 1);
@@ -197,129 +241,31 @@ public class TabLoanServiceEvent implements IActionForm {
 								.getString("loanServicePanel.loanLimitExpiredErrorTitle"),
 						JOptionPane.ERROR_MESSAGE);
 			}
-
-		} else {
+		} else
 			JOptionPane.showMessageDialog(tabbedForm.getFrame(),
 					SystemProperties.getInstance().getResourceBundle()
 							.getString("loanServicePanel.notSelectedLoanError"),
 					SystemProperties.getInstance().getResourceBundle()
 							.getString("loanServicePanel.notSelectedLoanErrorTitle"),
 					JOptionPane.ERROR_MESSAGE);
-		}
-	}
-
-	private double calculatePenalty() {
-		int diffMonth = 0;
-		if (tabbedForm.getPanelLoanService().getLoanTable().getSelectedRow() != -1) {
-			int selectedRowIndex = tabbedForm.getPanelLoanService().getLoanTable()
-					.convertRowIndexToModel(tabbedForm.getPanelLoanService().getLoanTable().getSelectedRow());
-
-			if (selectedRowIndex != -1) {
-				Lend selectedLend = ((LoanTableModel) tabbedForm.getPanelLoanService().getLoanTable().getModel())
-						.getLend(selectedRowIndex);
-
-				Date returnDate = selectedLend.getReturnedDate();
-
-				if (new Date().after(returnDate)) {
-					Calendar startCalendar = new GregorianCalendar();
-					startCalendar.setTime(returnDate);
-					Calendar endCalendar = new GregorianCalendar();
-					endCalendar.setTime(new Date());
-
-					int diffYear = endCalendar.get(Calendar.YEAR) - startCalendar.get(Calendar.YEAR);
-					diffMonth = diffYear * 12 + endCalendar.get(Calendar.MONTH) - startCalendar.get(Calendar.MONTH);
-				}
-				System.out.println(diffMonth * Constants.PENALTY_VALUE);
-			}
-		}
-		return diffMonth * Constants.PENALTY_VALUE;
-	}
-
-	private void prepareReservation() throws ParseException {
-		int selectedClientRow = tabbedForm.getPanelLoanService().getClientTable().getSelectedRow();
-		int selectedVolumeRow = tabbedForm.getPanelLoanService().getVolumeLoanTable().getSelectedRow();
-
-		if (selectedClientRow != -1 && selectedVolumeRow != -1) {
-
-			final Client selectedClient = ((ClientTableModel) tabbedForm.getPanelLoanService().getClientTable()
-					.getModel()).getClient(selectedClientRow);
-			final Volume selectedVolume = ((VolumeTableModel) tabbedForm.getPanelLoanService().getVolumeLoanTable()
-					.getModel()).getVolume(selectedVolumeRow);
-
-			HibernateUtil.beginTransaction();
-			final Date lendDate = Constants.APPLICATION_DATE_FORMAT
-					.parse(Constants.APPLICATION_DATE_FORMAT.format(new Date()));
-			final Calendar cal = Calendar.getInstance();
-			cal.add(Calendar.MONTH, 1);
-
-			final Lend loan = new Lend();
-			loan.setClient(selectedClient);
-			loan.setVolume(selectedVolume);
-			loan.setLendDate(lendDate);
-			loan.setReturnedDate(cal.getTime());
-			loan.getVolume().setIsLended(true);
-			HibernateUtil.getSession().save(loan);
-			HibernateUtil.commitTransaction();
-
-			changeStatusVolumeISLended(selectedVolume);
-
-			final LoanTableModel vtm = (LoanTableModel) tabbedForm.getPanelLoanService().getLoanTable().getModel();
-			vtm.add(loan);
-
-			((VolumeTableModel) tabbedForm.getPanelLoanService().getVolumeLoanTable().getModel())
-					.remove(loan.getVolume());
-			((VolumeTableModel) tabbedForm.getPanelLoanService().getVolumeLoanTable().getModel())
-					.fireTableDataChanged();
-
-			JOptionPane.showMessageDialog(tabbedForm.getFrame(),
-					SystemProperties.getInstance().getResourceBundle().getString("tabLoanServiceEvent.loanSuccess"),
-					SystemProperties.getInstance().getResourceBundle()
-							.getString("tabLoanServiceEvent.loanSuccessTitle"),
-					JOptionPane.INFORMATION_MESSAGE);
-		} else {
-			JOptionPane.showMessageDialog(tabbedForm.getFrame(),
-					SystemProperties.getInstance().getResourceBundle()
-							.getString("loanServicePanel.loanLackClientOrVolume"),
-					SystemProperties.getInstance().getResourceBundle()
-							.getString("loanServicePanel.loanLackClientOrVolumeTitle"),
-					JOptionPane.ERROR_MESSAGE);
-		}
-	}
-
-	private void changeStatusVolumeISLended(final Volume volume) {
-		HibernateUtil.beginTransaction();
-		volume.setIsLended(true);
-		HibernateUtil.getSession().save(volume);
-		HibernateUtil.commitTransaction();
-	}
-
-	private void changeStatusVolumeISReturned(final Volume volume) {
-		HibernateUtil.beginTransaction();
-		volume.setIsLended(false);
-		HibernateUtil.getSession().save(volume);
-		HibernateUtil.commitTransaction();
 	}
 
 	private void onClickBtnReturn() {
-		final Lend lend = getLendClicked();
-
-		if (calculatePenalty() != new BigDecimal(0).doubleValue()) {
+		final Lend lend = getSelectedLend();
+		if (calculatePenalty() != new BigDecimal(0).doubleValue())
 			JOptionPane.showMessageDialog(tabbedForm.getFrame(),
 					SystemProperties.getInstance().getResourceBundle().getString("loanServicePanel.penaltyError") + " "
 							+ calculatePenalty() + Constants.APPLICATION_CURRENCY,
 					SystemProperties.getInstance().getResourceBundle().getString("loanServicePanel.penaltyErrorTitle"),
 					JOptionPane.ERROR_MESSAGE);
-
-		} else if (Objects.isNull(lend.getReservationClient())) {
+		else if (Objects.isNull(lend.getReservationClient())) {
 			lend.setIsReturned(true);
-			changeStatusVolumeISReturned(lend.getVolume());
 			HibernateUtil.beginTransaction();
-			HibernateUtil.getSession().delete(lend);
+			HibernateUtil.getSession().update(lend);
 			HibernateUtil.commitTransaction();
 
-			((LoanTableModel) tabbedForm.getPanelLoanService().getLoanTable().getModel()).delete(lend);
-			((LoanTableModel) tabbedForm.getPanelLoanService().getLoanTable().getModel()).fireTableDataChanged();
 			((VolumeTableModel) tabbedForm.getPanelLoanService().getVolumeLoanTable().getModel()).reloadData();
+			((LoanTableModel) tabbedForm.getPanelLoanService().getLoanTable().getModel()).reloadData();
 
 			JOptionPane.showMessageDialog(tabbedForm.getFrame(),
 					SystemProperties.getInstance().getResourceBundle()
@@ -336,8 +282,7 @@ public class TabLoanServiceEvent implements IActionForm {
 			HibernateUtil.commitTransaction();
 
 			((LoanTableModel) tabbedForm.getPanelLoanService().getLoanTable().getModel()).reloadData();
-			((LoanReservationTableModel) tabbedForm.getPanelLoanService().getReservationTable().getModel())
-					.reloadData();
+			((LoanReservationTableModel) tabbedForm.getPanelLoanService().getReservationTable().getModel()).reloadData();
 
 			JOptionPane.showMessageDialog(tabbedForm.getFrame(),
 					SystemProperties.getInstance().getResourceBundle()
@@ -351,105 +296,102 @@ public class TabLoanServiceEvent implements IActionForm {
 	}
 
 	private void onClickBtnPenalty() {
-		final Lend lend = getLendClicked();
-
+		final Lend lend = getSelectedLend();
 		if (calculatePenalty() != new BigDecimal(0).doubleValue()) {
-			changeStatusVolumeISReturned(lend.getVolume());
+			//TODO Handle data base penalty approach
+			//TODO Bug fix of paying penalty for volume that is reserved
+			lend.setIsReturned(true);
 			HibernateUtil.beginTransaction();
-			HibernateUtil.getSession().delete(lend);
+			HibernateUtil.getSession().update(lend);
 			HibernateUtil.commitTransaction();
 
-			((VolumeTableModel) tabbedForm.getPanelLoanService().getVolumeLoanTable().getModel()).add(lend.getVolume());
-			((LoanTableModel) tabbedForm.getPanelLoanService().getLoanTable().getModel()).delete(lend);
 			((LoanTableModel) tabbedForm.getPanelLoanService().getLoanTable().getModel()).reloadData();
 			((VolumeTableModel) tabbedForm.getPanelLoanService().getVolumeLoanTable().getModel()).reloadData();
 			JOptionPane.showMessageDialog(tabbedForm.getFrame(), "Kara została spłacona", "Spłacona",
 					JOptionPane.INFORMATION_MESSAGE);
-		} else {
+		} else
 			JOptionPane.showMessageDialog(tabbedForm.getFrame(),
 					SystemProperties.getInstance().getResourceBundle().getString("loanServicePanel.loanError"),
 					SystemProperties.getInstance().getResourceBundle().getString("loanServicePanel.loanErrorTitle"),
 					JOptionPane.ERROR_MESSAGE);
-		}
 	}
 
-	private Lend getLendClicked() {
-		final JTable jTable = tabbedForm.getPanelLoanService().getLoanTable();
-		final Lend lend = ((LoanTableModel) jTable.getModel())
-				.getLend(jTable.convertRowIndexToModel(jTable.getSelectedRow()));
+	private void onClickBtnCancelReservation() {
+		if (tabbedForm.getPanelLoanService().getReservationTable().getSelectedRow() != -1) {
+			int selectedRowIndex = tabbedForm.getPanelLoanService().getReservationTable()
+					.convertRowIndexToModel(tabbedForm.getPanelLoanService().getReservationTable().getSelectedRow());
 
-		return lend;
-	}
+			if (selectedRowIndex != -1) {
+				Lend selectedLend = ((LoanReservationTableModel) tabbedForm.getPanelLoanService().getReservationTable()
+						.getModel()).getLend(selectedRowIndex);
+				selectedLend.setReservationClient(null);
+				selectedLend.getVolume().setIsReserve(false);
 
-	private void onClickBtnReservation() {
-		if (tabbedForm.getPanelLoanService().getClientTable().getSelectedRow() != -1
-				&& tabbedForm.getPanelLoanService().getLoanTable().getSelectedRow() != -1) {
-			int selectedClientRowIndex = tabbedForm.getPanelLoanService().getClientTable()
-					.convertRowIndexToModel(tabbedForm.getPanelLoanService().getClientTable().getSelectedRow());
-			int selectedLoanRowIndex = tabbedForm.getPanelLoanService().getLoanTable()
-					.convertRowIndexToModel(tabbedForm.getPanelLoanService().getLoanTable().getSelectedRow());
-			if (selectedClientRowIndex != -1 && selectedLoanRowIndex != -1) {
-				Client selectedClient = ((ClientTableModel) tabbedForm.getPanelLoanService().getClientTable()
-						.getModel()).getClient(selectedClientRowIndex);
-				Client clientShallowClone = (Client) selectedClient.clone();
-				Lend selectedLoan = ((LoanTableModel) tabbedForm.getPanelLoanService().getLoanTable().getModel())
-						.getLend(selectedLoanRowIndex);
-				Lend lendShallowClone = (Lend) selectedLoan.clone();
+				HibernateUtil.beginTransaction();
+				HibernateUtil.getSession().update(Lend.class.getName(), selectedLend);
+				HibernateUtil.commitTransaction();
 
-				if (!selectedClient.equals(selectedLoan.getClient())) {
+				((LoanReservationTableModel) tabbedForm.getPanelLoanService().getReservationTable().getModel()).reloadData();
+				((LoanTableModel) tabbedForm.getPanelLoanService().getLoanTable().getModel()).reloadData();
 
-					if (!selectedLoan.getVolume().getIsReserve()) {
-						lendShallowClone.getVolume().setIsReserve(true);
-						lendShallowClone.setReservationClient(clientShallowClone);
-
-						HibernateUtil.beginTransaction();
-						HibernateUtil.getSession()
-								.evict(((ClientTableModel) tabbedForm.getPanelLoanService().getClientTable().getModel())
-										.getClient(selectedClientRowIndex));
-						HibernateUtil.getSession()
-								.evict(((LoanTableModel) tabbedForm.getPanelLoanService().getLoanTable().getModel())
-										.getLend(selectedLoanRowIndex));
-						HibernateUtil.getSession().update(Lend.class.getName(), lendShallowClone);
-						HibernateUtil.commitTransaction();
-
-						((LoanTableModel) tabbedForm.getPanelLoanService().getLoanTable().getModel())
-								.setLend(selectedLoanRowIndex, lendShallowClone);
-						((LoanTableModel) tabbedForm.getPanelLoanService().getLoanTable().getModel())
-								.fireTableDataChanged();
-						((LoanReservationTableModel) tabbedForm.getPanelLoanService().getReservationTable().getModel())
-								.reloadData();
-
-						Utils.displayOptionPane(
-								SystemProperties.getInstance().getResourceBundle()
-										.getString("tabLoanServiceEvent.reservationSuccess"),
-								SystemProperties.getInstance().getResourceBundle()
-										.getString("tabLoanServiceEvent.reservationSuccessTitle"),
-								JOptionPane.INFORMATION_MESSAGE);
-					} else {
-						JOptionPane.showMessageDialog(tabbedForm.getFrame(),
-								SystemProperties.getInstance().getResourceBundle()
-										.getString("tabLoanServiceEvent.reservationError"),
-								SystemProperties.getInstance().getResourceBundle().getString(
-										"tabLoanServiceEvent.reservationErrorTitle"),
-								JOptionPane.ERROR_MESSAGE);
-					}
-
-				} else {
-					JOptionPane.showMessageDialog(tabbedForm.getFrame(),
-							SystemProperties.getInstance().getResourceBundle()
-									.getString("tabLoanServiceEvent.reservationError1"),
-							SystemProperties.getInstance().getResourceBundle()
-									.getString("tabLoanServiceEvent.reservationErrorTitle"),
-							JOptionPane.ERROR_MESSAGE);
-				}
-
+				JOptionPane.showMessageDialog(tabbedForm.getFrame(),
+						SystemProperties.getInstance().getResourceBundle()
+								.getString("tabLoanServiceEvent.reservationCancelSuccess"),
+						SystemProperties.getInstance().getResourceBundle().getString(
+								"tabLoanServiceEvent.reservationCancelSuccessTitle"),
+						JOptionPane.INFORMATION_MESSAGE);
 			}
-		} else {
+		} else
 			LogGuiException.logWarning(
 					SystemProperties.getInstance().getResourceBundle()
 							.getString("tabLoanEvent.notSelectedTablesWarningTitle"),
 					SystemProperties.getInstance().getResourceBundle()
 							.getString("tabLoanEvent.notSelectedTablesWarning"));
+	}
+
+	private void onChangeLoanTable() {
+		boolean isLoanTableNotEmpty = !((LoanTableModel) tabbedForm.getPanelLoanService().getLoanTable().getModel()).getLends().isEmpty();
+		tabbedForm.getPanelLoanService().getBtnProlongation().setEnabled(isLoanTableNotEmpty);
+		tabbedForm.getPanelLoanService().getBtnReturn().setEnabled(isLoanTableNotEmpty);
+		tabbedForm.getPanelLoanService().getBtnReservation().setEnabled(isLoanTableNotEmpty);
+		tabbedForm.getPanelLoanService().getBtnPenalty().setEnabled(isLoanTableNotEmpty);
+	}
+
+	private void onClientTableListSelectionChange() {
+		tabbedForm.getPanelLoanService().getBtnPenalty().setEnabled(tabbedForm.getPanelLoanService().getLoanTable().getSelectedRow() != -1
+				&& tabbedForm.getPanelLoanService().getLoanTable().convertRowIndexToModel(tabbedForm.getPanelLoanService().getLoanTable().getSelectedRow()) != -1
+				&& calculatePenalty() != new BigDecimal(0).doubleValue());
+	}
+
+	private double calculatePenalty() {
+		int diffMonth = 0;
+		if (tabbedForm.getPanelLoanService().getLoanTable().getSelectedRow() != -1) {
+			int selectedRowIndex = tabbedForm.getPanelLoanService().getLoanTable()
+					.convertRowIndexToModel(tabbedForm.getPanelLoanService().getLoanTable().getSelectedRow());
+
+			if (selectedRowIndex != -1) {
+				Lend selectedLend = ((LoanTableModel) tabbedForm.getPanelLoanService().getLoanTable().getModel())
+						.getLend(selectedRowIndex);
+				Date returnDate = selectedLend.getReturnedDate();
+
+				if (new Date().after(returnDate)) {
+					Calendar startCalendar = new GregorianCalendar();
+					startCalendar.setTime(returnDate);
+					Calendar endCalendar = new GregorianCalendar();
+					endCalendar.setTime(new Date());
+
+					int diffYear = endCalendar.get(Calendar.YEAR) - startCalendar.get(Calendar.YEAR);
+					diffMonth = diffYear * 12 + endCalendar.get(Calendar.MONTH) - startCalendar.get(Calendar.MONTH);
+				}
+			}
 		}
+		return diffMonth * Constants.APPLICATION_PENALTY_VALUE;
+	}
+
+	private Lend getSelectedLend() {
+		final JTable jTable = tabbedForm.getPanelLoanService().getLoanTable();
+		final Lend lend = ((LoanTableModel) jTable.getModel())
+				.getLend(jTable.convertRowIndexToModel(jTable.getSelectedRow()));
+		return lend;
 	}
 }

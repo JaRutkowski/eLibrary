@@ -12,13 +12,13 @@ import javax.swing.border.TitledBorder;
 import com.javafee.elibrary.core.common.BasePanel;
 import com.javafee.elibrary.core.common.SystemProperties;
 import com.javafee.elibrary.core.common.Utils;
-import com.javafee.elibrary.hibernate.dto.library.Client;
 import com.javafee.elibrary.core.unicomponent.border.CustomTitledBorder;
 import com.javafee.elibrary.core.unicomponent.jcheckbox.CustomJCheckBox;
 import com.javafee.elibrary.core.unicomponent.jcombobox.CustomJComboBox;
 import com.javafee.elibrary.core.unicomponent.jeditorpane.CustomJEditorPane;
 import com.javafee.elibrary.core.unicomponent.jlabel.CustomJLabel;
 import com.javafee.elibrary.core.unicomponent.jtextfield.CustomJTextField;
+import com.javafee.elibrary.hibernate.dto.library.Client;
 
 import lombok.Getter;
 

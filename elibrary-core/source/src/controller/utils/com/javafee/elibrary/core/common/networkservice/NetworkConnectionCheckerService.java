@@ -5,8 +5,8 @@ import java.awt.*;
 import javax.swing.ImageIcon;
 
 import com.javafee.elibrary.core.common.Common;
-import com.javafee.elibrary.core.tabbedform.Actions;
 import com.javafee.elibrary.core.startform.RegistrationPanel;
+import com.javafee.elibrary.core.tabbedform.Actions;
 
 import lombok.Setter;
 
