@@ -60,7 +60,7 @@ public class TabLoanServiceEvent implements IActionForm {
 		tabbedForm.getPanelLoanService().getBtnPenalty().addActionListener(e -> onClickBtnPenalty());
 		tabbedForm.getPanelLoanService().getLoanTable().getSelectionModel().addListSelectionListener(e -> {
 			if (!e.getValueIsAdjusting())
-				onClientTableListSelectionChange();
+				onSelectionChangeLoanTable();
 		});
 		tabbedForm.getPanelLoanService().getLoanTable().getModel().addTableModelListener(e -> onChangeLoanTable());
 		tabbedForm.getPanelLoanService().getBtnCancelReservation().addActionListener(e -> onClickBtnCancelReservation());
@@ -372,7 +372,7 @@ public class TabLoanServiceEvent implements IActionForm {
 		tabbedForm.getPanelLoanService().getBtnPenalty().setEnabled(isLoanTableNotEmpty);
 	}
 
-	private void onClientTableListSelectionChange() {
+	private void onSelectionChangeLoanTable() {
 		tabbedForm.getPanelLoanService().getBtnPenalty().setEnabled(tabbedForm.getPanelLoanService().getLoanTable().getSelectedRow() != -1
 				&& tabbedForm.getPanelLoanService().getLoanTable().convertRowIndexToModel(tabbedForm.getPanelLoanService().getLoanTable().getSelectedRow()) != -1
 				&& calculatePenalty() != new BigDecimal(0).doubleValue());
