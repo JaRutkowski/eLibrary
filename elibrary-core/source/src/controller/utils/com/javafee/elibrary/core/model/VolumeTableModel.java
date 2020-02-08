@@ -8,8 +8,8 @@ import javax.swing.table.AbstractTableModel;
 
 import com.javafee.elibrary.core.common.Constants.VolumeTableColumn;
 import com.javafee.elibrary.core.common.SystemProperties;
-import com.javafee.elibrary.hibernate.dto.library.Volume;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
+import com.javafee.elibrary.hibernate.dto.library.Volume;
 
 public class VolumeTableModel extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
@@ -53,8 +53,9 @@ public class VolumeTableModel extends AbstractTableModel {
 	@SuppressWarnings("unchecked")
 	protected void prepareHibernateDao() {
 		this.volumes = HibernateUtil.getSession().createQuery("from Volume as vol join fetch vol.book").list();
-		this.volumes = volumes.stream().filter(vol -> !vol.getIsLended()).collect(Collectors.toList());
-		this.volumes = volumes.stream().filter(vol -> !vol.getIsReadingRoom()).collect(Collectors.toList());
+		this.volumes = volumes.stream().filter(vol -> (vol.getLend().size() == 0 || !vol.getLend().stream()
+				.filter(v -> !v.getIsReturned()).findAny().isPresent()) && !vol.getIsReadingRoom())
+				.collect(Collectors.toList());
 	}
 
 	@SuppressWarnings("unused")
@@ -97,9 +98,9 @@ public class VolumeTableModel extends AbstractTableModel {
 			case COL_IS_READING_ROOM:
 				return volume.getIsReadingRoom()
 						? SystemProperties.getInstance().getResourceBundle()
-						.getString("volumeTableModel.isReadigRoomTrueVal")
+						.getString("volumeTableModel.isReadingRoomTrueVal")
 						: SystemProperties.getInstance().getResourceBundle()
-						.getString("volumeTableModel.isReadigRoomFalseVal");
+						.getString("volumeTableModel.isReadingRoomFalseVal");
 			default:
 				return null;
 		}

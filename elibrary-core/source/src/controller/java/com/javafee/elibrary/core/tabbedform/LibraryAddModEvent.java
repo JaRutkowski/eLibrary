@@ -5,33 +5,33 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JOptionPane;
 
-import com.javafee.elibrary.core.common.Validator;
 import com.javafee.elibrary.core.common.Constants;
 import com.javafee.elibrary.core.common.Constants.Context;
 import com.javafee.elibrary.core.common.Params;
 import com.javafee.elibrary.core.common.SystemProperties;
 import com.javafee.elibrary.core.common.Utils;
+import com.javafee.elibrary.core.common.Validator;
+import com.javafee.elibrary.core.exception.LogGuiException;
+import com.javafee.elibrary.core.model.BookTableModel;
+import com.javafee.elibrary.core.model.VolumeLoanTableModel;
+import com.javafee.elibrary.core.model.VolumeReadingRoomTableModel;
+import com.javafee.elibrary.core.model.VolumeTableModel;
+import com.javafee.elibrary.core.tabbedform.library.frames.LibraryAddModFrame;
+import com.javafee.elibrary.hibernate.dao.HibernateUtil;
 import com.javafee.elibrary.hibernate.dto.library.Book;
 import com.javafee.elibrary.hibernate.dto.library.Volume;
-import com.javafee.elibrary.core.model.VolumeTableModel;
-import com.javafee.elibrary.core.exception.LogGuiException;
-import com.javafee.elibrary.hibernate.dao.HibernateUtil;
-import com.javafee.elibrary.core.model.BookTableModel;
-import com.javafee.elibrary.core.model.VolumeTableLoanModel;
-import com.javafee.elibrary.core.model.VolumeTableReadingRoomModel;
-import com.javafee.elibrary.core.tabbedform.library.frames.LibraryAddModFrame;
 
 public class LibraryAddModEvent {
 	private LibraryAddModFrame libraryAddModFrame;
 
-	private VolumeTableLoanModel volumeTableLoanModel;
-	private VolumeTableReadingRoomModel volumeTableReadingRoomModel;
+	private VolumeLoanTableModel volumeLoanTableModel;
+	private VolumeReadingRoomTableModel volumeReadingRoomTableModel;
 
 	public void control(Context context, Context loanOrReadingRoom, VolumeTableModel volumeTableModel) {
 		if (loanOrReadingRoom == Context.LOAN)
-			volumeTableLoanModel = (VolumeTableLoanModel) volumeTableModel;
+			volumeLoanTableModel = (VolumeLoanTableModel) volumeTableModel;
 		else if (loanOrReadingRoom == Context.READING_ROOM)
-			volumeTableReadingRoomModel = (VolumeTableReadingRoomModel) volumeTableModel;
+			volumeReadingRoomTableModel = (VolumeReadingRoomTableModel) volumeTableModel;
 
 		openLibraryAddModFrame(context);
 
@@ -86,23 +86,23 @@ public class LibraryAddModEvent {
 				HibernateUtil.beginTransaction();
 				if (loanOrReadingRoom == Context.LOAN) {
 					HibernateUtil.getSession().evict(
-							volumeTableLoanModel.getVolume((Integer) Params.getInstance().get("selectedRowIndex")));
+							volumeLoanTableModel.getVolume((Integer) Params.getInstance().get("selectedRowIndex")));
 					HibernateUtil.getSession().update(Volume.class.getName(), volumeShallowClone);
 				} else if (loanOrReadingRoom == Context.READING_ROOM) {
-					HibernateUtil.getSession().evict(volumeTableReadingRoomModel
+					HibernateUtil.getSession().evict(volumeReadingRoomTableModel
 							.getVolume((Integer) Params.getInstance().get("selectedRowIndex")));
 					HibernateUtil.getSession().update(Volume.class.getName(), volumeShallowClone);
 				}
 				HibernateUtil.commitTransaction();
 
 				if (loanOrReadingRoom == Context.LOAN) {
-					volumeTableLoanModel.setVolume((Integer) Params.getInstance().get("selectedRowIndex"),
+					volumeLoanTableModel.setVolume((Integer) Params.getInstance().get("selectedRowIndex"),
 							volumeShallowClone);
-					volumeTableLoanModel.fireTableDataChanged();
+					volumeLoanTableModel.fireTableDataChanged();
 				} else if (loanOrReadingRoom == Context.READING_ROOM) {
-					volumeTableReadingRoomModel.setVolume((Integer) Params.getInstance().get("selectedRowIndex"),
+					volumeReadingRoomTableModel.setVolume((Integer) Params.getInstance().get("selectedRowIndex"),
 							volumeShallowClone);
-					volumeTableReadingRoomModel.fireTableDataChanged();
+					volumeReadingRoomTableModel.fireTableDataChanged();
 				}
 
 				Utils.displayOptionPane(
@@ -156,9 +156,9 @@ public class LibraryAddModEvent {
 					HibernateUtil.commitTransaction();
 
 					if (loanOrReadingRoom == Context.LOAN)
-						volumeTableLoanModel.add(volume);
+						volumeLoanTableModel.add(volume);
 					else if (loanOrReadingRoom == Context.READING_ROOM)
-						volumeTableReadingRoomModel.add(volume);
+						volumeReadingRoomTableModel.add(volume);
 
 					Utils.displayOptionPane(
 							SystemProperties.getInstance().getResourceBundle()

@@ -2,21 +2,21 @@ package com.javafee.elibrary.core.tabbedform;
 
 import javax.swing.JOptionPane;
 
-import com.javafee.elibrary.core.common.IActionForm;
-import com.javafee.elibrary.core.common.Validator;
 import com.javafee.elibrary.core.common.Common;
 import com.javafee.elibrary.core.common.Constants;
 import com.javafee.elibrary.core.common.Constants.Role;
+import com.javafee.elibrary.core.common.IActionForm;
 import com.javafee.elibrary.core.common.Params;
 import com.javafee.elibrary.core.common.SystemProperties;
 import com.javafee.elibrary.core.common.Utils;
-import com.javafee.elibrary.hibernate.dto.library.Client;
+import com.javafee.elibrary.core.common.Validator;
 import com.javafee.elibrary.core.emailform.Actions;
-import com.javafee.elibrary.core.startform.LogInEvent;
 import com.javafee.elibrary.core.exception.LogGuiException;
 import com.javafee.elibrary.core.exception.RefusedClientsEventLoadingException;
-import com.javafee.elibrary.hibernate.dao.HibernateUtil;
 import com.javafee.elibrary.core.model.ClientTableModel;
+import com.javafee.elibrary.core.startform.LogInEvent;
+import com.javafee.elibrary.hibernate.dao.HibernateUtil;
+import com.javafee.elibrary.hibernate.dto.library.Client;
 
 import lombok.Setter;
 
@@ -34,7 +34,6 @@ public final class TabClientEvent implements IActionForm {
 	}
 
 	public static TabClientEvent getInstance(TabbedForm tabbedForm) {
-		View.forceRefresh(tabbedForm, LogInEvent.getRole() == Role.WORKER_ACCOUNTANT);
 		if (clientEvent == null) {
 			clientEvent = new TabClientEvent(tabbedForm);
 		} else
@@ -58,6 +57,11 @@ public final class TabClientEvent implements IActionForm {
 		});
 		tabbedForm.getPanelClient().getMessageAndAlertPanel().getBtnContact()
 				.addActionListener(e -> onClickBtnContact());
+	}
+
+	@Override
+	public void initializeForm() {
+		switchPerspectiveToAdm(LogInEvent.getRole() == Role.WORKER_ACCOUNTANT);
 	}
 
 	private void onClickBtnContact() {
@@ -87,11 +91,6 @@ public final class TabClientEvent implements IActionForm {
 		}
 
 		action.control();
-	}
-
-	@Override
-	public void initializeForm() {
-		switchPerspectiveToAdm(LogInEvent.getRole() == Role.WORKER_ACCOUNTANT);
 	}
 
 	private void reloadChckbxIsRegistered(boolean isRegistered) {
@@ -235,12 +234,5 @@ public final class TabClientEvent implements IActionForm {
 
 	public boolean validateClientTableSelection(int index) {
 		return index > -1;
-	}
-
-	private static class View {
-		private static void forceRefresh(TabbedForm tabbedForm, Boolean isAdminOrAccountant) {
-			tabbedForm.getPanelClient().getAdmIsRegisteredPanel().setEnabled(isAdminOrAccountant);
-			tabbedForm.getPanelClient().getAdmIsRegisteredPanel().setVisible(isAdminOrAccountant);
-		}
 	}
 }

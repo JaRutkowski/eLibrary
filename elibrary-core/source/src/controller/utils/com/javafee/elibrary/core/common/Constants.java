@@ -3,6 +3,7 @@ package com.javafee.elibrary.core.common;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.stream.Stream;
 
 import javax.swing.KeyStroke;
@@ -267,6 +268,9 @@ public final class Constants {
 	public static final SimpleDateFormat APPLICATION_TIME_FORMAT = new SimpleDateFormat("HH:mm");
 	public static final SimpleDateFormat APPLICATION_DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
 	public static final SimpleDateFormat APPLICATION_DATE_TIME_FORMAT = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+	public static final Integer APPLICATION_MAX_PROLONGNATION = 5;
+	public static double APPLICATION_PENALTY_VALUE = 0.60;
+	public static Pair<Integer, Double> APPLICATION_PROLONGATION_PERIOD = new Pair<>(Calendar.MONTH, 1.0);
 	public static final String APPLICATION_CURRENCY = "PLN";
 	public static final Integer APPLICATION_MIN_PASSWORD_LENGTH = 8;
 	public static final Integer APPLICATION_MAX_PASSWORD_LENGTH = 16;
@@ -296,8 +300,6 @@ public final class Constants {
 			.getString("constans.WORKER_LIBRARIAN");
 	public static final String CLIENT = SystemProperties.getInstance().getResourceBundle().getString("constans.CLIENT");
 
-	public static final Integer MAX_PROLONGNATION = 5;
-
 	public static final String RADIO_BUTTON_AUTHOR = "Author";
 	public static final String RADIO_BUTTON_CATEGORY = "Category";
 	public static final String RADIO_BUTTON_PUBLISHING_HOUSE = "Publishing house";
@@ -322,6 +324,4 @@ public final class Constants {
 	public static final String DATA_BASE_MESSAGE_TYPE_SYS_NOTIFICATION = "sys_notifiaction";
 	public static final String DATA_BASE_DELETED_MESSAGE_RECIPIENT_VALUE = "null";
 	public static final String DATA_BASE_DELETED_MESSAGE_SENDER_VALUE = "null";
-
-	public static double PENALTY_VALUE = 0.60;
 }

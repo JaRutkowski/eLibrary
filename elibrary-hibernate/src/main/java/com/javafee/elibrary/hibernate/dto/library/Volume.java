@@ -21,8 +21,10 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(exclude = "lend")
 @Entity
 @NamedQueries({
 		@NamedQuery(name = "Volume.checkIfInventoryNumberExist", query = "from Volume where inventoryNumber = :inventoryNumber")})
@@ -43,9 +45,6 @@ public class Volume implements Cloneable {
 	@Column(name = "is_reading_room", unique = false, nullable = true, insertable = true, updatable = true)
 	private Boolean isReadingRoom = false;
 
-	@Column(name = "is_lended", unique = false, nullable = true, insertable = true, updatable = true)
-	private Boolean isLended = false;
-
 	@Column(name = "is_reserve", unique = false, nullable = true, insertable = true, updatable = true)
 	private Boolean isReserve = false;
 
@@ -53,7 +52,9 @@ public class Volume implements Cloneable {
 	@JoinColumn(name = "id_book")
 	private Book book;
 
-	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.LAZY, mappedBy = "volume")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "volume",
+			cascade = {CascadeType.DETACH, CascadeType.MERGE,//
+					CascadeType.PERSIST, CascadeType.REFRESH})
 	private Set<Lend> lend = new HashSet<Lend>(0);
 
 	@Column(name = "penalty_value", unique = false, nullable = true, insertable = true, updatable = true, precision = 9, scale = 2)
@@ -69,12 +70,4 @@ public class Volume implements Cloneable {
 		}
 		return result;
 	}
-
-	@Override
-	public String toString() {
-		return "Volume [idVolume=" + idVolume + ", inventoryNumber=" + inventoryNumber + ", state=" + state
-				+ ", isReadingRoom=" + isReadingRoom + ", isLended=" + isLended + ", isReserve=" + isReserve + ", book="
-				+ book + ", lend=" + lend + ", penaltyValue=" + penaltyValue + "]";
-	}
-
 }

@@ -10,11 +10,11 @@ import javax.swing.border.TitledBorder;
 
 import com.javafee.elibrary.core.common.BasePanel;
 import com.javafee.elibrary.core.common.SystemProperties;
+import com.javafee.elibrary.core.unicomponent.border.CustomTitledBorder;
 import com.javafee.elibrary.core.unicomponent.jbutton.CustomJButton;
 import com.javafee.elibrary.core.unicomponent.jlabel.CustomJLabel;
 import com.javafee.elibrary.core.unicomponent.jpasswordfield.CustomJPasswordField;
 import com.javafee.elibrary.core.unicomponent.jtextfield.CustomJTextField;
-import com.javafee.elibrary.core.unicomponent.border.CustomTitledBorder;
 
 import lombok.Getter;
 

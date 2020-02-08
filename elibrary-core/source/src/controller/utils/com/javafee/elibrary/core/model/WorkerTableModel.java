@@ -6,16 +6,16 @@ import java.util.List;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.AbstractTableModel;
 
-import com.javafee.elibrary.core.common.SystemProperties;
-import com.javafee.elibrary.core.common.Validator;
 import com.javafee.elibrary.core.common.Constants;
 import com.javafee.elibrary.core.common.Constants.ClientTableColumn;
-import com.javafee.elibrary.hibernate.dto.association.City;
-import com.javafee.elibrary.hibernate.dto.library.Client;
-import com.javafee.elibrary.hibernate.dto.library.Worker;
+import com.javafee.elibrary.core.common.SystemProperties;
+import com.javafee.elibrary.core.common.Validator;
 import com.javafee.elibrary.core.exception.LogGuiException;
 import com.javafee.elibrary.hibernate.dao.HibernateDao;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
+import com.javafee.elibrary.hibernate.dto.association.City;
+import com.javafee.elibrary.hibernate.dto.library.Client;
+import com.javafee.elibrary.hibernate.dto.library.Worker;
 
 public class WorkerTableModel extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;

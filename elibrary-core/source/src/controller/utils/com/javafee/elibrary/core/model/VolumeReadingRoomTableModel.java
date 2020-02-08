@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
 
-public class VolumeTableReadingRoomModel extends VolumeTableModel {
+public class VolumeReadingRoomTableModel extends VolumeTableModel {
 	private static final long serialVersionUID = 1L;
 
 	@SuppressWarnings("unchecked")

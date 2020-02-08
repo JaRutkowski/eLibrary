@@ -11,9 +11,9 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import com.javafee.elibrary.core.common.Constants;
+import com.javafee.elibrary.core.mail.MailSender;
 import com.javafee.elibrary.hibernate.dto.common.UserData;
 import com.javafee.elibrary.hibernate.dto.common.message.Recipient;
-import com.javafee.elibrary.core.mail.MailSender;
 
 public class MailSenderEvent {
 

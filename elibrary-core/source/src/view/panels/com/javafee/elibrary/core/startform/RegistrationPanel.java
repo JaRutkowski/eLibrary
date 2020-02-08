@@ -16,7 +16,6 @@ import com.javafee.elibrary.core.common.BasePanel;
 import com.javafee.elibrary.core.common.Constants;
 import com.javafee.elibrary.core.common.SystemProperties;
 import com.javafee.elibrary.core.common.Utils;
-import com.javafee.elibrary.hibernate.dto.association.City;
 import com.javafee.elibrary.core.unicomponent.border.CustomTitledBorder;
 import com.javafee.elibrary.core.unicomponent.jbutton.CustomJButton;
 import com.javafee.elibrary.core.unicomponent.jcombobox.CustomJComboBox;
@@ -25,6 +24,7 @@ import com.javafee.elibrary.core.unicomponent.jlabel.CustomJLabel;
 import com.javafee.elibrary.core.unicomponent.jpasswordfield.CustomJPasswordField;
 import com.javafee.elibrary.core.unicomponent.jradiobutton.CustomJRadioButton;
 import com.javafee.elibrary.core.unicomponent.jtextfield.CustomJTextField;
+import com.javafee.elibrary.hibernate.dto.association.City;
 import com.toedter.calendar.JDateChooser;
 
 import lombok.Getter;
