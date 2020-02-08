@@ -97,6 +97,7 @@ public class BookAddModFrame extends JFrame {
 		authorTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		authorTable.setModel(new AuthorTableModel());
 		authorTable.setAutoCreateRowSorter(true);
+		authorTable.setRowSelectionInterval(0, 0);
 		scrollPane.setViewportView(authorTable);
 
 		scrollPane_categoryTable = new JScrollPane();
@@ -114,6 +115,7 @@ public class BookAddModFrame extends JFrame {
 		categoryTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		categoryTable.setModel(new CategoryTableModel());
 		categoryTable.setAutoCreateRowSorter(true);
+		categoryTable.setRowSelectionInterval(0, 0);
 		scrollPane_categoryTable.setViewportView(categoryTable);
 
 		scrollPane_publishingHouse = new JScrollPane();
@@ -131,6 +133,7 @@ public class BookAddModFrame extends JFrame {
 		publishingHouseTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		publishingHouseTable.setModel(new PublishingHouseTableModel());
 		publishingHouseTable.setAutoCreateRowSorter(true);
+		publishingHouseTable.setRowSelectionInterval(0, 0);
 		scrollPane_publishingHouse.setViewportView(publishingHouseTable);
 
 		cockpitConfirmationPanel = new CockpitConfirmationPanel();
