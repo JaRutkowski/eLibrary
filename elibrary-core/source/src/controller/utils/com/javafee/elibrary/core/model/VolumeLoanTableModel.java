@@ -42,20 +42,24 @@ public class VolumeLoanTableModel extends VolumeTableModel {
 						: SystemProperties.getInstance().getResourceBundle()
 						.getString("volumeTableModel.isReadingRoomFalseVal");
 			case COL_IS_LOANED:
-				return getValueColIsLoanedBaseOnRole(volume);
+				return getValueColIsLentBaseOnRole(volume);
 			default:
 				return super.getValueAt(row, col);
 		}
 	}
 
-	private Object getValueColIsLoanedBaseOnRole(Volume volume) {
+	private Object getValueColIsLentBaseOnRole(Volume volume) {
 		boolean isLent = !Objects.isNull(volume.getLend()) && volume.getLend().stream()
-				.filter(l -> !l.getIsReturned() && volume.getIdVolume().equals(l.getVolume().getIdVolume()))
-				.findAny().isPresent();
+				.anyMatch(l -> !l.getIsReturned() && volume.getIdVolume().equals(l.getVolume().getIdVolume())),
+				isLentByClient = isLent && volume.getLend().stream()
+						.anyMatch(l -> !l.getIsReturned() && volume.getIdVolume().equals(l.getVolume().getIdVolume())
+								&& l.getClient().getIdUserData().equals(LogInEvent.getUserData().getIdUserData()));
 		String lendToDate = isLent ? Constants.APPLICATION_DATE_FORMAT.format(volume.getLend().stream().filter(l -> !l.getIsReturned()).findFirst().get().getReturnedDate()) : "";
 		Object result = LogInEvent.getRole() == Constants.Role.CLIENT
-				? (isLent ? MessageFormat.format(SystemProperties.getInstance().getResourceBundle()
-				.getString("volumeTableModel.isLentWithDateTrueVal"), lendToDate)
+				? (isLent ? isLentByClient ? MessageFormat.format(SystemProperties.getInstance().getResourceBundle()
+				.getString("volumeTableModel.isLentByClientWithDateTrueVal"), lendToDate) :
+				MessageFormat.format(SystemProperties.getInstance().getResourceBundle()
+						.getString("volumeTableModel.isLentWithDateTrueVal"), lendToDate)
 				: SystemProperties.getInstance().getResourceBundle().getString("volumeTableModel.isReadingRoomFalseVal"))
 				: isLent ? SystemProperties.getInstance().getResourceBundle().getString("volumeTableModel.isReadingRoomTrueVal")
 				: SystemProperties.getInstance().getResourceBundle().getString("volumeTableModel.isReadingRoomFalseVal");
