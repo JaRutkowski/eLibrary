@@ -23,8 +23,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.javafee.elibrary.hibernate.dto.association.MessageType;
 import com.javafee.elibrary.hibernate.dto.common.UserData;
+import com.javafee.elibrary.hibernate.dto.association.MessageType;
 
 import lombok.Getter;
 import lombok.Setter;
