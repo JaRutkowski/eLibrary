@@ -230,7 +230,7 @@ public final class Constants {
 	public static final Integer DATA_BASE_PESEL_NUMBER_LENGHT = 11;
 	public static final String DATA_BASE_MESSAGE_TYPE_USR_MESSAGE = "usr_message";
 	public static final String DATA_BASE_MESSAGE_TYPE_SYS_MESSAGE = "sys_message";
-	public static final String DATA_BASE_MESSAGE_TYPE_SYS_NOTIFICATION = "sys_notifiaction";
+	public static final String DATA_BASE_MESSAGE_TYPE_SYS_NOTIFICATION = "sys_notification";
 	public static final String DATA_BASE_DELETED_MESSAGE_RECIPIENT_VALUE = "null";
 	public static final String DATA_BASE_DELETED_MESSAGE_SENDER_VALUE = "null";
 
