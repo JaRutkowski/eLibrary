@@ -12,6 +12,7 @@ import org.hibernate.exception.ConstraintViolationException;
 
 import com.javafee.elibrary.core.common.Constants;
 import com.javafee.elibrary.core.common.Constants.Context;
+import com.javafee.elibrary.core.common.IEvent;
 import com.javafee.elibrary.core.common.Params;
 import com.javafee.elibrary.core.common.SystemProperties;
 import com.javafee.elibrary.core.common.Utils;
@@ -28,18 +29,20 @@ import com.javafee.elibrary.hibernate.dto.library.Book;
 import com.javafee.elibrary.hibernate.dto.library.Category;
 import com.javafee.elibrary.hibernate.dto.library.PublishingHouse;
 
-public class BookAddModEvent {
+public class BookAddModEvent implements IEvent {
+	private Context context;
+	private BookTableModel bookTableModel;
 
 	private BookAddModFrame bookAddModFrame;
 
-	private BookTableModel bookTableModel;
-
-	private Context context;
-
 	public void control(Context context, BookTableModel bookTableModel) {
+		this.context = context;
 		this.bookTableModel = bookTableModel;
 		openBookAddModFrame(context);
+	}
 
+	@Override
+	public void initializeEventHandlers() {
 		bookAddModFrame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosed(WindowEvent e) {
@@ -249,6 +252,7 @@ public class BookAddModEvent {
 				fillBookDataPanel();
 				reloadTablesWithBookData();
 			}
+			initializeEventHandlers();
 			bookAddModFrame.setVisible(true);
 		} else
 			bookAddModFrame.toFront();

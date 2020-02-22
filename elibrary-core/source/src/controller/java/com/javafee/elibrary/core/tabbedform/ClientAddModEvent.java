@@ -14,6 +14,7 @@ import com.javafee.elibrary.core.common.Common;
 import com.javafee.elibrary.core.common.Constants;
 import com.javafee.elibrary.core.common.Constants.Context;
 import com.javafee.elibrary.core.common.Constants.Role;
+import com.javafee.elibrary.core.common.IEvent;
 import com.javafee.elibrary.core.common.Params;
 import com.javafee.elibrary.core.common.SystemProperties;
 import com.javafee.elibrary.core.common.Utils;
@@ -29,17 +30,21 @@ import com.javafee.elibrary.hibernate.dto.association.City;
 import com.javafee.elibrary.hibernate.dto.common.UserData;
 import com.javafee.elibrary.hibernate.dto.library.Client;
 
-public class ClientAddModEvent {
-
+public class ClientAddModEvent implements IEvent {
+	private Context context;
 	private ClientAddModFrame clientAddModFrame;
 
 	private RegistrationEvent registrationEvent;
 	private ClientTableModel clientTableModel;
 
 	public void control(Context context, ClientTableModel clientTableModel) {
+		this.context = context;
 		this.clientTableModel = clientTableModel;
 		openClientAddModFrame(context);
+	}
 
+	@Override
+	public void initializeEventHandlers() {
 		clientAddModFrame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosed(WindowEvent e) {
@@ -61,6 +66,7 @@ public class ClientAddModEvent {
 				reloadRegistrationPanel();
 			}
 			reloadComboBoxCity();
+			initializeEventHandlers();
 			clientAddModFrame.setVisible(true);
 		} else {
 			clientAddModFrame.toFront();

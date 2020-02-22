@@ -14,6 +14,7 @@ import com.javafee.elibrary.core.common.Common;
 import com.javafee.elibrary.core.common.Constants;
 import com.javafee.elibrary.core.common.Constants.Context;
 import com.javafee.elibrary.core.common.Constants.Role;
+import com.javafee.elibrary.core.common.IEvent;
 import com.javafee.elibrary.core.common.Params;
 import com.javafee.elibrary.core.common.SystemProperties;
 import com.javafee.elibrary.core.common.Utils;
@@ -29,16 +30,22 @@ import com.javafee.elibrary.hibernate.dto.association.City;
 import com.javafee.elibrary.hibernate.dto.common.UserData;
 import com.javafee.elibrary.hibernate.dto.library.Worker;
 
-public class WorkerAddModEvent {
+public class WorkerAddModEvent implements IEvent {
+	private Context context;
+	private WorkerTableModel workerTableModel;
+
 	private WorkerAddModFrame workerAddModFrame;
 
 	private RegistrationEvent registrationEvent;
-	private WorkerTableModel workerTableModel;
 
 	public void control(Context context, WorkerTableModel workerTableModel) {
+		this.context = context;
 		this.workerTableModel = workerTableModel;
 		openWorkerAddModFrame(context);
+	}
 
+	@Override
+	public void initializeEventHandlers() {
 		workerAddModFrame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosed(WindowEvent e) {
@@ -126,6 +133,7 @@ public class WorkerAddModEvent {
 				reloadRegistrationPanel();
 			}
 			reloadComboBoxCity();
+			initializeEventHandlers();
 			workerAddModFrame.setVisible(true);
 		} else {
 			workerAddModFrame.toFront();
