@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 
 import com.javafee.elibrary.core.common.Constants;
 import com.javafee.elibrary.core.common.Constants.Context;
+import com.javafee.elibrary.core.common.IEvent;
 import com.javafee.elibrary.core.common.Params;
 import com.javafee.elibrary.core.common.SystemProperties;
 import com.javafee.elibrary.core.common.Utils;
@@ -21,20 +22,27 @@ import com.javafee.elibrary.hibernate.dao.HibernateUtil;
 import com.javafee.elibrary.hibernate.dto.library.Book;
 import com.javafee.elibrary.hibernate.dto.library.Volume;
 
-public class LibraryAddModEvent {
-	private LibraryAddModFrame libraryAddModFrame;
-
+public class LibraryAddModEvent implements IEvent {
+	private Context context;
+	private Context loanOrReadingRoom;
 	private VolumeLoanTableModel volumeLoanTableModel;
 	private VolumeReadingRoomTableModel volumeReadingRoomTableModel;
 
+	private LibraryAddModFrame libraryAddModFrame;
+
 	public void control(Context context, Context loanOrReadingRoom, VolumeTableModel volumeTableModel) {
+		this.context = context;
+		this.loanOrReadingRoom = loanOrReadingRoom;
 		if (loanOrReadingRoom == Context.LOAN)
 			volumeLoanTableModel = (VolumeLoanTableModel) volumeTableModel;
 		else if (loanOrReadingRoom == Context.READING_ROOM)
 			volumeReadingRoomTableModel = (VolumeReadingRoomTableModel) volumeTableModel;
 
 		openLibraryAddModFrame(context);
+	}
 
+	@Override
+	public void initializeEventHandlers() {
 		libraryAddModFrame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosed(WindowEvent e) {
@@ -186,6 +194,7 @@ public class LibraryAddModEvent {
 				fillTextBoxInventoryNumber();
 				reloadTable();
 			}
+			initializeEventHandlers();
 			libraryAddModFrame.setVisible(true);
 		} else {
 			libraryAddModFrame.toFront();
