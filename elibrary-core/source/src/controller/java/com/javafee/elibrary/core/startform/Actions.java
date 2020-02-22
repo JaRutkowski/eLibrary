@@ -252,16 +252,6 @@ public class Actions implements IRegistrationForm {
 		switchPerspectiveToRegistrationOrLogIn(false);
 	}
 
-	// private void onEnterKeyPressed(KeyEvent e) {
-	// if (startForm.getLogInPanel().isVisible() && e.getKeyCode() ==
-	// KeyEvent.VK_ENTER && e.getID() == KeyEvent.KEY_PRESSED) {
-	// onClickBtnLogIn();
-	// } else if (startForm.getRegistrationPanel().isVisible() && e.getKeyCode() ==
-	// KeyEvent.VK_ENTER && e.getID() == KeyEvent.KEY_PRESSED) {
-	// onClickBtnRegisterNow();
-	// }
-	// }
-
 	private void openTabbedForm() {
 		startForm.getFrame().setVisible(false);
 		com.javafee.elibrary.core.tabbedform.Actions actions = new com.javafee.elibrary.core.tabbedform.Actions();
@@ -279,6 +269,8 @@ public class Actions implements IRegistrationForm {
 		startForm.getNavigationPanel().setVisible(registration);
 		startForm.getRegistrationPanel().setEnabled(registration);
 		startForm.getRegistrationPanel().setVisible(registration);
+		startForm.getFrame().getRootPane().setDefaultButton(registration
+				? startForm.getRegistrationPanel().getBtnRegisterNow() : startForm.getBtnLogIn());
 		startForm.getFrame().pack();
 	}
 
@@ -412,7 +404,7 @@ public class Actions implements IRegistrationForm {
 					JOptionPane.ERROR_MESSAGE);
 		else
 			result = true;
-
+		switchPerspectiveToRegistrationOrLogIn(true);
 		return result;
 	}
 }

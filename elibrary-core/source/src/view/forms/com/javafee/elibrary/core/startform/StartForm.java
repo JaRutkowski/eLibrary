@@ -71,6 +71,7 @@ public class StartForm extends BaseForm {
 		btnLogIn.setBorderPainted(true);
 		btnLogIn.setFocusPainted(true);
 		btnLogIn.setContentAreaFilled(true);
+		getFrame().getRootPane().setDefaultButton(btnLogIn);
 		GridBagConstraints gbc_btnLogIn = new GridBagConstraints();
 		gbc_btnLogIn.anchor = GridBagConstraints.SOUTH;
 		gbc_btnLogIn.fill = GridBagConstraints.HORIZONTAL;
