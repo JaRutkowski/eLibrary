@@ -205,6 +205,14 @@ public final class TabClientEvent implements IActionForm {
 			((ClientTableModel) tabbedForm.getPanelClient().getClientTable().getModel()).setClient(selectedRowIndex,
 					clientShallowClone);
 			reloadClientTable();
+
+			Utils.displayOptionPane(
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("tabClientEvent.updateAdministratorPrivilegesClientSuccess"),
+					SystemProperties.getInstance().getResourceBundle().getString(
+							"tabClientEvent.updateClientSuccessTitle"),
+					JOptionPane.INFORMATION_MESSAGE);
+
 		} else {
 			Utils.displayOptionPane(
 					SystemProperties.getInstance().getResourceBundle()
