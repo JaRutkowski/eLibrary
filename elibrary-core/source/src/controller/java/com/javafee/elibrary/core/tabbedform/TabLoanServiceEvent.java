@@ -320,12 +320,19 @@ public class TabLoanServiceEvent implements IActionForm {
 
 				((LoanTableModel) tabbedForm.getPanelLoanService().getLoanTable().getModel()).reloadData();
 				((VolumeTableModel) tabbedForm.getPanelLoanService().getVolumeLoanTable().getModel()).reloadData();
-				JOptionPane.showMessageDialog(tabbedForm.getFrame(), "Kara została spłacona", "Spłacona",
+
+				JOptionPane.showMessageDialog(tabbedForm.getFrame(),
+						SystemProperties.getInstance().getResourceBundle()
+								.getString("tabLoanServiceEvent.penaltyPaid"),
+						SystemProperties.getInstance().getResourceBundle()
+								.getString("tabLoanServiceEvent.penaltyPaidTitle"),
 						JOptionPane.INFORMATION_MESSAGE);
 			} else {
 				JOptionPane.showMessageDialog(tabbedForm.getFrame(),
-						SystemProperties.getInstance().getResourceBundle().getString("loanServicePanel.loanError"),
-						SystemProperties.getInstance().getResourceBundle().getString("loanServicePanel.loanErrorTitle"),
+						SystemProperties.getInstance().getResourceBundle()
+								.getString("tabLoanServiceEvent.loanError"),
+						SystemProperties.getInstance().getResourceBundle()
+								.getString("tabLoanServiceEvent.loanErrorTitle"),
 						JOptionPane.ERROR_MESSAGE);
 			}
 		}
