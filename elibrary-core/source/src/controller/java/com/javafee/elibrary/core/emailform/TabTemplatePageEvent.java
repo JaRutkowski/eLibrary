@@ -139,7 +139,7 @@ public class TabTemplatePageEvent implements IActionForm {
 			if (Strings.isEmpty(systemProperties.getTemplateDirectory())) {
 				if (Utils.displayConfirmDialog(com.javafee.elibrary.core.common.SystemProperties.getInstance().getResourceBundle()
 						.getString("confirmDialog.initialTemplateLibrary"), "") == JOptionPane.YES_OPTION) {
-					File result = Utils.displaySaveDialogAndGetFile(null);
+					File result = Utils.displaySaveDialogAndGetTemplateFile(null);
 					if (result != null) {
 						try {
 							Files.write(Paths.get(result.getPath()),
@@ -173,7 +173,7 @@ public class TabTemplatePageEvent implements IActionForm {
 					}
 				}
 			} else {
-				File result = Utils.displaySaveDialogAndGetFile(systemProperties.getTemplateDirectory());
+				File result = Utils.displaySaveDialogAndGetTemplateFile(systemProperties.getTemplateDirectory());
 				if (result != null) {
 					try {
 						Files.write(Paths.get(result.getPath()),
@@ -213,7 +213,7 @@ public class TabTemplatePageEvent implements IActionForm {
 		if (systemProperties.getTemplateDirectory() == null) {
 			if (Utils.displayConfirmDialog(com.javafee.elibrary.core.common.SystemProperties.getInstance().getResourceBundle()
 					.getString("confirmDialog.loadFromTemplateLibraryNoDirectory"), "") == JOptionPane.YES_OPTION) {
-				File result = Utils.displayOpenDialogAndGetFile(null);
+				File result = Utils.displayOpenDialogAndGetTemplateFile(null);
 
 				systemProperties.setTemplateDirectory(result.getParent());
 
@@ -224,7 +224,7 @@ public class TabTemplatePageEvent implements IActionForm {
 				fillTextAreaHTMLeditorWithFile(result);
 			}
 		} else {
-			File result = Utils.displayOpenDialogAndGetFile(systemProperties.getTemplateDirectory());
+			File result = Utils.displayOpenDialogAndGetTemplateFile(systemProperties.getTemplateDirectory());
 			fillTextAreaHTMLeditorWithFile(result);
 		}
 	}

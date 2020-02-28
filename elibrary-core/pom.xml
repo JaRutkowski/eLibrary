@@ -136,6 +136,12 @@
 			<version>${org.projectlombok.version}</version>
 			<scope>provided</scope>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>${common.io.version}</version>
+		</dependency>
 		<!-- jsoup HTML parser library @ https://jsoup.org/ -->
 		<dependency>
 			<groupId>org.jsoup</groupId>

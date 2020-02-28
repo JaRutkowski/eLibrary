@@ -12,6 +12,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
+import com.javafee.elibrary.core.common.BasePanel;
+import com.javafee.elibrary.core.common.SystemProperties;
 import com.javafee.elibrary.core.common.Utils;
 import com.javafee.elibrary.core.model.AuthorTableModel;
 import com.javafee.elibrary.core.model.CategoryTableModel;
@@ -21,6 +23,7 @@ import com.javafee.elibrary.core.unicomponent.jbutton.CustomJButton;
 import com.javafee.elibrary.core.unicomponent.jtable.CustomJTable;
 import com.javafee.elibrary.core.unicomponent.tablefilterheader.CustomTableFilterHeader;
 import com.javafee.elibrary.core.uniform.CockpitConfirmationPanel;
+import com.javafee.elibrary.core.uniform.ImagePanel;
 
 import lombok.Getter;
 import net.coderazzi.filters.gui.TableFilterHeader;
@@ -31,35 +34,38 @@ public class BookAddModFrame extends JFrame {
 
 	@Getter
 	private BookDataPanel bookDataPanel;
-	@Getter
-	private CockpitConfirmationPanel cockpitConfirmationPanel;
 
-	@Getter
-	private JTable authorTable;
-	@Getter
-	private JTable categoryTable;
 	private JScrollPane scrollPane;
 	private JScrollPane scrollPane_categoryTable;
 	private JScrollPane scrollPane_publishingHouse;
 	@Getter
+	private JTable categoryTable;
+	@Getter
+	private JTable authorTable;
+	@Getter
 	private JTable publishingHouseTable;
 	@Getter
 	private JButton btnRefreshTables;
+	@Getter
+	private ImagePanel bookImagePreviewPanel;
+
+	@Getter
+	private CockpitConfirmationPanel cockpitConfirmationPanel;
 
 	public BookAddModFrame() {
 		setBackground(Utils.getApplicationUserDefinedColor());
 		setIconImage(
 				Toolkit.getDefaultToolkit().getImage(BookAddModFrame.class.getResource("/images/splashScreen.jpg")));
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 667, 561);
-		contentPane = new JPanel();
+		setBounds(100, 100, 994, 561);
+		contentPane = new BasePanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[]{29, 197, 0};
+		gbl_contentPane.columnWidths = new int[]{29, 197, 269, 0};
 		gbl_contentPane.rowHeights = new int[]{0, 119, 140, 119, 22, 0};
-		gbl_contentPane.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
-		gbl_contentPane.rowWeights = new double[]{0.0, 1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
+		gbl_contentPane.columnWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
+		gbl_contentPane.rowWeights = new double[]{1.0, 1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
 
 		bookDataPanel = new BookDataPanel();
@@ -77,14 +83,14 @@ public class BookAddModFrame extends JFrame {
 						.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
 		GridBagConstraints gbc_btnRefreshTables = new GridBagConstraints();
 		gbc_btnRefreshTables.anchor = GridBagConstraints.EAST;
-		gbc_btnRefreshTables.insets = new Insets(0, 0, 5, 0);
+		gbc_btnRefreshTables.insets = new Insets(0, 0, 5, 5);
 		gbc_btnRefreshTables.gridx = 1;
 		gbc_btnRefreshTables.gridy = 0;
 		contentPane.add(btnRefreshTables, gbc_btnRefreshTables);
 
 		scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
-		gbc_scrollPane.insets = new Insets(0, 0, 5, 0);
+		gbc_scrollPane.insets = new Insets(0, 0, 5, 5);
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
 		gbc_scrollPane.gridx = 1;
 		gbc_scrollPane.gridy = 1;
@@ -102,7 +108,7 @@ public class BookAddModFrame extends JFrame {
 
 		scrollPane_categoryTable = new JScrollPane();
 		GridBagConstraints gbc_scrollPane_categoryTable = new GridBagConstraints();
-		gbc_scrollPane_categoryTable.insets = new Insets(0, 0, 5, 0);
+		gbc_scrollPane_categoryTable.insets = new Insets(0, 0, 5, 5);
 		gbc_scrollPane_categoryTable.fill = GridBagConstraints.BOTH;
 		gbc_scrollPane_categoryTable.gridx = 1;
 		gbc_scrollPane_categoryTable.gridy = 2;
@@ -120,7 +126,7 @@ public class BookAddModFrame extends JFrame {
 
 		scrollPane_publishingHouse = new JScrollPane();
 		GridBagConstraints gbc_scrollPane_publishingHouse = new GridBagConstraints();
-		gbc_scrollPane_publishingHouse.insets = new Insets(0, 0, 5, 0);
+		gbc_scrollPane_publishingHouse.insets = new Insets(0, 0, 5, 5);
 		gbc_scrollPane_publishingHouse.fill = GridBagConstraints.BOTH;
 		gbc_scrollPane_publishingHouse.gridx = 1;
 		gbc_scrollPane_publishingHouse.gridy = 3;
@@ -136,8 +142,19 @@ public class BookAddModFrame extends JFrame {
 		publishingHouseTable.setRowSelectionInterval(0, 0);
 		scrollPane_publishingHouse.setViewportView(publishingHouseTable);
 
+		bookImagePreviewPanel = new ImagePanel(SystemProperties.getInstance().getResourceBundle()
+				.getString("imagePanel.title"));
+		GridBagConstraints gbc_panel = new GridBagConstraints();
+		gbc_panel.gridheight = 4;
+		gbc_panel.insets = new Insets(0, 0, 5, 0);
+		gbc_panel.fill = GridBagConstraints.BOTH;
+		gbc_panel.gridx = 2;
+		gbc_panel.gridy = 0;
+		contentPane.add(bookImagePreviewPanel, gbc_panel);
+
 		cockpitConfirmationPanel = new CockpitConfirmationPanel();
 		GridBagConstraints gbc_cockpitConfirmationPanel = new GridBagConstraints();
+		gbc_cockpitConfirmationPanel.insets = new Insets(0, 0, 0, 5);
 		gbc_cockpitConfirmationPanel.gridwidth = 2;
 		gbc_cockpitConfirmationPanel.fill = GridBagConstraints.BOTH;
 		gbc_cockpitConfirmationPanel.gridx = 0;

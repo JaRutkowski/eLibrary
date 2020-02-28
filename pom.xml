@@ -30,6 +30,7 @@
 		<net.coderazzi.version>5.5.1</net.coderazzi.version>
 		<javax.mail.version>1.4.7</javax.mail.version>
 		<org.projectlombok.version>1.16.22</org.projectlombok.version>
+		<common.io.version>2.6</common.io.version>
 		<org.jsoup.version>1.11.3</org.jsoup.version>
 		<org.apache.httpcomponents.version>4.4.10</org.apache.httpcomponents.version>
 		<com.mashape.unirest.version>1.4.9</com.mashape.unirest.version>

@@ -2,12 +2,17 @@ package com.javafee.elibrary.core.tabbedform;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.PersistenceException;
 import javax.swing.JOptionPane;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.hibernate.exception.ConstraintViolationException;
 
 import com.javafee.elibrary.core.common.Constants;
@@ -24,16 +29,22 @@ import com.javafee.elibrary.core.model.CategoryTableModel;
 import com.javafee.elibrary.core.model.PublishingHouseTableModel;
 import com.javafee.elibrary.core.tabbedform.books.frames.BookAddModFrame;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
+import com.javafee.elibrary.hibernate.dto.common.extdata.ExtFileMetadata;
 import com.javafee.elibrary.hibernate.dto.library.Author;
 import com.javafee.elibrary.hibernate.dto.library.Book;
 import com.javafee.elibrary.hibernate.dto.library.Category;
 import com.javafee.elibrary.hibernate.dto.library.PublishingHouse;
 
+import lombok.extern.java.Log;
+
+@Log
 public class BookAddModEvent implements IEvent {
 	private Context context;
 	private BookTableModel bookTableModel;
 
 	private BookAddModFrame bookAddModFrame;
+
+	private File cachedImageFile;
 
 	public void control(Context context, BookTableModel bookTableModel) {
 		this.context = context;
@@ -51,8 +62,23 @@ public class BookAddModEvent implements IEvent {
 			}
 		});
 
-		bookAddModFrame.getCockpitConfirmationPanel().getBtnAccept().addActionListener(e -> onClickBtnAccept(context));
 		bookAddModFrame.getBtnRefreshTables().addActionListener(e -> onClickBtnRefreshTables());
+		bookAddModFrame.getBookDataPanel().getBtnChooseBookImageFile().addActionListener(e -> onClickBtnChooseBookImageFile());
+		bookAddModFrame.getCockpitConfirmationPanel().getBtnAccept().addActionListener(e -> onClickBtnAccept(context));
+	}
+
+	private void onClickBtnRefreshTables() {
+		if (this.context == Context.MODIFICATION)
+			reloadTablesWithBookData();
+		else
+			reloadTablesData();
+	}
+
+	private void onClickBtnChooseBookImageFile() {
+		cachedImageFile = Utils.displayOpenSimpleDialogAndGetImageFile(null);
+		bookAddModFrame.getBookDataPanel().getTextFieldBookImagePath().setText(cachedImageFile.getAbsolutePath());
+
+		reloadBookImagePreviewPanelWithCachedImageFile();
 	}
 
 	private void onClickBtnAccept(Context context) {
@@ -68,13 +94,6 @@ public class BookAddModEvent implements IEvent {
 					SystemProperties.getInstance().getResourceBundle()
 							.getString("bookAddModEvent.notSelectedTablesWarningTitle"),
 					JOptionPane.ERROR_MESSAGE);
-	}
-
-	private void onClickBtnRefreshTables() {
-		if (this.context == Context.MODIFICATION)
-			reloadTablesWithBookData();
-		else
-			reloadTablesData();
 	}
 
 	private void modifyBook() {
@@ -111,6 +130,11 @@ public class BookAddModEvent implements IEvent {
 								? Integer.parseInt(
 								bookAddModFrame.getBookDataPanel().getTextFieldNumberOfTomes().getText())
 								: null);
+				if (cachedImageFile != null) {
+					bookShallowClone.setFile(Files.readAllBytes(cachedImageFile.toPath()));
+					bookShallowClone.setExtFileMetadata(new ExtFileMetadata(cachedImageFile.getAbsolutePath(),
+							FilenameUtils.getExtension(cachedImageFile.getName()), cachedImageFile.length()));
+				}
 
 				HibernateUtil.beginTransaction();
 				HibernateUtil.getSession()
@@ -150,6 +174,13 @@ public class BookAddModEvent implements IEvent {
 					SystemProperties.getInstance().getResourceBundle()
 							.getString("bookAddModEvent.savingBookConstraintViolationError"),
 					e);
+		} catch (IOException e) {
+			LogGuiException.logError(
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("bookAddModEvent.savingBookImageLoadingErrorTitle"),
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("bookAddModEvent.savingBookImageLoadingError"),
+					e);
 		}
 	}
 
@@ -185,6 +216,11 @@ public class BookAddModEvent implements IEvent {
 				book.setIsbnNumber(isbnNumber);
 				book.setNumberOfPage(numberOfPage);
 				book.setNumberOfTomes(numberOfTomes);
+				if (cachedImageFile != null) {
+					book.setFile(Files.readAllBytes(cachedImageFile.toPath()));
+					book.setExtFileMetadata(new ExtFileMetadata(cachedImageFile.getAbsolutePath(),
+							FilenameUtils.getExtension(cachedImageFile.getName()), cachedImageFile.length()));
+				}
 				HibernateUtil.getSession().save(book);
 				HibernateUtil.commitTransaction();
 
@@ -219,6 +255,13 @@ public class BookAddModEvent implements IEvent {
 					SystemProperties.getInstance().getResourceBundle()
 							.getString("bookAddModEvent.savingBookConstraintViolationError"),
 					e);
+		} catch (IOException e) {
+			LogGuiException.logError(
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("bookAddModEvent.savingBookImageLoadingErrorTitle"),
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("bookAddModEvent.savingBookImageLoadingError"),
+					e);
 		}
 	}
 
@@ -248,12 +291,14 @@ public class BookAddModEvent implements IEvent {
 		if (bookAddModFrame == null || (bookAddModFrame != null && !bookAddModFrame.isDisplayable())) {
 			bookAddModFrame = new BookAddModFrame();
 			this.context = context;
+			bookAddModFrame.setVisible(true);
 			if (this.context == Context.MODIFICATION) {
 				fillBookDataPanel();
 				reloadTablesWithBookData();
-			}
+				reloadBookImagePreviewPanel();
+			} else if (this.context == Context.ADDITION)
+				cachedImageFile = null;
 			initializeEventHandlers();
-			bookAddModFrame.setVisible(true);
 		} else
 			bookAddModFrame.toFront();
 	}
@@ -283,10 +328,53 @@ public class BookAddModEvent implements IEvent {
 		}
 	}
 
+	private void reloadBookImagePreviewPanel() {
+		if (Params.getInstance().get("selectedBook") != null) {
+			Book selectedBook = ((Book) Params.getInstance().get("selectedBook"));
+			File dir = new File("tmp/test");
+			dir.mkdirs();
+			File tmp = new File(dir, "tmp.txt");
+			try {
+				tmp.createNewFile();
+				if (selectedBook.getExtFileMetadata() != null) {
+					FileUtils.writeByteArrayToFile(tmp, selectedBook.getFile());
+					bookAddModFrame.getBookImagePreviewPanel().loadImage(tmp.getAbsolutePath());
+					bookAddModFrame.getBookImagePreviewPanel().paint(bookAddModFrame.getBookImagePreviewPanel().getGraphics());
+					tmp.delete();
+				} else {
+					bookAddModFrame.getBookImagePreviewPanel().setImage(null);
+					bookAddModFrame.getBookImagePreviewPanel().setScaledImage(null);
+					bookAddModFrame.getBookImagePreviewPanel()
+							.paint(bookAddModFrame.getBookImagePreviewPanel().getGraphics());
+				}
+			} catch (IOException e) {
+				LogGuiException.logError(
+						SystemProperties.getInstance().getResourceBundle().getString("bookAddModEvent.loadingFileErrorTitle"), e);
+				e.printStackTrace();
+			}
+		}
+	}
+
 	private void reloadTablesData() {
 		((AuthorTableModel) bookAddModFrame.getAuthorTable().getModel()).reloadData();
 		((CategoryTableModel) bookAddModFrame.getCategoryTable().getModel()).reloadData();
 		((PublishingHouseTableModel) bookAddModFrame.getPublishingHouseTable().getModel()).reloadData();
+	}
+
+	private void reloadBookImagePreviewPanelWithCachedImageFile() {
+		if (cachedImageFile != null) {
+			try {
+				bookAddModFrame.getBookImagePreviewPanel().loadImage(cachedImageFile.getAbsolutePath());
+				bookAddModFrame.getBookImagePreviewPanel().paint(bookAddModFrame.getBookImagePreviewPanel().getGraphics());
+			} catch (IOException e) {
+				LogGuiException.logError(
+						SystemProperties.getInstance().getResourceBundle().getString("errorDialog.title"), e);
+				log.severe(e.getMessage());
+			}
+		} else
+			LogGuiException.logError(
+					SystemProperties.getInstance().getResourceBundle().getString("bookAddModEvent.emptyImageErrorTitle"),
+					SystemProperties.getInstance().getResourceBundle().getString("bookAddModEvent.emptyImageError"));
 	}
 
 	private void fillBookDataPanel() {
@@ -305,6 +393,10 @@ public class BookAddModEvent implements IEvent {
 		bookAddModFrame.getBookDataPanel().getTextFieldNumberOfTomes()
 				.setText(((Book) Params.getInstance().get("selectedBook")).getNumberOfTomes() != null
 						? ((Book) Params.getInstance().get("selectedBook")).getNumberOfTomes().toString()
+						: "");
+		bookAddModFrame.getBookDataPanel().getTextFieldBookImagePath()
+				.setText(((Book) Params.getInstance().get("selectedBook")).getExtFileMetadata() != null
+						? ((Book) Params.getInstance().get("selectedBook")).getExtFileMetadata().getLocalPath()
 						: "");
 	}
 

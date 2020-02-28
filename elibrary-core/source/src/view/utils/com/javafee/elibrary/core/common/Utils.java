@@ -7,12 +7,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import javax.imageio.ImageIO;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 
 import org.oxbow.swingbits.util.Strings;
@@ -74,7 +76,24 @@ public class Utils {
 				JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 	}
 
-	public static File displaySaveDialogAndGetFile(String directory) {
+	public static File displayOpenSimpleDialogAndGetImageFile(String directory) {
+		String dir = directory != null ? directory : FileSystemView.getFileSystemView().getHomeDirectory().toString();
+		JFileChooser jfc = new JFileChooser(dir);
+		jfc.addChoosableFileFilter(new FileNameExtensionFilter(
+				"Image files", ImageIO.getReaderFileSuffixes()));
+
+		File result = null;
+
+		int returnValue = jfc.showSaveDialog(null);
+
+		if (returnValue == JFileChooser.APPROVE_OPTION) {
+			result = jfc.getSelectedFile();
+		}
+
+		return result;
+	}
+
+	public static File displaySaveDialogAndGetTemplateFile(String directory) {
 		String dir = directory != null ? directory : FileSystemView.getFileSystemView().getHomeDirectory().toString();
 		JFileChooser jfc = new JFileChooser(dir);
 		jfc.addChoosableFileFilter(new FileFilter() {
@@ -124,7 +143,7 @@ public class Utils {
 		return result;
 	}
 
-	public static File displayOpenDialogAndGetFile(String directory) {
+	public static File displayOpenDialogAndGetTemplateFile(String directory) {
 		String dir = directory != null ? directory : FileSystemView.getFileSystemView().getHomeDirectory().toString();
 		JFileChooser jfc = new JFileChooser(dir);
 		jfc.addChoosableFileFilter(new FileFilter() {

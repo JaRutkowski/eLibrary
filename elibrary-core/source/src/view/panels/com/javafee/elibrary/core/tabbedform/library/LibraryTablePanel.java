@@ -4,6 +4,7 @@ import java.awt.*;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
@@ -17,6 +18,7 @@ import com.javafee.elibrary.core.unicomponent.border.CustomTitledBorder;
 import com.javafee.elibrary.core.unicomponent.jtable.CustomJTable;
 import com.javafee.elibrary.core.unicomponent.tablefilterheader.CustomTableFilterHeader;
 import com.javafee.elibrary.core.uniform.CockpitEditionPanel;
+import com.javafee.elibrary.core.uniform.ImagePanel;
 
 import lombok.Getter;
 import net.coderazzi.filters.gui.TableFilterHeader;
@@ -37,6 +39,12 @@ public class LibraryTablePanel extends BasePanel {
 	private JPanel panelLoan;
 	@Getter
 	private JPanel panelReadingRoom;
+	private JSplitPane splitPane;
+	private JSplitPane splitPane_1;
+	@Getter
+	private ImagePanel imagePreviewPanelLoan;
+	@Getter
+	private ImagePanel imagePreviewPanelReadingRoom;
 
 	public LibraryTablePanel() {
 		super();
@@ -47,17 +55,26 @@ public class LibraryTablePanel extends BasePanel {
 		gridBagLayout.rowWeights = new double[]{1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 
+		splitPane = new JSplitPane();
+		splitPane.setOneTouchExpandable(true);
+		splitPane.setResizeWeight(0.5);
+		GridBagConstraints gbc_splitPane = new GridBagConstraints();
+		gbc_splitPane.insets = new Insets(0, 0, 5, 0);
+		gbc_splitPane.fill = GridBagConstraints.BOTH;
+		gbc_splitPane.gridx = 0;
+		gbc_splitPane.gridy = 0;
+		add(splitPane, gbc_splitPane);
+
+		imagePreviewPanelLoan = new ImagePanel(SystemProperties.getInstance().getResourceBundle()
+				.getString("imagePanel.title"));
+		splitPane.setRightComponent(imagePreviewPanelLoan);
+
 		panelLoan = new JPanel();
+		splitPane.setLeftComponent(panelLoan);
 		panelLoan.setBackground(Utils.getApplicationUserDefinedColor());
 		panelLoan.setBorder(new CustomTitledBorder(null,
 				SystemProperties.getInstance().getResourceBundle().getString("libraryTablePanel.panelLoanTitle"),
 				TitledBorder.LEADING, CustomTitledBorder.TOP, null, null));
-		GridBagConstraints gbc_panelLoan = new GridBagConstraints();
-		gbc_panelLoan.fill = GridBagConstraints.BOTH;
-		gbc_panelLoan.insets = new Insets(0, 0, 5, 0);
-		gbc_panelLoan.gridx = 0;
-		gbc_panelLoan.gridy = 0;
-		add(panelLoan, gbc_panelLoan);
 		GridBagLayout gbl_panelLoan = new GridBagLayout();
 		gbl_panelLoan.columnWidths = new int[]{477, 0};
 		gbl_panelLoan.rowHeights = new int[]{284, 0};
@@ -90,17 +107,26 @@ public class LibraryTablePanel extends BasePanel {
 		gbc_ce_panelLoan.gridy = 1;
 		add(cockpitEditionPanelLoan, gbc_ce_panelLoan);
 
+		splitPane_1 = new JSplitPane();
+		splitPane_1.setOneTouchExpandable(true);
+		splitPane_1.setResizeWeight(0.5);
+		GridBagConstraints gbc_splitPane_1 = new GridBagConstraints();
+		gbc_splitPane_1.insets = new Insets(0, 0, 5, 0);
+		gbc_splitPane_1.fill = GridBagConstraints.BOTH;
+		gbc_splitPane_1.gridx = 0;
+		gbc_splitPane_1.gridy = 2;
+		add(splitPane_1, gbc_splitPane_1);
+
+		imagePreviewPanelReadingRoom = new ImagePanel(SystemProperties.getInstance().getResourceBundle()
+				.getString("imagePanel.title"));
+		splitPane_1.setRightComponent(imagePreviewPanelReadingRoom);
+
 		panelReadingRoom = new JPanel();
+		splitPane_1.setLeftComponent(panelReadingRoom);
 		panelReadingRoom.setBackground(Utils.getApplicationUserDefinedColor());
 		panelReadingRoom.setBorder(new CustomTitledBorder(null,
 				SystemProperties.getInstance().getResourceBundle().getString("libraryTablePanel.panelReadingRoomTitle"),
 				TitledBorder.LEADING, CustomTitledBorder.TOP, null, null));
-		GridBagConstraints gbc_panelReadingRoom = new GridBagConstraints();
-		gbc_panelReadingRoom.fill = GridBagConstraints.BOTH;
-		gbc_panelReadingRoom.insets = new Insets(0, 0, 5, 0);
-		gbc_panelReadingRoom.gridx = 0;
-		gbc_panelReadingRoom.gridy = 2;
-		add(panelReadingRoom, gbc_panelReadingRoom);
 		GridBagLayout gbl_panelReadingRoom = new GridBagLayout();
 		gbl_panelReadingRoom.columnWidths = new int[]{477, 0};
 		gbl_panelReadingRoom.rowHeights = new int[]{312, 0};
@@ -125,11 +151,11 @@ public class LibraryTablePanel extends BasePanel {
 		scrollPane_readingRoom.setViewportView(readingRoomVolumeTable);
 
 		cockpitEditionPanelReadingRoom = new CockpitEditionPanel();
-		GridBagConstraints gbc_panel_1 = new GridBagConstraints();
-		gbc_panel_1.anchor = GridBagConstraints.WEST;
-		gbc_panel_1.fill = GridBagConstraints.VERTICAL;
-		gbc_panel_1.gridx = 0;
-		gbc_panel_1.gridy = 3;
-		add(cockpitEditionPanelReadingRoom, gbc_panel_1);
+		GridBagConstraints gbc_cockpitEditionPanelReadingRoom = new GridBagConstraints();
+		gbc_cockpitEditionPanelReadingRoom.anchor = GridBagConstraints.WEST;
+		gbc_cockpitEditionPanelReadingRoom.fill = GridBagConstraints.VERTICAL;
+		gbc_cockpitEditionPanelReadingRoom.gridx = 0;
+		gbc_cockpitEditionPanelReadingRoom.gridy = 3;
+		add(cockpitEditionPanelReadingRoom, gbc_cockpitEditionPanelReadingRoom);
 	}
 }
