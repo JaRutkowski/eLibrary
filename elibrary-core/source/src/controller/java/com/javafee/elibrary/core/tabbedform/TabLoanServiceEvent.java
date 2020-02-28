@@ -377,6 +377,7 @@ public class TabLoanServiceEvent implements IActionForm {
 		tabbedForm.getPanelLoanService().getBtnReturn().setEnabled(isLoanTableNotEmpty);
 		tabbedForm.getPanelLoanService().getBtnReservation().setEnabled(isLoanTableNotEmpty);
 		tabbedForm.getPanelLoanService().getBtnPenalty().setEnabled(isLoanTableNotEmpty);
+		tabbedForm.getPanelLoanService().getBtnCancelReservation().setEnabled(isLoanTableNotEmpty);
 	}
 
 	private void onSelectionChangeLoanTable() {
