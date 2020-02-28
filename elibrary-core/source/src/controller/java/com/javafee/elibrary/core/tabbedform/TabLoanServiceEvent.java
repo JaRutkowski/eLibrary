@@ -61,7 +61,6 @@ public class TabLoanServiceEvent implements IActionForm {
 		tabbedForm.getPanelLoanService().getLoanTable().getSelectionModel().addListSelectionListener(e -> {
 			if (!e.getValueIsAdjusting())
 				onSelectionChangeLoanTable();
-
 		});
 		tabbedForm.getPanelLoanService().getLoanTable().getModel().addTableModelListener(e -> onChangeLoanTable());
 		tabbedForm.getPanelLoanService().getBtnCancelReservation().addActionListener(e -> onClickBtnCancelReservation());
@@ -318,6 +317,9 @@ public class TabLoanServiceEvent implements IActionForm {
 				HibernateUtil.beginTransaction();
 				HibernateUtil.getSession().update(lend);
 				HibernateUtil.commitTransaction();
+
+				((LoanTableModel) tabbedForm.getPanelLoanService().getLoanTable().getModel()).reloadData();
+				((VolumeTableModel) tabbedForm.getPanelLoanService().getVolumeLoanTable().getModel()).reloadData();
 
 				JOptionPane.showMessageDialog(tabbedForm.getFrame(),
 						SystemProperties.getInstance().getResourceBundle()
