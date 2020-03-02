@@ -1,8 +1,12 @@
 package com.javafee.elibrary.core.tabbedform;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import javax.swing.JOptionPane;
+
+import org.apache.commons.io.FileUtils;
 
 import com.javafee.elibrary.core.common.Constants;
 import com.javafee.elibrary.core.common.IActionForm;
@@ -46,6 +50,52 @@ public class TabBookEvent implements IActionForm {
 				.addActionListener(e -> onClickBtnModify());
 		tabbedForm.getPanelBook().getCockpitEditionPanelBook().getBtnDelete()
 				.addActionListener(e -> onClickBtnDelete());
+
+		tabbedForm.getPanelBook().getBookTable().getSelectionModel().addListSelectionListener(e -> {
+			if (!e.getValueIsAdjusting())
+				onBookTableListSelectionChange();
+		});
+	}
+
+	private void onBookTableListSelectionChange() {
+		if (tabbedForm.getPanelBook().getBookTable().getSelectedRow() != -1 && tabbedForm.getPanelBook().getBookTable()
+				.convertRowIndexToModel(tabbedForm.getPanelBook().getBookTable().getSelectedRow()) != -1) {
+
+			int selectedRowIndex = tabbedForm.getPanelBook().getBookTable()
+					.convertRowIndexToModel(tabbedForm.getPanelBook().getBookTable().getSelectedRow());
+
+			if (selectedRowIndex != -1) {
+				Book selectedBook = ((BookTableModel) tabbedForm.getPanelBook().getBookTable().getModel())
+						.getBook(selectedRowIndex);
+				reloadImagePreviewPanel(selectedBook);
+			}
+		}
+	}
+
+	private void reloadImagePreviewPanel(Book book) {
+		File dir = new File("tmp/test");
+		dir.mkdirs();
+		File tmp = new File(dir, "tmp.txt");
+		try {
+			tmp.createNewFile();
+			if (book != null && book.getFile() != null
+					&& book.getFile().length > 0) {
+				FileUtils.writeByteArrayToFile(tmp, book.getFile());
+				tabbedForm.getPanelBook().getBookImagePreviewPanel().loadImage(tmp.getAbsolutePath());
+				tabbedForm.getPanelBook().getBookImagePreviewPanel()
+						.paint(tabbedForm.getPanelBook().getBookImagePreviewPanel().getGraphics());
+				tmp.delete();
+			} else {
+				tabbedForm.getPanelBook().getBookImagePreviewPanel().setImage(null);
+				tabbedForm.getPanelBook().getBookImagePreviewPanel().setScaledImage(null);
+				tabbedForm.getPanelBook().getBookImagePreviewPanel()
+						.paint(tabbedForm.getPanelBook().getBookImagePreviewPanel().getGraphics());
+			}
+		} catch (IOException e) {
+			LogGuiException.logError(
+					SystemProperties.getInstance().getResourceBundle().getString("bookAddModEvent.loadingFileErrorTitle"), e);
+			e.printStackTrace();
+		}
 	}
 
 	private void onClickBtnAdd() {
@@ -94,20 +144,16 @@ public class TabBookEvent implements IActionForm {
 							.getBook(selectedRowIndex);
 					@SuppressWarnings("unchecked")
 					List<Volume> volumes = HibernateUtil.getSession()
-							.createQuery("from Volume as vol join fetch vol.book").list();
-					boolean bookVolumeExist = false;
-					for (Volume v : volumes) {
-						if (v.getBook().getIdBook() == selectedBook.getIdBook())
-							bookVolumeExist = true;
-					}
+							.createQuery("from Volume as vol join fetch vol.book where vol.book.idBook = "
+									+ selectedBook.getIdBook()).list();
 
-					if (bookVolumeExist) {
+					if (!volumes.isEmpty())
 						LogGuiException.logWarning(
 								SystemProperties.getInstance().getResourceBundle()
 										.getString("tabBookEvent.existingBookVolumeError"),
 								SystemProperties.getInstance().getResourceBundle()
 										.getString("tabBookEvent.existingBookVolumeErrorTitle"));
-					} else {
+					else {
 						HibernateUtil.beginTransaction();
 						HibernateUtil.getSession().delete(selectedBook);
 						HibernateUtil.commitTransaction();
@@ -116,17 +162,16 @@ public class TabBookEvent implements IActionForm {
 
 				}
 			}
-		} else {
+		} else
 			LogGuiException.logWarning(
 					SystemProperties.getInstance().getResourceBundle()
 							.getString("tabClientEvent.notSelectedClientWarningTitle"),
 					SystemProperties.getInstance().getResourceBundle()
 							.getString("tabClientEvent.notSelectedClientWarning"));
-		}
 	}
 
 	@Override
 	public void initializeForm() {
-
+		onBookTableListSelectionChange();
 	}
 }

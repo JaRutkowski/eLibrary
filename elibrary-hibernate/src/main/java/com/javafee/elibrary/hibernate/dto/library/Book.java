@@ -19,6 +19,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.javafee.elibrary.hibernate.dto.common.FileEntity;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -29,7 +31,7 @@ import lombok.EqualsAndHashCode;
 		@NamedQuery(name = "Book.checkWithComparingIdIfIsbnNumberExist", query = "from Book where idBook != :idBook and isbnNumber = :isbnNumber")})
 @Table(name = "lib_book")
 @SequenceGenerator(name = "seq_lib_book", sequenceName = "seq_lib_book", allocationSize = 1)
-public class Book implements Cloneable {
+public class Book extends FileEntity implements Cloneable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_lib_book")
 	@Column(name = "id_book", unique = false, nullable = false, insertable = true, updatable = true)

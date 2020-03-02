@@ -1,6 +1,12 @@
 package com.javafee.elibrary.core.tabbedform;
 
+import java.io.File;
+import java.io.IOException;
+
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+
+import org.apache.commons.io.FileUtils;
 
 import com.javafee.elibrary.core.common.Constants;
 import com.javafee.elibrary.core.common.Constants.Context;
@@ -15,7 +21,9 @@ import com.javafee.elibrary.core.model.VolumeLoanTableModel;
 import com.javafee.elibrary.core.model.VolumeReadingRoomTableModel;
 import com.javafee.elibrary.core.model.VolumeTableModel;
 import com.javafee.elibrary.core.startform.LogInEvent;
+import com.javafee.elibrary.core.uniform.ImagePanel;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
+import com.javafee.elibrary.hibernate.dto.library.Book;
 import com.javafee.elibrary.hibernate.dto.library.Volume;
 
 import lombok.Setter;
@@ -55,11 +63,65 @@ public class TabLibraryEvent implements IActionForm {
 				.addActionListener(e -> onClickBtnModifyVolumeReadingRoom());
 		tabbedForm.getPanelLibrary().getCockpitEditionPanelReadingRoom().getBtnDelete()
 				.addActionListener(e -> onClickBtnDeleteVolumeReadingRoom());
+
+		tabbedForm.getPanelLibrary().getLoanVolumeTable().getSelectionModel().addListSelectionListener(e -> {
+			if (!e.getValueIsAdjusting())
+				onBookTableListSelectionChange(tabbedForm.getPanelLibrary().getLoanVolumeTable(),
+						tabbedForm.getPanelLibrary().getImagePreviewPanelLoan());
+		});
+		tabbedForm.getPanelLibrary().getReadingRoomVolumeTable().getSelectionModel().addListSelectionListener(e -> {
+			if (!e.getValueIsAdjusting())
+				onBookTableListSelectionChange(tabbedForm.getPanelLibrary().getReadingRoomVolumeTable(),
+						tabbedForm.getPanelLibrary().getImagePreviewPanelReadingRoom());
+		});
 	}
 
 	@Override
 	public void initializeForm() {
 		switchPerspectiveToClient(LogInEvent.getRole() == Role.CLIENT);
+		onBookTableListSelectionChange(tabbedForm.getPanelLibrary().getReadingRoomVolumeTable(),
+				tabbedForm.getPanelLibrary().getImagePreviewPanelReadingRoom());
+		onBookTableListSelectionChange(tabbedForm.getPanelLibrary().getLoanVolumeTable(),
+				tabbedForm.getPanelLibrary().getImagePreviewPanelLoan());
+	}
+
+	private void onBookTableListSelectionChange(JTable jTable, ImagePanel imagePreviewPanel) {
+		if (jTable.getSelectedRow() != -1 && jTable
+				.convertRowIndexToModel(jTable.getSelectedRow()) != -1) {
+
+			int selectedRowIndex = jTable
+					.convertRowIndexToModel(jTable.getSelectedRow());
+
+			if (selectedRowIndex != -1) {
+				Book selectedBook = ((VolumeTableModel) jTable.getModel())
+						.getVolume(selectedRowIndex).getBook();
+				reloadImagePreviewPanel(imagePreviewPanel, selectedBook);
+			}
+		}
+	}
+
+	private void reloadImagePreviewPanel(ImagePanel imagePreviewPanel, Book book) {
+		File dir = new File("tmp/test");
+		dir.mkdirs();
+		File tmp = new File(dir, "tmp.txt");
+		try {
+			tmp.createNewFile();
+			if (book != null && book.getFile() != null
+					&& book.getFile().length > 0) {
+				FileUtils.writeByteArrayToFile(tmp, book.getFile());
+				imagePreviewPanel.loadImage(tmp.getAbsolutePath());
+				imagePreviewPanel.paint(imagePreviewPanel.getGraphics());
+				tmp.delete();
+			} else {
+				imagePreviewPanel.setImage(null);
+				imagePreviewPanel.setScaledImage(null);
+				imagePreviewPanel.paint(imagePreviewPanel.getGraphics());
+			}
+		} catch (IOException e) {
+			LogGuiException.logError(
+					SystemProperties.getInstance().getResourceBundle().getString("bookAddModEvent.loadingFileErrorTitle"), e);
+			e.printStackTrace();
+		}
 	}
 
 	private void onClickBtnDeleteVolumeReadingRoom() {
