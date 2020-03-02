@@ -64,7 +64,7 @@ public class ImagePanel extends BasePanel {
 					iw = -1;
 				if (ih == 0)
 					ih = -1;
-				if (isTitledBorder)
+				if (iw > 0 && isTitledBorder)
 					iw -= 20;
 				scaledImage = image.getScaledInstance(Float.valueOf(iw).intValue(), Float.valueOf(ih).intValue(),
 						Image.SCALE_DEFAULT);
