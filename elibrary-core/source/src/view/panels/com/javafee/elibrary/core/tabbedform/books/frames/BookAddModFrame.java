@@ -103,7 +103,8 @@ public class BookAddModFrame extends JFrame {
 		authorTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		authorTable.setModel(new AuthorTableModel());
 		authorTable.setAutoCreateRowSorter(true);
-		authorTable.setRowSelectionInterval(0, 0);
+		if (authorTable.getModel().getRowCount() != 0)
+			authorTable.setRowSelectionInterval(0, 0);
 		scrollPane.setViewportView(authorTable);
 
 		scrollPane_categoryTable = new JScrollPane();
@@ -121,7 +122,8 @@ public class BookAddModFrame extends JFrame {
 		categoryTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		categoryTable.setModel(new CategoryTableModel());
 		categoryTable.setAutoCreateRowSorter(true);
-		categoryTable.setRowSelectionInterval(0, 0);
+		if (categoryTable.getModel().getRowCount() != 0)
+			categoryTable.setRowSelectionInterval(0, 0);
 		scrollPane_categoryTable.setViewportView(categoryTable);
 
 		scrollPane_publishingHouse = new JScrollPane();
@@ -139,7 +141,8 @@ public class BookAddModFrame extends JFrame {
 		publishingHouseTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		publishingHouseTable.setModel(new PublishingHouseTableModel());
 		publishingHouseTable.setAutoCreateRowSorter(true);
-		publishingHouseTable.setRowSelectionInterval(0, 0);
+		if (publishingHouseTable.getModel().getRowCount() != 0)
+			publishingHouseTable.setRowSelectionInterval(0, 0);
 		scrollPane_publishingHouse.setViewportView(publishingHouseTable);
 
 		bookImagePreviewPanel = new ImagePanel(SystemProperties.getInstance().getResourceBundle()
