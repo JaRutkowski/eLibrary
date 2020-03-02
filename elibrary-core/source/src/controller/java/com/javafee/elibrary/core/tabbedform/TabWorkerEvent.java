@@ -55,13 +55,14 @@ public final class TabWorkerEvent implements IActionForm {
 		tabbedForm.getPanelWorker().getWorkerTable().getModel().addTableModelListener(e -> reloadClientTable());
 		tabbedForm.getPanelWorker().getWorkerTable().getSelectionModel().addListSelectionListener(e -> {
 			if (!e.getValueIsAdjusting())
-				onClientTableListSelectionChange();
+				onWorkerTableListSelectionChange();
 		});
 	}
 
 	@Override
 	public void initializeForm() {
 		switchPerspectiveToAdm(LogInEvent.getRole() == Role.ADMIN || LogInEvent.getRole() == Role.WORKER_ACCOUNTANT);
+		onWorkerTableListSelectionChange();
 	}
 
 	private void reloadChckbxIsRegistered(boolean isRegistered) {
@@ -232,7 +233,7 @@ public final class TabWorkerEvent implements IActionForm {
 		}
 	}
 
-	private void onClientTableListSelectionChange() {
+	private void onWorkerTableListSelectionChange() {
 		if (tabbedForm.getPanelWorker().getWorkerTable().getSelectedRow() != -1
 				&& tabbedForm.getPanelWorker().getWorkerTable()
 				.convertRowIndexToModel(tabbedForm.getPanelWorker().getWorkerTable().getSelectedRow()) != -1) {
