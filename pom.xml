@@ -1,0 +1,44 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+
+	<groupId>com.javafee.elibrary</groupId>
+	<artifactId>elibrary-modules</artifactId>
+	<packaging>pom</packaging>
+	<version>1.0-SNAPSHOT</version>
+	<name>elibrary-modules</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<elibrary.version>1.0-SNAPSHOT</elibrary.version>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<org.codehaus.mojo.version>1.7</org.codehaus.mojo.version>
+		<sonar.maven.plugin.version>3.4.0.905</sonar.maven.plugin.version>
+		<junit.version>3.8.1</junit.version>
+		<org.reflections.version>0.9.10</org.reflections.version>
+		<jaxb.api.version>2.2.11</jaxb.api.version>
+		<jaxb.core.version>2.2.11</jaxb.core.version>
+		<jaxb.impl.version>2.2.11</jaxb.impl.version>
+		<jcalendar.version>1.4</jcalendar.version>
+		<jfontchooser.version>1.0.5-3</jfontchooser.version>
+		<edu.vt.middleware.version>3.1.2</edu.vt.middleware.version>
+		<log4j.version>1.2.17</log4j.version>
+		<org.bidib.org.oxbow.version>1.2.1</org.bidib.org.oxbow.version>
+		<net.coderazzi.version>5.5.1</net.coderazzi.version>
+		<javax.mail.version>1.4.7</javax.mail.version>
+		<org.projectlombok.version>1.16.22</org.projectlombok.version>
+		<common.io.version>2.6</common.io.version>
+		<org.jsoup.version>1.11.3</org.jsoup.version>
+		<org.apache.httpcomponents.version>4.4.10</org.apache.httpcomponents.version>
+		<com.mashape.unirest.version>1.4.9</com.mashape.unirest.version>
+		<org.json.version>20180813</org.json.version>
+	</properties>
+
+	<modules>
+		<module>elibrary-core</module>
+		<module>elibrary-hibernate</module>
+	</modules>
+</project>

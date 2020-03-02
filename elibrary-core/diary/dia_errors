@@ -1,0 +1,25 @@
+	[resolved] 	P5 C-
+	[resolved] 	#1 RefusedLogInException: Cannot log in to the system
+	[resolved] 		- desc: typing correct login and incorrect password generate Params.getInstance().get("NOT_REGISTERED") 
+	[resolved] 		param
+------------------------------------------------------------------------------------------------------------------------------------------------		
+	[resolved]	P5 C1
+	[resolved]	#2 RefusedMainSplashScreenCreationExcpetion: Cannot create main splash screen or was already created
+	[resolved]		- desc: cannot log in to the system more then one time because of using Singleton MainSplashScreen,
+	[resolved]		look at LogInEvent (Singleton too)
+------------------------------------------------------------------------------------------------------------------------------------------------	
+	[resolved]	P1 C1
+	[resolved]	#3 TabClientEvent: Failed to adding correct city into table during btnAdd action.
+------------------------------------------------------------------------------------------------------------------------------------------------	
+	[resolved]	P1 C1
+	[resolved]	#4 TabClientEvent: Incorrect date format drawing into table.
+------------------------------------------------------------------------------------------------------------------------------------------------	
+	[resolved] 	P1 C1
+	[resolved] 	#5 com.javafee.model.tabbedform.TabClientEvent: Failed client data panel filling while setting sorting.
+------------------------------------------------------------------------------------------------------------------------------------------------	
+	P1 C-
+	#6 Actions: incorrect blank error while there is no user in data base.
+------------------------------------------------------------------------------------------------------------------------------------------------	
+	P1 C-
+	#7 TabBookEvent: multiply book adding after few tab changed and confirmed.
+------------------------------------------------------------------------------------------------------------------------------------------------

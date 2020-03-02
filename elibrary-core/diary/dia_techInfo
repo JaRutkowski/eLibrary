@@ -1,0 +1,129 @@
+#1 changing using functional interfaces (Java 8)
+		tabbedForm.getPanelClient().getCockpitPanel().getBtnDelete().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				onClickBtnDelete();
+				System.out.println("Pressed Delete");
+			}
+		});
+------------------------------------------------------------------------------------------------------------------------------------------------		
+		tabbedForm.getPanelClient().getCockpitPanel().getBtnDelete().addActionListener(e -> {
+				onClickBtnDelete();
+				System.out.println("Pressed Delete");
+		});
+		
+		tabbedForm.getPanelClient().getCockpitPanel().getBtnDelete().addActionListener(e ->onClickBtnDelete());
+------------------------------------------------------------------------------------------------------------------------------------------------	
+#2 log4j
+		Registered errors:
+		1. RefusedLogInException
+		2. RefusedRegistrationException
+------------------------------------------------------------------------------------------------------------------------------------------------	
+#3 Java 9 - java.lang.NoClassDefFoundError: javax/xml/bind/JAXBException in Java 9
+		https://stackoverflow.com/questions/43574426/how-to-resolve-java-lang-noclassdeffounderror-javax-xml-bind-jaxbexception-in-j
+------------------------------------------------------------------------------------------------------------------------------------------------	
+#4 Hibernate session new configuration (HibernateUtil)
+		static {
+	       try
+	        {
+	    	    Configuration configuration = new Configuration().configure();
+	            serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
+	            sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+	            session = sessionFactory.openSession();
+
+	        }
+	        catch (HibernateException he)
+	        {
+	            System.err.println("Error creating Session: " + he);
+	            throw new ExceptionInInitializerError(he);
+	        }
+			// try {
+			// sessionFactory = new Configuration().configure().buildSessionFactory();
+			// session = sessionFactory.openSession();
+			// } catch (HibernateException e) {
+			// Logger.getLogger("app").log(Level.WARNING, e.getMessage());
+			// throw new ExceptionInInitializerError(e);
+			// }
+		}
+------------------------------------------------------------------------------------------------------------------------------------------------	
+#5 Java 9 - java.lang.NoClassDefFoundError: javax/activation/DataSource in Java 9
+		--add-modules java.activation
+------------------------------------------------------------------------------------------------------------------------------------------------	
+#6 Mvn versions and parent - child pom
+		https://stackoverflow.com/questions/10582054/maven-project-version-inheritance-do-i-have-to-specify-the-parent-version
+------------------------------------------------------------------------------------------------------------------------------------------------	
+#7 @Data and @EqualsAndHashCode in lombok	
+		https://projectlombok.org/features/EqualsAndHashCode
+		https://stackoverflow.com/questions/34972895/lombok-hashcode-issue-with-java-lang-stackoverflowerror-null
+------------------------------------------------------------------------------------------------------------------------------------------------	
+#8 HTML Validator
+		https://github.com/validator/validator/wiki/Service-%C2%BB-Input-%C2%BB-POST-body
+		-- various usings	--
+		Jsoup.isValid(htmlText, Whitelist.basic())
+		Document initialDoc = Jsoup.parse(htmlText);
+		Document validatedDoc;
+		//Collection<Defect> defects = ValidatorBuilder.HTML
+		//	.validate("<html>hello, world!</html>")
+		//	.errors();
+		validatedDoc = Jsoup.connect("https://validator.w3.org/nu/")
+			data("fragment", initialDoc.html())
+			.data("st", "1")
+			.post();
+		//String response = null;
+		//HttpResponse<String> uniResponse = Unirest.post("https://validator.w3.org/nu/?out=gnu")
+		//	.header("User-Agent", "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.101 Safari/537.36")
+		//	.header("Content-Type", "text/html; charset=UTF-8")
+		//	.queryString("out", "gnu")
+		//	.body(initialDoc)
+		//	.asString();
+		//response = uniResponse.getBody();
+		//for(Element error : validatedDoc.select("li.msg_err")){
+		//	System.out.println(error.select("em").text() + " : " + error.select("span.msg").text());
+		//}
+		//for(Defect error : defects){
+		//	System.out.println(error.source() + " : " + error.line() + " " + error.message());
+		//}
+		//Document cleanedOuput = Jsoup.parse(validatedDoc.select("pre.source").text());
+		//cleanedOuput.select("meta[name=generator]").first().remove();
+		//cleanedOuput.outputSettings().indentAmount(4);
+		//cleanedOuput.outputSettings().prettyPrint(true);
+		//new Cleaner(Whitelist.basic()).clean(initialDoc);
+		//System.out.println(initialDoc.html());
+		
+		<!-- https://mvnrepository.com/artifact/com.jcabi/jcabi-w3c -->
+		<!-- <dependency> -->
+		<!-- <groupId>com.jcabi</groupId> -->
+		<!-- <artifactId>jcabi-w3c</artifactId> -->
+		<!-- <version>1.3</version> -->
+		<!-- </dependency> -->
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+#9 Generate Snapshot
+		<!--temp-->
+		<dependency>
+			<groupId>org.jetbrains.kotlin</groupId>
+			<artifactId>kotlin-runtime</artifactId>
+			<version>1.1.3</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jetbrains.kotlin</groupId>
+			<artifactId>kotlin-stdlib</artifactId>
+			<version>1.1.3</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<!--tmp-->
+        <plugin>
+        		<artifactId>maven-assembly-plugin</artifactId>
+        		<configuration>
+                    <archive>
+                            <manifest>
+                                <mainClass>event.handlers.InventoryEventHandler</mainClass>
+                            </manifest>
+                    </archive>
+                    <descriptorRefs>
+                            <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+        		</configuration>
+        </plugin>
