@@ -22,7 +22,11 @@ public final class Constants {
 		FONT_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuFont")),
 		ACCOUNT_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuAccount")),
 		PERSONAL_DATA_CHANGE_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuDataChange")),
-		PASSWORD_CHANGE_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuPasswordChange"));
+		PASSWORD_CHANGE_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuPasswordChange")),
+		SYSTEM_DATA_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuSystemData")),
+		SYSTEM_PARAMETERS_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuSystemParameters")),
+		SYSTEM_DATA_FEEDING_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuSystemDataFeeding")),
+		PROCESSES_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuProcesses"));
 
 		private final String name;
 
@@ -83,6 +87,36 @@ public final class Constants {
 					.findFirst().get();
 		}
 	}
+
+	@Getter
+	@AllArgsConstructor
+	public enum SystemDataFeedingTableData {
+		ADMINISTRATOR_DATA(new String[]{SystemProperties.getInstance().getResourceBundle().getString("systemDataFeedingTableData.administratorData.feedTypeCol"),
+				SystemProperties.getInstance().getResourceBundle().getString("systemDataFeedingTableData.administratorData.dataCol")}),
+		MESSAGES_AND_NOTIFICATIONS_DICTIONARIES_DATA(new String[]{SystemProperties.getInstance().getResourceBundle().getString("systemDataFeedingTableData.messagesAndNotificationsDictionaryData.feedTypeCol"),
+				SystemProperties.getInstance().getResourceBundle().getString("systemDataFeedingTableData.messagesAndNotificationsDictionaryData.dataCol")});
+
+		private final String[] value;
+
+		@Getter
+		@AllArgsConstructor
+		public enum SystemDataFeedingTableRow {
+			ROW_ADMINISTRATOR_DATA(0), ROW_MESSAGES_AND_NOTIFICATIONS_DICTIONARIES_DATA(1);
+
+			private final Integer index;
+
+			public static SystemDataFeedingTableRow getByNumber(int systemDataFeedingTableRowIndex) {
+				return Stream.of(SystemDataFeedingTableRow.values())
+						.filter(item -> item.getIndex().equals(systemDataFeedingTableRowIndex)).findFirst().get();
+			}
+		}
+
+		public static SystemDataFeedingTableData getByName(String systemDataFeedingTableDataName) {
+			return Stream.of(SystemDataFeedingTableData.values()).filter(item -> item.getValue().equals(systemDataFeedingTableDataName))
+					.findFirst().get();
+		}
+	}
+
 
 	public enum ClientTableColumn {
 		COL_PESEL_NUMBER(0), COL_DOCUMENT_NUMBER(1), COL_LOGIN(2), COL_E_MAIL(3), COL_NAME(4), COL_SURNAME(5),
@@ -242,6 +276,25 @@ public final class Constants {
 		}
 	}
 
+	public enum SystemDataFeedingTableColumn {
+		COL_FEEDING_TYPE(0), COL_DATA(1), COL_ACTION(2);
+
+		private final Integer value;
+
+		SystemDataFeedingTableColumn(final int newValue) {
+			value = newValue;
+		}
+
+		public Integer getValue() {
+			return value;
+		}
+
+		public static SystemDataFeedingTableColumn getByNumber(int systemDataFeedingTableSelectedIndex) {
+			return Stream.of(SystemDataFeedingTableColumn.values())
+					.filter(item -> item.getValue().equals(systemDataFeedingTableSelectedIndex)).findFirst().get();
+		}
+	}
+
 	public enum Button_Type {
 		ACCEPT, DENY
 	}
@@ -317,7 +370,7 @@ public final class Constants {
 	public static final Integer DATA_BASE_PESEL_NUMBER_LENGHT = 11;
 	public static final String DATA_BASE_MESSAGE_TYPE_USR_MESSAGE = "usr_message";
 	public static final String DATA_BASE_MESSAGE_TYPE_SYS_MESSAGE = "sys_message";
-	public static final String DATA_BASE_MESSAGE_TYPE_SYS_NOTIFICATION = "sys_notifiaction";
+	public static final String DATA_BASE_MESSAGE_TYPE_SYS_NOTIFICATION = "sys_notification";
 	public static final String DATA_BASE_DELETED_MESSAGE_RECIPIENT_VALUE = "null";
 	public static final String DATA_BASE_DELETED_MESSAGE_SENDER_VALUE = "null";
 }

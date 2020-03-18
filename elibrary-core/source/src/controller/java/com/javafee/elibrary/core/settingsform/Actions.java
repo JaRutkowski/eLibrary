@@ -107,12 +107,24 @@ public class Actions implements IActionForm {
 						settingsForm.getSettingsPanel().reloadContentPanel(settingsForm, settingsForm.getSettingsPanel().getFontPanel());
 						FontPanelEvent.getInstance(settingsForm);
 						break;
-					case ACCOUNT_PANEL:
+					case SYSTEM_DATA_PANEL:
 						settingsForm.getSettingsPanel().reloadContentPanel(settingsForm, settingsForm.getSettingsPanel()
 								.reloadAndGetInformationPanel(
-										SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuAccountTitle"),
-										SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuAccountDescription"),
-										SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuAccountMenuItems")));
+										SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuSystemDataTitle"),
+										SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuSystemDataDescription"),
+										SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuSystemDataMenuItems")));
+						break;
+					case SYSTEM_PARAMETERS_PANEL:
+						// settingsForm.getSettingsPanel().reloadContentPanel(settingsForm, settingsForm.getSettingsPanel().getSystemParametersPanel());
+						// SystemParametersPanelEvent.getInstance(settingsForm);
+						break;
+					case SYSTEM_DATA_FEEDING_PANEL:
+						settingsForm.getSettingsPanel().reloadContentPanel(settingsForm, settingsForm.getSettingsPanel().getSystemDataFeedingPanel());
+						SystemDataFeedingPanelEvent.getInstance(settingsForm);
+						break;
+					case PROCESSES_PANEL:
+						// settingsForm.getSettingsPanel().reloadContentPanel(settingsForm, settingsForm.getSettingsPanel().getProcessesPanel());
+						// ProcessesPanelEvent.getInstance(settingsForm);
 						break;
 					default:
 						break;
@@ -135,5 +147,6 @@ public class Actions implements IActionForm {
 		FontPanelEvent.fontPanelEvent = null;
 		PersonalDataChangePanelEvent.personalDataChangePanelEvent = null;
 		PasswordChangePanelEvent.passwordChangePanelEvent = null;
+		SystemDataFeedingPanelEvent.systemDataFeedingPanelEvent = null;
 	}
 }

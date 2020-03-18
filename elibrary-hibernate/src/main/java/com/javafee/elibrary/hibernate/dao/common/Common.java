@@ -54,6 +54,24 @@ public class Common {
 		return userData;
 	}
 
+	public static String findAdminDataByIdAndGetPresentationValue(final int id) {
+		Optional<UserData> userData;
+		StringBuilder result = null;
+		try {
+			userData = Optional.ofNullable(HibernateUtil.getSession().get(UserData.class, id));
+			if (userData.isPresent()) {
+				result = new StringBuilder();
+				result.append("[").append(userData.get().getIdUserData()).append(",")
+						.append(userData.get().getLogin()).append(",")
+						.append(userData.get().getPassword())
+						.append("]");
+			}
+		} catch (Exception e) {
+			log.severe(e.getMessage());
+		}
+		return result != null ? result.toString() : null;
+	}
+
 	public static Optional<SystemProperties> findSystemPropertiesByUserDataId(final int userDataId) {
 		Optional<SystemProperties> systemProperties = Optional.empty();
 
