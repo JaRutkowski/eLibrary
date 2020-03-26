@@ -36,8 +36,6 @@ public class WorkerAddModEvent implements IEvent {
 
 	private WorkerAddModFrame workerAddModFrame;
 
-	private RegistrationEvent registrationEvent;
-
 	public void control(Context context, WorkerTableModel workerTableModel) {
 		this.context = context;
 		this.workerTableModel = workerTableModel;
@@ -190,8 +188,8 @@ public class WorkerAddModEvent implements IEvent {
 										"clientAddModEvent.updatingClientPeselErrorTitle"),
 								JOptionPane.ERROR_MESSAGE);
 					} else {
-						if (birthDate == null) {
-							registrationEvent = RegistrationEvent.getInstance(
+						if (birthDate == null || birthDate.before(new Date())) {
+							RegistrationEvent.getInstance(
 									workerAddModFrame.getWorkerDataPanel().getTextFieldPeselNumber().getText(),
 									workerAddModFrame.getWorkerDataPanel().getTextFieldDocumentNumber().getText(),
 									workerAddModFrame.getWorkerDataPanel().getTextFieldName().getText(),
@@ -204,23 +202,6 @@ public class WorkerAddModEvent implements IEvent {
 									String.valueOf(
 											workerAddModFrame.getWorkerDataPanel().getPasswordField().getPassword()),
 									Role.WORKER_LIBRARIAN);
-							workerTableModel.add((Worker) RegistrationEvent.userData);
-							workerAddModFrame.dispose();
-						} else if (birthDate.before(new Date())) {
-							registrationEvent = RegistrationEvent.getInstance(
-									workerAddModFrame.getWorkerDataPanel().getTextFieldPeselNumber().getText(),
-									workerAddModFrame.getWorkerDataPanel().getTextFieldDocumentNumber().getText(),
-									workerAddModFrame.getWorkerDataPanel().getTextFieldName().getText(),
-									workerAddModFrame.getWorkerDataPanel().getTextFieldSurname().getText(),
-									workerAddModFrame.getWorkerDataPanel().getTextFieldAddress().getText(),
-									(City) workerAddModFrame.getWorkerDataPanel().getComboBoxCity().getSelectedItem(),
-									sex, birthDate,
-									workerAddModFrame.getWorkerDataPanel().getTextFieldLogin().getText(),
-									workerAddModFrame.getWorkerDataPanel().getTextFieldEMail().getText(),
-									String.valueOf(
-											workerAddModFrame.getWorkerDataPanel().getPasswordField().getPassword()),
-									Role.WORKER_LIBRARIAN);
-
 							workerTableModel.add((Worker) RegistrationEvent.userData);
 							workerAddModFrame.dispose();
 						} else {
@@ -264,7 +245,7 @@ public class WorkerAddModEvent implements IEvent {
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
-			if (registrationEvent != null)
+			if (RegistrationEvent.getRegistrationEvent() != null)
 				Utils.displayOptionPane(
 						SystemProperties.getInstance().getResourceBundle().getString("startForm.registrationSuccess2"),
 						SystemProperties.getInstance().getResourceBundle()

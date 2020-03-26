@@ -19,6 +19,7 @@ import com.javafee.elibrary.hibernate.dto.library.Worker;
 import lombok.Getter;
 
 public class RegistrationEvent {
+	@Getter
 	private static RegistrationEvent registrationEvent = null;
 	@Getter
 	private static Date registrationDate;
