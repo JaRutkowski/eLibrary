@@ -38,7 +38,6 @@ public class Actions implements IRegistrationForm {
 	private StartForm startForm = new StartForm();
 
 	private LogInEvent logInEvent;
-	private RegistrationEvent registrationEvent;
 
 	public void control() {
 		if (MainSplashScreen.isNull())
@@ -150,9 +149,6 @@ public class Actions implements IRegistrationForm {
 
 	@Override
 	public void onClickBtnRegisterNow() {
-		// test
-
-		// test
 		reloadRegistrationPanel();
 		if (validateRegistration()) {
 			switchPerspectiveToRegistrationOrLogIn(false);
@@ -165,21 +161,9 @@ public class Actions implements IRegistrationForm {
 						? new SimpleDateFormat("dd-MM-yyyy").parse(new SimpleDateFormat("dd-MM-yyyy")
 						.format(startForm.getRegistrationPanel().getDateChooserBirthDate().getDate()))
 						: null;
-
-				if (birthDate == null) {
-					registrationEvent = RegistrationEvent.getInstance(
-							startForm.getRegistrationPanel().getTextFieldPeselNumber().getText(),
-							startForm.getRegistrationPanel().getTextFieldDocumentNumber().getText(),
-							startForm.getRegistrationPanel().getTextFieldName().getText(),
-							startForm.getRegistrationPanel().getTextFieldSurname().getText(),
-							startForm.getRegistrationPanel().getTextFieldAddress().getText(),
-							(City) startForm.getRegistrationPanel().getComboBoxCity().getSelectedItem(), sex, birthDate,
-							startForm.getRegistrationPanel().getTextFieldLogin().getText(),
-							startForm.getRegistrationPanel().getTextFieldEMail().getText(),
-							String.valueOf(startForm.getRegistrationPanel().getPasswordField().getPassword()),
-							Role.WORKER_LIBRARIAN);
-				} else if (birthDate.before(new Date())) {
-					registrationEvent = RegistrationEvent.getInstance(
+				RegistrationEvent.forceClearRegistrationEvenet();
+				if (birthDate == null || birthDate.before(new Date())) {
+					RegistrationEvent.getInstance(
 							startForm.getRegistrationPanel().getTextFieldPeselNumber().getText(),
 							startForm.getRegistrationPanel().getTextFieldDocumentNumber().getText(),
 							startForm.getRegistrationPanel().getTextFieldName().getText(),
@@ -191,10 +175,6 @@ public class Actions implements IRegistrationForm {
 							String.valueOf(startForm.getRegistrationPanel().getPasswordField().getPassword()),
 							Role.WORKER_LIBRARIAN);
 				} else {
-					// Utils.displayOptionPane(
-					// SystemProperties.getInstance().getResourceBundle().getString("startForm.registrationError9"),
-					// SystemProperties.getInstance().getResourceBundle().getString("startForm.registrationErrorTitle"),
-					// JOptionPane.INFORMATION_MESSAGE);
 					Params.getInstance().add("INCORRECT_BIRTH_DATE", RegistrationFailureCause.INCORRECT_BIRTH_DATE);
 					throw new RefusedRegistrationException("Cannot register to the system");
 				}
@@ -225,8 +205,7 @@ public class Actions implements IRegistrationForm {
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
-
-			if (registrationEvent != null)
+			if (RegistrationEvent.getRegistrationEvent() != null)
 				Utils.displayOptionPane(
 						SystemProperties.getInstance().getResourceBundle().getString("startForm.registrationSuccess2"),
 						SystemProperties.getInstance().getResourceBundle()

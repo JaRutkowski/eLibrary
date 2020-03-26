@@ -34,7 +34,6 @@ public class ClientAddModEvent implements IEvent {
 	private Context context;
 	private ClientAddModFrame clientAddModFrame;
 
-	private RegistrationEvent registrationEvent;
 	private ClientTableModel clientTableModel;
 
 	public void control(Context context, ClientTableModel clientTableModel) {
@@ -193,27 +192,8 @@ public class ClientAddModEvent implements IEvent {
 										"clientAddModEvent.updatingClientPeselErrorTitle"),
 								JOptionPane.ERROR_MESSAGE);
 					} else {
-						if (birthDate == null) {
-
-							registrationEvent = RegistrationEvent.getInstance(
-									clientAddModFrame.getClientDataPanel().getTextFieldPeselNumber().getText(),
-									clientAddModFrame.getClientDataPanel().getTextFieldDocumentNumber().getText(),
-									clientAddModFrame.getClientDataPanel().getTextFieldName().getText(),
-									clientAddModFrame.getClientDataPanel().getTextFieldSurname().getText(),
-									clientAddModFrame.getClientDataPanel().getTextFieldAddress().getText(),
-									(City) clientAddModFrame.getClientDataPanel().getComboBoxCity().getSelectedItem(),
-									sex, birthDate,
-									clientAddModFrame.getClientDataPanel().getTextFieldLogin().getText(),
-									clientAddModFrame.getClientDataPanel().getTextFieldEMail().getText(),
-									String.valueOf(
-											clientAddModFrame.getClientDataPanel().getPasswordField().getPassword()),
-									Role.CLIENT);
-
-							clientTableModel.add((Client) RegistrationEvent.userData);
-
-							clientAddModFrame.dispose();
-						} else if (birthDate.before(new Date())) {
-							registrationEvent = RegistrationEvent.getInstance(
+						if (birthDate == null || birthDate.before(new Date())) {
+							RegistrationEvent.getInstance(
 									clientAddModFrame.getClientDataPanel().getTextFieldPeselNumber().getText(),
 									clientAddModFrame.getClientDataPanel().getTextFieldDocumentNumber().getText(),
 									clientAddModFrame.getClientDataPanel().getTextFieldName().getText(),
@@ -244,7 +224,6 @@ public class ClientAddModEvent implements IEvent {
 									.getString("workerAddModEvent.existingLoginTitle"),
 							JOptionPane.ERROR_MESSAGE);
 				}
-
 			} catch (RefusedRegistrationException e) {
 				StringBuilder errorBuilder = new StringBuilder();
 
@@ -272,8 +251,7 @@ public class ClientAddModEvent implements IEvent {
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
-
-			if (registrationEvent != null)
+			if (RegistrationEvent.getRegistrationEvent() != null)
 				Utils.displayOptionPane(
 						SystemProperties.getInstance().getResourceBundle().getString("startForm.registrationSuccess2"),
 						SystemProperties.getInstance().getResourceBundle()
