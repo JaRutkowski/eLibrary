@@ -27,7 +27,6 @@ import com.javafee.elibrary.core.tabbedform.clients.frames.ClientAddModFrame;
 import com.javafee.elibrary.hibernate.dao.HibernateDao;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
 import com.javafee.elibrary.hibernate.dto.association.City;
-import com.javafee.elibrary.hibernate.dto.common.UserData;
 import com.javafee.elibrary.hibernate.dto.library.Client;
 
 public class ClientAddModEvent implements IEvent {
@@ -174,55 +173,39 @@ public class ClientAddModEvent implements IEvent {
 						: null;
 
 				RegistrationEvent.forceClearRegistrationEvenet();
-				boolean result = true;
-				@SuppressWarnings("unchecked")
-				List<UserData> ud = HibernateUtil.getSession().createQuery("from UserData").list();
-				for (UserData u : ud) {
-					if (u.getLogin().equals(clientAddModFrame.getClientDataPanel().getTextFieldLogin().getText()))
-						result = false;
-				}
-				if (result) {
-					if (!"".equals(clientAddModFrame.getClientDataPanel().getTextFieldPeselNumber().getText())
-							&& clientAddModFrame.getClientDataPanel().getTextFieldPeselNumber().getText()
-							.length() != Constants.DATA_BASE_PESEL_NUMBER_LENGHT) {
-						Utils.displayOptionPane(
-								SystemProperties.getInstance().getResourceBundle()
-										.getString("clientAddModEvent.updatingClientPeselError"),
-								SystemProperties.getInstance().getResourceBundle().getString(
-										"clientAddModEvent.updatingClientPeselErrorTitle"),
-								JOptionPane.ERROR_MESSAGE);
-					} else {
-						if (birthDate == null || birthDate.before(new Date())) {
-							RegistrationEvent.getInstance(
-									clientAddModFrame.getClientDataPanel().getTextFieldPeselNumber().getText(),
-									clientAddModFrame.getClientDataPanel().getTextFieldDocumentNumber().getText(),
-									clientAddModFrame.getClientDataPanel().getTextFieldName().getText(),
-									clientAddModFrame.getClientDataPanel().getTextFieldSurname().getText(),
-									clientAddModFrame.getClientDataPanel().getTextFieldAddress().getText(),
-									(City) clientAddModFrame.getClientDataPanel().getComboBoxCity().getSelectedItem(),
-									sex, birthDate,
-									clientAddModFrame.getClientDataPanel().getTextFieldLogin().getText(),
-									clientAddModFrame.getClientDataPanel().getTextFieldEMail().getText(),
-									String.valueOf(
-											clientAddModFrame.getClientDataPanel().getPasswordField().getPassword()),
-									Role.CLIENT);
-
-							clientTableModel.add((Client) RegistrationEvent.userData);
-
-							clientAddModFrame.dispose();
-						} else {
-							Params.getInstance().add("INCORRECT_BIRTH_DATE",
-									RegistrationEvent.RegistrationFailureCause.INCORRECT_BIRTH_DATE);
-							throw new RefusedRegistrationException("Cannot register to the system");
-						}
-					}
-				} else {
+				if (!"".equals(clientAddModFrame.getClientDataPanel().getTextFieldPeselNumber().getText())
+						&& clientAddModFrame.getClientDataPanel().getTextFieldPeselNumber().getText()
+						.length() != Constants.DATA_BASE_PESEL_NUMBER_LENGHT) {
 					Utils.displayOptionPane(
 							SystemProperties.getInstance().getResourceBundle()
-									.getString("workerAddModEvent.existingLogin"),
-							SystemProperties.getInstance().getResourceBundle()
-									.getString("workerAddModEvent.existingLoginTitle"),
+									.getString("clientAddModEvent.updatingClientPeselError"),
+							SystemProperties.getInstance().getResourceBundle().getString(
+									"clientAddModEvent.updatingClientPeselErrorTitle"),
 							JOptionPane.ERROR_MESSAGE);
+				} else {
+					if (birthDate == null || birthDate.before(new Date())) {
+						RegistrationEvent.getInstance(
+								clientAddModFrame.getClientDataPanel().getTextFieldPeselNumber().getText(),
+								clientAddModFrame.getClientDataPanel().getTextFieldDocumentNumber().getText(),
+								clientAddModFrame.getClientDataPanel().getTextFieldName().getText(),
+								clientAddModFrame.getClientDataPanel().getTextFieldSurname().getText(),
+								clientAddModFrame.getClientDataPanel().getTextFieldAddress().getText(),
+								(City) clientAddModFrame.getClientDataPanel().getComboBoxCity().getSelectedItem(),
+								sex, birthDate,
+								clientAddModFrame.getClientDataPanel().getTextFieldLogin().getText(),
+								clientAddModFrame.getClientDataPanel().getTextFieldEMail().getText(),
+								String.valueOf(
+										clientAddModFrame.getClientDataPanel().getPasswordField().getPassword()),
+								Role.CLIENT);
+
+						clientTableModel.add((Client) RegistrationEvent.userData);
+
+						clientAddModFrame.dispose();
+					} else {
+						Params.getInstance().add("INCORRECT_BIRTH_DATE",
+								RegistrationEvent.RegistrationFailureCause.INCORRECT_BIRTH_DATE);
+						throw new RefusedRegistrationException("Cannot register to the system");
+					}
 				}
 			} catch (RefusedRegistrationException e) {
 				StringBuilder errorBuilder = new StringBuilder();
