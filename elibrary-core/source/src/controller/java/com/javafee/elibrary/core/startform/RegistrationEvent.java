@@ -52,39 +52,13 @@ public class RegistrationEvent {
 
 	private static boolean checkRegistration(String login, String password, String peselNumber, Role role) {
 		boolean result = false;
+		UserData userData = (UserData) HibernateUtil.getSession().getNamedQuery("UserData.checkIfUserDataLoginExist")
+				.setParameter("login", login).uniqueResult();
 		switch (role) {
 			case WORKER_LIBRARIAN:
-				Worker worker = (Worker) HibernateUtil.getSession().getNamedQuery("Worker.checkIfWorkerLoginExist")
-						.setParameter("login", login).uniqueResult();
-
-				if (worker != null)
-					Params.getInstance().add("ALREADY_REGISTERED", RegistrationFailureCause.ALREADY_REGISTERED);
-				else {
-					if (Common.checkPasswordStrength(password))
-						result = true;
-					else
-						Params.getInstance().add("WEAK_PASSWORD", RegistrationFailureCause.WEAK_PASSWORD);
-				}
-			case ADMIN:
-				break;
 			case CLIENT:
-				Client client = (Client) HibernateUtil.getSession().getNamedQuery("Client.checkIfClientLoginExist")
-						.setParameter("login", login).uniqueResult();
-				// Client existingPeselClient = (Client)
-				// HibernateUtil.getSession().getNamedQuery("UserData.checkIfUserDataPeselExist")
-				// .setParameter("peselNumber", peselNumber).uniqueResult();
-				if (client != null)
-					Params.getInstance().add("ALREADY_REGISTERED", RegistrationFailureCause.ALREADY_REGISTERED);
-					// if (!"".equals(peselNumber) && (client != null || existingPeselClient !=
-					// null))
-					// Params.getInstance().add("ALREADY_REGISTERED",
-					// RegistrationFailureCause.ALREADY_REGISTERED);
-				else {
-					if (Common.checkPasswordStrength(password))
-						result = true;
-					else
-						Params.getInstance().add("WEAK_PASSWORD", RegistrationFailureCause.WEAK_PASSWORD);
-				}
+				result = performCheck(userData, password);
+			case ADMIN:
 				break;
 			case WORKER_ACCOUNTANT:
 				break;
@@ -92,6 +66,17 @@ public class RegistrationEvent {
 				break;
 		}
 
+		return result;
+	}
+
+	private static boolean performCheck(UserData userData, String password) {
+		boolean result = false;
+		if (userData != null)
+			Params.getInstance().add("ALREADY_REGISTERED", RegistrationFailureCause.ALREADY_REGISTERED);
+		else if (Common.checkPasswordStrength(password))
+			result = true;
+		else
+			Params.getInstance().add("WEAK_PASSWORD", RegistrationFailureCause.WEAK_PASSWORD);
 		return result;
 	}
 
@@ -168,11 +153,5 @@ public class RegistrationEvent {
 
 		HibernateUtil.commitTransaction();
 		return resultUserData;
-	}
-
-	@SuppressWarnings("unused")
-	private static boolean checkParameters(String peselNumber) {
-		boolean result = false;
-		return result;
 	}
 }
