@@ -408,7 +408,7 @@ public class TabLoanServiceEvent implements IActionForm {
 				}
 			}
 		}
-		return diffMonth * Constants.APPLICATION_PENALTY_VALUE;
+		return diffMonth * Double.valueOf(SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_PENALTY_VALUE).getValue());
 	}
 
 	private Lend getSelectedLend() {

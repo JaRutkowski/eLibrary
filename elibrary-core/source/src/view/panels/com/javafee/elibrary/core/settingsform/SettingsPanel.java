@@ -32,7 +32,11 @@ public class SettingsPanel extends BasePanel {
 	@Getter
 	private PasswordChangePanel passwordChangePanel;
 	@Getter
+	private SystemParametersPanel systemParametersPanel;
+	@Getter
 	private SystemDataFeedingPanel systemDataFeedingPanel;
+	@Getter
+	private SystemProcessesPanel systemProcessesPanel;
 
 	private GridBagConstraints gbc_panel;
 
@@ -68,7 +72,9 @@ public class SettingsPanel extends BasePanel {
 		fontPanel = new FontPanel();
 		personalDataChangePanel = new PersonalDataChangePanel();
 		passwordChangePanel = new PasswordChangePanel();
+		systemParametersPanel = new SystemParametersPanel();
 		systemDataFeedingPanel = new SystemDataFeedingPanel();
+		systemProcessesPanel = new SystemProcessesPanel();
 	}
 
 	public void reloadContentPanel(SettingsForm settingsForm, JPanel contentPanel) {

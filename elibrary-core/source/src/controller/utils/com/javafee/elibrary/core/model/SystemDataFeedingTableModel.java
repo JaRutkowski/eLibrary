@@ -18,7 +18,13 @@ public class SystemDataFeedingTableModel extends DefaultTableModel {
 			{Constants.SystemDataFeedingTableData.ADMINISTRATOR_DATA.getValue()[Constants.SystemDataFeedingTableColumn.COL_FEEDING_TYPE.getValue()],
 					Constants.SystemDataFeedingTableData.ADMINISTRATOR_DATA.getValue()[Constants.SystemDataFeedingTableColumn.COL_DATA.getValue()], null},
 			{Constants.SystemDataFeedingTableData.MESSAGES_AND_NOTIFICATIONS_DICTIONARIES_DATA.getValue()[Constants.SystemDataFeedingTableColumn.COL_FEEDING_TYPE.getValue()],
-					Constants.SystemDataFeedingTableData.MESSAGES_AND_NOTIFICATIONS_DICTIONARIES_DATA.getValue()[Constants.SystemDataFeedingTableColumn.COL_DATA.getValue()], null}
+					Constants.SystemDataFeedingTableData.MESSAGES_AND_NOTIFICATIONS_DICTIONARIES_DATA.getValue()[Constants.SystemDataFeedingTableColumn.COL_DATA.getValue()], null},
+			{Constants.SystemDataFeedingTableData.SYSTEM_PARAMETERS_DATA.getValue()[Constants.SystemDataFeedingTableColumn.COL_FEEDING_TYPE.getValue()],
+					Constants.SystemDataFeedingTableData.SYSTEM_PARAMETERS_DATA.getValue()[Constants.SystemDataFeedingTableColumn.COL_DATA.getValue()], null},
+			{Constants.SystemDataFeedingTableData.SYSTEM_DATA.getValue()[Constants.SystemDataFeedingTableColumn.COL_FEEDING_TYPE.getValue()],
+					Constants.SystemDataFeedingTableData.SYSTEM_DATA.getValue()[Constants.SystemDataFeedingTableColumn.COL_DATA.getValue()], null},
+			{Constants.SystemDataFeedingTableData.LIBRARY_DATA.getValue()[Constants.SystemDataFeedingTableColumn.COL_FEEDING_TYPE.getValue()],
+					Constants.SystemDataFeedingTableData.LIBRARY_DATA.getValue()[Constants.SystemDataFeedingTableColumn.COL_DATA.getValue()], null}
 	};
 
 	public SystemDataFeedingTableModel() {

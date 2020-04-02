@@ -8,10 +8,12 @@ public class CustomJCheckBox extends JCheckBox {
 	public CustomJCheckBox() {
 		super();
 		setFont(Utils.getApplicationUserDefinedFont());
+		setBackground(Utils.getApplicationUserDefinedColor());
 	}
 
 	public CustomJCheckBox(String text) {
 		super(text);
 		setFont(Utils.getApplicationUserDefinedFont());
+		setBackground(Utils.getApplicationUserDefinedColor());
 	}
 }

@@ -115,16 +115,16 @@ public class Actions implements IActionForm {
 										SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuSystemDataMenuItems")));
 						break;
 					case SYSTEM_PARAMETERS_PANEL:
-						// settingsForm.getSettingsPanel().reloadContentPanel(settingsForm, settingsForm.getSettingsPanel().getSystemParametersPanel());
-						// SystemParametersPanelEvent.getInstance(settingsForm);
+						settingsForm.getSettingsPanel().reloadContentPanel(settingsForm, settingsForm.getSettingsPanel().getSystemParametersPanel());
+						SystemParametersPanelEvent.getInstance(settingsForm);
 						break;
 					case SYSTEM_DATA_FEEDING_PANEL:
 						settingsForm.getSettingsPanel().reloadContentPanel(settingsForm, settingsForm.getSettingsPanel().getSystemDataFeedingPanel());
 						SystemDataFeedingPanelEvent.getInstance(settingsForm);
 						break;
-					case PROCESSES_PANEL:
-						// settingsForm.getSettingsPanel().reloadContentPanel(settingsForm, settingsForm.getSettingsPanel().getProcessesPanel());
-						// ProcessesPanelEvent.getInstance(settingsForm);
+					case SYSTEM_PROCESSES_PANEL:
+						settingsForm.getSettingsPanel().reloadContentPanel(settingsForm, settingsForm.getSettingsPanel().getSystemProcessesPanel());
+						SystemProcessesPanelEvent.getInstance(settingsForm);
 						break;
 					default:
 						break;
@@ -147,6 +147,8 @@ public class Actions implements IActionForm {
 		FontPanelEvent.fontPanelEvent = null;
 		PersonalDataChangePanelEvent.personalDataChangePanelEvent = null;
 		PasswordChangePanelEvent.passwordChangePanelEvent = null;
+		SystemParametersPanelEvent.systemParametersPanelEvent = null;
 		SystemDataFeedingPanelEvent.systemDataFeedingPanelEvent = null;
+		SystemProcessesPanelEvent.systemProcessesPanelEvent = null;
 	}
 }

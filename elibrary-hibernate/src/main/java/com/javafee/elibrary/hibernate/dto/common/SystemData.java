@@ -22,7 +22,7 @@ import lombok.Data;
 @Table(name = "com_system_data", uniqueConstraints = {@UniqueConstraint(columnNames = {"license_number"})})
 @Inheritance(strategy = InheritanceType.JOINED)
 @SequenceGenerator(name = "seq_com_system_data", sequenceName = "seq_com_system_data", allocationSize = 1)
-public abstract class SystemData {
+public class SystemData {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_com_system_data")
 	@Column(name = "id_system_data", unique = false, nullable = false, insertable = true, updatable = true)
@@ -41,9 +41,16 @@ public abstract class SystemData {
 	@Column(name = "installation_date", unique = false, nullable = true, insertable = true, updatable = true, length = 13)
 	private Date installationDate;
 
+	@Temporal(TemporalType.DATE)
+	@Column(name = "system_data_initialization_date", unique = false, nullable = true, insertable = true, updatable = true, length = 13)
+	private Date systemDataInitializationDate;
+
 	@Column(name = "has_license", unique = false, nullable = true, insertable = true, updatable = true)
 	private Boolean hasLicense = false;
 
 	@Column(name = "license_number", unique = false, nullable = true, insertable = true, updatable = true, length = 80)
 	private String licenseNumber;
+
+	@Column(name = "number_of_system_parameters", unique = false, nullable = true, insertable = true, updatable = true, length = 8)
+	private Integer numberOfSystemParameters;
 }

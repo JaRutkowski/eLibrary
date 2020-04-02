@@ -11,12 +11,13 @@ import javax.mail.Transport;
 import org.apache.log4j.Logger;
 
 import com.javafee.elibrary.core.common.Constants;
+import com.javafee.elibrary.core.common.SystemProperties;
 
 import lombok.Getter;
 
 public class MailSender {
-	private final String username = Constants.APPLICATION_EMAIL;
-	private final String password = Constants.APPLICATION_EMAIL_PASSWORD;
+	private final String username = SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_EMAIL_ADDRESS).getValue();
+	private final String password = SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_EMAIL_PASSWORD).getValue();
 	@Getter
 	private Properties properties;
 	@Getter
@@ -46,6 +47,17 @@ public class MailSender {
 		this.properties.put("mail.smtp.starttls.enable", starttlsEnable);
 		this.properties.put("mail.smtp.host", host);
 		this.properties.put("mail.smtp.port", port);
+	}
+
+	public void validateConnection() throws MessagingException {
+		try {
+			Transport transport = session.getTransport("smtp");
+			transport.connect(this.properties.getProperty("mail.smtp.host"),
+					Integer.valueOf(this.properties.getProperty("mail.smtp.port")), username, password);
+			transport.close();
+		} catch (MessagingException e) {
+			throw e;
+		}
 	}
 
 	private void defaultConfig() {

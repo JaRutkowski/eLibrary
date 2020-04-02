@@ -3,6 +3,7 @@ package com.javafee.elibrary.hibernate.dao.common;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.stream.Stream;
 
 import javax.swing.KeyStroke;
@@ -233,6 +234,23 @@ public final class Constants {
 	public static final String DATA_BASE_MESSAGE_TYPE_SYS_NOTIFICATION = "sys_notification";
 	public static final String DATA_BASE_DELETED_MESSAGE_RECIPIENT_VALUE = "null";
 	public static final String DATA_BASE_DELETED_MESSAGE_SENDER_VALUE = "null";
-
+	public static final String DATA_BASE_SYSTEM_PARAMETER_PENALTY_NAME = "APPLICATION_PENALTY_VALUE";
+	public static final String DATA_BASE_SYSTEM_PARAMETER_PENALTY_VALUE = "0.6";
+	public static final String DATA_BASE_SYSTEM_PARAMETER_EMAIL_NAME = "APPLICATION_EMAIL_ADDRESS";
+	public static final String DATA_BASE_SYSTEM_PARAMETER_EMAIL_VALUE = "nreply.elibrary@gmail.com";
+	public static final String DATA_BASE_SYSTEM_PARAMETER_EMAIL_PASSWORD_NAME = "APPLICATION_EMAIL_PASSWORD";
+	public static final String DATA_BASE_SYSTEM_PARAMETER_EMAIL_PASSWORD_VALUE = "Admin95!";
+	public static final String DATA_BASE_SYSTEM_PARAMETER_GENERATE_PASSWORD_LENGTH_NAME = "APPLICATION_GENERATED_PASSWORD_LENGTH";
+	public static final String DATA_BASE_SYSTEM_PARAMETER_GENERATE_PASSWORD_LENGTH_VALUE = "16";
+	public static final String DATA_BASE_SYSTEM_PARAMETER_TEMPLATE_DIRECTORY_NAME_NAME = "APPLICATION_TEMPLATE_DIRECTORY_NAME";
+	public static final String DATA_BASE_SYSTEM_PARAMETER_TEMPLATE_DIRECTORY_NAME_VALUE = "eLib-mes-templates";
+	public static final Integer DATA_BASE_NUMBER_OF_SYSTEM_PARAMETERS = 5;
+	public static final Integer DATA_BASE_SYSTEM_DATA_ID = 1;
+	public static final Date DATA_BASE_SYSTEM_DATA_INITIALIZATION_DATE = new Date();
+	public static final Integer DATA_BASE_LIBRARY_DATA_ID = 1;
+	public static final String DATA_BASE_LIBRARY_DATA_NAME = "Library";
+	public static final Integer DATA_BASE_LIBRARY_BRANCH_DATA_ID = 1;
+	public static final String DATA_BASE_LIBRARY_BRANCH_DATA_NAME = "Main branch";
+	
 	public static double PENALTY_VALUE = 0.60;
 }

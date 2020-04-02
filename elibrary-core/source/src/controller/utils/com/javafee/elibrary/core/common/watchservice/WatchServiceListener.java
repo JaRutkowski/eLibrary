@@ -21,13 +21,13 @@ public class WatchServiceListener implements IWatchService {
 	@Override
 	public void destroy() {
 		if (thread != null) {
-			try {
-				runnable.terminate();
-				thread.join();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+			thread.interrupt();
+			runnable.terminate();
 		}
 	}
 
+	@Override
+	public boolean isRunning() {
+		return thread.isAlive();
+	}
 }

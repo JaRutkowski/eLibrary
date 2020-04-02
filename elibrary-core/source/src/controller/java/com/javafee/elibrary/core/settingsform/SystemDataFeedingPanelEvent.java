@@ -18,11 +18,16 @@ import com.javafee.elibrary.core.model.SystemDataFeedingTableModel;
 import com.javafee.elibrary.core.model.pojo.SystemDataFeedingPojo;
 import com.javafee.elibrary.core.process.ProcessFactory;
 import com.javafee.elibrary.core.process.initializator.FeedAdministratorDataProcess;
+import com.javafee.elibrary.core.process.initializator.FeedLibraryDataProcess;
 import com.javafee.elibrary.core.process.initializator.FeedMessageTypesProcess;
+import com.javafee.elibrary.core.process.initializator.FeedSystemDataProcess;
+import com.javafee.elibrary.core.process.initializator.FeedSystemParametersProcess;
 import com.javafee.elibrary.core.unicomponent.jtable.actiontable.Action;
 import com.javafee.elibrary.hibernate.dao.HibernateDao;
 import com.javafee.elibrary.hibernate.dao.common.Common;
 import com.javafee.elibrary.hibernate.dto.association.MessageType;
+import com.javafee.elibrary.hibernate.dto.common.SystemData;
+import com.javafee.elibrary.hibernate.dto.common.SystemParameter;
 
 import lombok.Setter;
 import lombok.extern.java.Log;
@@ -58,6 +63,18 @@ public class SystemDataFeedingPanelEvent implements IActionForm {
 				Arrays.asList(new Action(SystemProperties.getInstance().getResourceBundle().getString("systemDataFeedingTablePanel.messagesAndNotificationsDictionaryData.btnRun"),
 								e -> onClickBtnRun()),
 						new Action(SystemProperties.getInstance().getResourceBundle().getString("systemDataFeedingTablePanel.messagesAndNotificationsDictionaryData.btnCheck"),
+								e -> onClickBtnCheck())),
+				Arrays.asList(new Action(SystemProperties.getInstance().getResourceBundle().getString("systemDataFeedingTablePanel.systemParametersData.btnRun"),
+								e -> onClickBtnRun()),
+						new Action(SystemProperties.getInstance().getResourceBundle().getString("systemDataFeedingTablePanel.systemParametersData.btnCheck"),
+								e -> onClickBtnCheck())),
+				Arrays.asList(new Action(SystemProperties.getInstance().getResourceBundle().getString("systemDataFeedingTablePanel.systemData.btnRun"),
+								e -> onClickBtnRun()),
+						new Action(SystemProperties.getInstance().getResourceBundle().getString("systemDataFeedingTablePanel.systemData.btnCheck"),
+								e -> onClickBtnCheck())),
+				Arrays.asList(new Action(SystemProperties.getInstance().getResourceBundle().getString("systemDataFeedingTablePanel.libraryData.btnRun"),
+								e -> onClickBtnRun()),
+						new Action(SystemProperties.getInstance().getResourceBundle().getString("systemDataFeedingTablePanel.libraryData.btnCheck"),
 								e -> onClickBtnCheck()))));
 		settingsForm.getSettingsPanel().getSystemDataFeedingPanel().getSystemDataFeedingTablePanel()
 				.getSystemDataFeedingTable().initialize(2);
@@ -83,6 +100,15 @@ public class SystemDataFeedingPanelEvent implements IActionForm {
 						break;
 					case ROW_MESSAGES_AND_NOTIFICATIONS_DICTIONARIES_DATA:
 						performRunForMessagesAndNotificationsDictionariesData();
+						break;
+					case ROW_SYSTEM_PARAMETERS_DATA:
+						performRunForSystemParametersData();
+						break;
+					case ROW_SYSTEM_DATA:
+						performRunForSystemData();
+						break;
+					case ROW_LIBRARY_DATA:
+						performRunForLibraryData();
 						break;
 				}
 				Utils.displayOptionPane(
@@ -114,6 +140,15 @@ public class SystemDataFeedingPanelEvent implements IActionForm {
 				case ROW_MESSAGES_AND_NOTIFICATIONS_DICTIONARIES_DATA:
 					performCheckForMessagesAndNotificationsDictionariesData(selectedSystemDataFeedingPojo);
 					break;
+				case ROW_SYSTEM_PARAMETERS_DATA:
+					performCheckForSystemParametersData(selectedSystemDataFeedingPojo);
+					break;
+				case ROW_SYSTEM_DATA:
+					performCheckForSystemData(selectedSystemDataFeedingPojo);
+					break;
+				case ROW_LIBRARY_DATA:
+					performCheckForLibraryData(selectedSystemDataFeedingPojo);
+					break;
 			}
 		}
 	}
@@ -124,15 +159,23 @@ public class SystemDataFeedingPanelEvent implements IActionForm {
 				.getSystemDataFeedingPojo(Constants.SystemDataFeedingTableData.SystemDataFeedingTableRow.ROW_ADMINISTRATOR_DATA.getIndex())),
 				messagesAndNotificationsDictionariesDataValidation = performCheckForMessagesAndNotificationsDictionariesData(((SystemDataFeedingTableModel) settingsForm.getSettingsPanel().getSystemDataFeedingPanel()
 						.getSystemDataFeedingTablePanel().getSystemDataFeedingTable().getModel())
-						.getSystemDataFeedingPojo(Constants.SystemDataFeedingTableData.SystemDataFeedingTableRow.ROW_MESSAGES_AND_NOTIFICATIONS_DICTIONARIES_DATA.getIndex()));
-		if (administrationDataValidation && messagesAndNotificationsDictionariesDataValidation)
+						.getSystemDataFeedingPojo(Constants.SystemDataFeedingTableData.SystemDataFeedingTableRow.ROW_MESSAGES_AND_NOTIFICATIONS_DICTIONARIES_DATA.getIndex())),
+				systemParametersDataValidation = performCheckForSystemParametersData(((SystemDataFeedingTableModel) settingsForm.getSettingsPanel().getSystemDataFeedingPanel()
+						.getSystemDataFeedingTablePanel().getSystemDataFeedingTable().getModel())
+						.getSystemDataFeedingPojo(Constants.SystemDataFeedingTableData.SystemDataFeedingTableRow.ROW_SYSTEM_PARAMETERS_DATA.getIndex())),
+				systemDataValidation = performCheckForSystemData(((SystemDataFeedingTableModel) settingsForm.getSettingsPanel().getSystemDataFeedingPanel()
+						.getSystemDataFeedingTablePanel().getSystemDataFeedingTable().getModel())
+						.getSystemDataFeedingPojo(Constants.SystemDataFeedingTableData.SystemDataFeedingTableRow.ROW_SYSTEM_DATA.getIndex())),
+				libraryDataValidation = performCheckForLibraryData(((SystemDataFeedingTableModel) settingsForm.getSettingsPanel().getSystemDataFeedingPanel()
+						.getSystemDataFeedingTablePanel().getSystemDataFeedingTable().getModel())
+						.getSystemDataFeedingPojo(Constants.SystemDataFeedingTableData.SystemDataFeedingTableRow.ROW_LIBRARY_DATA.getIndex()));
+		if (administrationDataValidation && messagesAndNotificationsDictionariesDataValidation && systemParametersDataValidation && systemDataValidation && libraryDataValidation)
 			Utils.displayOptionPane(
 					SystemProperties.getInstance().getResourceBundle()
 							.getString("systemDataFeedingPanelEvent.checkingAllDataValidationSuccess"),
 					SystemProperties.getInstance().getResourceBundle()
 							.getString("systemDataFeedingPanelEvent.checkingAllDataValidationSuccessTitle"),
 					JOptionPane.INFORMATION_MESSAGE);
-
 		else
 			Utils.displayOptionPane(
 					SystemProperties.getInstance().getResourceBundle()
@@ -146,6 +189,9 @@ public class SystemDataFeedingPanelEvent implements IActionForm {
 		try {
 			performRunForAdministratorData();
 			performRunForMessagesAndNotificationsDictionariesData();
+			performRunForSystemParametersData();
+			performRunForSystemData();
+			performRunForLibraryData();
 			Utils.displayOptionPane(
 					SystemProperties.getInstance().getResourceBundle()
 							.getString("systemDataFeedingPanelEvent.runningProcessesSuccess"),
@@ -183,12 +229,60 @@ public class SystemDataFeedingPanelEvent implements IActionForm {
 		return validatedMessagesAndNotificationsDictionariesData.getFirst();
 	}
 
+	private boolean performCheckForSystemParametersData(SystemDataFeedingPojo selectedSystemDataFeedingPojo) {
+		Pair<Boolean, String> validatedSystemParametersData = validateSystemParametersData();
+		selectedSystemDataFeedingPojo.setData(validatedSystemParametersData.getFirst()
+				? validatedSystemParametersData.getSecond()
+				: SystemProperties.getInstance().getResourceBundle().getString("systemDataFeedingPanelEvent.validationDataFailed"));
+		((SystemDataFeedingTableModel) settingsForm.getSettingsPanel().getSystemDataFeedingPanel().getSystemDataFeedingTablePanel()
+				.getSystemDataFeedingTable().getModel()).update(
+				Constants.SystemDataFeedingTableData.SystemDataFeedingTableRow.ROW_SYSTEM_PARAMETERS_DATA.getIndex(),
+				selectedSystemDataFeedingPojo);
+		return validatedSystemParametersData.getFirst();
+	}
+
+	private boolean performCheckForSystemData(SystemDataFeedingPojo selectedSystemDataFeedingPojo) {
+		Pair<Boolean, String> validatedSystemData = validateSystemData();
+		selectedSystemDataFeedingPojo.setData(validatedSystemData.getFirst()
+				? validatedSystemData.getSecond()
+				: SystemProperties.getInstance().getResourceBundle().getString("systemDataFeedingPanelEvent.validationDataFailed"));
+		((SystemDataFeedingTableModel) settingsForm.getSettingsPanel().getSystemDataFeedingPanel().getSystemDataFeedingTablePanel()
+				.getSystemDataFeedingTable().getModel()).update(
+				Constants.SystemDataFeedingTableData.SystemDataFeedingTableRow.ROW_SYSTEM_DATA.getIndex(),
+				selectedSystemDataFeedingPojo);
+		return validatedSystemData.getFirst();
+	}
+
+	private boolean performCheckForLibraryData(SystemDataFeedingPojo selectedSystemDataFeedingPojo) {
+		Pair<Boolean, String> validatedLibraryData = validateLibraryData();
+		selectedSystemDataFeedingPojo.setData(validatedLibraryData.getFirst()
+				? validatedLibraryData.getSecond()
+				: SystemProperties.getInstance().getResourceBundle().getString("systemDataFeedingPanelEvent.validationDataFailed"));
+		((SystemDataFeedingTableModel) settingsForm.getSettingsPanel().getSystemDataFeedingPanel().getSystemDataFeedingTablePanel()
+				.getSystemDataFeedingTable().getModel()).update(
+				Constants.SystemDataFeedingTableData.SystemDataFeedingTableRow.ROW_LIBRARY_DATA.getIndex(),
+				selectedSystemDataFeedingPojo);
+		return validatedLibraryData.getFirst();
+	}
+
 	private void performRunForAdministratorData() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
 		ProcessFactory.create(FeedAdministratorDataProcess.class).execute();
 	}
 
 	private void performRunForMessagesAndNotificationsDictionariesData() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
 		ProcessFactory.create(FeedMessageTypesProcess.class).execute();
+	}
+
+	private void performRunForSystemParametersData() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+		ProcessFactory.create(FeedSystemParametersProcess.class).execute();
+	}
+
+	private void performRunForSystemData() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+		ProcessFactory.create(FeedSystemDataProcess.class).execute();
+	}
+
+	private void performRunForLibraryData() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+		ProcessFactory.create(FeedLibraryDataProcess.class).execute();
 	}
 
 	private Pair<Boolean, String> validateAdministratorData() {
@@ -207,5 +301,23 @@ public class SystemDataFeedingPanelEvent implements IActionForm {
 				&& messagesAndNotificationsDictionariesData.contains(Constants.DATA_BASE_MESSAGE_TYPE_USR_MESSAGE)
 				&& messagesAndNotificationsDictionariesData.contains(Constants.DATA_BASE_MESSAGE_TYPE_SYS_MESSAGE)
 				&& messagesAndNotificationsDictionariesData.contains(Constants.DATA_BASE_MESSAGE_TYPE_SYS_NOTIFICATION), messagesAndNotificationsDictionariesData);
+	}
+
+	private Pair<Boolean, String> validateSystemParametersData() {
+		List<SystemParameter> systemParametersList = new HibernateDao<>(SystemParameter.class).findAll();
+		String systemParametersData = systemParametersList != null && !systemParametersList.isEmpty() ? systemParametersList.toString() : "";
+		Integer numberOfSystemParameters = new HibernateDao<>(SystemData.class).findByPrimaryKey(Constants.DATA_BASE_SYSTEM_DATA_ID).getNumberOfSystemParameters(),
+				numberOfFetchedSystemParameters = !Strings.isEmpty(systemParametersData) ? systemParametersData.split("],").length : 0;
+		return new Pair<>(numberOfSystemParameters.equals(numberOfFetchedSystemParameters), systemParametersData);
+	}
+
+	private Pair<Boolean, String> validateSystemData() {
+		String systemData = Common.findSystemDataByIdAndGetPresentationValue(com.javafee.elibrary.hibernate.dao.common.Constants.DATA_BASE_SYSTEM_DATA_ID);
+		return new Pair<>(!Strings.isEmpty(systemData), systemData);
+	}
+
+	private Pair<Boolean, String> validateLibraryData() {
+		String libraryData = Common.findLibraryDataByIdAndGetPresentationValue(com.javafee.elibrary.hibernate.dao.common.Constants.DATA_BASE_LIBRARY_DATA_ID);
+		return new Pair<>(!Strings.isEmpty(libraryData), libraryData);
 	}
 }

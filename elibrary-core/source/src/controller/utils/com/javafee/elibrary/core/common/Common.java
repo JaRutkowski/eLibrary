@@ -78,7 +78,7 @@ public final class Common {
 		rules.add(new UppercaseCharacterRule(1));
 		rules.add(new LowercaseCharacterRule(1));
 
-		return generator.generatePassword(Constants.APPLICATION_GENERATE_PASSWORD_LENGTH, rules);
+		return generator.generatePassword(Integer.valueOf(SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_GENERATED_PASSWORD_LENGTH).getValue()), rules);
 	}
 
 	public static final boolean checkPasswordStrength(String password) {
@@ -225,6 +225,10 @@ public final class Common {
 			watchServiceListener.destroy();
 	}
 
+	public static boolean isWatchServiceRunning() {
+		return watchServiceListener != null && watchServiceListener.isRunning();
+	}
+
 	public static void registerNetworkServiceListener(Actions actions) {
 		networkServiceListener = new NetworkServiceListener();
 		networkServiceListener.initialize(actions);
@@ -233,6 +237,10 @@ public final class Common {
 	public static void unregisterNetworkServiceListener() {
 		if (networkServiceListener != null)
 			networkServiceListener.destroy();
+	}
+
+	public static boolean isNetworkServiceRunning() {
+		return networkServiceListener != null && networkServiceListener.isRunning();
 	}
 
 	public static void registerTimerServiceListenerSingleton(JLabel label) {

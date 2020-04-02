@@ -26,7 +26,7 @@ public final class Constants {
 		SYSTEM_DATA_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuSystemData")),
 		SYSTEM_PARAMETERS_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuSystemParameters")),
 		SYSTEM_DATA_FEEDING_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuSystemDataFeeding")),
-		PROCESSES_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuProcesses"));
+		SYSTEM_PROCESSES_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuProcesses"));
 
 		private final String name;
 
@@ -94,14 +94,20 @@ public final class Constants {
 		ADMINISTRATOR_DATA(new String[]{SystemProperties.getInstance().getResourceBundle().getString("systemDataFeedingTableData.administratorData.feedTypeCol"),
 				SystemProperties.getInstance().getResourceBundle().getString("systemDataFeedingTableData.administratorData.dataCol")}),
 		MESSAGES_AND_NOTIFICATIONS_DICTIONARIES_DATA(new String[]{SystemProperties.getInstance().getResourceBundle().getString("systemDataFeedingTableData.messagesAndNotificationsDictionaryData.feedTypeCol"),
-				SystemProperties.getInstance().getResourceBundle().getString("systemDataFeedingTableData.messagesAndNotificationsDictionaryData.dataCol")});
+				SystemProperties.getInstance().getResourceBundle().getString("systemDataFeedingTableData.messagesAndNotificationsDictionaryData.dataCol")}),
+		SYSTEM_PARAMETERS_DATA(new String[]{SystemProperties.getInstance().getResourceBundle().getString("systemDataFeedingTableData.systemParametersData.feedTypeCol"),
+				SystemProperties.getInstance().getResourceBundle().getString("systemDataFeedingTableData.systemParametersData.dataCol")}),
+		SYSTEM_DATA(new String[]{SystemProperties.getInstance().getResourceBundle().getString("systemDataFeedingTableData.systemData.feedTypeCol"),
+				SystemProperties.getInstance().getResourceBundle().getString("systemDataFeedingTableData.systemData.dataCol")}),
+		LIBRARY_DATA(new String[]{SystemProperties.getInstance().getResourceBundle().getString("systemDataFeedingTableData.libraryData.feedTypeCol"),
+				SystemProperties.getInstance().getResourceBundle().getString("systemDataFeedingTableData.libraryData.dataCol")});
 
 		private final String[] value;
 
 		@Getter
 		@AllArgsConstructor
 		public enum SystemDataFeedingTableRow {
-			ROW_ADMINISTRATOR_DATA(0), ROW_MESSAGES_AND_NOTIFICATIONS_DICTIONARIES_DATA(1);
+			ROW_ADMINISTRATOR_DATA(0), ROW_MESSAGES_AND_NOTIFICATIONS_DICTIONARIES_DATA(1), ROW_SYSTEM_PARAMETERS_DATA(2), ROW_SYSTEM_DATA(3), ROW_LIBRARY_DATA(4);
 
 			private final Integer index;
 
@@ -322,18 +328,19 @@ public final class Constants {
 	public static final SimpleDateFormat APPLICATION_DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
 	public static final SimpleDateFormat APPLICATION_DATE_TIME_FORMAT = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
 	public static final Integer APPLICATION_MAX_PROLONGNATION = 5;
-	public static double APPLICATION_PENALTY_VALUE = 0.60;
 	public static Pair<Integer, Double> APPLICATION_PROLONGATION_PERIOD = new Pair<>(Calendar.MONTH, 1.0);
 	public static final String APPLICATION_CURRENCY = "PLN";
 	public static final Integer APPLICATION_MIN_PASSWORD_LENGTH = 8;
 	public static final Integer APPLICATION_MAX_PASSWORD_LENGTH = 16;
-	public static final Integer APPLICATION_GENERATE_PASSWORD_LENGTH = 16;
-	public static final String APPLICATION_EMAIL = "nreply.elibrary@gmail.com";
-	public static final String APPLICATION_EMAIL_PASSWORD = "Admin95!";
 	public static final String APPLICATION_TEMPLATE_EXTENSION = ".html";
 	public static final String APPLICATION_TEMPLATE_EXTENSION_DESCRIPTION = "HTML file";
-	public static final String APPLICATION_TEMPLATE_DIRECTORY_NAME = "eLib-mes-templates";
 	public static final String APPLICATION_TEMPLATE_ENCODING = "UTF-8";
+
+	public static final String APPLICATION_PENALTY_VALUE = "APPLICATION_PENALTY_VALUE";
+	public static final String APPLICATION_EMAIL_ADDRESS = "APPLICATION_EMAIL_ADDRESS";
+	public static final String APPLICATION_EMAIL_PASSWORD = "APPLICATION_EMAIL_PASSWORD";
+	public static final String APPLICATION_TEMPLATE_DIRECTORY_NAME = "APPLICATION_TEMPLATE_DIRECTORY_NAME";
+	public static final String APPLICATION_GENERATED_PASSWORD_LENGTH = "APPLICATION_GENERATED_PASSWORD_LENGTH";
 
 	public static final Dimension START_FORM_MINIMUM_SIZE = new Dimension(300, 200);
 	public static final Dimension EMAIL_FORM_MINIMUM_SIZE = new Dimension(800, 700);
@@ -357,6 +364,11 @@ public final class Constants {
 	public static final String RADIO_BUTTON_CATEGORY = "Category";
 	public static final String RADIO_BUTTON_PUBLISHING_HOUSE = "Publishing house";
 
+	public static final double SPINNER_INITIAL_VALUE = 0;
+	public static final double DOUBLE_SPINNER_STEP_VALUE = 0.1;
+	public static final double SPINNER_MINIMUM_VALUE = 0;
+	public static final double SPINNER_MAXIMUM_VALUE = 100;
+
 	public static final String LANGUAGE_RESOURCE_BUNDLE = "messages";
 
 	public static final Character DATA_BASE_MALE_SIGN = 'M';
@@ -373,4 +385,5 @@ public final class Constants {
 	public static final String DATA_BASE_MESSAGE_TYPE_SYS_NOTIFICATION = "sys_notification";
 	public static final String DATA_BASE_DELETED_MESSAGE_RECIPIENT_VALUE = "null";
 	public static final String DATA_BASE_DELETED_MESSAGE_SENDER_VALUE = "null";
+	public static final Integer DATA_BASE_SYSTEM_DATA_ID = 1;
 }
