@@ -54,8 +54,7 @@ public class WatchServiceDirectory implements Runnable {
 					WatchKey key;
 					try {
 						while ((key = watchService.take()) != null) {
-							if (!key.pollEvents().isEmpty())
-								key.pollEvents().get(0);
+							key.pollEvents().get(0);
 							c.accept(tabTemplatePageEvent);
 							key.reset();
 						}
