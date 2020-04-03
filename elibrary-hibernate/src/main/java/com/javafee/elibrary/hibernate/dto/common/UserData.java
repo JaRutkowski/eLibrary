@@ -31,7 +31,8 @@ import lombok.Data;
 @NamedQueries({
 		@NamedQuery(name = "UserData.checkWithComparingIdIfUserDataLoginExist", query = "from UserData where login = :login and id != :id"),
 		@NamedQuery(name = "UserData.checkIfUserDataPeselExist", query = "from UserData where peselNumber = :peselNumber"),
-		@NamedQuery(name = "UserData.checkWithComparingIdIfUserDataPeselExist", query = "from UserData where peselNumber = :peselNumber and id != :id")})
+		@NamedQuery(name = "UserData.checkWithComparingIdIfUserDataPeselExist", query = "from UserData where peselNumber = :peselNumber and id != :id"),
+		@NamedQuery(name = "UserData.checkIfUserDataLoginExist", query = "from UserData where login = :login")})
 @Table(name = "com_user_data", uniqueConstraints = {@UniqueConstraint(columnNames = {"login", "pesel"})})
 @Inheritance(strategy = InheritanceType.JOINED)
 @SequenceGenerator(name = "seq_com_user_data", sequenceName = "seq_com_user_data", allocationSize = 1)
