@@ -117,7 +117,7 @@ public class LoanTableModel extends AbstractTableModel {
 			int diffYear = endCalendar.get(Calendar.YEAR) - startCalendar.get(Calendar.YEAR);
 			diffMonth = diffYear * 12 + endCalendar.get(Calendar.MONTH) - startCalendar.get(Calendar.MONTH);
 		}
-		return diffMonth * Constants.APPLICATION_PENALTY_VALUE;
+		return diffMonth * Double.valueOf(SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_PENALTY_VALUE).getValue());
 	}
 
 	@Override

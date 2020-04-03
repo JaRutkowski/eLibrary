@@ -115,7 +115,7 @@ public class Utils {
 
 			Path path = Paths.get(result.getParent());
 
-			if (path.toString().toLowerCase().endsWith(Constants.APPLICATION_TEMPLATE_DIRECTORY_NAME.toLowerCase())) {
+			if (path.toString().toLowerCase().endsWith(SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_TEMPLATE_DIRECTORY_NAME).getValue().toLowerCase())) {
 				if (result.getAbsolutePath().toLowerCase()
 						.endsWith(Constants.APPLICATION_TEMPLATE_EXTENSION.toLowerCase()))
 					result = new File(path.toString(), result.getName());
@@ -124,7 +124,7 @@ public class Utils {
 			} else {
 				try {
 					path = Paths.get(
-							result.getParentFile() + File.separator + Constants.APPLICATION_TEMPLATE_DIRECTORY_NAME);
+							result.getParentFile() + File.separator + SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_TEMPLATE_DIRECTORY_NAME).getValue());
 					if (!Files.exists(path)) {
 						Files.createDirectories(path);
 						if (result.getAbsolutePath().toLowerCase()
@@ -165,7 +165,7 @@ public class Utils {
 
 			Path path = Paths.get(result.getParent());
 
-			if (path.toString().toLowerCase().endsWith(Constants.APPLICATION_TEMPLATE_DIRECTORY_NAME.toLowerCase())) {
+			if (path.toString().toLowerCase().endsWith(SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_TEMPLATE_DIRECTORY_NAME).getValue().toLowerCase())) {
 				if (result.getAbsolutePath().toLowerCase()
 						.endsWith(Constants.APPLICATION_TEMPLATE_EXTENSION.toLowerCase()))
 					result = new File(path.toString(), result.getName());
@@ -174,7 +174,7 @@ public class Utils {
 			} else {
 				try {
 					path = Paths.get(
-							result.getParentFile() + File.separator + Constants.APPLICATION_TEMPLATE_DIRECTORY_NAME);
+							result.getParentFile() + File.separator + SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_TEMPLATE_DIRECTORY_NAME).getValue());
 					if (!Files.exists(path)) {
 						Files.createDirectories(path);
 						if (result.getAbsolutePath().toLowerCase()

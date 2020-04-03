@@ -25,4 +25,13 @@ public class MessageType {
 
 	@Column(name = "description", unique = false, nullable = true, insertable = true, updatable = true, length = 200)
 	private String description;
+
+	@Override
+	public String toString() {
+		String result = "[";
+		if (idMessageType != null && name != null)
+			result += (idMessageType + ", " + name);
+		result += "]";
+		return result;
+	}
 }

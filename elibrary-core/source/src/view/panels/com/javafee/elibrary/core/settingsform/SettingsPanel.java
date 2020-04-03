@@ -31,6 +31,12 @@ public class SettingsPanel extends BasePanel {
 	private PersonalDataChangePanel personalDataChangePanel;
 	@Getter
 	private PasswordChangePanel passwordChangePanel;
+	@Getter
+	private SystemParametersPanel systemParametersPanel;
+	@Getter
+	private SystemDataFeedingPanel systemDataFeedingPanel;
+	@Getter
+	private SystemProcessesPanel systemProcessesPanel;
 
 	private GridBagConstraints gbc_panel;
 
@@ -66,6 +72,9 @@ public class SettingsPanel extends BasePanel {
 		fontPanel = new FontPanel();
 		personalDataChangePanel = new PersonalDataChangePanel();
 		passwordChangePanel = new PasswordChangePanel();
+		systemParametersPanel = new SystemParametersPanel();
+		systemDataFeedingPanel = new SystemDataFeedingPanel();
+		systemProcessesPanel = new SystemProcessesPanel();
 	}
 
 	public void reloadContentPanel(SettingsForm settingsForm, JPanel contentPanel) {
@@ -100,9 +109,17 @@ public class SettingsPanel extends BasePanel {
 		accountNodes.add(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuDataChange"));
 		accountNodes.add(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuPasswordChange"));
 
+		List<Object> systemDataNodes = new ArrayList<>();
+		systemDataNodes.add(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuSystemData"));
+		systemDataNodes.add(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuSystemParameters"));
+		systemDataNodes.add(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuSystemDataFeeding"));
+		systemDataNodes.add(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuProcesses"));
+
 		nodes.add(generalNodes);
 		if (LogInEvent.getRole() != Constants.Role.ADMIN)
 			nodes.add(accountNodes);
+		if (LogInEvent.getRole() == Constants.Role.ADMIN)
+			nodes.add(systemDataNodes);
 
 		return nodes;
 	}

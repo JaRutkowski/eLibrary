@@ -108,6 +108,7 @@ public class RegistrationEvent {
 				LibraryWorker lWorker = new LibraryWorker();
 				lWorker.setIsAccountant(false);
 				lWorker.setWorker(worker);
+				//TODO Change Library Data should be checked by appropriate ID
 				@SuppressWarnings("unchecked")
 				List<LibraryData> libData = HibernateUtil.getSession()
 						.createQuery("from LibraryData where idLibraryData = 1").list();
