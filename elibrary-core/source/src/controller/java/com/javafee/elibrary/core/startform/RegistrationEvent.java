@@ -1,7 +1,6 @@
 package com.javafee.elibrary.core.startform;
 
 import java.util.Date;
-import java.util.List;
 
 import com.javafee.elibrary.core.common.Common;
 import com.javafee.elibrary.core.common.Constants;
@@ -12,7 +11,6 @@ import com.javafee.elibrary.hibernate.dao.HibernateUtil;
 import com.javafee.elibrary.hibernate.dto.association.City;
 import com.javafee.elibrary.hibernate.dto.common.UserData;
 import com.javafee.elibrary.hibernate.dto.library.Client;
-import com.javafee.elibrary.hibernate.dto.library.LibraryData;
 import com.javafee.elibrary.hibernate.dto.library.LibraryWorker;
 import com.javafee.elibrary.hibernate.dto.library.Worker;
 
@@ -108,21 +106,8 @@ public class RegistrationEvent {
 				LibraryWorker lWorker = new LibraryWorker();
 				lWorker.setIsAccountant(false);
 				lWorker.setWorker(worker);
-				//TODO Change Library Data should be checked by appropriate ID
-				@SuppressWarnings("unchecked")
-				List<LibraryData> libData = HibernateUtil.getSession()
-						.createQuery("from LibraryData where idLibraryData = 1").list();
-				if (libData.isEmpty()) {
-					LibraryData libDataAdm = new LibraryData();
-					libDataAdm.setName("Adm");
-
-					HibernateUtil.getSession().save(libDataAdm);
-					HibernateUtil.commitTransaction();
-
-					HibernateUtil.beginTransaction();
-					lWorker.setLibraryData(libDataAdm);
-				} else
-					lWorker.setLibraryData(libData.get(0));
+				lWorker.setLibraryData(com.javafee.elibrary.hibernate.dao.common.Common.findLibraryDataById(
+						com.javafee.elibrary.hibernate.dao.common.Constants.DATA_BASE_LIBRARY_DATA_ID).get());
 				worker.getLibraryWorker().add(lWorker);
 				HibernateUtil.getSession().save(lWorker);
 				resultUserData = worker;

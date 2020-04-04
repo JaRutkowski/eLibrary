@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
@@ -32,6 +33,7 @@ import com.javafee.elibrary.hibernate.dto.common.UserData;
 import com.javafee.elibrary.hibernate.dto.common.message.Message;
 import com.javafee.elibrary.hibernate.dto.common.message.Recipient;
 import com.javafee.elibrary.hibernate.dto.library.Client;
+import com.javafee.elibrary.hibernate.dto.library.LibraryData;
 import com.javafee.elibrary.hibernate.dto.library.Worker;
 
 public class Actions implements IRegistrationForm {
@@ -372,16 +374,26 @@ public class Actions implements IRegistrationForm {
 
 	@Override
 	public boolean validateRegistration() {
-		boolean result = false;
-		if (startForm.getRegistrationPanel().getTextFieldLogin().getText().isEmpty()
-				|| startForm.getRegistrationPanel().getPasswordField().getPassword().length == 0)
+		Optional<LibraryData> libraryData =
+				Common.findLibraryDataById(com.javafee.elibrary.hibernate.dao.common.Constants.DATA_BASE_LIBRARY_DATA_ID);
+		boolean result = false,
+				isLoginAndPasswordNotProvided = startForm.getRegistrationPanel().getTextFieldLogin().getText().isEmpty()
+						|| startForm.getRegistrationPanel().getPasswordField().getPassword().length == 0,
+				isSystemInitialized = libraryData.isPresent();
+		if (isLoginAndPasswordNotProvided || !isSystemInitialized) {
+			StringBuilder errorBuilder = new StringBuilder();
+			if (isLoginAndPasswordNotProvided)
+				errorBuilder.append(SystemProperties.getInstance().getResourceBundle()
+						.getString("startForm.validateRegistrationError8"));
+			if (!isSystemInitialized)
+				errorBuilder.append(SystemProperties.getInstance().getResourceBundle()
+						.getString("startForm.validateRegistrationError9"));
 			JOptionPane.showMessageDialog(startForm.getFrame(),
+					errorBuilder.toString(),
 					SystemProperties.getInstance().getResourceBundle()
-							.getString("startForm.validateRegistrationError8"),
-					SystemProperties.getInstance().getResourceBundle()
-							.getString("startForm.validateRegistrationError8Title"),
+							.getString("errorDialog.title"),
 					JOptionPane.ERROR_MESSAGE);
-		else
+		} else
 			result = true;
 		switchPerspectiveToRegistrationOrLogIn(true);
 		return result;
