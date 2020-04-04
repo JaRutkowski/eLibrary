@@ -309,6 +309,7 @@ public class BookAddModEvent implements IEvent {
 				publishingHouseIndexes = new ArrayList<>();
 
 		if (Params.getInstance().get("selectedBook") != null) {
+			reloadTablesData();
 			clearTablesSelection();
 			((Book) Params.getInstance().get("selectedBook")).getAuthor().forEach(e -> authorIndexes
 					.add(((AuthorTableModel) bookAddModFrame.getAuthorTable().getModel()).getAuthors().indexOf(e)));
@@ -323,7 +324,6 @@ public class BookAddModEvent implements IEvent {
 			publishingHouseIndexes
 					.forEach(e -> {
 						bookAddModFrame.getPublishingHouseTable().addRowSelectionInterval(e, e);
-						System.out.println(e);
 					});
 		}
 	}
@@ -359,6 +359,7 @@ public class BookAddModEvent implements IEvent {
 		((AuthorTableModel) bookAddModFrame.getAuthorTable().getModel()).reloadData();
 		((CategoryTableModel) bookAddModFrame.getCategoryTable().getModel()).reloadData();
 		((PublishingHouseTableModel) bookAddModFrame.getPublishingHouseTable().getModel()).reloadData();
+		bookAddModFrame.reloadToDefaultTablesSelection();
 	}
 
 	private void reloadBookImagePreviewPanelWithCachedImageFile() {
