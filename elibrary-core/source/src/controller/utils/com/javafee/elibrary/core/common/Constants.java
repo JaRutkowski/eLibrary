@@ -364,10 +364,10 @@ public final class Constants {
 	public static final String RADIO_BUTTON_CATEGORY = "Category";
 	public static final String RADIO_BUTTON_PUBLISHING_HOUSE = "Publishing house";
 
-	public static final double SPINNER_INITIAL_VALUE = 0;
-	public static final double DOUBLE_SPINNER_STEP_VALUE = 0.1;
-	public static final double SPINNER_MINIMUM_VALUE = 0;
-	public static final double SPINNER_MAXIMUM_VALUE = 100;
+	public static final double SPINNER_INITIAL_VALUE_PENALTY = 0;
+	public static final double DOUBLE_SPINNER_STEP_VALUE_PENALTY = 0.1;
+	public static final double SPINNER_MINIMUM_VALUE_PENALTY = 0;
+	public static final double SPINNER_MAXIMUM_VALUE_PENALTY = 100;
 
 	public static final String LANGUAGE_RESOURCE_BUNDLE = "messages";
 
