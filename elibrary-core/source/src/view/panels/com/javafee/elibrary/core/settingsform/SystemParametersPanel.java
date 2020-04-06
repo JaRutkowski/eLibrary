@@ -55,10 +55,10 @@ public class SystemParametersPanel extends BasePanel {
 		add(lblApplicationPenaltyValue, gbc_lblApplicationPenaltyValue);
 
 		spinnerApplicationPenaltyValue = new DoubleJSpinner(
-				Constants.SPINNER_INITIAL_VALUE,
-				Constants.SPINNER_MINIMUM_VALUE,
-				Constants.SPINNER_MAXIMUM_VALUE,
-				Constants.DOUBLE_SPINNER_STEP_VALUE);
+				Constants.SPINNER_INITIAL_VALUE_PENALTY,
+				Constants.SPINNER_MINIMUM_VALUE_PENALTY,
+				Constants.SPINNER_MAXIMUM_VALUE_PENALTY,
+				Constants.DOUBLE_SPINNER_STEP_VALUE_PENALTY);
 		GridBagConstraints gbc_spinnerApplicationPenaltyValue = new GridBagConstraints();
 		gbc_spinnerApplicationPenaltyValue.fill = GridBagConstraints.HORIZONTAL;
 		gbc_spinnerApplicationPenaltyValue.insets = new Insets(0, 0, 5, 0);
@@ -120,9 +120,9 @@ public class SystemParametersPanel extends BasePanel {
 		add(lblApplicationGeneratedPasswordLength, gbc_lblApplicationGeneratedPasswordLength);
 
 		spinnerApplicationGeneratedPasswordLength = new CustomJSpinner(
-				Constants.SPINNER_INITIAL_VALUE,
-				Constants.SPINNER_MINIMUM_VALUE,
-				Constants.SPINNER_MAXIMUM_VALUE);
+				Constants.APPLICATION_MIN_PASSWORD_LENGTH,
+				Constants.APPLICATION_MIN_PASSWORD_LENGTH,
+				Constants.APPLICATION_MAX_PASSWORD_LENGTH);
 		GridBagConstraints gbc_spinnerApplicationGeneratedPasswordLength = new GridBagConstraints();
 		gbc_spinnerApplicationGeneratedPasswordLength.fill = GridBagConstraints.HORIZONTAL;
 		gbc_spinnerApplicationGeneratedPasswordLength.insets = new Insets(0, 0, 5, 0);
