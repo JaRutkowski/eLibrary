@@ -330,8 +330,6 @@ public final class Constants {
 	public static final Integer APPLICATION_MAX_PROLONGNATION = 5;
 	public static Pair<Integer, Double> APPLICATION_PROLONGATION_PERIOD = new Pair<>(Calendar.MONTH, 1.0);
 	public static final String APPLICATION_CURRENCY = "PLN";
-	//public static final Integer APPLICATION_MIN_PASSWORD_LENGTH = 8;
-	//public static final Integer APPLICATION_MAX_PASSWORD_LENGTH = 16;
 	public static final String APPLICATION_TEMPLATE_EXTENSION = ".html";
 	public static final String APPLICATION_TEMPLATE_EXTENSION_DESCRIPTION = "HTML file";
 	public static final String APPLICATION_TEMPLATE_ENCODING = "UTF-8";
