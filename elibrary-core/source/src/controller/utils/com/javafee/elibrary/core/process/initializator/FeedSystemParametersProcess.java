@@ -28,6 +28,10 @@ public class FeedSystemParametersProcess implements Process {
 					.setParameter(7, Constants.DATA_BASE_SYSTEM_PARAMETER_GENERATE_PASSWORD_LENGTH_VALUE)
 					.setParameter(8, Constants.DATA_BASE_SYSTEM_PARAMETER_TEMPLATE_DIRECTORY_NAME_NAME)
 					.setParameter(9, Constants.DATA_BASE_SYSTEM_PARAMETER_TEMPLATE_DIRECTORY_NAME_VALUE)
+					.setParameter(10, Constants.DATA_BASE_SYSTEM_PARAMETER_APPLICATION_MIN_PASSWORD_LENGTH_NAME)
+					.setParameter(11, Constants.DATA_BASE_SYSTEM_PARAMETER_APPLICATION_MIN_PASSWORD_LENGTH_VALUE)
+					.setParameter(12, Constants.DATA_BASE_SYSTEM_PARAMETER_APPLICATION_MAX_PASSWORD_LENGTH_NAME)
+					.setParameter(13, Constants.DATA_BASE_SYSTEM_PARAMETER_APPLICATION_MAX_PASSWORD_LENGTH_VALUE)
 					.executeUpdate();
 			HibernateUtil.commitJpaTransaction();
 			HibernateUtil.beginTransaction();

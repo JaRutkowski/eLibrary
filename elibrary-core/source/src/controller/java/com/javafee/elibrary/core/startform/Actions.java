@@ -193,8 +193,10 @@ public class Actions implements IRegistrationForm {
 							.getString("startForm.registrationError6"));
 				}
 				if (Params.getInstance().get("WEAK_PASSWORD") != null) {
-					errorBuilder.append(SystemProperties.getInstance().getResourceBundle()
-							.getString("startForm.registrationError7"));
+					errorBuilder.append(MessageFormat.format(SystemProperties.getInstance().getResourceBundle()
+									.getString("startForm.registrationError7"),
+							SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_MIN_PASSWORD_LENGTH).getValue(),
+							SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_MAX_PASSWORD_LENGTH).getValue()));
 				}
 				if (Params.getInstance().get("INCORRECT_BIRTH_DATE") != null) {
 					errorBuilder.append(SystemProperties.getInstance().getResourceBundle()

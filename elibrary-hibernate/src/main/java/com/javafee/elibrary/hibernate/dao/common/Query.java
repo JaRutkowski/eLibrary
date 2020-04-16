@@ -16,7 +16,9 @@ public class Query {
 				"(2, ?2, ?3, ?3)," +
 				"(3, ?4, ?5, ?5)," +
 				"(4, ?6, ?7, ?7)," +
-				"(5, ?8, ?9, ?9)"),
+				"(5, ?8, ?9, ?9)," +
+				"(6, ?10, ?11, ?11)," +
+				"(7, ?12, ?13, ?13)"),
 		FEED_SYSTEM_PARAMETERS_DATA_UPDATE_SYSTEM_DATA("update public.com_system_data" +
 				" set number_of_system_parameters = ?0" +
 				" where id_system_data = ?1"

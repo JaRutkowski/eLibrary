@@ -60,6 +60,10 @@ public class SystemParametersPanelEvent implements IActionForm {
 				Integer.valueOf(SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_GENERATED_PASSWORD_LENGTH).getValue()));
 		settingsForm.getSettingsPanel().getSystemParametersPanel().getTextFieldApplicationTemplatesDirectoryName().setText(
 				SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_TEMPLATE_DIRECTORY_NAME).getValue());
+		settingsForm.getSettingsPanel().getSystemParametersPanel().getSpinnerApplicationMinPasswordLength().setValue(
+				Integer.valueOf(SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_MIN_PASSWORD_LENGTH).getValue()));
+		settingsForm.getSettingsPanel().getSystemParametersPanel().getSpinnerApplicationMaxPasswordLength().setValue(
+				Integer.valueOf(SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_MAX_PASSWORD_LENGTH).getValue()));
 	}
 
 	private void onClickBtnAccept() {
@@ -81,6 +85,14 @@ public class SystemParametersPanelEvent implements IActionForm {
 		systemParameter.setValue(Integer.valueOf((Integer) settingsForm.getSettingsPanel().getSystemParametersPanel().getSpinnerApplicationGeneratedPasswordLength().getValue()).toString());
 		updateSystemParameter(systemParameter);
 
+		systemParameter = SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_MIN_PASSWORD_LENGTH);
+		systemParameter.setValue(Integer.valueOf((Integer) settingsForm.getSettingsPanel().getSystemParametersPanel().getSpinnerApplicationMinPasswordLength().getValue()).toString());
+		updateSystemParameter(systemParameter);
+
+		systemParameter = SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_MAX_PASSWORD_LENGTH);
+		systemParameter.setValue(Integer.valueOf((Integer) settingsForm.getSettingsPanel().getSystemParametersPanel().getSpinnerApplicationMaxPasswordLength().getValue()).toString());
+		updateSystemParameter(systemParameter);
+
 		systemParameter = SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_TEMPLATE_DIRECTORY_NAME);
 		systemParameter.setValue(settingsForm.getSettingsPanel().getSystemParametersPanel().getTextFieldApplicationTemplatesDirectoryName().getText());
 		updateSystemParameter(systemParameter);
@@ -94,6 +106,8 @@ public class SystemParametersPanelEvent implements IActionForm {
 				SystemProperties.getInstance().getResourceBundle()
 						.getString("systemParametersPanelEvent.parametersModificationSuccessSuccessTitle"),
 				JOptionPane.INFORMATION_MESSAGE);
+
+		settingsForm.getSettingsPanel().getSystemParametersPanel().reloadMinMaxDefaultInSpinners();
 	}
 
 	private void onClickBtnRestoreDefaultValues() {
@@ -102,6 +116,8 @@ public class SystemParametersPanelEvent implements IActionForm {
 		restoreAndUpdateDefaultSystemParameterValue(Constants.APPLICATION_EMAIL_PASSWORD);
 		restoreAndUpdateDefaultSystemParameterValue(Constants.APPLICATION_GENERATED_PASSWORD_LENGTH);
 		restoreAndUpdateDefaultSystemParameterValue(Constants.APPLICATION_TEMPLATE_DIRECTORY_NAME);
+		restoreAndUpdateDefaultSystemParameterValue(Constants.APPLICATION_MIN_PASSWORD_LENGTH);
+		restoreAndUpdateDefaultSystemParameterValue(Constants.APPLICATION_MAX_PASSWORD_LENGTH);
 		reloadParametersValues();
 
 		Utils.displayOptionPane(

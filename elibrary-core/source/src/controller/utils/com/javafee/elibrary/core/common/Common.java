@@ -83,9 +83,9 @@ public final class Common {
 
 	public static final boolean checkPasswordStrength(String password) {
 		boolean result = false;
-		// password must be between 8 and 16 chars long
-		LengthRule lengthRule = new LengthRule(Constants.APPLICATION_MIN_PASSWORD_LENGTH,
-				Constants.APPLICATION_MAX_PASSWORD_LENGTH);
+		// password must be between APPLICATION_MIN_PASSWORD_LENGTH and APPLICATION_MAX_PASSWORD_LENGTH chars long
+		LengthRule lengthRule = new LengthRule(Integer.valueOf(SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_MIN_PASSWORD_LENGTH).getValue()),
+				Integer.valueOf(SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_MAX_PASSWORD_LENGTH).getValue()));
 		// don't allow whitespace
 		WhitespaceRule whitespaceRule = new WhitespaceRule();
 		// control allowed characters
