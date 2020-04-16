@@ -188,8 +188,6 @@ public final class Constants {
 	public static final SimpleDateFormat APPLICATION_DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
 	public static final SimpleDateFormat APPLICATION_DATE_TIME_FORMAT = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
 	public static final String APPLICATION_CURRENCY = "PLN";
-	public static final Integer APPLICATION_MIN_PASSWORD_LENGTH = 8;
-	public static final Integer APPLICATION_MAX_PASSWORD_LENGTH = 16;
 	public static final Integer APPLICATION_GENERATE_PASSWORD_LENGTH = 16;
 	public static final String APPLICATION_EMAIL = "nreply.elibrary@gmail.com";
 	public static final String APPLICATION_EMAIL_PASSWORD = "Admin95!";
@@ -244,13 +242,17 @@ public final class Constants {
 	public static final String DATA_BASE_SYSTEM_PARAMETER_GENERATE_PASSWORD_LENGTH_VALUE = "16";
 	public static final String DATA_BASE_SYSTEM_PARAMETER_TEMPLATE_DIRECTORY_NAME_NAME = "APPLICATION_TEMPLATE_DIRECTORY_NAME";
 	public static final String DATA_BASE_SYSTEM_PARAMETER_TEMPLATE_DIRECTORY_NAME_VALUE = "eLib-mes-templates";
-	public static final Integer DATA_BASE_NUMBER_OF_SYSTEM_PARAMETERS = 5;
+	public static final String DATA_BASE_SYSTEM_PARAMETER_APPLICATION_MIN_PASSWORD_LENGTH_NAME = "APPLICATION_MIN_PASSWORD_LENGTH";
+	public static final String DATA_BASE_SYSTEM_PARAMETER_APPLICATION_MIN_PASSWORD_LENGTH_VALUE = "8";
+	public static final String DATA_BASE_SYSTEM_PARAMETER_APPLICATION_MAX_PASSWORD_LENGTH_NAME = "APPLICATION_MAX_PASSWORD_LENGTH";
+	public static final String DATA_BASE_SYSTEM_PARAMETER_APPLICATION_MAX_PASSWORD_LENGTH_VALUE = "16";
+	public static final Integer DATA_BASE_NUMBER_OF_SYSTEM_PARAMETERS = 7;
 	public static final Integer DATA_BASE_SYSTEM_DATA_ID = 1;
 	public static final Date DATA_BASE_SYSTEM_DATA_INITIALIZATION_DATE = new Date();
 	public static final Integer DATA_BASE_LIBRARY_DATA_ID = 1;
 	public static final String DATA_BASE_LIBRARY_DATA_NAME = "Library";
 	public static final Integer DATA_BASE_LIBRARY_BRANCH_DATA_ID = 1;
 	public static final String DATA_BASE_LIBRARY_BRANCH_DATA_NAME = "Main branch";
-	
+
 	public static double PENALTY_VALUE = 0.60;
 }

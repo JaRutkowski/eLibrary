@@ -330,8 +330,6 @@ public final class Constants {
 	public static final Integer APPLICATION_MAX_PROLONGNATION = 5;
 	public static Pair<Integer, Double> APPLICATION_PROLONGATION_PERIOD = new Pair<>(Calendar.MONTH, 1.0);
 	public static final String APPLICATION_CURRENCY = "PLN";
-	public static final Integer APPLICATION_MIN_PASSWORD_LENGTH = 8;
-	public static final Integer APPLICATION_MAX_PASSWORD_LENGTH = 16;
 	public static final String APPLICATION_TEMPLATE_EXTENSION = ".html";
 	public static final String APPLICATION_TEMPLATE_EXTENSION_DESCRIPTION = "HTML file";
 	public static final String APPLICATION_TEMPLATE_ENCODING = "UTF-8";
@@ -341,6 +339,8 @@ public final class Constants {
 	public static final String APPLICATION_EMAIL_PASSWORD = "APPLICATION_EMAIL_PASSWORD";
 	public static final String APPLICATION_TEMPLATE_DIRECTORY_NAME = "APPLICATION_TEMPLATE_DIRECTORY_NAME";
 	public static final String APPLICATION_GENERATED_PASSWORD_LENGTH = "APPLICATION_GENERATED_PASSWORD_LENGTH";
+	public static final String APPLICATION_MIN_PASSWORD_LENGTH = "APPLICATION_MIN_PASSWORD_LENGTH";
+	public static final String APPLICATION_MAX_PASSWORD_LENGTH = "APPLICATION_MAX_PASSWORD_LENGTH";
 
 	public static final Dimension START_FORM_MINIMUM_SIZE = new Dimension(300, 200);
 	public static final Dimension EMAIL_FORM_MINIMUM_SIZE = new Dimension(800, 700);
@@ -368,6 +368,8 @@ public final class Constants {
 	public static final double DOUBLE_SPINNER_STEP_VALUE_PENALTY = 0.1;
 	public static final double SPINNER_MINIMUM_VALUE_PENALTY = 0;
 	public static final double SPINNER_MAXIMUM_VALUE_PENALTY = 100;
+	public static final Integer SPINNER_MINIMUM_PASSWORD_LENGTH = 1;
+	public static final Integer SPINNER_MAXIMUM_PASSWORD_LENGTH = 30;
 
 	public static final String LANGUAGE_RESOURCE_BUNDLE = "messages";
 
