@@ -7,7 +7,6 @@ import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
 import javax.swing.JLabel;
@@ -208,7 +207,7 @@ public final class Common {
 		Process process;
 		try {
 			process = java.lang.Runtime.getRuntime().exec("ping www.geeksforgeeks.org");
-			return !process.waitFor(100, TimeUnit.MILLISECONDS);
+			return process.waitFor() == 0;
 		} catch (IOException | InterruptedException e) {
 			return false;
 		}

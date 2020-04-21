@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import javax.mail.MessagingException;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
@@ -23,6 +24,7 @@ import com.javafee.elibrary.core.emailform.MailSenderEvent;
 import com.javafee.elibrary.core.exception.LogGuiException;
 import com.javafee.elibrary.core.exception.RefusedLogInException;
 import com.javafee.elibrary.core.exception.RefusedRegistrationException;
+import com.javafee.elibrary.core.mail.MailSender;
 import com.javafee.elibrary.core.startform.RegistrationEvent.RegistrationFailureCause;
 import com.javafee.elibrary.hibernate.dao.HibernateDao;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
@@ -299,6 +301,17 @@ public class Actions implements IRegistrationForm {
 		}
 	}
 
+	private boolean checkEmailServerConnectivity() {
+		boolean result = true;
+		MailSender mailSender = new MailSender();
+		try {
+			mailSender.validateConnection();
+		} catch (MessagingException e) {
+			result = false;
+		}
+		return result;
+	}
+
 	private boolean validateLogIn() {
 		boolean result = false;
 		if (startForm.getLogInPanel().getTextFieldLogin().getText().isEmpty()
@@ -315,7 +328,7 @@ public class Actions implements IRegistrationForm {
 
 	private boolean validateForgotPassword() {
 		boolean result = false;
-		if (!com.javafee.elibrary.core.common.Common.checkInternetConnectivity())
+		if (!com.javafee.elibrary.core.common.Common.checkInternetConnectivity() || !checkEmailServerConnectivity())
 			JOptionPane.showMessageDialog(startForm.getFrame(),
 					SystemProperties.getInstance().getResourceBundle()
 							.getString("startForm.validateForgotPasswordError4"),
