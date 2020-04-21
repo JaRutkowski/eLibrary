@@ -114,7 +114,7 @@ public class PasswordChangePanelEvent implements IActionForm {
 		}
 		if (!newPasswordStrength) {
 			errorBuilder.append(MessageFormat.format(SystemProperties.getInstance().getResourceBundle()
-					.getString("startForm.registrationError7"),
+							.getString("startForm.registrationError7"),
 					SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_MIN_PASSWORD_LENGTH).getValue(),
 					SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_MAX_PASSWORD_LENGTH).getValue()));
 			result = false;

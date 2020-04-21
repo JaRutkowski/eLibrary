@@ -1,5 +1,8 @@
 package com.javafee.elibrary.core.tabbedform;
 
+import java.text.MessageFormat;
+
+import javax.mail.MessagingException;
 import javax.swing.JOptionPane;
 
 import com.javafee.elibrary.core.common.Common;
@@ -13,6 +16,7 @@ import com.javafee.elibrary.core.common.Validator;
 import com.javafee.elibrary.core.emailform.Actions;
 import com.javafee.elibrary.core.exception.LogGuiException;
 import com.javafee.elibrary.core.exception.RefusedClientsEventLoadingException;
+import com.javafee.elibrary.core.mail.MailSender;
 import com.javafee.elibrary.core.model.ClientTableModel;
 import com.javafee.elibrary.core.startform.LogInEvent;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
@@ -80,15 +84,18 @@ public final class TabClientEvent implements IActionForm {
 		if (action == null)
 			action = new Actions();
 
-		boolean internetConnectivity = Common.checkInternetConnectivity();
-		if (!internetConnectivity) {
-			Params.getInstance().add("NO_INTERNET_CONNVECTIVITY", internetConnectivity);
+		boolean internetConnectivity = Common.checkInternetConnectivity(),
+				emailServerConnectivity = checkEmailServerConnectivity();
+		if (!internetConnectivity) Params.getInstance().add("NO_INTERNET_CONNECTIVITY", internetConnectivity);
+		if (!emailServerConnectivity) Params.getInstance().add("NO_EMAIL_SERVER_CONNECTIVITY", emailServerConnectivity);
+
+		if (!internetConnectivity || !emailServerConnectivity)
 			LogGuiException.logWarning(
 					SystemProperties.getInstance().getResourceBundle()
-							.getString("tabClientEvent.noInternetConnectionWarningTitle"),
-					SystemProperties.getInstance().getResourceBundle()
-							.getString("tabClientEvent.noInternetConnectionWarning"));
-		}
+							.getString("tabClientEvent.noConnectionWarningTitle"),
+					MessageFormat.format(SystemProperties.getInstance().getResourceBundle().getString("tabClientEvent.noConnectionWarning"),
+							!internetConnectivity ? SystemProperties.getInstance().getResourceBundle().getString("tabClientEvent.noInternetConnectionWarning")
+									: SystemProperties.getInstance().getResourceBundle().getString("tabClientEvent.noEmailServerConnectionWarning")));
 
 		action.control();
 	}
@@ -242,5 +249,16 @@ public final class TabClientEvent implements IActionForm {
 
 	public boolean validateClientTableSelection(int index) {
 		return index > -1;
+	}
+
+	private boolean checkEmailServerConnectivity() {
+		boolean result = true;
+		MailSender mailSender = new MailSender();
+		try {
+			mailSender.validateConnection();
+		} catch (MessagingException e) {
+			result = false;
+		}
+		return result;
 	}
 }
