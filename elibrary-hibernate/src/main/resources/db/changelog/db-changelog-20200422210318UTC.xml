@@ -63,6 +63,12 @@
             <column name="id_system_properties"/>
         </insert>
     </changeSet>
+    <changeSet author="rutko (generated)" id="1587593039512-5">
+        <insert tableName="lib_library_data">
+            <column name="id_library_data" valueNumeric="1"/>
+            <column name="name" value="Library"/>
+        </insert>
+    </changeSet>
     <changeSet author="rutko (generated)" id="1587593039512-4">
         <insert tableName="lib_library_branch_data">
             <column name="id_library_branch_data" valueNumeric="1"/>
@@ -76,12 +82,6 @@
         <insert tableName="lib_library_system_data">
             <column name="id_library_system_data" valueNumeric="1"/>
             <column name="id_library_data" valueNumeric="1"/>
-        </insert>
-    </changeSet>
-    <changeSet author="rutko (generated)" id="1587593039512-5">
-        <insert tableName="lib_library_data">
-            <column name="id_library_data" valueNumeric="1"/>
-            <column name="name" value="Library"/>
         </insert>
     </changeSet>
     <changeSet author="rutko (generated)" id="1587593039512-7">
