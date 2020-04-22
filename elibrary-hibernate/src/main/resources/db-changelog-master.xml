@@ -16,7 +16,7 @@
 	<!-- Version data -->
 	<!-- generated using mvn liquibase:generateChangeLog -Dliquibase.diffTypes=data -->
 	<!-- comment old version and add new one -->
-	<include file="src/main/resources/db/changelog/db-changelog-20200422201731UTC.xml" relativeToChangelogFile="false"/>
+	<include file="src/main/resources/db/changelog/db-changelog-20200422210318UTC.xml" relativeToChangelogFile="false"/>
 
 	<!-- Notes -->
 	<!-- it is possible to run DML on local: -->

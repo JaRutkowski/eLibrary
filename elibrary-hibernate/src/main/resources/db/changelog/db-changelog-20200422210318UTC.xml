@@ -1,0 +1,104 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet author="rutko (generated)" id="1587593039512-1">
+        <insert tableName="com_system_data">
+            <column name="id_system_data" valueNumeric="1"/>
+            <column name="build_number"/>
+            <column name="has_license" valueBoolean="false"/>
+            <column name="installation_date"/>
+            <column name="license_number"/>
+            <column name="name"/>
+            <column name="number_of_system_parameters" valueNumeric="5"/>
+            <column name="system_data_initialization_date" valueDate="2020-04-22"/>
+            <column name="version"/>
+        </insert>
+    </changeSet>
+    <changeSet author="rutko (generated)" id="1587593039512-2">
+        <insert tableName="com_system_parameter">
+            <column name="id_system_parameter" valueNumeric="1"/>
+            <column name="default_value" value="0.6"/>
+            <column name="name" value="APPLICATION_PENALTY_VALUE"/>
+            <column name="value" value="0.6"/>
+        </insert>
+        <insert tableName="com_system_parameter">
+            <column name="id_system_parameter" valueNumeric="2"/>
+            <column name="default_value" value="nreply.elibrary@gmail.com"/>
+            <column name="name" value="APPLICATION_EMAIL_ADDRESS"/>
+            <column name="value" value="nreply.elibrary@gmail.com"/>
+        </insert>
+        <insert tableName="com_system_parameter">
+            <column name="id_system_parameter" valueNumeric="3"/>
+            <column name="default_value" value="Admin95!"/>
+            <column name="name" value="APPLICATION_EMAIL_PASSWORD"/>
+            <column name="value" value="Admin95!"/>
+        </insert>
+        <insert tableName="com_system_parameter">
+            <column name="id_system_parameter" valueNumeric="4"/>
+            <column name="default_value" value="16"/>
+            <column name="name" value="APPLICATION_GENERATED_PASSWORD_LENGTH"/>
+            <column name="value" value="16"/>
+        </insert>
+        <insert tableName="com_system_parameter">
+            <column name="id_system_parameter" valueNumeric="5"/>
+            <column name="default_value" value="eLib-mes-templates"/>
+            <column name="name" value="APPLICATION_TEMPLATE_DIRECTORY_NAME"/>
+            <column name="value" value="eLib-mes-templates"/>
+        </insert>
+    </changeSet>
+    <changeSet author="rutko (generated)" id="1587593039512-3">
+        <insert tableName="com_user_data">
+            <column name="id_user_data" valueNumeric="0"/>
+            <column name="address"/>
+            <column name="birth_date"/>
+            <column name="document_number"/>
+            <column name="e_mail"/>
+            <column name="login" value="admin"/>
+            <column name="name"/>
+            <column name="password" value="f7e3c24e1a04758097f69be41aa3cf18"/>
+            <column name="pesel"/>
+            <column name="registered"/>
+            <column name="sex"/>
+            <column name="surname"/>
+            <column name="id_city"/>
+            <column name="id_system_properties"/>
+        </insert>
+    </changeSet>
+    <changeSet author="rutko (generated)" id="1587593039512-4">
+        <insert tableName="lib_library_branch_data">
+            <column name="id_library_branch_data" valueNumeric="1"/>
+            <column name="address"/>
+            <column name="name" value="Main branch"/>
+            <column name="id_city"/>
+            <column name="id_library_data" valueNumeric="1"/>
+        </insert>
+    </changeSet>
+    <changeSet author="rutko (generated)" id="1587593039512-5">
+        <insert tableName="lib_library_data">
+            <column name="id_library_data" valueNumeric="1"/>
+            <column name="name" value="Library"/>
+        </insert>
+    </changeSet>
+    <changeSet author="rutko (generated)" id="1587593039512-6">
+        <insert tableName="lib_library_system_data">
+            <column name="id_library_system_data" valueNumeric="1"/>
+            <column name="id_library_data" valueNumeric="1"/>
+        </insert>
+    </changeSet>
+    <changeSet author="rutko (generated)" id="1587593039512-7">
+        <insert tableName="mes_message_type">
+            <column name="id_message_type" valueNumeric="0"/>
+            <column name="description" value=""/>
+            <column name="name" value="usr_message"/>
+        </insert>
+        <insert tableName="mes_message_type">
+            <column name="id_message_type" valueNumeric="1"/>
+            <column name="description" value=""/>
+            <column name="name" value="sys_message"/>
+        </insert>
+        <insert tableName="mes_message_type">
+            <column name="id_message_type" valueNumeric="2"/>
+            <column name="description" value=""/>
+            <column name="name" value="sys_notification"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
