@@ -38,6 +38,8 @@
 				<version>${org.liquibase.version}</version>
 				<configuration>
 					<propertyFile>liquibase.properties</propertyFile>
+					<changeLogFile>src/main/resources/db-changelog-master.xml</changeLogFile>
+					<url>jdbc:postgresql://ec2-46-137-121-216.eu-west-1.compute.amazonaws.com/dfsnu6tveajrq7?sslmode=require</url>
 				</configuration>
 			</plugin>
 			<!-- display active profile in compile phase -->
