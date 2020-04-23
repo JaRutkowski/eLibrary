@@ -1,1 +1,1 @@
-release: ./mvnw liquibase:update
+release: mvn liquibase:update
