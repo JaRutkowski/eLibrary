@@ -1,14 +1,17 @@
 package com.javafee.elibrary.core.settingsform;
 
+import java.text.MessageFormat;
+
 import javax.mail.MessagingException;
 import javax.swing.JOptionPane;
+
+import org.oxbow.swingbits.util.Strings;
 
 import com.javafee.elibrary.core.common.Common;
 import com.javafee.elibrary.core.common.Constants;
 import com.javafee.elibrary.core.common.IActionForm;
 import com.javafee.elibrary.core.common.SystemProperties;
 import com.javafee.elibrary.core.common.Utils;
-import com.javafee.elibrary.core.exception.LogGuiException;
 import com.javafee.elibrary.core.mail.MailSender;
 import com.javafee.elibrary.core.unicomponent.jspinner.DoubleJSpinner;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
@@ -73,9 +76,18 @@ public class SystemParametersPanelEvent implements IActionForm {
 		systemParameter.setValue(((DoubleJSpinner) settingsForm.getSettingsPanel().getSystemParametersPanel().getSpinnerApplicationPenaltyValue()).getDouble().toString());
 		updateSystemParameter(systemParameter);
 
-		systemParameter = SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_EMAIL_ADDRESS);
-		systemParameter.setValue(settingsForm.getSettingsPanel().getSystemParametersPanel().getTextFieldApplicationEmailAddress().getText());
-		updateSystemParameter(systemParameter);
+		String validationError = validateEmailServerConnection();
+		if ((settingsForm.getSettingsPanel().getSystemParametersPanel().getChckbxValidateEmailServerConnection().isSelected()
+				&& !Strings.isEmpty(validationError)
+				&& Utils.displayConfirmDialog(
+				MessageFormat.format(SystemProperties.getInstance().getResourceBundle()
+						.getString("systemParametersPanelEvent.noEmailServerConnectionConfirmDialog"), validationError),
+				SystemProperties.getInstance().getResourceBundle().getString("errorDialog.title")) == JOptionPane.YES_OPTION)
+				|| Strings.isEmpty(validationError)) {
+			systemParameter = SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_EMAIL_ADDRESS);
+			systemParameter.setValue(settingsForm.getSettingsPanel().getSystemParametersPanel().getTextFieldApplicationEmailAddress().getText());
+			updateSystemParameter(systemParameter);
+		}
 
 		systemParameter = SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_EMAIL_PASSWORD);
 		systemParameter.setValue(String.valueOf(settingsForm.getSettingsPanel().getSystemParametersPanel().getPasswordField().getPassword()));
@@ -97,8 +109,6 @@ public class SystemParametersPanelEvent implements IActionForm {
 		systemParameter.setValue(settingsForm.getSettingsPanel().getSystemParametersPanel().getTextFieldApplicationTemplatesDirectoryName().getText());
 		updateSystemParameter(systemParameter);
 
-		if (settingsForm.getSettingsPanel().getSystemParametersPanel().getChckbxValidateEmailServerConnection().isSelected())
-			validateEmailServerConnection();
 
 		Utils.displayOptionPane(
 				SystemProperties.getInstance().getResourceBundle()
@@ -149,14 +159,15 @@ public class SystemParametersPanelEvent implements IActionForm {
 		settingsForm.getSettingsPanel().getSystemParametersPanel().getChckbxValidateEmailServerConnection().setEnabled(enable);
 	}
 
-	private void validateEmailServerConnection() {
+	private String validateEmailServerConnection() {
+		String resultError = null;
 		MailSender mailSender = new MailSender();
 		try {
 			mailSender.validateConnection();
 		} catch (MessagingException e) {
-			LogGuiException.logError(
-					SystemProperties.getInstance().getResourceBundle().getString("errorDialog.title"), e);
 			log.severe(e.getMessage());
+			return e.getMessage();
 		}
+		return resultError;
 	}
 }
