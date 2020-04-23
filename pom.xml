@@ -15,7 +15,6 @@
 		<elibrary.version>1.0-SNAPSHOT</elibrary.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		<org.liquibase.version>3.8.0</org.liquibase.version>
 		<org.codehaus.mojo.version>1.7</org.codehaus.mojo.version>
 		<sonar.maven.plugin.version>3.4.0.905</sonar.maven.plugin.version>
 		<junit.version>3.8.1</junit.version>
@@ -37,16 +36,6 @@
 		<com.mashape.unirest.version>1.4.9</com.mashape.unirest.version>
 		<org.json.version>20180813</org.json.version>
 	</properties>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.liquibase</groupId>
-				<artifactId>liquibase-maven-plugin</artifactId>
-				<version>${org.liquibase.version}</version>
-			</plugin>
-		</plugins>
-	</build>
 
 	<modules>
 		<module>elibrary-core</module>
