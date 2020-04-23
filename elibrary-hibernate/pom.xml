@@ -33,13 +33,50 @@
 	<build>
 		<plugins>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>org.liquibase</groupId>
+									<artifactId>liquibase-core</artifactId>
+									<version>3.4.1</version>
+									<destFileName>liquibase.jar</destFileName>
+								</artifactItem>
+								<artifactItem>
+									<groupId>org.yaml</groupId>
+									<artifactId>snakeyaml</artifactId>
+									<version>1.13</version>
+									<outputDirectory>${project.build.directory}/dependency/lib</outputDirectory>
+								</artifactItem>
+								<artifactItem>
+									<groupId>org.postgresql</groupId>
+									<artifactId>postgresql</artifactId>
+									<version>9.4-1204-jdbc41</version>
+									<destFileName>postgres.jar</destFileName>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
 				<groupId>org.liquibase</groupId>
 				<artifactId>liquibase-maven-plugin</artifactId>
 				<version>${org.liquibase.version}</version>
 				<configuration>
 					<propertyFile>liquibase.properties</propertyFile>
 					<changeLogFile>src/main/resources/db-changelog-master.xml</changeLogFile>
-					<url>jdbc:postgresql://ec2-46-137-121-216.eu-west-1.compute.amazonaws.com/dfsnu6tveajrq7?sslmode=require</url>
+					<url>
+						jdbc:postgresql://ec2-46-137-121-216.eu-west-1.compute.amazonaws.com/dfsnu6tveajrq7?sslmode=require
+					</url>
 					<username>ppqrmsqersyeto</username>
 					<password>39f03b52de7505db0046939040eb112254bd4560779165c62a2792b9bfe65cfb</password>
 					<promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
@@ -47,18 +84,18 @@
 			</plugin>
 			<!-- display active profile in compile phase -->
 			<!--<plugin>-->
-				<!--<groupId>org.apache.maven.plugins</groupId>-->
-				<!--<artifactId>maven-help-plugin</artifactId>-->
-				<!--<version>${org.apache.maven.plugins}</version>-->
-				<!--<executions>-->
-					<!--<execution>-->
-						<!--<id>show-profiles</id>-->
-						<!--<phase>compile</phase>-->
-						<!--<goals>-->
-							<!--<goal>active-profiles</goal>-->
-						<!--</goals>-->
-					<!--</execution>-->
-				<!--</executions>-->
+			<!--<groupId>org.apache.maven.plugins</groupId>-->
+			<!--<artifactId>maven-help-plugin</artifactId>-->
+			<!--<version>${org.apache.maven.plugins}</version>-->
+			<!--<executions>-->
+			<!--<execution>-->
+			<!--<id>show-profiles</id>-->
+			<!--<phase>compile</phase>-->
+			<!--<goals>-->
+			<!--<goal>active-profiles</goal>-->
+			<!--</goals>-->
+			<!--</execution>-->
+			<!--</executions>-->
 			<!--</plugin>-->
 			<plugin>
 				<groupId>com.heroku.sdk</groupId>
