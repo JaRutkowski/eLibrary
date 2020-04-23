@@ -2,8 +2,9 @@ package com.javafee.elibrary.core.tabbedform;
 
 import java.text.MessageFormat;
 
-import javax.mail.MessagingException;
 import javax.swing.JOptionPane;
+
+import org.oxbow.swingbits.util.Strings;
 
 import com.javafee.elibrary.core.common.Common;
 import com.javafee.elibrary.core.common.Constants;
@@ -16,7 +17,6 @@ import com.javafee.elibrary.core.common.Validator;
 import com.javafee.elibrary.core.emailform.Actions;
 import com.javafee.elibrary.core.exception.LogGuiException;
 import com.javafee.elibrary.core.exception.RefusedClientsEventLoadingException;
-import com.javafee.elibrary.core.mail.MailSender;
 import com.javafee.elibrary.core.model.ClientTableModel;
 import com.javafee.elibrary.core.startform.LogInEvent;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
@@ -85,7 +85,7 @@ public final class TabClientEvent implements IActionForm {
 			action = new Actions();
 
 		boolean internetConnectivity = Common.checkInternetConnectivity(),
-				emailServerConnectivity = checkEmailServerConnectivity();
+				emailServerConnectivity = Strings.isEmpty(Common.checkEmailServerConnectivity());
 		if (!internetConnectivity) Params.getInstance().add("NO_INTERNET_CONNECTIVITY", internetConnectivity);
 		if (!emailServerConnectivity) Params.getInstance().add("NO_EMAIL_SERVER_CONNECTIVITY", emailServerConnectivity);
 
@@ -249,16 +249,5 @@ public final class TabClientEvent implements IActionForm {
 
 	public boolean validateClientTableSelection(int index) {
 		return index > -1;
-	}
-
-	private boolean checkEmailServerConnectivity() {
-		boolean result = true;
-		MailSender mailSender = new MailSender();
-		try {
-			mailSender.validateConnection();
-		} catch (MessagingException e) {
-			result = false;
-		}
-		return result;
 	}
 }

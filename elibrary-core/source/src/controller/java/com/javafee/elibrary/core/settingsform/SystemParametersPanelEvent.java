@@ -1,7 +1,8 @@
 package com.javafee.elibrary.core.settingsform;
 
-import javax.mail.MessagingException;
 import javax.swing.JOptionPane;
+
+import org.oxbow.swingbits.util.Strings;
 
 import com.javafee.elibrary.core.common.Common;
 import com.javafee.elibrary.core.common.Constants;
@@ -9,7 +10,6 @@ import com.javafee.elibrary.core.common.IActionForm;
 import com.javafee.elibrary.core.common.SystemProperties;
 import com.javafee.elibrary.core.common.Utils;
 import com.javafee.elibrary.core.exception.LogGuiException;
-import com.javafee.elibrary.core.mail.MailSender;
 import com.javafee.elibrary.core.unicomponent.jspinner.DoubleJSpinner;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
 import com.javafee.elibrary.hibernate.dto.common.SystemParameter;
@@ -150,13 +150,9 @@ public class SystemParametersPanelEvent implements IActionForm {
 	}
 
 	private void validateEmailServerConnection() {
-		MailSender mailSender = new MailSender();
-		try {
-			mailSender.validateConnection();
-		} catch (MessagingException e) {
+		String validationResult = Common.checkEmailServerConnectivity();
+		if (!Strings.isEmpty(validationResult))
 			LogGuiException.logError(
-					SystemProperties.getInstance().getResourceBundle().getString("errorDialog.title"), e);
-			log.severe(e.getMessage());
-		}
+					SystemProperties.getInstance().getResourceBundle().getString("errorDialog.title"), validationResult);
 	}
 }
