@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
+import javax.mail.MessagingException;
 import javax.swing.JLabel;
 
 import org.hibernate.resource.transaction.spi.TransactionStatus;
@@ -17,6 +18,7 @@ import com.javafee.elibrary.core.common.networkservice.NetworkServiceListener;
 import com.javafee.elibrary.core.common.timerservice.TimerServiceListener;
 import com.javafee.elibrary.core.common.watchservice.WatchServiceListener;
 import com.javafee.elibrary.core.emailform.TabTemplatePageEvent;
+import com.javafee.elibrary.core.mail.MailSender;
 import com.javafee.elibrary.core.startform.RegistrationPanel;
 import com.javafee.elibrary.core.tabbedform.Actions;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
@@ -211,6 +213,17 @@ public final class Common {
 		} catch (IOException | InterruptedException e) {
 			return false;
 		}
+	}
+
+	public static String checkEmailServerConnectivity() {
+		String result = null;
+		MailSender mailSender = new MailSender();
+		try {
+			mailSender.validateConnection();
+		} catch (MessagingException e) {
+			result = e.getMessage();
+		}
+		return result;
 	}
 
 	public static void registerWatchServiceListener(TabTemplatePageEvent tabTemplatePageEvent,
