@@ -17,6 +17,7 @@
 	<!-- generated using mvn liquibase:generateChangeLog -Dliquibase.diffTypes=data -->
 	<!-- liquibase plugin part - db configuration - should be commented in pom.xml -->
 	<!-- comment old version and add new one -->
+	<!-- increment truncate-all-cascade-changelog id -->
 	<!--<include file="src/main/resources/db/changelog/db-changelog-20200422201731UTC.xml" relativeToChangelogFile="false"/>-->
 	<!--<include file="src/main/resources/db/changelog/db-changelog-20200422210318UTC.xml" relativeToChangelogFile="false"/>-->
 	<include file="src/main/resources/db/changelog/db-changelog-20200501192149UTC.xml" relativeToChangelogFile="false"/>
