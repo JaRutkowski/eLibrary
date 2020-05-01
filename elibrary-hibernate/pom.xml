@@ -66,8 +66,9 @@
 			<plugin>
 				<groupId>com.heroku.sdk</groupId>
 				<artifactId>heroku-maven-plugin</artifactId>
-				<version>0.5.6</version>
+				<version>3.0.2</version>
 				<configuration>
+					<jdkVersion>${maven.compiler.target}</jdkVersion>
 					<configVars>
 						<MAVEN_JAVA_OPTS>liquibase:update -P prod</MAVEN_JAVA_OPTS>
 					</configVars>
