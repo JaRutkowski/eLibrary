@@ -27,7 +27,7 @@ public class HibernateDao<T, Id extends Serializable> implements GenericDao<T, I
 	public List<T> findByExample(T exampleInstance, String[] excludeProperty) {
 		Criteria crit = HibernateUtil.getSession().createCriteria(persistentClass);
 		Example example = Example.create(exampleInstance);
-		for (String eProperty : excludeProperty)
+		for (var eProperty : excludeProperty)
 			example.excludeProperty(eProperty);
 		crit.add(example);
 		return crit.list();

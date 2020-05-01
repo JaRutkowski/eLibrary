@@ -19,7 +19,7 @@ class ActionJTableBtnPanel extends BasePanel {
 	protected void updateButtons(Object value) {
 		if (value instanceof List) {
 			removeAll();
-			for (Action e : ((List<Action>) value)) {
+			for (var e : ((List<Action>) value)) {
 				JButton b = new JButton(e.getName());
 				b.setFocusable(false);
 				b.setRolloverEnabled(false);
