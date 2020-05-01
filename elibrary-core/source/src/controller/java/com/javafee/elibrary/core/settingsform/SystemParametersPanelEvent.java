@@ -1,6 +1,7 @@
 package com.javafee.elibrary.core.settingsform;
 
 import java.text.MessageFormat;
+
 import javax.swing.JOptionPane;
 
 import org.oxbow.swingbits.util.Strings;

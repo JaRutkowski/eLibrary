@@ -54,7 +54,7 @@ public class HTMLProcessor {
 		JSONObject jsonObject = response.getObject();
 		JSONArray messages = jsonObject.getJSONArray("messages");
 
-		for (int i = 0; i < messages.length(); i++) {
+		for (var i = 0; i < messages.length(); i++) {
 			JSONObject error = messages.getJSONObject(i);
 			resposeMessages.add(error.getString("type").toUpperCase() + "\t (line: " + error.getInt("lastLine") + ") : "
 					+ error.getString("message") + " Near: [" + error.getString("extract") + "]");
