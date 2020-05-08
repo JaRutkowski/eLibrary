@@ -39,7 +39,7 @@ public final class Constants {
 	@Getter
 	@AllArgsConstructor
 	public enum Tab_Client {
-		TAB_LIBRARY(0);
+		TAB_LIBRARY(0), TAB_CLIENT_RESERVATION(1);
 
 		private final Integer value;
 
@@ -84,6 +84,19 @@ public final class Constants {
 
 		public static Tab_Email getByNumber(int tabbedPaneSelectedIndex) {
 			return Stream.of(Tab_Email.values()).filter(item -> item.getValue().equals(tabbedPaneSelectedIndex))
+					.findFirst().get();
+		}
+	}
+
+	@Getter
+	@AllArgsConstructor
+	public enum Tab_ClientReservations {
+		TAB_CREATE_RESERVATIONS(0);
+
+		private final Integer value;
+
+		public static Tab_ClientReservations getByNumber(int tabbedPaneSelectedIndex) {
+			return Stream.of(Tab_ClientReservations.values()).filter(item -> item.getValue().equals(tabbedPaneSelectedIndex))
 					.findFirst().get();
 		}
 	}
@@ -201,6 +214,26 @@ public final class Constants {
 
 		public static LendTableColumn getByNumber(int lendTableSelectedIndex) {
 			return Stream.of(LendTableColumn.values()).filter(item -> item.getValue().equals(lendTableSelectedIndex))
+					.findFirst().get();
+		}
+	}
+
+	public enum LendClientReservationTableColumn {
+		COL_VOLUME_BOOK_TITLE(0), COL_VOLUME_BOOK_ISBN_NUMBER(1), COL_VOLUME_INVENTORY_NUMBER(2), COL_LEND_DATE_OR_RESERVATION_DATE(3), COL_RETURNED_DATE(4);
+
+		private final Integer value;
+
+		LendClientReservationTableColumn(final int newValue) {
+			value = newValue;
+		}
+
+		public Integer getValue() {
+			return value;
+		}
+
+		public static LendClientReservationTableColumn getByNumber(int lendClientReservationTableSelectedIndex) {
+			return Stream.of(LendClientReservationTableColumn.values())
+					.filter(item -> item.getValue().equals(lendClientReservationTableSelectedIndex))
 					.findFirst().get();
 		}
 	}

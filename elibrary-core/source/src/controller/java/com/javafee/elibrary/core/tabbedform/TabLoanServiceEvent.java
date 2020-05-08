@@ -5,7 +5,6 @@ import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Objects;
 
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -23,6 +22,7 @@ import com.javafee.elibrary.core.model.VolumeTableModel;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
 import com.javafee.elibrary.hibernate.dto.library.Client;
 import com.javafee.elibrary.hibernate.dto.library.Lend;
+import com.javafee.elibrary.hibernate.dto.library.Reservation;
 import com.javafee.elibrary.hibernate.dto.library.Volume;
 
 import lombok.Setter;
@@ -137,9 +137,17 @@ public class TabLoanServiceEvent implements IActionForm {
 				Lend lendShallowClone = (Lend) selectedLoan.clone();
 
 				if (!selectedClient.equals(selectedLoan.getClient())) {
-					if (!selectedLoan.getVolume().getIsReserve()) {
-						lendShallowClone.getVolume().setIsReserve(true);
-						lendShallowClone.setReservationClient(clientShallowClone);
+					if (!validateIfActiveReservationForLendExists(lendShallowClone)) {
+						Reservation reservation = new Reservation();
+						reservation.setClient(clientShallowClone);
+						reservation.setVolume(lendShallowClone.getVolume());
+						reservation.setReservationDate(new Date());
+
+						HibernateUtil.beginTransaction();
+						HibernateUtil.getSession().save(reservation);
+						HibernateUtil.commitTransaction();
+
+						lendShallowClone.setReservation(reservation);
 
 						HibernateUtil.beginTransaction();
 						HibernateUtil.getSession()
@@ -264,7 +272,7 @@ public class TabLoanServiceEvent implements IActionForm {
 								+ calculatePenalty() + Constants.APPLICATION_CURRENCY,
 						SystemProperties.getInstance().getResourceBundle().getString("loanServicePanel.penaltyErrorTitle"),
 						JOptionPane.ERROR_MESSAGE);
-			else if (Objects.isNull(lend.getReservationClient())) {
+			else if (!validateIfActiveReservationForLendExists(lend)) {
 				lend.setIsReturned(true);
 				HibernateUtil.beginTransaction();
 				HibernateUtil.getSession().update(lend);
@@ -280,11 +288,13 @@ public class TabLoanServiceEvent implements IActionForm {
 								.getString("tabLoanServiceEvent.loanReturnSuccessTitle"),
 						JOptionPane.INFORMATION_MESSAGE);
 			} else {
-				lend.setClient(lend.getReservationClient());
-				lend.setReservationClient(null);
-				lend.getVolume().setIsReserve(false);
+				Reservation reservation = lend.getReservation();
+				lend.setClient(reservation.getClient());
+				reservation.setIsActive(false);
+
 				HibernateUtil.beginTransaction();
-				HibernateUtil.getSession().save(lend);
+				HibernateUtil.getSession().update(Lend.class.getName(), lend);
+				HibernateUtil.getSession().update(Reservation.class.getName(), reservation);
 				HibernateUtil.commitTransaction();
 
 				((LoanTableModel) tabbedForm.getPanelLoanService().getLoanTable().getModel()).reloadData();
@@ -346,11 +356,12 @@ public class TabLoanServiceEvent implements IActionForm {
 			if (selectedRowIndex != -1) {
 				Lend selectedLend = ((LoanReservationTableModel) tabbedForm.getPanelLoanService().getReservationTable()
 						.getModel()).getLend(selectedRowIndex);
-				selectedLend.setReservationClient(null);
-				selectedLend.getVolume().setIsReserve(false);
+				Reservation reservation = selectedLend.getReservation();
+				reservation.setIsCancelled(true);
+				reservation.setIsActive(false);
 
 				HibernateUtil.beginTransaction();
-				HibernateUtil.getSession().update(Lend.class.getName(), selectedLend);
+				HibernateUtil.getSession().update(Reservation.class.getName(), reservation);
 				HibernateUtil.commitTransaction();
 
 				((LoanReservationTableModel) tabbedForm.getPanelLoanService().getReservationTable().getModel()).reloadData();
@@ -416,6 +427,10 @@ public class TabLoanServiceEvent implements IActionForm {
 		final Lend lend = ((LoanTableModel) jTable.getModel())
 				.getLend(jTable.convertRowIndexToModel(jTable.getSelectedRow()));
 		return lend;
+	}
+
+	private boolean validateIfActiveReservationForLendExists(Lend lend) {
+		return lend.getReservation() != null && lend.getReservation().getIsActive();
 	}
 
 	private boolean validateLoanTableSelection() {

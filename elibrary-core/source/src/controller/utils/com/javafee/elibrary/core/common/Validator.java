@@ -134,6 +134,13 @@ public final class Validator {
 		return lendClientExist;
 	}
 
+	public static boolean validateIfVolumeActiveReservationExists(Integer idVolume) {
+		return HibernateUtil.getSession()
+				.getNamedQuery("Reservation.checkIfVolumeActiveReservationExists")
+				.setParameter("idVolume", idVolume)
+				.uniqueResult() != null;
+	}
+
 	public static boolean validateIfUserCorrespondenceExists(Integer idUserData) {
 		List<Recipient> recipients = HibernateUtil.getSession().createQuery("from Recipient as rec where userData.idUserData = ?0")
 				.setParameter(0, idUserData).list();

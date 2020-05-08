@@ -57,6 +57,9 @@ public class Actions implements IActionForm {
 			tabbedForm.getTabbedPane().addTab(
 					SystemProperties.getInstance().getResourceBundle().getString("tabbedForm.tabLibraryTitle"), null,
 					tabbedForm.getPanelLibrary(), null);
+			tabbedForm.getTabbedPane().addTab(
+					SystemProperties.getInstance().getResourceBundle().getString("tabbedForm.tabClientReservationTitle"), null,
+					tabbedForm.getPanelClientReservations(), null);
 			tabbedForm.pack();
 		}
 
@@ -136,6 +139,9 @@ public class Actions implements IActionForm {
 			switch (Tab_Client.getByNumber(tabbedForm.getTabbedPane().getSelectedIndex())) {
 				case TAB_LIBRARY:
 					TabLibraryEvent.getInstance(tabbedForm);
+					break;
+				case TAB_CLIENT_RESERVATION:
+					TabClientReservationEvent.getInstance(tabbedForm);
 					break;
 				default:
 					break;
@@ -226,6 +232,8 @@ public class Actions implements IActionForm {
 	private void clearEvents() {
 		TabClientEvent.clientEvent = null;
 		TabLibraryEvent.libraryEvent = null;
+		TabClientReservationEvent.clientReservationEvent = null;
+		TabClientReservationEvent.clearDependentEvents();
 		TabBookEvent.bookEvent = null;
 		TabLoanServiceEvent.loadServiceEvent = null;
 		TabAdmDictionaryEvent.admDictionaryEvent = null;
