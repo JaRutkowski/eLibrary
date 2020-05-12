@@ -25,11 +25,17 @@ public class TabClientReservationEvent implements IActionForm {
 	public void control(TabbedForm tabbedForm) {
 		setTabbedForm(tabbedForm);
 		initializeForm();
+
+		tabbedForm.getPanelClientReservations().getTabbedPane().addChangeListener(e -> onChangeTabbedPane());
 	}
 
 	@Override
 	public void initializeForm() {
 		initializeTabbedPane();
+		reloadTabbedPane();
+	}
+
+	private void onChangeTabbedPane() {
 		reloadTabbedPane();
 	}
 
@@ -47,6 +53,9 @@ public class TabClientReservationEvent implements IActionForm {
 			case TAB_CREATE_RESERVATIONS:
 				TabCreateReservationEvent.getInstance(tabbedForm.getPanelClientReservations());
 				break;
+			case TAB_BROWSE_RESERVATIONS:
+				TabBrowseReservationEvent.getInstance(tabbedForm.getPanelBrowseReservations());
+				break;
 			default:
 				break;
 		}
@@ -54,5 +63,6 @@ public class TabClientReservationEvent implements IActionForm {
 
 	public static void clearDependentEvents() {
 		TabCreateReservationEvent.tabCreateReservationEvent = null;
+		TabBrowseReservationEvent.tabBrowseReservationEvent = null;
 	}
 }

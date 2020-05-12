@@ -2,10 +2,14 @@ package com.javafee.elibrary.core.tabbedform.clientreservations;
 
 import java.awt.*;
 
-import javax.swing.JPanel;
+import com.javafee.elibrary.core.common.BasePanel;
 
-public class BrowseReservationPanel extends JPanel {
+import lombok.Getter;
+
+public class BrowseReservationPanel extends BasePanel {
+	@Getter
 	private ActiveClientReservationPanel activeClientReservationPanel;
+	@Getter
 	private HistoryClientReservationPanel historyClientReservationPanel;
 
 	public BrowseReservationPanel() {

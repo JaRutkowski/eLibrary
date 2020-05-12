@@ -91,7 +91,7 @@ public final class Constants {
 	@Getter
 	@AllArgsConstructor
 	public enum Tab_ClientReservations {
-		TAB_CREATE_RESERVATIONS(0);
+		TAB_CREATE_RESERVATIONS(0), TAB_BROWSE_RESERVATIONS(1);
 
 		private final Integer value;
 
