@@ -2,6 +2,7 @@ package com.javafee.elibrary.core.model;
 
 import com.javafee.elibrary.core.common.Constants;
 import com.javafee.elibrary.core.common.SystemProperties;
+import com.javafee.elibrary.core.startform.LogInEvent;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
 import com.javafee.elibrary.hibernate.dto.library.Lend;
 
@@ -18,10 +19,12 @@ public class LoanClientReservationTableModel extends LoanTableModel {
 
 	@Override
 	protected void prepareHibernateDao() {
+		int loggedUserId = LogInEvent.getClient() != null ? LogInEvent.getClient().getIdUserData() : 0;
 		setLends(HibernateUtil.getSession().createQuery("from Lend as len left join fetch len.reservation " +
 				"where len.isReturned = false and " +
 				"(len.reservation is null or " +
-				"(len.reservation is not null and (len.reservation.isActive = false or len.reservation.isCancelled = true)))").list());
+				"(len.reservation is not null and (len.reservation.isActive = false or len.reservation.isCancelled = true)))" +
+				" and (len.client is not null and len.client != " + loggedUserId + ")").list());
 	}
 
 	@Override
@@ -37,7 +40,7 @@ public class LoanClientReservationTableModel extends LoanTableModel {
 				return lend.getVolume().getInventoryNumber();
 			case COL_LEND_DATE_OR_RESERVATION_DATE:
 				return Constants.APPLICATION_DATE_FORMAT.format(lend.getLendDate());
-			case COL_RETURNED_DATE:
+			case COL_RETURNED_DATE_OR_IS_CANCELLED:
 				return Constants.APPLICATION_DATE_FORMAT.format(lend.getReturnedDate());
 			default:
 				return null;

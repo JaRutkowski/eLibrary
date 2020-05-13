@@ -61,6 +61,7 @@ public class TabBrowseReservationEvent implements IActionForm {
 
 				((LoanTableModel) clientReservationPanel.getBrowseReservationPanel().getActiveClientReservationPanel().getLoanTable().getModel()).reloadData();
 				((LoanTableModel) clientReservationPanel.getCreateReservationPanel().getLoanTable().getModel()).reloadData();
+				((LoanTableModel) clientReservationPanel.getBrowseReservationPanel().getHistoryClientReservationPanel().getLoanTable().getModel()).reloadData();
 
 				Utils.displayOptionPane(
 						SystemProperties.getInstance().getResourceBundle()
