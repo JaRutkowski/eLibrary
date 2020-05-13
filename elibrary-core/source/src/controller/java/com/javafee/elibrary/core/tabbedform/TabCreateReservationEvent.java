@@ -74,6 +74,7 @@ public class TabCreateReservationEvent implements IActionForm {
 						HibernateUtil.commitTransaction();
 
 						((LoanTableModel) clientReservationPanel.getCreateReservationPanel().getLoanTable().getModel()).reloadData();
+						((LoanTableModel) clientReservationPanel.getBrowseReservationPanel().getActiveClientReservationPanel().getLoanTable().getModel()).reloadData();
 
 						Utils.displayOptionPane(
 								SystemProperties.getInstance().getResourceBundle()

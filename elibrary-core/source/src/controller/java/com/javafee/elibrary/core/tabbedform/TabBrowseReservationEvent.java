@@ -7,6 +7,7 @@ import com.javafee.elibrary.core.common.SystemProperties;
 import com.javafee.elibrary.core.common.Utils;
 import com.javafee.elibrary.core.exception.LogGuiException;
 import com.javafee.elibrary.core.model.LoanActiveClientReservationTableModel;
+import com.javafee.elibrary.core.model.LoanTableModel;
 import com.javafee.elibrary.core.tabbedform.clientreservations.ClientReservationPanel;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
 import com.javafee.elibrary.hibernate.dto.library.Lend;
@@ -34,6 +35,7 @@ public class TabBrowseReservationEvent implements IActionForm {
 	private void control(ClientReservationPanel clientReservationPanel) {
 		setClientReservationPanel(clientReservationPanel);
 		initializeForm();
+
 		clientReservationPanel.getBrowseReservationPanel().getActiveClientReservationPanel().getBtnCancelReservation().addActionListener(e -> onClickBtnCancelReservation());
 	}
 
@@ -42,7 +44,6 @@ public class TabBrowseReservationEvent implements IActionForm {
 	}
 
 	private void onClickBtnCancelReservation() {
-		System.out.println("onClickBtnCancelReservation");
 		if (validateLoanActiveClientReservationPanel()) {
 			int selectedRowIndex = clientReservationPanel.getBrowseReservationPanel().getActiveClientReservationPanel().getLoanTable()
 					.convertRowIndexToModel(clientReservationPanel.getBrowseReservationPanel().getActiveClientReservationPanel().getLoanTable().getSelectedRow());
@@ -58,8 +59,8 @@ public class TabBrowseReservationEvent implements IActionForm {
 				HibernateUtil.getSession().update(Reservation.class.getName(), reservation);
 				HibernateUtil.commitTransaction();
 
-				//((LoanActiveClientReservationTableModel) tabbedForm.getPanelLoanService().getReservationTable().getModel()).reloadData();
-				//((LoanTableModel) tabbedForm.getPanelLoanService().getLoanTable().getModel()).reloadData();
+				((LoanTableModel) clientReservationPanel.getBrowseReservationPanel().getActiveClientReservationPanel().getLoanTable().getModel()).reloadData();
+				((LoanTableModel) clientReservationPanel.getCreateReservationPanel().getLoanTable().getModel()).reloadData();
 
 				Utils.displayOptionPane(
 						SystemProperties.getInstance().getResourceBundle()
