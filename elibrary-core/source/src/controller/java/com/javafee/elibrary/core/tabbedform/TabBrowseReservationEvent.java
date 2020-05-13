@@ -7,7 +7,7 @@ import com.javafee.elibrary.core.common.SystemProperties;
 import com.javafee.elibrary.core.common.Utils;
 import com.javafee.elibrary.core.exception.LogGuiException;
 import com.javafee.elibrary.core.model.LoanActiveClientReservationTableModel;
-import com.javafee.elibrary.core.tabbedform.clientreservations.BrowseReservationPanel;
+import com.javafee.elibrary.core.tabbedform.clientreservations.ClientReservationPanel;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
 import com.javafee.elibrary.hibernate.dto.library.Lend;
 import com.javafee.elibrary.hibernate.dto.library.Reservation;
@@ -16,26 +16,25 @@ import lombok.Setter;
 
 public class TabBrowseReservationEvent implements IActionForm {
 	@Setter
-	private BrowseReservationPanel browseReservationPanel;
+	private ClientReservationPanel clientReservationPanel;
 
 	protected static TabBrowseReservationEvent tabBrowseReservationEvent = null;
 
-	public TabBrowseReservationEvent(BrowseReservationPanel browseReservationPanel) {
-		this.control(browseReservationPanel);
+	public TabBrowseReservationEvent(ClientReservationPanel clientReservationPanel) {
+		this.control(clientReservationPanel);
 	}
 
-	public static TabBrowseReservationEvent getInstance(BrowseReservationPanel browseReservationPanel) {
+	public static TabBrowseReservationEvent getInstance(ClientReservationPanel clientReservationPanel) {
 		if (tabBrowseReservationEvent == null) {
-			tabBrowseReservationEvent = new TabBrowseReservationEvent(browseReservationPanel);
+			tabBrowseReservationEvent = new TabBrowseReservationEvent(clientReservationPanel);
 		}
 		return tabBrowseReservationEvent;
 	}
 
-	private void control(BrowseReservationPanel browseReservationPanel) {
-		setBrowseReservationPanel(browseReservationPanel);
+	private void control(ClientReservationPanel clientReservationPanel) {
+		setClientReservationPanel(clientReservationPanel);
 		initializeForm();
-
-		browseReservationPanel.getActiveClientReservationPanel().getBtnCancelReservation().addActionListener(e -> onClickBtnCancelReservation());
+		clientReservationPanel.getBrowseReservationPanel().getActiveClientReservationPanel().getBtnCancelReservation().addActionListener(e -> onClickBtnCancelReservation());
 	}
 
 	@Override
@@ -43,12 +42,13 @@ public class TabBrowseReservationEvent implements IActionForm {
 	}
 
 	private void onClickBtnCancelReservation() {
+		System.out.println("onClickBtnCancelReservation");
 		if (validateLoanActiveClientReservationPanel()) {
-			int selectedRowIndex = browseReservationPanel.getActiveClientReservationPanel().getLoanTable()
-					.convertRowIndexToModel(browseReservationPanel.getActiveClientReservationPanel().getLoanTable().getSelectedRow());
+			int selectedRowIndex = clientReservationPanel.getBrowseReservationPanel().getActiveClientReservationPanel().getLoanTable()
+					.convertRowIndexToModel(clientReservationPanel.getBrowseReservationPanel().getActiveClientReservationPanel().getLoanTable().getSelectedRow());
 
 			if (selectedRowIndex != -1) {
-				Lend selectedLend = ((LoanActiveClientReservationTableModel) browseReservationPanel.getActiveClientReservationPanel().getLoanTable()
+				Lend selectedLend = ((LoanActiveClientReservationTableModel) clientReservationPanel.getBrowseReservationPanel().getActiveClientReservationPanel().getLoanTable()
 						.getModel()).getLend(selectedRowIndex);
 				Reservation reservation = selectedLend.getReservation();
 				reservation.setIsCancelled(true);
@@ -77,6 +77,6 @@ public class TabBrowseReservationEvent implements IActionForm {
 	}
 
 	private boolean validateLoanActiveClientReservationPanel() {
-		return browseReservationPanel.getActiveClientReservationPanel().getLoanTable().getSelectedRow() != -1;
+		return clientReservationPanel.getBrowseReservationPanel().getActiveClientReservationPanel().getLoanTable().getSelectedRow() != -1;
 	}
 }

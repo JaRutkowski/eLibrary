@@ -54,7 +54,7 @@ public class TabClientReservationEvent implements IActionForm {
 				TabCreateReservationEvent.getInstance(tabbedForm.getPanelClientReservations());
 				break;
 			case TAB_BROWSE_RESERVATIONS:
-				TabBrowseReservationEvent.getInstance(tabbedForm.getPanelBrowseReservations());
+				TabBrowseReservationEvent.getInstance(tabbedForm.getPanelClientReservations());
 				break;
 			default:
 				break;

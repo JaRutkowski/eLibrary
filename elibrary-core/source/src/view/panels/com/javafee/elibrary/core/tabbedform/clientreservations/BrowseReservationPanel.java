@@ -35,5 +35,4 @@ public class BrowseReservationPanel extends BasePanel {
 		gbc_historyClientReservationPanel.gridy = 1;
 		add(historyClientReservationPanel, gbc_historyClientReservationPanel);
 	}
-
 }
