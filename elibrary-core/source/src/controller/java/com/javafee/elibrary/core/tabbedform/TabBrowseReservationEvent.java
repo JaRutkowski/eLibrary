@@ -6,6 +6,7 @@ import com.javafee.elibrary.core.common.IActionForm;
 import com.javafee.elibrary.core.common.SystemProperties;
 import com.javafee.elibrary.core.common.Utils;
 import com.javafee.elibrary.core.exception.LogGuiException;
+import com.javafee.elibrary.core.model.HistoryClientReservationTableModel;
 import com.javafee.elibrary.core.model.LoanActiveClientReservationTableModel;
 import com.javafee.elibrary.core.model.LoanTableModel;
 import com.javafee.elibrary.core.tabbedform.clientreservations.ClientReservationPanel;
@@ -61,7 +62,7 @@ public class TabBrowseReservationEvent implements IActionForm {
 
 				((LoanTableModel) clientReservationPanel.getBrowseReservationPanel().getActiveClientReservationPanel().getLoanTable().getModel()).reloadData();
 				((LoanTableModel) clientReservationPanel.getCreateReservationPanel().getLoanTable().getModel()).reloadData();
-				((LoanTableModel) clientReservationPanel.getBrowseReservationPanel().getHistoryClientReservationPanel().getLoanTable().getModel()).reloadData();
+				((HistoryClientReservationTableModel) clientReservationPanel.getBrowseReservationPanel().getHistoryClientReservationPanel().getLoanTable().getModel()).reloadData();
 
 				Utils.displayOptionPane(
 						SystemProperties.getInstance().getResourceBundle()
