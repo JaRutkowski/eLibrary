@@ -141,6 +141,16 @@ public final class Validator {
 				.uniqueResult() != null;
 	}
 
+	public static boolean validateIfReservationsLimitExceeded(Integer idUserData, Long additionalReservations) {
+		long activeClientReservationCount = ((Long) HibernateUtil.getSession()
+				.getNamedQuery("Reservation.countActiveClientReservations")
+				.setParameter("idClient", idUserData)
+				.getSingleResult()).intValue();
+		return activeClientReservationCount + additionalReservations
+				> Integer.valueOf(SystemProperties.getInstance().getSystemParameters()
+				.get(Constants.APPLICATION_RESERVATIONS_LIMIT).getValue());
+	}
+
 	public static boolean validateIfUserCorrespondenceExists(Integer idUserData) {
 		List<Recipient> recipients = HibernateUtil.getSession().createQuery("from Recipient as rec where userData.idUserData = ?0")
 				.setParameter(0, idUserData).list();

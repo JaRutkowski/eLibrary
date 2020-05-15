@@ -30,6 +30,7 @@ import lombok.Getter;
 @Getter
 public class SystemParametersPanel extends BasePanel {
 	private JSpinner spinnerApplicationPenaltyValue;
+	private JSpinner spinnerApplicationReservationLimit;
 	private JTextField textFieldApplicationEmailAddress;
 	private JPasswordField passwordField;
 	private JCheckBox chckbxValidateEmailServerConnection;
@@ -43,9 +44,9 @@ public class SystemParametersPanel extends BasePanel {
 	public SystemParametersPanel() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 
 		JLabel lblApplicationPenaltyValue = new CustomJLabel(
@@ -69,13 +70,33 @@ public class SystemParametersPanel extends BasePanel {
 		gbc_spinnerApplicationPenaltyValue.gridy = 0;
 		add(spinnerApplicationPenaltyValue, gbc_spinnerApplicationPenaltyValue);
 
+		JLabel lblApplicationReservationLimit = new JLabel(
+				SystemProperties.getInstance().getResourceBundle().getString("systemParametersPanel.lblApplicationReservationLimit"));
+		GridBagConstraints gbc_lblApplicationReservationLimit = new GridBagConstraints();
+		gbc_lblApplicationReservationLimit.anchor = GridBagConstraints.WEST;
+		gbc_lblApplicationReservationLimit.insets = new Insets(0, 0, 5, 5);
+		gbc_lblApplicationReservationLimit.gridx = 0;
+		gbc_lblApplicationReservationLimit.gridy = 1;
+		add(lblApplicationReservationLimit, gbc_lblApplicationReservationLimit);
+
+		spinnerApplicationReservationLimit = new CustomJSpinner(
+				Constants.SPINNER_MINIMUM_VALUE_RESERVATION_LIMIT,
+				Constants.SPINNER_MINIMUM_VALUE_RESERVATION_LIMIT,
+				Constants.SPINNER_MAXIMUM_VALUE_RESERVATION_LIMIT);
+		GridBagConstraints gbc_spinnerApplicationReservationLimit = new GridBagConstraints();
+		gbc_spinnerApplicationReservationLimit.fill = GridBagConstraints.HORIZONTAL;
+		gbc_spinnerApplicationReservationLimit.insets = new Insets(0, 0, 5, 0);
+		gbc_spinnerApplicationReservationLimit.gridx = 1;
+		gbc_spinnerApplicationReservationLimit.gridy = 1;
+		add(spinnerApplicationReservationLimit, gbc_spinnerApplicationReservationLimit);
+
 		JLabel lblApplicationEmailAddress = new CustomJLabel(
 				SystemProperties.getInstance().getResourceBundle().getString("systemParametersPanel.lblApplicationEmailAddress"));
 		GridBagConstraints gbc_lblApplicationEmailAddress = new GridBagConstraints();
 		gbc_lblApplicationEmailAddress.fill = GridBagConstraints.HORIZONTAL;
 		gbc_lblApplicationEmailAddress.insets = new Insets(0, 0, 5, 5);
 		gbc_lblApplicationEmailAddress.gridx = 0;
-		gbc_lblApplicationEmailAddress.gridy = 1;
+		gbc_lblApplicationEmailAddress.gridy = 2;
 		add(lblApplicationEmailAddress, gbc_lblApplicationEmailAddress);
 
 		textFieldApplicationEmailAddress = new CustomJTextField();
@@ -83,7 +104,7 @@ public class SystemParametersPanel extends BasePanel {
 		gbc_textFieldApplicationEmailAddress.insets = new Insets(0, 0, 5, 0);
 		gbc_textFieldApplicationEmailAddress.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textFieldApplicationEmailAddress.gridx = 1;
-		gbc_textFieldApplicationEmailAddress.gridy = 1;
+		gbc_textFieldApplicationEmailAddress.gridy = 2;
 		add(textFieldApplicationEmailAddress, gbc_textFieldApplicationEmailAddress);
 		textFieldApplicationEmailAddress.setColumns(10);
 
@@ -93,7 +114,7 @@ public class SystemParametersPanel extends BasePanel {
 		gbc_lblApplicationEmailPassword.fill = GridBagConstraints.HORIZONTAL;
 		gbc_lblApplicationEmailPassword.insets = new Insets(0, 0, 5, 5);
 		gbc_lblApplicationEmailPassword.gridx = 0;
-		gbc_lblApplicationEmailPassword.gridy = 2;
+		gbc_lblApplicationEmailPassword.gridy = 3;
 		add(lblApplicationEmailPassword, gbc_lblApplicationEmailPassword);
 
 		passwordField = new CustomJPasswordField();
@@ -101,7 +122,7 @@ public class SystemParametersPanel extends BasePanel {
 		gbc_passwordField.insets = new Insets(0, 0, 5, 0);
 		gbc_passwordField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_passwordField.gridx = 1;
-		gbc_passwordField.gridy = 2;
+		gbc_passwordField.gridy = 3;
 		add(passwordField, gbc_passwordField);
 
 		chckbxValidateEmailServerConnection = new CustomJCheckBox(
@@ -110,7 +131,7 @@ public class SystemParametersPanel extends BasePanel {
 		gbc_chckbxValidateEmailServerConnection.fill = GridBagConstraints.HORIZONTAL;
 		gbc_chckbxValidateEmailServerConnection.insets = new Insets(0, 0, 5, 0);
 		gbc_chckbxValidateEmailServerConnection.gridx = 1;
-		gbc_chckbxValidateEmailServerConnection.gridy = 3;
+		gbc_chckbxValidateEmailServerConnection.gridy = 4;
 		add(chckbxValidateEmailServerConnection, gbc_chckbxValidateEmailServerConnection);
 
 		JLabel lblApplicationGeneratedPasswordLength = new CustomJLabel(
@@ -119,7 +140,7 @@ public class SystemParametersPanel extends BasePanel {
 		gbc_lblApplicationGeneratedPasswordLength.fill = GridBagConstraints.HORIZONTAL;
 		gbc_lblApplicationGeneratedPasswordLength.insets = new Insets(0, 0, 5, 5);
 		gbc_lblApplicationGeneratedPasswordLength.gridx = 0;
-		gbc_lblApplicationGeneratedPasswordLength.gridy = 4;
+		gbc_lblApplicationGeneratedPasswordLength.gridy = 5;
 		add(lblApplicationGeneratedPasswordLength, gbc_lblApplicationGeneratedPasswordLength);
 
 		spinnerApplicationGeneratedPasswordLength = new CustomJSpinner(
@@ -130,7 +151,7 @@ public class SystemParametersPanel extends BasePanel {
 		gbc_spinnerApplicationGeneratedPasswordLength.fill = GridBagConstraints.HORIZONTAL;
 		gbc_spinnerApplicationGeneratedPasswordLength.insets = new Insets(0, 0, 5, 0);
 		gbc_spinnerApplicationGeneratedPasswordLength.gridx = 1;
-		gbc_spinnerApplicationGeneratedPasswordLength.gridy = 4;
+		gbc_spinnerApplicationGeneratedPasswordLength.gridy = 5;
 		add(spinnerApplicationGeneratedPasswordLength, gbc_spinnerApplicationGeneratedPasswordLength);
 
 		JLabel lblApplicationMinPasswordLength = new CustomJLabel(
@@ -139,7 +160,7 @@ public class SystemParametersPanel extends BasePanel {
 		gbc_lblApplicationMinPasswordLength.fill = GridBagConstraints.HORIZONTAL;
 		gbc_lblApplicationMinPasswordLength.insets = new Insets(0, 0, 5, 5);
 		gbc_lblApplicationMinPasswordLength.gridx = 0;
-		gbc_lblApplicationMinPasswordLength.gridy = 5;
+		gbc_lblApplicationMinPasswordLength.gridy = 6;
 		add(lblApplicationMinPasswordLength, gbc_lblApplicationMinPasswordLength);
 
 		spinnerApplicationMinPasswordLength = new CustomJSpinner(
@@ -150,7 +171,7 @@ public class SystemParametersPanel extends BasePanel {
 		gbc_spinnerApplicationMinPasswordLength.fill = GridBagConstraints.HORIZONTAL;
 		gbc_spinnerApplicationMinPasswordLength.insets = new Insets(0, 0, 5, 0);
 		gbc_spinnerApplicationMinPasswordLength.gridx = 1;
-		gbc_spinnerApplicationMinPasswordLength.gridy = 5;
+		gbc_spinnerApplicationMinPasswordLength.gridy = 6;
 		add(spinnerApplicationMinPasswordLength, gbc_spinnerApplicationMinPasswordLength);
 
 		JLabel lblApplicationMaxPasswordLength = new CustomJLabel(
@@ -159,7 +180,7 @@ public class SystemParametersPanel extends BasePanel {
 		gbc_lblApplicationMaxPasswordLength.fill = GridBagConstraints.HORIZONTAL;
 		gbc_lblApplicationMaxPasswordLength.insets = new Insets(0, 0, 5, 5);
 		gbc_lblApplicationMaxPasswordLength.gridx = 0;
-		gbc_lblApplicationMaxPasswordLength.gridy = 6;
+		gbc_lblApplicationMaxPasswordLength.gridy = 7;
 		add(lblApplicationMaxPasswordLength, gbc_lblApplicationMaxPasswordLength);
 
 		spinnerApplicationMaxPasswordLength = new CustomJSpinner(
@@ -170,7 +191,7 @@ public class SystemParametersPanel extends BasePanel {
 		gbc_spinnerApplicationMaxPasswordLength.fill = GridBagConstraints.HORIZONTAL;
 		gbc_spinnerApplicationMaxPasswordLength.insets = new Insets(0, 0, 5, 0);
 		gbc_spinnerApplicationMaxPasswordLength.gridx = 1;
-		gbc_spinnerApplicationMaxPasswordLength.gridy = 6;
+		gbc_spinnerApplicationMaxPasswordLength.gridy = 7;
 		add(spinnerApplicationMaxPasswordLength, gbc_spinnerApplicationMaxPasswordLength);
 
 		JLabel lblApplicationTemplatesDirectoryName = new CustomJLabel(
@@ -179,7 +200,7 @@ public class SystemParametersPanel extends BasePanel {
 		gbc_lblApplicationTemplatesDirectoryName.fill = GridBagConstraints.HORIZONTAL;
 		gbc_lblApplicationTemplatesDirectoryName.insets = new Insets(0, 0, 5, 5);
 		gbc_lblApplicationTemplatesDirectoryName.gridx = 0;
-		gbc_lblApplicationTemplatesDirectoryName.gridy = 7;
+		gbc_lblApplicationTemplatesDirectoryName.gridy = 8;
 		add(lblApplicationTemplatesDirectoryName, gbc_lblApplicationTemplatesDirectoryName);
 
 		textFieldApplicationTemplatesDirectoryName = new CustomJTextField();
@@ -187,7 +208,7 @@ public class SystemParametersPanel extends BasePanel {
 		gbc_textFieldApplicationTemplatesDirectoryName.insets = new Insets(0, 0, 5, 0);
 		gbc_textFieldApplicationTemplatesDirectoryName.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textFieldApplicationTemplatesDirectoryName.gridx = 1;
-		gbc_textFieldApplicationTemplatesDirectoryName.gridy = 7;
+		gbc_textFieldApplicationTemplatesDirectoryName.gridy = 8;
 		add(textFieldApplicationTemplatesDirectoryName, gbc_textFieldApplicationTemplatesDirectoryName);
 		textFieldApplicationTemplatesDirectoryName.setColumns(10);
 
@@ -195,7 +216,7 @@ public class SystemParametersPanel extends BasePanel {
 		GridBagConstraints gbc_btnAccept = new GridBagConstraints();
 		gbc_btnAccept.insets = new Insets(0, 0, 5, 0);
 		gbc_btnAccept.gridx = 1;
-		gbc_btnAccept.gridy = 9;
+		gbc_btnAccept.gridy = 10;
 		add(btnAccept, gbc_btnAccept);
 
 		btnRestoreDefaultValues = new CustomJButton(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnSendAgain-ico.png"))
@@ -203,7 +224,7 @@ public class SystemParametersPanel extends BasePanel {
 				SystemProperties.getInstance().getResourceBundle().getString("systemParametersPanel.btnRestoreDefaultValues"));
 		GridBagConstraints gbc_btnRestoreDefaultValues = new GridBagConstraints();
 		gbc_btnRestoreDefaultValues.gridx = 1;
-		gbc_btnRestoreDefaultValues.gridy = 10;
+		gbc_btnRestoreDefaultValues.gridy = 11;
 		add(btnRestoreDefaultValues, gbc_btnRestoreDefaultValues);
 	}
 

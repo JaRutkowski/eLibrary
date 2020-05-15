@@ -57,38 +57,41 @@ public class TabCreateReservationEvent implements IActionForm {
 						.getLend(selectedLoanRowIndex);
 
 				if (!loggedUser.equals(selectedLoan.getClient())) {
-					if (!Validator.validateIfVolumeActiveReservationExists(selectedLoan.getVolume().getIdVolume())) {
-						Reservation reservation = new Reservation();
-						reservation.setClient(loggedUser);
-						reservation.setVolume(selectedLoan.getVolume());
-						reservation.setReservationDate(new Date());
+					if (!Validator.validateIfReservationsLimitExceeded(loggedUser.getIdUserData(), 1L)) {
+						if (!Validator.validateIfVolumeActiveReservationExists(selectedLoan.getVolume().getIdVolume())) {
+							Reservation reservation = new Reservation();
+							reservation.setClient(loggedUser);
+							reservation.setVolume(selectedLoan.getVolume());
+							reservation.setReservationDate(new Date());
 
-						HibernateUtil.beginTransaction();
-						HibernateUtil.getSession().save(reservation);
-						HibernateUtil.commitTransaction();
+							HibernateUtil.beginTransaction();
+							HibernateUtil.getSession().save(reservation);
+							HibernateUtil.commitTransaction();
 
-						selectedLoan.setReservation(reservation);
+							selectedLoan.setReservation(reservation);
 
-						HibernateUtil.beginTransaction();
-						HibernateUtil.getSession().update(Lend.class.getName(), selectedLoan);
-						HibernateUtil.commitTransaction();
+							HibernateUtil.beginTransaction();
+							HibernateUtil.getSession().update(Lend.class.getName(), selectedLoan);
+							HibernateUtil.commitTransaction();
 
-						((LoanTableModel) clientReservationPanel.getCreateReservationPanel().getLoanTable().getModel()).reloadData();
-						((LoanTableModel) clientReservationPanel.getBrowseReservationPanel().getActiveClientReservationPanel().getLoanTable().getModel()).reloadData();
+							((LoanTableModel) clientReservationPanel.getCreateReservationPanel().getLoanTable().getModel()).reloadData();
+							((LoanTableModel) clientReservationPanel.getBrowseReservationPanel().getActiveClientReservationPanel().getLoanTable().getModel()).reloadData();
 
-						Utils.displayOptionPane(
-								SystemProperties.getInstance().getResourceBundle()
-										.getString("tabLoanServiceEvent.reservationSuccess"),
-								SystemProperties.getInstance().getResourceBundle()
-										.getString("tabLoanServiceEvent.reservationSuccessTitle"),
-								JOptionPane.INFORMATION_MESSAGE);
+							Utils.displayOptionPane(
+									SystemProperties.getInstance().getResourceBundle()
+											.getString("tabLoanServiceEvent.reservationSuccess"),
+									SystemProperties.getInstance().getResourceBundle()
+											.getString("tabLoanServiceEvent.reservationSuccessTitle"),
+									JOptionPane.INFORMATION_MESSAGE);
+						} else
+							JOptionPane.showMessageDialog(clientReservationPanel,
+									SystemProperties.getInstance().getResourceBundle()
+											.getString("tabLoanServiceEvent.reservationError"),
+									SystemProperties.getInstance().getResourceBundle().getString(
+											"tabLoanServiceEvent.reservationErrorTitle"),
+									JOptionPane.ERROR_MESSAGE);
 					} else
-						JOptionPane.showMessageDialog(clientReservationPanel,
-								SystemProperties.getInstance().getResourceBundle()
-										.getString("tabLoanServiceEvent.reservationError"),
-								SystemProperties.getInstance().getResourceBundle().getString(
-										"tabLoanServiceEvent.reservationErrorTitle"),
-								JOptionPane.ERROR_MESSAGE);
+						System.err.println("PRZEKROCZONO LIMIT!!!!");
 				} else
 					JOptionPane.showMessageDialog(clientReservationPanel,
 							SystemProperties.getInstance().getResourceBundle()

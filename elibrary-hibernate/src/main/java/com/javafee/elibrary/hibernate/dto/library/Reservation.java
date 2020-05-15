@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -20,8 +21,11 @@ import lombok.Data;
 
 @Data
 @Entity
-@NamedQuery(name = "Reservation.checkIfVolumeActiveReservationExists", query = "from Reservation where id_volume = :idVolume " +
-		"and is_active is not null and is_active = true and (is_cancelled is null or (is_cancelled is not null and is_cancelled = false))")
+@NamedQueries({
+		@NamedQuery(name = "Reservation.checkIfVolumeActiveReservationExists", query = "from Reservation where id_volume = :idVolume " +
+				"and is_active is not null and is_active = true and (is_cancelled is null or (is_cancelled is not null and is_cancelled = false))"),
+		@NamedQuery(name = "Reservation.countActiveClientReservations", query = "select count(*) from Reservation where id_client = :idClient " +
+				"and is_active is not null and is_active = true and (is_cancelled is null or (is_cancelled is not null and is_cancelled = false))")})
 @Table(name = "lib_reservation")
 @SequenceGenerator(name = "seq_lib_reservation", sequenceName = "seq_lib_reservation", allocationSize = 1)
 public class Reservation {

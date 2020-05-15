@@ -53,6 +53,8 @@ public class SystemParametersPanelEvent implements IActionForm {
 	private void reloadParametersValues() {
 		settingsForm.getSettingsPanel().getSystemParametersPanel().getSpinnerApplicationPenaltyValue().setValue(
 				Double.valueOf(SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_PENALTY_VALUE).getValue()));
+		settingsForm.getSettingsPanel().getSystemParametersPanel().getSpinnerApplicationReservationLimit().setValue(
+				Double.valueOf(SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_RESERVATIONS_LIMIT).getValue()));
 		settingsForm.getSettingsPanel().getSystemParametersPanel().getTextFieldApplicationEmailAddress().setText(
 				SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_EMAIL_ADDRESS).getValue());
 		settingsForm.getSettingsPanel().getSystemParametersPanel().getPasswordField().setText(
@@ -72,6 +74,10 @@ public class SystemParametersPanelEvent implements IActionForm {
 
 		systemParameter = SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_PENALTY_VALUE);
 		systemParameter.setValue(((DoubleJSpinner) settingsForm.getSettingsPanel().getSystemParametersPanel().getSpinnerApplicationPenaltyValue()).getDouble().toString());
+		updateSystemParameter(systemParameter);
+
+		systemParameter = SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_RESERVATIONS_LIMIT);
+		systemParameter.setValue(((Integer) settingsForm.getSettingsPanel().getSystemParametersPanel().getSpinnerApplicationReservationLimit().getValue()).toString());
 		updateSystemParameter(systemParameter);
 
 		String validationError = validateEmailServerConnection();
@@ -120,6 +126,7 @@ public class SystemParametersPanelEvent implements IActionForm {
 
 	private void onClickBtnRestoreDefaultValues() {
 		restoreAndUpdateDefaultSystemParameterValue(Constants.APPLICATION_PENALTY_VALUE);
+		restoreAndUpdateDefaultSystemParameterValue(Constants.APPLICATION_RESERVATIONS_LIMIT);
 		restoreAndUpdateDefaultSystemParameterValue(Constants.APPLICATION_EMAIL_ADDRESS);
 		restoreAndUpdateDefaultSystemParameterValue(Constants.APPLICATION_EMAIL_PASSWORD);
 		restoreAndUpdateDefaultSystemParameterValue(Constants.APPLICATION_GENERATED_PASSWORD_LENGTH);

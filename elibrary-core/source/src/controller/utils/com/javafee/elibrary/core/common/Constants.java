@@ -368,6 +368,7 @@ public final class Constants {
 	public static final String APPLICATION_TEMPLATE_ENCODING = "UTF-8";
 
 	public static final String APPLICATION_PENALTY_VALUE = "APPLICATION_PENALTY_VALUE";
+	public static final String APPLICATION_RESERVATIONS_LIMIT = "APPLICATION_RESERVATIONS_LIMIT";
 	public static final String APPLICATION_EMAIL_ADDRESS = "APPLICATION_EMAIL_ADDRESS";
 	public static final String APPLICATION_EMAIL_PASSWORD = "APPLICATION_EMAIL_PASSWORD";
 	public static final String APPLICATION_TEMPLATE_DIRECTORY_NAME = "APPLICATION_TEMPLATE_DIRECTORY_NAME";
@@ -401,6 +402,8 @@ public final class Constants {
 	public static final double DOUBLE_SPINNER_STEP_VALUE_PENALTY = 0.1;
 	public static final double SPINNER_MINIMUM_VALUE_PENALTY = 0;
 	public static final double SPINNER_MAXIMUM_VALUE_PENALTY = 100;
+	public static final Integer SPINNER_MINIMUM_VALUE_RESERVATION_LIMIT = 0;
+	public static final Integer SPINNER_MAXIMUM_VALUE_RESERVATION_LIMIT = 100;
 	public static final Integer SPINNER_MINIMUM_PASSWORD_LENGTH = 1;
 	public static final Integer SPINNER_MAXIMUM_PASSWORD_LENGTH = 30;
 
