@@ -37,7 +37,7 @@ public class SystemDataFeedingTableModel extends DefaultTableModel {
 	}
 
 	private void prepareInitialData() {
-		for (Object[] systemDataFeedingPojo : initialData) {
+		for (var systemDataFeedingPojo : initialData) {
 			SystemDataFeedingPojo sdfp = new SystemDataFeedingPojo((String) systemDataFeedingPojo[Constants.SystemDataFeedingTableColumn.COL_FEEDING_TYPE.getValue()],
 					(String) systemDataFeedingPojo[Constants.SystemDataFeedingTableColumn.COL_DATA.getValue()],
 					(List<Consumer>) systemDataFeedingPojo[Constants.SystemDataFeedingTableColumn.COL_ACTION.getValue()]);
@@ -47,7 +47,7 @@ public class SystemDataFeedingTableModel extends DefaultTableModel {
 
 	public void prepareActionData(List<List> actionColData) {
 		int rowIndex = 0;
-		for (List action : actionColData) {
+		for (var action : actionColData) {
 			systemDataFeedingPojos.get(rowIndex).setActions(action);
 			rowIndex++;
 		}

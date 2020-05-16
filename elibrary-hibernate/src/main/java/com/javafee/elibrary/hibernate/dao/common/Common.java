@@ -16,7 +16,6 @@ import com.javafee.elibrary.hibernate.dto.common.SystemProperties;
 import com.javafee.elibrary.hibernate.dto.common.SystemProperties_;
 import com.javafee.elibrary.hibernate.dto.common.UserData;
 import com.javafee.elibrary.hibernate.dto.library.Client;
-import com.javafee.elibrary.hibernate.dto.library.LibraryBranchData;
 import com.javafee.elibrary.hibernate.dto.library.LibraryData;
 
 import lombok.extern.java.Log;
@@ -140,7 +139,7 @@ public class Common {
 				result.append("[").append(libraryData.get().getName()).append(",");
 				if (!libraryData.get().getLibraryBranchData().isEmpty()) {
 					int index = 0;
-					for (LibraryBranchData libraryBranchData : libraryData.get().getLibraryBranchData()) {
+					for (var libraryBranchData : libraryData.get().getLibraryBranchData()) {
 						result.append("[").append(libraryBranchData.getAddress()).append(",")
 								.append(libraryBranchData.getName()).append(",")
 								.append(libraryBranchData.getCity()).append(index != libraryData.get().getLibraryBranchData().size() - 1 ? "]," : "]");

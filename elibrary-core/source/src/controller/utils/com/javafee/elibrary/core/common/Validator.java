@@ -26,7 +26,7 @@ public final class Validator {
 				.getNamedQuery("Client.checkWithComparingIdIfClientLoginExist").setParameter("login", client.getLogin())
 				.setParameter("id", client.getIdUserData()).uniqueResult();
 		List<UserData> ud = HibernateUtil.getSession().createQuery("from UserData").list();
-		for (UserData u : ud) {
+		for (var u : ud) {
 			if (u.getLogin().equals(client.getLogin()) && u.getIdUserData() != client.getIdUserData())
 				return false;
 		}
@@ -79,7 +79,7 @@ public final class Validator {
 				.setParameter("id", client.getIdUserData()).uniqueResult();
 
 		List<UserData> ud = HibernateUtil.getSession().createQuery("from UserData").list();
-		for (UserData u : ud) {
+		for (var u : ud) {
 			if (u.getLogin().equals(client.getLogin()) && u.getIdUserData() != client.getIdUserData())
 				return false;
 		}
@@ -128,7 +128,7 @@ public final class Validator {
 				.list();
 
 		boolean lendClientExist = false;
-		for (Lend l : lends)
+		for (var l : lends)
 			if (l.getClient().getIdUserData() == idUserData)
 				lendClientExist = true;
 		return lendClientExist;

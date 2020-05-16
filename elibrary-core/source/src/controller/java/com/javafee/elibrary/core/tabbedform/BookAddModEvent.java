@@ -267,21 +267,21 @@ public class BookAddModEvent implements IEvent {
 
 	private List<Author> getSelectedAuthors() {
 		List<Author> authorList = new ArrayList<Author>();
-		for (int index : bookAddModFrame.getAuthorTable().getSelectedRows())
+		for (var index : bookAddModFrame.getAuthorTable().getSelectedRows())
 			authorList.add(((AuthorTableModel) bookAddModFrame.getAuthorTable().getModel()).getAuthor(index));
 		return !authorList.isEmpty() ? authorList : null;
 	}
 
 	private List<Category> getSelectedCategories() {
 		List<Category> categoryList = new ArrayList<Category>();
-		for (int index : bookAddModFrame.getCategoryTable().getSelectedRows())
+		for (var index : bookAddModFrame.getCategoryTable().getSelectedRows())
 			categoryList.add(((CategoryTableModel) bookAddModFrame.getCategoryTable().getModel()).getCategory(index));
 		return !categoryList.isEmpty() ? categoryList : null;
 	}
 
 	private List<PublishingHouse> getSelectedPublishingHouses() {
 		List<PublishingHouse> publishingHouseList = new ArrayList<PublishingHouse>();
-		for (int index : bookAddModFrame.getPublishingHouseTable().getSelectedRows())
+		for (var index : bookAddModFrame.getPublishingHouseTable().getSelectedRows())
 			publishingHouseList.add(((PublishingHouseTableModel) bookAddModFrame.getPublishingHouseTable().getModel())
 					.getPublishingHouse(index));
 		return !publishingHouseList.isEmpty() ? publishingHouseList : null;

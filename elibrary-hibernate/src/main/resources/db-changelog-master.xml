@@ -15,13 +15,17 @@
 	<include file="src/main/resources/db/changelog/truncate-all-cascade-changelog.xml" relativeToChangelogFile="false"/>
 	<!-- Version data -->
 	<!-- generated using mvn liquibase:generateChangeLog -Dliquibase.diffTypes=data -->
+	<!-- liquibase plugin part - db configuration - should be commented in pom.xml -->
 	<!-- comment old version and add new one -->
+	<!-- increment truncate-all-cascade-changelog id -->
 	<!--<include file="src/main/resources/db/changelog/db-changelog-20200422201731UTC.xml" relativeToChangelogFile="false"/>-->
 	<!--<include file="src/main/resources/db/changelog/db-changelog-20200422210318UTC.xml" relativeToChangelogFile="false"/>-->
+	<!--<include file="src/main/resources/db/changelog/db-changelog-20200501192149UTC.xml" relativeToChangelogFile="false"/>-->
 	<include file="src/main/resources/db/changelog/db-changelog-20200514202928UTC.xml" relativeToChangelogFile="false"/>
 
 	<!-- Notes -->
 	<!-- it is possible to run DML on local: -->
+	<!--   - liquibase plugin part - db configuration - should be commented in pom.xml; -->
 	<!--   - all data should be truncated; -->
 	<!--   - last version changelog should be applied using mvn liquibase:update using dev profile. -->
 </databaseChangeLog>

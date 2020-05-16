@@ -123,11 +123,11 @@
 			<artifactId>tablefilter-swing</artifactId>
 			<version>${net.coderazzi.version}</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/javax.mail/mail -->
+		<!-- https://mvnrepository.com/artifact/com.sun.mail/javax.mail -->
 		<dependency>
-			<groupId>javax.mail</groupId>
-			<artifactId>mail</artifactId>
-			<version>${javax.mail.version}</version>
+			<groupId>com.sun.mail</groupId>
+			<artifactId>javax.mail</artifactId>
+			<version>${com.sun.mail.version}</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok-maven -->
 		<dependency>
