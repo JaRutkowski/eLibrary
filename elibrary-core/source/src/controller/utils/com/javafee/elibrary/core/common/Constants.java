@@ -39,7 +39,7 @@ public final class Constants {
 	@Getter
 	@AllArgsConstructor
 	public enum Tab_Client {
-		TAB_LIBRARY(0);
+		TAB_LIBRARY(0), TAB_CLIENT_RESERVATION(1);
 
 		private final Integer value;
 
@@ -84,6 +84,19 @@ public final class Constants {
 
 		public static Tab_Email getByNumber(int tabbedPaneSelectedIndex) {
 			return Stream.of(Tab_Email.values()).filter(item -> item.getValue().equals(tabbedPaneSelectedIndex))
+					.findFirst().get();
+		}
+	}
+
+	@Getter
+	@AllArgsConstructor
+	public enum Tab_ClientReservations {
+		TAB_CREATE_RESERVATIONS(0), TAB_BROWSE_RESERVATIONS(1);
+
+		private final Integer value;
+
+		public static Tab_ClientReservations getByNumber(int tabbedPaneSelectedIndex) {
+			return Stream.of(Tab_ClientReservations.values()).filter(item -> item.getValue().equals(tabbedPaneSelectedIndex))
 					.findFirst().get();
 		}
 	}
@@ -201,6 +214,26 @@ public final class Constants {
 
 		public static LendTableColumn getByNumber(int lendTableSelectedIndex) {
 			return Stream.of(LendTableColumn.values()).filter(item -> item.getValue().equals(lendTableSelectedIndex))
+					.findFirst().get();
+		}
+	}
+
+	public enum LendClientReservationTableColumn {
+		COL_VOLUME_BOOK_TITLE(0), COL_VOLUME_BOOK_ISBN_NUMBER(1), COL_VOLUME_INVENTORY_NUMBER(2), COL_LEND_DATE_OR_RESERVATION_DATE(3), COL_RETURNED_DATE_OR_IS_CANCELLED(4);
+
+		private final Integer value;
+
+		LendClientReservationTableColumn(final int newValue) {
+			value = newValue;
+		}
+
+		public Integer getValue() {
+			return value;
+		}
+
+		public static LendClientReservationTableColumn getByNumber(int lendClientReservationTableSelectedIndex) {
+			return Stream.of(LendClientReservationTableColumn.values())
+					.filter(item -> item.getValue().equals(lendClientReservationTableSelectedIndex))
 					.findFirst().get();
 		}
 	}
@@ -335,6 +368,7 @@ public final class Constants {
 	public static final String APPLICATION_TEMPLATE_ENCODING = "UTF-8";
 
 	public static final String APPLICATION_PENALTY_VALUE = "APPLICATION_PENALTY_VALUE";
+	public static final String APPLICATION_RESERVATIONS_LIMIT = "APPLICATION_RESERVATIONS_LIMIT";
 	public static final String APPLICATION_EMAIL_ADDRESS = "APPLICATION_EMAIL_ADDRESS";
 	public static final String APPLICATION_EMAIL_PASSWORD = "APPLICATION_EMAIL_PASSWORD";
 	public static final String APPLICATION_TEMPLATE_DIRECTORY_NAME = "APPLICATION_TEMPLATE_DIRECTORY_NAME";
@@ -368,6 +402,8 @@ public final class Constants {
 	public static final double DOUBLE_SPINNER_STEP_VALUE_PENALTY = 0.1;
 	public static final double SPINNER_MINIMUM_VALUE_PENALTY = 0;
 	public static final double SPINNER_MAXIMUM_VALUE_PENALTY = 100;
+	public static final Integer SPINNER_MINIMUM_VALUE_RESERVATION_LIMIT = 0;
+	public static final Integer SPINNER_MAXIMUM_VALUE_RESERVATION_LIMIT = 100;
 	public static final Integer SPINNER_MINIMUM_PASSWORD_LENGTH = 1;
 	public static final Integer SPINNER_MAXIMUM_PASSWORD_LENGTH = 30;
 

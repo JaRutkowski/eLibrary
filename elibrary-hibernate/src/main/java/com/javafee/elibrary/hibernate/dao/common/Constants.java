@@ -232,6 +232,8 @@ public final class Constants {
 	public static final String DATA_BASE_DELETED_MESSAGE_SENDER_VALUE = "null";
 	public static final String DATA_BASE_SYSTEM_PARAMETER_PENALTY_NAME = "APPLICATION_PENALTY_VALUE";
 	public static final String DATA_BASE_SYSTEM_PARAMETER_PENALTY_VALUE = "0.6";
+	public static final String DATA_BASE_SYSTEM_PARAMETER_RESERVATIONS_LIMIT_NAME = "APPLICATION_RESERVATIONS_LIMIT";
+	public static final String DATA_BASE_SYSTEM_PARAMETER_RESERVATIONS_LIMIT_VALUE = "3";
 	public static final String DATA_BASE_SYSTEM_PARAMETER_EMAIL_NAME = "APPLICATION_EMAIL_ADDRESS";
 	public static final String DATA_BASE_SYSTEM_PARAMETER_EMAIL_VALUE = "nreply.elibrary@gmail.com";
 	public static final String DATA_BASE_SYSTEM_PARAMETER_EMAIL_PASSWORD_NAME = "APPLICATION_EMAIL_PASSWORD";
@@ -244,7 +246,7 @@ public final class Constants {
 	public static final String DATA_BASE_SYSTEM_PARAMETER_APPLICATION_MIN_PASSWORD_LENGTH_VALUE = "8";
 	public static final String DATA_BASE_SYSTEM_PARAMETER_APPLICATION_MAX_PASSWORD_LENGTH_NAME = "APPLICATION_MAX_PASSWORD_LENGTH";
 	public static final String DATA_BASE_SYSTEM_PARAMETER_APPLICATION_MAX_PASSWORD_LENGTH_VALUE = "16";
-	public static final Integer DATA_BASE_NUMBER_OF_SYSTEM_PARAMETERS = 7;
+	public static final Integer DATA_BASE_NUMBER_OF_SYSTEM_PARAMETERS = 8;
 	public static final Integer DATA_BASE_SYSTEM_DATA_ID = 1;
 	public static final Date DATA_BASE_SYSTEM_DATA_INITIALIZATION_DATE = new Date();
 	public static final Integer DATA_BASE_LIBRARY_DATA_ID = 1;
