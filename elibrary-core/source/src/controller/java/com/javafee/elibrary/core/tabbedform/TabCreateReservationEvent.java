@@ -1,9 +1,11 @@
 package com.javafee.elibrary.core.tabbedform;
 
+import java.text.MessageFormat;
 import java.util.Date;
 
 import javax.swing.JOptionPane;
 
+import com.javafee.elibrary.core.common.Constants;
 import com.javafee.elibrary.core.common.IActionForm;
 import com.javafee.elibrary.core.common.SystemProperties;
 import com.javafee.elibrary.core.common.Utils;
@@ -91,7 +93,13 @@ public class TabCreateReservationEvent implements IActionForm {
 											"tabLoanServiceEvent.reservationErrorTitle"),
 									JOptionPane.ERROR_MESSAGE);
 					} else
-						System.err.println("PRZEKROCZONO LIMIT!!!!");
+						JOptionPane.showMessageDialog(clientReservationPanel,
+								MessageFormat.format(SystemProperties.getInstance().getResourceBundle()
+												.getString("tabLoanServiceEvent.reservationsLimitExceededError"),
+										SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_RESERVATIONS_LIMIT).getValue()),
+								SystemProperties.getInstance().getResourceBundle().getString(
+										"tabLoanServiceEvent.reservationErrorTitle"),
+								JOptionPane.ERROR_MESSAGE);
 				} else
 					JOptionPane.showMessageDialog(clientReservationPanel,
 							SystemProperties.getInstance().getResourceBundle()
