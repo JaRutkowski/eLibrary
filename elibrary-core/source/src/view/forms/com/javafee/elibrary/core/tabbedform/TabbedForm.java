@@ -16,6 +16,7 @@ import com.javafee.elibrary.core.startform.RegistrationPanel;
 import com.javafee.elibrary.core.tabbedform.admdictionaries.AdmDictionaryPanel;
 import com.javafee.elibrary.core.tabbedform.admworkers.WorkerTablePanel;
 import com.javafee.elibrary.core.tabbedform.books.BookTablePanel;
+import com.javafee.elibrary.core.tabbedform.clientloans.ClientLoanPanel;
 import com.javafee.elibrary.core.tabbedform.clientreservations.ClientReservationPanel;
 import com.javafee.elibrary.core.tabbedform.clients.ClientTablePanel;
 import com.javafee.elibrary.core.tabbedform.library.LibraryTablePanel;
@@ -36,6 +37,8 @@ public class TabbedForm extends BaseForm {
 	private WorkerTablePanel panelWorker;
 	@Getter
 	private LibraryTablePanel panelLibrary;
+	@Getter
+	private ClientLoanPanel panelClientLoans;
 	@Getter
 	private ClientReservationPanel panelClientReservations;
 	@Getter
@@ -167,6 +170,7 @@ public class TabbedForm extends BaseForm {
 
 		panelClient = new ClientTablePanel();
 		panelLibrary = new LibraryTablePanel();
+		panelClientLoans = new ClientLoanPanel();
 		panelClientReservations = new ClientReservationPanel();
 		panelBook = new BookTablePanel();
 		panelLoanService = new LoanServicePanel();
