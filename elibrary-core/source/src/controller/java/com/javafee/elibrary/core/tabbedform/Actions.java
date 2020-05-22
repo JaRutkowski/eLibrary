@@ -58,6 +58,9 @@ public class Actions implements IActionForm {
 					SystemProperties.getInstance().getResourceBundle().getString("tabbedForm.tabLibraryTitle"), null,
 					tabbedForm.getPanelLibrary(), null);
 			tabbedForm.getTabbedPane().addTab(
+					SystemProperties.getInstance().getResourceBundle().getString("tabbedForm.tabClientLoanTitle"), null,
+					tabbedForm.getPanelClientLoans(), null);
+			tabbedForm.getTabbedPane().addTab(
 					SystemProperties.getInstance().getResourceBundle().getString("tabbedForm.tabClientReservationTitle"), null,
 					tabbedForm.getPanelClientReservations(), null);
 			tabbedForm.pack();
@@ -139,6 +142,9 @@ public class Actions implements IActionForm {
 			switch (Tab_Client.getByNumber(tabbedForm.getTabbedPane().getSelectedIndex())) {
 				case TAB_LIBRARY:
 					TabLibraryEvent.getInstance(tabbedForm);
+					break;
+				case TAB_CLIENT_LOAN:
+					TabClientLoanEvent.getInstance(tabbedForm);
 					break;
 				case TAB_CLIENT_RESERVATION:
 					TabClientReservationEvent.getInstance(tabbedForm);
