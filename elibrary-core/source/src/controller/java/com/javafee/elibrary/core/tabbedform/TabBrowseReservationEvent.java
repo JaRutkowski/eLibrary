@@ -2,9 +2,9 @@ package com.javafee.elibrary.core.tabbedform;
 
 import javax.swing.JOptionPane;
 
-import com.javafee.elibrary.core.common.IActionForm;
 import com.javafee.elibrary.core.common.SystemProperties;
 import com.javafee.elibrary.core.common.Utils;
+import com.javafee.elibrary.core.common.action.IActionForm;
 import com.javafee.elibrary.core.exception.LogGuiException;
 import com.javafee.elibrary.core.model.HistoryClientReservationTableModel;
 import com.javafee.elibrary.core.model.LoanActiveClientReservationTableModel;

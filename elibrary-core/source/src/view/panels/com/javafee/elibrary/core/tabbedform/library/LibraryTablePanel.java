@@ -5,31 +5,30 @@ import java.awt.*;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
 
 import com.javafee.elibrary.core.common.BasePanel;
+import com.javafee.elibrary.core.common.Common;
 import com.javafee.elibrary.core.common.SystemProperties;
 import com.javafee.elibrary.core.common.Utils;
 import com.javafee.elibrary.core.model.VolumeLoanTableModel;
 import com.javafee.elibrary.core.model.VolumeReadingRoomTableModel;
+import com.javafee.elibrary.core.unicomponent.action.BtnExportAction;
+import com.javafee.elibrary.core.unicomponent.action.BtnImportAction;
 import com.javafee.elibrary.core.unicomponent.border.CustomTitledBorder;
-import com.javafee.elibrary.core.unicomponent.jtable.CustomJTable;
-import com.javafee.elibrary.core.unicomponent.tablefilterheader.CustomTableFilterHeader;
+import com.javafee.elibrary.core.unicomponent.jtable.imortexportable.ImportExportableJTable;
 import com.javafee.elibrary.core.uniform.CockpitEditionPanel;
 import com.javafee.elibrary.core.uniform.ImagePanel;
 
 import lombok.Getter;
-import net.coderazzi.filters.gui.TableFilterHeader;
 
 public class LibraryTablePanel extends BasePanel {
 	private static final long serialVersionUID = 1L;
 
 	@Getter
-	private JTable loanVolumeTable;
+	private ImportExportableJTable loanVolumeTable;
 	@Getter
-	private JTable readingRoomVolumeTable;
+	private ImportExportableJTable readingRoomVolumeTable;
 	private JScrollPane scrollPane_readingRoom;
 	@Getter
 	private CockpitEditionPanel cockpitEditionPanelLoan;
@@ -89,13 +88,10 @@ public class LibraryTablePanel extends BasePanel {
 		gbc_scrollPane.gridy = 0;
 		panelLoan.add(scrollPane, gbc_scrollPane);
 
-		loanVolumeTable = new CustomJTable();
-		@SuppressWarnings("unused")
-		TableFilterHeader customTableFilterHeader = new CustomTableFilterHeader(loanVolumeTable);
-		loanVolumeTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		loanVolumeTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		loanVolumeTable.setModel(new VolumeLoanTableModel());
-		loanVolumeTable.setAutoCreateRowSorter(true);
+		loanVolumeTable = new ImportExportableJTable(Common.prepareIconListForExportImportComboBox(),
+				new VolumeLoanTableModel(),
+				true);
+		loanVolumeTable.setActions(new BtnImportAction(loanVolumeTable), new BtnExportAction(loanVolumeTable));
 		scrollPane.setViewportView(loanVolumeTable);
 
 		cockpitEditionPanelLoan = new CockpitEditionPanel();
@@ -141,13 +137,10 @@ public class LibraryTablePanel extends BasePanel {
 		gbc_scrollPane_readingRoom.gridy = 0;
 		panelReadingRoom.add(scrollPane_readingRoom, gbc_scrollPane_readingRoom);
 
-		readingRoomVolumeTable = new CustomJTable();
-		@SuppressWarnings("unused")
-		TableFilterHeader customTableFilterHeader_readingRoom = new CustomTableFilterHeader(readingRoomVolumeTable);
-		readingRoomVolumeTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		readingRoomVolumeTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		readingRoomVolumeTable.setModel(new VolumeReadingRoomTableModel());
-		readingRoomVolumeTable.setAutoCreateRowSorter(true);
+		readingRoomVolumeTable = new ImportExportableJTable(Common.prepareIconListForExportImportComboBox(),
+				new VolumeReadingRoomTableModel(),
+				true);
+		readingRoomVolumeTable.setActions(new BtnImportAction(readingRoomVolumeTable), new BtnExportAction(readingRoomVolumeTable));
 		scrollPane_readingRoom.setViewportView(readingRoomVolumeTable);
 
 		cockpitEditionPanelReadingRoom = new CockpitEditionPanel();
