@@ -1,6 +1,6 @@
 package com.javafee.elibrary.core.tabbedform;
 
-import com.javafee.elibrary.core.common.IActionForm;
+import com.javafee.elibrary.core.common.action.IActionForm;
 
 import lombok.Setter;
 
