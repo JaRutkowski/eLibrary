@@ -8,19 +8,19 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 
 import com.javafee.elibrary.core.common.Constants;
-import com.javafee.elibrary.core.common.IActionForm;
 import com.javafee.elibrary.core.common.SystemProperties;
 import com.javafee.elibrary.core.common.Utils;
 import com.javafee.elibrary.core.common.Validator;
+import com.javafee.elibrary.core.common.action.IActionForm;
 import com.javafee.elibrary.core.exception.LogGuiException;
 import com.javafee.elibrary.core.exception.RefusedLoanServiceEventLoadingException;
 import com.javafee.elibrary.core.model.ClientTableModel;
 import com.javafee.elibrary.core.model.LoanReservationTableModel;
 import com.javafee.elibrary.core.model.LoanTableModel;
 import com.javafee.elibrary.core.model.VolumeTableModel;
+import com.javafee.elibrary.core.unicomponent.jtable.imortexportable.ImportExportableJTable;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
 import com.javafee.elibrary.hibernate.dto.library.Client;
 import com.javafee.elibrary.hibernate.dto.library.Lend;
@@ -207,7 +207,7 @@ public class TabLoanServiceEvent implements IActionForm {
 	@SuppressWarnings("deprecation")
 	private void onClickBtnProlongation() {
 		if (validateLoanTableSelection()) {
-			final JTable jTable = tabbedForm.getPanelLoanService().getLoanTable();
+			final ImportExportableJTable jTable = tabbedForm.getPanelLoanService().getLoanTable();
 			Lend lend = ((LoanTableModel) jTable.getModel())
 					.getLend(jTable.convertRowIndexToModel(jTable.getSelectedRow()));
 
@@ -436,7 +436,7 @@ public class TabLoanServiceEvent implements IActionForm {
 	}
 
 	private Lend getSelectedLend() {
-		final JTable jTable = tabbedForm.getPanelLoanService().getLoanTable();
+		final ImportExportableJTable jTable = tabbedForm.getPanelLoanService().getLoanTable();
 		final Lend lend = ((LoanTableModel) jTable.getModel())
 				.getLend(jTable.convertRowIndexToModel(jTable.getSelectedRow()));
 		return lend;
@@ -447,7 +447,7 @@ public class TabLoanServiceEvent implements IActionForm {
 	}
 
 	private boolean validateLoanTableSelection() {
-		final JTable jTable = tabbedForm.getPanelLoanService().getLoanTable();
+		final ImportExportableJTable jTable = tabbedForm.getPanelLoanService().getLoanTable();
 		return jTable.getSelectedRow() != -1;
 	}
 }

@@ -4,25 +4,24 @@ import java.awt.*;
 
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
 
 import com.javafee.elibrary.core.common.BasePanel;
+import com.javafee.elibrary.core.common.Common;
 import com.javafee.elibrary.core.common.SystemProperties;
 import com.javafee.elibrary.core.model.BookTableModel;
-import com.javafee.elibrary.core.unicomponent.jtable.CustomJTable;
-import com.javafee.elibrary.core.unicomponent.tablefilterheader.CustomTableFilterHeader;
+import com.javafee.elibrary.core.unicomponent.action.BtnExportAction;
+import com.javafee.elibrary.core.unicomponent.action.BtnImportAction;
+import com.javafee.elibrary.core.unicomponent.jtable.imortexportable.ImportExportableJTable;
 import com.javafee.elibrary.core.uniform.CockpitEditionPanel;
 import com.javafee.elibrary.core.uniform.ImagePanel;
 
 import lombok.Getter;
-import net.coderazzi.filters.gui.TableFilterHeader;
 
 public class BookTablePanel extends BasePanel {
 	private static final long serialVersionUID = 1L;
 
 	@Getter
-	private JTable bookTable;
+	private ImportExportableJTable bookTable;
 	@Getter
 	private CockpitEditionPanel cockpitEditionPanelBook;
 	@Getter
@@ -56,13 +55,10 @@ public class BookTablePanel extends BasePanel {
 		JScrollPane scrollPane = new JScrollPane();
 		splitPane.setLeftComponent(scrollPane);
 
-		bookTable = new CustomJTable();
-		@SuppressWarnings("unused")
-		TableFilterHeader customTableFilterHeader = new CustomTableFilterHeader(bookTable);
-		bookTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		bookTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		bookTable.setModel(new BookTableModel());
-		bookTable.setAutoCreateRowSorter(true);
+		bookTable = new ImportExportableJTable(Common.prepareIconListForExportImportComboBox(),
+				new BookTableModel(),
+				true);
+		bookTable.setActions(new BtnImportAction(bookTable), new BtnExportAction(bookTable));
 		scrollPane.setViewportView(bookTable);
 
 		cockpitEditionPanelBook = new CockpitEditionPanel();

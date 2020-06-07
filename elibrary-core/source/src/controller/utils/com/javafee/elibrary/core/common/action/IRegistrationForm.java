@@ -1,4 +1,4 @@
-package com.javafee.elibrary.core.common;
+package com.javafee.elibrary.core.common.action;
 
 public interface IRegistrationForm {
 	boolean validateRegistration();

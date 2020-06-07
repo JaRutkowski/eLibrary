@@ -3,10 +3,10 @@ package com.javafee.elibrary.core.settingsform;
 import javax.swing.JOptionPane;
 
 import com.javafee.elibrary.core.common.Constants;
-import com.javafee.elibrary.core.common.IActionForm;
 import com.javafee.elibrary.core.common.Params;
 import com.javafee.elibrary.core.common.SystemProperties;
 import com.javafee.elibrary.core.common.Utils;
+import com.javafee.elibrary.core.common.action.IActionForm;
 import com.javafee.elibrary.core.startform.LogInEvent;
 import com.javafee.elibrary.core.tabbedform.Actions;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;

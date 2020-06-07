@@ -3,25 +3,24 @@ package com.javafee.elibrary.core.tabbedform.clients;
 import java.awt.*;
 
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
 
 import com.javafee.elibrary.core.common.BasePanel;
+import com.javafee.elibrary.core.common.Common;
 import com.javafee.elibrary.core.model.ClientTableModel;
-import com.javafee.elibrary.core.unicomponent.jtable.CustomJTable;
-import com.javafee.elibrary.core.unicomponent.tablefilterheader.CustomTableFilterHeader;
+import com.javafee.elibrary.core.unicomponent.action.BtnExportAction;
+import com.javafee.elibrary.core.unicomponent.action.BtnImportAction;
+import com.javafee.elibrary.core.unicomponent.jtable.imortexportable.ImportExportableJTable;
 import com.javafee.elibrary.core.uniform.AdmIsRegisteredPanel;
 import com.javafee.elibrary.core.uniform.CockpitEditionPanel;
 import com.javafee.elibrary.core.uniform.MessageAndAlertPanel;
 
 import lombok.Getter;
-import net.coderazzi.filters.gui.TableFilterHeader;
 
 public class ClientTablePanel extends BasePanel {
 	private static final long serialVersionUID = 1L;
 
 	@Getter
-	private JTable clientTable;
+	private ImportExportableJTable clientTable;
 	@Getter
 	private CockpitEditionPanel cockpitEditionPanel;
 	@Getter
@@ -47,13 +46,10 @@ public class ClientTablePanel extends BasePanel {
 		gbc_scrollPane.gridy = 0;
 		add(scrollPane, gbc_scrollPane);
 
-		clientTable = new CustomJTable();
-		@SuppressWarnings("unused")
-		TableFilterHeader customTableFilterHeader = new CustomTableFilterHeader(clientTable);
-		clientTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		clientTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		clientTable.setModel(new ClientTableModel());
-		clientTable.setAutoCreateRowSorter(true);
+		clientTable = new ImportExportableJTable(Common.prepareIconListForExportImportComboBox(),
+				new ClientTableModel(),
+				true);
+		clientTable.setActions(new BtnImportAction(clientTable), new BtnExportAction(clientTable));
 		scrollPane.setViewportView(clientTable);
 
 		admIsRegisteredPanel = new AdmIsRegisteredPanel();

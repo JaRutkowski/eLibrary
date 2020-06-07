@@ -3,25 +3,24 @@ package com.javafee.elibrary.core.tabbedform.admworkers;
 import java.awt.*;
 
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
 
 import com.javafee.elibrary.core.common.BasePanel;
+import com.javafee.elibrary.core.common.Common;
 import com.javafee.elibrary.core.model.WorkerTableModel;
-import com.javafee.elibrary.core.unicomponent.jtable.CustomJTable;
-import com.javafee.elibrary.core.unicomponent.tablefilterheader.CustomTableFilterHeader;
+import com.javafee.elibrary.core.unicomponent.action.BtnExportAction;
+import com.javafee.elibrary.core.unicomponent.action.BtnImportAction;
+import com.javafee.elibrary.core.unicomponent.jtable.imortexportable.ImportExportableJTable;
 import com.javafee.elibrary.core.uniform.AdmIsAccountantPanel;
 import com.javafee.elibrary.core.uniform.AdmIsRegisteredPanel;
 import com.javafee.elibrary.core.uniform.CockpitEditionPanel;
 
 import lombok.Getter;
-import net.coderazzi.filters.gui.TableFilterHeader;
 
 public class WorkerTablePanel extends BasePanel {
 	private static final long serialVersionUID = 1L;
 
 	@Getter
-	private JTable workerTable;
+	private ImportExportableJTable workerTable;
 
 	@Getter
 	private WorkerDataPanel workerDataPanel;
@@ -51,13 +50,10 @@ public class WorkerTablePanel extends BasePanel {
 		gbc_scrollPane.gridy = 0;
 		add(scrollPane, gbc_scrollPane);
 
-		workerTable = new CustomJTable();
-		@SuppressWarnings("unused")
-		TableFilterHeader customTableFilterHeader = new CustomTableFilterHeader(workerTable);
-		workerTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		workerTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		workerTable.setModel(new WorkerTableModel());
-		workerTable.setAutoCreateRowSorter(true);
+		workerTable = new ImportExportableJTable(Common.prepareIconListForExportImportComboBox(),
+				new WorkerTableModel(),
+				true);
+		workerTable.setActions(new BtnImportAction(workerTable), new BtnExportAction(workerTable));
 		scrollPane.setViewportView(workerTable);
 
 		// workerDataPanel = new WorkerDataPanel();

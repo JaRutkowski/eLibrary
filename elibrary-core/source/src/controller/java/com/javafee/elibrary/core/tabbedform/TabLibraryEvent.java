@@ -4,24 +4,24 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 
 import org.apache.commons.io.FileUtils;
 
 import com.javafee.elibrary.core.common.Constants;
 import com.javafee.elibrary.core.common.Constants.Context;
 import com.javafee.elibrary.core.common.Constants.Role;
-import com.javafee.elibrary.core.common.IActionForm;
 import com.javafee.elibrary.core.common.Params;
 import com.javafee.elibrary.core.common.SystemProperties;
 import com.javafee.elibrary.core.common.Utils;
 import com.javafee.elibrary.core.common.Validator;
+import com.javafee.elibrary.core.common.action.IActionForm;
 import com.javafee.elibrary.core.exception.LogGuiException;
 import com.javafee.elibrary.core.exception.RefusedLibraryEventLoadingException;
 import com.javafee.elibrary.core.model.VolumeLoanTableModel;
 import com.javafee.elibrary.core.model.VolumeReadingRoomTableModel;
 import com.javafee.elibrary.core.model.VolumeTableModel;
 import com.javafee.elibrary.core.startform.LogInEvent;
+import com.javafee.elibrary.core.unicomponent.jtable.imortexportable.ImportExportableJTable;
 import com.javafee.elibrary.core.uniform.ImagePanel;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
 import com.javafee.elibrary.hibernate.dto.library.Book;
@@ -86,7 +86,7 @@ public class TabLibraryEvent implements IActionForm {
 				tabbedForm.getPanelLibrary().getImagePreviewPanelLoan());
 	}
 
-	private void onBookTableListSelectionChange(JTable jTable, ImagePanel imagePreviewPanel) {
+	private void onBookTableListSelectionChange(ImportExportableJTable jTable, ImagePanel imagePreviewPanel) {
 		if (jTable.getSelectedRow() != -1 && jTable
 				.convertRowIndexToModel(jTable.getSelectedRow()) != -1) {
 

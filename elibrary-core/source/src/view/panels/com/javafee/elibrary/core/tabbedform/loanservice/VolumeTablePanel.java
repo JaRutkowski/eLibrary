@@ -3,22 +3,21 @@ package com.javafee.elibrary.core.tabbedform.loanservice;
 import java.awt.*;
 
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
 
 import com.javafee.elibrary.core.common.BasePanel;
+import com.javafee.elibrary.core.common.Common;
 import com.javafee.elibrary.core.model.VolumeTableModel;
-import com.javafee.elibrary.core.unicomponent.jtable.CustomJTable;
-import com.javafee.elibrary.core.unicomponent.tablefilterheader.CustomTableFilterHeader;
+import com.javafee.elibrary.core.unicomponent.action.BtnExportAction;
+import com.javafee.elibrary.core.unicomponent.action.BtnImportAction;
+import com.javafee.elibrary.core.unicomponent.jtable.imortexportable.ImportExportableJTable;
 
 import lombok.Getter;
-import net.coderazzi.filters.gui.TableFilterHeader;
 
 public class VolumeTablePanel extends BasePanel {
 	private static final long serialVersionUID = 1L;
 
 	@Getter
-	private JTable volumeTable;
+	private ImportExportableJTable volumeTable;
 
 	public VolumeTablePanel() {
 		super();
@@ -36,13 +35,10 @@ public class VolumeTablePanel extends BasePanel {
 		gbc_scrollPane.gridy = 0;
 		add(scrollPane, gbc_scrollPane);
 
-		volumeTable = new CustomJTable();
-		@SuppressWarnings("unused")
-		TableFilterHeader customTableFilterHeader = new CustomTableFilterHeader(volumeTable);
-		volumeTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		volumeTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		volumeTable.setModel(new VolumeTableModel());
-		volumeTable.setAutoCreateRowSorter(true);
+		volumeTable = new ImportExportableJTable(Common.prepareIconListForExportImportComboBox(),
+				new VolumeTableModel(),
+				true);
+		volumeTable.setActions(new BtnImportAction(volumeTable), new BtnExportAction(volumeTable));
 		scrollPane.setViewportView(volumeTable);
 	}
 }

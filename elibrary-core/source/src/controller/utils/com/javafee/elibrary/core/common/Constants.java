@@ -353,6 +353,11 @@ public final class Constants {
 	public static String APPLICATION_LANGUAGE = "pl";
 	public static final String APPLICATION_LANGUAGE_PL = "pl";
 	public static final String APPLICATION_LANGUAGE_EN = "en";
+	public static final String APPLICATION_CSV_EXTENSION = ".csv";
+	public static final String APPLICATION_XLS_EXTENSION = ".xls";
+	public static final String APPLICATION_XLSX_EXTENSION = ".xlsx";
+	public static final String APPLICATION_PDF_EXTENSION = ".pdf";
+	public static final char APPLICATION_CSV_SEPARATOR = ',';
 	public static final Color APPLICATION_DEFAULT_COLOR = new Color(237, 245, 248);
 	public static final Font APPLICATION_DEFAULT_FONT = UIManager.getDefaults().getFont("TabbedPane.font");
 	public static final int APPLICATION_NETWORK_SERVICE_LISTENER_DURATION = 2;

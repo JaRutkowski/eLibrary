@@ -24,6 +24,8 @@
 		<jaxb.impl.version>2.2.11</jaxb.impl.version>
 		<jcalendar.version>1.4</jcalendar.version>
 		<jfontchooser.version>1.0.5-3</jfontchooser.version>
+		<com.twelvemonkeys.imageio.version>3.2.1</com.twelvemonkeys.imageio.version>
+		<batik.version>1.6-1</batik.version>
 		<edu.vt.middleware.version>3.1.2</edu.vt.middleware.version>
 		<log4j.version>1.2.17</log4j.version>
 		<org.bidib.org.oxbow.version>1.2.2</org.bidib.org.oxbow.version>
@@ -31,6 +33,12 @@
 		<com.sun.mail.version>1.6.2</com.sun.mail.version>
 		<org.projectlombok.version>1.18.12</org.projectlombok.version>
 		<common.io.version>2.6</common.io.version>
+		<opencsv.version>4.6</opencsv.version>
+		<org.apache.poi.version>3.17</org.apache.poi.version>
+		<xerces.version>2.12.0</xerces.version>
+		<com.itextpdf.version>5.5.10</com.itextpdf.version>
+		<org.apache.pdfbox.version>2.0.4</org.apache.pdfbox.version>
+		<org.bouncycastle.version>1.56</org.bouncycastle.version>
 		<org.jsoup.version>1.13.1</org.jsoup.version>
 		<org.apache.httpcomponents.version>4.4.13</org.apache.httpcomponents.version>
 		<com.mashape.unirest.version>1.4.9</com.mashape.unirest.version>

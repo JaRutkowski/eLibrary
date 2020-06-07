@@ -1,5 +1,6 @@
 package com.javafee.elibrary.core.common;
 
+import java.awt.*;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -7,10 +8,14 @@ import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 import java.util.function.Consumer;
 
+import javax.imageio.ImageIO;
 import javax.mail.MessagingException;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.table.AbstractTableModel;
 
 import org.hibernate.resource.transaction.spi.TransactionStatus;
 
@@ -21,6 +26,7 @@ import com.javafee.elibrary.core.emailform.TabTemplatePageEvent;
 import com.javafee.elibrary.core.mail.MailSender;
 import com.javafee.elibrary.core.startform.RegistrationPanel;
 import com.javafee.elibrary.core.tabbedform.Actions;
+import com.javafee.elibrary.core.tabbedform.clients.ClientTablePanel;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
 import com.javafee.elibrary.hibernate.dto.common.UserData;
 import com.javafee.elibrary.hibernate.dto.library.Client;
@@ -136,6 +142,22 @@ public final class Common {
 		comboBoxDataList.add((T) Constants.APPLICATION_COMBO_BOX_BLANK_OBJECT);
 	}
 
+	public static List prepareIconListForExportImportComboBox() {
+		List itemList = null;
+		try {
+			itemList = List.of(
+					new ImageIcon(new ImageIcon(ImageIO.read(ClientTablePanel.class.getResource("/images/csv-ico.svg")))
+							.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH), Constants.APPLICATION_CSV_EXTENSION),
+					new ImageIcon(new ImageIcon(ImageIO.read(ClientTablePanel.class.getResource("/images/excel-ico.svg")))
+							.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH), Constants.APPLICATION_XLSX_EXTENSION),
+					new ImageIcon(new ImageIcon(ImageIO.read(ClientTablePanel.class.getResource("/images/pdf-ico.svg")))
+							.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH), Constants.APPLICATION_PDF_EXTENSION));
+		} catch (IOException e) {
+			log.severe(e.getMessage());
+		}
+		return itemList;
+	}
+
 	public static void fillUserDataPanel(RegistrationPanel registrationPanel, UserData userData) {
 		// Pesel number
 		registrationPanel.getTextFieldPeselNumber().setText(userData.getPeselNumber() != null ? userData.getPeselNumber() : "");
@@ -166,6 +188,37 @@ public final class Common {
 		} catch (ParseException e) {
 			log.severe(e.getMessage());
 		}
+	}
+
+	public static List<List<Object>> extractDataFromTableModel(AbstractTableModel defaultTableModel, boolean withHeader) {
+		Vector<Vector> dataVector = new Vector<>();
+		if (withHeader) insertHeaderRow(dataVector, defaultTableModel);
+		extractDataFromAbstractTableModel(dataVector, defaultTableModel);
+		List<List<Object>> resultList = new ArrayList<>();
+		for (Vector row : dataVector) {
+			resultList.add(new ArrayList<>(row));
+		}
+		return resultList;
+	}
+
+	private static Vector<Vector> insertHeaderRow(Vector<Vector> dataVector, AbstractTableModel abstractTableModel) {
+		Vector row = new Vector();
+		for (var columnIndex = 0; columnIndex < abstractTableModel.getColumnCount(); columnIndex++) {
+			row.add(abstractTableModel.getColumnName(columnIndex));
+		}
+		dataVector.add(row);
+		return dataVector;
+	}
+
+	private static Vector<Vector> extractDataFromAbstractTableModel(Vector<Vector> dataVector, AbstractTableModel abstractTableModel) {
+		for (var rowIndex = 0; rowIndex < abstractTableModel.getRowCount(); rowIndex++) {
+			Vector row = new Vector();
+			for (var columnIndex = 0; columnIndex < abstractTableModel.getColumnCount(); columnIndex++) {
+				row.add(abstractTableModel.getValueAt(rowIndex, columnIndex));
+			}
+			dataVector.add(row);
+		}
+		return dataVector;
 	}
 
 	public static Integer clearMessagesRecipientData(Integer idUserData) {
