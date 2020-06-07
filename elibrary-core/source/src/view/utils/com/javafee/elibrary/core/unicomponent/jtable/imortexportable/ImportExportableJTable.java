@@ -39,9 +39,6 @@ public class ImportExportableJTable extends BasePanel {
 	private JComboBox comboBoxExport;
 	private JPanel panel;
 
-	private Action comboBoxExportItemListener = null;
-	private Action comboBoxImportItemListener = null;
-
 	public ImportExportableJTable(List<ImageIcon> comboBoxItems, AbstractTableModel tableModel, boolean defaultTableConfiguration) {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0};
