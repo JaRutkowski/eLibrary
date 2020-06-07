@@ -39,7 +39,7 @@ public final class Constants {
 	@Getter
 	@AllArgsConstructor
 	public enum Tab_Client {
-		TAB_LIBRARY(0), TAB_CLIENT_RESERVATION(1);
+		TAB_LIBRARY(0), TAB_CLIENT_LOAN(1), TAB_CLIENT_RESERVATION(2);
 
 		private final Integer value;
 
@@ -217,6 +217,27 @@ public final class Constants {
 					.findFirst().get();
 		}
 	}
+
+	public enum ClientLoanTableColumn {
+		COL_VOLUME_BOOK_TITLE(0), COL_VOLUME_BOOK_ISBN_NUMBER(1), COL_VOLUME_INVENTORY_NUMBER(2), COL_LEND_DATE(3), COL_RETURNED_DATE(4),
+		COL_PENALTY(5), COL_IS_PROLONGATED(6);
+
+		private final Integer value;
+
+		ClientLoanTableColumn(final int newValue) {
+			value = newValue;
+		}
+
+		public Integer getValue() {
+			return value;
+		}
+
+		public static ClientLoanTableColumn getByNumber(int lendTableSelectedIndex) {
+			return Stream.of(ClientLoanTableColumn.values()).filter(item -> item.getValue().equals(lendTableSelectedIndex))
+					.findFirst().get();
+		}
+	}
+
 
 	public enum LendClientReservationTableColumn {
 		COL_VOLUME_BOOK_TITLE(0), COL_VOLUME_BOOK_ISBN_NUMBER(1), COL_VOLUME_INVENTORY_NUMBER(2), COL_LEND_DATE_OR_RESERVATION_DATE(3), COL_RETURNED_DATE_OR_IS_CANCELLED(4);

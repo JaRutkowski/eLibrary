@@ -7,6 +7,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 import java.util.function.Consumer;
@@ -73,6 +75,14 @@ public final class Common {
 			}
 
 		return md5;
+	}
+
+	public static final int diffDatesByPeriodType(Date first, Date second, int period) {
+		Calendar firstCalendar = Calendar.getInstance(),
+				secondCalender = Calendar.getInstance();
+		firstCalendar.setTime(first);
+		secondCalender.setTime(second);
+		return secondCalender.get(period) - firstCalendar.get(period);
 	}
 
 	public static final String generatePassword() {
