@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="1.0"
+			 xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			 xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
+	<persistence-unit name="repository">
+		<jta-data-source>java:/PostgresDS</jta-data-source>
+		<class>com.javafee.elibrary.rest.api.repository.dto.api.Authorization</class>
+		<class>com.javafee.elibrary.rest.api.repository.dto.common.UserData</class>
+
+		<!--        <properties>-->
+		<!--<property name="hibernate.hbm2ddl.auto" value="create-drop" />-->
+		<!--            <property name="hibernate.hbm2ddl.auto" value="update"/>-->
+		<!--        </properties>-->
+
+		<properties>
+			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/> <!-- DB Driver -->
+			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://127.0.0.1/library"/> <!-- BD Mane -->
+			<property name="javax.persistence.jdbc.user" value="postgres"/> <!-- DB User -->
+			<property name="javax.persistence.jdbc.password" value="admin123"/> <!-- DB Password -->
+			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL9Dialect"/> <!-- DB Dialect -->
+			<property name="hibernate.hbm2ddl.auto" value="update"/> <!-- create / create-drop / update -->
+			<property name="hibernate.show_sql" value="true"/> <!-- Show SQL in console -->
+			<property name="hibernate.format_sql" value="true"/> <!-- Show SQL formatted -->
+		</properties>
+	</persistence-unit>
+</persistence>
+
+<!--<persistence>-->
+<!--	<persistence-unit name="manager" transaction-type="RESOURCE_LOCAL">-->
+<!--		<class>com.javafee.elibrary.rest.api.repository.dto.api.Authorization</class>-->
+<!--		<properties>-->
+<!--			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/> &lt;!&ndash; DB Driver &ndash;&gt;-->
+<!--			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://127.0.0.1/library"/> &lt;!&ndash; BD Mane &ndash;&gt;-->
+<!--			<property name="javax.persistence.jdbc.user" value="postgres"/> &lt;!&ndash; DB User &ndash;&gt;-->
+<!--			<property name="javax.persistence.jdbc.password" value="admin123"/> &lt;!&ndash; DB Password &ndash;&gt;-->
+<!--			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL9Dialect"/> &lt;!&ndash; DB Dialect &ndash;&gt;-->
+<!--			&lt;!&ndash;			<property name="hibernate.hbm2ddl.auto" value="update"/> &lt;!&ndash; create / create-drop / update &ndash;&gt;&ndash;&gt;-->
+<!--			&lt;!&ndash;			<property name="hibernate.show_sql" value="true"/> &lt;!&ndash; Show SQL in console &ndash;&gt;&ndash;&gt;-->
+<!--			&lt;!&ndash;			<property name="hibernate.format_sql" value="true"/> &lt;!&ndash; Show SQL formatted &ndash;&gt;&ndash;&gt;-->
+
+<!--			&lt;!&ndash;			<property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbcDriver"/>&ndash;&gt;-->
+<!--			&lt;!&ndash;			<property name="javax.persistence.jdbc.user" value="sa"/>&ndash;&gt;-->
+<!--			&lt;!&ndash;			<property name="javax.persistence.jdbc.password" value=""/>&ndash;&gt;-->
+<!--			&lt;!&ndash;			<property name="javax.persistence.jdbc.url" value="jdbc:hsqldb:."/>&ndash;&gt;-->
+<!--			&lt;!&ndash;			<property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>&ndash;&gt;-->
+<!--			&lt;!&ndash;			<property name="hibernate.max_fetch_depth" value="3"/>&ndash;&gt;-->
+
+<!--			&lt;!&ndash; cache configuration &ndash;&gt;-->
+<!--			<property name="hibernate.ejb.classcache.org.hibernate.ejb.test.Item" value="read-write"/>-->
+<!--			<property name="hibernate.ejb.collectioncache.org.hibernate.ejb.test.Item.distributors"-->
+<!--					  value="read-write, RegionName"/>-->
+
+<!--			&lt;!&ndash; alternatively to <class> and <property> declarations, you can use a regular hibernate.cfg.xml file &ndash;&gt;-->
+<!--			&lt;!&ndash; property name="hibernate.ejb.cfgfile" value="/org/hibernate/ejb/test/hibernate.cfg.xml"/ &ndash;&gt;-->
+<!--		</properties>-->
+<!--	</persistence-unit>-->
+<!--</persistence>-->
