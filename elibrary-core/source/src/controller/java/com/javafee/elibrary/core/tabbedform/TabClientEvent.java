@@ -1,15 +1,19 @@
 package com.javafee.elibrary.core.tabbedform;
 
+import java.text.MessageFormat;
+
 import javax.swing.JOptionPane;
+
+import org.oxbow.swingbits.util.Strings;
 
 import com.javafee.elibrary.core.common.Common;
 import com.javafee.elibrary.core.common.Constants;
 import com.javafee.elibrary.core.common.Constants.Role;
-import com.javafee.elibrary.core.common.IActionForm;
 import com.javafee.elibrary.core.common.Params;
 import com.javafee.elibrary.core.common.SystemProperties;
 import com.javafee.elibrary.core.common.Utils;
 import com.javafee.elibrary.core.common.Validator;
+import com.javafee.elibrary.core.common.action.IActionForm;
 import com.javafee.elibrary.core.emailform.Actions;
 import com.javafee.elibrary.core.exception.LogGuiException;
 import com.javafee.elibrary.core.exception.RefusedClientsEventLoadingException;
@@ -80,15 +84,18 @@ public final class TabClientEvent implements IActionForm {
 		if (action == null)
 			action = new Actions();
 
-		boolean internetConnectivity = Common.checkInternetConnectivity();
-		if (!internetConnectivity) {
-			Params.getInstance().add("NO_INTERNET_CONNVECTIVITY", internetConnectivity);
+		boolean internetConnectivity = Common.checkInternetConnectivity(),
+				emailServerConnectivity = Strings.isEmpty(Common.checkEmailServerConnectivity());
+		if (!internetConnectivity) Params.getInstance().add("NO_INTERNET_CONNECTIVITY", internetConnectivity);
+		if (!emailServerConnectivity) Params.getInstance().add("NO_EMAIL_SERVER_CONNECTIVITY", emailServerConnectivity);
+
+		if (!internetConnectivity || !emailServerConnectivity)
 			LogGuiException.logWarning(
 					SystemProperties.getInstance().getResourceBundle()
-							.getString("tabClientEvent.noInternetConnectionWarningTitle"),
-					SystemProperties.getInstance().getResourceBundle()
-							.getString("tabClientEvent.noInternetConnectionWarning"));
-		}
+							.getString("tabClientEvent.noConnectionWarningTitle"),
+					MessageFormat.format(SystemProperties.getInstance().getResourceBundle().getString("tabClientEvent.noConnectionWarning"),
+							!internetConnectivity ? SystemProperties.getInstance().getResourceBundle().getString("tabClientEvent.noInternetConnectionWarning")
+									: SystemProperties.getInstance().getResourceBundle().getString("tabClientEvent.noEmailServerConnectionWarning")));
 
 		action.control();
 	}

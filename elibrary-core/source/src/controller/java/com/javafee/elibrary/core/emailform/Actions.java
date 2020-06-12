@@ -14,9 +14,9 @@ import javax.swing.JOptionPane;
 
 import com.javafee.elibrary.core.common.Constants;
 import com.javafee.elibrary.core.common.Constants.Tab_Email;
-import com.javafee.elibrary.core.common.IActionForm;
 import com.javafee.elibrary.core.common.Params;
 import com.javafee.elibrary.core.common.Utils;
+import com.javafee.elibrary.core.common.action.IActionForm;
 import com.javafee.elibrary.core.startform.LogInEvent;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
 import com.javafee.elibrary.hibernate.dao.common.Common;
@@ -211,19 +211,19 @@ public class Actions implements IActionForm {
 	}
 
 	private void setVisibleControls() {
-		if (Params.getInstance().get("NO_INTERNET_CONNVECTIVITY") != null
-				&& !(boolean) Params.getInstance().get("NO_INTERNET_CONNVECTIVITY")) {
-			setNetworkControls(false);
-			Params.getInstance().remove("NO_INTERNET_CONNVECTIVITY");
-		}
-	}
+		boolean internetConnectivity = !(Params.getInstance().get("NO_INTERNET_CONNECTIVITY") != null
+				&& !(boolean) Params.getInstance().get("NO_INTERNET_CONNECTIVITY")),
+				emailServerConnectivity = !(Params.getInstance().get("NO_EMAIL_SERVER_CONNECTIVITY") != null
+						&& !(boolean) Params.getInstance().get("NO_EMAIL_SERVER_CONNECTIVITY"));
 
-	private void setNetworkControls(boolean enable) {
-		emailForm.getPanelComposePage().getComposeNavigationEmailPanel().getBtnSend().setEnabled(enable);
-		emailForm.getPanelOutboxPage().getOutboxNavigationPanel().getBtnSendAgain().setEnabled(enable);
-		emailForm.getPanelDraftPage().getDraftNavigationPanel().getBtnSend().setEnabled(enable);
-		emailForm.getPanelTemplatePage().getHtmlEditorPanel().getBtnParse().setEnabled(enable);
-		emailForm.getPanelTemplatePage().getHtmlEditorPanel().getBtnValidate().setEnabled(enable);
+		emailForm.getPanelComposePage().getComposeNavigationEmailPanel().getBtnSend().setEnabled(internetConnectivity && emailServerConnectivity);
+		emailForm.getPanelOutboxPage().getOutboxNavigationPanel().getBtnSendAgain().setEnabled(internetConnectivity && emailServerConnectivity);
+		emailForm.getPanelDraftPage().getDraftNavigationPanel().getBtnSend().setEnabled(internetConnectivity && emailServerConnectivity);
+		emailForm.getPanelTemplatePage().getHtmlEditorPanel().getBtnParse().setEnabled(internetConnectivity);
+		emailForm.getPanelTemplatePage().getHtmlEditorPanel().getBtnValidate().setEnabled(internetConnectivity);
+
+		Params.getInstance().remove("NO_INTERNET_CONNECTIVITY");
+		Params.getInstance().remove("NO_EMAIL_SERVER_CONNECTIVITY");
 	}
 
 	private void clearEvent() {

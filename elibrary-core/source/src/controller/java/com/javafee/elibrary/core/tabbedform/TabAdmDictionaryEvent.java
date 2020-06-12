@@ -10,9 +10,9 @@ import javax.swing.JOptionPane;
 import org.hibernate.query.NativeQuery;
 
 import com.javafee.elibrary.core.common.Constants;
-import com.javafee.elibrary.core.common.IActionForm;
 import com.javafee.elibrary.core.common.SystemProperties;
 import com.javafee.elibrary.core.common.Utils;
+import com.javafee.elibrary.core.common.action.IActionForm;
 import com.javafee.elibrary.core.exception.LogGuiException;
 import com.javafee.elibrary.core.exception.RefusedAdmDictionaryEventLoadingException;
 import com.javafee.elibrary.core.tabbedform.admdictionaries.AdmDictionaryPanel;

@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import com.javafee.elibrary.core.common.Constants;
 import com.javafee.elibrary.core.common.Constants.VolumeTableColumn;
 import com.javafee.elibrary.core.common.SystemProperties;
+import com.javafee.elibrary.core.common.Validator;
 import com.javafee.elibrary.core.startform.LogInEvent;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
 import com.javafee.elibrary.hibernate.dto.library.Volume;
@@ -36,7 +37,7 @@ public class VolumeLoanTableModel extends VolumeTableModel {
 		Volume volume = volumes.get(row);
 		switch (VolumeTableColumn.getByNumber(col)) {
 			case COL_IS_RESERVERD:
-				return volume.getIsReserve()
+				return Validator.validateIfVolumeActiveReservationExists(volume.getIdVolume())
 						? SystemProperties.getInstance().getResourceBundle()
 						.getString("volumeTableModel.isReadingRoomTrueVal")
 						: SystemProperties.getInstance().getResourceBundle()

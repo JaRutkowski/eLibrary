@@ -45,9 +45,6 @@ public class Volume implements Cloneable {
 	@Column(name = "is_reading_room", unique = false, nullable = true, insertable = true, updatable = true)
 	private Boolean isReadingRoom = false;
 
-	@Column(name = "is_reserve", unique = false, nullable = true, insertable = true, updatable = true)
-	private Boolean isReserve = false;
-
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_book")
 	private Book book;

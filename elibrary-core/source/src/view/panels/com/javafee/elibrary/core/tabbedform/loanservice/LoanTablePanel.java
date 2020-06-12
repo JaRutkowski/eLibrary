@@ -3,22 +3,21 @@ package com.javafee.elibrary.core.tabbedform.loanservice;
 import java.awt.*;
 
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
 
 import com.javafee.elibrary.core.common.BasePanel;
+import com.javafee.elibrary.core.common.Common;
 import com.javafee.elibrary.core.model.LoanTableModel;
-import com.javafee.elibrary.core.unicomponent.jtable.CustomJTable;
-import com.javafee.elibrary.core.unicomponent.tablefilterheader.CustomTableFilterHeader;
+import com.javafee.elibrary.core.unicomponent.action.BtnExportAction;
+import com.javafee.elibrary.core.unicomponent.action.BtnImportAction;
+import com.javafee.elibrary.core.unicomponent.jtable.imortexportable.ImportExportableJTable;
 
 import lombok.Getter;
-import net.coderazzi.filters.gui.TableFilterHeader;
 
 public class LoanTablePanel extends BasePanel {
 	private static final long serialVersionUID = 1L;
 
 	@Getter
-	private JTable loanTable;
+	private ImportExportableJTable loanTable;
 
 	public LoanTablePanel() {
 		super();
@@ -36,13 +35,10 @@ public class LoanTablePanel extends BasePanel {
 		gbc_scrollPane.gridy = 0;
 		add(scrollPane, gbc_scrollPane);
 
-		loanTable = new CustomJTable();
-		@SuppressWarnings("unused")
-		TableFilterHeader customTableFilterHeader = new CustomTableFilterHeader(loanTable);
-		loanTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		loanTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		loanTable.setModel(new LoanTableModel());
-		loanTable.setAutoCreateRowSorter(true);
+		loanTable = new ImportExportableJTable(Common.prepareIconListForExportImportComboBox(),
+				new LoanTableModel(),
+				true);
+		loanTable.setActions(new BtnImportAction(loanTable), new BtnExportAction(loanTable));
 		scrollPane.setViewportView(loanTable);
 	}
 }

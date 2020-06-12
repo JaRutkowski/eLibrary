@@ -1,10 +1,11 @@
 package com.javafee.elibrary.hibernate.dao;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
 
@@ -21,7 +22,9 @@ import org.reflections.Reflections;
 import com.javafee.elibrary.hibernate.dao.common.Constants;
 
 import lombok.Getter;
+import lombok.extern.java.Log;
 
+@Log
 public class HibernateUtil {
 	@Getter
 	private static final SessionFactory sessionFactory;
@@ -34,13 +37,20 @@ public class HibernateUtil {
 
 	static {
 		try {
+			Properties prop = new Properties();
+			try (InputStream resourceAsStream = HibernateUtil.class.getClassLoader().getResourceAsStream(Constants.APPLICATION_PROPERTIES)) {
+				prop.load(resourceAsStream);
+			} catch (IOException e) {
+				log.severe(e.getMessage());
+			}
+
 			StandardServiceRegistryBuilder registryBuilder = new StandardServiceRegistryBuilder();
 
 			Map<String, String> settings = new HashMap<>();
 			settings.put(Environment.DRIVER, "org.postgresql.Driver");
-			settings.put(Environment.URL, "jdbc:postgresql://" + Constants.DATA_BASE_URL);
-			settings.put(Environment.USER, Constants.DATA_BASE_USER);
-			settings.put(Environment.PASS, Constants.DATA_BASE_PASSWORD);
+			settings.put(Environment.URL, prop.getProperty("db.url"));
+			settings.put(Environment.USER, prop.getProperty("db.username"));
+			settings.put(Environment.PASS, prop.getProperty("db.password"));
 			settings.put(Environment.DIALECT, "org.hibernate.dialect.PostgreSQL9Dialect");
 			settings.put(Environment.CACHE_PROVIDER_CONFIG, "org.hibernate.cache.internal.NoCacheProvider");
 			settings.put(Environment.HBM2DDL_AUTO, "update");
@@ -60,7 +70,7 @@ public class HibernateUtil {
 			session = sessionFactory.openSession();
 			entityManager = sessionFactory.createEntityManager();
 		} catch (HibernateException e) {
-			Logger.getLogger("app").log(Level.WARNING, e.getMessage());
+			log.severe(e.getMessage());
 			throw new ExceptionInInitializerError(e);
 		}
 	}

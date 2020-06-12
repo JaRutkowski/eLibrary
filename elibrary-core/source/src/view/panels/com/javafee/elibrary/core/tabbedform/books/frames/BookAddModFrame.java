@@ -103,8 +103,6 @@ public class BookAddModFrame extends JFrame {
 		authorTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		authorTable.setModel(new AuthorTableModel());
 		authorTable.setAutoCreateRowSorter(true);
-		if (authorTable.getModel().getRowCount() != 0)
-			authorTable.setRowSelectionInterval(0, 0);
 		scrollPane.setViewportView(authorTable);
 
 		scrollPane_categoryTable = new JScrollPane();
@@ -122,8 +120,6 @@ public class BookAddModFrame extends JFrame {
 		categoryTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		categoryTable.setModel(new CategoryTableModel());
 		categoryTable.setAutoCreateRowSorter(true);
-		if (categoryTable.getModel().getRowCount() != 0)
-			categoryTable.setRowSelectionInterval(0, 0);
 		scrollPane_categoryTable.setViewportView(categoryTable);
 
 		scrollPane_publishingHouse = new JScrollPane();
@@ -141,8 +137,6 @@ public class BookAddModFrame extends JFrame {
 		publishingHouseTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		publishingHouseTable.setModel(new PublishingHouseTableModel());
 		publishingHouseTable.setAutoCreateRowSorter(true);
-		if (publishingHouseTable.getModel().getRowCount() != 0)
-			publishingHouseTable.setRowSelectionInterval(0, 0);
 		scrollPane_publishingHouse.setViewportView(publishingHouseTable);
 
 		bookImagePreviewPanel = new ImagePanel(SystemProperties.getInstance().getResourceBundle()
@@ -163,5 +157,16 @@ public class BookAddModFrame extends JFrame {
 		gbc_cockpitConfirmationPanel.gridx = 0;
 		gbc_cockpitConfirmationPanel.gridy = 4;
 		contentPane.add(cockpitConfirmationPanel, gbc_cockpitConfirmationPanel);
+
+		reloadToDefaultTablesSelection();
+	}
+
+	public void reloadToDefaultTablesSelection() {
+		if (authorTable.getModel().getRowCount() != 0)
+			authorTable.setRowSelectionInterval(0, 0);
+		if (categoryTable.getModel().getRowCount() != 0)
+			categoryTable.setRowSelectionInterval(0, 0);
+		if (publishingHouseTable.getModel().getRowCount() != 0)
+			publishingHouseTable.setRowSelectionInterval(0, 0);
 	}
 }

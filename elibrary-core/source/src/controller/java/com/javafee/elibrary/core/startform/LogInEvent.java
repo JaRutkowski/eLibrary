@@ -10,7 +10,10 @@ import com.javafee.elibrary.core.common.Params;
 import com.javafee.elibrary.core.exception.RefusedLogInException;
 import com.javafee.elibrary.core.process.ProcessFactory;
 import com.javafee.elibrary.core.process.initializator.FeedAdministratorDataProcess;
+import com.javafee.elibrary.core.process.initializator.FeedLibraryDataProcess;
 import com.javafee.elibrary.core.process.initializator.FeedMessageTypesProcess;
+import com.javafee.elibrary.core.process.initializator.FeedSystemDataProcess;
+import com.javafee.elibrary.core.process.initializator.FeedSystemParametersProcess;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
 import com.javafee.elibrary.hibernate.dto.common.UserData;
 import com.javafee.elibrary.hibernate.dto.library.Client;
@@ -58,8 +61,11 @@ public final class LogInEvent {
 
 	private static void initializeSystem() {
 		try {
+			ProcessFactory.create(FeedLibraryDataProcess.class).execute();
+			ProcessFactory.create(FeedSystemDataProcess.class).execute();
 			ProcessFactory.create(FeedAdministratorDataProcess.class).execute();
 			ProcessFactory.create(FeedMessageTypesProcess.class).execute();
+			ProcessFactory.create(FeedSystemParametersProcess.class).execute();
 		} catch (IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
 			log.severe(e.getMessage());
 		}

@@ -19,6 +19,7 @@ import javax.swing.filechooser.FileSystemView;
 
 import org.oxbow.swingbits.util.Strings;
 
+import com.itextpdf.text.BaseColor;
 import com.javafee.elibrary.core.startform.LogInEvent;
 
 public class Utils {
@@ -48,6 +49,10 @@ public class Utils {
 			userDefinedColor = new Color(Integer.parseInt(rgb[0]), Integer.parseInt(rgb[1]), Integer.parseInt(rgb[2]));
 		}
 		return userDefinedColor;
+	}
+
+	public static BaseColor getApplicationUserDefinedColorAsItextpdfBaseColor() {
+		return new BaseColor(getApplicationUserDefinedColor().getRGB());
 	}
 
 	public static Font getApplicationUserDefinedFont() {
@@ -115,7 +120,7 @@ public class Utils {
 
 			Path path = Paths.get(result.getParent());
 
-			if (path.toString().toLowerCase().endsWith(Constants.APPLICATION_TEMPLATE_DIRECTORY_NAME.toLowerCase())) {
+			if (path.toString().toLowerCase().endsWith(SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_TEMPLATE_DIRECTORY_NAME).getValue().toLowerCase())) {
 				if (result.getAbsolutePath().toLowerCase()
 						.endsWith(Constants.APPLICATION_TEMPLATE_EXTENSION.toLowerCase()))
 					result = new File(path.toString(), result.getName());
@@ -124,7 +129,7 @@ public class Utils {
 			} else {
 				try {
 					path = Paths.get(
-							result.getParentFile() + File.separator + Constants.APPLICATION_TEMPLATE_DIRECTORY_NAME);
+							result.getParentFile() + File.separator + SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_TEMPLATE_DIRECTORY_NAME).getValue());
 					if (!Files.exists(path)) {
 						Files.createDirectories(path);
 						if (result.getAbsolutePath().toLowerCase()
@@ -165,7 +170,7 @@ public class Utils {
 
 			Path path = Paths.get(result.getParent());
 
-			if (path.toString().toLowerCase().endsWith(Constants.APPLICATION_TEMPLATE_DIRECTORY_NAME.toLowerCase())) {
+			if (path.toString().toLowerCase().endsWith(SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_TEMPLATE_DIRECTORY_NAME).getValue().toLowerCase())) {
 				if (result.getAbsolutePath().toLowerCase()
 						.endsWith(Constants.APPLICATION_TEMPLATE_EXTENSION.toLowerCase()))
 					result = new File(path.toString(), result.getName());
@@ -174,7 +179,7 @@ public class Utils {
 			} else {
 				try {
 					path = Paths.get(
-							result.getParentFile() + File.separator + Constants.APPLICATION_TEMPLATE_DIRECTORY_NAME);
+							result.getParentFile() + File.separator + SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_TEMPLATE_DIRECTORY_NAME).getValue());
 					if (!Files.exists(path)) {
 						Files.createDirectories(path);
 						if (result.getAbsolutePath().toLowerCase()
@@ -190,6 +195,23 @@ public class Utils {
 			}
 		}
 
+		return result;
+	}
+
+	public static File displayOpenSimpleDialogAndGetFile(String directory, String extension) {
+		String dir = directory != null ? directory : FileSystemView.getFileSystemView().getHomeDirectory().toString();
+		JFileChooser jfc = new JFileChooser(dir);
+		jfc.addChoosableFileFilter(new FileNameExtensionFilter(
+				"", ImageIO.getReaderFileSuffixes()));
+		File result = null;
+		int returnValue = jfc.showSaveDialog(null);
+		if (returnValue == JFileChooser.APPROVE_OPTION) {
+			result = jfc.getSelectedFile();
+
+			Path path = Paths.get(result.getPath());
+			if (!path.toString().toLowerCase().endsWith(extension.toLowerCase()))
+				result = new File(path.toString() + extension);
+		}
 		return result;
 	}
 }

@@ -28,4 +28,8 @@ public class NetworkServiceListener implements INetworkService {
 		scheduler.shutdown();
 	}
 
+	@Override
+	public boolean isRunning() {
+		return !scheduler.isTerminated();
+	}
 }

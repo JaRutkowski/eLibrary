@@ -14,13 +14,15 @@ import com.javafee.elibrary.hibernate.dao.HibernateUtil;
 import com.javafee.elibrary.hibernate.dto.library.Lend;
 
 import lombok.Getter;
+import lombok.Setter;
 
 public class LoanTableModel extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
 
 	@Getter
+	@Setter
 	private List<Lend> lends;
-	private String[] columns;
+	protected String[] columns;
 
 	public LoanTableModel() {
 		super();
@@ -56,7 +58,7 @@ public class LoanTableModel extends AbstractTableModel {
 	}
 
 	@SuppressWarnings("unchecked")
-	private void prepareHibernateDao() {
+	protected void prepareHibernateDao() {
 		this.lends = HibernateUtil.getSession().createQuery("from Lend as len join fetch len.volume " +
 				"where len.isReturned = false").list();
 	}
@@ -117,7 +119,7 @@ public class LoanTableModel extends AbstractTableModel {
 			int diffYear = endCalendar.get(Calendar.YEAR) - startCalendar.get(Calendar.YEAR);
 			diffMonth = diffYear * 12 + endCalendar.get(Calendar.MONTH) - startCalendar.get(Calendar.MONTH);
 		}
-		return diffMonth * Constants.APPLICATION_PENALTY_VALUE;
+		return diffMonth * Double.valueOf(SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_PENALTY_VALUE).getValue());
 	}
 
 	@Override

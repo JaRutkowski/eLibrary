@@ -5,25 +5,25 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+
+import org.oxbow.swingbits.util.Strings;
 
 import com.javafee.elibrary.core.common.Constants;
 import com.javafee.elibrary.core.common.Constants.Role;
-import com.javafee.elibrary.core.common.IRegistrationForm;
 import com.javafee.elibrary.core.common.Params;
 import com.javafee.elibrary.core.common.SystemProperties;
 import com.javafee.elibrary.core.common.Utils;
+import com.javafee.elibrary.core.common.action.IRegistrationForm;
 import com.javafee.elibrary.core.emailform.MailSenderEvent;
 import com.javafee.elibrary.core.exception.LogGuiException;
 import com.javafee.elibrary.core.exception.RefusedLogInException;
 import com.javafee.elibrary.core.exception.RefusedRegistrationException;
 import com.javafee.elibrary.core.startform.RegistrationEvent.RegistrationFailureCause;
-import com.javafee.elibrary.hibernate.dao.HibernateDao;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
 import com.javafee.elibrary.hibernate.dao.common.Common;
 import com.javafee.elibrary.hibernate.dto.association.City;
@@ -32,13 +32,13 @@ import com.javafee.elibrary.hibernate.dto.common.UserData;
 import com.javafee.elibrary.hibernate.dto.common.message.Message;
 import com.javafee.elibrary.hibernate.dto.common.message.Recipient;
 import com.javafee.elibrary.hibernate.dto.library.Client;
+import com.javafee.elibrary.hibernate.dto.library.LibraryData;
 import com.javafee.elibrary.hibernate.dto.library.Worker;
 
 public class Actions implements IRegistrationForm {
 	private StartForm startForm = new StartForm();
 
 	private LogInEvent logInEvent;
-	private RegistrationEvent registrationEvent;
 
 	public void control() {
 		if (MainSplashScreen.isNull())
@@ -60,13 +60,7 @@ public class Actions implements IRegistrationForm {
 	}
 
 	private void reloadComboBoxCity() {
-		DefaultComboBoxModel<City> comboBoxCityModel = new DefaultComboBoxModel<City>();
-		HibernateDao<City, Integer> city = new HibernateDao<City, Integer>(City.class);
-		List<City> cityListToSort = city.findAll();
-		cityListToSort.sort(Comparator.comparing(City::getName, Comparator.nullsFirst(Comparator.naturalOrder())));
-		cityListToSort.forEach(c -> comboBoxCityModel.addElement(c));
-
-		startForm.getRegistrationPanel().getComboBoxCity().setModel(comboBoxCityModel);
+		com.javafee.elibrary.core.common.Common.fillComboBoxCity(startForm.getRegistrationPanel().getComboBoxCity());
 	}
 
 	private void onClickBtnForgotPassword() {
@@ -150,9 +144,6 @@ public class Actions implements IRegistrationForm {
 
 	@Override
 	public void onClickBtnRegisterNow() {
-		// test
-
-		// test
 		reloadRegistrationPanel();
 		if (validateRegistration()) {
 			switchPerspectiveToRegistrationOrLogIn(false);
@@ -165,21 +156,9 @@ public class Actions implements IRegistrationForm {
 						? new SimpleDateFormat("dd-MM-yyyy").parse(new SimpleDateFormat("dd-MM-yyyy")
 						.format(startForm.getRegistrationPanel().getDateChooserBirthDate().getDate()))
 						: null;
-
-				if (birthDate == null) {
-					registrationEvent = RegistrationEvent.getInstance(
-							startForm.getRegistrationPanel().getTextFieldPeselNumber().getText(),
-							startForm.getRegistrationPanel().getTextFieldDocumentNumber().getText(),
-							startForm.getRegistrationPanel().getTextFieldName().getText(),
-							startForm.getRegistrationPanel().getTextFieldSurname().getText(),
-							startForm.getRegistrationPanel().getTextFieldAddress().getText(),
-							(City) startForm.getRegistrationPanel().getComboBoxCity().getSelectedItem(), sex, birthDate,
-							startForm.getRegistrationPanel().getTextFieldLogin().getText(),
-							startForm.getRegistrationPanel().getTextFieldEMail().getText(),
-							String.valueOf(startForm.getRegistrationPanel().getPasswordField().getPassword()),
-							Role.WORKER_LIBRARIAN);
-				} else if (birthDate.before(new Date())) {
-					registrationEvent = RegistrationEvent.getInstance(
+				RegistrationEvent.forceClearRegistrationEvenet();
+				if (birthDate == null || birthDate.before(new Date())) {
+					RegistrationEvent.getInstance(
 							startForm.getRegistrationPanel().getTextFieldPeselNumber().getText(),
 							startForm.getRegistrationPanel().getTextFieldDocumentNumber().getText(),
 							startForm.getRegistrationPanel().getTextFieldName().getText(),
@@ -191,10 +170,6 @@ public class Actions implements IRegistrationForm {
 							String.valueOf(startForm.getRegistrationPanel().getPasswordField().getPassword()),
 							Role.WORKER_LIBRARIAN);
 				} else {
-					// Utils.displayOptionPane(
-					// SystemProperties.getInstance().getResourceBundle().getString("startForm.registrationError9"),
-					// SystemProperties.getInstance().getResourceBundle().getString("startForm.registrationErrorTitle"),
-					// JOptionPane.INFORMATION_MESSAGE);
 					Params.getInstance().add("INCORRECT_BIRTH_DATE", RegistrationFailureCause.INCORRECT_BIRTH_DATE);
 					throw new RefusedRegistrationException("Cannot register to the system");
 				}
@@ -211,8 +186,10 @@ public class Actions implements IRegistrationForm {
 							.getString("startForm.registrationError6"));
 				}
 				if (Params.getInstance().get("WEAK_PASSWORD") != null) {
-					errorBuilder.append(SystemProperties.getInstance().getResourceBundle()
-							.getString("startForm.registrationError7"));
+					errorBuilder.append(MessageFormat.format(SystemProperties.getInstance().getResourceBundle()
+									.getString("startForm.registrationError7"),
+							SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_MIN_PASSWORD_LENGTH).getValue(),
+							SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_MAX_PASSWORD_LENGTH).getValue()));
 				}
 				if (Params.getInstance().get("INCORRECT_BIRTH_DATE") != null) {
 					errorBuilder.append(SystemProperties.getInstance().getResourceBundle()
@@ -225,8 +202,7 @@ public class Actions implements IRegistrationForm {
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
-
-			if (registrationEvent != null)
+			if (RegistrationEvent.getRegistrationEvent() != null)
 				Utils.displayOptionPane(
 						SystemProperties.getInstance().getResourceBundle().getString("startForm.registrationSuccess2"),
 						SystemProperties.getInstance().getResourceBundle()
@@ -332,7 +308,8 @@ public class Actions implements IRegistrationForm {
 
 	private boolean validateForgotPassword() {
 		boolean result = false;
-		if (!com.javafee.elibrary.core.common.Common.checkInternetConnectivity())
+		if (!com.javafee.elibrary.core.common.Common.checkInternetConnectivity() ||
+				!Strings.isEmpty(com.javafee.elibrary.core.common.Common.checkEmailServerConnectivity()))
 			JOptionPane.showMessageDialog(startForm.getFrame(),
 					SystemProperties.getInstance().getResourceBundle()
 							.getString("startForm.validateForgotPasswordError4"),
@@ -393,16 +370,26 @@ public class Actions implements IRegistrationForm {
 
 	@Override
 	public boolean validateRegistration() {
-		boolean result = false;
-		if (startForm.getRegistrationPanel().getTextFieldLogin().getText().isEmpty()
-				|| startForm.getRegistrationPanel().getPasswordField().getPassword().length == 0)
+		Optional<LibraryData> libraryData =
+				Common.findLibraryDataById(com.javafee.elibrary.hibernate.dao.common.Constants.DATA_BASE_LIBRARY_DATA_ID);
+		boolean result = false,
+				isLoginAndPasswordNotProvided = startForm.getRegistrationPanel().getTextFieldLogin().getText().isEmpty()
+						|| startForm.getRegistrationPanel().getPasswordField().getPassword().length == 0,
+				isSystemInitialized = libraryData.isPresent();
+		if (isLoginAndPasswordNotProvided || !isSystemInitialized) {
+			StringBuilder errorBuilder = new StringBuilder();
+			if (isLoginAndPasswordNotProvided)
+				errorBuilder.append(SystemProperties.getInstance().getResourceBundle()
+						.getString("startForm.validateRegistrationError8"));
+			if (!isSystemInitialized)
+				errorBuilder.append(SystemProperties.getInstance().getResourceBundle()
+						.getString("startForm.validateRegistrationError9"));
 			JOptionPane.showMessageDialog(startForm.getFrame(),
+					errorBuilder.toString(),
 					SystemProperties.getInstance().getResourceBundle()
-							.getString("startForm.validateRegistrationError8"),
-					SystemProperties.getInstance().getResourceBundle()
-							.getString("startForm.validateRegistrationError8Title"),
+							.getString("errorDialog.title"),
 					JOptionPane.ERROR_MESSAGE);
-		else
+		} else
 			result = true;
 		switchPerspectiveToRegistrationOrLogIn(true);
 		return result;

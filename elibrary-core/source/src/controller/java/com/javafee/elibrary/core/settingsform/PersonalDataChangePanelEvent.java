@@ -1,21 +1,16 @@
 package com.javafee.elibrary.core.settingsform;
 
-import java.util.Comparator;
-import java.util.List;
-
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 import com.javafee.elibrary.core.common.Common;
 import com.javafee.elibrary.core.common.Constants;
-import com.javafee.elibrary.core.common.IActionForm;
 import com.javafee.elibrary.core.common.Params;
 import com.javafee.elibrary.core.common.SystemProperties;
 import com.javafee.elibrary.core.common.Utils;
 import com.javafee.elibrary.core.common.Validator;
+import com.javafee.elibrary.core.common.action.IActionForm;
 import com.javafee.elibrary.core.model.WorkerTableModel;
 import com.javafee.elibrary.core.startform.LogInEvent;
-import com.javafee.elibrary.hibernate.dao.HibernateDao;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
 import com.javafee.elibrary.hibernate.dto.association.City;
 import com.javafee.elibrary.hibernate.dto.common.UserData;
@@ -59,13 +54,7 @@ public class PersonalDataChangePanelEvent implements IActionForm {
 	}
 
 	private void reloadComboBoxCity() {
-		DefaultComboBoxModel<City> comboBoxCityModel = new DefaultComboBoxModel<City>();
-		HibernateDao<City, Integer> city = new HibernateDao<>(City.class);
-		List<City> cityListToSort = city.findAll();
-		cityListToSort.sort(Comparator.comparing(City::getName, Comparator.nullsFirst(Comparator.naturalOrder())));
-		cityListToSort.forEach(c -> comboBoxCityModel.addElement(c));
-
-		settingsForm.getSettingsPanel().getPersonalDataChangePanel().getPersonalDataPanel().getComboBoxCity().setModel(comboBoxCityModel);
+		Common.fillComboBoxCity(settingsForm.getSettingsPanel().getPersonalDataChangePanel().getPersonalDataPanel().getComboBoxCity());
 	}
 
 	private void onClickBtnAccept() {

@@ -17,7 +17,9 @@ import com.javafee.elibrary.hibernate.dao.common.Common;
 import com.javafee.elibrary.hibernate.dto.common.SystemProperties;
 
 import lombok.Setter;
+import lombok.extern.java.Log;
 
+@Log
 public class WatchServiceDirectory implements Runnable {
 
 	@Setter
@@ -57,11 +59,11 @@ public class WatchServiceDirectory implements Runnable {
 							key.reset();
 						}
 					} catch (InterruptedException e) {
-						e.printStackTrace();
+						log.severe(e.getMessage());
 					}
 				}
 			} catch (IOException e) {
-				e.printStackTrace();
+				log.severe(e.getMessage());
 			}
 		}
 	}

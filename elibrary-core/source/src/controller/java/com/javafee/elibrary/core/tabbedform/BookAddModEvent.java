@@ -17,11 +17,11 @@ import org.hibernate.exception.ConstraintViolationException;
 
 import com.javafee.elibrary.core.common.Constants;
 import com.javafee.elibrary.core.common.Constants.Context;
-import com.javafee.elibrary.core.common.IEvent;
 import com.javafee.elibrary.core.common.Params;
 import com.javafee.elibrary.core.common.SystemProperties;
 import com.javafee.elibrary.core.common.Utils;
 import com.javafee.elibrary.core.common.Validator;
+import com.javafee.elibrary.core.common.action.IEvent;
 import com.javafee.elibrary.core.exception.LogGuiException;
 import com.javafee.elibrary.core.model.AuthorTableModel;
 import com.javafee.elibrary.core.model.BookTableModel;
@@ -267,21 +267,21 @@ public class BookAddModEvent implements IEvent {
 
 	private List<Author> getSelectedAuthors() {
 		List<Author> authorList = new ArrayList<Author>();
-		for (int index : bookAddModFrame.getAuthorTable().getSelectedRows())
+		for (var index : bookAddModFrame.getAuthorTable().getSelectedRows())
 			authorList.add(((AuthorTableModel) bookAddModFrame.getAuthorTable().getModel()).getAuthor(index));
 		return !authorList.isEmpty() ? authorList : null;
 	}
 
 	private List<Category> getSelectedCategories() {
 		List<Category> categoryList = new ArrayList<Category>();
-		for (int index : bookAddModFrame.getCategoryTable().getSelectedRows())
+		for (var index : bookAddModFrame.getCategoryTable().getSelectedRows())
 			categoryList.add(((CategoryTableModel) bookAddModFrame.getCategoryTable().getModel()).getCategory(index));
 		return !categoryList.isEmpty() ? categoryList : null;
 	}
 
 	private List<PublishingHouse> getSelectedPublishingHouses() {
 		List<PublishingHouse> publishingHouseList = new ArrayList<PublishingHouse>();
-		for (int index : bookAddModFrame.getPublishingHouseTable().getSelectedRows())
+		for (var index : bookAddModFrame.getPublishingHouseTable().getSelectedRows())
 			publishingHouseList.add(((PublishingHouseTableModel) bookAddModFrame.getPublishingHouseTable().getModel())
 					.getPublishingHouse(index));
 		return !publishingHouseList.isEmpty() ? publishingHouseList : null;
@@ -309,6 +309,7 @@ public class BookAddModEvent implements IEvent {
 				publishingHouseIndexes = new ArrayList<>();
 
 		if (Params.getInstance().get("selectedBook") != null) {
+			reloadTablesData();
 			clearTablesSelection();
 			((Book) Params.getInstance().get("selectedBook")).getAuthor().forEach(e -> authorIndexes
 					.add(((AuthorTableModel) bookAddModFrame.getAuthorTable().getModel()).getAuthors().indexOf(e)));
@@ -323,7 +324,6 @@ public class BookAddModEvent implements IEvent {
 			publishingHouseIndexes
 					.forEach(e -> {
 						bookAddModFrame.getPublishingHouseTable().addRowSelectionInterval(e, e);
-						System.out.println(e);
 					});
 		}
 	}
@@ -359,6 +359,7 @@ public class BookAddModEvent implements IEvent {
 		((AuthorTableModel) bookAddModFrame.getAuthorTable().getModel()).reloadData();
 		((CategoryTableModel) bookAddModFrame.getCategoryTable().getModel()).reloadData();
 		((PublishingHouseTableModel) bookAddModFrame.getPublishingHouseTable().getModel()).reloadData();
+		bookAddModFrame.reloadToDefaultTablesSelection();
 	}
 
 	private void reloadBookImagePreviewPanelWithCachedImageFile() {

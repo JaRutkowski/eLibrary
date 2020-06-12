@@ -4,23 +4,24 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 
 import org.apache.commons.io.FileUtils;
 
 import com.javafee.elibrary.core.common.Constants;
 import com.javafee.elibrary.core.common.Constants.Context;
 import com.javafee.elibrary.core.common.Constants.Role;
-import com.javafee.elibrary.core.common.IActionForm;
 import com.javafee.elibrary.core.common.Params;
 import com.javafee.elibrary.core.common.SystemProperties;
 import com.javafee.elibrary.core.common.Utils;
+import com.javafee.elibrary.core.common.Validator;
+import com.javafee.elibrary.core.common.action.IActionForm;
 import com.javafee.elibrary.core.exception.LogGuiException;
 import com.javafee.elibrary.core.exception.RefusedLibraryEventLoadingException;
 import com.javafee.elibrary.core.model.VolumeLoanTableModel;
 import com.javafee.elibrary.core.model.VolumeReadingRoomTableModel;
 import com.javafee.elibrary.core.model.VolumeTableModel;
 import com.javafee.elibrary.core.startform.LogInEvent;
+import com.javafee.elibrary.core.unicomponent.jtable.imortexportable.ImportExportableJTable;
 import com.javafee.elibrary.core.uniform.ImagePanel;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
 import com.javafee.elibrary.hibernate.dto.library.Book;
@@ -85,7 +86,7 @@ public class TabLibraryEvent implements IActionForm {
 				tabbedForm.getPanelLibrary().getImagePreviewPanelLoan());
 	}
 
-	private void onBookTableListSelectionChange(JTable jTable, ImagePanel imagePreviewPanel) {
+	private void onBookTableListSelectionChange(ImportExportableJTable jTable, ImagePanel imagePreviewPanel) {
 		if (jTable.getSelectedRow() != -1 && jTable
 				.convertRowIndexToModel(jTable.getSelectedRow()) != -1) {
 
@@ -135,7 +136,7 @@ public class TabLibraryEvent implements IActionForm {
 					Volume selectedVolume = ((VolumeReadingRoomTableModel) tabbedForm.getPanelLibrary()
 							.getReadingRoomVolumeTable().getModel()).getVolume(selectedRowIndex);
 
-					if (!checkIfVolumeIsLent(selectedVolume) && !selectedVolume.getIsReserve()) {
+					if (!checkIfVolumeIsLentOrReserved(selectedVolume)) {
 						HibernateUtil.beginTransaction();
 						HibernateUtil.getSession().delete(selectedVolume);
 						HibernateUtil.commitTransaction();
@@ -170,7 +171,7 @@ public class TabLibraryEvent implements IActionForm {
 					Volume selectedVolume = ((VolumeLoanTableModel) tabbedForm.getPanelLibrary().getLoanVolumeTable()
 							.getModel()).getVolume(selectedRowIndex);
 
-					if (!checkIfVolumeIsLent(selectedVolume) && !selectedVolume.getIsReserve()) {
+					if (!checkIfVolumeIsLentOrReserved(selectedVolume)) {
 						HibernateUtil.beginTransaction();
 						HibernateUtil.getSession().delete(selectedVolume);
 						HibernateUtil.commitTransaction();
@@ -231,7 +232,7 @@ public class TabLibraryEvent implements IActionForm {
 						.getModel()).getVolume(selectedRowIndex);
 				Volume volumeShallowClone = (Volume) selectedVolume.clone();
 
-				if (!checkIfVolumeIsLent(selectedVolume) && !selectedVolume.getIsReserve()) {
+				if (!checkIfVolumeIsLentOrReserved(selectedVolume)) {
 
 					Params.getInstance().add("selectedVolume", volumeShallowClone);
 					Params.getInstance().add("selectedRowIndex", selectedRowIndex);
@@ -273,8 +274,9 @@ public class TabLibraryEvent implements IActionForm {
 
 	}
 
-	private boolean checkIfVolumeIsLent(Volume volume) {
-		return !volume.getLend().isEmpty() && volume.getLend().stream().filter(l -> !l.getIsReturned()).findFirst().isPresent();
+	private boolean checkIfVolumeIsLentOrReserved(Volume volume) {
+		return !volume.getLend().isEmpty() && volume.getLend().stream().filter(l -> !l.getIsReturned()).findFirst().isPresent()
+				|| !Validator.validateIfVolumeActiveReservationExists(volume.getIdVolume());
 	}
 
 	private void switchPerspectiveToClient(boolean isClient) {

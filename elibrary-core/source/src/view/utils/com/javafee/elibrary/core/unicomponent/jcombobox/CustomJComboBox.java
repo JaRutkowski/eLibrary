@@ -9,4 +9,9 @@ public class CustomJComboBox<E> extends JComboBox<E> {
 		super();
 		setFont(Utils.getApplicationUserDefinedFont());
 	}
+
+	public CustomJComboBox(E[] items) {
+		super(items);
+		setFont(Utils.getApplicationUserDefinedFont());
+	}
 }

@@ -6,11 +6,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
 
 import com.javafee.elibrary.core.common.BasePanel;
+import com.javafee.elibrary.core.common.Common;
 import com.javafee.elibrary.core.common.SystemProperties;
 import com.javafee.elibrary.core.common.Utils;
 import com.javafee.elibrary.core.model.LoanReservationTableModel;
@@ -18,28 +17,28 @@ import com.javafee.elibrary.core.model.LoanTableModel;
 import com.javafee.elibrary.core.model.RegisteredClientTableModel;
 import com.javafee.elibrary.core.model.VolumeTableModel;
 import com.javafee.elibrary.core.startform.RegistrationPanel;
+import com.javafee.elibrary.core.unicomponent.action.BtnExportAction;
+import com.javafee.elibrary.core.unicomponent.action.BtnImportAction;
 import com.javafee.elibrary.core.unicomponent.border.CustomTitledBorder;
 import com.javafee.elibrary.core.unicomponent.jbutton.CustomJButton;
-import com.javafee.elibrary.core.unicomponent.jtable.CustomJTable;
-import com.javafee.elibrary.core.unicomponent.tablefilterheader.CustomTableFilterHeader;
+import com.javafee.elibrary.core.unicomponent.jtable.imortexportable.ImportExportableJTable;
 
 import lombok.Getter;
-import net.coderazzi.filters.gui.TableFilterHeader;
 
 public class LoanServicePanel extends BasePanel {
 	private static final long serialVersionUID = 1L;
 	private JScrollPane scrollPaneClient;
 	@Getter
-	private JTable clientTable;
+	private ImportExportableJTable clientTable;
 	@Getter
-	private JTable volumeLoanTable;
+	private ImportExportableJTable volumeLoanTable;
 	@Getter
-	private JTable loanTable;
+	private ImportExportableJTable loanTable;
 	@Getter
 	private JPanel panel;
 	private JScrollPane scrollPane_reservationTable;
 	@Getter
-	private JTable reservationTable;
+	private ImportExportableJTable reservationTable;
 	@Getter
 	private JButton btnLoan;
 	@Getter
@@ -94,14 +93,11 @@ public class LoanServicePanel extends BasePanel {
 		gbc_scrollPaneClient.gridy = 0;
 		panel.add(scrollPaneClient, gbc_scrollPaneClient);
 
-		clientTable = new CustomJTable();
-		scrollPaneClient.setViewportView(clientTable);
-		@SuppressWarnings("unused")
-		TableFilterHeader customTableFilterHeader = new CustomTableFilterHeader(clientTable);
-		clientTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		clientTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		clientTable.setModel(new RegisteredClientTableModel());
-		clientTable.setAutoCreateRowSorter(true);
+		clientTable = new ImportExportableJTable(Common.prepareIconListForExportImportComboBox(),
+				new RegisteredClientTableModel(),
+				true);
+		clientTable.setActions(new BtnImportAction(clientTable), new BtnExportAction(clientTable));
+
 		scrollPaneClient.setViewportView(clientTable);
 
 		volumePanel = new JPanel();
@@ -132,17 +128,11 @@ public class LoanServicePanel extends BasePanel {
 		gbc_scrollPane_loanTable_2.gridy = 0;
 		volumePanel.add(scrollPane_loanTable_2, gbc_scrollPane_loanTable_2);
 
-		volumeLoanTable = new CustomJTable();
+		volumeLoanTable = new ImportExportableJTable(Common.prepareIconListForExportImportComboBox(),
+				new VolumeTableModel(),
+				true);
+		volumeLoanTable.setActions(new BtnImportAction(volumeLoanTable), new BtnExportAction(volumeLoanTable));
 		scrollPane_loanTable_2.setViewportView(volumeLoanTable);
-		@SuppressWarnings("unused")
-		TableFilterHeader customTableFilterHeader_volumeLoanTable = new CustomTableFilterHeader(volumeLoanTable);
-		volumeLoanTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		volumeLoanTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		volumeLoanTable.setModel(new VolumeTableModel());
-		volumeLoanTable.setAutoCreateRowSorter(true);
-		scrollPane_loanTable_2.setViewportView(volumeLoanTable);
-		@SuppressWarnings("unused")
-		TableFilterHeader customTableFilterHeader_loanTable = new CustomTableFilterHeader(volumeLoanTable);
 
 		btnLoan = new CustomJButton(SystemProperties.getInstance().getResourceBundle().getString("loanServicePanel.btnLoan"));
 		btnLoan.setIcon(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnAddToList-ico.png"))
@@ -182,13 +172,10 @@ public class LoanServicePanel extends BasePanel {
 		gbc_scrollPane_loanTable_1.gridy = 0;
 		loanPanel.add(scrollPane_loanTable_1, gbc_scrollPane_loanTable_1);
 
-		loanTable = new CustomJTable();
-		scrollPane_loanTable_1.setViewportView(loanTable);
-		loanTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		loanTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		loanTable.setModel(new LoanTableModel());
-		loanTable.setAutoCreateRowSorter(true);
-		scrollPane_loanTable_1.setViewportView(loanTable);
+		loanTable = new ImportExportableJTable(Common.prepareIconListForExportImportComboBox(),
+				new LoanTableModel(),
+				true);
+		loanTable.setActions(new BtnImportAction(loanTable), new BtnExportAction(loanTable));
 		scrollPane_loanTable_1.setViewportView(loanTable);
 
 		btnReservation = new CustomJButton(
@@ -265,12 +252,11 @@ public class LoanServicePanel extends BasePanel {
 		gbc_scrollPane_reservationTable.gridy = 0;
 		reservationPanel.add(scrollPane_reservationTable, gbc_scrollPane_reservationTable);
 
-		reservationTable = new CustomJTable();
+		reservationTable = new ImportExportableJTable(Common.prepareIconListForExportImportComboBox(),
+				new LoanReservationTableModel(), // TODO Change to ReservationTableModel()
+				true);
+		reservationTable.setActions(new BtnImportAction(reservationTable), new BtnExportAction(reservationTable));
 		scrollPane_reservationTable.setViewportView(reservationTable);
-		reservationTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		reservationTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		reservationTable.setModel(new LoanReservationTableModel()); // TODO Change to ReservationTableModel()
-		reservationTable.setAutoCreateRowSorter(true);
 
 		btnCancelReservation = new CustomJButton(
 				SystemProperties.getInstance().getResourceBundle().getString("loanServicePanel.btnCancelReservation"));

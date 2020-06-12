@@ -9,10 +9,10 @@ import com.javafee.elibrary.core.common.Constants.Role;
 import com.javafee.elibrary.core.common.Constants.Tab_Accountant;
 import com.javafee.elibrary.core.common.Constants.Tab_Client;
 import com.javafee.elibrary.core.common.Constants.Tab_Worker;
-import com.javafee.elibrary.core.common.IActionForm;
 import com.javafee.elibrary.core.common.Params;
 import com.javafee.elibrary.core.common.SystemProperties;
 import com.javafee.elibrary.core.common.Utils;
+import com.javafee.elibrary.core.common.action.IActionForm;
 import com.javafee.elibrary.core.startform.LogInEvent;
 
 public class Actions implements IActionForm {
@@ -57,6 +57,12 @@ public class Actions implements IActionForm {
 			tabbedForm.getTabbedPane().addTab(
 					SystemProperties.getInstance().getResourceBundle().getString("tabbedForm.tabLibraryTitle"), null,
 					tabbedForm.getPanelLibrary(), null);
+			tabbedForm.getTabbedPane().addTab(
+					SystemProperties.getInstance().getResourceBundle().getString("tabbedForm.tabClientLoanTitle"), null,
+					tabbedForm.getPanelClientLoans(), null);
+			tabbedForm.getTabbedPane().addTab(
+					SystemProperties.getInstance().getResourceBundle().getString("tabbedForm.tabClientReservationTitle"), null,
+					tabbedForm.getPanelClientReservations(), null);
 			tabbedForm.pack();
 		}
 
@@ -136,6 +142,12 @@ public class Actions implements IActionForm {
 			switch (Tab_Client.getByNumber(tabbedForm.getTabbedPane().getSelectedIndex())) {
 				case TAB_LIBRARY:
 					TabLibraryEvent.getInstance(tabbedForm);
+					break;
+				case TAB_CLIENT_LOAN:
+					TabClientLoanEvent.getInstance(tabbedForm);
+					break;
+				case TAB_CLIENT_RESERVATION:
+					TabClientReservationEvent.getInstance(tabbedForm);
 					break;
 				default:
 					break;
@@ -226,6 +238,8 @@ public class Actions implements IActionForm {
 	private void clearEvents() {
 		TabClientEvent.clientEvent = null;
 		TabLibraryEvent.libraryEvent = null;
+		TabClientReservationEvent.clientReservationEvent = null;
+		TabClientReservationEvent.clearDependentEvents();
 		TabBookEvent.bookEvent = null;
 		TabLoanServiceEvent.loadServiceEvent = null;
 		TabAdmDictionaryEvent.admDictionaryEvent = null;

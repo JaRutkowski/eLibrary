@@ -21,8 +21,8 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 @Data
-@ToString(exclude = "volume")
-@EqualsAndHashCode(exclude = "volume")
+@ToString(exclude = {"volume", "reservation"})
+@EqualsAndHashCode(exclude = {"volume", "reservation"})
 @Entity
 @Table(name = "lib_lend")
 @SequenceGenerator(name = "seq_lib_lend", sequenceName = "seq_lib_lend", allocationSize = 1)
@@ -55,8 +55,8 @@ public class Lend implements Cloneable {
 	private Boolean isReturned = false;
 
 	@ManyToOne(cascade = {}, fetch = FetchType.LAZY)
-	@JoinColumn(name = "reservation_client", unique = false, nullable = true, insertable = true, updatable = true)
-	private Client reservationClient;
+	@JoinColumn(name = "id_reservation", unique = false, nullable = true, insertable = true, updatable = true)
+	private Reservation reservation;
 
 	@Column(name = "queue_client", unique = false, nullable = true, insertable = true, updatable = true)
 	private Integer queueClient;

@@ -1,14 +1,17 @@
 package com.javafee.elibrary.core.settingsform;
 
+import java.text.MessageFormat;
+
 import javax.swing.JOptionPane;
 
 import org.oxbow.swingbits.util.Strings;
 
 import com.javafee.elibrary.core.common.Common;
-import com.javafee.elibrary.core.common.IActionForm;
+import com.javafee.elibrary.core.common.Constants;
 import com.javafee.elibrary.core.common.Params;
 import com.javafee.elibrary.core.common.SystemProperties;
 import com.javafee.elibrary.core.common.Utils;
+import com.javafee.elibrary.core.common.action.IActionForm;
 import com.javafee.elibrary.core.exception.LogGuiException;
 import com.javafee.elibrary.core.startform.LogInEvent;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
@@ -110,8 +113,10 @@ public class PasswordChangePanelEvent implements IActionForm {
 			result = false;
 		}
 		if (!newPasswordStrength) {
-			errorBuilder.append(SystemProperties.getInstance().getResourceBundle()
-					.getString("startForm.registrationError7")); // WEAK_PASSWORD resource
+			errorBuilder.append(MessageFormat.format(SystemProperties.getInstance().getResourceBundle()
+							.getString("startForm.registrationError7"),
+					SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_MIN_PASSWORD_LENGTH).getValue(),
+					SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_MAX_PASSWORD_LENGTH).getValue()));
 			result = false;
 		}
 

@@ -38,7 +38,7 @@ public class Worker extends UserData implements Cloneable {
 		Worker result = null;
 		try {
 			result = (Worker) super.clone();
-			for (LibraryWorker e : ((Worker) super.clone()).getLibraryWorker()) {
+			for (var e : ((Worker) super.clone()).getLibraryWorker()) {
 				result.getLibraryWorker().add((LibraryWorker) e.clone());
 			}
 

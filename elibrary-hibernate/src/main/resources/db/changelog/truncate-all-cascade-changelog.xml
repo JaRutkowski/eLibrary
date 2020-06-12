@@ -1,0 +1,37 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+				   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+				   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+	<changeSet author="Jakub.Rutkowski" id="0000000003">
+		<comment>Clear any existing legacy data in the tables</comment>
+		<sql splitStatements="true">
+			TRUNCATE TABLE public.com_city CONTINUE IDENTITY CASCADE;
+			TRUNCATE TABLE public.com_language CONTINUE IDENTITY CASCADE;
+			TRUNCATE TABLE public.com_system_data CONTINUE IDENTITY CASCADE;
+			TRUNCATE TABLE public.com_system_parameter CONTINUE IDENTITY CASCADE;
+			TRUNCATE TABLE public.com_system_properties CONTINUE IDENTITY CASCADE;
+			TRUNCATE TABLE public.com_user_data CONTINUE IDENTITY CASCADE;
+			TRUNCATE TABLE public.lib_author CONTINUE IDENTITY CASCADE;
+			TRUNCATE TABLE public.lib_book CONTINUE IDENTITY CASCADE;
+			TRUNCATE TABLE public.lib_book_author CONTINUE IDENTITY CASCADE;
+			TRUNCATE TABLE public.lib_book_category CONTINUE IDENTITY CASCADE;
+			TRUNCATE TABLE public.lib_book_publishing_house CONTINUE IDENTITY CASCADE;
+			TRUNCATE TABLE public.lib_category CONTINUE IDENTITY CASCADE;
+			TRUNCATE TABLE public.lib_client CONTINUE IDENTITY CASCADE;
+			TRUNCATE TABLE public.lib_lend CONTINUE IDENTITY CASCADE;
+			TRUNCATE TABLE public.lib_library_branch_data CONTINUE IDENTITY CASCADE;
+			TRUNCATE TABLE public.lib_library_data CONTINUE IDENTITY CASCADE;
+			TRUNCATE TABLE public.lib_library_system_data CONTINUE IDENTITY CASCADE;
+			TRUNCATE TABLE public.lib_library_worker CONTINUE IDENTITY CASCADE;
+			TRUNCATE TABLE public.lib_penalty CONTINUE IDENTITY CASCADE;
+			TRUNCATE TABLE public.lib_publishing_house CONTINUE IDENTITY CASCADE;
+			TRUNCATE TABLE public.lib_raw_lending_data CONTINUE IDENTITY CASCADE;
+			TRUNCATE TABLE public.lib_system_properties CONTINUE IDENTITY CASCADE;
+			TRUNCATE TABLE public.lib_volume CONTINUE IDENTITY CASCADE;
+			TRUNCATE TABLE public.lib_worker CONTINUE IDENTITY CASCADE;
+			TRUNCATE TABLE public.mes_message CONTINUE IDENTITY CASCADE;
+			TRUNCATE TABLE public.mes_message_type CONTINUE IDENTITY CASCADE;
+			TRUNCATE TABLE public.mes_recipient CONTINUE IDENTITY CASCADE;
+		</sql>
+	</changeSet>
+</databaseChangeLog>

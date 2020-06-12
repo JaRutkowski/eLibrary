@@ -54,7 +54,7 @@ public class LoanReservationTableModel extends AbstractTableModel {
 	private void prepareHibernateDao() {
 		this.lends = new ArrayList<>();
 		List<Lend> lends = HibernateUtil.getSession().createQuery("from Lend as len join fetch len.volume").list();
-		this.lends = lends.stream().filter(l -> !l.getIsReturned() && l.getVolume().getIsReserve())
+		this.lends = lends.stream().filter(l -> !l.getIsReturned() && l.getReservation() != null && l.getReservation().getIsActive())
 				.collect(Collectors.toList());
 	}
 
@@ -86,11 +86,14 @@ public class LoanReservationTableModel extends AbstractTableModel {
 
 		switch (Constants.LendTableColumn.getByNumber(col)) {
 			case COL_CLIENT_BASIC_DATA:
-				return lend.getReservationClient();
+				return lend.getReservation() != null && lend.getReservation().getClient() != null
+						? lend.getReservation().getClient() : "";
 			case COL_CLIENT_PESEL_NUMBER:
-				return lend.getReservationClient().getPeselNumber();
+				return lend.getReservation() != null && lend.getReservation().getClient() != null
+						? lend.getReservation().getClient().getPeselNumber() : "";
 			case COL_CLIENT_DOCUMENT_NUMBER:
-				return lend.getReservationClient().getDocumentNumber();
+				return lend.getReservation() != null && lend.getReservation().getClient() != null
+						? lend.getReservation().getClient().getDocumentNumber() : "";
 			case COL_VOLUME_BOOK_TITLE:
 				return lend.getVolume().getBook();
 			case COL_VOLUME_BOOK_ISBN_NUMBER:

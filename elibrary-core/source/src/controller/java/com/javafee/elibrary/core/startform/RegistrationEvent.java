@@ -1,7 +1,6 @@
 package com.javafee.elibrary.core.startform;
 
 import java.util.Date;
-import java.util.List;
 
 import com.javafee.elibrary.core.common.Common;
 import com.javafee.elibrary.core.common.Constants;
@@ -12,13 +11,13 @@ import com.javafee.elibrary.hibernate.dao.HibernateUtil;
 import com.javafee.elibrary.hibernate.dto.association.City;
 import com.javafee.elibrary.hibernate.dto.common.UserData;
 import com.javafee.elibrary.hibernate.dto.library.Client;
-import com.javafee.elibrary.hibernate.dto.library.LibraryData;
 import com.javafee.elibrary.hibernate.dto.library.LibraryWorker;
 import com.javafee.elibrary.hibernate.dto.library.Worker;
 
 import lombok.Getter;
 
 public class RegistrationEvent {
+	@Getter
 	private static RegistrationEvent registrationEvent = null;
 	@Getter
 	private static Date registrationDate;
@@ -51,39 +50,13 @@ public class RegistrationEvent {
 
 	private static boolean checkRegistration(String login, String password, String peselNumber, Role role) {
 		boolean result = false;
+		UserData userData = (UserData) HibernateUtil.getSession().getNamedQuery("UserData.checkIfUserDataLoginExist")
+				.setParameter("login", login).uniqueResult();
 		switch (role) {
 			case WORKER_LIBRARIAN:
-				Worker worker = (Worker) HibernateUtil.getSession().getNamedQuery("Worker.checkIfWorkerLoginExist")
-						.setParameter("login", login).uniqueResult();
-
-				if (worker != null)
-					Params.getInstance().add("ALREADY_REGISTERED", RegistrationFailureCause.ALREADY_REGISTERED);
-				else {
-					if (Common.checkPasswordStrength(password))
-						result = true;
-					else
-						Params.getInstance().add("WEAK_PASSWORD", RegistrationFailureCause.WEAK_PASSWORD);
-				}
-			case ADMIN:
-				break;
 			case CLIENT:
-				Client client = (Client) HibernateUtil.getSession().getNamedQuery("Client.checkIfClientLoginExist")
-						.setParameter("login", login).uniqueResult();
-				// Client existingPeselClient = (Client)
-				// HibernateUtil.getSession().getNamedQuery("UserData.checkIfUserDataPeselExist")
-				// .setParameter("peselNumber", peselNumber).uniqueResult();
-				if (client != null)
-					Params.getInstance().add("ALREADY_REGISTERED", RegistrationFailureCause.ALREADY_REGISTERED);
-					// if (!"".equals(peselNumber) && (client != null || existingPeselClient !=
-					// null))
-					// Params.getInstance().add("ALREADY_REGISTERED",
-					// RegistrationFailureCause.ALREADY_REGISTERED);
-				else {
-					if (Common.checkPasswordStrength(password))
-						result = true;
-					else
-						Params.getInstance().add("WEAK_PASSWORD", RegistrationFailureCause.WEAK_PASSWORD);
-				}
+				result = performCheck(userData, password);
+			case ADMIN:
 				break;
 			case WORKER_ACCOUNTANT:
 				break;
@@ -91,6 +64,17 @@ public class RegistrationEvent {
 				break;
 		}
 
+		return result;
+	}
+
+	private static boolean performCheck(UserData userData, String password) {
+		boolean result = false;
+		if (userData != null)
+			Params.getInstance().add("ALREADY_REGISTERED", RegistrationFailureCause.ALREADY_REGISTERED);
+		else if (Common.checkPasswordStrength(password))
+			result = true;
+		else
+			Params.getInstance().add("WEAK_PASSWORD", RegistrationFailureCause.WEAK_PASSWORD);
 		return result;
 	}
 
@@ -122,20 +106,8 @@ public class RegistrationEvent {
 				LibraryWorker lWorker = new LibraryWorker();
 				lWorker.setIsAccountant(false);
 				lWorker.setWorker(worker);
-				@SuppressWarnings("unchecked")
-				List<LibraryData> libData = HibernateUtil.getSession()
-						.createQuery("from LibraryData where idLibraryData = 1").list();
-				if (libData.isEmpty()) {
-					LibraryData libDataAdm = new LibraryData();
-					libDataAdm.setName("Adm");
-
-					HibernateUtil.getSession().save(libDataAdm);
-					HibernateUtil.commitTransaction();
-
-					HibernateUtil.beginTransaction();
-					lWorker.setLibraryData(libDataAdm);
-				} else
-					lWorker.setLibraryData(libData.get(0));
+				lWorker.setLibraryData(com.javafee.elibrary.hibernate.dao.common.Common.findLibraryDataById(
+						com.javafee.elibrary.hibernate.dao.common.Constants.DATA_BASE_LIBRARY_DATA_ID).get());
 				worker.getLibraryWorker().add(lWorker);
 				HibernateUtil.getSession().save(lWorker);
 				resultUserData = worker;
@@ -167,11 +139,5 @@ public class RegistrationEvent {
 
 		HibernateUtil.commitTransaction();
 		return resultUserData;
-	}
-
-	@SuppressWarnings("unused")
-	private static boolean checkParameters(String peselNumber) {
-		boolean result = false;
-		return result;
 	}
 }

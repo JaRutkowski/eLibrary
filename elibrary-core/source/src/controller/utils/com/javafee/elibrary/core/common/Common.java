@@ -1,16 +1,26 @@
 package com.javafee.elibrary.core.common;
 
+import java.awt.*;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
+import java.util.Vector;
 import java.util.function.Consumer;
 
+import javax.imageio.ImageIO;
+import javax.mail.MessagingException;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.table.AbstractTableModel;
 
 import org.hibernate.resource.transaction.spi.TransactionStatus;
 
@@ -18,9 +28,12 @@ import com.javafee.elibrary.core.common.networkservice.NetworkServiceListener;
 import com.javafee.elibrary.core.common.timerservice.TimerServiceListener;
 import com.javafee.elibrary.core.common.watchservice.WatchServiceListener;
 import com.javafee.elibrary.core.emailform.TabTemplatePageEvent;
+import com.javafee.elibrary.core.mail.MailSender;
 import com.javafee.elibrary.core.startform.RegistrationPanel;
 import com.javafee.elibrary.core.tabbedform.Actions;
+import com.javafee.elibrary.core.tabbedform.clients.ClientTablePanel;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
+import com.javafee.elibrary.hibernate.dto.association.City;
 import com.javafee.elibrary.hibernate.dto.common.UserData;
 import com.javafee.elibrary.hibernate.dto.library.Client;
 import com.javafee.elibrary.hibernate.dto.library.Worker;
@@ -43,6 +56,8 @@ import edu.vt.middleware.password.Rule;
 import edu.vt.middleware.password.RuleResult;
 import edu.vt.middleware.password.UppercaseCharacterRule;
 import edu.vt.middleware.password.WhitespaceRule;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.java.Log;
 
 @Log
@@ -53,6 +68,10 @@ public final class Common {
 	private static NetworkServiceListener networkServiceListener = null;
 
 	private static TimerServiceListener timerServiceListener = null;
+
+	@Getter
+	@Setter
+	private static List<City> cities = null;
 
 	public static final String createMd5(String password) {
 		String md5 = null;
@@ -68,6 +87,14 @@ public final class Common {
 		return md5;
 	}
 
+	public static final int diffDatesByPeriodType(Date first, Date second, int period) {
+		Calendar firstCalendar = Calendar.getInstance(),
+				secondCalender = Calendar.getInstance();
+		firstCalendar.setTime(first);
+		secondCalender.setTime(second);
+		return secondCalender.get(period) - firstCalendar.get(period);
+	}
+
 	public static final String generatePassword() {
 		PasswordGenerator generator = new PasswordGenerator();
 
@@ -78,14 +105,14 @@ public final class Common {
 		rules.add(new UppercaseCharacterRule(1));
 		rules.add(new LowercaseCharacterRule(1));
 
-		return generator.generatePassword(Constants.APPLICATION_GENERATE_PASSWORD_LENGTH, rules);
+		return generator.generatePassword(Integer.valueOf(SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_GENERATED_PASSWORD_LENGTH).getValue()), rules);
 	}
 
 	public static final boolean checkPasswordStrength(String password) {
 		boolean result = false;
-		// password must be between 8 and 16 chars long
-		LengthRule lengthRule = new LengthRule(Constants.APPLICATION_MIN_PASSWORD_LENGTH,
-				Constants.APPLICATION_MAX_PASSWORD_LENGTH);
+		// password must be between APPLICATION_MIN_PASSWORD_LENGTH and APPLICATION_MAX_PASSWORD_LENGTH chars long
+		LengthRule lengthRule = new LengthRule(Integer.valueOf(SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_MIN_PASSWORD_LENGTH).getValue()),
+				Integer.valueOf(SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_MAX_PASSWORD_LENGTH).getValue()));
 		// don't allow whitespace
 		WhitespaceRule whitespaceRule = new WhitespaceRule();
 		// control allowed characters
@@ -135,6 +162,31 @@ public final class Common {
 		comboBoxDataList.add((T) Constants.APPLICATION_COMBO_BOX_BLANK_OBJECT);
 	}
 
+	public static List prepareIconListForExportImportComboBox() {
+		List itemList = null;
+		try {
+			itemList = List.of(
+					new ImageIcon(new ImageIcon(ImageIO.read(ClientTablePanel.class.getResource("/images/csv-ico.svg")))
+							.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH), Constants.APPLICATION_CSV_EXTENSION),
+					new ImageIcon(new ImageIcon(ImageIO.read(ClientTablePanel.class.getResource("/images/excel-ico.svg")))
+							.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH), Constants.APPLICATION_XLSX_EXTENSION),
+					new ImageIcon(new ImageIcon(ImageIO.read(ClientTablePanel.class.getResource("/images/pdf-ico.svg")))
+							.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH), Constants.APPLICATION_PDF_EXTENSION));
+		} catch (IOException e) {
+			log.severe(e.getMessage());
+		}
+		return itemList;
+	}
+
+	public static void fillComboBoxCity(JComboBox comboBoxCity) {
+		DefaultComboBoxModel<City> comboBoxCityModel = new DefaultComboBoxModel<>();
+		List<City> cityListToSort = com.javafee.elibrary.core.common.Common.getCities();
+		cityListToSort.sort(Comparator.comparing(City::getName, Comparator.nullsFirst(Comparator.naturalOrder())));
+		cityListToSort.forEach(c -> comboBoxCityModel.addElement(c));
+
+		comboBoxCity.setModel(comboBoxCityModel);
+	}
+
 	public static void fillUserDataPanel(RegistrationPanel registrationPanel, UserData userData) {
 		// Pesel number
 		registrationPanel.getTextFieldPeselNumber().setText(userData.getPeselNumber() != null ? userData.getPeselNumber() : "");
@@ -165,6 +217,37 @@ public final class Common {
 		} catch (ParseException e) {
 			log.severe(e.getMessage());
 		}
+	}
+
+	public static List<List<Object>> extractDataFromTableModel(AbstractTableModel defaultTableModel, boolean withHeader) {
+		Vector<Vector> dataVector = new Vector<>();
+		if (withHeader) insertHeaderRow(dataVector, defaultTableModel);
+		extractDataFromAbstractTableModel(dataVector, defaultTableModel);
+		List<List<Object>> resultList = new ArrayList<>();
+		for (Vector row : dataVector) {
+			resultList.add(new ArrayList<>(row));
+		}
+		return resultList;
+	}
+
+	private static Vector<Vector> insertHeaderRow(Vector<Vector> dataVector, AbstractTableModel abstractTableModel) {
+		Vector row = new Vector();
+		for (var columnIndex = 0; columnIndex < abstractTableModel.getColumnCount(); columnIndex++) {
+			row.add(abstractTableModel.getColumnName(columnIndex));
+		}
+		dataVector.add(row);
+		return dataVector;
+	}
+
+	private static Vector<Vector> extractDataFromAbstractTableModel(Vector<Vector> dataVector, AbstractTableModel abstractTableModel) {
+		for (var rowIndex = 0; rowIndex < abstractTableModel.getRowCount(); rowIndex++) {
+			Vector row = new Vector();
+			for (var columnIndex = 0; columnIndex < abstractTableModel.getColumnCount(); columnIndex++) {
+				row.add(abstractTableModel.getValueAt(rowIndex, columnIndex));
+			}
+			dataVector.add(row);
+		}
+		return dataVector;
 	}
 
 	public static Integer clearMessagesRecipientData(Integer idUserData) {
@@ -208,10 +291,21 @@ public final class Common {
 		Process process;
 		try {
 			process = java.lang.Runtime.getRuntime().exec("ping www.geeksforgeeks.org");
-			return !process.waitFor(100, TimeUnit.MILLISECONDS);
+			return process.waitFor() == 0;
 		} catch (IOException | InterruptedException e) {
 			return false;
 		}
+	}
+
+	public static String checkEmailServerConnectivity() {
+		String result = null;
+		MailSender mailSender = new MailSender();
+		try {
+			mailSender.validateConnection();
+		} catch (MessagingException e) {
+			result = e.getMessage();
+		}
+		return result;
 	}
 
 	public static void registerWatchServiceListener(TabTemplatePageEvent tabTemplatePageEvent,
@@ -225,6 +319,10 @@ public final class Common {
 			watchServiceListener.destroy();
 	}
 
+	public static boolean isWatchServiceRunning() {
+		return watchServiceListener != null && watchServiceListener.isRunning();
+	}
+
 	public static void registerNetworkServiceListener(Actions actions) {
 		networkServiceListener = new NetworkServiceListener();
 		networkServiceListener.initialize(actions);
@@ -233,6 +331,10 @@ public final class Common {
 	public static void unregisterNetworkServiceListener() {
 		if (networkServiceListener != null)
 			networkServiceListener.destroy();
+	}
+
+	public static boolean isNetworkServiceRunning() {
+		return networkServiceListener != null && networkServiceListener.isRunning();
 	}
 
 	public static void registerTimerServiceListenerSingleton(JLabel label) {

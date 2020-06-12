@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+		xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+	<property name="now" value="now()" dbms="h2"/>
+	<property name="now" value="current_timestamp" dbms="postgresql"/>
+
+	<property name="floatType" value="float4" dbms="postgresql"/>
+	<property name="clobType" value="clob" dbms="postgresql"/>
+	<property name="uuidType" value="uuid" dbms="postgresql"/>
+
+	<!-- Increment id of changeSet -->
+	<include file="src/main/resources/db/changelog/truncate-all-cascade-changelog.xml" relativeToChangelogFile="false"/>
+	<!-- Version data -->
+	<!-- generated using mvn liquibase:generateChangeLog -Dliquibase.diffTypes=data -->
+	<!-- liquibase plugin part - db configuration - should be commented in pom.xml -->
+	<!-- comment old version and add new one -->
+	<!-- increment truncate-all-cascade-changelog id -->
+	<!--<include file="src/main/resources/db/changelog/db-changelog-20200422201731UTC.xml" relativeToChangelogFile="false"/>-->
+	<!--<include file="src/main/resources/db/changelog/db-changelog-20200422210318UTC.xml" relativeToChangelogFile="false"/>-->
+	<!--<include file="src/main/resources/db/changelog/db-changelog-20200501192149UTC.xml" relativeToChangelogFile="false"/>-->
+	<!--<include file="src/main/resources/db/changelog/db-changelog-20200514202928UTC.xml" relativeToChangelogFile="false"/>-->
+	<include file="src/main/resources/db/changelog/db-changelog-20200607205831UTC.xml" relativeToChangelogFile="false"/>
+
+	<!-- Notes -->
+	<!-- it is possible to run DML on local: -->
+	<!--   - liquibase plugin part - db configuration - should be commented in pom.xml; -->
+	<!--   - all data should be truncated; -->
+	<!--   - last version changelog should be applied using mvn liquibase:update using dev profile. -->
+</databaseChangeLog>
