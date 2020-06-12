@@ -8,6 +8,7 @@ import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
@@ -15,7 +16,9 @@ import java.util.function.Consumer;
 
 import javax.imageio.ImageIO;
 import javax.mail.MessagingException;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.table.AbstractTableModel;
 
@@ -173,6 +176,15 @@ public final class Common {
 			log.severe(e.getMessage());
 		}
 		return itemList;
+	}
+
+	public static void fillComboBoxCity(JComboBox comboBoxCity) {
+		DefaultComboBoxModel<City> comboBoxCityModel = new DefaultComboBoxModel<>();
+		List<City> cityListToSort = com.javafee.elibrary.core.common.Common.getCities();
+		cityListToSort.sort(Comparator.comparing(City::getName, Comparator.nullsFirst(Comparator.naturalOrder())));
+		cityListToSort.forEach(c -> comboBoxCityModel.addElement(c));
+
+		comboBoxCity.setModel(comboBoxCityModel);
 	}
 
 	public static void fillUserDataPanel(RegistrationPanel registrationPanel, UserData userData) {

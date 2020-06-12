@@ -21,7 +21,8 @@
 	<!--<include file="src/main/resources/db/changelog/db-changelog-20200422201731UTC.xml" relativeToChangelogFile="false"/>-->
 	<!--<include file="src/main/resources/db/changelog/db-changelog-20200422210318UTC.xml" relativeToChangelogFile="false"/>-->
 	<!--<include file="src/main/resources/db/changelog/db-changelog-20200501192149UTC.xml" relativeToChangelogFile="false"/>-->
-	<include file="src/main/resources/db/changelog/db-changelog-20200514202928UTC.xml" relativeToChangelogFile="false"/>
+	<!--<include file="src/main/resources/db/changelog/db-changelog-20200514202928UTC.xml" relativeToChangelogFile="false"/>-->
+	<include file="src/main/resources/db/changelog/db-changelog-20200607205831UTC.xml" relativeToChangelogFile="false"/>
 
 	<!-- Notes -->
 	<!-- it is possible to run DML on local: -->

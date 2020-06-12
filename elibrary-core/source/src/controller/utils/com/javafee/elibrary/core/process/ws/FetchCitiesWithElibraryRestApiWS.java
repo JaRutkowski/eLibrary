@@ -37,8 +37,8 @@ public class FetchCitiesWithElibraryRestApiWS implements Process {
 		Long toQueryParam = fromQueryParam + (SystemProperties.getInstance().getCitiesPackageSize() - 1);
 		try {
 			uniResponse = Unirest.get("http://localhost:8080/elibrary-rest-api-1.0-SNAPSHOT/teryt/get-cities-from-file?from=" + fromQueryParam + "&to=" + toQueryParam)
-					.header("Authorization", "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJUZXN0UEpSIiwiaWF0IjoxNTkxOTY2MTc4LCJleHAiOjE5MDc0NDU2MDB9.Auuj3yTfITni-50m0X8jRq9dtqp_WQYvajgOUFYaanjkGoWXZ-XXbT0zULn_wljT58r1Oej--xUvh8L1MmDZvA")
-					.header("login", "TestPJR")
+					.header("Authorization", "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTU5MTk5NTUwOCwiZXhwIjoxOTA3NDQ1NjAwfQ.X5QudAylDMyXy-mUQEsevQDOv9Wv4YOK8OCruvamGiIcu74SB8hmeOh3VA-7vz9RZZZaanbocVudV72DsMZZVg")
+					.header("login", "admin")
 					.queryString("out", "json")
 					.asJson();
 			response = uniResponse.getBody();
@@ -48,10 +48,13 @@ public class FetchCitiesWithElibraryRestApiWS implements Process {
 
 		JSONArray cities = response.getArray();
 
-		for (var i = 0; i < cities.length(); i++) {
-			JSONObject jsonCity = cities.getJSONObject(i);
-			responseCities.add(createCity(jsonCity.getString("name")));
-		}
+		if (cities.getJSONObject(0).length() > 0)
+			for (var i = 0; i < cities.length(); i++) {
+				JSONObject jsonCity = cities.getJSONObject(i);
+				responseCities.add(createCity(jsonCity.getString("name")));
+			}
+		else
+			log.warning("Not able to get response from WS teryt/get-cities-from method");
 
 		return responseCities;
 	}

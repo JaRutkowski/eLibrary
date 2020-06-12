@@ -4,11 +4,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.MessageFormat;
 import java.text.ParseException;
-import java.util.Comparator;
 import java.util.Date;
-import java.util.List;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 import com.javafee.elibrary.core.common.Common;
@@ -25,7 +22,6 @@ import com.javafee.elibrary.core.exception.RefusedRegistrationException;
 import com.javafee.elibrary.core.model.ClientTableModel;
 import com.javafee.elibrary.core.startform.RegistrationEvent;
 import com.javafee.elibrary.core.tabbedform.clients.frames.ClientAddModFrame;
-import com.javafee.elibrary.hibernate.dao.HibernateDao;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
 import com.javafee.elibrary.hibernate.dto.association.City;
 import com.javafee.elibrary.hibernate.dto.library.Client;
@@ -148,13 +144,7 @@ public class ClientAddModEvent implements IEvent {
 	}
 
 	private void reloadComboBoxCity() {
-		DefaultComboBoxModel<City> comboBoxCityModel = new DefaultComboBoxModel<City>();
-		HibernateDao<City, Integer> city = new HibernateDao<City, Integer>(City.class);
-		List<City> cityListToSort = city.findAll();
-		cityListToSort.sort(Comparator.comparing(City::getName, Comparator.nullsFirst(Comparator.naturalOrder())));
-		cityListToSort.forEach(c -> comboBoxCityModel.addElement(c));
-
-		clientAddModFrame.getClientDataPanel().getComboBoxCity().setModel(comboBoxCityModel);
+		Common.fillComboBoxCity(clientAddModFrame.getClientDataPanel().getComboBoxCity());
 	}
 
 	private void fillRegistrationPanel() {
