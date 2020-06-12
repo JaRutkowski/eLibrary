@@ -1,6 +1,5 @@
 package com.javafee.elibrary.rest.api.controller.echo;
 
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
 public class Echo implements EchoApi {

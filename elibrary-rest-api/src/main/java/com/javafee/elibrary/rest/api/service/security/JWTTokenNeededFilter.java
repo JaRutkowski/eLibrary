@@ -32,13 +32,16 @@ public class JWTTokenNeededFilter implements ContainerRequestFilter {
 		String authorizationHeader = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
 		String authorizationLogin = requestContext.getHeaderString(HttpHeadersUtils.LOGIN);
 
-		// Extract the token from the HTTP Authorization header
-		String token = authorizationHeader.substring("Bearer".length()).trim();
+		String token = null;
 
 		try {
-			// Validate the token
+			// Extract the token from the HTTP Authorization header
+			token = authorizationHeader.substring("Bearer".length()).trim();
+			// Extract private key for user
 			String secretKey = authorizationRepository.findPrivateKeyByLogin(authorizationLogin);
+			// Mapping a secretKey from the String to java.security.Key
 			Key key = Utils.decodeKey(secretKey, "DES");
+			// Validate the token
 			Jwts.parser().setSigningKey(key).parseClaimsJws(token);
 		} catch (Exception e) {
 			log.severe("Invalid token: " + token);

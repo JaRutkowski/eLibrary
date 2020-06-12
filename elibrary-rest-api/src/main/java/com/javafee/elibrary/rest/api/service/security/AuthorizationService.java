@@ -3,7 +3,6 @@ package com.javafee.elibrary.rest.api.service.security;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
-import java.util.Base64;
 import java.util.Date;
 
 import javax.crypto.KeyGenerator;

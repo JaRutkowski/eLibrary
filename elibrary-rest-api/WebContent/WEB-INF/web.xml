@@ -1,48 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
-    <servlet-mapping>
-        <servlet-name>javax.ws.rs.core.Application</servlet-name>
-        <url-pattern>/*</url-pattern>
-    </servlet-mapping>
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+	<servlet-mapping>
+		<servlet-name>javax.ws.rs.core.Application</servlet-name>
+		<url-pattern>/*</url-pattern>
+	</servlet-mapping>
 
-    <!-- RESTEasy - Bealdung -->
-    <!--<display-name>RestEasy Example</display-name>-->
+	<!-- RESTEasy - Bealdung -->
+	<!--<display-name>RestEasy Example</display-name>-->
 
-    <!--<context-param>-->
-        <!--<param-name>resteasy.servlet.mapping.prefix</param-name>-->
-        <!--<param-value>/rest</param-value>-->
-    <!--</context-param>-->
+	<!--<context-param>-->
+	<!--<param-name>resteasy.servlet.mapping.prefix</param-name>-->
+	<!--<param-value>/rest</param-value>-->
+	<!--</context-param>-->
 
-    <!-- RESTEasy - Mkyong -->
-    <!-- Auto scan REST service -->
-    <!--<context-param>-->
-        <!--<param-name>resteasy.scan</param-name>-->
-        <!--<param-value>true</param-value>-->
-    <!--</context-param>-->
+	<!-- RESTEasy - Mkyong -->
+	<!-- Auto scan REST service -->
+	<!--<context-param>-->
+	<!--<param-name>resteasy.scan</param-name>-->
+	<!--<param-value>true</param-value>-->
+	<!--</context-param>-->
 
-    <!--&lt;!&ndash; this need same with resteasy servlet url-pattern &ndash;&gt;-->
-    <!--<context-param>-->
-        <!--<param-name>resteasy.servlet.mapping.prefix</param-name>-->
-        <!--<param-value>/rest</param-value>-->
-    <!--</context-param>-->
+	<!--&lt;!&ndash; this need same with resteasy servlet url-pattern &ndash;&gt;-->
+	<!--<context-param>-->
+	<!--<param-name>resteasy.servlet.mapping.prefix</param-name>-->
+	<!--<param-value>/rest</param-value>-->
+	<!--</context-param>-->
 
-    <!--<listener>-->
-        <!--<listener-class>-->
-            <!--org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap-->
-        <!--</listener-class>-->
-    <!--</listener>-->
+	<!--<listener>-->
+	<!--<listener-class>-->
+	<!--org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap-->
+	<!--</listener-class>-->
+	<!--</listener>-->
 
-    <!--<servlet>-->
-        <!--<servlet-name>resteasy-servlet</servlet-name>-->
-        <!--<servlet-class>-->
-            <!--org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher-->
-        <!--</servlet-class>-->
-    <!--</servlet>-->
+	<!--<servlet>-->
+	<!--<servlet-name>resteasy-servlet</servlet-name>-->
+	<!--<servlet-class>-->
+	<!--org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher-->
+	<!--</servlet-class>-->
+	<!--</servlet>-->
 
-    <!--<servlet-mapping>-->
-        <!--<servlet-name>resteasy-servlet</servlet-name>-->
-        <!--<url-pattern>/rest/*</url-pattern>-->
-    <!--</servlet-mapping>-->
+	<!--<servlet-mapping>-->
+	<!--<servlet-name>resteasy-servlet</servlet-name>-->
+	<!--<url-pattern>/rest/*</url-pattern>-->
+	<!--</servlet-mapping>-->
 </web-app>

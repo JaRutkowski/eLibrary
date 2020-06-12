@@ -20,7 +20,7 @@ public class UserData {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_com_user_data")
 	@Column(name = "id_user_data", unique = false, nullable = false, insertable = true, updatable = true)
 	private Integer idUserData;
-	
+
 	@Column(name = "login", nullable = false, length = 15)
 	private String login;
 
