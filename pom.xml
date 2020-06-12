@@ -47,6 +47,7 @@
 
 	<modules>
 		<module>elibrary-core</module>
+		<module>elibrary-rest-api</module>
 		<module>elibrary-hibernate</module>
 	</modules>
 </project>

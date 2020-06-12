@@ -8,6 +8,7 @@ import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
@@ -15,7 +16,9 @@ import java.util.function.Consumer;
 
 import javax.imageio.ImageIO;
 import javax.mail.MessagingException;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.table.AbstractTableModel;
 
@@ -30,6 +33,7 @@ import com.javafee.elibrary.core.startform.RegistrationPanel;
 import com.javafee.elibrary.core.tabbedform.Actions;
 import com.javafee.elibrary.core.tabbedform.clients.ClientTablePanel;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
+import com.javafee.elibrary.hibernate.dto.association.City;
 import com.javafee.elibrary.hibernate.dto.common.UserData;
 import com.javafee.elibrary.hibernate.dto.library.Client;
 import com.javafee.elibrary.hibernate.dto.library.Worker;
@@ -52,6 +56,8 @@ import edu.vt.middleware.password.Rule;
 import edu.vt.middleware.password.RuleResult;
 import edu.vt.middleware.password.UppercaseCharacterRule;
 import edu.vt.middleware.password.WhitespaceRule;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.java.Log;
 
 @Log
@@ -62,6 +68,10 @@ public final class Common {
 	private static NetworkServiceListener networkServiceListener = null;
 
 	private static TimerServiceListener timerServiceListener = null;
+
+	@Getter
+	@Setter
+	private static List<City> cities = null;
 
 	public static final String createMd5(String password) {
 		String md5 = null;
@@ -166,6 +176,15 @@ public final class Common {
 			log.severe(e.getMessage());
 		}
 		return itemList;
+	}
+
+	public static void fillComboBoxCity(JComboBox comboBoxCity) {
+		DefaultComboBoxModel<City> comboBoxCityModel = new DefaultComboBoxModel<>();
+		List<City> cityListToSort = com.javafee.elibrary.core.common.Common.getCities();
+		cityListToSort.sort(Comparator.comparing(City::getName, Comparator.nullsFirst(Comparator.naturalOrder())));
+		cityListToSort.forEach(c -> comboBoxCityModel.addElement(c));
+
+		comboBoxCity.setModel(comboBoxCityModel);
 	}
 
 	public static void fillUserDataPanel(RegistrationPanel registrationPanel, UserData userData) {

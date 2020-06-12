@@ -5,12 +5,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 import org.oxbow.swingbits.util.Strings;
@@ -26,7 +24,6 @@ import com.javafee.elibrary.core.exception.LogGuiException;
 import com.javafee.elibrary.core.exception.RefusedLogInException;
 import com.javafee.elibrary.core.exception.RefusedRegistrationException;
 import com.javafee.elibrary.core.startform.RegistrationEvent.RegistrationFailureCause;
-import com.javafee.elibrary.hibernate.dao.HibernateDao;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
 import com.javafee.elibrary.hibernate.dao.common.Common;
 import com.javafee.elibrary.hibernate.dto.association.City;
@@ -63,13 +60,7 @@ public class Actions implements IRegistrationForm {
 	}
 
 	private void reloadComboBoxCity() {
-		DefaultComboBoxModel<City> comboBoxCityModel = new DefaultComboBoxModel<City>();
-		HibernateDao<City, Integer> city = new HibernateDao<City, Integer>(City.class);
-		List<City> cityListToSort = city.findAll();
-		cityListToSort.sort(Comparator.comparing(City::getName, Comparator.nullsFirst(Comparator.naturalOrder())));
-		cityListToSort.forEach(c -> comboBoxCityModel.addElement(c));
-
-		startForm.getRegistrationPanel().getComboBoxCity().setModel(comboBoxCityModel);
+		com.javafee.elibrary.core.common.Common.fillComboBoxCity(startForm.getRegistrationPanel().getComboBoxCity());
 	}
 
 	private void onClickBtnForgotPassword() {
