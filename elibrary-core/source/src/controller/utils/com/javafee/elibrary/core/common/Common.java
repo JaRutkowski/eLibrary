@@ -30,6 +30,7 @@ import com.javafee.elibrary.core.startform.RegistrationPanel;
 import com.javafee.elibrary.core.tabbedform.Actions;
 import com.javafee.elibrary.core.tabbedform.clients.ClientTablePanel;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
+import com.javafee.elibrary.hibernate.dto.association.City;
 import com.javafee.elibrary.hibernate.dto.common.UserData;
 import com.javafee.elibrary.hibernate.dto.library.Client;
 import com.javafee.elibrary.hibernate.dto.library.Worker;
@@ -52,6 +53,8 @@ import edu.vt.middleware.password.Rule;
 import edu.vt.middleware.password.RuleResult;
 import edu.vt.middleware.password.UppercaseCharacterRule;
 import edu.vt.middleware.password.WhitespaceRule;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.java.Log;
 
 @Log
@@ -62,6 +65,10 @@ public final class Common {
 	private static NetworkServiceListener networkServiceListener = null;
 
 	private static TimerServiceListener timerServiceListener = null;
+
+	@Getter
+	@Setter
+	private static List<City> cities = null;
 
 	public static final String createMd5(String password) {
 		String md5 = null;

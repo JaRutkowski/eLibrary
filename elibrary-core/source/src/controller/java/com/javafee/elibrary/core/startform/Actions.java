@@ -26,7 +26,6 @@ import com.javafee.elibrary.core.exception.LogGuiException;
 import com.javafee.elibrary.core.exception.RefusedLogInException;
 import com.javafee.elibrary.core.exception.RefusedRegistrationException;
 import com.javafee.elibrary.core.startform.RegistrationEvent.RegistrationFailureCause;
-import com.javafee.elibrary.hibernate.dao.HibernateDao;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
 import com.javafee.elibrary.hibernate.dao.common.Common;
 import com.javafee.elibrary.hibernate.dto.association.City;
@@ -64,8 +63,8 @@ public class Actions implements IRegistrationForm {
 
 	private void reloadComboBoxCity() {
 		DefaultComboBoxModel<City> comboBoxCityModel = new DefaultComboBoxModel<City>();
-		HibernateDao<City, Integer> city = new HibernateDao<City, Integer>(City.class);
-		List<City> cityListToSort = city.findAll();
+		// HibernateDao<City, Integer> city = new HibernateDao<City, Integer>(City.class);
+		List<City> cityListToSort = com.javafee.elibrary.core.common.Common.getCities();//city.findAll();
 		cityListToSort.sort(Comparator.comparing(City::getName, Comparator.nullsFirst(Comparator.naturalOrder())));
 		cityListToSort.forEach(c -> comboBoxCityModel.addElement(c));
 
