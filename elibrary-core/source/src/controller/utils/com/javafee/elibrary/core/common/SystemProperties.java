@@ -1,6 +1,7 @@
 package com.javafee.elibrary.core.common;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Comparator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -11,6 +12,7 @@ import com.javafee.elibrary.core.process.ProcessFactory;
 import com.javafee.elibrary.core.process.ws.FetchCitiesWithElibraryRestApiWS;
 import com.javafee.elibrary.hibernate.dao.HibernateDao;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
+import com.javafee.elibrary.hibernate.dto.association.City;
 import com.javafee.elibrary.hibernate.dto.common.SystemParameter;
 
 import lombok.Getter;
@@ -30,10 +32,17 @@ public class SystemProperties {
 
 	@Getter
 	@Setter
+	private Long citiesDataPackageNumber = 0l;
+	@Getter
+	@Setter
 	private Long citiesFromIndex = 1l;
 	@Getter
 	@Setter
 	private Long citiesPackageSize = 20000l;
+
+	static {
+		fetchCitiesPackage();
+	}
 
 	private SystemProperties() {
 	}
@@ -49,7 +58,6 @@ public class SystemProperties {
 	public void initializeSystem() {
 		initializeHibernateUtil();
 		initializeSystemParameters();
-		initializeCities();
 	}
 
 	private void initializeHibernateUtil() {
@@ -62,9 +70,12 @@ public class SystemProperties {
 				.collect(Collectors.toMap(SystemParameter::getName, SystemParameter::_this));
 	}
 
-	public void initializeCities() {
+	public static void fetchCitiesPackage() {
 		try {
+			Common.removeMoreComboBoxCityElementIfExists();
 			ProcessFactory.create(FetchCitiesWithElibraryRestApiWS.class).execute();
+			Common.getCities().sort(Comparator.comparing(City::getName, Comparator.nullsFirst(Comparator.naturalOrder())));
+			Common.prepareMoreComboBoxCityElement(Common.getCities());
 		} catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException e) {
 			log.severe(e.getMessage());
 		}

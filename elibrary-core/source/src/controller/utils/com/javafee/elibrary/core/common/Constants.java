@@ -383,6 +383,7 @@ public final class Constants {
 	public static final Font APPLICATION_DEFAULT_FONT = UIManager.getDefaults().getFont("TabbedPane.font");
 	public static final int APPLICATION_NETWORK_SERVICE_LISTENER_DURATION = 2;
 	public static final Object APPLICATION_COMBO_BOX_BLANK_OBJECT = null;
+	public static final String APPLICATION_COMBO_BOX_MORE_OBJECT = "More..."; //TODO: add resource code
 	public static final SimpleDateFormat APPLICATION_TIME_FORMAT = new SimpleDateFormat("HH:mm");
 	public static final SimpleDateFormat APPLICATION_DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
 	public static final SimpleDateFormat APPLICATION_DATE_TIME_FORMAT = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");

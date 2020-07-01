@@ -2,6 +2,7 @@ package com.javafee.elibrary.core.process.ws;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -25,7 +26,9 @@ public class FetchCitiesWithElibraryRestApiWS implements Process {
 	}
 
 	private void initializeCitiesWithElibraryRestApi() {
-		Common.setCities(invokeElibraryRestApi());
+		List<City> citiesPackage = invokeElibraryRestApi();
+		if (Optional.ofNullable(citiesPackage).isPresent() && !citiesPackage.isEmpty())
+			Common.getCities().addAll(citiesPackage);
 	}
 
 	private List<City> invokeElibraryRestApi() {
@@ -33,7 +36,7 @@ public class FetchCitiesWithElibraryRestApiWS implements Process {
 		JsonNode response = null;
 		HttpResponse<JsonNode> uniResponse;
 
-		Long fromQueryParam = SystemProperties.getInstance().getCitiesFromIndex();
+		Long fromQueryParam = SystemProperties.getInstance().getCitiesFromIndex() + (SystemProperties.getInstance().getCitiesPackageSize() * SystemProperties.getInstance().getCitiesDataPackageNumber());
 		Long toQueryParam = fromQueryParam + (SystemProperties.getInstance().getCitiesPackageSize() - 1);
 		try {
 			uniResponse = Unirest.get("http://localhost:8080/elibrary-rest-api-1.0-SNAPSHOT/teryt/get-cities-from-file?from=" + fromQueryParam + "&to=" + toQueryParam)
@@ -56,6 +59,7 @@ public class FetchCitiesWithElibraryRestApiWS implements Process {
 		else
 			log.warning("Not able to get response from WS teryt/get-cities-from method");
 
+		incrementCitiesPackageNumber();
 		return responseCities;
 	}
 
@@ -63,5 +67,9 @@ public class FetchCitiesWithElibraryRestApiWS implements Process {
 		City city = new City();
 		city.setName(name);
 		return city;
+	}
+
+	private void incrementCitiesPackageNumber() {
+		SystemProperties.getInstance().setCitiesDataPackageNumber(SystemProperties.getInstance().getCitiesDataPackageNumber() + 1);
 	}
 }

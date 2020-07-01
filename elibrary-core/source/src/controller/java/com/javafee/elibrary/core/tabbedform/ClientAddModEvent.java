@@ -60,7 +60,6 @@ public class ClientAddModEvent implements IEvent {
 				clientAddModFrame.getClientDataPanel().getPasswordField().setVisible(false);
 				reloadRegistrationPanel();
 			}
-			reloadComboBoxCity();
 			initializeEventHandlers();
 			clientAddModFrame.setVisible(true);
 		} else {
@@ -139,12 +138,7 @@ public class ClientAddModEvent implements IEvent {
 	}
 
 	private void reloadRegistrationPanel() {
-		reloadComboBoxCity();
 		fillRegistrationPanel();
-	}
-
-	private void reloadComboBoxCity() {
-		Common.fillComboBoxCity(clientAddModFrame.getClientDataPanel().getComboBoxCity());
 	}
 
 	private void fillRegistrationPanel() {

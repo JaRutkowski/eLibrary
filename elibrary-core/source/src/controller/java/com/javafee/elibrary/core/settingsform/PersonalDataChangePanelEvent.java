@@ -49,12 +49,7 @@ public class PersonalDataChangePanelEvent implements IActionForm {
 	}
 
 	private void reloadPersonalDataPanel() {
-		reloadComboBoxCity();
 		Common.fillUserDataPanel(settingsForm.getSettingsPanel().getPersonalDataChangePanel().getPersonalDataPanel(), LogInEvent.getUserData());
-	}
-
-	private void reloadComboBoxCity() {
-		Common.fillComboBoxCity(settingsForm.getSettingsPanel().getPersonalDataChangePanel().getPersonalDataPanel().getComboBoxCity());
 	}
 
 	private void onClickBtnAccept() {

@@ -8,7 +8,6 @@ import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
@@ -16,9 +15,7 @@ import java.util.function.Consumer;
 
 import javax.imageio.ImageIO;
 import javax.mail.MessagingException;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.table.AbstractTableModel;
 
@@ -71,7 +68,7 @@ public final class Common {
 
 	@Getter
 	@Setter
-	private static List<City> cities = null;
+	private static List<City> cities = new ArrayList<>();
 
 	public static final String createMd5(String password) {
 		String md5 = null;
@@ -162,6 +159,18 @@ public final class Common {
 		comboBoxDataList.add((T) Constants.APPLICATION_COMBO_BOX_BLANK_OBJECT);
 	}
 
+	public static void prepareMoreComboBoxCityElement(List comboBoxDataList) {
+		City moreElement = new City();
+		moreElement.setName(Constants.APPLICATION_COMBO_BOX_MORE_OBJECT);
+		comboBoxDataList.add(comboBoxDataList.size(), moreElement);
+	}
+
+	public static void removeMoreComboBoxCityElementIfExists() {
+		if (!Common.getCities().isEmpty() &&
+				(Common.getCities().size() % ((SystemProperties.getInstance().getCitiesPackageSize() * (SystemProperties.getInstance().getCitiesDataPackageNumber())) + 1)) == 0)
+			Common.getCities().remove(Common.getCities().size() - 1);
+	}
+
 	public static List prepareIconListForExportImportComboBox() {
 		List itemList = null;
 		try {
@@ -176,15 +185,6 @@ public final class Common {
 			log.severe(e.getMessage());
 		}
 		return itemList;
-	}
-
-	public static void fillComboBoxCity(JComboBox comboBoxCity) {
-		DefaultComboBoxModel<City> comboBoxCityModel = new DefaultComboBoxModel<>();
-		List<City> cityListToSort = com.javafee.elibrary.core.common.Common.getCities();
-		cityListToSort.sort(Comparator.comparing(City::getName, Comparator.nullsFirst(Comparator.naturalOrder())));
-		cityListToSort.forEach(c -> comboBoxCityModel.addElement(c));
-
-		comboBoxCity.setModel(comboBoxCityModel);
 	}
 
 	public static void fillUserDataPanel(RegistrationPanel registrationPanel, UserData userData) {

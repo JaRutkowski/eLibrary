@@ -126,7 +126,6 @@ public class WorkerAddModEvent implements IEvent {
 				workerAddModFrame.getWorkerDataPanel().getPasswordField().setVisible(false);
 				reloadRegistrationPanel();
 			}
-			reloadComboBoxCity();
 			initializeEventHandlers();
 			workerAddModFrame.setVisible(true);
 		} else {
@@ -135,12 +134,7 @@ public class WorkerAddModEvent implements IEvent {
 	}
 
 	private void reloadRegistrationPanel() {
-		reloadComboBoxCity();
 		fillRegistrationPanel();
-	}
-
-	private void reloadComboBoxCity() {
-		Common.fillComboBoxCity(workerAddModFrame.getWorkerDataPanel().getComboBoxCity());
 	}
 
 	private void fillRegistrationPanel() {
