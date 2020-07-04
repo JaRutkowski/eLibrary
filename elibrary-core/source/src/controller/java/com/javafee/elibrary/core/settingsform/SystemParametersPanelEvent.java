@@ -54,7 +54,7 @@ public class SystemParametersPanelEvent implements IActionForm {
 		settingsForm.getSettingsPanel().getSystemParametersPanel().getSpinnerApplicationPenaltyValue().setValue(
 				Double.valueOf(SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_PENALTY_VALUE).getValue()));
 		settingsForm.getSettingsPanel().getSystemParametersPanel().getSpinnerApplicationReservationLimit().setValue(
-				Double.valueOf(SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_RESERVATIONS_LIMIT).getValue()));
+				Integer.valueOf(SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_RESERVATIONS_LIMIT).getValue()));
 		settingsForm.getSettingsPanel().getSystemParametersPanel().getTextFieldApplicationEmailAddress().setText(
 				SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_EMAIL_ADDRESS).getValue());
 		settingsForm.getSettingsPanel().getSystemParametersPanel().getPasswordField().setText(
@@ -67,6 +67,8 @@ public class SystemParametersPanelEvent implements IActionForm {
 				Integer.valueOf(SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_MIN_PASSWORD_LENGTH).getValue()));
 		settingsForm.getSettingsPanel().getSystemParametersPanel().getSpinnerApplicationMaxPasswordLength().setValue(
 				Integer.valueOf(SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_MAX_PASSWORD_LENGTH).getValue()));
+		settingsForm.getSettingsPanel().getSystemParametersPanel().getSpinnerApplicationComboBoxDataPackageSize().setValue(
+				Integer.valueOf(SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_COMBO_BOX_DATA_PACKAGE_SIZE).getValue()));
 	}
 
 	private void onClickBtnAccept() {
@@ -77,7 +79,7 @@ public class SystemParametersPanelEvent implements IActionForm {
 		updateSystemParameter(systemParameter);
 
 		systemParameter = SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_RESERVATIONS_LIMIT);
-		systemParameter.setValue(((Integer) settingsForm.getSettingsPanel().getSystemParametersPanel().getSpinnerApplicationReservationLimit().getValue()).toString());
+		systemParameter.setValue(Integer.valueOf((Integer) settingsForm.getSettingsPanel().getSystemParametersPanel().getSpinnerApplicationReservationLimit().getValue()).toString());
 		updateSystemParameter(systemParameter);
 
 		String validationError = validateEmailServerConnection();
@@ -113,6 +115,10 @@ public class SystemParametersPanelEvent implements IActionForm {
 		systemParameter.setValue(settingsForm.getSettingsPanel().getSystemParametersPanel().getTextFieldApplicationTemplatesDirectoryName().getText());
 		updateSystemParameter(systemParameter);
 
+		systemParameter = SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_COMBO_BOX_DATA_PACKAGE_SIZE);
+		systemParameter.setValue(Integer.valueOf((Integer) settingsForm.getSettingsPanel().getSystemParametersPanel().getSpinnerApplicationComboBoxDataPackageSize().getValue()).toString());
+		updateSystemParameter(systemParameter);
+
 
 		Utils.displayOptionPane(
 				SystemProperties.getInstance().getResourceBundle()
@@ -133,6 +139,7 @@ public class SystemParametersPanelEvent implements IActionForm {
 		restoreAndUpdateDefaultSystemParameterValue(Constants.APPLICATION_TEMPLATE_DIRECTORY_NAME);
 		restoreAndUpdateDefaultSystemParameterValue(Constants.APPLICATION_MIN_PASSWORD_LENGTH);
 		restoreAndUpdateDefaultSystemParameterValue(Constants.APPLICATION_MAX_PASSWORD_LENGTH);
+		restoreAndUpdateDefaultSystemParameterValue(Constants.APPLICATION_COMBO_BOX_DATA_PACKAGE_SIZE);
 		reloadParametersValues();
 
 		Utils.displayOptionPane(

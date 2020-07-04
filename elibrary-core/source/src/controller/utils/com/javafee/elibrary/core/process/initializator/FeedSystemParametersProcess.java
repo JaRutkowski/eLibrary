@@ -34,6 +34,8 @@ public class FeedSystemParametersProcess implements Process {
 					.setParameter(13, Constants.DATA_BASE_SYSTEM_PARAMETER_APPLICATION_MIN_PASSWORD_LENGTH_VALUE)
 					.setParameter(14, Constants.DATA_BASE_SYSTEM_PARAMETER_APPLICATION_MAX_PASSWORD_LENGTH_NAME)
 					.setParameter(15, Constants.DATA_BASE_SYSTEM_PARAMETER_APPLICATION_MAX_PASSWORD_LENGTH_VALUE)
+					.setParameter(16, Constants.DATA_BASE_SYSTEM_PARAMETER_APPLICATION_COMBO_BOX_DATA_PACKAGE_SIZE_NAME)
+					.setParameter(17, Constants.DATA_BASE_SYSTEM_PARAMETER_APPLICATION_COMBO_BOX_DATA_PACKAGE_SIZE_VALUE)
 					.executeUpdate();
 			HibernateUtil.commitJpaTransaction();
 			HibernateUtil.beginTransaction();

@@ -161,13 +161,19 @@ public final class Common {
 
 	public static void prepareMoreComboBoxCityElement(List comboBoxDataList) {
 		City moreElement = new City();
-		moreElement.setName(Constants.APPLICATION_COMBO_BOX_MORE_OBJECT);
+		moreElement.setName(SystemProperties.getInstance().getResourceBundle().getString("comboBoxMoreElement"));
 		comboBoxDataList.add(comboBoxDataList.size(), moreElement);
+	}
+
+	public static Long getCitiesPackageSize() {
+		return SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_COMBO_BOX_DATA_PACKAGE_SIZE) != null
+				? Long.valueOf(SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_COMBO_BOX_DATA_PACKAGE_SIZE).getValue())
+				: Constants.APPLICATION_PREDEFINED_COMBO_BOX_PACKAGE_SIZE;
 	}
 
 	public static void removeMoreComboBoxCityElementIfExists() {
 		if (!Common.getCities().isEmpty() &&
-				(Common.getCities().size() % ((SystemProperties.getInstance().getCitiesPackageSize() * (SystemProperties.getInstance().getCitiesDataPackageNumber())) + 1)) == 0)
+				(Common.getCities().size() % ((getCitiesPackageSize() * (SystemProperties.getInstance().getCitiesDataPackageNumber())) + 1)) == 0)
 			Common.getCities().remove(Common.getCities().size() - 1);
 	}
 

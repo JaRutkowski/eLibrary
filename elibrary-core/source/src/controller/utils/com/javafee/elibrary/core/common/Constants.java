@@ -383,11 +383,11 @@ public final class Constants {
 	public static final Font APPLICATION_DEFAULT_FONT = UIManager.getDefaults().getFont("TabbedPane.font");
 	public static final int APPLICATION_NETWORK_SERVICE_LISTENER_DURATION = 2;
 	public static final Object APPLICATION_COMBO_BOX_BLANK_OBJECT = null;
-	public static final String APPLICATION_COMBO_BOX_MORE_OBJECT = "More..."; //TODO: add resource code
 	public static final SimpleDateFormat APPLICATION_TIME_FORMAT = new SimpleDateFormat("HH:mm");
 	public static final SimpleDateFormat APPLICATION_DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
 	public static final SimpleDateFormat APPLICATION_DATE_TIME_FORMAT = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
 	public static final Integer APPLICATION_MAX_PROLONGNATION = 5;
+	public static final Long APPLICATION_PREDEFINED_COMBO_BOX_PACKAGE_SIZE = 20000L;
 	public static Pair<Integer, Double> APPLICATION_PROLONGATION_PERIOD = new Pair<>(Calendar.MONTH, 1.0);
 	public static final String APPLICATION_CURRENCY = "PLN";
 	public static final String APPLICATION_TEMPLATE_EXTENSION = ".html";
@@ -402,6 +402,7 @@ public final class Constants {
 	public static final String APPLICATION_GENERATED_PASSWORD_LENGTH = "APPLICATION_GENERATED_PASSWORD_LENGTH";
 	public static final String APPLICATION_MIN_PASSWORD_LENGTH = "APPLICATION_MIN_PASSWORD_LENGTH";
 	public static final String APPLICATION_MAX_PASSWORD_LENGTH = "APPLICATION_MAX_PASSWORD_LENGTH";
+	public static final String APPLICATION_COMBO_BOX_DATA_PACKAGE_SIZE = "APPLICATION_COMBO_BOX_DATA_PACKAGE_SIZE";
 
 	public static final Dimension START_FORM_MINIMUM_SIZE = new Dimension(300, 200);
 	public static final Dimension EMAIL_FORM_MINIMUM_SIZE = new Dimension(800, 700);
@@ -431,8 +432,11 @@ public final class Constants {
 	public static final double SPINNER_MAXIMUM_VALUE_PENALTY = 100;
 	public static final Integer SPINNER_MINIMUM_VALUE_RESERVATION_LIMIT = 0;
 	public static final Integer SPINNER_MAXIMUM_VALUE_RESERVATION_LIMIT = 100;
-	public static final Integer SPINNER_MINIMUM_PASSWORD_LENGTH = 1;
-	public static final Integer SPINNER_MAXIMUM_PASSWORD_LENGTH = 30;
+	public static final Integer SPINNER_MINIMUM_VALUE_PASSWORD_LENGTH = 1;
+	public static final Integer SPINNER_MAXIMUM_VALUE_PASSWORD_LENGTH = 30;
+	public static final Integer SPINNER_MINIMUM_VALUE_COMBO_BOX_DATA_PACKAGE_SIZE = 1;
+	public static final Integer SPINNER_MAXIMUM_VALUE_COMBO_BOX_DATA_PACKAGE_SIZE = 300000;
+
 
 	public static final String LANGUAGE_RESOURCE_BUNDLE = "messages";
 

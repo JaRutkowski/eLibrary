@@ -2,7 +2,7 @@ package com.javafee.elibrary.core.unicomponent.action;
 
 import java.util.Optional;
 
-import com.javafee.elibrary.core.common.Constants;
+import com.javafee.elibrary.core.common.SystemProperties;
 import com.javafee.elibrary.core.unicomponent.jcombobox.citiescombobox.CitiesJComboBox;
 import com.javafee.elibrary.core.unicomponent.jtable.actiontable.Action;
 import com.javafee.elibrary.core.unicomponent.jtable.actiontable.ActionWrapper;
@@ -19,7 +19,7 @@ public class CitiesJComboBoxAction extends Action {
 
 	public void onChangeCitiesJComboBox() {
 		if (Optional.ofNullable(citiesJComboBox.getSelectedItem()).isPresent()
-				&& Constants.APPLICATION_COMBO_BOX_MORE_OBJECT
+				&& SystemProperties.getInstance().getResourceBundle().getString("comboBoxMoreElement")
 				.equals(((City) citiesJComboBox.getSelectedItem()).getName()))
 			citiesJComboBox.fetchNextDataPackage();
 	}

@@ -10,7 +10,6 @@ import javax.swing.JLabel;
 import javax.swing.JWindow;
 import javax.swing.SwingUtilities;
 
-import com.javafee.elibrary.core.common.SystemProperties;
 import com.javafee.elibrary.core.unicomponent.jlabel.CustomJLabel;
 
 class MainSplashScreen extends JWindow {
@@ -45,7 +44,6 @@ class MainSplashScreen extends JWindow {
 		Runnable waitRunner = () -> {
 			try {
 				setVisible(true);
-				SystemProperties.getInstance().initializeSystem();
 				Thread.sleep(pause);
 				SwingUtilities.invokeAndWait(closerRunner);
 			} catch (InvocationTargetException | InterruptedException e) {
