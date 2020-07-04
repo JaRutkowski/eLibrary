@@ -2,6 +2,7 @@ package com.javafee.elibrary.core.model;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.AbstractTableModel;
@@ -13,7 +14,6 @@ import com.javafee.elibrary.core.common.Validator;
 import com.javafee.elibrary.core.exception.LogGuiException;
 import com.javafee.elibrary.hibernate.dao.HibernateDao;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
-import com.javafee.elibrary.hibernate.dto.association.City;
 import com.javafee.elibrary.hibernate.dto.library.Client;
 
 public class ClientTableModel extends AbstractTableModel {
@@ -99,7 +99,7 @@ public class ClientTableModel extends AbstractTableModel {
 			case COL_ADDRESS:
 				return client.getAddress();
 			case COL_CITY:
-				return client.getCity() != null ? client.getCity().getName() : null;
+				return client.getCity();
 			case COL_SEX:
 				if (client.getSex() != null) {
 					if (Constants.DATA_BASE_MALE_SIGN.toString().equals(client.getSex().toString()))
@@ -150,7 +150,7 @@ public class ClientTableModel extends AbstractTableModel {
 				clientShallowClone.setAddress(value.toString());
 				break;
 			case COL_CITY:
-				clientShallowClone.setCity((City) value);
+				clientShallowClone.setCity(Optional.ofNullable(value).isPresent() ? value.toString() : null);
 				break;
 			case COL_SEX:
 				clientShallowClone.setSex((Character) value);

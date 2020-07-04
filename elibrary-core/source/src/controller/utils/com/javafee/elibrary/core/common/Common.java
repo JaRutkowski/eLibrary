@@ -209,7 +209,9 @@ public final class Common {
 		// Address
 		registrationPanel.getTextFieldAddress().setText(userData.getAddress() != null ? userData.getAddress() : "");
 		// City
-		registrationPanel.getComboBoxCity().setSelectedItem(userData.getCity());
+		City city = new City();
+		city.setName(userData.getCity());
+		registrationPanel.getComboBoxCity().setSelectedItem(city);
 		// Sex
 		if (userData.getSex() != null && Constants.DATA_BASE_MALE_SIGN.toString().equals(userData.getSex().toString()))
 			registrationPanel.getGroupRadioButtonSex().setSelected(registrationPanel.getRadioButtonMale().getModel(), true);

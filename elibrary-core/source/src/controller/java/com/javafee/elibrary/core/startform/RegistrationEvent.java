@@ -32,7 +32,7 @@ public class RegistrationEvent {
 	}
 
 	public static RegistrationEvent getInstance(String peselNumber, String documentNumber, String name, String surname,
-	                                            String address, City city, Character sex, Date birthDate, String login, String eMail, String password,
+	                                            String address, String city, Character sex, Date birthDate, String login, String eMail, String password,
 	                                            Role role) throws RefusedRegistrationException {
 		if (checkRegistration(login, password, peselNumber, role)) {
 			registrationEvent = new RegistrationEvent();
@@ -79,7 +79,7 @@ public class RegistrationEvent {
 	}
 
 	private static UserData createUser(String peselNumber, String documentNumber, String name, String surname,
-	                                   String address, City city, Character sex, Date birthDate, String login, String eMail, String password,
+	                                   String address, String city, Character sex, Date birthDate, String login, String eMail, String password,
 	                                   Role role) {
 		HibernateUtil.beginTransaction();
 		UserData resultUserData = null;

@@ -76,9 +76,12 @@ public class UserData {
 	@Column(name = "address", unique = false, nullable = true, insertable = true, updatable = true, length = 200)
 	private String address;
 
+	@Column(name = "city", unique = false, nullable = true, insertable = true, updatable = true, length = 200)
+	private String city;
+
 	@ManyToOne(cascade = {}, fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_city", unique = false, nullable = true, insertable = true, updatable = true)
-	private City city;
+	private City cityy;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_system_properties")

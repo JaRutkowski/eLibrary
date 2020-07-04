@@ -5,6 +5,7 @@ import java.awt.event.WindowEvent;
 import java.text.MessageFormat;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.Optional;
 
 import javax.swing.JOptionPane;
 
@@ -70,7 +71,8 @@ public class WorkerAddModEvent implements IEvent {
 		workerShallowClone.setName(workerAddModFrame.getWorkerDataPanel().getTextFieldName().getText());
 		workerShallowClone.setSurname(workerAddModFrame.getWorkerDataPanel().getTextFieldSurname().getText());
 		workerShallowClone.setAddress(workerAddModFrame.getWorkerDataPanel().getTextFieldAddress().getText());
-		workerShallowClone.setCity((City) workerAddModFrame.getWorkerDataPanel().getComboBoxCity().getSelectedItem());
+		workerShallowClone.setCity(Optional.ofNullable(workerAddModFrame.getWorkerDataPanel().getComboBoxCity().getSelectedItem()).isPresent()
+				? ((City) workerAddModFrame.getWorkerDataPanel().getComboBoxCity().getSelectedItem()).getName() : null);
 		if (workerAddModFrame.getWorkerDataPanel().getRadioButtonMale().isSelected()
 				|| workerAddModFrame.getWorkerDataPanel().getRadioButtonFemale().isSelected())
 			workerShallowClone.setSex(workerAddModFrame.getWorkerDataPanel().getRadioButtonMale().isSelected()
@@ -172,7 +174,8 @@ public class WorkerAddModEvent implements IEvent {
 								workerAddModFrame.getWorkerDataPanel().getTextFieldName().getText(),
 								workerAddModFrame.getWorkerDataPanel().getTextFieldSurname().getText(),
 								workerAddModFrame.getWorkerDataPanel().getTextFieldAddress().getText(),
-								(City) workerAddModFrame.getWorkerDataPanel().getComboBoxCity().getSelectedItem(),
+								Optional.ofNullable(workerAddModFrame.getWorkerDataPanel().getComboBoxCity().getSelectedItem()).isPresent()
+										? workerAddModFrame.getWorkerDataPanel().getComboBoxCity().getSelectedItem().toString() : null,
 								sex, birthDate,
 								workerAddModFrame.getWorkerDataPanel().getTextFieldLogin().getText(),
 								workerAddModFrame.getWorkerDataPanel().getTextFieldEMail().getText(),

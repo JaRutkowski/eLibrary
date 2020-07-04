@@ -2,6 +2,7 @@ package com.javafee.elibrary.core.model;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.AbstractTableModel;
@@ -13,7 +14,6 @@ import com.javafee.elibrary.core.common.Validator;
 import com.javafee.elibrary.core.exception.LogGuiException;
 import com.javafee.elibrary.hibernate.dao.HibernateDao;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
-import com.javafee.elibrary.hibernate.dto.association.City;
 import com.javafee.elibrary.hibernate.dto.library.Client;
 import com.javafee.elibrary.hibernate.dto.library.Worker;
 
@@ -100,7 +100,7 @@ public class WorkerTableModel extends AbstractTableModel {
 			case COL_ADDRESS:
 				return client.getAddress();
 			case COL_CITY:
-				return client.getCity() != null ? client.getCity().getName() : null;
+				return client.getCity();
 			case COL_SEX:
 				if (client.getSex() != null) {
 					if (Constants.DATA_BASE_MALE_SIGN.toString().equals(client.getSex().toString()))
@@ -152,7 +152,7 @@ public class WorkerTableModel extends AbstractTableModel {
 				workerShallowClone.setAddress(value.toString());
 				break;
 			case COL_CITY:
-				workerShallowClone.setCity((City) value);
+				workerShallowClone.setCity(Optional.ofNullable(value).isPresent() ? value.toString() : null);
 				break;
 			case COL_SEX:
 				workerShallowClone.setSex((Character) value);
