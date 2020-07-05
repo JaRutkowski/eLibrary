@@ -56,11 +56,6 @@ public class Actions implements IRegistrationForm {
 
 	@Override
 	public void reloadRegistrationPanel() {
-		reloadComboBoxCity();
-	}
-
-	private void reloadComboBoxCity() {
-		com.javafee.elibrary.core.common.Common.fillComboBoxCity(startForm.getRegistrationPanel().getComboBoxCity());
 	}
 
 	private void onClickBtnForgotPassword() {
@@ -164,7 +159,8 @@ public class Actions implements IRegistrationForm {
 							startForm.getRegistrationPanel().getTextFieldName().getText(),
 							startForm.getRegistrationPanel().getTextFieldSurname().getText(),
 							startForm.getRegistrationPanel().getTextFieldAddress().getText(),
-							(City) startForm.getRegistrationPanel().getComboBoxCity().getSelectedItem(), sex, birthDate,
+							Optional.ofNullable(startForm.getRegistrationPanel().getComboBoxCity().getSelectedItem()).isPresent()
+									? ((City) startForm.getRegistrationPanel().getComboBoxCity().getSelectedItem()).getName() : null, sex, birthDate,
 							startForm.getRegistrationPanel().getTextFieldLogin().getText(),
 							startForm.getRegistrationPanel().getTextFieldEMail().getText(),
 							String.valueOf(startForm.getRegistrationPanel().getPasswordField().getPassword()),

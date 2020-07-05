@@ -1,5 +1,7 @@
 package com.javafee.elibrary.core.settingsform;
 
+import java.util.Optional;
+
 import javax.swing.JOptionPane;
 
 import com.javafee.elibrary.core.common.Common;
@@ -49,12 +51,7 @@ public class PersonalDataChangePanelEvent implements IActionForm {
 	}
 
 	private void reloadPersonalDataPanel() {
-		reloadComboBoxCity();
 		Common.fillUserDataPanel(settingsForm.getSettingsPanel().getPersonalDataChangePanel().getPersonalDataPanel(), LogInEvent.getUserData());
-	}
-
-	private void reloadComboBoxCity() {
-		Common.fillComboBoxCity(settingsForm.getSettingsPanel().getPersonalDataChangePanel().getPersonalDataPanel().getComboBoxCity());
 	}
 
 	private void onClickBtnAccept() {
@@ -68,7 +65,9 @@ public class PersonalDataChangePanelEvent implements IActionForm {
 		userData.setName(personalDataChangePanel.getTextFieldName().getText());
 		userData.setSurname(personalDataChangePanel.getTextFieldSurname().getText());
 		userData.setAddress(personalDataChangePanel.getTextFieldAddress().getText());
-		userData.setCity((City) personalDataChangePanel.getComboBoxCity().getSelectedItem());
+		userData.setCity(Optional.ofNullable(personalDataChangePanel.getComboBoxCity().getSelectedItem()).isPresent()
+				? ((City) personalDataChangePanel.getComboBoxCity().getSelectedItem()).getName()
+				: null);
 		if (personalDataChangePanel.getRadioButtonMale().isSelected()
 				|| personalDataChangePanel.getRadioButtonFemale().isSelected())
 			userData.setSex(personalDataChangePanel.getRadioButtonMale().isSelected()
