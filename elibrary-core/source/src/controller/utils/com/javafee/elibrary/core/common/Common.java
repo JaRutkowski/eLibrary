@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.Vector;
 import java.util.function.Consumer;
 
@@ -160,9 +161,11 @@ public final class Common {
 	}
 
 	public static void prepareMoreComboBoxCityElement(List comboBoxDataList) {
-		City moreElement = new City();
-		moreElement.setName(SystemProperties.getInstance().getResourceBundle().getString("comboBoxMoreElement"));
-		comboBoxDataList.add(comboBoxDataList.size(), moreElement);
+		if (Optional.ofNullable(comboBoxDataList).isPresent() && !comboBoxDataList.isEmpty()) {
+			City moreElement = new City();
+			moreElement.setName(SystemProperties.getInstance().getResourceBundle().getString("comboBoxMoreElement"));
+			comboBoxDataList.add(comboBoxDataList.size(), moreElement);
+		}
 	}
 
 	public static Long getCitiesPackageSize() {

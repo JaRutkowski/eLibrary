@@ -45,21 +45,21 @@ public class FetchCitiesWithElibraryRestApiWS implements Process {
 					.queryString("out", "json")
 					.asJson();
 			response = uniResponse.getBody();
+			JSONArray cities = response.getArray();
+
+			if (cities.getJSONObject(0).length() > 0) {
+				for (var i = 0; i < cities.length(); i++) {
+					JSONObject jsonCity = cities.getJSONObject(i);
+					responseCities.add(createCity(jsonCity.getString("name")));
+				}
+				incrementCitiesPackageNumber();
+			} else {
+				log.warning("Not able to get response from WS teryt/get-cities-from method");
+			}
 		} catch (UnirestException e) {
 			log.severe(e.getMessage());
 		}
 
-		JSONArray cities = response.getArray();
-
-		if (cities.getJSONObject(0).length() > 0)
-			for (var i = 0; i < cities.length(); i++) {
-				JSONObject jsonCity = cities.getJSONObject(i);
-				responseCities.add(createCity(jsonCity.getString("name")));
-			}
-		else
-			log.warning("Not able to get response from WS teryt/get-cities-from method");
-
-		incrementCitiesPackageNumber();
 		return responseCities;
 	}
 
