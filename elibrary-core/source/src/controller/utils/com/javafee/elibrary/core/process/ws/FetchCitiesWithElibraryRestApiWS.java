@@ -39,7 +39,7 @@ public class FetchCitiesWithElibraryRestApiWS implements Process {
 		Long fromQueryParam = SystemProperties.getInstance().getCitiesFromIndex() + (Common.getCitiesPackageSize() * SystemProperties.getInstance().getCitiesDataPackageNumber());
 		Long toQueryParam = fromQueryParam + (Common.getCitiesPackageSize() - 1);
 		try {
-			uniResponse = Unirest.get("http://localhost:8080/elibrary-rest-api-1.0-SNAPSHOT/teryt/get-cities-from-file?from=" + fromQueryParam + "&to=" + toQueryParam)
+			uniResponse = Unirest.get(SystemProperties.getConfigProperties().getProperty("app.api.url") + "/teryt/get-cities-from-file?from=" + fromQueryParam + "&to=" + toQueryParam)
 					.header("Authorization", "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTU5MTk5NTUwOCwiZXhwIjoxOTA3NDQ1NjAwfQ.X5QudAylDMyXy-mUQEsevQDOv9Wv4YOK8OCruvamGiIcu74SB8hmeOh3VA-7vz9RZZZaanbocVudV72DsMZZVg")
 					.header("login", "admin")
 					.queryString("out", "json")
