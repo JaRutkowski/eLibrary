@@ -1,9 +1,12 @@
 package com.javafee.elibrary.core.common;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Comparator;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
@@ -28,6 +31,8 @@ public class SystemProperties {
 			new Locale(Constants.APPLICATION_LANGUAGE));
 
 	@Getter
+	private static Properties configProperties;
+	@Getter
 	private static Map<String, SystemParameter> systemParameters;
 
 	@Getter
@@ -39,6 +44,7 @@ public class SystemProperties {
 
 	static {
 		initializeHibernateUtil();
+		initializeCoreProperties();
 		initializeSystemParameters();
 		fetchCitiesPackage();
 	}
@@ -63,6 +69,15 @@ public class SystemProperties {
 	private static void initializeHibernateUtil() {
 		@SuppressWarnings("unused")
 		HibernateUtil hibernateUtil = new HibernateUtil();
+	}
+
+	private static void initializeCoreProperties() {
+		configProperties = new Properties();
+		try (InputStream resourceAsStream = HibernateUtil.class.getClassLoader().getResourceAsStream(Constants.APPLICATION_PROPERTIES)) {
+			configProperties.load(resourceAsStream);
+		} catch (IOException e) {
+			log.severe(e.getMessage());
+		}
 	}
 
 	/**

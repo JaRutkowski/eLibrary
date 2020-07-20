@@ -20,6 +20,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.table.AbstractTableModel;
 
+import org.apache.http.HttpStatus;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
 
 import com.javafee.elibrary.core.common.networkservice.NetworkServiceListener;
@@ -35,6 +36,9 @@ import com.javafee.elibrary.hibernate.dto.association.City;
 import com.javafee.elibrary.hibernate.dto.common.UserData;
 import com.javafee.elibrary.hibernate.dto.library.Client;
 import com.javafee.elibrary.hibernate.dto.library.Worker;
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
 
 import edu.vt.middleware.password.AlphabeticalSequenceRule;
 import edu.vt.middleware.password.CharacterCharacteristicsRule;
@@ -306,6 +310,21 @@ public final class Common {
 		} catch (IOException | InterruptedException e) {
 			return false;
 		}
+	}
+
+	public static Pair<Boolean, String> checkELibraryApiConnectivityAndGetHealthStatus() {
+		StringBuilder response = new StringBuilder();
+		Boolean connectivity = false;
+		try {
+			HttpResponse httpResponse = Unirest.get(SystemProperties.getConfigProperties().getProperty("app.api.url") + "/monitor/health")
+					.header("Authorization", "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTU5MTk5NTUwOCwiZXhwIjoxOTA3NDQ1NjAwfQ.X5QudAylDMyXy-mUQEsevQDOv9Wv4YOK8OCruvamGiIcu74SB8hmeOh3VA-7vz9RZZZaanbocVudV72DsMZZVg")
+					.header("login", "admin").asString();
+			connectivity = HttpStatus.SC_OK == httpResponse.getStatus();
+			response.append(httpResponse.getStatus()).append(" ").append(httpResponse.getStatusText());
+		} catch (UnirestException e) {
+			response.append(e.getCause().getMessage());
+		}
+		return new Pair<>(connectivity, response.toString());
 	}
 
 	public static String checkEmailServerConnectivity() {

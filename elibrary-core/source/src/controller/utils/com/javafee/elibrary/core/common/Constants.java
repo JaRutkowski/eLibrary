@@ -26,7 +26,8 @@ public final class Constants {
 		SYSTEM_DATA_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuSystemData")),
 		SYSTEM_PARAMETERS_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuSystemParameters")),
 		SYSTEM_DATA_FEEDING_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuSystemDataFeeding")),
-		SYSTEM_PROCESSES_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuProcesses"));
+		SYSTEM_PROCESSES_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuProcesses")),
+		SYSTEM_MONITOR_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuMonitor"));
 
 		private final String name;
 
@@ -367,6 +368,9 @@ public final class Constants {
 		ADDITION, MODIFICATION, CANCELED, LOAN, READING_ROOM
 	}
 
+	public static final String LANGUAGE_RESOURCE_BUNDLE = "messages";
+	public static final String APPLICATION_PROPERTIES = "application.properties";
+
 	public static final int MAIN_SPLASH_SCREEN_DURATION = 1000;
 	public static final String MAIN_SPLASH_SCREEN_IMAGE = "source/resources/images/splashScreen.jpg";
 
@@ -436,9 +440,6 @@ public final class Constants {
 	public static final Integer SPINNER_MAXIMUM_VALUE_PASSWORD_LENGTH = 30;
 	public static final Integer SPINNER_MINIMUM_VALUE_COMBO_BOX_DATA_PACKAGE_SIZE = 1;
 	public static final Integer SPINNER_MAXIMUM_VALUE_COMBO_BOX_DATA_PACKAGE_SIZE = 300000;
-
-
-	public static final String LANGUAGE_RESOURCE_BUNDLE = "messages";
 
 	public static final Character DATA_BASE_MALE_SIGN = 'M';
 	public static final Character DATA_BASE_FEMALE_SIGN = 'F';
