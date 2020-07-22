@@ -51,6 +51,10 @@ public class SystemMonitorPanelEvent implements IActionForm {
 				.setText(SystemProperties.getInstance().getConfigProperties().getProperty("app.api.port"));
 		settingsForm.getSettingsPanel().getSystemMonitorPanel().getLblApiServicesVersionValue()
 				.setText(SystemProperties.getInstance().getConfigProperties().getProperty("app.api.version"));
+		settingsForm.getSettingsPanel().getSystemMonitorPanel().getLblDbConnectionHostValue()
+				.setText(SystemProperties.getInstance().getConfigProperties().getProperty("db.ip"));
+		settingsForm.getSettingsPanel().getSystemMonitorPanel().getLblDbConnectionNameValue()
+				.setText(SystemProperties.getInstance().getConfigProperties().getProperty("db.name"));
 	}
 
 	private void onClickBtnCheckHealth() {
@@ -68,6 +72,14 @@ public class SystemMonitorPanelEvent implements IActionForm {
 					elibraryApiStatus.getFirst(),
 					elibraryApiStatus.getSecond());
 		}
+		if (settingsForm.getSettingsPanel().getSystemMonitorPanel().getChckbxDbConnection().isSelected()) {
+			Pair<Boolean, String> elibraryDbStatus = Common.checkELibraryDbConnectivityAndGetHealthStatus();
+			reloadLblsWitchImageIconAndStatus(
+					settingsForm.getSettingsPanel().getSystemMonitorPanel().getLblDbConnectionHealth(),
+					settingsForm.getSettingsPanel().getSystemMonitorPanel().getLblDbConnectionStatus(),
+					elibraryDbStatus.getFirst(),
+					elibraryDbStatus.getSecond());
+		}
 	}
 
 	private void resetAllLblsForUncheckedElements() {
@@ -75,8 +87,11 @@ public class SystemMonitorPanelEvent implements IActionForm {
 			reloadLblsWitchImageIconAndStatus(settingsForm.getSettingsPanel().getSystemMonitorPanel().getLblApiServicesHealth(),
 					settingsForm.getSettingsPanel().getSystemMonitorPanel().getLblApiServicesStatus(),
 					null, null);
+		if (!settingsForm.getSettingsPanel().getSystemMonitorPanel().getChckbxDbConnection().isSelected())
+			reloadLblsWitchImageIconAndStatus(settingsForm.getSettingsPanel().getSystemMonitorPanel().getLblDbConnectionHealth(),
+					settingsForm.getSettingsPanel().getSystemMonitorPanel().getLblDbConnectionStatus(),
+					null, null);
 	}
-
 
 	private void reloadLblsWitchImageIconAndStatus(JLabel labelHealth, JLabel labelStatus, Boolean isPositive, String status) {
 		labelHealth.setIcon(isPositive != null ? (isPositive ? new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/sign-check-ico.png"))
