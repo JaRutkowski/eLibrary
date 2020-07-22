@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.text.MessageFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -325,6 +328,27 @@ public final class Common {
 			response.append(e.getCause().getMessage());
 		}
 		return new Pair<>(connectivity, response.toString());
+	}
+
+	public static Pair<Boolean, String> checkELibraryDbConnectivityAndGetHealthStatus() {
+		StringBuilder status = new StringBuilder();
+		Boolean connectivity = false;
+		String dbUrl = SystemProperties.getInstance().getConfigProperties().getProperty("db.url")
+				+ "?user=" + SystemProperties.getInstance().getConfigProperties().getProperty("db.username")
+				+ "&password=" + SystemProperties.getInstance().getConfigProperties().getProperty("db.password");
+		try {
+			Class.forName("org.postgresql.Driver");
+			Connection connection = DriverManager.getConnection(dbUrl);
+
+			connectivity = connection.getMetaData().getDatabaseProductName() != null;
+			status.append(MessageFormat.format(
+					SystemProperties.getInstance().getResourceBundle().getString("common.dbConnectivitySuccessStatus"),
+					connection.getMetaData().getDatabaseProductName(),
+					connection.getMetaData().getDatabaseProductVersion()));
+		} catch (Exception e) {
+			status.append(e.getMessage());
+		}
+		return new Pair<>(connectivity, status.toString());
 	}
 
 	public static String checkEmailServerConnectivity() {
