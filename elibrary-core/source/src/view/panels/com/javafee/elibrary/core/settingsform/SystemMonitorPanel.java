@@ -32,7 +32,7 @@ public class SystemMonitorPanel extends BasePanel {
 	private JLabel lblDbConnectionNameValue;
 	private JLabel lblDbConnectionHealth;
 	private JLabel lblDbConnectionStatus;
-	
+
 	public SystemMonitorPanel() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{91, 68, 420, 0};
@@ -140,7 +140,7 @@ public class SystemMonitorPanel extends BasePanel {
 		gbc_chckbxDbConnection.gridx = 0;
 		gbc_chckbxDbConnection.gridy = 2;
 		add(chckbxDbConnection, gbc_chckbxDbConnection);
-		
+
 		lblDbConnectionHealth = new CustomJLabel();
 		GridBagConstraints gbc_lblDbConnectionHealth = new GridBagConstraints();
 		gbc_lblDbConnectionHealth.fill = GridBagConstraints.HORIZONTAL;
@@ -148,7 +148,7 @@ public class SystemMonitorPanel extends BasePanel {
 		gbc_lblDbConnectionHealth.gridx = 1;
 		gbc_lblDbConnectionHealth.gridy = 2;
 		add(lblDbConnectionHealth, gbc_lblDbConnectionHealth);
-		
+
 		lblDbConnectionStatus = new CustomJLabel();
 		GridBagConstraints gbc_lblDbConnectionStatus = new GridBagConstraints();
 		gbc_lblDbConnectionStatus.anchor = GridBagConstraints.WEST;

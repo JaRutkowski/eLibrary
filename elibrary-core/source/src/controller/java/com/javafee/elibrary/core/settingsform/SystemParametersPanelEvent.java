@@ -82,6 +82,14 @@ public class SystemParametersPanelEvent implements IActionForm {
 		systemParameter.setValue(Integer.valueOf((Integer) settingsForm.getSettingsPanel().getSystemParametersPanel().getSpinnerApplicationReservationLimit().getValue()).toString());
 		updateSystemParameter(systemParameter);
 
+		systemParameter = SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_EMAIL_ADDRESS);
+		String currentEmailAddress = systemParameter.getValue();
+		systemParameter.setValue(settingsForm.getSettingsPanel().getSystemParametersPanel().getTextFieldApplicationEmailAddress().getText());
+
+		systemParameter = SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_EMAIL_PASSWORD);
+		String currentEmailPassword = systemParameter.getValue();
+		systemParameter.setValue(String.valueOf(settingsForm.getSettingsPanel().getSystemParametersPanel().getPasswordField().getPassword()));
+
 		String validationError = validateEmailServerConnection();
 		if ((settingsForm.getSettingsPanel().getSystemParametersPanel().getChckbxValidateEmailServerConnection().isSelected()
 				&& !Strings.isEmpty(validationError)
@@ -89,15 +97,22 @@ public class SystemParametersPanelEvent implements IActionForm {
 				MessageFormat.format(SystemProperties.getInstance().getResourceBundle()
 						.getString("systemParametersPanelEvent.noEmailServerConnectionConfirmDialog"), validationError),
 				SystemProperties.getInstance().getResourceBundle().getString("errorDialog.title")) == JOptionPane.YES_OPTION)
+				|| !settingsForm.getSettingsPanel().getSystemParametersPanel().getChckbxValidateEmailServerConnection().isSelected()
 				|| Strings.isEmpty(validationError)) {
 			systemParameter = SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_EMAIL_ADDRESS);
-			systemParameter.setValue(settingsForm.getSettingsPanel().getSystemParametersPanel().getTextFieldApplicationEmailAddress().getText());
 			updateSystemParameter(systemParameter);
-		}
 
-		systemParameter = SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_EMAIL_PASSWORD);
-		systemParameter.setValue(String.valueOf(settingsForm.getSettingsPanel().getSystemParametersPanel().getPasswordField().getPassword()));
-		updateSystemParameter(systemParameter);
+			systemParameter = SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_EMAIL_PASSWORD);
+			updateSystemParameter(systemParameter);
+		} else {
+			systemParameter = SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_EMAIL_ADDRESS);
+			systemParameter.setValue(currentEmailAddress);
+			settingsForm.getSettingsPanel().getSystemParametersPanel().getTextFieldApplicationEmailAddress().setText(currentEmailAddress);
+
+			systemParameter = SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_EMAIL_PASSWORD);
+			systemParameter.setValue(currentEmailPassword);
+			settingsForm.getSettingsPanel().getSystemParametersPanel().getPasswordField().setText(currentEmailPassword);
+		}
 
 		systemParameter = SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_GENERATED_PASSWORD_LENGTH);
 		systemParameter.setValue(Integer.valueOf((Integer) settingsForm.getSettingsPanel().getSystemParametersPanel().getSpinnerApplicationGeneratedPasswordLength().getValue()).toString());
@@ -118,7 +133,6 @@ public class SystemParametersPanelEvent implements IActionForm {
 		systemParameter = SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_COMBO_BOX_DATA_PACKAGE_SIZE);
 		systemParameter.setValue(Integer.valueOf((Integer) settingsForm.getSettingsPanel().getSystemParametersPanel().getSpinnerApplicationComboBoxDataPackageSize().getValue()).toString());
 		updateSystemParameter(systemParameter);
-
 
 		Utils.displayOptionPane(
 				SystemProperties.getInstance().getResourceBundle()
