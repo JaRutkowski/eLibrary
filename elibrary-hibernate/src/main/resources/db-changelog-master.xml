@@ -11,8 +11,10 @@
 	<property name="clobType" value="clob" dbms="postgresql"/>
 	<property name="uuidType" value="uuid" dbms="postgresql"/>
 
+	<!-- Pre-processing -->
 	<!-- Increment id of changeSet -->
 	<include file="src/main/resources/db/changelog/truncate-all-cascade-changelog.xml" relativeToChangelogFile="false"/>
+
 	<!-- Version data -->
 	<!-- generated using mvn liquibase:generateChangeLog -Dliquibase.diffTypes=data -->
 	<!-- liquibase plugin part - db configuration - should be commented in pom.xml -->
@@ -29,6 +31,10 @@
 	<!--<include file="src/main/resources/db/changelog/db-changelog-20200703213344UTC.xml" relativeToChangelogFile="false"/>-->
 	<!--<include file="src/main/resources/db/changelog/db-changelog-ddl-20200703213345UTC.xml" relativeToChangelogFile="false"/>-->
 	<include file="src/main/resources/db/changelog/db-changelog-20200722123232UTC.xml" relativeToChangelogFile="false"/>
+
+	<!-- Post-processing -->
+	<!-- Increment id of changeSet -->
+	<include file="src/main/resources/db/changelog/init-sequences-changelog.xml" relativeToChangelogFile="false"/>
 
 	<!-- Notes -->
 	<!-- it is possible to run DML on local: -->

@@ -1,0 +1,31 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+				   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+				   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+	<changeSet author="Jakub.Rutkowski" id="0000000000">
+		<comment>Sequences initialization</comment>
+		<sql splitStatements="true">
+			SELECT SETVAL('seq_com_authorization', MAX(id_authorization)) FROM com_authorization;
+			SELECT SETVAL('seq_com_city', MAX(id_city)) FROM com_city;
+			SELECT SETVAL('seq_com_language', MAX(id_language)) FROM com_language;
+			SELECT SETVAL('seq_com_system_data', MAX(id_system_data)) FROM com_system_data;
+			SELECT SETVAL('seq_com_system_parameter', MAX(id_system_parameter)) FROM com_system_parameter;
+			SELECT SETVAL('seq_com_system_properties', MAX(id_system_properties)) FROM com_system_properties;
+			SELECT SETVAL('seq_com_user_data', MAX(id_user_data)) FROM com_user_data;
+			SELECT SETVAL('seq_lib_author', MAX(id_author)) FROM lib_author;
+			SELECT SETVAL('seq_lib_book', MAX(id_book)) FROM lib_book;
+			SELECT SETVAL('seq_lib_category', MAX(id_category)) FROM lib_category;
+			SELECT SETVAL('seq_lib_lend', MAX(id_lend)) FROM lib_lend;
+			SELECT SETVAL('seq_lib_library_branch_data', MAX(id_library_branch_data)) FROM lib_library_branch_data;
+			SELECT SETVAL('seq_lib_library_data', MAX(id_library_data)) FROM lib_library_data;
+			SELECT SETVAL('seq_lib_penalty', MAX(id_penalty)) FROM lib_penalty;
+			SELECT SETVAL('seq_lib_publishing_house', MAX(id_publishing_house)) FROM lib_publishing_house;
+			SELECT SETVAL('seq_lib_raw_lending_data', MAX(id_lending_data)) FROM lib_raw_lending_data;
+			SELECT SETVAL('seq_lib_reservation', MAX(id_reservation)) FROM lib_reservation;
+			SELECT SETVAL('seq_lib_volume', MAX(id_volume)) FROM lib_volume;
+			SELECT SETVAL('seq_mes_message', MAX(id_message)) FROM mes_message;
+			SELECT SETVAL('seq_mes_message_type', MAX(id_message_type)) FROM mes_message_type;
+			SELECT SETVAL('seq_mes_recipient', MAX(id_recipiet)) FROM mes_recipient;
+		</sql>
+	</changeSet>
+</databaseChangeLog>
