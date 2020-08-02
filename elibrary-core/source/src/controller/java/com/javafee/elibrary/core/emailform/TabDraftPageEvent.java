@@ -5,6 +5,8 @@ import java.awt.event.ComponentListener;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
@@ -83,6 +85,7 @@ public class TabDraftPageEvent implements IMessageForm {
 		reloadComboBoxRecipient();
 		reloadDraftTable();
 		switchPerspectiveToAdm(LogInEvent.getRole() == Role.WORKER_ACCOUNTANT || LogInEvent.getRole() == Role.ADMIN);
+		addReloadsMethodsToParams();
 	}
 
 	public void onTabDraftOpen() {
@@ -92,18 +95,13 @@ public class TabDraftPageEvent implements IMessageForm {
 
 	@SuppressWarnings("unchecked")
 	private void reloadComboBoxRecipient() {
-		DefaultComboBoxModel<UserData> comboBoxRecipientModel = new DefaultComboBoxModel<UserData>();
+		DefaultComboBoxModel<UserData> comboBoxRecipientModel = new DefaultComboBoxModel<>();
+		List<UserData> userDataListToSort;
 
-		List<UserData> userDataListToSort = null;
-
-		if (LogInEvent.getWorker() != null)
-			userDataListToSort = (List<UserData>) HibernateUtil.getSession().createQuery(
-					Query.TabOutboxPageEventQuery.DISTINCT_DRAFT_MESSAGE_RECIPIENT_BY_SENDER_LOGIN.getValue()). //
-					setParameter("login", LogInEvent.getWorker().getLogin()).list();
-		else
-			userDataListToSort = (List<UserData>) HibernateUtil.getSession()
-					.createQuery(Query.TabOutboxPageEventQuery.DISTINCT_DRAFT_MESSAGE_RECIPIENT_ALL.getValue()). //
-					list();
+		userDataListToSort = LogInEvent.getWorker() != null ?
+				(List<UserData>) HibernateUtil.getSession().createQuery(Query.TabOutboxPageEventQuery.DISTINCT_DRAFT_MESSAGE_RECIPIENT_BY_SENDER_LOGIN.getValue()). //
+						setParameter("login", LogInEvent.getWorker().getLogin()).list()
+				: (List<UserData>) HibernateUtil.getSession().createQuery(Query.TabOutboxPageEventQuery.DISTINCT_DRAFT_MESSAGE_RECIPIENT_ALL.getValue()).list();
 
 		com.javafee.elibrary.core.common.Common.prepareBlankComboBoxElement(userDataListToSort);
 		userDataListToSort.sort(Comparator.nullsFirst(Comparator.comparing(UserData::getSurname)));
@@ -113,7 +111,7 @@ public class TabDraftPageEvent implements IMessageForm {
 
 	private void reloadDraftTable() {
 		if (LogInEvent.getWorker() != null) {
-			List<Object> parameters = new ArrayList<Object>();
+			List<Object> parameters = new ArrayList<>();
 			parameters.add(LogInEvent.getWorker().getLogin());
 			((DraftTableModel) emailForm.getPanelDraftPage().getDraftTable().getModel()) //
 					.reloadData(Query.TabOutboxPageEventQuery.DRAFT_MESSAGE_BY_SENDER_LOGIN.getValue(), parameters);
@@ -142,7 +140,7 @@ public class TabDraftPageEvent implements IMessageForm {
 
 	private void onChangeChckShowOnlySystemCorrespondence() {
 		if (emailForm.getPanelDraftPage().getCheckShowOnlySystemCorrespondence().isSelected()) {
-			List<Object> parameters = new ArrayList<Object>();
+			List<Object> parameters = new ArrayList<>();
 			MessageType messageType = Common
 					.findMessageTypeByName(Constants.DATA_BASE_MESSAGE_TYPE_SYS_MESSAGE).get();
 			parameters.add(messageType);
@@ -207,7 +205,7 @@ public class TabDraftPageEvent implements IMessageForm {
 
 	private void onChangeComboBoxRecipient() {
 		UserData recipientUserData = (UserData) emailForm.getPanelDraftPage().getComboBoxRecipient().getSelectedItem();
-		List<Object> parameters = new ArrayList<Object>();
+		List<Object> parameters = new ArrayList<>();
 		if (recipientUserData != null) {
 			parameters.add(recipientUserData);
 			if (LogInEvent.getWorker() != null) {
@@ -233,6 +231,13 @@ public class TabDraftPageEvent implements IMessageForm {
 						.reloadData();
 			}
 		}
+	}
+
+	private void addReloadsMethodsToParams() {
+		Map<String, Consumer> emailEventsMethods = com.javafee.elibrary.core.common.Common.getEmailModuleEventsMethodsMapParam();
+		emailEventsMethods.put(com.javafee.elibrary.core.common.Common.getMethodReference("reloadDraftTable"), c -> this.reloadDraftTable());
+		emailEventsMethods.put(com.javafee.elibrary.core.common.Common.getMethodReference("reloadComboBoxRecipient"), c -> this.reloadComboBoxRecipient());
+		Params.getInstance().add("EMAIL_MODULE_EVENTS_METHODS", emailEventsMethods);
 	}
 
 	private void updateDraft() {
@@ -264,5 +269,4 @@ public class TabDraftPageEvent implements IMessageForm {
 		if (isAdminOrAccountant)
 			onChangeChckShowOnlySystemCorrespondence();
 	}
-
 }

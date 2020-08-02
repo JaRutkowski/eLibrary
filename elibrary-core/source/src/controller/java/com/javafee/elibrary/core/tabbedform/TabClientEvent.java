@@ -158,27 +158,17 @@ public final class TabClientEvent implements IActionForm {
 					if (Utils.displayConfirmDialog(
 							SystemProperties.getInstance().getResourceBundle().getString("confirmDialog.deleteMessage"),
 							"") == JOptionPane.YES_OPTION) {
-						if (!Validator.validateIfUserCorrespondenceExists(selectedClient.getIdUserData())) {
-							HibernateUtil.beginTransaction();
-							HibernateUtil.getSession().delete(selectedClient);
-							HibernateUtil.commitTransaction();
-							((ClientTableModel) tabbedForm.getPanelClient().getClientTable().getModel())
-									.remove(selectedClient);
-						} else {
+						if (!Validator.validateIfUserCorrespondenceExists(selectedClient.getIdUserData()))
+							this.performDelete(selectedClient);
+						else {
 							if (Utils.displayConfirmDialog(
 									SystemProperties.getInstance().getResourceBundle().getString("confirmDialog.clearClientCorrespondenceData"),
-									"") == JOptionPane.YES_OPTION) {
-								if (Common.clearMessagesRecipientData(selectedClient.getIdUserData()) > 0) {
-									HibernateUtil.beginTransaction();
-									HibernateUtil.getSession().delete(selectedClient);
-									HibernateUtil.commitTransaction();
-									((ClientTableModel) tabbedForm.getPanelClient().getClientTable().getModel())
-											.remove(selectedClient);
-									JOptionPane.showMessageDialog(tabbedForm.getFrame(),
-											SystemProperties.getInstance().getResourceBundle().getString("tabClientEvent.deleteClientSuccess"),
-											SystemProperties.getInstance().getResourceBundle().getString("tabClientEvent.deleteClientSuccessTitle"),
-											JOptionPane.INFORMATION_MESSAGE);
-								}
+									"") == JOptionPane.YES_OPTION && Common.clearMessagesRecipientData(selectedClient.getIdUserData()) > 0) {
+								performDelete(selectedClient);
+								JOptionPane.showMessageDialog(tabbedForm.getFrame(),
+										SystemProperties.getInstance().getResourceBundle().getString("tabClientEvent.deleteClientSuccess"),
+										SystemProperties.getInstance().getResourceBundle().getString("tabClientEvent.deleteClientSuccessTitle"),
+										JOptionPane.INFORMATION_MESSAGE);
 							}
 						}
 					}
@@ -219,15 +209,13 @@ public final class TabClientEvent implements IActionForm {
 					SystemProperties.getInstance().getResourceBundle().getString(
 							"tabClientEvent.updateClientSuccessTitle"),
 					JOptionPane.INFORMATION_MESSAGE);
-
-		} else {
+		} else
 			Utils.displayOptionPane(
 					SystemProperties.getInstance().getResourceBundle()
 							.getString("tabClientEvent.validateClientTableSelectionWarning1"),
 					SystemProperties.getInstance().getResourceBundle().getString(
 							"tabClientEvent.validateClientTableSelectionWarning1Title"),
 					JOptionPane.WARNING_MESSAGE);
-		}
 	}
 
 	private void onClientTableListSelectionChange() {
@@ -240,6 +228,18 @@ public final class TabClientEvent implements IActionForm {
 									tabbedForm.getPanelClient().getClientTable().convertRowIndexToModel(
 											tabbedForm.getPanelClient().getClientTable().getSelectedRow()),
 									Constants.ClientTableColumn.COL_REGISTERED.getValue())));
+	}
+
+	private void performDelete(Client selectedClient) {
+		HibernateUtil.beginTransaction();
+		// Without clearing the Session, there's still deleted object in it so that previously once the user deleted the Client,
+		// then the Client data was still appearing in the outbox/draft tables despite reloading it.
+		HibernateUtil.getSession().clear();
+		HibernateUtil.getSession().delete(selectedClient);
+		HibernateUtil.commitTransaction();
+		((ClientTableModel) tabbedForm.getPanelClient().getClientTable().getModel())
+				.remove(selectedClient);
+		Common.invokeEmailModuleEventsMethods();
 	}
 
 	private void switchPerspectiveToAdm(boolean isAdminOrAccountant) {
