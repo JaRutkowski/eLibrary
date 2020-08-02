@@ -57,9 +57,7 @@ public class DraftTableModel extends AbstractTableModel {
 	protected void prepareHibernateDao(String query, List<Object> parameters) {
 		Query<Message> resultQuery = HibernateUtil.getSession().createQuery(query);
 		AtomicInteger position = new AtomicInteger(0);
-		parameters.forEach(param -> {
-			resultQuery.setParameter(position.getAndIncrement(), param);
-		});
+		parameters.forEach(param -> resultQuery.setParameter(position.getAndIncrement(), param));
 		this.messages = resultQuery.list();
 	}
 

@@ -63,18 +63,16 @@ public class ClientAddModEvent implements IEvent {
 			}
 			initializeEventHandlers();
 			clientAddModFrame.setVisible(true);
-		} else {
+		} else
 			clientAddModFrame.toFront();
-		}
 	}
 
 	private void onClickBtnAccept(Context context) {
-		if (context == Context.ADDITION) {
-			if (validateRegistration())
-				registerNow();
-		} else if (context == Context.MODIFICATION) {
+		if (context == Context.ADDITION && validateRegistration())
+			registerNow();
+		else if (context == Context.MODIFICATION)
 			modificateClient();
-		}
+		Common.invokeEmailModuleEventsMethods();
 	}
 
 	private void modificateClient() {

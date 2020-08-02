@@ -7,7 +7,9 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.function.Consumer;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
@@ -91,6 +93,7 @@ public class TabOutboxPageEvent implements IMessageForm {
 		reloadComboBoxRecipient();
 		reloadOutboxTable();
 		switchPerspectiveToAdm(LogInEvent.getRole() == Role.WORKER_ACCOUNTANT || LogInEvent.getRole() == Role.ADMIN);
+		addReloadsMethodsToParams();
 	}
 
 	public void onTabOutboxOpen() {
@@ -100,18 +103,13 @@ public class TabOutboxPageEvent implements IMessageForm {
 
 	@SuppressWarnings("unchecked")
 	private void reloadComboBoxRecipient() {
-		DefaultComboBoxModel<UserData> comboBoxRecipientModel = new DefaultComboBoxModel<UserData>();
+		DefaultComboBoxModel<UserData> comboBoxRecipientModel = new DefaultComboBoxModel<>();
+		List<UserData> userDataListToSort;
 
-		List<UserData> userDataListToSort = null;
-
-		if (LogInEvent.getWorker() != null)
-			userDataListToSort = (List<UserData>) HibernateUtil.getSession()
-					.createQuery(Query.TabOutboxPageEventQuery.DISTINCT_MESSAGE_RECIPIENT_BY_SENDER_LOGIN.getValue()). //
-					setParameter("login", LogInEvent.getWorker().getLogin()).list();
-		else
-			userDataListToSort = (List<UserData>) HibernateUtil.getSession()
-					.createQuery(Query.TabOutboxPageEventQuery.DISTINCT_MESSAGE_RECIPIENT_ALL.getValue()). //
-					list();
+		userDataListToSort = LogInEvent.getWorker() != null ?
+				(List<UserData>) HibernateUtil.getSession().createQuery(Query.TabOutboxPageEventQuery.DISTINCT_MESSAGE_RECIPIENT_BY_SENDER_LOGIN.getValue()). //
+						setParameter("login", LogInEvent.getWorker().getLogin()).list()
+				: (List<UserData>) HibernateUtil.getSession().createQuery(Query.TabOutboxPageEventQuery.DISTINCT_MESSAGE_RECIPIENT_ALL.getValue()).list();
 
 		com.javafee.elibrary.core.common.Common.prepareBlankComboBoxElement(userDataListToSort);
 		userDataListToSort.sort(Comparator.nullsFirst(Comparator.comparing(UserData::getSurname)));
@@ -121,7 +119,7 @@ public class TabOutboxPageEvent implements IMessageForm {
 
 	private void reloadOutboxTable() {
 		if (LogInEvent.getWorker() != null) {
-			List<Object> parameters = new ArrayList<Object>();
+			List<Object> parameters = new ArrayList<>();
 			parameters.add(LogInEvent.getWorker().getLogin());
 			((OutboxTableModel) emailForm.getPanelOutboxPage().getOutboxTable().getModel()) //
 					.reloadData(Query.TabOutboxPageEventQuery.MESSAGE_BY_SENDER_LOGIN.getValue(), parameters);
@@ -150,7 +148,7 @@ public class TabOutboxPageEvent implements IMessageForm {
 
 	private void onChangeChckShowOnlySystemCorrespondence() {
 		if (emailForm.getPanelOutboxPage().getCheckShowOnlySystemCorrespondence().isSelected()) {
-			List<Object> parameters = new ArrayList<Object>();
+			List<Object> parameters = new ArrayList<>();
 			MessageType messageType = Common
 					.findMessageTypeByName(Constants.DATA_BASE_MESSAGE_TYPE_SYS_MESSAGE).get();
 			parameters.add(messageType);
@@ -215,7 +213,7 @@ public class TabOutboxPageEvent implements IMessageForm {
 
 	private void onChangeComboBoxRecipient() {
 		UserData recipientUserData = (UserData) emailForm.getPanelOutboxPage().getComboBoxRecipient().getSelectedItem();
-		List<Object> parameters = new ArrayList<Object>();
+		List<Object> parameters = new ArrayList<>();
 		if (recipientUserData != null) {
 			parameters.add(recipientUserData);
 			if (LogInEvent.getWorker() != null) {
@@ -239,6 +237,13 @@ public class TabOutboxPageEvent implements IMessageForm {
 				((OutboxTableModel) emailForm.getPanelOutboxPage().getOutboxTable().getModel()) //
 						.reloadData();
 		}
+	}
+
+	private void addReloadsMethodsToParams() {
+		Map<String, Consumer> emailEventsMethods = com.javafee.elibrary.core.common.Common.getEmailModuleEventsMethodsMapParam();
+		emailEventsMethods.put(com.javafee.elibrary.core.common.Common.getMethodReference("reloadOutboxTable"), c -> this.reloadOutboxTable());
+		emailEventsMethods.put(com.javafee.elibrary.core.common.Common.getMethodReference("reloadComboBoxRecipient"), c -> this.reloadComboBoxRecipient());
+		Params.getInstance().add("EMAIL_MODULE_EVENTS_METHODS", emailEventsMethods);
 	}
 
 	private void createEmail(Set<Recipient> recipients, String subject, String text) {
@@ -286,5 +291,4 @@ public class TabOutboxPageEvent implements IMessageForm {
 		if (isAdminOrAccountant)
 			onChangeChckShowOnlySystemCorrespondence();
 	}
-
 }
