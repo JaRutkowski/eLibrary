@@ -32,13 +32,20 @@ public class SystemMonitorPanel extends BasePanel {
 	private JLabel lblDbConnectionNameValue;
 	private JLabel lblDbConnectionHealth;
 	private JLabel lblDbConnectionStatus;
+	private JCheckBox chckbxEmailServerConnection;
+	private JLabel lblEmailServerConnectionHealth;
+	private JLabel lblEmailServerConnectionStatus;
+	private JLabel lblEmailServerConnectionEmailAddressValue;
+	private JCheckBox chckbxInternetConnection;
+	private JLabel lblInternetConnectionHealth;
+	private JLabel lblInternetConnectionStatus;
 
 	public SystemMonitorPanel() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{91, 68, 420, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{1.0, 0.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 
 		chckbxApiServices = new CustomJCheckBox(
@@ -121,6 +128,7 @@ public class SystemMonitorPanel extends BasePanel {
 		JLabel lblApiServicesVersion = new CustomJLabel(
 				SystemProperties.getInstance().getResourceBundle().getString("systemMonitorPanel.lblApiServicesVersion"));
 		GridBagConstraints gbc_lblApiServicesVersion = new GridBagConstraints();
+		gbc_lblApiServicesVersion.anchor = GridBagConstraints.WEST;
 		gbc_lblApiServicesVersion.insets = new Insets(0, 0, 0, 5);
 		gbc_lblApiServicesVersion.gridx = 0;
 		gbc_lblApiServicesVersion.gridy = 2;
@@ -207,6 +215,89 @@ public class SystemMonitorPanel extends BasePanel {
 		gbc_lblDbConnectionNameValue.gridy = 1;
 		dbConnectionDetailsPanel.add(lblDbConnectionNameValue, gbc_lblDbConnectionNameValue);
 
+		chckbxEmailServerConnection = new CustomJCheckBox(
+				SystemProperties.getInstance().getResourceBundle().getString("systemMonitorPanel.chckbxEmailServerConnection"));
+		GridBagConstraints gbc_chckbxEmailServerConnection = new GridBagConstraints();
+		gbc_chckbxEmailServerConnection.anchor = GridBagConstraints.WEST;
+		gbc_chckbxEmailServerConnection.insets = new Insets(0, 0, 5, 5);
+		gbc_chckbxEmailServerConnection.gridx = 0;
+		gbc_chckbxEmailServerConnection.gridy = 4;
+		add(chckbxEmailServerConnection, gbc_chckbxEmailServerConnection);
+
+		lblEmailServerConnectionHealth = new CustomJLabel();
+		GridBagConstraints gbc_lblEmailServerConnectionHealth = new GridBagConstraints();
+		gbc_lblEmailServerConnectionHealth.fill = GridBagConstraints.HORIZONTAL;
+		gbc_lblEmailServerConnectionHealth.insets = new Insets(0, 0, 5, 5);
+		gbc_lblEmailServerConnectionHealth.gridx = 1;
+		gbc_lblEmailServerConnectionHealth.gridy = 4;
+		add(lblEmailServerConnectionHealth, gbc_lblEmailServerConnectionHealth);
+
+		lblEmailServerConnectionStatus = new CustomJLabel();
+		GridBagConstraints gbc_lblEmailServerConnectionStatus = new GridBagConstraints();
+		gbc_lblEmailServerConnectionStatus.anchor = GridBagConstraints.WEST;
+		gbc_lblEmailServerConnectionStatus.insets = new Insets(0, 0, 5, 0);
+		gbc_lblEmailServerConnectionStatus.gridx = 2;
+		gbc_lblEmailServerConnectionStatus.gridy = 4;
+		add(lblEmailServerConnectionStatus, gbc_lblEmailServerConnectionStatus);
+
+		JPanel emailServerConnectionPanel = new BasePanel();
+		emailServerConnectionPanel.setBorder(new TitledBorder(null,
+				SystemProperties.getInstance().getResourceBundle().getString("systemMonitorPanel.emailServerConnectionDetailsPanelTitle"), TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		GridBagConstraints gbc_panel = new GridBagConstraints();
+		gbc_panel.fill = GridBagConstraints.BOTH;
+		gbc_panel.gridwidth = 3;
+		gbc_panel.insets = new Insets(0, 0, 5, 0);
+		gbc_panel.gridx = 0;
+		gbc_panel.gridy = 5;
+		add(emailServerConnectionPanel, gbc_panel);
+		GridBagLayout gbl_panel = new GridBagLayout();
+		gbl_panel.columnWidths = new int[]{0, 0, 0};
+		gbl_panel.rowHeights = new int[]{0, 0};
+		gbl_panel.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
+		gbl_panel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		emailServerConnectionPanel.setLayout(gbl_panel);
+
+		JLabel lblEmailServerConnectionEmailAddress = new CustomJLabel(
+				SystemProperties.getInstance().getResourceBundle().getString("systemMonitorPanel.lblEmailServerConnectionAddress"));
+		GridBagConstraints gbc_lblEmailServerConnectionEmailAddress = new GridBagConstraints();
+		gbc_lblEmailServerConnectionEmailAddress.anchor = GridBagConstraints.WEST;
+		gbc_lblEmailServerConnectionEmailAddress.insets = new Insets(0, 0, 0, 5);
+		gbc_lblEmailServerConnectionEmailAddress.gridx = 0;
+		gbc_lblEmailServerConnectionEmailAddress.gridy = 0;
+		emailServerConnectionPanel.add(lblEmailServerConnectionEmailAddress, gbc_lblEmailServerConnectionEmailAddress);
+
+		lblEmailServerConnectionEmailAddressValue = new CustomJLabel();
+		GridBagConstraints gbc_lblEmailServerConnectionEmailAddressValue = new GridBagConstraints();
+		gbc_lblEmailServerConnectionEmailAddressValue.fill = GridBagConstraints.HORIZONTAL;
+		gbc_lblEmailServerConnectionEmailAddressValue.gridx = 1;
+		gbc_lblEmailServerConnectionEmailAddressValue.gridy = 0;
+		emailServerConnectionPanel.add(lblEmailServerConnectionEmailAddressValue, gbc_lblEmailServerConnectionEmailAddressValue);
+
+		chckbxInternetConnection = new CustomJCheckBox(
+				SystemProperties.getInstance().getResourceBundle().getString("systemMonitorPanel.chckbxInternetConnection"));
+		GridBagConstraints gbc_chckbxInternetConnection = new GridBagConstraints();
+		gbc_chckbxInternetConnection.anchor = GridBagConstraints.WEST;
+		gbc_chckbxInternetConnection.insets = new Insets(0, 0, 5, 5);
+		gbc_chckbxInternetConnection.gridx = 0;
+		gbc_chckbxInternetConnection.gridy = 6;
+		add(chckbxInternetConnection, gbc_chckbxInternetConnection);
+
+		lblInternetConnectionHealth = new CustomJLabel();
+		GridBagConstraints gbc_lblInternetConnectionHealth = new GridBagConstraints();
+		gbc_lblInternetConnectionHealth.fill = GridBagConstraints.HORIZONTAL;
+		gbc_lblInternetConnectionHealth.insets = new Insets(0, 0, 5, 5);
+		gbc_lblInternetConnectionHealth.gridx = 1;
+		gbc_lblInternetConnectionHealth.gridy = 6;
+		add(lblInternetConnectionHealth, gbc_lblInternetConnectionHealth);
+
+		lblInternetConnectionStatus = new CustomJLabel();
+		GridBagConstraints gbc_lblInternetConnectionStatus = new GridBagConstraints();
+		gbc_lblInternetConnectionStatus.anchor = GridBagConstraints.WEST;
+		gbc_lblInternetConnectionStatus.insets = new Insets(0, 0, 5, 0);
+		gbc_lblInternetConnectionStatus.gridx = 2;
+		gbc_lblInternetConnectionStatus.gridy = 6;
+		add(lblInternetConnectionStatus, gbc_lblInternetConnectionStatus);
+
 		btnCheckHealth = new CustomJButton(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnCheckHealth-ico.png"))
 				.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)),
 				SystemProperties.getInstance().getResourceBundle().getString("systemMonitorPanel.btnCheckHealth"));
@@ -214,7 +305,7 @@ public class SystemMonitorPanel extends BasePanel {
 		gbc_btnCheckHealth.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnCheckHealth.insets = new Insets(0, 0, 0, 5);
 		gbc_btnCheckHealth.gridx = 1;
-		gbc_btnCheckHealth.gridy = 4;
+		gbc_btnCheckHealth.gridy = 7;
 		add(btnCheckHealth, gbc_btnCheckHealth);
 	}
 }

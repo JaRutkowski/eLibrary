@@ -7,7 +7,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+import org.oxbow.swingbits.util.Strings;
+
 import com.javafee.elibrary.core.common.Common;
+import com.javafee.elibrary.core.common.Constants;
 import com.javafee.elibrary.core.common.Pair;
 import com.javafee.elibrary.core.common.SystemProperties;
 import com.javafee.elibrary.core.common.Utils;
@@ -55,6 +58,8 @@ public class SystemMonitorPanelEvent implements IActionForm {
 				.setText(SystemProperties.getInstance().getConfigProperties().getProperty("db.ip"));
 		settingsForm.getSettingsPanel().getSystemMonitorPanel().getLblDbConnectionNameValue()
 				.setText(SystemProperties.getInstance().getConfigProperties().getProperty("db.name"));
+		settingsForm.getSettingsPanel().getSystemMonitorPanel().getLblEmailServerConnectionEmailAddressValue()
+				.setText(SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_EMAIL_ADDRESS).getValue());
 	}
 
 	private void onClickBtnCheckHealth() {
@@ -80,6 +85,24 @@ public class SystemMonitorPanelEvent implements IActionForm {
 					elibraryDbStatus.getFirst(),
 					elibraryDbStatus.getSecond());
 		}
+		if (settingsForm.getSettingsPanel().getSystemMonitorPanel().getChckbxEmailServerConnection().isSelected()) {
+			String validationError = Common.checkEmailServerConnectivity();
+			reloadLblsWitchImageIconAndStatus(
+					settingsForm.getSettingsPanel().getSystemMonitorPanel().getLblEmailServerConnectionHealth(),
+					settingsForm.getSettingsPanel().getSystemMonitorPanel().getLblEmailServerConnectionStatus(),
+					Strings.isEmpty(validationError),
+					Strings.isEmpty(validationError) ? SystemProperties.getInstance().getResourceBundle()
+							.getString("systemMonitorPanel.chckbxEmailServerConnectionStatusOk") : validationError);
+		}
+		if (settingsForm.getSettingsPanel().getSystemMonitorPanel().getChckbxInternetConnection().isSelected()) {
+			boolean internetConnectivity = Common.checkInternetConnectivity();
+			reloadLblsWitchImageIconAndStatus(
+					settingsForm.getSettingsPanel().getSystemMonitorPanel().getLblInternetConnectionHealth(),
+					settingsForm.getSettingsPanel().getSystemMonitorPanel().getLblInternetConnectionStatus(),
+					internetConnectivity,
+					internetConnectivity ? SystemProperties.getInstance().getResourceBundle()
+							.getString("systemMonitorPanel.chckbxEmailServerConnectionStatusOk") : null);
+		}
 	}
 
 	private void resetAllLblsForUncheckedElements() {
@@ -90,6 +113,14 @@ public class SystemMonitorPanelEvent implements IActionForm {
 		if (!settingsForm.getSettingsPanel().getSystemMonitorPanel().getChckbxDbConnection().isSelected())
 			reloadLblsWitchImageIconAndStatus(settingsForm.getSettingsPanel().getSystemMonitorPanel().getLblDbConnectionHealth(),
 					settingsForm.getSettingsPanel().getSystemMonitorPanel().getLblDbConnectionStatus(),
+					null, null);
+		if (!settingsForm.getSettingsPanel().getSystemMonitorPanel().getChckbxEmailServerConnection().isSelected())
+			reloadLblsWitchImageIconAndStatus(settingsForm.getSettingsPanel().getSystemMonitorPanel().getLblEmailServerConnectionHealth(),
+					settingsForm.getSettingsPanel().getSystemMonitorPanel().getLblEmailServerConnectionStatus(),
+					null, null);
+		if (!settingsForm.getSettingsPanel().getSystemMonitorPanel().getChckbxInternetConnection().isSelected())
+			reloadLblsWitchImageIconAndStatus(settingsForm.getSettingsPanel().getSystemMonitorPanel().getLblInternetConnectionHealth(),
+					settingsForm.getSettingsPanel().getSystemMonitorPanel().getLblInternetConnectionStatus(),
 					null, null);
 	}
 
