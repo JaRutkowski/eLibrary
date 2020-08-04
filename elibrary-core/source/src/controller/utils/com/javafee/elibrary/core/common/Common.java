@@ -194,7 +194,8 @@ public final class Common {
 
 	public void removeMoreComboBoxCityElementIfExists() {
 		if (!Common.getCities().isEmpty() &&
-				(Common.getCities().size() % ((getCitiesPackageSize() * (SystemProperties.getInstance().getCitiesDataPackageNumber())) + 1)) == 0)
+				SystemProperties.getInstance().getResourceBundle().getString("comboBoxMoreElement")
+						.equals(Common.getCities().get(Common.getCities().size() - 1).getName()))
 			Common.getCities().remove(Common.getCities().size() - 1);
 	}
 
