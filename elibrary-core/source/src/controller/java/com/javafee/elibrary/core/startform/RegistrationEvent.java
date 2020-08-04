@@ -98,6 +98,7 @@ public class RegistrationEvent {
 				worker.setEMail(eMail);
 				worker.setPassword(Common.createMd5(password));
 				worker.setRegistered(Constants.DATA_BASE_REGISTER_DEFAULT_FLAG);
+				worker.setRegistrationDate(registrationDate);
 				HibernateUtil.getSession().save(worker);
 				HibernateUtil.commitTransaction();
 
@@ -127,6 +128,7 @@ public class RegistrationEvent {
 				client.setEMail(eMail);
 				client.setPassword(Common.createMd5(password));
 				client.setRegistered(Constants.DATA_BASE_REGISTER_DEFAULT_FLAG);
+				client.setRegistrationDate(registrationDate);
 				HibernateUtil.getSession().save(client);
 				resultUserData = client;
 				break;

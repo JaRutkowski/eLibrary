@@ -30,7 +30,8 @@
 	<!--<include file="src/main/resources/db/changelog/db-changelog-20200629152318UTC.xml" relativeToChangelogFile="false"/>-->
 	<!--<include file="src/main/resources/db/changelog/db-changelog-20200703213344UTC.xml" relativeToChangelogFile="false"/>-->
 	<!--<include file="src/main/resources/db/changelog/db-changelog-ddl-20200703213345UTC.xml" relativeToChangelogFile="false"/>-->
-	<include file="src/main/resources/db/changelog/db-changelog-20200722123232UTC.xml" relativeToChangelogFile="false"/>
+	<!--<include file="src/main/resources/db/changelog/db-changelog-20200722123232UTC.xml" relativeToChangelogFile="false"/>-->
+	<include file="src/main/resources/db/changelog/db-changelog-ddl-20200803134708UTC.xml" relativeToChangelogFile="false"/>
 
 	<!-- Post-processing -->
 	<!-- Increment id of changeSet -->

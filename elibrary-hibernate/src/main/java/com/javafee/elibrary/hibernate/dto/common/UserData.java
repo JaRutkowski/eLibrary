@@ -69,6 +69,10 @@ public class UserData {
 	@Column(name = "registered", unique = false, nullable = true, insertable = true, updatable = true)
 	private Boolean registered;
 
+	@Temporal(TemporalType.DATE)
+	@Column(name = "registration_date", unique = false, nullable = true, insertable = true, updatable = true, length = 13)
+	private Date registrationDate;
+
 	@Column(name = "address", unique = false, nullable = true, insertable = true, updatable = true, length = 200)
 	private String address;
 
