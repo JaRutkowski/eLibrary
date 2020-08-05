@@ -83,16 +83,25 @@ public class DraftTableModel extends AbstractTableModel {
 		Message message = messages.get(row);
 		switch (OutboxTableColumn.getByNumber(col)) {
 			case COL_RECIPIENT_SIMPLE_DATA:
-				return message.getRecipient();
+				StringBuilder recipientsSimpleData = new StringBuilder("[");
+				message.getRecipient().forEach(recipient -> {
+					if (recipient.getUserData() != null)
+						recipientsSimpleData.append(recipient.getUserData());
+					else
+						recipientsSimpleData.append(SystemProperties.getInstance().getResourceBundle().getString("outboxTableModel.deletedUserAlias"));
+					if (message.getRecipient().size() > 1)
+						recipientsSimpleData.append(",");
+				});
+				recipientsSimpleData.append("]");
+				return recipientsSimpleData.toString();
 			case COL_RECIPIENT_EMAIL:
-				AtomicInteger counter = new AtomicInteger(1);
 				StringBuilder recipientsEmails = new StringBuilder("[");
 				message.getRecipient().forEach(recipient -> {
 					if (recipient.getUserData() != null)
 						recipientsEmails.append(recipient.getUserData().getEMail());
 					else
 						recipientsEmails.append(SystemProperties.getInstance().getResourceBundle().getString("outboxTableModel.deletedUserAlias"));
-					if (counter.get() != message.getRecipient().size())
+					if (message.getRecipient().size() > 1)
 						recipientsEmails.append(",");
 				});
 				recipientsEmails.append("]");
