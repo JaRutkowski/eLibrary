@@ -8,6 +8,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
 
@@ -137,6 +138,15 @@ public class TabOutboxPageEvent implements IMessageForm {
 					.getMessage(selectedRowIndex);
 
 			Params.getInstance().add("MESSAGE_TO_PREVIEW", selectedMessage);
+
+			if (!selectedMessage.getRecipient().stream().filter(recipient -> Optional.ofNullable(recipient).isEmpty()
+					|| Optional.ofNullable(recipient.getUserData()).isEmpty()).findAny().isEmpty())
+				LogGuiException.logWarning(
+						SystemProperties.getInstance().getResourceBundle()
+								.getString("tabOutboxPageEvent.removedRecipientWarningTitle"),
+						SystemProperties.getInstance().getResourceBundle()
+								.getString("tabOutboxPageEvent.removedRecipientWarning"));
+
 			emailForm.getTabbedPane().setSelectedIndex(Tab_Email.TAB_CREATE_PAGE.getValue());
 		} else
 			LogGuiException.logWarning(
@@ -190,14 +200,15 @@ public class TabOutboxPageEvent implements IMessageForm {
 
 	@Override
 	public void onClickBtnSend() {
-		if (Utils.displayConfirmDialog(
+		int selectedRowIndex = emailForm.getPanelOutboxPage().getOutboxTable()
+				.convertRowIndexToModel(emailForm.getPanelOutboxPage().getOutboxTable().getSelectedRow());
+		Message selectedMessage = ((OutboxTableModel) emailForm.getPanelOutboxPage().getOutboxTable().getModel())
+				.getMessage(selectedRowIndex);
+		if (selectedMessage.getRecipient().stream().filter(recipient -> Optional.ofNullable(recipient).isEmpty()
+				|| Optional.ofNullable(recipient.getUserData()).isEmpty()).findAny().isEmpty()
+				&& Utils.displayConfirmDialog(
 				SystemProperties.getInstance().getResourceBundle().getString("confirmDialog.sendAgainMessage"),
 				"") == JOptionPane.YES_OPTION) {
-			int selectedRowIndex = emailForm.getPanelOutboxPage().getOutboxTable()
-					.convertRowIndexToModel(emailForm.getPanelOutboxPage().getOutboxTable().getSelectedRow());
-			Message selectedMessage = ((OutboxTableModel) emailForm.getPanelOutboxPage().getOutboxTable().getModel())
-					.getMessage(selectedRowIndex);
-
 			if (new MailSenderEvent().control(selectedMessage.getRecipient(), selectedMessage.getTitle(),
 					selectedMessage.getContent())) {
 				createEmail(selectedMessage.getRecipient(), selectedMessage.getTitle(), selectedMessage.getContent());
@@ -208,7 +219,12 @@ public class TabOutboxPageEvent implements IMessageForm {
 								.getString("tabCreatePageEvent.emailSendErrorTitle"),
 						SystemProperties.getInstance().getResourceBundle()
 								.getString("tabCreatePageEvent.emailSendErrorTitle"));
-		}
+		} else
+			LogGuiException.logError(
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("errorDialog.title"),
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("tabOutboxPageEvent.removedRecipientError"));
 	}
 
 	private void onChangeComboBoxRecipient() {

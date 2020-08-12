@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Consumer;
 
 import javax.swing.DefaultComboBoxModel;
@@ -129,6 +130,15 @@ public class TabDraftPageEvent implements IMessageForm {
 					.getMessage(selectedRowIndex);
 
 			Params.getInstance().add("DRAFT_TO_MODIFY", selectedMessage);
+
+			if (!selectedMessage.getRecipient().stream().filter(recipient -> Optional.ofNullable(recipient).isEmpty()
+					|| Optional.ofNullable(recipient.getUserData()).isEmpty()).findAny().isEmpty())
+				LogGuiException.logWarning(
+						SystemProperties.getInstance().getResourceBundle()
+								.getString("tabOutboxPageEvent.removedRecipientWarningTitle"),
+						SystemProperties.getInstance().getResourceBundle()
+								.getString("tabOutboxPageEvent.removedRecipientWarning"));
+
 			emailForm.getTabbedPane().setSelectedIndex(Tab_Email.TAB_CREATE_PAGE.getValue());
 		} else
 			LogGuiException.logWarning(
@@ -182,14 +192,15 @@ public class TabDraftPageEvent implements IMessageForm {
 
 	@Override
 	public void onClickBtnSend() {
-		if (Utils.displayConfirmDialog(
+		int selectedRowIndex = emailForm.getPanelDraftPage().getDraftTable()
+				.convertRowIndexToModel(emailForm.getPanelDraftPage().getDraftTable().getSelectedRow());
+		Message selectedMessage = ((DraftTableModel) emailForm.getPanelDraftPage().getDraftTable().getModel())
+				.getMessage(selectedRowIndex);
+		if (selectedMessage.getRecipient().stream().filter(recipient -> Optional.ofNullable(recipient).isEmpty()
+				|| Optional.ofNullable(recipient.getUserData()).isEmpty()).findAny().isEmpty()
+				&& Utils.displayConfirmDialog(
 				SystemProperties.getInstance().getResourceBundle().getString("confirmDialog.sendAgainMessage"),
 				"") == JOptionPane.YES_OPTION) {
-			int selectedRowIndex = emailForm.getPanelDraftPage().getDraftTable()
-					.convertRowIndexToModel(emailForm.getPanelDraftPage().getDraftTable().getSelectedRow());
-			Message selectedMessage = ((DraftTableModel) emailForm.getPanelDraftPage().getDraftTable().getModel())
-					.getMessage(selectedRowIndex);
-
 			if (new MailSenderEvent().control(selectedMessage.getRecipient(), selectedMessage.getTitle(),
 					selectedMessage.getContent())) {
 				updateDraft();
@@ -200,7 +211,12 @@ public class TabDraftPageEvent implements IMessageForm {
 								.getString("tabCreatePageEvent.emailSendErrorTitle"),
 						SystemProperties.getInstance().getResourceBundle()
 								.getString("tabCreatePageEvent.emailSendErrorTitle"));
-		}
+		} else
+			LogGuiException.logError(
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("errorDialog.title"),
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("tabOutboxPageEvent.removedRecipientError"));
 	}
 
 	private void onChangeComboBoxRecipient() {

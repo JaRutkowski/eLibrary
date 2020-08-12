@@ -9,6 +9,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -116,25 +117,27 @@ public class TabComposePageEvent implements IActionForm {
 		emailForm.getPanelComposePage().getEditorPaneContent().setText(messageToPreview.getContent());
 
 		messageToPreview.getRecipient().forEach(recipient -> {
-			Client client;
-			if (recipient.getIsCC() != null && recipient.getIsCC()) {
-				emailForm.getPanelComposePage().getLblCC().setVisible(true);
-				emailForm.getPanelComposePage().getChckbxCC().setSelected(true);
-				emailForm.getPanelComposePage().getComboBoxCC().setVisible(true);
-				client = (Client) HibernateUtil.getSession().getNamedQuery("Client.checkIfClientLoginExist")
-						.setParameter("login", recipient.getUserData().getLogin()).uniqueResult();
-				emailForm.getPanelComposePage().getComboBoxCC().setSelectedItem(client);
-			} else if (recipient.getIsBCC() != null && recipient.getIsBCC()) {
-				emailForm.getPanelComposePage().getLblBCC().setVisible(true);
-				emailForm.getPanelComposePage().getChckbxBCC().setSelected(true);
-				emailForm.getPanelComposePage().getComboBoxBCC().setVisible(true);
-				client = (Client) HibernateUtil.getSession().getNamedQuery("Client.checkIfClientLoginExist")
-						.setParameter("login", recipient.getUserData().getLogin()).uniqueResult();
-				emailForm.getPanelComposePage().getComboBoxBCC().setSelectedItem(client);
-			} else {
-				client = (Client) HibernateUtil.getSession().getNamedQuery("Client.checkIfClientLoginExist")
-						.setParameter("login", recipient.getUserData().getLogin()).uniqueResult();
-				emailForm.getPanelComposePage().getComboBoxTo().setSelectedItem(client);
+			if (Optional.ofNullable(recipient.getUserData()).isPresent()) {
+				Client client;
+				if (recipient.getIsCC() != null && recipient.getIsCC()) {
+					emailForm.getPanelComposePage().getLblCC().setVisible(true);
+					emailForm.getPanelComposePage().getChckbxCC().setSelected(true);
+					emailForm.getPanelComposePage().getComboBoxCC().setVisible(true);
+					client = (Client) HibernateUtil.getSession().getNamedQuery("Client.checkIfClientLoginExist")
+							.setParameter("login", recipient.getUserData().getLogin()).uniqueResult();
+					emailForm.getPanelComposePage().getComboBoxCC().setSelectedItem(client);
+				} else if (recipient.getIsBCC() != null && recipient.getIsBCC()) {
+					emailForm.getPanelComposePage().getLblBCC().setVisible(true);
+					emailForm.getPanelComposePage().getChckbxBCC().setSelected(true);
+					emailForm.getPanelComposePage().getComboBoxBCC().setVisible(true);
+					client = (Client) HibernateUtil.getSession().getNamedQuery("Client.checkIfClientLoginExist")
+							.setParameter("login", recipient.getUserData().getLogin()).uniqueResult();
+					emailForm.getPanelComposePage().getComboBoxBCC().setSelectedItem(client);
+				} else {
+					client = (Client) HibernateUtil.getSession().getNamedQuery("Client.checkIfClientLoginExist")
+							.setParameter("login", recipient.getUserData().getLogin()).uniqueResult();
+					emailForm.getPanelComposePage().getComboBoxTo().setSelectedItem(client);
+				}
 			}
 		});
 	}
