@@ -2,11 +2,14 @@ package com.javafee.elibrary.core.startform;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
+import java.util.Optional;
 
 import com.javafee.elibrary.core.common.Common;
 import com.javafee.elibrary.core.common.Constants;
 import com.javafee.elibrary.core.common.Constants.Role;
 import com.javafee.elibrary.core.common.Params;
+import com.javafee.elibrary.core.common.SystemProperties;
+import com.javafee.elibrary.core.exception.LogGuiException;
 import com.javafee.elibrary.core.exception.RefusedLogInException;
 import com.javafee.elibrary.core.process.ProcessFactory;
 import com.javafee.elibrary.core.process.initializator.FeedAdministratorDataProcess;
@@ -15,6 +18,7 @@ import com.javafee.elibrary.core.process.initializator.FeedMessageTypesProcess;
 import com.javafee.elibrary.core.process.initializator.FeedSystemDataProcess;
 import com.javafee.elibrary.core.process.initializator.FeedSystemParametersProcess;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
+import com.javafee.elibrary.hibernate.dto.common.UserAccount;
 import com.javafee.elibrary.hibernate.dto.common.UserData;
 import com.javafee.elibrary.hibernate.dto.library.Client;
 import com.javafee.elibrary.hibernate.dto.library.LibraryWorker;
@@ -43,7 +47,7 @@ public final class LogInEvent {
 	private static Date logInDate;
 
 	public enum LogInFailureCause {
-		NOT_REGISTERED, NOT_HIRED, BAD_PASSWORD, NO_USER, UNIDENTIFIED
+		NOT_REGISTERED, NOT_HIRED, BAD_PASSWORD, NO_USER, BLOCKED, USER_ACCOUNT_NOT_EXISTS, UNIDENTIFIED
 	}
 
 	private LogInEvent() {
@@ -72,14 +76,16 @@ public final class LogInEvent {
 	}
 
 	private static boolean checkLogAndRole(String login, String password) {
-		boolean result = false;
 		client = (Client) HibernateUtil.getSession().getNamedQuery("Client.checkIfClientLoginExist")
 				.setParameter("login", login).uniqueResult();
 		worker = (Worker) HibernateUtil.getSession().getNamedQuery("Worker.checkIfWorkerLoginExist")
 				.setParameter("login", login).uniqueResult();
 		isAdmin = Common.isAdmin(login, password);
+		boolean result = false, clientExists = client != null, workerExists = worker != null,
+				clientNotBlocked = clientExists && !client.getUserAccount().getBlocked(),
+				workerNotBlocked = workerExists && !worker.getUserAccount().getBlocked();
 
-		if (client != null) {
+		if (clientNotBlocked) {
 			if (isAdmin) {
 				role = Role.ADMIN;
 				userData = com.javafee.elibrary.hibernate.dao.common.Common.findUserDataById(Constants.DATA_BASE_ADMIN_ID).get();
@@ -96,7 +102,7 @@ public final class LogInEvent {
 			role = Role.ADMIN;
 			userData = com.javafee.elibrary.hibernate.dao.common.Common.findUserDataById(Constants.DATA_BASE_ADMIN_ID).get();
 			result = true;
-		} else if (worker != null) {
+		} else if (workerNotBlocked) {
 			if (checkLoginAndPassword(password)) {
 				if (worker.getRegistered()) {
 					if (checkIfHired(worker)) {
@@ -109,10 +115,12 @@ public final class LogInEvent {
 				} else
 					Params.getInstance().add("NOT_REGISTERED", LogInFailureCause.NOT_REGISTERED);
 			}
-		} else
-			Params.getInstance().add("NO_USER", LogInFailureCause.NO_USER);
-
-
+		} else {
+			if (!clientNotBlocked || !workerNotBlocked)
+				Params.getInstance().add("BLOCKED", LogInFailureCause.BLOCKED);
+			else if (!clientExists || !workerExists)
+				Params.getInstance().add("NO_USER", LogInFailureCause.NO_USER);
+		}
 		return result;
 	}
 
@@ -134,12 +142,43 @@ public final class LogInEvent {
 		else if (worker != null && md5.equals(worker.getPassword()))
 			result = true;
 
-		if (!result && worker != null)
-			Params.getInstance().add("BAD_PASSWORD", LogInFailureCause.BAD_PASSWORD);
-		if (!result && client != null)
+		if ((!result && worker != null) || (!result && client != null))
 			Params.getInstance().add("BAD_PASSWORD", LogInFailureCause.BAD_PASSWORD);
 
+		if (!result)
+			handleWrongPasswordAttempt(client != null ?
+					client : (worker != null ? worker : (libraryWorker != null ? libraryWorker.getWorker() : null)));
+
 		return result;
+	}
+
+	private static void handleWrongPasswordAttempt(UserData userData) {
+		if (Optional.ofNullable(userData.getUserAccount()).isPresent()) {
+			UserAccount userAccount = userData.getUserAccount();
+			userAccount.setNumberOfFailedPasswordAttempts(userAccount.getNumberOfFailedPasswordAttempts() + 1);
+
+			HibernateUtil.beginTransaction();
+			HibernateUtil.getSession().update(userAccount);
+			HibernateUtil.commitTransaction();
+
+			if (userAccount.getNumberOfFailedPasswordAttempts()
+					>= Integer.valueOf(SystemProperties.getSystemParameters().get(Constants.APPLICATION_NUMBER_OF_ATTEMPTS_LIMIT).getValue()))
+				blockUserAccount(userData);
+		} else
+			Params.getInstance().add("USER_ACCOUNT_NOT_EXISTS", LogInFailureCause.USER_ACCOUNT_NOT_EXISTS);
+	}
+
+	private static void blockUserAccount(UserData userData) {
+		UserAccount userAccount = userData.getUserAccount();
+		userAccount.setBlocked(Boolean.TRUE);
+		userAccount.setBlockDate(new Date());
+		userAccount.setBlockReason(Constants.BlockReason.WRONG_PASSWORD.getValue());
+
+		HibernateUtil.beginTransaction();
+		HibernateUtil.getSession().update(userAccount);
+		HibernateUtil.commitTransaction();
+
+		Params.getInstance().add("BLOCKED", LogInFailureCause.BLOCKED);
 	}
 
 	public static void clearLogInData() {

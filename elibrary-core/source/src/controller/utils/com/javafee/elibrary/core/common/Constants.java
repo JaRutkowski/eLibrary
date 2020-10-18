@@ -368,6 +368,19 @@ public final class Constants {
 		ADDITION, MODIFICATION, CANCELED, LOAN, READING_ROOM
 	}
 
+	@AllArgsConstructor
+	@Getter
+	public enum BlockReason {
+		WRONG_PASSWORD("Wrong password");
+
+		private final String value;
+
+		public static BlockReason getByNumber(String blockReason) {
+			return Stream.of(BlockReason.values())
+					.filter(item -> item.getValue().equals(blockReason)).findFirst().get();
+		}
+	}
+
 	public static final String LANGUAGE_RESOURCE_BUNDLE = "messages";
 	public static final String APPLICATION_PROPERTIES = "application.properties";
 
@@ -407,6 +420,8 @@ public final class Constants {
 	public static final String APPLICATION_MIN_PASSWORD_LENGTH = "APPLICATION_MIN_PASSWORD_LENGTH";
 	public static final String APPLICATION_MAX_PASSWORD_LENGTH = "APPLICATION_MAX_PASSWORD_LENGTH";
 	public static final String APPLICATION_COMBO_BOX_DATA_PACKAGE_SIZE = "APPLICATION_COMBO_BOX_DATA_PACKAGE_SIZE";
+	public static final String APPLICATION_NUMBER_OF_ATTEMPTS_LIMIT = "APPLICATION_NUMBER_OF_ATTEMPTS_LIMIT";
+	public static final String APPLICATION_BLOCK_ACCOUNT_FUNCTIONALITY = "APPLICATION_BLOCK_ACCOUNT_FUNCTIONALITY";
 
 	public static final Dimension START_FORM_MINIMUM_SIZE = new Dimension(300, 200);
 	public static final Dimension EMAIL_FORM_MINIMUM_SIZE = new Dimension(800, 700);
@@ -440,6 +455,8 @@ public final class Constants {
 	public static final Integer SPINNER_MAXIMUM_VALUE_PASSWORD_LENGTH = 30;
 	public static final Integer SPINNER_MINIMUM_VALUE_COMBO_BOX_DATA_PACKAGE_SIZE = 1;
 	public static final Integer SPINNER_MAXIMUM_VALUE_COMBO_BOX_DATA_PACKAGE_SIZE = 300000;
+	public static final Integer SPINNER_MINIMUM_VALUE_APPLICATION_NUMBER_OF_ATTEMPTS_LIMIT = 1;
+	public static final Integer SPINNER_MAXIMUM_VALUE_APPLICATION_NUMBER_OF_ATTEMPTS_LIMIT = 20;
 
 	public static final Character DATA_BASE_MALE_SIGN = 'M';
 	public static final Character DATA_BASE_FEMALE_SIGN = 'F';

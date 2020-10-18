@@ -8,6 +8,9 @@ import java.util.stream.Stream;
 
 import javax.swing.KeyStroke;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 public final class Constants {
 	public enum ClientTableColumn {
 		COL_PESEL_NUMBER(0), COL_DOCUMENT_NUMBER(1), COL_LOGIN(2), COL_E_MAIL(3), COL_NAME(4), COL_SURNAME(5),
@@ -248,7 +251,11 @@ public final class Constants {
 	public static final String DATA_BASE_SYSTEM_PARAMETER_APPLICATION_MAX_PASSWORD_LENGTH_VALUE = "16";
 	public static final String DATA_BASE_SYSTEM_PARAMETER_APPLICATION_COMBO_BOX_DATA_PACKAGE_SIZE_NAME = "APPLICATION_COMBO_BOX_DATA_PACKAGE_SIZE";
 	public static final String DATA_BASE_SYSTEM_PARAMETER_APPLICATION_COMBO_BOX_DATA_PACKAGE_SIZE_VALUE = "20000";
-	public static final Integer DATA_BASE_NUMBER_OF_SYSTEM_PARAMETERS = 9;
+	public static final String DATA_BASE_SYSTEM_PARAMETER_APPLICATION_NUMBER_OF_ATTEMPTS_LIMIT_NAME = "APPLICATION_NUMBER_OF_ATTEMPTS_LIMIT";
+	public static final String DATA_BASE_SYSTEM_PARAMETER_APPLICATION_NUMBER_OF_ATTEMPTS_LIMIT_VALUE = "3";
+	public static final String DATA_BASE_SYSTEM_PARAMETER_APPLICATION_BLOCK_ACCOUNT_FUNCTIONALITY_NAME = "APPLICATION_BLOCK_ACCOUNT_FUNCTIONALITY";
+	public static final String DATA_BASE_SYSTEM_PARAMETER_APPLICATION_BLOCK_ACCOUNT_FUNCTIONALITY_VALUE = "true";
+	public static final Integer DATA_BASE_NUMBER_OF_SYSTEM_PARAMETERS = 11;
 	public static final Integer DATA_BASE_SYSTEM_DATA_ID = 1;
 	public static final Date DATA_BASE_SYSTEM_DATA_INITIALIZATION_DATE = new Date();
 	public static final Integer DATA_BASE_LIBRARY_DATA_ID = 1;
