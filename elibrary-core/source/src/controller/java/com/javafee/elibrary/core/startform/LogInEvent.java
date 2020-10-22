@@ -9,7 +9,6 @@ import com.javafee.elibrary.core.common.Constants;
 import com.javafee.elibrary.core.common.Constants.Role;
 import com.javafee.elibrary.core.common.Params;
 import com.javafee.elibrary.core.common.SystemProperties;
-import com.javafee.elibrary.core.exception.LogGuiException;
 import com.javafee.elibrary.core.exception.RefusedLogInException;
 import com.javafee.elibrary.core.process.ProcessFactory;
 import com.javafee.elibrary.core.process.initializator.FeedAdministratorDataProcess;
@@ -145,7 +144,8 @@ public final class LogInEvent {
 		if ((!result && worker != null) || (!result && client != null))
 			Params.getInstance().add("BAD_PASSWORD", LogInFailureCause.BAD_PASSWORD);
 
-		if (!result)
+		if (!result && Boolean.valueOf(SystemProperties.getSystemParameters()
+				.get(Constants.APPLICATION_BLOCK_ACCOUNT_FUNCTIONALITY).getValue()))
 			handleWrongPasswordAttempt(client != null ?
 					client : (worker != null ? worker : (libraryWorker != null ? libraryWorker.getWorker() : null)));
 
