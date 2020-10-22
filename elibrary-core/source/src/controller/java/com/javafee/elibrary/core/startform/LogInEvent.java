@@ -82,7 +82,8 @@ public final class LogInEvent {
 		isAdmin = Common.isAdmin(login, password);
 		boolean result = false, clientExists = client != null, workerExists = worker != null,
 				clientNotBlocked = clientExists && !client.getUserAccount().getBlocked(),
-				workerNotBlocked = workerExists && !worker.getUserAccount().getBlocked();
+				workerNotBlocked = workerExists && !worker.getUserAccount().getBlocked(),
+				isAdminLogin = Common.isAdminLogin(login);
 
 		if (clientNotBlocked) {
 			if (isAdmin) {
@@ -115,7 +116,7 @@ public final class LogInEvent {
 					Params.getInstance().add("NOT_REGISTERED", LogInFailureCause.NOT_REGISTERED);
 			}
 		} else {
-			if (!clientNotBlocked || !workerNotBlocked)
+			if ((!clientNotBlocked || !workerNotBlocked) && !isAdminLogin)
 				Params.getInstance().add("BLOCKED", LogInFailureCause.BLOCKED);
 			else if (!clientExists || !workerExists)
 				Params.getInstance().add("NO_USER", LogInFailureCause.NO_USER);

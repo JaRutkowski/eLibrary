@@ -309,6 +309,10 @@ public final class Common {
 					.stream().forEach(entry -> entry.getValue().accept(null));
 	}
 
+	public boolean isAdminLogin(String login) {
+		return Constants.DATA_BASE_ADMIN_LOGIN.equals(login);
+	}
+
 	public boolean isAdmin(String login, String password) {
 		return Constants.DATA_BASE_ADMIN_LOGIN.equals(login)
 				&& Constants.DATA_BASE_ADMIN_PASSWORD.equals(Common.createMd5(password));
