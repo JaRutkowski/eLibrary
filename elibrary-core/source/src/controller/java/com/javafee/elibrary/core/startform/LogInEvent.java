@@ -90,21 +90,21 @@ public final class LogInEvent {
 				role = Role.ADMIN;
 				userData = com.javafee.elibrary.hibernate.dao.common.Common.findUserDataById(Constants.DATA_BASE_ADMIN_ID).get();
 			}
-			if (checkLoginAndPassword(password)) {
-				if (client.getRegistered()) {
+			if (client.getRegistered()) {
+				if (checkLoginAndPassword(password)) {
 					role = Role.CLIENT;
 					userData = client;
 					result = true;
-				} else
-					Params.getInstance().add("NOT_REGISTERED", LogInFailureCause.NOT_REGISTERED);
-			}
+				}
+			} else
+				Params.getInstance().add("NOT_REGISTERED", LogInFailureCause.NOT_REGISTERED);
 		} else if (worker == null && isAdmin) {
 			role = Role.ADMIN;
 			userData = com.javafee.elibrary.hibernate.dao.common.Common.findUserDataById(Constants.DATA_BASE_ADMIN_ID).get();
 			result = true;
 		} else if (workerNotBlocked) {
-			if (checkLoginAndPassword(password)) {
-				if (worker.getRegistered()) {
+			if (worker.getRegistered()) {
+				if (checkLoginAndPassword(password)) {
 					if (checkIfHired(worker)) {
 						if (libraryWorker.getIsAccountant() != null)
 							role = libraryWorker.getIsAccountant() ? Role.WORKER_ACCOUNTANT : Role.WORKER_LIBRARIAN;
@@ -112,11 +112,11 @@ public final class LogInEvent {
 						result = true;
 					} else
 						Params.getInstance().add("NOT_HIRED", LogInFailureCause.NOT_HIRED);
-				} else
-					Params.getInstance().add("NOT_REGISTERED", LogInFailureCause.NOT_REGISTERED);
-			}
+				}
+			} else
+				Params.getInstance().add("NOT_REGISTERED", LogInFailureCause.NOT_REGISTERED);
 		} else {
-			if ((!clientNotBlocked || !workerNotBlocked) && !isAdminLogin)
+			if (((!clientNotBlocked || !workerNotBlocked) && (clientExists || workerExists)) && !isAdminLogin)
 				Params.getInstance().add("BLOCKED", LogInFailureCause.BLOCKED);
 			else if (!clientExists || !workerExists)
 				Params.getInstance().add("NO_USER", LogInFailureCause.NO_USER);
