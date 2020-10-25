@@ -39,6 +39,7 @@ import com.javafee.elibrary.core.tabbedform.Actions;
 import com.javafee.elibrary.core.tabbedform.clients.ClientTablePanel;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
 import com.javafee.elibrary.hibernate.dto.association.City;
+import com.javafee.elibrary.hibernate.dto.common.UserAccount;
 import com.javafee.elibrary.hibernate.dto.common.UserData;
 import com.javafee.elibrary.hibernate.dto.library.Client;
 import com.javafee.elibrary.hibernate.dto.library.Worker;
@@ -171,6 +172,31 @@ public final class Common {
 		}
 
 		return result;
+	}
+
+	public static void blockUserAccount(UserData userData, boolean withParam) {
+		UserAccount userAccount = userData.getUserAccount();
+		userAccount.setBlocked(Boolean.TRUE);
+		userAccount.setBlockDate(new Date());
+		userAccount.setBlockReason(Constants.BlockReason.WRONG_PASSWORD.getValue());
+
+		HibernateUtil.beginTransaction();
+		HibernateUtil.getSession().update(userAccount);
+		HibernateUtil.commitTransaction();
+
+		if (withParam)
+			Params.getInstance().add("BLOCKED", Constants.LogInFailureCause.BLOCKED);
+	}
+
+	public static void unblockUserAccount(UserData userData) {
+		UserAccount userAccount = userData.getUserAccount();
+		userAccount.setBlocked(Boolean.FALSE);
+		userAccount.setBlockDate(null);
+		userAccount.setBlockReason(null);
+
+		HibernateUtil.beginTransaction();
+		HibernateUtil.getSession().update(userAccount);
+		HibernateUtil.commitTransaction();
 	}
 
 	@SuppressWarnings("unchecked")

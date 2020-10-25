@@ -368,6 +368,10 @@ public final class Constants {
 		ADDITION, MODIFICATION, CANCELED, LOAN, READING_ROOM
 	}
 
+	public enum LogInFailureCause {
+		NOT_REGISTERED, NOT_HIRED, BAD_PASSWORD, NO_USER, BLOCKED, USER_ACCOUNT_NOT_EXISTS, UNIDENTIFIED
+	}
+
 	@AllArgsConstructor
 	@Getter
 	public enum BlockReason {
