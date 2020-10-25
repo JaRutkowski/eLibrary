@@ -174,11 +174,11 @@ public final class Common {
 		return result;
 	}
 
-	public static void blockUserAccount(UserData userData, boolean withParam) {
+	public static void blockUserAccount(UserData userData, boolean withParam, Date blockDate, String blockReason) {
 		UserAccount userAccount = userData.getUserAccount();
 		userAccount.setBlocked(Boolean.TRUE);
-		userAccount.setBlockDate(new Date());
-		userAccount.setBlockReason(Constants.BlockReason.WRONG_PASSWORD.getValue());
+		userAccount.setBlockDate(blockDate);
+		userAccount.setBlockReason(blockReason);
 
 		HibernateUtil.beginTransaction();
 		HibernateUtil.getSession().update(userAccount);

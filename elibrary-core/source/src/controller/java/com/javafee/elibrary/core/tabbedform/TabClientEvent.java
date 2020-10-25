@@ -54,6 +54,8 @@ public final class TabClientEvent implements IActionForm {
 		tabbedForm.getPanelClient().getCockpitEditionPanel().getBtnDelete().addActionListener(e -> onClickBtnDelete());
 		tabbedForm.getPanelClient().getAdmIsRegisteredPanel().getDecisionPanel().getBtnAccept()
 				.addActionListener(e -> onClickBtnAccept());
+		tabbedForm.getPanelClient().getAdmBlockPanel().getBtnBlock().addActionListener(e -> onClickBtnBlock(Boolean.TRUE));
+		tabbedForm.getPanelClient().getAdmBlockPanel().getBtnUnblock().addActionListener(e -> onClickBtnBlock(Boolean.FALSE));
 		tabbedForm.getPanelClient().getClientTable().getModel().addTableModelListener(e -> reloadClientTable());
 		tabbedForm.getPanelClient().getClientTable().getSelectionModel().addListSelectionListener(e -> {
 			if (!e.getValueIsAdjusting())
@@ -238,6 +240,36 @@ public final class TabClientEvent implements IActionForm {
 					JOptionPane.WARNING_MESSAGE);
 	}
 
+	private void onClickBtnBlock(boolean block) {
+		if (validateClientTableSelection(tabbedForm.getPanelClient().getClientTable().getSelectedRow())) {
+			int selectedRowIndex = tabbedForm.getPanelClient().getClientTable()
+					.convertRowIndexToModel(tabbedForm.getPanelClient().getClientTable().getSelectedRow());
+			Client selectedClient = ((ClientTableModel) tabbedForm.getPanelClient().getClientTable().getModel())
+					.getClient(selectedRowIndex);
+			if (block)
+				Common.blockUserAccount(selectedClient, Boolean.FALSE,
+						tabbedForm.getPanelClient().getAdmBlockPanel().getDateChooserBlockDate().getDate(),
+						tabbedForm.getPanelClient().getAdmBlockPanel().getTextFieldBlockReason().getText());
+			else
+				Common.unblockUserAccount(selectedClient);
+
+			Utils.displayOptionPane(
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("tabClientEvent.blockClientSuccess"),
+					SystemProperties.getInstance().getResourceBundle().getString(
+							"tabClientEvent.updateClientSuccessTitle"),
+					JOptionPane.INFORMATION_MESSAGE);
+
+			reloadAdmBlockPanel(selectedClient.getUserAccount().getBlocked());
+			reloadClientTable();
+		} else
+			LogGuiException.logWarning(
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("tabClientEvent.notSelectedClientWarningTitle"),
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("tabClientEvent.notSelectedClientWarning"));
+	}
+
 	private void onClientTableListSelectionChange() {
 		if (tabbedForm.getPanelClient().getClientTable().getSelectedRow() != -1
 				&& tabbedForm.getPanelClient().getClientTable()
@@ -277,8 +309,13 @@ public final class TabClientEvent implements IActionForm {
 	}
 
 	private void setEnableAdmBlockPanelControls(boolean isBlocked) {
+		tabbedForm.getPanelClient().getAdmBlockPanel().getChckbxIsBlocked().setEnabled(Boolean.FALSE);
+		tabbedForm.getPanelClient().getAdmBlockPanel().getLblBlockDate().setEnabled(!isBlocked);
 		tabbedForm.getPanelClient().getAdmBlockPanel().getDateChooserBlockDate().setEnabled(!isBlocked);
+		tabbedForm.getPanelClient().getAdmBlockPanel().getLblBlockReason().setEnabled(!isBlocked);
 		tabbedForm.getPanelClient().getAdmBlockPanel().getTextFieldBlockReason().setEnabled(!isBlocked);
+		tabbedForm.getPanelClient().getAdmBlockPanel().getBtnBlock().setEnabled(!isBlocked);
+		tabbedForm.getPanelClient().getAdmBlockPanel().getBtnUnblock().setEnabled(isBlocked);
 	}
 
 	public boolean validateClientTableSelection(int index) {

@@ -162,7 +162,7 @@ public final class LogInEvent {
 
 			if (userAccount.getNumberOfFailedPasswordAttempts()
 					>= Integer.valueOf(SystemProperties.getSystemParameters().get(Constants.APPLICATION_NUMBER_OF_ATTEMPTS_LIMIT).getValue()))
-				Common.blockUserAccount(userData, true);
+				Common.blockUserAccount(userData, true, new Date(), Constants.BlockReason.WRONG_PASSWORD.getValue());
 		} else
 			Params.getInstance().add("USER_ACCOUNT_NOT_EXISTS", Constants.LogInFailureCause.USER_ACCOUNT_NOT_EXISTS);
 	}

@@ -2,15 +2,20 @@ package com.javafee.elibrary.core.uniform;
 
 import java.awt.*;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 
 import com.javafee.elibrary.core.common.BasePanel;
 import com.javafee.elibrary.core.common.SystemProperties;
 import com.javafee.elibrary.core.common.Utils;
+import com.javafee.elibrary.core.startform.RegistrationPanel;
 import com.javafee.elibrary.core.unicomponent.border.CustomTitledBorder;
+import com.javafee.elibrary.core.unicomponent.jbutton.CustomJButton;
 import com.javafee.elibrary.core.unicomponent.jcheckbox.CustomJCheckBox;
 import com.javafee.elibrary.core.unicomponent.jdatechooser.CustomJDateChooser;
 import com.javafee.elibrary.core.unicomponent.jlabel.CustomJLabel;
@@ -18,7 +23,6 @@ import com.javafee.elibrary.core.unicomponent.jtextfield.CustomJTextField;
 import com.toedter.calendar.JDateChooser;
 
 import lombok.Getter;
-import javax.swing.JTextField;
 
 public class AdmBlockPanel extends BasePanel {
 	private static final long serialVersionUID = 1L;
@@ -26,11 +30,17 @@ public class AdmBlockPanel extends BasePanel {
 	@Getter
 	private JCheckBox chckbxIsBlocked;
 	@Getter
-	private DecisionPanel decisionPanel;
+	private JLabel lblBlockDate;
 	@Getter
 	private JDateChooser dateChooserBlockDate;
 	@Getter
+	private JLabel lblBlockReason;
+	@Getter
 	private JTextField textFieldBlockReason;
+	@Getter
+	private JButton btnBlock;
+	@Getter
+	private JButton btnUnblock;
 
 	public AdmBlockPanel() {
 		super();
@@ -39,9 +49,9 @@ public class AdmBlockPanel extends BasePanel {
 						.getString("admBlockPanel.admBlockPanelBorderTitle"),
 				TitledBorder.LEADING, CustomTitledBorder.TOP, null, new Color(0, 0, 0)));
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0, 0, 0, 161, 0};
+		gridBagLayout.columnWidths = new int[]{0, 0, 156, 71, 38, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{1.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.columnWeights = new double[]{1.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{1.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 
@@ -55,7 +65,7 @@ public class AdmBlockPanel extends BasePanel {
 		gbc_chckbxIsBlocked.gridy = 0;
 		add(chckbxIsBlocked, gbc_chckbxIsBlocked);
 
-		JLabel lblBlockDate = new CustomJLabel(SystemProperties.getInstance().getResourceBundle()
+		lblBlockDate = new CustomJLabel(SystemProperties.getInstance().getResourceBundle()
 				.getString("admBlockPanel.lblBlockDate"));
 		GridBagConstraints gbc_lblBlockDate = new GridBagConstraints();
 		gbc_lblBlockDate.insets = new Insets(0, 0, 5, 5);
@@ -71,9 +81,10 @@ public class AdmBlockPanel extends BasePanel {
 		gbc_dateChooserBlockDate.gridy = 0;
 		add(dateChooserBlockDate, gbc_dateChooserBlockDate);
 
-		JLabel lblBlockReason = new CustomJLabel(SystemProperties.getInstance().getResourceBundle()
+		lblBlockReason = new CustomJLabel(SystemProperties.getInstance().getResourceBundle()
 				.getString("admBlockPanel.lblBlockReason"));
 		GridBagConstraints gbc_lblBlockReason = new GridBagConstraints();
+		gbc_lblBlockReason.gridwidth = 5;
 		gbc_lblBlockReason.anchor = GridBagConstraints.WEST;
 		gbc_lblBlockReason.insets = new Insets(0, 0, 5, 5);
 		gbc_lblBlockReason.gridx = 0;
@@ -82,22 +93,32 @@ public class AdmBlockPanel extends BasePanel {
 
 		textFieldBlockReason = new CustomJTextField();
 		GridBagConstraints gbc_textField = new GridBagConstraints();
-		gbc_textField.gridwidth = 4;
 		gbc_textField.insets = new Insets(0, 0, 0, 5);
+		gbc_textField.gridwidth = 5;
 		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField.gridx = 0;
 		gbc_textField.gridy = 2;
 		add(textFieldBlockReason, gbc_textField);
 		textFieldBlockReason.setColumns(10);
 
-		decisionPanel = new DecisionPanel();
-		GridBagLayout gridBagLayout_1 = (GridBagLayout) decisionPanel.getLayout();
-		gridBagLayout_1.columnWeights = new double[]{0.0, 0.0};
-		GridBagConstraints gbc_decisionPanel = new GridBagConstraints();
-		gbc_decisionPanel.insets = new Insets(0, 0, 5, 0);
-		gbc_decisionPanel.fill = GridBagConstraints.HORIZONTAL;
-		gbc_decisionPanel.gridx = 3;
-		gbc_decisionPanel.gridy = 0;
-		add(decisionPanel, gbc_decisionPanel);
+		btnBlock = new CustomJButton(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnAccept-ico.png"))
+				.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)),
+				SystemProperties.getInstance().getResourceBundle().getString("admBlockPanel.btnBlock"));
+		GridBagConstraints gbc_btnBlock = new GridBagConstraints();
+		gbc_btnBlock.anchor = GridBagConstraints.EAST;
+		gbc_btnBlock.insets = new Insets(0, 0, 5, 5);
+		gbc_btnBlock.gridx = 3;
+		gbc_btnBlock.gridy = 0;
+		add(btnBlock, gbc_btnBlock);
+
+		btnUnblock = new CustomJButton(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnDeny-ico.png"))
+				.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)),
+				SystemProperties.getInstance().getResourceBundle().getString("admBlockPanel.btnUnblock"));
+		GridBagConstraints gbc_btnUnblock = new GridBagConstraints();
+		gbc_btnUnblock.anchor = GridBagConstraints.WEST;
+		gbc_btnUnblock.insets = new Insets(0, 0, 5, 0);
+		gbc_btnUnblock.gridx = 4;
+		gbc_btnUnblock.gridy = 0;
+		add(btnUnblock, gbc_btnUnblock);
 	}
 }
