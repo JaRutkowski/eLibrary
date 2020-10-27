@@ -7,7 +7,6 @@
               splitStatements="true"
               stripComments="true">
                 -- Drop table
-
                 -- DROP TABLE public.com_user_account;
 
                 CREATE TABLE public.com_user_account (
@@ -18,6 +17,10 @@
                     number_of_failed_password_attempts int4 NULL,
                     CONSTRAINT com_user_account_pkey PRIMARY KEY (id_user_account)
                 );
+
+                ALTER TABLE public.com_user_data ADD id_user_account int4 NULL;
+                ALTER TABLE public.com_user_data ADD CONSTRAINT fknfb0y5budgfars80x2pcpdug3
+                    FOREIGN KEY (id_user_account) REFERENCES com_user_account(id_user_account);
         </sql>
     </changeSet>
 </databaseChangeLog>
