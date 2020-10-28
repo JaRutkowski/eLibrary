@@ -1,13 +1,13 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
-    <changeSet author="Mój (generated)" id="1601064489930-1">
+    <changeSet author="Mój (generated)" id="1601064489931-1">
         <insert tableName="com_authorization">
             <column name="id_authorization" valueNumeric="1"/>
             <column name="login" value="admin"/>
             <column name="private_key" value="rsLpZA5G8XM="/>
         </insert>
     </changeSet>
-    <changeSet author="Mój (generated)" id="1601064489930-2">
+    <changeSet author="Mój (generated)" id="1601064489931-2">
         <insert tableName="com_system_data">
             <column name="id_system_data" valueNumeric="1"/>
             <column name="build_number"/>
@@ -20,7 +20,7 @@
             <column name="version"/>
         </insert>
     </changeSet>
-    <changeSet author="Mój (generated)" id="1601064489930-3">
+    <changeSet author="Mój (generated)" id="1601064489931-3">
         <insert tableName="com_system_parameter">
             <column name="id_system_parameter" valueNumeric="1"/>
             <column name="default_value" value="0.6"/>
@@ -88,7 +88,7 @@
             <column name="value" value="true"/>
         </insert>
     </changeSet>
-    <changeSet author="Mój (generated)" id="1601064489930-4">
+    <changeSet author="Mój (generated)" id="1601064489931-4">
         <insert tableName="com_user_data">
             <column name="id_user_data" valueNumeric="0"/>
             <column name="address"/>
@@ -294,7 +294,7 @@
             <column name="id_system_properties"/>
         </insert>
     </changeSet>
-    <changeSet author="Mój (generated)" id="1601064489930-5">
+    <changeSet author="Mój (generated)" id="1601064489931-5">
         <insert tableName="lib_author">
             <column name="id_author" valueNumeric="1"/>
             <column name="birth_date"/>
@@ -422,7 +422,7 @@
             <column name="surname" value="Bradly"/>
         </insert>
     </changeSet>
-    <changeSet author="Mój (generated)" id="1601064489930-6">
+    <changeSet author="Mój (generated)" id="1601064489931-6">
         <insert tableName="lib_book">
             <column name="id_book" valueNumeric="1"/>
             <column name="ext_file_metadata"/>
@@ -451,7 +451,7 @@
             <column name="title" value="Dzieci Húrina. Pod redakcją Christophera Tolkiena"/>
         </insert>
     </changeSet>
-    <changeSet author="Mój (generated)" id="1601064489930-7">
+    <changeSet author="Mój (generated)" id="1601064489931-7">
         <insert tableName="lib_book_author">
             <column name="id_book" valueNumeric="1"/>
             <column name="id_author" valueNumeric="11"/>
@@ -465,7 +465,7 @@
             <column name="id_author" valueNumeric="1"/>
         </insert>
     </changeSet>
-    <changeSet author="Mój (generated)" id="1601064489930-10">
+    <changeSet author="Mój (generated)" id="1601064489931-10">
         <insert tableName="lib_category">
             <column name="id_category" valueNumeric="1"/>
             <column name="name" value="Akcja"/>
@@ -595,7 +595,7 @@
             <column name="name" value="Thriller"/>
         </insert>
     </changeSet>
-    <changeSet author="Mój (generated)" id="1601064489930-8">
+    <changeSet author="Mój (generated)" id="1601064489931-8">
         <insert tableName="lib_book_category">
             <column name="id_book" valueNumeric="1"/>
             <column name="id_category" valueNumeric="1"/>
@@ -609,7 +609,7 @@
             <column name="id_category" valueNumeric="1"/>
         </insert>
     </changeSet>
-    <changeSet author="Mój (generated)" id="1601064489930-16">
+    <changeSet author="Mój (generated)" id="1601064489931-16">
         <insert tableName="lib_publishing_house">
             <column name="id_publishing_house" valueNumeric="1"/>
             <column name="name" value="Księgarnia Wydawnicza Trzaska, Evert i Michalski"/>
@@ -659,7 +659,7 @@
             <column name="name" value="Noir sur Blanc"/>
         </insert>
     </changeSet>
-    <changeSet author="Mój (generated)" id="1601064489930-9">
+    <changeSet author="Mój (generated)" id="1601064489931-9">
         <insert tableName="lib_book_publishing_house">
             <column name="id_book" valueNumeric="1"/>
             <column name="id_publishing_house" valueNumeric="5"/>
@@ -673,7 +673,7 @@
             <column name="id_publishing_house" valueNumeric="5"/>
         </insert>
     </changeSet>
-    <changeSet author="Mój (generated)" id="1601064489930-11">
+    <changeSet author="Mój (generated)" id="1601064489931-11">
         <insert tableName="lib_client">
             <column name="id_client" valueNumeric="1"/>
         </insert>
@@ -696,13 +696,13 @@
             <column name="id_client" valueNumeric="11"/>
         </insert>
     </changeSet>
-    <changeSet author="Mój (generated)" id="1601064489930-13">
+    <changeSet author="Mój (generated)" id="1601064489931-13">
         <insert tableName="lib_library_data">
             <column name="id_library_data" valueNumeric="1"/>
             <column name="name" value="Library"/>
         </insert>
     </changeSet>
-    <changeSet author="Mój (generated)" id="1601064489930-12">
+    <changeSet author="Mój (generated)" id="1601064489931-12">
         <insert tableName="lib_library_branch_data">
             <column name="id_library_branch_data" valueNumeric="1"/>
             <column name="address"/>
@@ -711,13 +711,13 @@
             <column name="id_library_data" valueNumeric="1"/>
         </insert>
     </changeSet>
-    <changeSet author="Mój (generated)" id="1601064489930-14">
+    <changeSet author="Mój (generated)" id="1601064489931-14">
         <insert tableName="lib_library_system_data">
             <column name="id_library_system_data" valueNumeric="1"/>
             <column name="id_library_data" valueNumeric="1"/>
         </insert>
     </changeSet>
-    <changeSet author="Mój (generated)" id="1601064489930-18">
+    <changeSet author="Mój (generated)" id="1601064489931-18">
         <insert tableName="lib_worker">
             <column name="salary"/>
             <column name="id_worker" valueNumeric="6"/>
@@ -735,7 +735,7 @@
             <column name="id_worker" valueNumeric="3"/>
         </insert>
     </changeSet>
-    <changeSet author="Mój (generated)" id="1601064489930-15">
+    <changeSet author="Mój (generated)" id="1601064489931-15">
         <insert tableName="lib_library_worker">
             <column name="is_accountant" valueBoolean="true"/>
             <column name="id_library_data" valueNumeric="1"/>
@@ -757,7 +757,7 @@
             <column name="id_worker" valueNumeric="6"/>
         </insert>
     </changeSet>
-    <changeSet author="Mój (generated)" id="1601064489930-17">
+    <changeSet author="Mój (generated)" id="1601064489931-17">
         <insert tableName="lib_volume">
             <column name="id_volume" valueNumeric="1"/>
             <column name="inventory_number" value="2020220700001"/>
@@ -823,7 +823,7 @@
             <column name="id_book" valueNumeric="3"/>
         </insert>
     </changeSet>
-    <changeSet author="Mój (generated)" id="1601064489930-19">
+    <changeSet author="Mój (generated)" id="1601064489931-19">
         <insert tableName="mes_message_type">
             <column name="id_message_type" valueNumeric="0"/>
             <column name="description" value=""/>

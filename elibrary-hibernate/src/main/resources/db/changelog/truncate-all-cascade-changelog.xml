@@ -2,7 +2,7 @@
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
 				   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 				   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
-	<changeSet author="Jakub.Rutkowski" id="0000000011">
+	<changeSet author="Jakub.Rutkowski" id="0000000012">
 		<comment>Clear any existing legacy data in the tables</comment>
 		<sql splitStatements="true">
 			TRUNCATE TABLE public.com_authorization CONTINUE IDENTITY CASCADE;
@@ -11,6 +11,7 @@
 			TRUNCATE TABLE public.com_system_data CONTINUE IDENTITY CASCADE;
 			TRUNCATE TABLE public.com_system_parameter CONTINUE IDENTITY CASCADE;
 			TRUNCATE TABLE public.com_system_properties CONTINUE IDENTITY CASCADE;
+			TRUNCATE TABLE public.com_user_account CONTINUE IDENTITY CASCADE;
 			TRUNCATE TABLE public.com_user_data CONTINUE IDENTITY CASCADE;
 			TRUNCATE TABLE public.lib_author CONTINUE IDENTITY CASCADE;
 			TRUNCATE TABLE public.lib_book CONTINUE IDENTITY CASCADE;
