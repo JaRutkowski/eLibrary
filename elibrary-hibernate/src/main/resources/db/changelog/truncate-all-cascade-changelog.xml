@@ -2,7 +2,7 @@
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
 				   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 				   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
-	<changeSet author="Jakub.Rutkowski" id="0000000009">
+	<changeSet author="Jakub.Rutkowski" id="0000000010">
 		<comment>Clear any existing legacy data in the tables</comment>
 		<sql splitStatements="true">
 			TRUNCATE TABLE public.com_authorization CONTINUE IDENTITY CASCADE;
