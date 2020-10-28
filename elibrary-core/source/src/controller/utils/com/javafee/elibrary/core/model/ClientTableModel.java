@@ -38,7 +38,8 @@ public class ClientTableModel extends AbstractTableModel {
 				SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.cityCol"),
 				SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.sexCol"),
 				SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.birthDateCol"),
-				SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.registeredCol")};
+				SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.registeredCol"),
+				SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.blockedCol")};
 	}
 
 	public Client getClient(int index) {
@@ -118,6 +119,11 @@ public class ClientTableModel extends AbstractTableModel {
 						? SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.registeredTrueVal")
 						: SystemProperties.getInstance().getResourceBundle()
 						.getString("clientTableModel.registeredFalseVal");
+			case COL_BLOCKED:
+				return Optional.ofNullable(client.getUserAccount()).isPresent() && client.getUserAccount().getBlocked()
+						? SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.registeredTrueVal")
+						: SystemProperties.getInstance().getResourceBundle()
+						.getString("clientTableModel.registeredFalseVal");
 			default:
 				return null;
 		}
@@ -160,6 +166,10 @@ public class ClientTableModel extends AbstractTableModel {
 				break;
 			case COL_REGISTERED:
 				clientShallowClone.setRegistered((Boolean) value);
+				break;
+			case COL_BLOCKED:
+				if (Optional.ofNullable(clientShallowClone.getUserAccount()).isPresent())
+					clientShallowClone.getUserAccount().setBlocked((Boolean) value);
 				break;
 		}
 

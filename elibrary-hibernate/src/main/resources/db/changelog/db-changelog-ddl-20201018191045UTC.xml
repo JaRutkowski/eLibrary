@@ -1,0 +1,26 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet  author="Jakub.Rutkowski"  id="0000000000">
+        <comment>New table com_user_account addition</comment>
+        <sql  dbms="postgresql"
+              endDelimiter="\nGO"
+              splitStatements="true"
+              stripComments="true">
+                -- Drop table
+                -- DROP TABLE public.com_user_account;
+
+                CREATE TABLE public.com_user_account (
+                    id_user_account int4 NOT NULL,
+                    block_date date NULL,
+                    block_reason varchar(200) NULL,
+                    "blocked" bool NULL,
+                    number_of_failed_password_attempts int4 NULL,
+                    CONSTRAINT com_user_account_pkey PRIMARY KEY (id_user_account)
+                );
+
+                ALTER TABLE public.com_user_data ADD id_user_account int4 NULL;
+                ALTER TABLE public.com_user_data ADD CONSTRAINT fknfb0y5budgfars80x2pcpdug3
+                    FOREIGN KEY (id_user_account) REFERENCES com_user_account(id_user_account);
+        </sql>
+    </changeSet>
+</databaseChangeLog>

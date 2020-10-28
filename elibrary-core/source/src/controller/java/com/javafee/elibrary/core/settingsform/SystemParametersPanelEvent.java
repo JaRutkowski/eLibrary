@@ -69,6 +69,10 @@ public class SystemParametersPanelEvent implements IActionForm {
 				Integer.valueOf(SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_MAX_PASSWORD_LENGTH).getValue()));
 		settingsForm.getSettingsPanel().getSystemParametersPanel().getSpinnerApplicationComboBoxDataPackageSize().setValue(
 				Integer.valueOf(SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_COMBO_BOX_DATA_PACKAGE_SIZE).getValue()));
+		settingsForm.getSettingsPanel().getSystemParametersPanel().getSpinnerApplicationNumberOfAttemptsLimit().setValue(
+				Integer.valueOf(SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_NUMBER_OF_ATTEMPTS_LIMIT).getValue()));
+		settingsForm.getSettingsPanel().getSystemParametersPanel().getChckbxWrongAttemptsAccountBlocking().setSelected(
+				Boolean.valueOf(SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_BLOCK_ACCOUNT_FUNCTIONALITY).getValue()));
 	}
 
 	private void onClickBtnAccept() {
@@ -134,6 +138,14 @@ public class SystemParametersPanelEvent implements IActionForm {
 		systemParameter.setValue(Integer.valueOf((Integer) settingsForm.getSettingsPanel().getSystemParametersPanel().getSpinnerApplicationComboBoxDataPackageSize().getValue()).toString());
 		updateSystemParameter(systemParameter);
 
+		systemParameter = SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_NUMBER_OF_ATTEMPTS_LIMIT);
+		systemParameter.setValue(Integer.valueOf((Integer) settingsForm.getSettingsPanel().getSystemParametersPanel().getSpinnerApplicationNumberOfAttemptsLimit().getValue()).toString());
+		updateSystemParameter(systemParameter);
+
+		systemParameter = SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_BLOCK_ACCOUNT_FUNCTIONALITY);
+		systemParameter.setValue(Boolean.valueOf(settingsForm.getSettingsPanel().getSystemParametersPanel().getChckbxWrongAttemptsAccountBlocking().isSelected()).toString());
+		updateSystemParameter(systemParameter);
+
 		Utils.displayOptionPane(
 				SystemProperties.getInstance().getResourceBundle()
 						.getString("systemParametersPanelEvent.parametersModificationSuccess"),
@@ -154,6 +166,8 @@ public class SystemParametersPanelEvent implements IActionForm {
 		restoreAndUpdateDefaultSystemParameterValue(Constants.APPLICATION_MIN_PASSWORD_LENGTH);
 		restoreAndUpdateDefaultSystemParameterValue(Constants.APPLICATION_MAX_PASSWORD_LENGTH);
 		restoreAndUpdateDefaultSystemParameterValue(Constants.APPLICATION_COMBO_BOX_DATA_PACKAGE_SIZE);
+		restoreAndUpdateDefaultSystemParameterValue(Constants.APPLICATION_NUMBER_OF_ATTEMPTS_LIMIT);
+		restoreAndUpdateDefaultSystemParameterValue(Constants.APPLICATION_BLOCK_ACCOUNT_FUNCTIONALITY);
 		reloadParametersValues();
 
 		Utils.displayOptionPane(

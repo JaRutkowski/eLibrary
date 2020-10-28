@@ -52,6 +52,8 @@ public final class TabWorkerEvent implements IActionForm {
 				.addActionListener(e -> onClickBtnAccept());
 		tabbedForm.getPanelWorker().getAdmIsAccountantPanel().getDecisionPanel().getBtnAccept()
 				.addActionListener(e -> onClickBtnAcceptAccountant());
+		tabbedForm.getPanelWorker().getAdmBlockPanel().getBtnBlock().addActionListener(e -> onClickBtnBlock(Boolean.TRUE));
+		tabbedForm.getPanelWorker().getAdmBlockPanel().getBtnUnblock().addActionListener(e -> onClickBtnBlock(Boolean.FALSE));
 		tabbedForm.getPanelWorker().getWorkerTable().getModel().addTableModelListener(e -> reloadClientTable());
 		tabbedForm.getPanelWorker().getWorkerTable().getSelectionModel().addListSelectionListener(e -> {
 			if (!e.getValueIsAdjusting())
@@ -78,6 +80,26 @@ public final class TabWorkerEvent implements IActionForm {
 				.getNamedQuery("LibraryWorker.checkIfLibraryWorkerHiredExist")
 				.setParameter("idWorker", worker.getIdUserData()).uniqueResult();
 		return libraryWorker;
+	}
+
+	private void reloadChckbxIsBlocked(boolean isBlocked) {
+		tabbedForm.getPanelWorker().getAdmBlockPanel().getChckbxIsBlocked().setSelected(isBlocked);
+	}
+
+	private void reloadAdmBlockPanel(boolean isBlocked) {
+		reloadChckbxIsBlocked(isBlocked);
+		int selectedRowIndex = tabbedForm.getPanelWorker().getWorkerTable()
+				.convertRowIndexToModel(tabbedForm.getPanelWorker().getWorkerTable().getSelectedRow());
+		if (selectedRowIndex != -1 && isBlocked) {
+			Worker selectedWorker = ((WorkerTableModel) tabbedForm.getPanelWorker().getWorkerTable().getModel())
+					.getWorker(selectedRowIndex);
+			tabbedForm.getPanelWorker().getAdmBlockPanel().getDateChooserBlockDate().setDate(selectedWorker.getUserAccount().getBlockDate());
+			tabbedForm.getPanelWorker().getAdmBlockPanel().getTextFieldBlockReason().setText(selectedWorker.getUserAccount().getBlockReason());
+		} else if (selectedRowIndex != -1 && !isBlocked) {
+			tabbedForm.getPanelWorker().getAdmBlockPanel().getDateChooserBlockDate().setDate(null);
+			tabbedForm.getPanelWorker().getAdmBlockPanel().getTextFieldBlockReason().setText(null);
+		}
+		setEnableAdmBlockPanelControls(isBlocked);
 	}
 
 	private void reloadClientTable() {
@@ -233,6 +255,44 @@ public final class TabWorkerEvent implements IActionForm {
 		}
 	}
 
+	private void onClickBtnBlock(boolean block) {
+		if (validateClientTableSelection(tabbedForm.getPanelWorker().getWorkerTable().getSelectedRow())) {
+			int selectedRowIndex = tabbedForm.getPanelWorker().getWorkerTable()
+					.convertRowIndexToModel(tabbedForm.getPanelWorker().getWorkerTable().getSelectedRow());
+			Worker selectedWorker = ((WorkerTableModel) tabbedForm.getPanelWorker().getWorkerTable().getModel())
+					.getWorker(selectedRowIndex);
+
+			if (!selectedWorker.getIdUserData().equals(LogInEvent.getUserData().getIdUserData())) {
+				if (block)
+					Common.blockUserAccount(selectedWorker, Boolean.FALSE,
+							tabbedForm.getPanelWorker().getAdmBlockPanel().getDateChooserBlockDate().getDate(),
+							tabbedForm.getPanelWorker().getAdmBlockPanel().getTextFieldBlockReason().getText());
+				else
+					Common.unblockUserAccount(selectedWorker);
+
+				Utils.displayOptionPane(
+						SystemProperties.getInstance().getResourceBundle()
+								.getString("tabClientEvent.blockClientSuccess"),
+						SystemProperties.getInstance().getResourceBundle().getString(
+								"tabClientEvent.updateClientSuccessTitle"),
+						JOptionPane.INFORMATION_MESSAGE);
+
+				reloadAdmBlockPanel(selectedWorker.getUserAccount().getBlocked());
+				reloadClientTable();
+			} else
+				LogGuiException.logWarning(
+						SystemProperties.getInstance().getResourceBundle()
+								.getString("tabWorkerEvent.blockingLoggedUserWarningTitle"),
+						SystemProperties.getInstance().getResourceBundle()
+								.getString("tabWorkerEvent.blockingLoggedUserWarning"));
+		} else
+			LogGuiException.logWarning(
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("tabClientEvent.notSelectedClientWarningTitle"),
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("tabClientEvent.notSelectedClientWarning"));
+	}
+
 	private void onWorkerTableListSelectionChange() {
 		if (tabbedForm.getPanelWorker().getWorkerTable().getSelectedRow() != -1
 				&& tabbedForm.getPanelWorker().getWorkerTable()
@@ -247,12 +307,28 @@ public final class TabWorkerEvent implements IActionForm {
 							.getWorker(tabbedForm.getPanelWorker().getWorkerTable().convertRowIndexToModel(
 									tabbedForm.getPanelWorker().getWorkerTable().getSelectedRow())));
 			reloadChckbxIsAccountant(libraryWorker != null ? libraryWorker.getIsAccountant() : false);
+			reloadAdmBlockPanel(
+					(SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.registeredTrueVal"))
+							.equals(tabbedForm.getPanelWorker().getWorkerTable().getModel().getValueAt(
+									tabbedForm.getPanelWorker().getWorkerTable().convertRowIndexToModel(
+											tabbedForm.getPanelWorker().getWorkerTable().getSelectedRow()),
+									Constants.ClientTableColumn.COL_BLOCKED.getValue())));
 		}
 	}
 
 	private void switchPerspectiveToAdm(boolean isAdminOrAccountant) {
 		tabbedForm.getPanelWorker().getAdmIsRegisteredPanel().setEnabled(isAdminOrAccountant);
 		tabbedForm.getPanelWorker().getAdmIsRegisteredPanel().setVisible(isAdminOrAccountant);
+	}
+
+	private void setEnableAdmBlockPanelControls(boolean isBlocked) {
+		tabbedForm.getPanelWorker().getAdmBlockPanel().getChckbxIsBlocked().setEnabled(Boolean.FALSE);
+		tabbedForm.getPanelWorker().getAdmBlockPanel().getLblBlockDate().setEnabled(!isBlocked);
+		tabbedForm.getPanelWorker().getAdmBlockPanel().getDateChooserBlockDate().setEnabled(!isBlocked);
+		tabbedForm.getPanelWorker().getAdmBlockPanel().getLblBlockReason().setEnabled(!isBlocked);
+		tabbedForm.getPanelWorker().getAdmBlockPanel().getTextFieldBlockReason().setEnabled(!isBlocked);
+		tabbedForm.getPanelWorker().getAdmBlockPanel().getBtnBlock().setEnabled(!isBlocked);
+		tabbedForm.getPanelWorker().getAdmBlockPanel().getBtnUnblock().setEnabled(isBlocked);
 	}
 
 	public boolean validateClientTableSelection(int index) {

@@ -83,6 +83,10 @@ public class UserData {
 	@JoinColumn(name = "id_system_properties")
 	private SystemProperties systemProperties;
 
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "id_user_account")
+	private UserAccount userAccount;
+
 	@Override
 	public String toString() {
 		String result = "";

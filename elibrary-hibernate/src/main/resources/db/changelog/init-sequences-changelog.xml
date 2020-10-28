@@ -2,7 +2,7 @@
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
 				   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 				   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
-	<changeSet author="Jakub.Rutkowski" id="0000000000">
+	<changeSet author="Jakub.Rutkowski" id="0000000001">
 		<comment>Sequences initialization</comment>
 		<sql splitStatements="true">
 			SELECT SETVAL('seq_com_authorization', MAX(id_authorization)) FROM com_authorization;
@@ -11,6 +11,7 @@
 			SELECT SETVAL('seq_com_system_data', MAX(id_system_data)) FROM com_system_data;
 			SELECT SETVAL('seq_com_system_parameter', MAX(id_system_parameter)) FROM com_system_parameter;
 			SELECT SETVAL('seq_com_system_properties', MAX(id_system_properties)) FROM com_system_properties;
+			SELECT SETVAL('seq_com_user_account', MAX(id_user_account)) FROM com_user_account;
 			SELECT SETVAL('seq_com_user_data', MAX(id_user_data)) FROM com_user_data;
 			SELECT SETVAL('seq_lib_author', MAX(id_author)) FROM lib_author;
 			SELECT SETVAL('seq_lib_book', MAX(id_book)) FROM lib_book;

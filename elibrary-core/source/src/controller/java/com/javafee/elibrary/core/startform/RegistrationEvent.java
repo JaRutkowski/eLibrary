@@ -8,6 +8,7 @@ import com.javafee.elibrary.core.common.Constants.Role;
 import com.javafee.elibrary.core.common.Params;
 import com.javafee.elibrary.core.exception.RefusedRegistrationException;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
+import com.javafee.elibrary.hibernate.dto.common.UserAccount;
 import com.javafee.elibrary.hibernate.dto.common.UserData;
 import com.javafee.elibrary.hibernate.dto.library.Client;
 import com.javafee.elibrary.hibernate.dto.library.LibraryWorker;
@@ -85,6 +86,8 @@ public class RegistrationEvent {
 
 		switch (role) {
 			case WORKER_LIBRARIAN:
+				UserAccount workerUserAccount = new UserAccount();
+				HibernateUtil.getSession().save(workerUserAccount);
 				Worker worker = new Worker();
 				worker.setPeselNumber(peselNumber);
 				worker.setDocumentNumber(documentNumber);
@@ -99,6 +102,7 @@ public class RegistrationEvent {
 				worker.setPassword(Common.createMd5(password));
 				worker.setRegistered(Constants.DATA_BASE_REGISTER_DEFAULT_FLAG);
 				worker.setRegistrationDate(registrationDate);
+				worker.setUserAccount(workerUserAccount);
 				HibernateUtil.getSession().save(worker);
 				HibernateUtil.commitTransaction();
 
@@ -115,6 +119,8 @@ public class RegistrationEvent {
 			case ADMIN:
 				break;
 			case CLIENT:
+				UserAccount clientUserAccount = new UserAccount();
+				HibernateUtil.getSession().save(clientUserAccount);
 				Client client = new Client();
 				client.setPeselNumber(peselNumber);
 				client.setDocumentNumber(documentNumber);
@@ -129,6 +135,7 @@ public class RegistrationEvent {
 				client.setPassword(Common.createMd5(password));
 				client.setRegistered(Constants.DATA_BASE_REGISTER_DEFAULT_FLAG);
 				client.setRegistrationDate(registrationDate);
+				client.setUserAccount(clientUserAccount);
 				HibernateUtil.getSession().save(client);
 				resultUserData = client;
 				break;

@@ -112,6 +112,11 @@ public class Actions implements IRegistrationForm {
 							SystemProperties.getInstance().getResourceBundle().getString("startForm.logInError9"));
 					Params.getInstance().remove("NOT_HIRED");
 				}
+				if (Params.getInstance().get("BLOCKED") != null) {
+					errorBuilder.append(
+							SystemProperties.getInstance().getResourceBundle().getString("startForm.logInError10"));
+					Params.getInstance().remove("BLOCKED");
+				}
 
 				LogGuiException.logError(
 						SystemProperties.getInstance().getResourceBundle().getString("startForm.logInErrorTitle"),
