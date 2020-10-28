@@ -166,6 +166,7 @@ public class ClientTableModel extends AbstractTableModel {
 				break;
 			case COL_REGISTERED:
 				clientShallowClone.setRegistered((Boolean) value);
+				break;
 			case COL_BLOCKED:
 				if (Optional.ofNullable(clientShallowClone.getUserAccount()).isPresent())
 					clientShallowClone.getUserAccount().setBlocked((Boolean) value);

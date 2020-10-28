@@ -39,7 +39,8 @@ public class WorkerTableModel extends AbstractTableModel {
 				SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.cityCol"),
 				SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.sexCol"),
 				SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.birthDateCol"),
-				SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.registeredCol")};
+				SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.registeredCol"),
+				SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.blockedCol")};
 	}
 
 	public Worker getWorker(int index) {
@@ -119,6 +120,11 @@ public class WorkerTableModel extends AbstractTableModel {
 						? SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.registeredTrueVal")
 						: SystemProperties.getInstance().getResourceBundle()
 						.getString("clientTableModel.registeredFalseVal");
+			case COL_BLOCKED:
+				return Optional.ofNullable(client.getUserAccount()).isPresent() && client.getUserAccount().getBlocked()
+						? SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.registeredTrueVal")
+						: SystemProperties.getInstance().getResourceBundle()
+						.getString("clientTableModel.registeredFalseVal");
 			default:
 				return null;
 		}
@@ -162,6 +168,10 @@ public class WorkerTableModel extends AbstractTableModel {
 				break;
 			case COL_REGISTERED:
 				workerShallowClone.setRegistered((Boolean) value);
+				break;
+			case COL_BLOCKED:
+				if (Optional.ofNullable(workerShallowClone.getUserAccount()).isPresent())
+					workerShallowClone.getUserAccount().setBlocked((Boolean) value);
 				break;
 		}
 
