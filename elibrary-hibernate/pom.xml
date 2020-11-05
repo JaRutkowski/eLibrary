@@ -40,12 +40,12 @@
 					<propertyFile>liquibase.properties</propertyFile>
 					<changeLogFile>src/main/resources/db-changelog-master.xml</changeLogFile>
 					<!-- comment if running locally -->
-					<!--<url>-->
-						<!--jdbc:postgresql://ec2-46-137-121-216.eu-west-1.compute.amazonaws.com/dfsnu6tveajrq7?sslmode=require-->
-					<!--</url>-->
-					<!--<username>ppqrmsqersyeto</username>-->
-					<!--<password>39f03b52de7505db0046939040eb112254bd4560779165c62a2792b9bfe65cfb</password>-->
-					<!--<promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>-->
+					<url>
+						jdbc:postgresql://ec2-46-137-121-216.eu-west-1.compute.amazonaws.com/dfsnu6tveajrq7?sslmode=require
+					</url>
+					<username>ppqrmsqersyeto</username>
+					<password>39f03b52de7505db0046939040eb112254bd4560779165c62a2792b9bfe65cfb</password>
+					<promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
 				</configuration>
 			</plugin>
 			<!-- display active profile in compile phase -->
