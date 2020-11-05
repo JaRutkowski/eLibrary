@@ -43,11 +43,31 @@
 		<org.apache.httpcomponents.version>4.4.13</org.apache.httpcomponents.version>
 		<com.mashape.unirest.version>1.4.9</com.mashape.unirest.version>
 		<org.json.version>20190722</org.json.version>
+
+		<postgresql.version>42.2.12</postgresql.version>
+		<org.apache.maven.plugins>3.2.3</org.apache.maven.plugins>
+		<org.hibernate.javax.persistence.version>1.0.1.Final</org.hibernate.javax.persistence.version>
+		<org.hibernate.version>5.4.10.Final</org.hibernate.version>
+		<javax.ws.rs.version>2.1.1</javax.ws.rs.version>
+		<com.fasterxml.jackson.core.version>2.11.0</com.fasterxml.jackson.core.version>
+		<jboss.annotations.api.1.2.spec.version>1.0.2.Final</jboss.annotations.api.1.2.spec.version>
+		<org.jboss.spec.javax.el.version>2.0.0.Final</org.jboss.spec.javax.el.version>
+		<javax.version>8.0</javax.version>
+		<org.projectlombok.version>1.16.22</org.projectlombok.version>
+		<com.google.code.gson.version>2.8.6</com.google.code.gson.version>
+		<io.jsonwebtoken.version>0.9.1</io.jsonwebtoken.version>
+		<org.reflections.version>0.9.10</org.reflections.version>
+		<postgresql.driver.version>42.2.12</postgresql.driver.version>
+
+		<org.springframework.boot.version>2.3.5.RELEASE</org.springframework.boot.version>
+		<org.springdoc.version>1.1.33</org.springdoc.version>
 	</properties>
 
 	<modules>
 		<module>elibrary-core</module>
 		<module>elibrary-rest-api</module>
 		<module>elibrary-hibernate</module>
+		<module>elibrary-web-rest-api</module>
+		<module>elibrary-web-front</module>
 	</modules>
 </project>

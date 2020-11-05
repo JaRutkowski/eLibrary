@@ -20,7 +20,7 @@
 		<org.liquibase.version>3.8.0</org.liquibase.version>
 		<org.apache.maven.plugins>3.1.0</org.apache.maven.plugins>
 		<com.heroku.sdk>0.5.6</com.heroku.sdk>
-		<postgresql.driver.version>42.2.12</postgresql.driver.version>
+		<postgresql.version>42.2.12</postgresql.version>
 		<org.hibernate.version>5.4.14.Final</org.hibernate.version>
 		<org.reflections.version>0.9.10</org.reflections.version>
 		<sonar.maven.plugin.version>3.4.0.905</sonar.maven.plugin.version>
@@ -40,12 +40,12 @@
 					<propertyFile>liquibase.properties</propertyFile>
 					<changeLogFile>src/main/resources/db-changelog-master.xml</changeLogFile>
 					<!-- comment if running locally -->
-					<url>
-						jdbc:postgresql://ec2-46-137-121-216.eu-west-1.compute.amazonaws.com/dfsnu6tveajrq7?sslmode=require
-					</url>
-					<username>ppqrmsqersyeto</username>
-					<password>39f03b52de7505db0046939040eb112254bd4560779165c62a2792b9bfe65cfb</password>
-					<promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
+					<!--<url>-->
+						<!--jdbc:postgresql://ec2-46-137-121-216.eu-west-1.compute.amazonaws.com/dfsnu6tveajrq7?sslmode=require-->
+					<!--</url>-->
+					<!--<username>ppqrmsqersyeto</username>-->
+					<!--<password>39f03b52de7505db0046939040eb112254bd4560779165c62a2792b9bfe65cfb</password>-->
+					<!--<promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>-->
 				</configuration>
 			</plugin>
 			<!-- display active profile in compile phase -->
@@ -131,7 +131,7 @@
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-			<version>${postgresql.driver.version}</version>
+			<version>${postgresql.version}</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok-maven -->
 		<dependency>
