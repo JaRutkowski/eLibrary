@@ -127,3 +127,15 @@
                     </descriptorRefs>
         		</configuration>
         </plugin>
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+#10 Deployment
+
+    Server: https://www.youtube.com/watch?v=filyn4iKkUA
+    Vim: https://vitux.com/how-to-edit-config-files-in-ubuntu/
+    DigitalOcean: https://medium.com/@ldclakmal/deploy-a-java-web-application-in-digitalocean-882226dcdbd5
+
+#11 Web Table
+    React-Table https://react-table.tanstack.com/docs/examples/bootstrap-ui-components
+    React-Table https://codesandbox.io/s/github/tannerlinsley/react-table/tree/master/examples/basic?file=/src/App.js:1185-1202
+    React-Bootstrap
