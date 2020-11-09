@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import logo from './logo.svg';
 import './App.css';
-import ReservationsTable from "./components/ReservationsTable";
+import BoostratpBasicTable from "./Demo/Tables/ReservationsTable";
 
 class App extends Component {
   state = {
@@ -41,7 +41,7 @@ class App extends Component {
                     {/*{userData.login + " " + userData.email}*/}
                   {/*</div>*/}
               {/*)}*/}
-              <ReservationsTable columns={columns} data={activeLends}/>
+              <BoostratpBasicTable columns={columns} data={activeLends}/>
             </div>
           </header>
         </div>
