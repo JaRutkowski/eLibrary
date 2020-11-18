@@ -58,7 +58,7 @@ public class PasswordChangePanelEvent implements IActionForm {
 	private void persistPasswordChange() {
 		String newPassword = String.valueOf(settingsForm.getSettingsPanel().getPasswordChangePanel().getPasswordFieldConfirmNew().getPassword());
 		UserData userData = LogInEvent.getUserData();
-		userData.setPassword(Common.createMd5(newPassword));
+		userData.getUserAccount().setPassword(Common.createMd5(newPassword));
 
 		HibernateUtil.beginTransaction();
 		HibernateUtil.getSession().update(UserData.class.getName(), userData);

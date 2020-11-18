@@ -9,8 +9,9 @@ import javax.persistence.Table;
 import com.javafee.elibrary.hibernate.dto.common.UserData;
 
 @Entity
-@NamedQueries({@NamedQuery(name = "Client.checkIfClientLoginExist", query = "from Client where login = :login"),
-		@NamedQuery(name = "Client.checkWithComparingIdIfClientLoginExist", query = "from Client where login = :login and id != :id")})
+@NamedQueries({
+		@NamedQuery(name = "Client.checkWithComparingIdIfUserDataLoginExist", query = "from Client c join UserAccount ua on c.userAccount.idUserAccount = ua.idUserAccount where ua.login = :login and c.idUserData != :id"),
+		@NamedQuery(name = "Client.checkIfUserDataLoginExist", query = "from Client c join UserAccount ua on c.userAccount.idUserAccount = ua.idUserAccount where ua.login = :login")})
 @Table(name = "lib_client")
 @PrimaryKeyJoinColumn(name = "id_client", referencedColumnName = "id_user_data")
 public class Client extends UserData implements Cloneable {

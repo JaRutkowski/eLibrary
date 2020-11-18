@@ -71,10 +71,12 @@ public final class LogInEvent {
 	}
 
 	private static boolean checkLogAndRole(String login, String password) {
-		client = (Client) HibernateUtil.getSession().getNamedQuery("Client.checkIfClientLoginExist")
-				.setParameter("login", login).uniqueResult();
-		worker = (Worker) HibernateUtil.getSession().getNamedQuery("Worker.checkIfWorkerLoginExist")
-				.setParameter("login", login).uniqueResult();
+		client = HibernateUtil.getSession().getNamedQuery("Client.checkIfUserDataLoginExist").setParameter("login", login).uniqueResult() != null
+				? ((Client) ((Object[]) HibernateUtil.getSession().getNamedQuery("Client.checkIfUserDataLoginExist")
+				.setParameter("login", login).uniqueResult())[0]) : null;
+		worker = HibernateUtil.getSession().getNamedQuery("Worker.checkIfUserDataLoginExist").setParameter("login", login).uniqueResult() != null
+				? (Worker) ((Object[]) HibernateUtil.getSession().getNamedQuery("Worker.checkIfUserDataLoginExist")
+				.setParameter("login", login).uniqueResult())[0] : null;
 		isAdmin = Common.isAdmin(login, password);
 		boolean result = false, clientExists = client != null, workerExists = worker != null,
 				clientNotBlocked = clientExists && !client.getUserAccount().getBlocked(),
@@ -86,7 +88,7 @@ public final class LogInEvent {
 				role = Role.ADMIN;
 				userData = com.javafee.elibrary.hibernate.dao.common.Common.findUserDataById(Constants.DATA_BASE_ADMIN_ID).get();
 			}
-			if (client.getRegistered()) {
+			if (client.getUserAccount().getRegistered()) {
 				if (checkLoginAndPassword(password)) {
 					role = Role.CLIENT;
 					userData = client;
@@ -100,7 +102,7 @@ public final class LogInEvent {
 			userData = com.javafee.elibrary.hibernate.dao.common.Common.findUserDataById(Constants.DATA_BASE_ADMIN_ID).get();
 			result = true;
 		} else if (workerNotBlocked) {
-			if (worker.getRegistered()) {
+			if (worker.getUserAccount().getRegistered()) {
 				if (checkLoginAndPassword(password)) {
 					if (checkIfHired(worker)) {
 						if (libraryWorker.getIsAccountant() != null)
@@ -135,9 +137,9 @@ public final class LogInEvent {
 		boolean result = false;
 		String md5 = Common.createMd5(password);
 
-		if (client != null && md5.equals(client.getPassword()))
+		if (client != null && md5.equals(client.getUserAccount().getPassword()))
 			result = true;
-		else if (worker != null && md5.equals(worker.getPassword()))
+		else if (worker != null && md5.equals(worker.getUserAccount().getPassword()))
 			result = true;
 
 		if ((!result && worker != null) || (!result && client != null))

@@ -39,7 +39,7 @@ public class WatchServiceDirectory implements Runnable {
 		while (running) {
 			try {
 				Optional<SystemProperties> systemProperties = Common
-						.findSystemPropertiesByUserDataId(
+						.findSystemPropertiesByUserAccountId(
 								LogInEvent.getWorker() != null ? LogInEvent.getWorker().getIdUserData()
 										: Constants.DATA_BASE_ADMIN_ID);
 				if (systemProperties.isPresent()) {

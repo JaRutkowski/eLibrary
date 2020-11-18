@@ -19,24 +19,30 @@ import com.javafee.elibrary.hibernate.dto.library.Worker;
 public final class Validator {
 	@SuppressWarnings("unchecked")
 	public static boolean validateClientUpdate(Client client) {
-		Client existingPeselClient = null;
+		UserData existingPeselClient = null;
 		boolean result;
 
-		Client existingLoginClient = (Client) HibernateUtil.getSession()
-				.getNamedQuery("Client.checkWithComparingIdIfClientLoginExist").setParameter("login", client.getLogin())
-				.setParameter("id", client.getIdUserData()).uniqueResult();
-		List<UserData> ud = HibernateUtil.getSession().createQuery("from UserData").list();
-		for (var u : ud) {
-			if (u.getLogin().equals(client.getLogin()) && u.getIdUserData() != client.getIdUserData())
-				return false;
-		}
+		Client existingLoginClient = HibernateUtil.getSession()
+				.getNamedQuery("Client.checkWithComparingIdIfUserDataLoginExist").setParameter("login", client.getUserAccount().getLogin())
+				.setParameter("id", client.getIdUserData()).uniqueResult() != null ?
+				(Client) ((Object[]) HibernateUtil.getSession()
+						.getNamedQuery("Client.checkWithComparingIdIfUserDataLoginExist").setParameter("login", client.getUserAccount().getLogin())
+						.setParameter("id", client.getIdUserData()).uniqueResult())[0] : null;
+		//		List<UserData> ud = HibernateUtil.getSession().createQuery("from UserData").list();
+		//		for (var u : ud) {
+		//			if (u.getUserAccount().getLogin().equals(client.getUserAccount().getLogin()) && u.getIdUserData() != client.getIdUserData())
+		//				return false;
+		//		}
 
 		if (existingLoginClient == null) {
 			if (!"".equals(client.getPeselNumber())) {
-				existingPeselClient = (Client) HibernateUtil.getSession()
+				existingPeselClient = client != null && HibernateUtil.getSession()
 						.getNamedQuery("UserData.checkWithComparingIdIfUserDataPeselExist")
 						.setParameter("peselNumber", client.getPeselNumber()).setParameter("id", client.getIdUserData())
-						.uniqueResult();
+						.uniqueResult() != null ? (UserData) HibernateUtil.getSession()
+						.getNamedQuery("UserData.checkWithComparingIdIfUserDataPeselExist")
+						.setParameter("peselNumber", client.getPeselNumber()).setParameter("id", client.getIdUserData())
+						.uniqueResult() : null;
 				result = client.getPeselNumber() == null || (existingLoginClient == null && existingPeselClient == null);
 			} else
 				result = existingLoginClient == null;
@@ -48,24 +54,20 @@ public final class Validator {
 	}
 
 	public static boolean validateClientPesel(String pesel) {
-		boolean result = true;
-		if (!"".equals(pesel)) {
-			Client existingPeselClient = (Client) HibernateUtil.getSession()
-					.getNamedQuery("UserData.checkIfUserDataPeselExist").setParameter("peselNumber", pesel)
-					.uniqueResult();
-			result = existingPeselClient == null;
-		}
+		boolean result;
+		UserData existingPeselUserData = (UserData) HibernateUtil.getSession()
+				.getNamedQuery("UserData.checkIfUserDataPeselExist").setParameter("peselNumber", pesel)
+				.uniqueResult();
+		result = existingPeselUserData == null;
 		return result;
 	}
 
 	public static boolean validateWorkerPesel(String pesel) {
-		boolean result = true;
-		if (!"".equals(pesel)) {
-			Worker existingPeselClient = (Worker) HibernateUtil.getSession()
-					.getNamedQuery("UserData.checkIfUserDataPeselExist").setParameter("peselNumber", pesel)
-					.uniqueResult();
-			result = existingPeselClient == null;
-		}
+		boolean result;
+		UserData existingPeselUserData = (UserData) HibernateUtil.getSession()
+				.getNamedQuery("UserData.checkIfUserDataPeselExist").setParameter("peselNumber", pesel)
+				.uniqueResult();
+		result = existingPeselUserData == null;
 		return result;
 	}
 
@@ -74,13 +76,16 @@ public final class Validator {
 		Worker existingPeselClient = null;
 		boolean result;
 
-		Worker existingLoginClient = (Worker) HibernateUtil.getSession()
-				.getNamedQuery("Worker.checkWithComparingIdIfClientLoginExist").setParameter("login", client.getLogin())
-				.setParameter("id", client.getIdUserData()).uniqueResult();
+		Worker existingLoginClient = HibernateUtil.getSession()
+				.getNamedQuery("Worker.checkWithComparingIdIfUserDataLoginExist").setParameter("login", client.getUserAccount().getLogin())
+				.setParameter("id", client.getIdUserData()).uniqueResult() != null ?
+				(Worker) ((Object[]) HibernateUtil.getSession()
+						.getNamedQuery("Worker.checkWithComparingIdIfUserDataLoginExist").setParameter("login", client.getUserAccount().getLogin())
+						.setParameter("id", client.getIdUserData()).uniqueResult())[0] : null;
 
 		List<UserData> ud = HibernateUtil.getSession().createQuery("from UserData").list();
 		for (var u : ud) {
-			if (u.getLogin().equals(client.getLogin()) && u.getIdUserData() != client.getIdUserData())
+			if (u.getUserAccount().getLogin().equals(client.getUserAccount().getLogin()) && u.getIdUserData() != client.getIdUserData())
 				return false;
 		}
 

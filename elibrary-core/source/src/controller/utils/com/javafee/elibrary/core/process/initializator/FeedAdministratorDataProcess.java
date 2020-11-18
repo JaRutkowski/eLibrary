@@ -18,10 +18,14 @@ public class FeedAdministratorDataProcess implements Process {
 	private void feedAdministratorData() {
 		if (!Common.findUserDataById(Constants.DATA_BASE_ADMIN_ID).isPresent()) {
 			HibernateUtil.beginJpaTransaction();
-			HibernateUtil.getEntityManager().createNativeQuery(Query.ProcessQuery.FEED_ADMINISTRATOR_DATA.getValue())
+			HibernateUtil.getEntityManager().createNativeQuery(Query.ProcessQuery.FEED_ADMINISTRATOR_USER_ACCOUNT.getValue())
 					.setParameter(0, Constants.DATA_BASE_ADMIN_ID)
 					.setParameter(1, Constants.DATA_BASE_ADMIN_LOGIN)
 					.setParameter(2, Constants.DATA_BASE_ADMIN_PASSWORD)
+					.executeUpdate();
+			HibernateUtil.getEntityManager().createNativeQuery(Query.ProcessQuery.FEED_ADMINISTRATOR_USER_DATA.getValue())
+					.setParameter(0, Constants.DATA_BASE_ADMIN_ID)
+					.setParameter(1, Constants.DATA_BASE_ADMIN_ID)
 					.executeUpdate();
 			HibernateUtil.commitJpaTransaction();
 		}

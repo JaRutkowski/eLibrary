@@ -71,7 +71,7 @@ public class TabTemplatePageEvent implements IActionForm {
 
 	private void reloadComboBoxLibraryTemplate() {
 		DefaultComboBoxModel<String> comboBoxLibraryTemplateModel = new DefaultComboBoxModel<String>();
-		Optional<SystemProperties> systemProperties = Common.findSystemPropertiesByUserDataId(
+		Optional<SystemProperties> systemProperties = Common.findSystemPropertiesByUserAccountId(
 				LogInEvent.getWorker() != null ? LogInEvent.getWorker().getIdUserData() : Constants.DATA_BASE_ADMIN_ID);
 		if (systemProperties.isPresent() && !Strings.isEmpty(systemProperties.get().getTemplateDirectory())) {
 			File[] files = new File(systemProperties.get().getTemplateDirectory()).listFiles();
@@ -90,7 +90,7 @@ public class TabTemplatePageEvent implements IActionForm {
 	}
 
 	private void registerWatchServiceListener() {
-		Optional<SystemProperties> systemProperties = Common.findSystemPropertiesByUserDataId(
+		Optional<SystemProperties> systemProperties = Common.findSystemPropertiesByUserAccountId(
 				LogInEvent.getWorker() != null ? LogInEvent.getWorker().getIdUserData() : Constants.DATA_BASE_ADMIN_ID);
 		if (systemProperties.isPresent() && !Strings.isEmpty(systemProperties.get().getTemplateDirectory())) {
 			com.javafee.elibrary.core.common.Common.registerWatchServiceListener(this, c -> this.reloadComboBoxLibraryTemplate());
@@ -131,9 +131,10 @@ public class TabTemplatePageEvent implements IActionForm {
 
 	private void onClickBtnSaveTemplateToLibrary() {
 		if (validate()) {
-			boolean systemPropertiesAlreadyExists = LogInEvent.getUserData().getSystemProperties() != null;
+			boolean systemPropertiesAlreadyExists = LogInEvent.getUserData().getUserAccount().getSystemProperties() != null;
 			SystemProperties systemProperties = Common
-					.checkAndGetSystemProperties(LogInEvent.getWorker() != null ? LogInEvent.getWorker().getIdUserData()
+					//FIXME: null check
+					.checkAndGetSystemProperties(LogInEvent.getWorker() != null ? LogInEvent.getWorker().getUserAccount().getIdUserAccount()
 							: Constants.DATA_BASE_ADMIN_ID);
 
 			if (Strings.isEmpty(systemProperties.getTemplateDirectory())) {
@@ -149,15 +150,15 @@ public class TabTemplatePageEvent implements IActionForm {
 
 							if (!systemPropertiesAlreadyExists) {
 								systemProperties.setTemplateDirectory(result.getParent());
-								LogInEvent.getUserData().setSystemProperties(systemProperties);
+								LogInEvent.getUserData().getUserAccount().setSystemProperties(systemProperties);
 
 								HibernateUtil.beginTransaction();
 								HibernateUtil.getSession().update(UserData.class.getName(), LogInEvent.getUserData());
 								HibernateUtil.commitTransaction();
 							} else {
 								HibernateUtil.beginTransaction();
-								LogInEvent.getUserData().getSystemProperties().setTemplateDirectory(result.getParent());
-								HibernateUtil.getSession().update(SystemProperties.class.getName(), LogInEvent.getUserData().getSystemProperties());
+								LogInEvent.getUserData().getUserAccount().getSystemProperties().setTemplateDirectory(result.getParent());
+								HibernateUtil.getSession().update(SystemProperties.class.getName(), LogInEvent.getUserData().getUserAccount().getSystemProperties());
 								HibernateUtil.commitTransaction();
 							}
 
@@ -207,7 +208,8 @@ public class TabTemplatePageEvent implements IActionForm {
 
 	private void onClickBtnPreviewTemplateLibrary() {
 		SystemProperties systemProperties = Common
-				.checkAndGetSystemProperties(LogInEvent.getWorker() != null ? LogInEvent.getWorker().getIdUserData()
+				//FIXME: null check
+				.checkAndGetSystemProperties(LogInEvent.getWorker() != null ? LogInEvent.getWorker().getUserAccount().getIdUserAccount()
 						: Constants.DATA_BASE_ADMIN_ID);
 
 		if (systemProperties.getTemplateDirectory() == null) {
@@ -234,7 +236,7 @@ public class TabTemplatePageEvent implements IActionForm {
 				.getComboBoxLibraryTemplate().getSelectedItem();
 
 		if (fileName != null) {
-			Optional<SystemProperties> systemProperties = Common.findSystemPropertiesByUserDataId(
+			Optional<SystemProperties> systemProperties = Common.findSystemPropertiesByUserAccountId(
 					LogInEvent.getWorker() != null ? LogInEvent.getWorker().getIdUserData()
 							: Constants.DATA_BASE_ADMIN_ID);
 			if (systemProperties.isPresent()) {
