@@ -1,1 +1,1 @@
-release: ./elibrary-hibernate/mvnw liquibase:update
+release: 'cd ./elibrary-hibernate && exec mvnw liquibase:update'
