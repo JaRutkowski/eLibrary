@@ -1,1 +1,1 @@
-release: 'cd ./elibrary-hibernate && exec mvnw liquibase:update'
+release: ./heroku-proc.sh
