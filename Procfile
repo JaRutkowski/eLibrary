@@ -1,1 +1,1 @@
-release: elibrary-hibernate/.mvnw liquibase:update
+release: /elibrary-hibernate/mvnw liquibase:update
