@@ -1,1 +1,1 @@
-release: ./heroku-proc.sh
+release: bash ./heroku-proc.sh
