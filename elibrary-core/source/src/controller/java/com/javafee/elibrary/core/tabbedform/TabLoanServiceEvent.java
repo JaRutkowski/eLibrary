@@ -144,12 +144,13 @@ public class TabLoanServiceEvent implements IActionForm {
 
 				if (!selectedClient.equals(selectedLoan.getClient())) {
 					if (!validateIfActiveReservationForLendExists(lendShallowClone)) {
-						if (Validator.validateIfReservationsLimitExceeded(selectedClient.getIdUserData(), 1L)
+						if ((Validator.validateIfReservationsLimitExceeded(selectedClient.getIdUserData(), 1L)
 								&& Utils.displayConfirmDialog(MessageFormat.format(
 								SystemProperties.getInstance().getResourceBundle().getString("confirmDialog.clientReservationsLimitExceeded"),
 								activeClientReservationCount, SystemProperties.getInstance().getSystemParameters()
 										.get(Constants.APPLICATION_RESERVATIONS_LIMIT).getValue()),
-								"") == JOptionPane.YES_OPTION) {
+								"") == JOptionPane.YES_OPTION) ||
+								(!Validator.validateIfReservationsLimitExceeded(selectedClient.getIdUserData(), 1L))) {
 							Reservation reservation = new Reservation();
 							reservation.setClient(clientShallowClone);
 							reservation.setVolume(lendShallowClone.getVolume());

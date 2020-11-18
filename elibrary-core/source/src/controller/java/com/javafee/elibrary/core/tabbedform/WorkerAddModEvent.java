@@ -81,7 +81,7 @@ public class WorkerAddModEvent implements IEvent {
 		workerShallowClone
 				.setBirthDate(workerAddModFrame.getWorkerDataPanel().getDateChooserBirthDate().getDate());
 		workerShallowClone.setEMail(workerAddModFrame.getWorkerDataPanel().getTextFieldEMail().getText());
-		workerShallowClone.setLogin(workerAddModFrame.getWorkerDataPanel().getTextFieldLogin().getText());
+		workerShallowClone.getUserAccount().setLogin(workerAddModFrame.getWorkerDataPanel().getTextFieldLogin().getText());
 
 		if (!"".equals(workerShallowClone.getPeselNumber())
 				&& workerShallowClone.getPeselNumber().length() != Constants.DATA_BASE_PESEL_NUMBER_LENGHT) {

@@ -109,7 +109,7 @@ public class TabOutboxPageEvent implements IMessageForm {
 
 		userDataListToSort = LogInEvent.getWorker() != null ?
 				(List<UserData>) HibernateUtil.getSession().createQuery(Query.TabOutboxPageEventQuery.DISTINCT_MESSAGE_RECIPIENT_BY_SENDER_LOGIN.getValue()). //
-						setParameter("login", LogInEvent.getWorker().getLogin()).list()
+						setParameter("login", LogInEvent.getWorker().getUserAccount().getLogin()).list()
 				: (List<UserData>) HibernateUtil.getSession().createQuery(Query.TabOutboxPageEventQuery.DISTINCT_MESSAGE_RECIPIENT_ALL.getValue()).list();
 
 		com.javafee.elibrary.core.common.Common.prepareBlankComboBoxElement(userDataListToSort);
@@ -121,7 +121,7 @@ public class TabOutboxPageEvent implements IMessageForm {
 	private void reloadOutboxTable() {
 		if (LogInEvent.getWorker() != null) {
 			List<Object> parameters = new ArrayList<>();
-			parameters.add(LogInEvent.getWorker().getLogin());
+			parameters.add(LogInEvent.getWorker().getUserAccount().getLogin());
 			((OutboxTableModel) emailForm.getPanelOutboxPage().getOutboxTable().getModel()) //
 					.reloadData(Query.TabOutboxPageEventQuery.MESSAGE_BY_SENDER_LOGIN.getValue(), parameters);
 		} else {
@@ -233,7 +233,7 @@ public class TabOutboxPageEvent implements IMessageForm {
 		if (recipientUserData != null) {
 			parameters.add(recipientUserData);
 			if (LogInEvent.getWorker() != null) {
-				parameters.add(LogInEvent.getWorker().getLogin());
+				parameters.add(LogInEvent.getWorker().getUserAccount().getLogin());
 				((OutboxTableModel) emailForm.getPanelOutboxPage().getOutboxTable().getModel()) //
 						.reloadData(
 								Query.TabOutboxPageEventQuery.DISTINCT_MESSAGE_BY_RECIPIENT_USER_DATA_AND_SENDER_LOGIN
@@ -246,7 +246,7 @@ public class TabOutboxPageEvent implements IMessageForm {
 			}
 		} else {
 			if (LogInEvent.getWorker() != null) {
-				parameters.add(LogInEvent.getWorker().getLogin());
+				parameters.add(LogInEvent.getWorker().getUserAccount().getLogin());
 				((OutboxTableModel) emailForm.getPanelOutboxPage().getOutboxTable().getModel()) //
 						.reloadData(Query.TabOutboxPageEventQuery.MESSAGE_BY_SENDER_LOGIN.getValue(), parameters);
 			} else

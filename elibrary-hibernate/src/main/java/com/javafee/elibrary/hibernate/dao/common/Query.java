@@ -2,8 +2,11 @@ package com.javafee.elibrary.hibernate.dao.common;
 
 public class Query {
 	public enum ProcessQuery {
-		FEED_ADMINISTRATOR_DATA("insert into public.com_user_data" +
-				"(id_user_data, login, password)" +
+		FEED_ADMINISTRATOR_USER_DATA("insert into public.com_user_data" +
+				"(id_user_data, id_user_account)" +
+				" values(?0, ?1)"),
+		FEED_ADMINISTRATOR_USER_ACCOUNT("insert into public.com_user_account" +
+				"(id_user_account, login, password)" +
 				" values(?0, ?1, ?2)"),
 		FEED_MESSAGE_TYPES("insert into public.mes_message_type" +
 				"(id_message_type, description, name)" +

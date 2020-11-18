@@ -91,7 +91,7 @@ public class WorkerTableModel extends AbstractTableModel {
 			case COL_DOCUMENT_NUMBER:
 				return client.getDocumentNumber();
 			case COL_LOGIN:
-				return client.getLogin();
+				return client.getUserAccount().getLogin();
 			case COL_E_MAIL:
 				return client.getEMail();
 			case COL_NAME:
@@ -116,7 +116,7 @@ public class WorkerTableModel extends AbstractTableModel {
 				return client.getBirthDate() != null ? Constants.APPLICATION_DATE_FORMAT.format(client.getBirthDate())
 						: null;
 			case COL_REGISTERED:
-				return client.getRegistered()
+				return client.getUserAccount().getRegistered()
 						? SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.registeredTrueVal")
 						: SystemProperties.getInstance().getResourceBundle()
 						.getString("clientTableModel.registeredFalseVal");
@@ -143,7 +143,7 @@ public class WorkerTableModel extends AbstractTableModel {
 				workerShallowClone.setDocumentNumber(value.toString());
 				break;
 			case COL_LOGIN:
-				workerShallowClone.setLogin(value.toString());
+				workerShallowClone.getUserAccount().setLogin(value.toString());
 				break;
 			case COL_E_MAIL:
 				workerShallowClone.setEMail(value.toString());
@@ -167,7 +167,7 @@ public class WorkerTableModel extends AbstractTableModel {
 				workerShallowClone.setBirthDate((Date) value);
 				break;
 			case COL_REGISTERED:
-				workerShallowClone.setRegistered((Boolean) value);
+				workerShallowClone.getUserAccount().setRegistered((Boolean) value);
 				break;
 			case COL_BLOCKED:
 				if (Optional.ofNullable(workerShallowClone.getUserAccount()).isPresent())

@@ -106,9 +106,10 @@ public class Actions implements IActionForm {
 
 	private void onClickMenuSaveAsTemplate() {
 		if (validate()) {
-			boolean systemPropertiesAlreadyExists = LogInEvent.getUserData().getSystemProperties() != null;
+			boolean systemPropertiesAlreadyExists = LogInEvent.getUserData().getUserAccount().getSystemProperties() != null;
 			SystemProperties systemProperties = Common
-					.checkAndGetSystemProperties(LogInEvent.getWorker() != null ? LogInEvent.getWorker().getIdUserData()
+					//FIXME: null check
+					.checkAndGetSystemProperties(LogInEvent.getWorker() != null ? LogInEvent.getWorker().getUserAccount().getIdUserAccount()
 							: Constants.DATA_BASE_ADMIN_ID);
 
 			if (systemProperties.getTemplateDirectory() == null) {
@@ -123,15 +124,15 @@ public class Actions implements IActionForm {
 
 							if (!systemPropertiesAlreadyExists) {
 								systemProperties.setTemplateDirectory(result.getParent());
-								LogInEvent.getUserData().setSystemProperties(systemProperties);
+								LogInEvent.getUserData().getUserAccount().setSystemProperties(systemProperties);
 
 								HibernateUtil.beginTransaction();
 								HibernateUtil.getSession().update(UserData.class.getName(), LogInEvent.getUserData());
 								HibernateUtil.commitTransaction();
 							} else {
 								HibernateUtil.beginTransaction();
-								LogInEvent.getUserData().getSystemProperties().setTemplateDirectory(result.getParent());
-								HibernateUtil.getSession().update(SystemProperties.class.getName(), LogInEvent.getUserData().getSystemProperties());
+								LogInEvent.getUserData().getUserAccount().getSystemProperties().setTemplateDirectory(result.getParent());
+								HibernateUtil.getSession().update(SystemProperties.class.getName(), LogInEvent.getUserData().getUserAccount().getSystemProperties());
 								HibernateUtil.commitTransaction();
 							}
 
@@ -177,7 +178,8 @@ public class Actions implements IActionForm {
 
 	private void onClickMenuLoadTemplate() {
 		SystemProperties systemProperties = Common
-				.checkAndGetSystemProperties(LogInEvent.getWorker() != null ? LogInEvent.getWorker().getIdUserData()
+				//FIXME: null check
+				.checkAndGetSystemProperties(LogInEvent.getWorker() != null ? LogInEvent.getWorker().getUserAccount().getIdUserAccount()
 						: Constants.DATA_BASE_ADMIN_ID);
 
 		if (systemProperties.getTemplateDirectory() == null) {
