@@ -1,1 +1,1 @@
-release: bash ./heroku-proc.sh
+release: ./mvnw
