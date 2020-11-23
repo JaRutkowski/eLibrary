@@ -1,0 +1,15 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet  author="Jakub.Rutkowski"  id="0000000001">
+        <comment>Add user account for admin user - bug fix</comment>
+        <sql  dbms="postgresql"
+              endDelimiter="\nGO"
+              splitStatements="true"
+              stripComments="true">
+                INSERT INTO public.com_user_account (id_user_account,block_date,block_reason,"blocked",login,number_of_failed_password_attempts,"password",registered,registration_date,id_system_properties) VALUES
+                (0,NULL,NULL,NULL,'admin',NULL,'f7e3c24e1a04758097f69be41aa3cf18',NULL,NULL,NULL);
+
+                UPDATE public.com_user_data SET id_user_account= 0 WHERE id_user_data = 0;
+        </sql>
+    </changeSet>
+</databaseChangeLog>

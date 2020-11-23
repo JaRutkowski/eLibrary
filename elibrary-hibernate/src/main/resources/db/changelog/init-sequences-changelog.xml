@@ -2,7 +2,7 @@
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
 				   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 				   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
-	<changeSet author="Jakub.Rutkowski" id="0000000006">
+	<changeSet author="Jakub.Rutkowski" id="0000000007">
 		<comment>Sequences initialization</comment>
 		<sql splitStatements="true">
 			SELECT SETVAL('seq_com_authorization', MAX(id_authorization)) FROM com_authorization;
