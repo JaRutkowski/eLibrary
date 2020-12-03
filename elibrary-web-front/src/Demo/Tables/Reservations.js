@@ -2,7 +2,7 @@ import React from 'react';
 import { Row, Col, Card } from 'react-bootstrap';
 
 import Aux from "../../hoc/_Aux";
-import BoostratpBasicTable from './ReservationsTable';
+import BootstrapBasicTable from './BootstrapBasicTable';
 
 class Reservations extends React.Component {
     state = {
@@ -35,7 +35,7 @@ class Reservations extends React.Component {
                                 {/* <span className="d-block m-t-5">use bootstrap <code>Table</code> component</span> */}
                             </Card.Header>
                             <Card.Body>
-                                <BoostratpBasicTable columns={columns} data={this.state.activeLends} />
+                                <BootstrapBasicTable columns={columns} data={this.state.activeLends} />
                             </Card.Body>
                         </Card>
                         {/* <Card>

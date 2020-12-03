@@ -20,9 +20,6 @@ public class UserData {
 	@Column(name = "id_user_data")
 	private Integer idUserData;
 
-	@Column(name = "login", nullable = false, length = 15)
-	private String login;
-
 	@Column(name = "e_mail", length = 80)
 	private String eMail;
 }

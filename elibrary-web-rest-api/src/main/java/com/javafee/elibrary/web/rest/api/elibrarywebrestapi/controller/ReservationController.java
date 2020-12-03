@@ -9,7 +9,10 @@ import com.javafee.elibrary.web.rest.api.elibrarywebrestapi.controller.api.Reser
 import com.javafee.elibrary.web.rest.api.elibrarywebrestapi.model.dto.LendDto;
 import com.javafee.elibrary.web.rest.api.elibrarywebrestapi.service.ReservationService;
 
+import lombok.extern.java.Log;
+
 @RestController
+@Log
 public class ReservationController implements ReservationApi {
 	@Autowired
 	private ReservationService reservationService;
