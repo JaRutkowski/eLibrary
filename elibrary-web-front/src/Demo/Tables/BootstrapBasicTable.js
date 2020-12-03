@@ -2,7 +2,7 @@ import React from 'react';
 import { Table } from "react-bootstrap"
 import { useTable } from "react-table"
 
-function BoostratpBasicTable({ columns, data }) {
+function BootstrapBasicTable({ columns, data }) {
     return <CreateTable columns={columns} data={data} />
 }
 
@@ -45,4 +45,4 @@ function CreateTable({ columns, data }) {
     )
 }
 
-export default BoostratpBasicTable;
+export default BootstrapBasicTable;
