@@ -8,9 +8,6 @@ import java.util.stream.Stream;
 
 import javax.swing.KeyStroke;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
 public final class Constants {
 	public enum ClientTableColumn {
 		COL_PESEL_NUMBER(0), COL_DOCUMENT_NUMBER(1), COL_LOGIN(2), COL_E_MAIL(3), COL_NAME(4), COL_SURNAME(5),

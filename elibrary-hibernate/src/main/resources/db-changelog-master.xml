@@ -13,7 +13,7 @@
 
 	<!-- Pre-processing -->
 	<!-- Increment id of changeSet -->
-	<include file="src/main/resources/db/changelog/truncate-all-cascade-changelog.xml" relativeToChangelogFile="false"/>
+	<!--<include file="src/main/resources/db/changelog/truncate-all-cascade-changelog.xml" relativeToChangelogFile="false"/>-->
 
 	<!-- Version data -->
 	<!-- generated using mvn liquibase:generateChangeLog -Dliquibase.diffTypes=data -->
@@ -32,10 +32,14 @@
 	<!--<include file="src/main/resources/db/changelog/db-changelog-ddl-20200703213345UTC.xml" relativeToChangelogFile="false"/>-->
 	<!--<include file="src/main/resources/db/changelog/db-changelog-20200722123232UTC.xml" relativeToChangelogFile="false"/>-->
 	<!--<include file="src/main/resources/db/changelog/db-changelog-ddl-20200803134708UTC.xml" relativeToChangelogFile="false"/>-->
-	<include file="src/main/resources/db/changelog/db-changelog-20200925200743UTC.xml" relativeToChangelogFile="false"/>
+	<!--<include file="src/main/resources/db/changelog/db-changelog-20200925200743UTC.xml" relativeToChangelogFile="false"/>-->
 	<!--<include file="src/main/resources/db/changelog/db-changelog-ddl-20201018191045UTC.xml" relativeToChangelogFile="false"/>-->
-	<include file="src/main/resources/db/changelog/db-changelog-20201018191345UTC.xml" relativeToChangelogFile="false"/>
+	<!--<include file="src/main/resources/db/changelog/db-changelog-20201018191345UTC.xml" relativeToChangelogFile="false"/>-->
 	<!--<include file="src/main/resources/db/changelog/db-changelog-ddl-20201028162212UTC.xml" relativeToChangelogFile="false"/>-->
+	<!--<include file="src/main/resources/db/changelog/db-changelog-ddl-20201118172712UTC.xml" relativeToChangelogFile="false"/>-->
+	<!--<include file="src/main/resources/db/changelog/db-changelog-20201123164445UTC.xml" relativeToChangelogFile="false"/>-->
+	<!--<include file="src/main/resources/db/changelog/db-changelog-20201123161902UTC.xml" relativeToChangelogFile="false"/>-->
+	<include file="src/main/resources/db/changelog/db-changelog-20201125160909UTC.xml" relativeToChangelogFile="false"/>
 
 	<!-- Post-processing -->
 	<!-- Increment id of changeSet -->

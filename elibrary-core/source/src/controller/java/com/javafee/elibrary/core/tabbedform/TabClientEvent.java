@@ -213,7 +213,7 @@ public final class TabClientEvent implements IActionForm {
 					.getClient(selectedRowIndex);
 			Client clientShallowClone = (Client) selectedClient.clone();
 
-			clientShallowClone.setRegistered(
+			clientShallowClone.getUserAccount().setRegistered(
 					tabbedForm.getPanelClient().getAdmIsRegisteredPanel().getChckbxIsRegistered().isSelected());
 
 			HibernateUtil.beginTransaction();

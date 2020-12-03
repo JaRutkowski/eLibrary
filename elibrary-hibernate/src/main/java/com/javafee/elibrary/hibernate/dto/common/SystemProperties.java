@@ -45,5 +45,5 @@ public class SystemProperties {
 	private String templateDirectory;
 
 	@OneToOne(mappedBy = "systemProperties", cascade = CascadeType.ALL)
-	private UserData userData;
+	private UserAccount userAccount;
 }

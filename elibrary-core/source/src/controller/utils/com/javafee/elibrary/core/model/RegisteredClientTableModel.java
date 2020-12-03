@@ -12,6 +12,6 @@ public class RegisteredClientTableModel extends ClientTableModel {
 	@Override
 	protected void prepareHibernateDao() {
 		this.clients = HibernateUtil.getSession().createQuery("from Client as cl").list();
-		this.clients = clients.stream().filter(vol -> vol.getRegistered()).collect(Collectors.toList());
+		this.clients = clients.stream().filter(vol -> vol.getUserAccount().getRegistered()).collect(Collectors.toList());
 	}
 }

@@ -94,7 +94,7 @@ public class ClientAddModEvent implements IEvent {
 		clientShallowClone
 				.setBirthDate(clientAddModFrame.getClientDataPanel().getDateChooserBirthDate().getDate());
 		clientShallowClone.setEMail(clientAddModFrame.getClientDataPanel().getTextFieldEMail().getText());
-		clientShallowClone.setLogin(clientAddModFrame.getClientDataPanel().getTextFieldLogin().getText());
+		clientShallowClone.getUserAccount().setLogin(clientAddModFrame.getClientDataPanel().getTextFieldLogin().getText());
 
 		if (!"".equals(clientShallowClone.getPeselNumber())
 				&& clientShallowClone.getPeselNumber().length() != Constants.DATA_BASE_PESEL_NUMBER_LENGHT) {

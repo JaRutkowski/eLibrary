@@ -40,7 +40,7 @@ public class Utils {
 	}
 
 	public static Color getApplicationUserDefinedColor() {
-		String color = LogInEvent.getUserData() != null && LogInEvent.getUserData().getSystemProperties() != null ? LogInEvent.getUserData().getSystemProperties().getColor() : null;
+		String color = LogInEvent.getUserData() != null && LogInEvent.getUserData().getUserAccount().getSystemProperties() != null ? LogInEvent.getUserData().getUserAccount().getSystemProperties().getColor() : null;
 		Color userDefinedColor;
 		if (Strings.isEmpty(color))
 			userDefinedColor = getApplicationColor();
@@ -56,8 +56,8 @@ public class Utils {
 	}
 
 	public static Font getApplicationUserDefinedFont() {
-		String fontName = LogInEvent.getUserData() != null && LogInEvent.getUserData().getSystemProperties() != null ? LogInEvent.getUserData().getSystemProperties().getFontName() : null;
-		Integer fontSize = LogInEvent.getUserData() != null && LogInEvent.getUserData().getSystemProperties() != null ? LogInEvent.getUserData().getSystemProperties().getFontSize() : null;
+		String fontName = LogInEvent.getUserData() != null && LogInEvent.getUserData().getUserAccount().getSystemProperties() != null ? LogInEvent.getUserData().getUserAccount().getSystemProperties().getFontName() : null;
+		Integer fontSize = LogInEvent.getUserData() != null && LogInEvent.getUserData().getUserAccount().getSystemProperties() != null ? LogInEvent.getUserData().getUserAccount().getSystemProperties().getFontSize() : null;
 		Font userDefinedFont;
 		if (Strings.isEmpty(fontName) && fontSize == null)
 			userDefinedFont = getApplicationFont();

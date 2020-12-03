@@ -191,7 +191,7 @@ public final class TabWorkerEvent implements IActionForm {
 			Worker selectedClient = ((WorkerTableModel) tabbedForm.getPanelWorker().getWorkerTable().getModel())
 					.getWorker(selectedRowIndex);
 
-			selectedClient.setRegistered(
+			selectedClient.getUserAccount().setRegistered(
 					tabbedForm.getPanelWorker().getAdmIsRegisteredPanel().getChckbxIsRegistered().isSelected());
 
 			HibernateUtil.beginTransaction();

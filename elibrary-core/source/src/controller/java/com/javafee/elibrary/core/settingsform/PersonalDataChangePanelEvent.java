@@ -75,7 +75,7 @@ public class PersonalDataChangePanelEvent implements IActionForm {
 					: Constants.DATA_BASE_FEMALE_SIGN);
 		userData.setBirthDate(personalDataChangePanel.getDateChooserBirthDate().getDate());
 		userData.setEMail(personalDataChangePanel.getTextFieldEMail().getText());
-		userData.setLogin(personalDataChangePanel.getTextFieldLogin().getText());
+		userData.getUserAccount().setLogin(personalDataChangePanel.getTextFieldLogin().getText());
 
 		if (!"".equals(userData.getPeselNumber()) && userData.getPeselNumber().length() != Constants.DATA_BASE_PESEL_NUMBER_LENGHT) {
 			Utils.displayOptionPane(SystemProperties.getInstance().getResourceBundle()

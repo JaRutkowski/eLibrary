@@ -24,12 +24,11 @@ import lombok.Data;
 
 @Data
 @Entity
+// TODO: checkWithComparingIdIfUserDataPeselExist
 @NamedQueries({
-		@NamedQuery(name = "UserData.checkWithComparingIdIfUserDataLoginExist", query = "from UserData where login = :login and id != :id"),
 		@NamedQuery(name = "UserData.checkIfUserDataPeselExist", query = "from UserData where peselNumber = :peselNumber"),
-		@NamedQuery(name = "UserData.checkWithComparingIdIfUserDataPeselExist", query = "from UserData where peselNumber = :peselNumber and id != :id"),
-		@NamedQuery(name = "UserData.checkIfUserDataLoginExist", query = "from UserData where login = :login")})
-@Table(name = "com_user_data", uniqueConstraints = {@UniqueConstraint(columnNames = {"login", "pesel"})})
+		@NamedQuery(name = "UserData.checkWithComparingIdIfUserDataPeselExist", query = "from UserData where peselNumber = :peselNumber and idUserData != :id")})
+@Table(name = "com_user_data", uniqueConstraints = {@UniqueConstraint(columnNames = {"pesel"})})
 @Inheritance(strategy = InheritanceType.JOINED)
 @SequenceGenerator(name = "seq_com_user_data", sequenceName = "seq_com_user_data", allocationSize = 1)
 public class UserData {
@@ -38,14 +37,8 @@ public class UserData {
 	@Column(name = "id_user_data", unique = false, nullable = false, insertable = true, updatable = true)
 	private Integer idUserData;
 
-	@Column(name = "login", unique = false, nullable = false, insertable = true, updatable = true, length = 15)
-	private String login;
-
 	@Column(name = "e_mail", unique = false, nullable = true, insertable = true, updatable = true, length = 80)
 	private String eMail;
-
-	@Column(name = "password", unique = false, nullable = false, insertable = true, updatable = true, length = 80)
-	private String password;
 
 	@Column(name = "name", unique = false, nullable = true, insertable = true, updatable = true, length = 30)
 	private String name;
@@ -66,22 +59,11 @@ public class UserData {
 	@Column(name = "document_number", unique = false, nullable = true, insertable = true, updatable = true, length = 20)
 	private String documentNumber;
 
-	@Column(name = "registered", unique = false, nullable = true, insertable = true, updatable = true)
-	private Boolean registered;
-
-	@Temporal(TemporalType.DATE)
-	@Column(name = "registration_date", unique = false, nullable = true, insertable = true, updatable = true, length = 13)
-	private Date registrationDate;
-
 	@Column(name = "address", unique = false, nullable = true, insertable = true, updatable = true, length = 200)
 	private String address;
 
 	@Column(name = "city", unique = false, nullable = true, insertable = true, updatable = true, length = 200)
 	private String city;
-
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "id_system_properties")
-	private SystemProperties systemProperties;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_user_account")

@@ -190,6 +190,7 @@ public final class Common {
 
 	public static void unblockUserAccount(UserData userData) {
 		UserAccount userAccount = userData.getUserAccount();
+		userAccount.setNumberOfFailedPasswordAttempts(0);
 		userAccount.setBlocked(Boolean.FALSE);
 		userAccount.setBlockDate(null);
 		userAccount.setBlockReason(null);
@@ -247,7 +248,7 @@ public final class Common {
 		// Document number
 		registrationPanel.getTextFieldDocumentNumber().setText(userData.getDocumentNumber() != null ? userData.getDocumentNumber() : "");
 		// Login
-		registrationPanel.getTextFieldLogin().setText(userData.getLogin() != null ? userData.getLogin() : "");
+		registrationPanel.getTextFieldLogin().setText(userData.getUserAccount().getLogin() != null ? userData.getUserAccount().getLogin() : "");
 		// Email
 		registrationPanel.getTextFieldEMail().setText(userData.getEMail() != null ? userData.getEMail() : "");
 		// Name
@@ -345,18 +346,18 @@ public final class Common {
 	}
 
 	public boolean isAdmin(Worker worker) {
-		return Constants.DATA_BASE_ADMIN_LOGIN.equals(worker.getLogin())
-				&& Constants.DATA_BASE_ADMIN_PASSWORD.equals(worker.getPassword());
+		return Constants.DATA_BASE_ADMIN_LOGIN.equals(worker.getUserAccount().getLogin())
+				&& Constants.DATA_BASE_ADMIN_PASSWORD.equals(worker.getUserAccount().getPassword());
 	}
 
 	public boolean isAdmin(Client client) {
-		return Constants.DATA_BASE_ADMIN_LOGIN.equals(client.getLogin())
-				&& Constants.DATA_BASE_ADMIN_PASSWORD.equals(client.getPassword());
+		return Constants.DATA_BASE_ADMIN_LOGIN.equals(client.getUserAccount().getLogin())
+				&& Constants.DATA_BASE_ADMIN_PASSWORD.equals(client.getUserAccount().getPassword());
 	}
 
 	public boolean isAdmin(UserData userData) {
-		return Constants.DATA_BASE_ADMIN_LOGIN.equals(userData.getLogin())
-				&& Constants.DATA_BASE_ADMIN_PASSWORD.equals(userData.getPassword());
+		return Constants.DATA_BASE_ADMIN_LOGIN.equals(userData.getUserAccount().getLogin())
+				&& Constants.DATA_BASE_ADMIN_PASSWORD.equals(userData.getUserAccount().getPassword());
 	}
 
 	public boolean checkInternetConnectivity() {
