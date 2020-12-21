@@ -19,10 +19,13 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 import lombok.extern.java.Log;
 
 @Log
-public class FetchCitiesWithElibraryRestApiWS implements Process {
+public class FetchCitiesWithElibraryRestApiWS implements Process, Runnable {
 	@Override
 	public void execute() {
-		initializeCitiesWithElibraryRestApi();
+		//initializeCitiesWithElibraryRestApi();
+		//TODO Optimize
+		Thread t = new Thread(this);
+		t.start();
 	}
 
 	private void initializeCitiesWithElibraryRestApi() {
@@ -71,5 +74,10 @@ public class FetchCitiesWithElibraryRestApiWS implements Process {
 
 	private void incrementCitiesPackageNumber() {
 		SystemProperties.getInstance().setCitiesDataPackageNumber(SystemProperties.getInstance().getCitiesDataPackageNumber() + 1);
+	}
+
+	@Override
+	public void run() {
+		initializeCitiesWithElibraryRestApi();
 	}
 }
