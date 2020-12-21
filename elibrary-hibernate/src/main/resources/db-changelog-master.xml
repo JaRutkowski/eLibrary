@@ -13,7 +13,7 @@
 
 	<!-- Pre-processing -->
 	<!-- Increment id of changeSet -->
-	<!--<include file="src/main/resources/db/changelog/truncate-all-cascade-changelog.xml" relativeToChangelogFile="false"/>-->
+	<include file="src/main/resources/db/changelog/truncate-all-cascade-changelog.xml" relativeToChangelogFile="false"/>
 
 	<!-- Version data -->
 	<!-- generated using mvn liquibase:generateChangeLog -Dliquibase.diffTypes=data -->
