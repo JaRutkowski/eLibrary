@@ -113,6 +113,8 @@ public final class Constants {
 				SystemProperties.getInstance().getResourceBundle().getString("systemDataFeedingTableData.systemParametersData.dataCol")}),
 		SYSTEM_DATA(new String[]{SystemProperties.getInstance().getResourceBundle().getString("systemDataFeedingTableData.systemData.feedTypeCol"),
 				SystemProperties.getInstance().getResourceBundle().getString("systemDataFeedingTableData.systemData.dataCol")}),
+		LANGUAGE_DATA(new String[]{SystemProperties.getInstance().getResourceBundle().getString("systemDataFeedingTableData.languageData.feedTypeCol"),
+				SystemProperties.getInstance().getResourceBundle().getString("systemDataFeedingTableData.languageData.dataCol")}),
 		LIBRARY_DATA(new String[]{SystemProperties.getInstance().getResourceBundle().getString("systemDataFeedingTableData.libraryData.feedTypeCol"),
 				SystemProperties.getInstance().getResourceBundle().getString("systemDataFeedingTableData.libraryData.dataCol")});
 
@@ -121,7 +123,7 @@ public final class Constants {
 		@Getter
 		@AllArgsConstructor
 		public enum SystemDataFeedingTableRow {
-			ROW_ADMINISTRATOR_DATA(0), ROW_MESSAGES_AND_NOTIFICATIONS_DICTIONARIES_DATA(1), ROW_SYSTEM_PARAMETERS_DATA(2), ROW_SYSTEM_DATA(3), ROW_LIBRARY_DATA(4);
+			ROW_ADMINISTRATOR_DATA(0), ROW_MESSAGES_AND_NOTIFICATIONS_DICTIONARIES_DATA(1), ROW_SYSTEM_PARAMETERS_DATA(2), ROW_SYSTEM_DATA(3), ROW_LANGUAGE_DATA(4), ROW_LIBRARY_DATA(5);
 
 			private final Integer index;
 
@@ -392,7 +394,7 @@ public final class Constants {
 	public static final String MAIN_SPLASH_SCREEN_IMAGE = "source/resources/images/splashScreen.jpg";
 
 	public static final String APPLICATION_NAME = "e-library";
-	public static String APPLICATION_LANGUAGE = "pl";
+	public static String APPLICATION_LANGUAGE = "en";
 	public static final String APPLICATION_LANGUAGE_PL = "pl";
 	public static final String APPLICATION_LANGUAGE_EN = "en";
 	public static final String APPLICATION_CSV_EXTENSION = ".csv";

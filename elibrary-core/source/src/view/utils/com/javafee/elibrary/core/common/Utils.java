@@ -66,6 +66,13 @@ public class Utils {
 		return userDefinedFont;
 	}
 
+	public static String getApplicationUserDefinedLanguage() {
+		String language = LogInEvent.getUserData() != null && LogInEvent.getUserData().getUserAccount().getSystemProperties() != null
+				&& LogInEvent.getUserData().getUserAccount().getSystemProperties().getLanguage() != null
+				? LogInEvent.getUserData().getUserAccount().getSystemProperties().getLanguage().getName() : null;
+		return Strings.isEmpty(language) ? Constants.APPLICATION_LANGUAGE : language;
+	}
+
 	public static void displayOptionPane(String message, String title, int messageType) {
 		JOptionPane optionPane = new JOptionPane();
 		optionPane.setMessage("<html>" + message + "</html>");
