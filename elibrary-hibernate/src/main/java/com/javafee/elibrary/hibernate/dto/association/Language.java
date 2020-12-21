@@ -8,11 +8,9 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import lombok.Builder;
 import lombok.Data;
 
 @Data
-@Builder
 @Entity
 @Table(name = "com_language")
 @SequenceGenerator(name = "seq_com_language", sequenceName = "seq_com_language", allocationSize = 1)
@@ -24,13 +22,4 @@ public class Language {
 
 	@Column(name = "name", unique = false, nullable = true, insertable = true, updatable = true, length = 200)
 	private String name;
-
-	@Override
-	public String toString() {
-		String result = "[";
-		if (name != null)
-			result += name;
-		result += "]";
-		return result;
-	}
 }

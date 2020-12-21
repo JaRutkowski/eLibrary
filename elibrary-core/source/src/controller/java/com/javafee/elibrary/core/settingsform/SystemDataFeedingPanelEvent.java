@@ -18,7 +18,6 @@ import com.javafee.elibrary.core.model.SystemDataFeedingTableModel;
 import com.javafee.elibrary.core.model.pojo.SystemDataFeedingPojo;
 import com.javafee.elibrary.core.process.ProcessFactory;
 import com.javafee.elibrary.core.process.initializator.FeedAdministratorDataProcess;
-import com.javafee.elibrary.core.process.initializator.FeedLanguageDataProcess;
 import com.javafee.elibrary.core.process.initializator.FeedLibraryDataProcess;
 import com.javafee.elibrary.core.process.initializator.FeedMessageTypesProcess;
 import com.javafee.elibrary.core.process.initializator.FeedSystemDataProcess;
@@ -26,7 +25,6 @@ import com.javafee.elibrary.core.process.initializator.FeedSystemParametersProce
 import com.javafee.elibrary.core.unicomponent.jtable.actiontable.Action;
 import com.javafee.elibrary.hibernate.dao.HibernateDao;
 import com.javafee.elibrary.hibernate.dao.common.Common;
-import com.javafee.elibrary.hibernate.dto.association.Language;
 import com.javafee.elibrary.hibernate.dto.association.MessageType;
 import com.javafee.elibrary.hibernate.dto.common.SystemData;
 import com.javafee.elibrary.hibernate.dto.common.SystemParameter;
@@ -74,10 +72,6 @@ public class SystemDataFeedingPanelEvent implements IActionForm {
 								e -> onClickBtnRun()),
 						new Action(SystemProperties.getInstance().getResourceBundle().getString("systemDataFeedingTablePanel.systemData.btnCheck"),
 								e -> onClickBtnCheck())),
-				Arrays.asList(new Action(SystemProperties.getInstance().getResourceBundle().getString("systemDataFeedingTablePanel.languageData.btnRun"),
-								e -> onClickBtnRun()),
-						new Action(SystemProperties.getInstance().getResourceBundle().getString("systemDataFeedingTablePanel.languageData.btnCheck"),
-								e -> onClickBtnCheck())),
 				Arrays.asList(new Action(SystemProperties.getInstance().getResourceBundle().getString("systemDataFeedingTablePanel.libraryData.btnRun"),
 								e -> onClickBtnRun()),
 						new Action(SystemProperties.getInstance().getResourceBundle().getString("systemDataFeedingTablePanel.libraryData.btnCheck"),
@@ -112,9 +106,6 @@ public class SystemDataFeedingPanelEvent implements IActionForm {
 						break;
 					case ROW_SYSTEM_DATA:
 						performRunForSystemData();
-						break;
-					case ROW_LANGUAGE_DATA:
-						performRunForLanguageData();
 						break;
 					case ROW_LIBRARY_DATA:
 						performRunForLibraryData();
@@ -155,9 +146,6 @@ public class SystemDataFeedingPanelEvent implements IActionForm {
 				case ROW_SYSTEM_DATA:
 					performCheckForSystemData(selectedSystemDataFeedingPojo);
 					break;
-				case ROW_LANGUAGE_DATA:
-					performCheckForLanguageData(selectedSystemDataFeedingPojo);
-					break;
 				case ROW_LIBRARY_DATA:
 					performCheckForLibraryData(selectedSystemDataFeedingPojo);
 					break;
@@ -178,14 +166,10 @@ public class SystemDataFeedingPanelEvent implements IActionForm {
 				systemDataValidation = performCheckForSystemData(((SystemDataFeedingTableModel) settingsForm.getSettingsPanel().getSystemDataFeedingPanel()
 						.getSystemDataFeedingTablePanel().getSystemDataFeedingTable().getModel())
 						.getSystemDataFeedingPojo(Constants.SystemDataFeedingTableData.SystemDataFeedingTableRow.ROW_SYSTEM_DATA.getIndex())),
-				languageDataValidation = performCheckForLanguageData(((SystemDataFeedingTableModel) settingsForm.getSettingsPanel().getSystemDataFeedingPanel()
-						.getSystemDataFeedingTablePanel().getSystemDataFeedingTable().getModel())
-						.getSystemDataFeedingPojo(Constants.SystemDataFeedingTableData.SystemDataFeedingTableRow.ROW_LANGUAGE_DATA.getIndex())),
 				libraryDataValidation = performCheckForLibraryData(((SystemDataFeedingTableModel) settingsForm.getSettingsPanel().getSystemDataFeedingPanel()
 						.getSystemDataFeedingTablePanel().getSystemDataFeedingTable().getModel())
 						.getSystemDataFeedingPojo(Constants.SystemDataFeedingTableData.SystemDataFeedingTableRow.ROW_LIBRARY_DATA.getIndex()));
-		if (administrationDataValidation && messagesAndNotificationsDictionariesDataValidation && systemParametersDataValidation && systemDataValidation
-				&& languageDataValidation && libraryDataValidation)
+		if (administrationDataValidation && messagesAndNotificationsDictionariesDataValidation && systemParametersDataValidation && systemDataValidation && libraryDataValidation)
 			Utils.displayOptionPane(
 					SystemProperties.getInstance().getResourceBundle()
 							.getString("systemDataFeedingPanelEvent.checkingAllDataValidationSuccess"),
@@ -207,7 +191,6 @@ public class SystemDataFeedingPanelEvent implements IActionForm {
 			performRunForMessagesAndNotificationsDictionariesData();
 			performRunForSystemParametersData();
 			performRunForSystemData();
-			performRunForLanguageData();
 			performRunForLibraryData();
 			Utils.displayOptionPane(
 					SystemProperties.getInstance().getResourceBundle()
@@ -270,18 +253,6 @@ public class SystemDataFeedingPanelEvent implements IActionForm {
 		return validatedSystemData.getFirst();
 	}
 
-	private boolean performCheckForLanguageData(SystemDataFeedingPojo selectedLanguageDataFeedingPojo) {
-		Pair<Boolean, String> validatedSystemData = validateLanguageData();
-		selectedLanguageDataFeedingPojo.setData(validatedSystemData.getFirst()
-				? validatedSystemData.getSecond()
-				: SystemProperties.getInstance().getResourceBundle().getString("systemDataFeedingPanelEvent.validationDataFailed"));
-		((SystemDataFeedingTableModel) settingsForm.getSettingsPanel().getSystemDataFeedingPanel().getSystemDataFeedingTablePanel()
-				.getSystemDataFeedingTable().getModel()).update(
-				Constants.SystemDataFeedingTableData.SystemDataFeedingTableRow.ROW_LANGUAGE_DATA.getIndex(),
-				selectedLanguageDataFeedingPojo);
-		return validatedSystemData.getFirst();
-	}
-
 	private boolean performCheckForLibraryData(SystemDataFeedingPojo selectedSystemDataFeedingPojo) {
 		Pair<Boolean, String> validatedLibraryData = validateLibraryData();
 		selectedSystemDataFeedingPojo.setData(validatedLibraryData.getFirst()
@@ -308,10 +279,6 @@ public class SystemDataFeedingPanelEvent implements IActionForm {
 
 	private void performRunForSystemData() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
 		ProcessFactory.create(FeedSystemDataProcess.class).execute();
-	}
-
-	private void performRunForLanguageData() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-		ProcessFactory.create(FeedLanguageDataProcess.class).execute();
 	}
 
 	private void performRunForLibraryData() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
@@ -347,13 +314,6 @@ public class SystemDataFeedingPanelEvent implements IActionForm {
 	private Pair<Boolean, String> validateSystemData() {
 		String systemData = Common.findSystemDataByIdAndGetPresentationValue(com.javafee.elibrary.hibernate.dao.common.Constants.DATA_BASE_SYSTEM_DATA_ID);
 		return new Pair<>(!Strings.isEmpty(systemData), systemData);
-	}
-
-	private Pair<Boolean, String> validateLanguageData() {
-		// return new Pair<>(true, "[]");
-		List<Language> languagesList = new HibernateDao<>(Language.class).findAll();
-		String languagesData = languagesList != null && !languagesList.isEmpty() ? languagesList.toString() : "";
-		return new Pair<>(!Strings.isEmpty(languagesData), languagesData);
 	}
 
 	private Pair<Boolean, String> validateLibraryData() {

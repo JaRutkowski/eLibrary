@@ -39,8 +39,7 @@
 	<!--<include file="src/main/resources/db/changelog/db-changelog-ddl-20201118172712UTC.xml" relativeToChangelogFile="false"/>-->
 	<!--<include file="src/main/resources/db/changelog/db-changelog-20201123164445UTC.xml" relativeToChangelogFile="false"/>-->
 	<!--<include file="src/main/resources/db/changelog/db-changelog-20201123161902UTC.xml" relativeToChangelogFile="false"/>-->
-	<!--<include file="src/main/resources/db/changelog/db-changelog-20201125160909UTC.xml" relativeToChangelogFile="false"/>-->
-	<include file="src/main/resources/db/changelog/db-changelog-20201220195517UTC.xml" relativeToChangelogFile="false"/>
+	<include file="src/main/resources/db/changelog/db-changelog-20201125160909UTC.xml" relativeToChangelogFile="false"/>
 
 	<!-- Post-processing -->
 	<!-- Increment id of changeSet -->

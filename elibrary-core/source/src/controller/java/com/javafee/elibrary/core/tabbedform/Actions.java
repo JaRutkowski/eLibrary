@@ -14,8 +14,6 @@ import com.javafee.elibrary.core.common.SystemProperties;
 import com.javafee.elibrary.core.common.Utils;
 import com.javafee.elibrary.core.common.action.IActionForm;
 import com.javafee.elibrary.core.startform.LogInEvent;
-import com.javafee.elibrary.hibernate.dao.HibernateUtil;
-import com.javafee.elibrary.hibernate.dto.common.UserData;
 
 public class Actions implements IActionForm {
 	private TabbedForm tabbedForm = new TabbedForm();
@@ -39,26 +37,6 @@ public class Actions implements IActionForm {
 			Constants.APPLICATION_LANGUAGE = (String) tabbedForm.getComboBoxLanguage().getSelectedItem();
 			SystemProperties.getInstance()
 					.setResourceBundleLanguage((String) tabbedForm.getComboBoxLanguage().getSelectedItem());
-
-			boolean systemPropertiesAlreadyExists = LogInEvent.getUserData().getUserAccount().getSystemProperties() != null;
-			com.javafee.elibrary.hibernate.dto.common.SystemProperties systemProperties = com.javafee.elibrary.hibernate.dao.common.Common
-					//FIXME: null check
-					.checkAndGetSystemProperties(LogInEvent.getWorker() != null ? LogInEvent.getWorker().getUserAccount().getIdUserAccount()
-							: Constants.DATA_BASE_ADMIN_ID);
-			if (!systemPropertiesAlreadyExists) {
-				systemProperties.setLanguage(com.javafee.elibrary.hibernate.dao.common.Common.findLanguageByName((String) tabbedForm.getComboBoxLanguage().getSelectedItem()).get());
-				LogInEvent.getUserData().getUserAccount().setSystemProperties(systemProperties);
-
-				HibernateUtil.beginTransaction();
-				HibernateUtil.getSession().update(UserData.class.getName(), LogInEvent.getUserData());
-				HibernateUtil.commitTransaction();
-			} else {
-				HibernateUtil.beginTransaction();
-				LogInEvent.getUserData().getUserAccount().getSystemProperties().setLanguage(com.javafee.elibrary.hibernate.dao.common.Common.findLanguageByName((String) tabbedForm.getComboBoxLanguage().getSelectedItem()).get());
-				HibernateUtil.getSession().update(com.javafee.elibrary.hibernate.dto.common.SystemProperties.class.getName(), LogInEvent.getUserData().getUserAccount().getSystemProperties());
-				HibernateUtil.commitTransaction();
-			}
-
 			onClickBtnLogOut();
 		}
 	}

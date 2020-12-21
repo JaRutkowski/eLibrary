@@ -9,11 +9,9 @@ import com.javafee.elibrary.core.common.Constants;
 import com.javafee.elibrary.core.common.Constants.Role;
 import com.javafee.elibrary.core.common.Params;
 import com.javafee.elibrary.core.common.SystemProperties;
-import com.javafee.elibrary.core.common.Utils;
 import com.javafee.elibrary.core.exception.RefusedLogInException;
 import com.javafee.elibrary.core.process.ProcessFactory;
 import com.javafee.elibrary.core.process.initializator.FeedAdministratorDataProcess;
-import com.javafee.elibrary.core.process.initializator.FeedLanguageDataProcess;
 import com.javafee.elibrary.core.process.initializator.FeedLibraryDataProcess;
 import com.javafee.elibrary.core.process.initializator.FeedMessageTypesProcess;
 import com.javafee.elibrary.core.process.initializator.FeedSystemDataProcess;
@@ -55,7 +53,6 @@ public final class LogInEvent {
 		if (checkLogAndRole(login, password)) {
 			logInEvent = new LogInEvent();
 			logInDate = new Date();
-			initializeLanguage();
 		} else
 			throw new RefusedLogInException("Cannot log in to the system");
 		return logInEvent;
@@ -66,16 +63,11 @@ public final class LogInEvent {
 			ProcessFactory.create(FeedLibraryDataProcess.class).execute();
 			ProcessFactory.create(FeedSystemDataProcess.class).execute();
 			ProcessFactory.create(FeedAdministratorDataProcess.class).execute();
-			ProcessFactory.create(FeedLanguageDataProcess.class).execute();
 			ProcessFactory.create(FeedMessageTypesProcess.class).execute();
 			ProcessFactory.create(FeedSystemParametersProcess.class).execute();
 		} catch (IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
 			log.severe(e.getMessage());
 		}
-	}
-
-	private static void initializeLanguage() {
-		SystemProperties.getInstance().setResourceBundleLanguage(Utils.getApplicationUserDefinedLanguage());
 	}
 
 	private static boolean checkLogAndRole(String login, String password) {

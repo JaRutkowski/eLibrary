@@ -23,8 +23,6 @@ public class SystemDataFeedingTableModel extends DefaultTableModel {
 					Constants.SystemDataFeedingTableData.SYSTEM_PARAMETERS_DATA.getValue()[Constants.SystemDataFeedingTableColumn.COL_DATA.getValue()], null},
 			{Constants.SystemDataFeedingTableData.SYSTEM_DATA.getValue()[Constants.SystemDataFeedingTableColumn.COL_FEEDING_TYPE.getValue()],
 					Constants.SystemDataFeedingTableData.SYSTEM_DATA.getValue()[Constants.SystemDataFeedingTableColumn.COL_DATA.getValue()], null},
-			{Constants.SystemDataFeedingTableData.LANGUAGE_DATA.getValue()[Constants.SystemDataFeedingTableColumn.COL_FEEDING_TYPE.getValue()],
-					Constants.SystemDataFeedingTableData.LANGUAGE_DATA.getValue()[Constants.SystemDataFeedingTableColumn.COL_DATA.getValue()], null},
 			{Constants.SystemDataFeedingTableData.LIBRARY_DATA.getValue()[Constants.SystemDataFeedingTableColumn.COL_FEEDING_TYPE.getValue()],
 					Constants.SystemDataFeedingTableData.LIBRARY_DATA.getValue()[Constants.SystemDataFeedingTableColumn.COL_DATA.getValue()], null}
 	};
