@@ -350,7 +350,6 @@ public class SystemDataFeedingPanelEvent implements IActionForm {
 	}
 
 	private Pair<Boolean, String> validateLanguageData() {
-		// return new Pair<>(true, "[]");
 		List<Language> languagesList = new HibernateDao<>(Language.class).findAll();
 		String languagesData = languagesList != null && !languagesList.isEmpty() ? languagesList.toString() : "";
 		return new Pair<>(!Strings.isEmpty(languagesData), languagesData);
