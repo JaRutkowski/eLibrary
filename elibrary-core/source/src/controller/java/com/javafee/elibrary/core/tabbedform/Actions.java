@@ -19,12 +19,14 @@ public class Actions implements IActionForm {
 	private TabbedForm tabbedForm = new TabbedForm();
 
 	private com.javafee.elibrary.core.settingsform.Actions actionSettings = null;
+	private com.javafee.elibrary.core.aboutform.Actions actionAbout = null;
 
 	public void control() {
 		tabbedForm.getFrame().setVisible(true);
 		initializeForm();
 
 		tabbedForm.getTabbedPane().addChangeListener(e -> onChangeTabbedPane());
+		tabbedForm.getBtnInformation().addActionListener(e -> onClickBtnAbout());
 		tabbedForm.getBtnSettings().addActionListener(e -> onClickBtnSettings());
 		tabbedForm.getBtnLogOut().addActionListener(e -> onClickBtnLogOut());
 		tabbedForm.getComboBoxLanguage().addActionListener(e -> onChangeComboBoxLanguage());
@@ -209,12 +211,22 @@ public class Actions implements IActionForm {
 		openStartForm();
 	}
 
+	private void onClickBtnAbout() {
+		openAboutForm();
+	}
+
 	private void onClickBtnSettings() {
 		openSettingsForm();
 	}
 
 	private void onChangeTabbedPane() {
 		reloadTabbedPane();
+	}
+
+	private void openAboutForm() {
+		if (actionAbout == null)
+			actionAbout = new com.javafee.elibrary.core.aboutform.Actions();
+		actionAbout.control();
 	}
 
 	private void openSettingsForm() {

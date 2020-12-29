@@ -17,4 +17,19 @@ public interface HerokuManagementApi {
 	@Path("latest-builds")
 	@JWTTokenNeeded
 	Response latestBuilds(@QueryParam("apiId") String token);
+
+	@GET
+	@Path("build-number")
+	@JWTTokenNeeded
+	Response buildNumber(@QueryParam("apiId") String token);
+
+	@GET
+	@Path("installation-date")
+	@JWTTokenNeeded
+	Response installationDate(@QueryParam("apiId") String token);
+
+	@GET
+	@Path("version")
+	@JWTTokenNeeded
+	Response version(@QueryParam("apiId") String token);
 }

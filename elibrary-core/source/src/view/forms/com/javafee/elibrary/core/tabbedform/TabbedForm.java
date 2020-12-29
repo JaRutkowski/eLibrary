@@ -103,7 +103,6 @@ public class TabbedForm extends BaseForm {
 		btnInformation.setIcon(
 				new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnInformation-ico.png"))
 						.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
-		btnInformation.setEnabled(false);
 		GridBagConstraints gbc_btnInformation = new GridBagConstraints();
 		gbc_btnInformation.anchor = GridBagConstraints.EAST;
 		gbc_btnInformation.insets = new Insets(5, 0, 5, 5);

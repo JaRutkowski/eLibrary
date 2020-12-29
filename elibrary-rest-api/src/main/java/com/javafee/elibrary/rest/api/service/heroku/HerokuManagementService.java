@@ -1,5 +1,8 @@
 package com.javafee.elibrary.rest.api.service.heroku;
 
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -17,6 +20,24 @@ public class HerokuManagementService {
 				.header("Authorization", "Bearer " + token)
 				.header("Accept", "application/vnd.heroku+json; version=3")
 				.get(Build[].class);
+	}
+
+	public String getBuildNumber(String token) {
+		return getLatestBuild(token)[0].getSourceBlob().getVersion();
+	}
+
+	public String getInstallationDate(String token) {
+		Build build = getLatestBuild(token)[0];
+		SimpleDateFormat releaseDateFormat = new SimpleDateFormat("MMMM dd, yyyy", Locale.US);
+		return releaseDateFormat.format(build.getCreatedAt());
+	}
+
+	public String getVersion(String token) {
+		Build build = getLatestBuild(token)[0];
+		String version = getBuildNumber(token);
+		SimpleDateFormat versionDateFormat = new SimpleDateFormat("yyyy-dd-MM");
+		String versionDateString = versionDateFormat.format(build.getCreatedAt());
+		return "#DSK-" + versionDateString + "-" + version;
 	}
 
 	//TODO Implement logs fetching method

@@ -66,6 +66,11 @@ public class Utils {
 		return userDefinedFont;
 	}
 
+	public static Font getApplicationUserDefinedFont(Integer fontSize) {
+		String fontName = LogInEvent.getUserData() != null && LogInEvent.getUserData().getUserAccount().getSystemProperties() != null ? LogInEvent.getUserData().getUserAccount().getSystemProperties().getFontName() : null;
+		return new Font(fontName, Font.BOLD, fontSize);
+	}
+
 	public static void displayOptionPane(String message, String title, int messageType) {
 		JOptionPane optionPane = new JOptionPane();
 		optionPane.setMessage("<html>" + message + "</html>");

@@ -10,6 +10,7 @@ import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.javafee.elibrary.core.exception.RefusedSystemPropertiesLoadingException;
 import com.javafee.elibrary.core.process.ProcessFactory;
 import com.javafee.elibrary.core.process.ws.FetchCitiesWithElibraryRestApiWS;
@@ -17,6 +18,8 @@ import com.javafee.elibrary.hibernate.dao.HibernateDao;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
 import com.javafee.elibrary.hibernate.dto.association.City;
 import com.javafee.elibrary.hibernate.dto.common.SystemParameter;
+import com.mashape.unirest.http.ObjectMapper;
+import com.mashape.unirest.http.Unirest;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -47,6 +50,7 @@ public class SystemProperties {
 		initializeCoreProperties();
 		initializeSystemParameters();
 		fetchCitiesPackage();
+		initializeObjectMapper();
 	}
 
 	private SystemProperties() {
@@ -108,6 +112,31 @@ public class SystemProperties {
 		} catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException e) {
 			log.severe(e.getMessage());
 		}
+	}
+
+	private static void initializeObjectMapper() {
+		Unirest.setObjectMapper(new ObjectMapper() {
+			com.fasterxml.jackson.databind.ObjectMapper mapper
+					= new com.fasterxml.jackson.databind.ObjectMapper();
+
+			public String writeValue(Object value) {
+				try {
+					return mapper.writeValueAsString(value);
+				} catch (JsonProcessingException e) {
+					e.printStackTrace();
+				}
+				return null;
+			}
+
+			public <T> T readValue(String value, Class<T> valueType) {
+				try {
+					return mapper.readValue(value, valueType);
+				} catch (JsonProcessingException e) {
+					e.printStackTrace();
+				}
+				return null;
+			}
+		});
 	}
 
 	public void setResourceBundleLanguage(ResourceBundle resourceBundleLanguage) {

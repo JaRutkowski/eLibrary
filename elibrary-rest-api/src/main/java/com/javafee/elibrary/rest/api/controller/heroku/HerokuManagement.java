@@ -15,4 +15,19 @@ public class HerokuManagement implements HerokuManagementApi {
 	public Response latestBuilds(String token) {
 		return Response.ok(herokuManagementService.getLatestBuild(token)).build();
 	}
+
+	@Override
+	public Response buildNumber(String token) {
+		return Response.ok(herokuManagementService.getBuildNumber(token)).build();
+	}
+
+	@Override
+	public Response installationDate(String token) {
+		return Response.ok(herokuManagementService.getInstallationDate(token)).build();
+	}
+
+	@Override
+	public Response version(String token) {
+		return Response.ok(herokuManagementService.getVersion(token)).build();
+	}
 }
