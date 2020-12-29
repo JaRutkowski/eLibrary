@@ -2,8 +2,6 @@ package com.javafee.elibrary.core.common.dto;
 
 import java.util.Date;
 
-import org.json.JSONPropertyName;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;

@@ -477,8 +477,4 @@ public final class Common {
 		if (timerServiceListener != null)
 			timerServiceListener.destroy();
 	}
-
-	private void createVersion() {
-
-	}
 }
