@@ -4,8 +4,8 @@ import java.awt.*;
 import java.io.IOException;
 import java.text.MessageFormat;
 
+import javax.swing.Box;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 import com.javafee.elibrary.core.common.BasePanel;
 import com.javafee.elibrary.core.common.Constants;
@@ -15,7 +15,6 @@ import com.javafee.elibrary.core.unicomponent.jlabel.CustomJLabel;
 import com.javafee.elibrary.core.uniform.ImagePanel;
 
 import lombok.Getter;
-import javax.swing.Box;
 
 public class AboutPanel extends BasePanel {
 	@Getter
@@ -36,14 +35,13 @@ public class AboutPanel extends BasePanel {
 
 		JLabel lblELibraryTitle = new CustomJLabel(MessageFormat.format(SystemProperties.getInstance().getResourceBundle().getString("aboutPanel.lblELibraryTitle"),
 				Constants.APPLICATION_NAME));
-		// TODO Increase font size by getting current fontSize + VALUE - move 19 to Constants
-		lblELibraryTitle.setFont(Utils.getApplicationUserDefinedFont(19));
+		lblELibraryTitle.setFont(Utils.getApplicationUserDefinedFont(Constants.APPLICATION_DEFAULT_FONT_BIG_SIZE_DIFF));
 		GridBagConstraints gbc_lblELibraryTitle = new GridBagConstraints();
 		gbc_lblELibraryTitle.insets = new Insets(0, 0, 5, 0);
 		gbc_lblELibraryTitle.gridx = 0;
 		gbc_lblELibraryTitle.gridy = 1;
 		add(lblELibraryTitle, gbc_lblELibraryTitle);
-		
+
 		Component verticalStrut = Box.createVerticalStrut(20);
 		GridBagConstraints gbc_verticalStrut = new GridBagConstraints();
 		gbc_verticalStrut.insets = new Insets(0, 0, 5, 0);

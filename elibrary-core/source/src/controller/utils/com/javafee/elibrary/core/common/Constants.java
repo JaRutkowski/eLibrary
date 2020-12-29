@@ -402,6 +402,7 @@ public final class Constants {
 	public static final char APPLICATION_CSV_SEPARATOR = ',';
 	public static final Color APPLICATION_DEFAULT_COLOR = new Color(237, 245, 248);
 	public static final Font APPLICATION_DEFAULT_FONT = UIManager.getDefaults().getFont("TabbedPane.font");
+	public static final Integer APPLICATION_DEFAULT_FONT_BIG_SIZE_DIFF = 6;
 	public static final int APPLICATION_NETWORK_SERVICE_LISTENER_DURATION = 2;
 	public static final Object APPLICATION_COMBO_BOX_BLANK_OBJECT = null;
 	public static final SimpleDateFormat APPLICATION_TIME_FORMAT = new SimpleDateFormat("HH:mm");
