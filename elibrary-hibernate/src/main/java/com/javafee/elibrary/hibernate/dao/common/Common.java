@@ -8,6 +8,8 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
+import com.javafee.elibrary.hibernate.dto.association.Language;
+import com.javafee.elibrary.hibernate.dto.association.Language_;
 import com.javafee.elibrary.hibernate.dto.association.MessageType;
 import com.javafee.elibrary.hibernate.dto.association.MessageType_;
 import com.javafee.elibrary.hibernate.dto.common.SystemData;
@@ -198,6 +200,12 @@ public class Common {
 		return !allQuery.getResultList().isEmpty();
 	}
 
+	public static boolean checkIfAnyLanguageExists() {
+		CriteriaQuery<Language> cq = HibernateUtil.getSession().getCriteriaBuilder().createQuery(Language.class);
+		TypedQuery<Language> allQuery = HibernateUtil.getSession().createQuery(cq.select(cq.from(Language.class)));
+		return !allQuery.getResultList().isEmpty();
+	}
+
 	public static Optional<MessageType> findMessageTypeByName(final String name) {
 		Optional<MessageType> messageType = Optional.empty();
 
@@ -216,5 +224,25 @@ public class Common {
 		}
 
 		return messageType;
+	}
+
+	public static Optional<Language> findLanguageByName(final String name) {
+		Optional<Language> language = Optional.empty();
+
+		try {
+			CriteriaBuilder cb = HibernateUtil.createAndGetEntityManager().getCriteriaBuilder();
+			CriteriaQuery<Language> criteria = cb.createQuery(Language.class);
+			Root<Language> messageTypeRoot = criteria.from(Language.class);
+			criteria.select(messageTypeRoot);
+			criteria.where(cb.equal(messageTypeRoot.get(Language_.name), name));
+			language = Optional
+					.ofNullable(!HibernateUtil.getEntityManager().createQuery(criteria).getResultList().isEmpty()
+							? HibernateUtil.getEntityManager().createQuery(criteria).getResultList().get(0)
+							: null);
+		} catch (Exception e) {
+			log.severe(e.getMessage());
+		}
+
+		return language;
 	}
 }
