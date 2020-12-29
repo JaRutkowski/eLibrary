@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Vector;
 import java.util.function.Consumer;
@@ -29,6 +30,7 @@ import javax.swing.table.AbstractTableModel;
 import org.apache.http.HttpStatus;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
 
+import com.javafee.elibrary.core.common.dto.Build;
 import com.javafee.elibrary.core.common.networkservice.NetworkServiceListener;
 import com.javafee.elibrary.core.common.timerservice.TimerServiceListener;
 import com.javafee.elibrary.core.common.watchservice.WatchServiceListener;
@@ -383,6 +385,25 @@ public final class Common {
 			response.append(e.getCause().getMessage());
 		}
 		return new Pair<>(connectivity, response.toString());
+	}
+
+	public Build fetchSystemVersion() {
+		Build[] responseVersion = null;
+		HttpResponse<Build[]> uniResponse;
+		//TODO Move to the properties or fetch from API
+		String apiId = "03fd2411-2ff3-476e-af88-efad0dee8fc0";
+		try {
+			uniResponse = Unirest.get(SystemProperties.getConfigProperties().getProperty("app.api.url") + "/heroku-management/latest-builds")
+					.header("Authorization", "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTU5MTk5NTUwOCwiZXhwIjoxOTA3NDQ1NjAwfQ.X5QudAylDMyXy-mUQEsevQDOv9Wv4YOK8OCruvamGiIcu74SB8hmeOh3VA-7vz9RZZZaanbocVudV72DsMZZVg")
+					.header("login", "admin")
+					.queryString("out", "json")
+					.queryString("apiId", apiId)
+					.asObject(Build[].class);
+			responseVersion = uniResponse.getBody();
+		} catch (UnirestException e) {
+			log.warning("Not able to get response from WS heroku-management/latest-builds method");
+		}
+		return Objects.requireNonNull(responseVersion)[0];
 	}
 
 	public Pair<Boolean, String> checkELibraryDbConnectivityAndGetHealthStatus() {

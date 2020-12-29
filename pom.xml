@@ -49,6 +49,7 @@
 		<org.hibernate.javax.persistence.version>1.0.1.Final</org.hibernate.javax.persistence.version>
 		<org.hibernate.version>5.4.10.Final</org.hibernate.version>
 		<javax.ws.rs.version>2.1.1</javax.ws.rs.version>
+		<org.glassfish.jersey.core.version>3.0.0</org.glassfish.jersey.core.version>
 		<com.fasterxml.jackson.core.version>2.11.0</com.fasterxml.jackson.core.version>
 		<jboss.annotations.api.1.2.spec.version>1.0.2.Final</jboss.annotations.api.1.2.spec.version>
 		<org.jboss.spec.javax.el.version>2.0.0.Final</org.jboss.spec.javax.el.version>
