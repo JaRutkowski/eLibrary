@@ -9,11 +9,13 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.text.MessageFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -403,7 +405,16 @@ public final class Common {
 		} catch (UnirestException e) {
 			log.warning("Not able to get response from WS heroku-management/latest-builds method");
 		}
-		return Objects.requireNonNull(responseVersion)[0];
+		return Optional.ofNullable(responseVersion).isPresent() ? responseVersion[0] : null;
+	}
+
+	public String constructVersionString(Build build) {
+		String version = build.getSourceBlob().getVersion();
+		SimpleDateFormat versionDateFormat = new SimpleDateFormat("yyyy-dd-MM");
+		String versionDateString = versionDateFormat.format(build.getCreatedAt());
+		String versionText = MessageFormat.format(SystemProperties.getInstance().getResourceBundle().getString("aboutPanel.version"),
+				versionDateString, version);
+		return versionText;
 	}
 
 	public Pair<Boolean, String> checkELibraryDbConnectivityAndGetHealthStatus() {

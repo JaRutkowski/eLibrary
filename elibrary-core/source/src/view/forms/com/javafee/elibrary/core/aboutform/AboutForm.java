@@ -19,7 +19,7 @@ public class AboutForm extends BaseForm {
 	public void initialize() {
 		super.initialize();
 
-		frame.setBounds(100, 100, 350, 420);
+		frame.setBounds(100, 100, 350, 430);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setResizable(false);
 
