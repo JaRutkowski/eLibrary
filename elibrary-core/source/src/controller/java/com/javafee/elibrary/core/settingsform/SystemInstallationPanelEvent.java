@@ -46,9 +46,10 @@ public class SystemInstallationPanelEvent implements IActionForm {
 		reloadLblBuildStatus();
 
 		reloadContentPanel();
-		//TODO - Build Health
-		// - Build Logsa
-		// - DB logs
+		//TODO
+		// - Build Logs (API) - #279
+		// - DB logs (dbchangelog) - US under #39
+		// - db version under 'System data' > 'Installation' (from dbchangelog) - US under #39
 	}
 
 	private void reloadContentPanel() {
