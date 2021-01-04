@@ -39,6 +39,8 @@ public class SettingsPanel extends BasePanel {
 	private SystemProcessesPanel systemProcessesPanel;
 	@Getter
 	private SystemMonitorPanel systemMonitorPanel;
+	@Getter
+	private SystemInstallationPanel systemInstallationPanel;
 
 	private GridBagConstraints gbc_panel;
 
@@ -78,6 +80,7 @@ public class SettingsPanel extends BasePanel {
 		systemDataFeedingPanel = new SystemDataFeedingPanel();
 		systemProcessesPanel = new SystemProcessesPanel();
 		systemMonitorPanel = new SystemMonitorPanel();
+		systemInstallationPanel = new SystemInstallationPanel();
 	}
 
 	public void reloadContentPanel(SettingsForm settingsForm, JPanel contentPanel) {
@@ -118,6 +121,7 @@ public class SettingsPanel extends BasePanel {
 		systemDataNodes.add(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuSystemDataFeeding"));
 		systemDataNodes.add(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuProcesses"));
 		systemDataNodes.add(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuMonitor"));
+		systemDataNodes.add(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuInstallation"));
 
 		nodes.add(generalNodes);
 		if (LogInEvent.getRole() != Constants.Role.ADMIN)

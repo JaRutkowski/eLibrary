@@ -70,8 +70,8 @@ public class Utils {
 		String fontName = LogInEvent.getUserData() != null && LogInEvent.getUserData().getUserAccount().getSystemProperties() != null ? LogInEvent.getUserData().getUserAccount().getSystemProperties().getFontName() : null;
 		Integer fontSizeSystem = LogInEvent.getUserData() != null && LogInEvent.getUserData().getUserAccount().getSystemProperties() != null ? LogInEvent.getUserData().getUserAccount().getSystemProperties().getFontSize() : null;
 		return new Font(fontName, Font.BOLD, fontSizeSystem != null ? fontSizeSystem + fontSize : getApplicationFont().getSize() + fontSize);
-  }
-  
+	}
+
 	public static String getApplicationUserDefinedLanguage() {
 		String language = LogInEvent.getUserData() != null && LogInEvent.getUserData().getUserAccount().getSystemProperties() != null
 				&& LogInEvent.getUserData().getUserAccount().getSystemProperties().getLanguage() != null

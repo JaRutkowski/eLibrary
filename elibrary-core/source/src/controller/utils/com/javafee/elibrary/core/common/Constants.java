@@ -27,7 +27,8 @@ public final class Constants {
 		SYSTEM_PARAMETERS_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuSystemParameters")),
 		SYSTEM_DATA_FEEDING_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuSystemDataFeeding")),
 		SYSTEM_PROCESSES_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuProcesses")),
-		SYSTEM_MONITOR_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuMonitor"));
+		SYSTEM_MONITOR_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuMonitor")),
+		SYSTEM_INSTALLATION_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuInstallation"));
 
 		private final String name;
 
@@ -394,6 +395,7 @@ public final class Constants {
 	public static final String MAIN_SPLASH_SCREEN_IMAGE = "source/resources/images/splashScreen.jpg";
 
 	public static final String APPLICATION_NAME = "e-library";
+	public static final String APPLICATION_BUILD_STATUS_SUCCEEDED = "succeeded";
 	public static String APPLICATION_LANGUAGE = "en";
 	public static final String APPLICATION_LANGUAGE_PL = "pl";
 	public static final String APPLICATION_LANGUAGE_EN = "en";

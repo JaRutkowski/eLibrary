@@ -3,11 +3,10 @@ package com.javafee.elibrary.core.aboutform;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
+import java.util.Optional;
 
-import com.javafee.elibrary.core.common.Common;
 import com.javafee.elibrary.core.common.SystemProperties;
 import com.javafee.elibrary.core.common.action.IActionForm;
-import com.javafee.elibrary.core.common.dto.Build;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
 import com.javafee.elibrary.hibernate.dao.common.Constants;
 import com.javafee.elibrary.hibernate.dto.library.LibraryBranchData;
@@ -37,26 +36,26 @@ public class Actions implements IActionForm {
 	}
 
 	private void reloadLblsDynamic() {
-		reloadLblVersion();
-		reloadLblLicenseInformation();
+		LibrarySystemData librarySystemData = HibernateUtil.getSession().get(LibrarySystemData.class, Constants.DATA_BASE_LIBRARY_DATA_ID);
+		reloadLblVersion(librarySystemData);
+		reloadLblLicenseInformation(librarySystemData);
 		reloadLblSubscription();
 	}
 
-	private void reloadLblVersion() {
-		Build build = Common.fetchSystemVersion();
-		String version = build.getSourceBlob().getVersion();
-		SimpleDateFormat versionDateFormat = new SimpleDateFormat("yyyy-dd-MM"),
-				releaseDateFormat = new SimpleDateFormat("MMMM dd, yyyy", Locale.US);
-		String versionDateString = versionDateFormat.format(build.getCreatedAt()),
-				releaseDateString = releaseDateFormat.format(build.getCreatedAt());
-		String versionText = MessageFormat.format(SystemProperties.getInstance().getResourceBundle().getString("aboutPanel.lblVersion"),
-				"#DSK-" + versionDateString + "-" + version, releaseDateString);
+	private void reloadLblVersion(LibrarySystemData librarySystemData) {
+		SimpleDateFormat releaseDateFormat = new SimpleDateFormat("MMMM dd, yyyy", Locale.US);
+		String releaseDateString = Optional.ofNullable(librarySystemData.getInstallationDate()).isPresent()
+				? releaseDateFormat.format(librarySystemData.getInstallationDate())
+				: SystemProperties.getInstance().getResourceBundle().getString("aboutPanel.none");
+		String versionText = Optional.ofNullable(librarySystemData.getVersion()).isPresent()
+				? MessageFormat.format(SystemProperties.getInstance().getResourceBundle()
+				.getString("aboutPanel.lblVersion"), librarySystemData.getVersion(), releaseDateString)
+				: SystemProperties.getInstance().getResourceBundle().getString("aboutPanel.none");
 		aboutForm.getAboutPanel().getLblVersion().setText(versionText);
 		aboutForm.getAboutPanel().getLblVersion().setToolTipText(versionText);
 	}
 
-	private void reloadLblLicenseInformation() {
-		LibrarySystemData librarySystemData = HibernateUtil.getSession().get(LibrarySystemData.class, Constants.DATA_BASE_LIBRARY_DATA_ID);
+	private void reloadLblLicenseInformation(LibrarySystemData librarySystemData) {
 		LibraryBranchData libraryBranchData = (LibraryBranchData) librarySystemData.getLibraryData().getLibraryBranchData().toArray()[0];
 		String licenseText = MessageFormat.format(SystemProperties.getInstance().getResourceBundle().getString("aboutPanel.lblLicenseInformation"),
 				librarySystemData.getLibraryData().getName(), libraryBranchData.getName());
