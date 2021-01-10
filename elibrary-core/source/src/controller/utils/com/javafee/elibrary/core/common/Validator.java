@@ -3,6 +3,7 @@ package com.javafee.elibrary.core.common;
 
 import java.util.List;
 
+import com.google.common.base.Strings;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
 import com.javafee.elibrary.hibernate.dto.common.UserData;
 import com.javafee.elibrary.hibernate.dto.common.message.Message;
@@ -53,21 +54,14 @@ public final class Validator {
 		return result;
 	}
 
-	public static boolean validateClientPesel(String pesel) {
-		boolean result;
-		UserData existingPeselUserData = (UserData) HibernateUtil.getSession()
-				.getNamedQuery("UserData.checkIfUserDataPeselExist").setParameter("peselNumber", pesel)
-				.uniqueResult();
-		result = existingPeselUserData == null;
-		return result;
-	}
-
-	public static boolean validateWorkerPesel(String pesel) {
-		boolean result;
-		UserData existingPeselUserData = (UserData) HibernateUtil.getSession()
-				.getNamedQuery("UserData.checkIfUserDataPeselExist").setParameter("peselNumber", pesel)
-				.uniqueResult();
-		result = existingPeselUserData == null;
+	public static boolean validateUserDataPesel(String pesel) {
+		boolean result = true;
+		if (!Strings.isNullOrEmpty(pesel)) {
+			UserData existingPeselUserData = (UserData) HibernateUtil.getSession()
+					.getNamedQuery("UserData.checkIfUserDataPeselExist").setParameter("peselNumber", pesel)
+					.uniqueResult();
+			result = existingPeselUserData == null;
+		}
 		return result;
 	}
 

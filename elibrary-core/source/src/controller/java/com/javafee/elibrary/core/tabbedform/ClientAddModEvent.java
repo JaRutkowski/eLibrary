@@ -146,7 +146,7 @@ public class ClientAddModEvent implements IEvent {
 	}
 
 	private void registerNow() {
-		if (Validator.validateClientPesel(clientAddModFrame.getClientDataPanel().getTextFieldPeselNumber().getText())) {
+		if (Validator.validateUserDataPesel(clientAddModFrame.getClientDataPanel().getTextFieldPeselNumber().getText())) {
 			try {
 				Character sex = clientAddModFrame.getClientDataPanel().getGroupRadioButtonSex().getSelection() != null
 						? clientAddModFrame.getClientDataPanel().getGroupRadioButtonSex().getSelection()
