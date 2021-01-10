@@ -145,7 +145,7 @@ public class WorkerAddModEvent implements IEvent {
 
 	@SuppressWarnings("unchecked")
 	private void registerNow() {
-		if (Validator.validateWorkerPesel(workerAddModFrame.getWorkerDataPanel().getTextFieldPeselNumber().getText())) {
+		if (Validator.validateUserDataPesel(workerAddModFrame.getWorkerDataPanel().getTextFieldPeselNumber().getText())) {
 			try {
 				Character sex = workerAddModFrame.getWorkerDataPanel().getGroupRadioButtonSex().getSelection() != null
 						? workerAddModFrame.getWorkerDataPanel().getGroupRadioButtonSex().getSelection()

@@ -54,18 +54,7 @@ public final class Validator {
 		return result;
 	}
 
-	public static boolean validateClientPesel(String pesel) {
-		boolean result = true;
-		if (!Strings.isNullOrEmpty(pesel)) {
-			UserData existingPeselUserData = (UserData) HibernateUtil.getSession()
-					.getNamedQuery("UserData.checkIfUserDataPeselExist").setParameter("peselNumber", pesel)
-					.uniqueResult();
-			result = existingPeselUserData == null;
-		}
-		return result;
-	}
-
-	public static boolean validateWorkerPesel(String pesel) {
+	public static boolean validateUserDataPesel(String pesel) {
 		boolean result = true;
 		if (!Strings.isNullOrEmpty(pesel)) {
 			UserData existingPeselUserData = (UserData) HibernateUtil.getSession()
