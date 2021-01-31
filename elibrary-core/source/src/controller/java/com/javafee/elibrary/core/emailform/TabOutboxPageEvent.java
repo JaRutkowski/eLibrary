@@ -7,7 +7,10 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
+import java.util.function.Consumer;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
@@ -91,6 +94,7 @@ public class TabOutboxPageEvent implements IMessageForm {
 		reloadComboBoxRecipient();
 		reloadOutboxTable();
 		switchPerspectiveToAdm(LogInEvent.getRole() == Role.WORKER_ACCOUNTANT || LogInEvent.getRole() == Role.ADMIN);
+		addReloadsMethodsToParams();
 	}
 
 	public void onTabOutboxOpen() {
@@ -100,18 +104,13 @@ public class TabOutboxPageEvent implements IMessageForm {
 
 	@SuppressWarnings("unchecked")
 	private void reloadComboBoxRecipient() {
-		DefaultComboBoxModel<UserData> comboBoxRecipientModel = new DefaultComboBoxModel<UserData>();
+		DefaultComboBoxModel<UserData> comboBoxRecipientModel = new DefaultComboBoxModel<>();
+		List<UserData> userDataListToSort;
 
-		List<UserData> userDataListToSort = null;
-
-		if (LogInEvent.getWorker() != null)
-			userDataListToSort = (List<UserData>) HibernateUtil.getSession()
-					.createQuery(Query.TabOutboxPageEventQuery.DISTINCT_MESSAGE_RECIPIENT_BY_SENDER_LOGIN.getValue()). //
-					setParameter("login", LogInEvent.getWorker().getLogin()).list();
-		else
-			userDataListToSort = (List<UserData>) HibernateUtil.getSession()
-					.createQuery(Query.TabOutboxPageEventQuery.DISTINCT_MESSAGE_RECIPIENT_ALL.getValue()). //
-					list();
+		userDataListToSort = LogInEvent.getWorker() != null ?
+				(List<UserData>) HibernateUtil.getSession().createQuery(Query.TabOutboxPageEventQuery.DISTINCT_MESSAGE_RECIPIENT_BY_SENDER_LOGIN.getValue()). //
+						setParameter("login", LogInEvent.getWorker().getUserAccount().getLogin()).list()
+				: (List<UserData>) HibernateUtil.getSession().createQuery(Query.TabOutboxPageEventQuery.DISTINCT_MESSAGE_RECIPIENT_ALL.getValue()).list();
 
 		com.javafee.elibrary.core.common.Common.prepareBlankComboBoxElement(userDataListToSort);
 		userDataListToSort.sort(Comparator.nullsFirst(Comparator.comparing(UserData::getSurname)));
@@ -121,8 +120,8 @@ public class TabOutboxPageEvent implements IMessageForm {
 
 	private void reloadOutboxTable() {
 		if (LogInEvent.getWorker() != null) {
-			List<Object> parameters = new ArrayList<Object>();
-			parameters.add(LogInEvent.getWorker().getLogin());
+			List<Object> parameters = new ArrayList<>();
+			parameters.add(LogInEvent.getWorker().getUserAccount().getLogin());
 			((OutboxTableModel) emailForm.getPanelOutboxPage().getOutboxTable().getModel()) //
 					.reloadData(Query.TabOutboxPageEventQuery.MESSAGE_BY_SENDER_LOGIN.getValue(), parameters);
 		} else {
@@ -139,6 +138,15 @@ public class TabOutboxPageEvent implements IMessageForm {
 					.getMessage(selectedRowIndex);
 
 			Params.getInstance().add("MESSAGE_TO_PREVIEW", selectedMessage);
+
+			if (!selectedMessage.getRecipient().stream().filter(recipient -> Optional.ofNullable(recipient).isEmpty()
+					|| Optional.ofNullable(recipient.getUserData()).isEmpty()).findAny().isEmpty())
+				LogGuiException.logWarning(
+						SystemProperties.getInstance().getResourceBundle()
+								.getString("tabOutboxPageEvent.removedRecipientWarningTitle"),
+						SystemProperties.getInstance().getResourceBundle()
+								.getString("tabOutboxPageEvent.removedRecipientWarning"));
+
 			emailForm.getTabbedPane().setSelectedIndex(Tab_Email.TAB_CREATE_PAGE.getValue());
 		} else
 			LogGuiException.logWarning(
@@ -150,7 +158,7 @@ public class TabOutboxPageEvent implements IMessageForm {
 
 	private void onChangeChckShowOnlySystemCorrespondence() {
 		if (emailForm.getPanelOutboxPage().getCheckShowOnlySystemCorrespondence().isSelected()) {
-			List<Object> parameters = new ArrayList<Object>();
+			List<Object> parameters = new ArrayList<>();
 			MessageType messageType = Common
 					.findMessageTypeByName(Constants.DATA_BASE_MESSAGE_TYPE_SYS_MESSAGE).get();
 			parameters.add(messageType);
@@ -192,14 +200,15 @@ public class TabOutboxPageEvent implements IMessageForm {
 
 	@Override
 	public void onClickBtnSend() {
-		if (Utils.displayConfirmDialog(
+		int selectedRowIndex = emailForm.getPanelOutboxPage().getOutboxTable()
+				.convertRowIndexToModel(emailForm.getPanelOutboxPage().getOutboxTable().getSelectedRow());
+		Message selectedMessage = ((OutboxTableModel) emailForm.getPanelOutboxPage().getOutboxTable().getModel())
+				.getMessage(selectedRowIndex);
+		if (selectedMessage.getRecipient().stream().filter(recipient -> Optional.ofNullable(recipient).isEmpty()
+				|| Optional.ofNullable(recipient.getUserData()).isEmpty()).findAny().isEmpty()
+				&& Utils.displayConfirmDialog(
 				SystemProperties.getInstance().getResourceBundle().getString("confirmDialog.sendAgainMessage"),
 				"") == JOptionPane.YES_OPTION) {
-			int selectedRowIndex = emailForm.getPanelOutboxPage().getOutboxTable()
-					.convertRowIndexToModel(emailForm.getPanelOutboxPage().getOutboxTable().getSelectedRow());
-			Message selectedMessage = ((OutboxTableModel) emailForm.getPanelOutboxPage().getOutboxTable().getModel())
-					.getMessage(selectedRowIndex);
-
 			if (new MailSenderEvent().control(selectedMessage.getRecipient(), selectedMessage.getTitle(),
 					selectedMessage.getContent())) {
 				createEmail(selectedMessage.getRecipient(), selectedMessage.getTitle(), selectedMessage.getContent());
@@ -210,16 +219,21 @@ public class TabOutboxPageEvent implements IMessageForm {
 								.getString("tabCreatePageEvent.emailSendErrorTitle"),
 						SystemProperties.getInstance().getResourceBundle()
 								.getString("tabCreatePageEvent.emailSendErrorTitle"));
-		}
+		} else
+			LogGuiException.logError(
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("errorDialog.title"),
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("tabOutboxPageEvent.removedRecipientError"));
 	}
 
 	private void onChangeComboBoxRecipient() {
 		UserData recipientUserData = (UserData) emailForm.getPanelOutboxPage().getComboBoxRecipient().getSelectedItem();
-		List<Object> parameters = new ArrayList<Object>();
+		List<Object> parameters = new ArrayList<>();
 		if (recipientUserData != null) {
 			parameters.add(recipientUserData);
 			if (LogInEvent.getWorker() != null) {
-				parameters.add(LogInEvent.getWorker().getLogin());
+				parameters.add(LogInEvent.getWorker().getUserAccount().getLogin());
 				((OutboxTableModel) emailForm.getPanelOutboxPage().getOutboxTable().getModel()) //
 						.reloadData(
 								Query.TabOutboxPageEventQuery.DISTINCT_MESSAGE_BY_RECIPIENT_USER_DATA_AND_SENDER_LOGIN
@@ -232,13 +246,20 @@ public class TabOutboxPageEvent implements IMessageForm {
 			}
 		} else {
 			if (LogInEvent.getWorker() != null) {
-				parameters.add(LogInEvent.getWorker().getLogin());
+				parameters.add(LogInEvent.getWorker().getUserAccount().getLogin());
 				((OutboxTableModel) emailForm.getPanelOutboxPage().getOutboxTable().getModel()) //
 						.reloadData(Query.TabOutboxPageEventQuery.MESSAGE_BY_SENDER_LOGIN.getValue(), parameters);
 			} else
 				((OutboxTableModel) emailForm.getPanelOutboxPage().getOutboxTable().getModel()) //
 						.reloadData();
 		}
+	}
+
+	private void addReloadsMethodsToParams() {
+		Map<String, Consumer> emailEventsMethods = com.javafee.elibrary.core.common.Common.getEmailModuleEventsMethodsMapParam();
+		emailEventsMethods.put(com.javafee.elibrary.core.common.Common.getMethodReference("reloadOutboxTable"), c -> this.reloadOutboxTable());
+		emailEventsMethods.put(com.javafee.elibrary.core.common.Common.getMethodReference("reloadComboBoxRecipient"), c -> this.reloadComboBoxRecipient());
+		Params.getInstance().add("EMAIL_MODULE_EVENTS_METHODS", emailEventsMethods);
 	}
 
 	private void createEmail(Set<Recipient> recipients, String subject, String text) {
@@ -286,5 +307,4 @@ public class TabOutboxPageEvent implements IMessageForm {
 		if (isAdminOrAccountant)
 			onChangeChckShowOnlySystemCorrespondence();
 	}
-
 }

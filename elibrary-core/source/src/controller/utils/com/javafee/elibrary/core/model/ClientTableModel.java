@@ -2,6 +2,7 @@ package com.javafee.elibrary.core.model;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.AbstractTableModel;
@@ -13,7 +14,6 @@ import com.javafee.elibrary.core.common.Validator;
 import com.javafee.elibrary.core.exception.LogGuiException;
 import com.javafee.elibrary.hibernate.dao.HibernateDao;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
-import com.javafee.elibrary.hibernate.dto.association.City;
 import com.javafee.elibrary.hibernate.dto.library.Client;
 
 public class ClientTableModel extends AbstractTableModel {
@@ -38,7 +38,8 @@ public class ClientTableModel extends AbstractTableModel {
 				SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.cityCol"),
 				SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.sexCol"),
 				SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.birthDateCol"),
-				SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.registeredCol")};
+				SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.registeredCol"),
+				SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.blockedCol")};
 	}
 
 	public Client getClient(int index) {
@@ -89,7 +90,7 @@ public class ClientTableModel extends AbstractTableModel {
 			case COL_DOCUMENT_NUMBER:
 				return client.getDocumentNumber();
 			case COL_LOGIN:
-				return client.getLogin();
+				return client.getUserAccount().getLogin();
 			case COL_E_MAIL:
 				return client.getEMail();
 			case COL_NAME:
@@ -99,7 +100,7 @@ public class ClientTableModel extends AbstractTableModel {
 			case COL_ADDRESS:
 				return client.getAddress();
 			case COL_CITY:
-				return client.getCity() != null ? client.getCity().getName() : null;
+				return client.getCity();
 			case COL_SEX:
 				if (client.getSex() != null) {
 					if (Constants.DATA_BASE_MALE_SIGN.toString().equals(client.getSex().toString()))
@@ -114,7 +115,12 @@ public class ClientTableModel extends AbstractTableModel {
 				return client.getBirthDate() != null ? Constants.APPLICATION_DATE_FORMAT.format(client.getBirthDate())
 						: null;
 			case COL_REGISTERED:
-				return client.getRegistered()
+				return client.getUserAccount().getRegistered()
+						? SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.registeredTrueVal")
+						: SystemProperties.getInstance().getResourceBundle()
+						.getString("clientTableModel.registeredFalseVal");
+			case COL_BLOCKED:
+				return Optional.ofNullable(client.getUserAccount()).isPresent() && client.getUserAccount().getBlocked()
 						? SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.registeredTrueVal")
 						: SystemProperties.getInstance().getResourceBundle()
 						.getString("clientTableModel.registeredFalseVal");
@@ -136,7 +142,7 @@ public class ClientTableModel extends AbstractTableModel {
 				clientShallowClone.setDocumentNumber(value.toString());
 				break;
 			case COL_LOGIN:
-				clientShallowClone.setLogin(value.toString());
+				clientShallowClone.getUserAccount().setLogin(value.toString());
 			case COL_E_MAIL:
 				clientShallowClone.setEMail(value.toString());
 				break;
@@ -150,7 +156,7 @@ public class ClientTableModel extends AbstractTableModel {
 				clientShallowClone.setAddress(value.toString());
 				break;
 			case COL_CITY:
-				clientShallowClone.setCity((City) value);
+				clientShallowClone.setCity(Optional.ofNullable(value).isPresent() ? value.toString() : null);
 				break;
 			case COL_SEX:
 				clientShallowClone.setSex((Character) value);
@@ -159,7 +165,11 @@ public class ClientTableModel extends AbstractTableModel {
 				clientShallowClone.setBirthDate((Date) value);
 				break;
 			case COL_REGISTERED:
-				clientShallowClone.setRegistered((Boolean) value);
+				clientShallowClone.getUserAccount().setRegistered((Boolean) value);
+				break;
+			case COL_BLOCKED:
+				if (Optional.ofNullable(clientShallowClone.getUserAccount()).isPresent())
+					clientShallowClone.getUserAccount().setBlocked((Boolean) value);
 				break;
 		}
 

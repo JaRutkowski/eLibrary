@@ -2,9 +2,12 @@ package com.javafee.elibrary.hibernate.dao.common;
 
 public class Query {
 	public enum ProcessQuery {
-		FEED_ADMINISTRATOR_DATA("insert into public.com_user_data" +
-				"(id_user_data, address, birth_date, document_number, e_mail, login, name, password, pesel, registered, sex, surname, id_city, id_system_properties)" +
-				" values(?0, null, null, null, null, ?1, null, ?2, null, null, null, null, null, null)"),
+		FEED_ADMINISTRATOR_USER_DATA("insert into public.com_user_data" +
+				"(id_user_data, id_user_account)" +
+				" values(?0, ?1)"),
+		FEED_ADMINISTRATOR_USER_ACCOUNT("insert into public.com_user_account" +
+				"(id_user_account, login, password)" +
+				" values(?0, ?1, ?2)"),
 		FEED_MESSAGE_TYPES("insert into public.mes_message_type" +
 				"(id_message_type, description, name)" +
 				" values(0, '', ?0)," +
@@ -19,7 +22,10 @@ public class Query {
 				"(5, ?8, ?9, ?9)," +
 				"(6, ?10, ?11, ?11)," +
 				"(7, ?12, ?13, ?13)," +
-				"(8, ?14, ?15, ?15)"),
+				"(8, ?14, ?15, ?15)," +
+				"(9, ?16, ?17, ?17)," +
+				"(10, ?18, ?19, ?19)," +
+				"(11, ?20, ?21, ?21)"),
 		FEED_SYSTEM_PARAMETERS_DATA_UPDATE_SYSTEM_DATA("update public.com_system_data" +
 				" set number_of_system_parameters = ?0" +
 				" where id_system_data = ?1"

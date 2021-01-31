@@ -14,11 +14,11 @@ public class CustomJSpinner extends JSpinner {
 		setBackground(Utils.getApplicationUserDefinedColor());
 	}
 
-	public CustomJSpinner(double value, double minimum, double maximum) {
+	public CustomJSpinner(int value, int minimum, int maximum) {
 		super();
 		setFont(Utils.getApplicationUserDefinedFont());
 		setBackground(Utils.getApplicationUserDefinedColor());
-		model = new SpinnerNumberModel((int) value, (int) minimum, (int) maximum, 1);
+		model = new SpinnerNumberModel(value, minimum, maximum, 1);
 		this.setModel(model);
 	}
 }

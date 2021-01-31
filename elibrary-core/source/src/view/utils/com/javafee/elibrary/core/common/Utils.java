@@ -40,7 +40,7 @@ public class Utils {
 	}
 
 	public static Color getApplicationUserDefinedColor() {
-		String color = LogInEvent.getUserData() != null && LogInEvent.getUserData().getSystemProperties() != null ? LogInEvent.getUserData().getSystemProperties().getColor() : null;
+		String color = LogInEvent.getUserData() != null && LogInEvent.getUserData().getUserAccount().getSystemProperties() != null ? LogInEvent.getUserData().getUserAccount().getSystemProperties().getColor() : null;
 		Color userDefinedColor;
 		if (Strings.isEmpty(color))
 			userDefinedColor = getApplicationColor();
@@ -56,14 +56,27 @@ public class Utils {
 	}
 
 	public static Font getApplicationUserDefinedFont() {
-		String fontName = LogInEvent.getUserData() != null && LogInEvent.getUserData().getSystemProperties() != null ? LogInEvent.getUserData().getSystemProperties().getFontName() : null;
-		Integer fontSize = LogInEvent.getUserData() != null && LogInEvent.getUserData().getSystemProperties() != null ? LogInEvent.getUserData().getSystemProperties().getFontSize() : null;
+		String fontName = LogInEvent.getUserData() != null && LogInEvent.getUserData().getUserAccount().getSystemProperties() != null ? LogInEvent.getUserData().getUserAccount().getSystemProperties().getFontName() : null;
+		Integer fontSize = LogInEvent.getUserData() != null && LogInEvent.getUserData().getUserAccount().getSystemProperties() != null ? LogInEvent.getUserData().getUserAccount().getSystemProperties().getFontSize() : null;
 		Font userDefinedFont;
 		if (Strings.isEmpty(fontName) && fontSize == null)
 			userDefinedFont = getApplicationFont();
 		else
 			userDefinedFont = new Font(fontName, Font.PLAIN, fontSize);
 		return userDefinedFont;
+	}
+
+	public static Font getApplicationUserDefinedFont(Integer fontSize) {
+		String fontName = LogInEvent.getUserData() != null && LogInEvent.getUserData().getUserAccount().getSystemProperties() != null ? LogInEvent.getUserData().getUserAccount().getSystemProperties().getFontName() : null;
+		Integer fontSizeSystem = LogInEvent.getUserData() != null && LogInEvent.getUserData().getUserAccount().getSystemProperties() != null ? LogInEvent.getUserData().getUserAccount().getSystemProperties().getFontSize() : null;
+		return new Font(fontName, Font.BOLD, fontSizeSystem != null ? fontSizeSystem + fontSize : getApplicationFont().getSize() + fontSize);
+	}
+
+	public static String getApplicationUserDefinedLanguage() {
+		String language = LogInEvent.getUserData() != null && LogInEvent.getUserData().getUserAccount().getSystemProperties() != null
+				&& LogInEvent.getUserData().getUserAccount().getSystemProperties().getLanguage() != null
+				? LogInEvent.getUserData().getUserAccount().getSystemProperties().getLanguage().getName() : null;
+		return Strings.isEmpty(language) ? Constants.APPLICATION_LANGUAGE : language;
 	}
 
 	public static void displayOptionPane(String message, String title, int messageType) {

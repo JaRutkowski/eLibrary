@@ -5,6 +5,7 @@ import java.awt.event.WindowEvent;
 import java.text.MessageFormat;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.Optional;
 
 import javax.swing.JOptionPane;
 
@@ -60,21 +61,18 @@ public class ClientAddModEvent implements IEvent {
 				clientAddModFrame.getClientDataPanel().getPasswordField().setVisible(false);
 				reloadRegistrationPanel();
 			}
-			reloadComboBoxCity();
 			initializeEventHandlers();
 			clientAddModFrame.setVisible(true);
-		} else {
+		} else
 			clientAddModFrame.toFront();
-		}
 	}
 
 	private void onClickBtnAccept(Context context) {
-		if (context == Context.ADDITION) {
-			if (validateRegistration())
-				registerNow();
-		} else if (context == Context.MODIFICATION) {
+		if (context == Context.ADDITION && validateRegistration())
+			registerNow();
+		else if (context == Context.MODIFICATION)
 			modificateClient();
-		}
+		Common.invokeEmailModuleEventsMethods();
 	}
 
 	private void modificateClient() {
@@ -86,7 +84,8 @@ public class ClientAddModEvent implements IEvent {
 		clientShallowClone.setName(clientAddModFrame.getClientDataPanel().getTextFieldName().getText());
 		clientShallowClone.setSurname(clientAddModFrame.getClientDataPanel().getTextFieldSurname().getText());
 		clientShallowClone.setAddress(clientAddModFrame.getClientDataPanel().getTextFieldAddress().getText());
-		clientShallowClone.setCity((City) clientAddModFrame.getClientDataPanel().getComboBoxCity().getSelectedItem());
+		clientShallowClone.setCity(Optional.ofNullable(clientAddModFrame.getClientDataPanel().getComboBoxCity().getSelectedItem()).isPresent()
+				? ((City) clientAddModFrame.getClientDataPanel().getComboBoxCity().getSelectedItem()).getName() : null);
 		if (clientAddModFrame.getClientDataPanel().getRadioButtonMale().isSelected()
 				|| clientAddModFrame.getClientDataPanel().getRadioButtonFemale().isSelected())
 			clientShallowClone.setSex(clientAddModFrame.getClientDataPanel().getRadioButtonMale().isSelected()
@@ -95,7 +94,7 @@ public class ClientAddModEvent implements IEvent {
 		clientShallowClone
 				.setBirthDate(clientAddModFrame.getClientDataPanel().getDateChooserBirthDate().getDate());
 		clientShallowClone.setEMail(clientAddModFrame.getClientDataPanel().getTextFieldEMail().getText());
-		clientShallowClone.setLogin(clientAddModFrame.getClientDataPanel().getTextFieldLogin().getText());
+		clientShallowClone.getUserAccount().setLogin(clientAddModFrame.getClientDataPanel().getTextFieldLogin().getText());
 
 		if (!"".equals(clientShallowClone.getPeselNumber())
 				&& clientShallowClone.getPeselNumber().length() != Constants.DATA_BASE_PESEL_NUMBER_LENGHT) {
@@ -139,12 +138,7 @@ public class ClientAddModEvent implements IEvent {
 	}
 
 	private void reloadRegistrationPanel() {
-		reloadComboBoxCity();
 		fillRegistrationPanel();
-	}
-
-	private void reloadComboBoxCity() {
-		Common.fillComboBoxCity(clientAddModFrame.getClientDataPanel().getComboBoxCity());
 	}
 
 	private void fillRegistrationPanel() {
@@ -152,7 +146,7 @@ public class ClientAddModEvent implements IEvent {
 	}
 
 	private void registerNow() {
-		if (Validator.validateClientPesel(clientAddModFrame.getClientDataPanel().getTextFieldPeselNumber().getText())) {
+		if (Validator.validateUserDataPesel(clientAddModFrame.getClientDataPanel().getTextFieldPeselNumber().getText())) {
 			try {
 				Character sex = clientAddModFrame.getClientDataPanel().getGroupRadioButtonSex().getSelection() != null
 						? clientAddModFrame.getClientDataPanel().getGroupRadioButtonSex().getSelection()
@@ -181,7 +175,8 @@ public class ClientAddModEvent implements IEvent {
 								clientAddModFrame.getClientDataPanel().getTextFieldName().getText(),
 								clientAddModFrame.getClientDataPanel().getTextFieldSurname().getText(),
 								clientAddModFrame.getClientDataPanel().getTextFieldAddress().getText(),
-								(City) clientAddModFrame.getClientDataPanel().getComboBoxCity().getSelectedItem(),
+								Optional.ofNullable(clientAddModFrame.getClientDataPanel().getComboBoxCity().getSelectedItem()).isPresent()
+										? clientAddModFrame.getClientDataPanel().getComboBoxCity().getSelectedItem().toString() : null,
 								sex, birthDate,
 								clientAddModFrame.getClientDataPanel().getTextFieldLogin().getText(),
 								clientAddModFrame.getClientDataPanel().getTextFieldEMail().getText(),

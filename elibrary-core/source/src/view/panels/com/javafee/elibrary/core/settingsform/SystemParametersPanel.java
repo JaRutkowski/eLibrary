@@ -40,13 +40,18 @@ public class SystemParametersPanel extends BasePanel {
 	private JButton btnRestoreDefaultValues;
 	private JSpinner spinnerApplicationMinPasswordLength;
 	private JSpinner spinnerApplicationMaxPasswordLength;
+	private JLabel lblApplicationComboBoxDataPackageSize;
+	private JSpinner spinnerApplicationComboBoxDataPackageSize;
+	private JLabel lblApplicationNumberOfAttempts;
+	private JSpinner spinnerApplicationNumberOfAttemptsLimit;
+	private JCheckBox chckbxWrongAttemptsAccountBlocking;
 
 	public SystemParametersPanel() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 
 		JLabel lblApplicationPenaltyValue = new CustomJLabel(
@@ -70,7 +75,7 @@ public class SystemParametersPanel extends BasePanel {
 		gbc_spinnerApplicationPenaltyValue.gridy = 0;
 		add(spinnerApplicationPenaltyValue, gbc_spinnerApplicationPenaltyValue);
 
-		JLabel lblApplicationReservationLimit = new JLabel(
+		JLabel lblApplicationReservationLimit = new CustomJLabel(
 				SystemProperties.getInstance().getResourceBundle().getString("systemParametersPanel.lblApplicationReservationLimit"));
 		GridBagConstraints gbc_lblApplicationReservationLimit = new GridBagConstraints();
 		gbc_lblApplicationReservationLimit.anchor = GridBagConstraints.WEST;
@@ -164,8 +169,8 @@ public class SystemParametersPanel extends BasePanel {
 		add(lblApplicationMinPasswordLength, gbc_lblApplicationMinPasswordLength);
 
 		spinnerApplicationMinPasswordLength = new CustomJSpinner(
-				Constants.SPINNER_MINIMUM_PASSWORD_LENGTH,
-				Constants.SPINNER_MINIMUM_PASSWORD_LENGTH,
+				Constants.SPINNER_MINIMUM_VALUE_PASSWORD_LENGTH,
+				Constants.SPINNER_MINIMUM_VALUE_PASSWORD_LENGTH,
 				Integer.valueOf(SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_MIN_PASSWORD_LENGTH).getValue()));
 		GridBagConstraints gbc_spinnerApplicationMinPasswordLength = new GridBagConstraints();
 		gbc_spinnerApplicationMinPasswordLength.fill = GridBagConstraints.HORIZONTAL;
@@ -186,7 +191,7 @@ public class SystemParametersPanel extends BasePanel {
 		spinnerApplicationMaxPasswordLength = new CustomJSpinner(
 				Integer.valueOf(SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_MAX_PASSWORD_LENGTH).getValue()),
 				Integer.valueOf(SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_MAX_PASSWORD_LENGTH).getValue()),
-				Constants.SPINNER_MAXIMUM_PASSWORD_LENGTH);
+				Constants.SPINNER_MAXIMUM_VALUE_PASSWORD_LENGTH);
 		GridBagConstraints gbc_spinnerApplicationMaxPasswordLength = new GridBagConstraints();
 		gbc_spinnerApplicationMaxPasswordLength.fill = GridBagConstraints.HORIZONTAL;
 		gbc_spinnerApplicationMaxPasswordLength.insets = new Insets(0, 0, 5, 0);
@@ -194,13 +199,42 @@ public class SystemParametersPanel extends BasePanel {
 		gbc_spinnerApplicationMaxPasswordLength.gridy = 7;
 		add(spinnerApplicationMaxPasswordLength, gbc_spinnerApplicationMaxPasswordLength);
 
+		lblApplicationNumberOfAttempts = new CustomJLabel(
+				SystemProperties.getInstance().getResourceBundle().getString("systemParametersPanel.lblApplicationNumberOfAttempts"));
+		GridBagConstraints gbc_lblApplicationNumberOfAttempts = new GridBagConstraints();
+		gbc_lblApplicationNumberOfAttempts.fill = GridBagConstraints.HORIZONTAL;
+		gbc_lblApplicationNumberOfAttempts.insets = new Insets(0, 0, 5, 5);
+		gbc_lblApplicationNumberOfAttempts.gridx = 0;
+		gbc_lblApplicationNumberOfAttempts.gridy = 8;
+		add(lblApplicationNumberOfAttempts, gbc_lblApplicationNumberOfAttempts);
+
+		spinnerApplicationNumberOfAttemptsLimit = new CustomJSpinner(
+				Integer.valueOf(SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_NUMBER_OF_ATTEMPTS_LIMIT).getValue()),
+				Constants.SPINNER_MINIMUM_VALUE_APPLICATION_NUMBER_OF_ATTEMPTS_LIMIT,
+				Constants.SPINNER_MAXIMUM_VALUE_APPLICATION_NUMBER_OF_ATTEMPTS_LIMIT);
+		GridBagConstraints gbc_spinnerApplicationNumberOfAttemptsLimit = new GridBagConstraints();
+		gbc_spinnerApplicationNumberOfAttemptsLimit.fill = GridBagConstraints.HORIZONTAL;
+		gbc_spinnerApplicationNumberOfAttemptsLimit.insets = new Insets(0, 0, 5, 0);
+		gbc_spinnerApplicationNumberOfAttemptsLimit.gridx = 1;
+		gbc_spinnerApplicationNumberOfAttemptsLimit.gridy = 8;
+		add(spinnerApplicationNumberOfAttemptsLimit, gbc_spinnerApplicationNumberOfAttemptsLimit);
+
+		chckbxWrongAttemptsAccountBlocking = new CustomJCheckBox(
+				SystemProperties.getInstance().getResourceBundle().getString("systemParametersPanel.chckbxWrongAttemptsAccountBlocking"));
+		GridBagConstraints gbc_chckbxWrongAttemptsAccountBlocking = new GridBagConstraints();
+		gbc_chckbxWrongAttemptsAccountBlocking.fill = GridBagConstraints.HORIZONTAL;
+		gbc_chckbxWrongAttemptsAccountBlocking.insets = new Insets(0, 0, 5, 0);
+		gbc_chckbxWrongAttemptsAccountBlocking.gridx = 1;
+		gbc_chckbxWrongAttemptsAccountBlocking.gridy = 9;
+		add(chckbxWrongAttemptsAccountBlocking, gbc_chckbxWrongAttemptsAccountBlocking);
+
 		JLabel lblApplicationTemplatesDirectoryName = new CustomJLabel(
 				SystemProperties.getInstance().getResourceBundle().getString("systemParametersPanel.lblApplicationTemplatesDirectoryName"));
 		GridBagConstraints gbc_lblApplicationTemplatesDirectoryName = new GridBagConstraints();
 		gbc_lblApplicationTemplatesDirectoryName.fill = GridBagConstraints.HORIZONTAL;
 		gbc_lblApplicationTemplatesDirectoryName.insets = new Insets(0, 0, 5, 5);
 		gbc_lblApplicationTemplatesDirectoryName.gridx = 0;
-		gbc_lblApplicationTemplatesDirectoryName.gridy = 8;
+		gbc_lblApplicationTemplatesDirectoryName.gridy = 10;
 		add(lblApplicationTemplatesDirectoryName, gbc_lblApplicationTemplatesDirectoryName);
 
 		textFieldApplicationTemplatesDirectoryName = new CustomJTextField();
@@ -208,15 +242,35 @@ public class SystemParametersPanel extends BasePanel {
 		gbc_textFieldApplicationTemplatesDirectoryName.insets = new Insets(0, 0, 5, 0);
 		gbc_textFieldApplicationTemplatesDirectoryName.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textFieldApplicationTemplatesDirectoryName.gridx = 1;
-		gbc_textFieldApplicationTemplatesDirectoryName.gridy = 8;
+		gbc_textFieldApplicationTemplatesDirectoryName.gridy = 10;
 		add(textFieldApplicationTemplatesDirectoryName, gbc_textFieldApplicationTemplatesDirectoryName);
 		textFieldApplicationTemplatesDirectoryName.setColumns(10);
+
+		lblApplicationComboBoxDataPackageSize = new CustomJLabel(
+				SystemProperties.getInstance().getResourceBundle().getString("systemParametersPanel.lblApplicationComboBoxDataPackageSize"));
+		GridBagConstraints gbc_lblApplicationComboBoxDataPackageSize = new GridBagConstraints();
+		gbc_lblApplicationComboBoxDataPackageSize.fill = GridBagConstraints.HORIZONTAL;
+		gbc_lblApplicationComboBoxDataPackageSize.insets = new Insets(0, 0, 5, 5);
+		gbc_lblApplicationComboBoxDataPackageSize.gridx = 0;
+		gbc_lblApplicationComboBoxDataPackageSize.gridy = 11;
+		add(lblApplicationComboBoxDataPackageSize, gbc_lblApplicationComboBoxDataPackageSize);
+
+		spinnerApplicationComboBoxDataPackageSize = new CustomJSpinner(
+				Integer.valueOf(SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_COMBO_BOX_DATA_PACKAGE_SIZE).getValue()),
+				Constants.SPINNER_MINIMUM_VALUE_COMBO_BOX_DATA_PACKAGE_SIZE,
+				Constants.SPINNER_MAXIMUM_VALUE_COMBO_BOX_DATA_PACKAGE_SIZE);
+		GridBagConstraints gbc_spinnerApplicationComboBoxDataPackageSize = new GridBagConstraints();
+		gbc_spinnerApplicationComboBoxDataPackageSize.fill = GridBagConstraints.HORIZONTAL;
+		gbc_spinnerApplicationComboBoxDataPackageSize.insets = new Insets(0, 0, 5, 0);
+		gbc_spinnerApplicationComboBoxDataPackageSize.gridx = 1;
+		gbc_spinnerApplicationComboBoxDataPackageSize.gridy = 11;
+		add(spinnerApplicationComboBoxDataPackageSize, gbc_spinnerApplicationComboBoxDataPackageSize);
 
 		btnAccept = CustomJButtonFactory.createCustomJButton(Button_Type.ACCEPT);
 		GridBagConstraints gbc_btnAccept = new GridBagConstraints();
 		gbc_btnAccept.insets = new Insets(0, 0, 5, 0);
 		gbc_btnAccept.gridx = 1;
-		gbc_btnAccept.gridy = 10;
+		gbc_btnAccept.gridy = 12;
 		add(btnAccept, gbc_btnAccept);
 
 		btnRestoreDefaultValues = new CustomJButton(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnSendAgain-ico.png"))
@@ -224,7 +278,7 @@ public class SystemParametersPanel extends BasePanel {
 				SystemProperties.getInstance().getResourceBundle().getString("systemParametersPanel.btnRestoreDefaultValues"));
 		GridBagConstraints gbc_btnRestoreDefaultValues = new GridBagConstraints();
 		gbc_btnRestoreDefaultValues.gridx = 1;
-		gbc_btnRestoreDefaultValues.gridy = 11;
+		gbc_btnRestoreDefaultValues.gridy = 13;
 		add(btnRestoreDefaultValues, gbc_btnRestoreDefaultValues);
 	}
 
@@ -236,13 +290,13 @@ public class SystemParametersPanel extends BasePanel {
 				1));
 		spinnerApplicationMinPasswordLength.setModel(new SpinnerNumberModel(
 				Integer.valueOf(SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_MIN_PASSWORD_LENGTH).getValue()).intValue(),
-				Constants.SPINNER_MINIMUM_PASSWORD_LENGTH.intValue(),
+				Constants.SPINNER_MINIMUM_VALUE_PASSWORD_LENGTH.intValue(),
 				Integer.valueOf(SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_MIN_PASSWORD_LENGTH).getValue()).intValue(),
 				1));
 		spinnerApplicationMaxPasswordLength.setModel(new SpinnerNumberModel(
 				Integer.valueOf(SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_MAX_PASSWORD_LENGTH).getValue()).intValue(),
 				Integer.valueOf(SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_MAX_PASSWORD_LENGTH).getValue()).intValue(),
-				Constants.SPINNER_MAXIMUM_PASSWORD_LENGTH.intValue(),
+				Constants.SPINNER_MAXIMUM_VALUE_PASSWORD_LENGTH.intValue(),
 				1));
 	}
 }

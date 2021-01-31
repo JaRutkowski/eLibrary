@@ -1,0 +1,48 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+				   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+				   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+	<changeSet author="Jakub.Rutkowski" id="0000000000">
+		<comment>com_user_data modification - moving columns to com_user_account</comment>
+		<sql dbms="postgresql"
+			 endDelimiter="\nGO"
+			 splitStatements="true"
+			 stripComments="true">
+			-- procedures for new the columns addition
+			ALTER TABLE public.com_user_account ADD registered bool NULL;
+			ALTER TABLE public.com_user_account ADD registration_date date NULL;
+			ALTER TABLE public.com_user_account ADD id_system_properties int4 NULL;
+			ALTER TABLE public.com_user_account ADD CONSTRAINT fkhwa0l0lk6pffu0lg4dg97vr54 FOREIGN KEY (id_system_properties) REFERENCES com_system_properties(id_system_properties);
+			ALTER TABLE public.com_user_account ADD login varchar(15) NULL; -- then changed to NOT NULL
+			ALTER TABLE public.com_user_account ADD "password" varchar(80) NULL; -- then changed to NOT NULL
+			ALTER TABLE public.com_user_account ADD CONSTRAINT ukj9nwmmaxfb6lxdw83hx77tw6h UNIQUE (login); -- add (login) constraint in com_user_account
+
+			-- procedures for new the constraints removal for com_user_data and addition for pesel
+			ALTER TABLE public.com_user_data DROP CONSTRAINT uk9jqq73ba9ea3ya1igo8q467yd; -- drop (login, pesel) constraint in com_user_data
+			ALTER TABLE public.com_user_data ADD CONSTRAINT uk3o3evwsefkkvctxo9vvvkuuko UNIQUE (pesel); -- add (pesel) constraint in com_user_data
+
+			-- update com_user_account.registered
+			UPDATE com_user_account
+			SET registered = (SELECT registered FROM com_user_data WHERE com_user_data.id_user_account is not null and com_user_account.id_user_account = com_user_data.id_user_account);
+			-- update com_user_account.registration_date
+			UPDATE com_user_account
+			SET registration_date = (SELECT registration_date FROM com_user_data WHERE com_user_data.id_user_account is not null and com_user_account.id_user_account = com_user_data.id_user_account);
+			-- update com_user_account.login
+			UPDATE com_user_account
+			SET login = (SELECT login FROM com_user_data WHERE com_user_data.id_user_account is not null and com_user_account.id_user_account = com_user_data.id_user_account);
+			-- update com_user_account.password
+			UPDATE com_user_account
+			SET "password" = (SELECT "password" FROM com_user_data WHERE com_user_data.id_user_account is not null and com_user_account.id_user_account = com_user_data.id_user_account);
+			-- update com_user_account.id_system_properties
+			UPDATE com_user_account
+			SET id_system_properties = (SELECT id_system_properties FROM com_user_data WHERE com_user_data.id_user_account is not null and com_user_account.id_user_account = com_user_data.id_user_account);
+
+			-- procedures for columns removal
+			ALTER TABLE public.com_user_data DROP COLUMN registered,
+			DROP COLUMN registration_date,
+			DROP COLUMN id_system_properties,
+			DROP COLUMN login,
+			DROP COLUMN "password";
+		</sql>
+	</changeSet>
+</databaseChangeLog>

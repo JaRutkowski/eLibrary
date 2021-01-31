@@ -275,8 +275,9 @@ public class TabLibraryEvent implements IActionForm {
 	}
 
 	private boolean checkIfVolumeIsLentOrReserved(Volume volume) {
-		return !volume.getLend().isEmpty() && volume.getLend().stream().filter(l -> !l.getIsReturned()).findFirst().isPresent()
-				|| !Validator.validateIfVolumeActiveReservationExists(volume.getIdVolume());
+		return !volume.getLend().isEmpty()
+				|| (!volume.getLend().isEmpty() && volume.getLend().stream().anyMatch(l -> !l.getIsReturned()))
+				|| Validator.validateIfVolumeActiveReservationExists(volume.getIdVolume());
 	}
 
 	private void switchPerspectiveToClient(boolean isClient) {

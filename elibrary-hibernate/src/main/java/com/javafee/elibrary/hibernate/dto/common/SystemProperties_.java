@@ -12,5 +12,5 @@ public class SystemProperties_ {
 	public static volatile SingularAttribute<SystemProperties, String> color;
 	public static volatile SingularAttribute<SystemProperties, Integer> fontSize;
 	public static volatile SingularAttribute<SystemProperties, String> templateDirectory;
-	public static volatile SingularAttribute<SystemProperties, UserData> userData;
+	public static volatile SingularAttribute<SystemProperties, UserAccount> userAccount;
 }

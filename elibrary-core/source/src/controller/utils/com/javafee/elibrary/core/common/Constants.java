@@ -26,7 +26,9 @@ public final class Constants {
 		SYSTEM_DATA_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuSystemData")),
 		SYSTEM_PARAMETERS_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuSystemParameters")),
 		SYSTEM_DATA_FEEDING_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuSystemDataFeeding")),
-		SYSTEM_PROCESSES_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuProcesses"));
+		SYSTEM_PROCESSES_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuProcesses")),
+		SYSTEM_MONITOR_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuMonitor")),
+		SYSTEM_INSTALLATION_PANEL(SystemProperties.getInstance().getResourceBundle().getString("settingsPanel.treeMenuInstallation"));
 
 		private final String name;
 
@@ -112,6 +114,8 @@ public final class Constants {
 				SystemProperties.getInstance().getResourceBundle().getString("systemDataFeedingTableData.systemParametersData.dataCol")}),
 		SYSTEM_DATA(new String[]{SystemProperties.getInstance().getResourceBundle().getString("systemDataFeedingTableData.systemData.feedTypeCol"),
 				SystemProperties.getInstance().getResourceBundle().getString("systemDataFeedingTableData.systemData.dataCol")}),
+		LANGUAGE_DATA(new String[]{SystemProperties.getInstance().getResourceBundle().getString("systemDataFeedingTableData.languageData.feedTypeCol"),
+				SystemProperties.getInstance().getResourceBundle().getString("systemDataFeedingTableData.languageData.dataCol")}),
 		LIBRARY_DATA(new String[]{SystemProperties.getInstance().getResourceBundle().getString("systemDataFeedingTableData.libraryData.feedTypeCol"),
 				SystemProperties.getInstance().getResourceBundle().getString("systemDataFeedingTableData.libraryData.dataCol")});
 
@@ -120,7 +124,7 @@ public final class Constants {
 		@Getter
 		@AllArgsConstructor
 		public enum SystemDataFeedingTableRow {
-			ROW_ADMINISTRATOR_DATA(0), ROW_MESSAGES_AND_NOTIFICATIONS_DICTIONARIES_DATA(1), ROW_SYSTEM_PARAMETERS_DATA(2), ROW_SYSTEM_DATA(3), ROW_LIBRARY_DATA(4);
+			ROW_ADMINISTRATOR_DATA(0), ROW_MESSAGES_AND_NOTIFICATIONS_DICTIONARIES_DATA(1), ROW_SYSTEM_PARAMETERS_DATA(2), ROW_SYSTEM_DATA(3), ROW_LANGUAGE_DATA(4), ROW_LIBRARY_DATA(5);
 
 			private final Integer index;
 
@@ -139,7 +143,7 @@ public final class Constants {
 
 	public enum ClientTableColumn {
 		COL_PESEL_NUMBER(0), COL_DOCUMENT_NUMBER(1), COL_LOGIN(2), COL_E_MAIL(3), COL_NAME(4), COL_SURNAME(5),
-		COL_ADDRESS(6), COL_CITY(7), COL_SEX(8), COL_BIRTH_DATE(9), COL_REGISTERED(10);
+		COL_ADDRESS(6), COL_CITY(7), COL_SEX(8), COL_BIRTH_DATE(9), COL_REGISTERED(10), COL_BLOCKED(11);
 
 		private final Integer value;
 
@@ -367,11 +371,32 @@ public final class Constants {
 		ADDITION, MODIFICATION, CANCELED, LOAN, READING_ROOM
 	}
 
+	public enum LogInFailureCause {
+		NOT_REGISTERED, NOT_HIRED, BAD_PASSWORD, NO_USER, BLOCKED, USER_ACCOUNT_NOT_EXISTS, UNIDENTIFIED
+	}
+
+	@AllArgsConstructor
+	@Getter
+	public enum BlockReason {
+		WRONG_PASSWORD("Wrong password");
+
+		private final String value;
+
+		public static BlockReason getByNumber(String blockReason) {
+			return Stream.of(BlockReason.values())
+					.filter(item -> item.getValue().equals(blockReason)).findFirst().get();
+		}
+	}
+
+	public static final String LANGUAGE_RESOURCE_BUNDLE = "messages";
+	public static final String APPLICATION_PROPERTIES = "application.properties";
+
 	public static final int MAIN_SPLASH_SCREEN_DURATION = 1000;
 	public static final String MAIN_SPLASH_SCREEN_IMAGE = "source/resources/images/splashScreen.jpg";
 
 	public static final String APPLICATION_NAME = "e-library";
-	public static String APPLICATION_LANGUAGE = "pl";
+	public static final String APPLICATION_BUILD_STATUS_SUCCEEDED = "succeeded";
+	public static String APPLICATION_LANGUAGE = "en";
 	public static final String APPLICATION_LANGUAGE_PL = "pl";
 	public static final String APPLICATION_LANGUAGE_EN = "en";
 	public static final String APPLICATION_CSV_EXTENSION = ".csv";
@@ -381,12 +406,14 @@ public final class Constants {
 	public static final char APPLICATION_CSV_SEPARATOR = ',';
 	public static final Color APPLICATION_DEFAULT_COLOR = new Color(237, 245, 248);
 	public static final Font APPLICATION_DEFAULT_FONT = UIManager.getDefaults().getFont("TabbedPane.font");
+	public static final Integer APPLICATION_DEFAULT_FONT_BIG_SIZE_DIFF = 6;
 	public static final int APPLICATION_NETWORK_SERVICE_LISTENER_DURATION = 2;
 	public static final Object APPLICATION_COMBO_BOX_BLANK_OBJECT = null;
 	public static final SimpleDateFormat APPLICATION_TIME_FORMAT = new SimpleDateFormat("HH:mm");
 	public static final SimpleDateFormat APPLICATION_DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
 	public static final SimpleDateFormat APPLICATION_DATE_TIME_FORMAT = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
 	public static final Integer APPLICATION_MAX_PROLONGNATION = 5;
+	public static final Long APPLICATION_PREDEFINED_COMBO_BOX_PACKAGE_SIZE = 20000L;
 	public static Pair<Integer, Double> APPLICATION_PROLONGATION_PERIOD = new Pair<>(Calendar.MONTH, 1.0);
 	public static final String APPLICATION_CURRENCY = "PLN";
 	public static final String APPLICATION_TEMPLATE_EXTENSION = ".html";
@@ -401,6 +428,9 @@ public final class Constants {
 	public static final String APPLICATION_GENERATED_PASSWORD_LENGTH = "APPLICATION_GENERATED_PASSWORD_LENGTH";
 	public static final String APPLICATION_MIN_PASSWORD_LENGTH = "APPLICATION_MIN_PASSWORD_LENGTH";
 	public static final String APPLICATION_MAX_PASSWORD_LENGTH = "APPLICATION_MAX_PASSWORD_LENGTH";
+	public static final String APPLICATION_COMBO_BOX_DATA_PACKAGE_SIZE = "APPLICATION_COMBO_BOX_DATA_PACKAGE_SIZE";
+	public static final String APPLICATION_NUMBER_OF_ATTEMPTS_LIMIT = "APPLICATION_NUMBER_OF_ATTEMPTS_LIMIT";
+	public static final String APPLICATION_BLOCK_ACCOUNT_FUNCTIONALITY = "APPLICATION_BLOCK_ACCOUNT_FUNCTIONALITY";
 
 	public static final Dimension START_FORM_MINIMUM_SIZE = new Dimension(300, 200);
 	public static final Dimension EMAIL_FORM_MINIMUM_SIZE = new Dimension(800, 700);
@@ -430,10 +460,12 @@ public final class Constants {
 	public static final double SPINNER_MAXIMUM_VALUE_PENALTY = 100;
 	public static final Integer SPINNER_MINIMUM_VALUE_RESERVATION_LIMIT = 0;
 	public static final Integer SPINNER_MAXIMUM_VALUE_RESERVATION_LIMIT = 100;
-	public static final Integer SPINNER_MINIMUM_PASSWORD_LENGTH = 1;
-	public static final Integer SPINNER_MAXIMUM_PASSWORD_LENGTH = 30;
-
-	public static final String LANGUAGE_RESOURCE_BUNDLE = "messages";
+	public static final Integer SPINNER_MINIMUM_VALUE_PASSWORD_LENGTH = 1;
+	public static final Integer SPINNER_MAXIMUM_VALUE_PASSWORD_LENGTH = 30;
+	public static final Integer SPINNER_MINIMUM_VALUE_COMBO_BOX_DATA_PACKAGE_SIZE = 1;
+	public static final Integer SPINNER_MAXIMUM_VALUE_COMBO_BOX_DATA_PACKAGE_SIZE = 300000;
+	public static final Integer SPINNER_MINIMUM_VALUE_APPLICATION_NUMBER_OF_ATTEMPTS_LIMIT = 1;
+	public static final Integer SPINNER_MAXIMUM_VALUE_APPLICATION_NUMBER_OF_ATTEMPTS_LIMIT = 20;
 
 	public static final Character DATA_BASE_MALE_SIGN = 'M';
 	public static final Character DATA_BASE_FEMALE_SIGN = 'F';

@@ -36,7 +36,7 @@ public class AuthorizationRepository {
 	}
 
 	public boolean authenticate(String login, String password) {
-		return manager.createQuery("select u from UserData u where login = :login and password = :password")
+		return manager.createQuery("select u from UserAccount u where login = :login and password = :password")
 				.setParameter("login", login).setParameter("password", password).getResultList().size() != 0;
 	}
 }

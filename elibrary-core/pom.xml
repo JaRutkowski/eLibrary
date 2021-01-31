@@ -6,7 +6,7 @@
 	<parent>
 		<artifactId>elibrary-modules</artifactId>
 		<groupId>com.javafee.elibrary</groupId>
-		<version>1.0-SNAPSHOT</version>
+		<version>4.0-SNAPSHOT</version>
 	</parent>
 
 	<groupId>com.javafee.elibrary</groupId>
@@ -213,6 +213,12 @@
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
 			<version>${org.json.version}</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${com.fasterxml.jackson.core.version}</version>
 		</dependency>
 	</dependencies>
 </project>

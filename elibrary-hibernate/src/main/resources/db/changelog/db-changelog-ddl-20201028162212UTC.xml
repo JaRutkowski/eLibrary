@@ -1,0 +1,19 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet  author="Jakub.Rutkowski"  id="0000000000">
+        <comment>Create sequence for the com_user_account table</comment>
+        <sql  dbms="postgresql"
+              endDelimiter="\nGO"
+              splitStatements="true"
+              stripComments="true">
+                -- DROP SEQUENCE public.seq_com_user_account;
+
+                CREATE SEQUENCE public.seq_com_user_account
+                    INCREMENT BY 1
+                    MINVALUE 1
+                    MAXVALUE 9223372036854775807
+                    CACHE 1
+                    NO CYCLE;
+        </sql>
+    </changeSet>
+</databaseChangeLog>

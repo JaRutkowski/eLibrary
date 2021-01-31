@@ -5,7 +5,6 @@ import java.awt.*;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
@@ -16,9 +15,10 @@ import com.javafee.elibrary.core.common.BasePanel;
 import com.javafee.elibrary.core.common.Constants;
 import com.javafee.elibrary.core.common.SystemProperties;
 import com.javafee.elibrary.core.common.Utils;
+import com.javafee.elibrary.core.unicomponent.action.CitiesJComboBoxAction;
 import com.javafee.elibrary.core.unicomponent.border.CustomTitledBorder;
 import com.javafee.elibrary.core.unicomponent.jbutton.CustomJButton;
-import com.javafee.elibrary.core.unicomponent.jcombobox.CustomJComboBox;
+import com.javafee.elibrary.core.unicomponent.jcombobox.citiescombobox.CitiesJComboBox;
 import com.javafee.elibrary.core.unicomponent.jdatechooser.CustomJDateChooser;
 import com.javafee.elibrary.core.unicomponent.jlabel.CustomJLabel;
 import com.javafee.elibrary.core.unicomponent.jpasswordfield.CustomJPasswordField;
@@ -51,7 +51,7 @@ public class RegistrationPanel extends BasePanel {
 	@Getter
 	private JButton btnRegisterNow;
 	@Getter
-	private JComboBox<City> comboBoxCity;
+	private CitiesJComboBox<City> comboBoxCity;
 	@Getter
 	private ButtonGroup groupRadioButtonSex;
 	@Getter
@@ -182,7 +182,8 @@ public class RegistrationPanel extends BasePanel {
 		gbc_lblCity.gridy = 5;
 		add(lblCity, gbc_lblCity);
 
-		comboBoxCity = new CustomJComboBox<City>();
+		comboBoxCity = new CitiesJComboBox();
+		comboBoxCity.setAction(new CitiesJComboBoxAction(comboBoxCity));
 		GridBagConstraints gbc_comboBoxCity = new GridBagConstraints();
 		gbc_comboBoxCity.gridwidth = 2;
 		gbc_comboBoxCity.insets = new Insets(0, 0, 5, 0);

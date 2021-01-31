@@ -126,6 +126,14 @@ public class Actions implements IActionForm {
 						settingsForm.getSettingsPanel().reloadContentPanel(settingsForm, settingsForm.getSettingsPanel().getSystemProcessesPanel());
 						SystemProcessesPanelEvent.getInstance(settingsForm);
 						break;
+					case SYSTEM_MONITOR_PANEL:
+						settingsForm.getSettingsPanel().reloadContentPanel(settingsForm, settingsForm.getSettingsPanel().getSystemMonitorPanel());
+						SystemMonitorPanelEvent.getInstance(settingsForm);
+						break;
+					case SYSTEM_INSTALLATION_PANEL:
+						settingsForm.getSettingsPanel().reloadContentPanel(settingsForm, settingsForm.getSettingsPanel().getSystemInstallationPanel());
+						SystemInstallationPanelEvent.getInstance(settingsForm);
+						break;
 					default:
 						break;
 				}
@@ -150,5 +158,7 @@ public class Actions implements IActionForm {
 		SystemParametersPanelEvent.systemParametersPanelEvent = null;
 		SystemDataFeedingPanelEvent.systemDataFeedingPanelEvent = null;
 		SystemProcessesPanelEvent.systemProcessesPanelEvent = null;
+		SystemMonitorPanelEvent.systemMonitorPanelEvent = null;
+		SystemInstallationPanelEvent.systemInstallationPanelEvent = null;
 	}
 }

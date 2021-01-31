@@ -1,0 +1,35 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet  author="Jakub.Rutkowski"  id="0000000002">
+        <comment>Add user accounts for each users</comment>
+        <sql  dbms="postgresql"
+              endDelimiter="\nGO"
+              splitStatements="true"
+              stripComments="true">
+                INSERT INTO public.com_user_account (id_user_account, "blocked", number_of_failed_password_attempts)
+                VALUES(1, false, 0),
+                (2, false, 0),
+                (3, false, 0),
+                (4, false, 0),
+                (5, false, 0),
+                (6, false, 0),
+                (7, false, 0),
+                (8, false, 0),
+                (9, false, 0),
+                (10, false, 0),
+                (11, false, 0);
+
+                UPDATE public.com_user_data SET id_user_account= 1 WHERE id_user_data = 1;
+                UPDATE public.com_user_data SET id_user_account= 2 WHERE id_user_data = 2;
+                UPDATE public.com_user_data SET id_user_account= 3 WHERE id_user_data = 3;
+                UPDATE public.com_user_data SET id_user_account= 4 WHERE id_user_data = 4;
+                UPDATE public.com_user_data SET id_user_account= 5 WHERE id_user_data = 5;
+                UPDATE public.com_user_data SET id_user_account= 6 WHERE id_user_data = 6;
+                UPDATE public.com_user_data SET id_user_account= 7 WHERE id_user_data = 7;
+                UPDATE public.com_user_data SET id_user_account= 8 WHERE id_user_data = 8;
+                UPDATE public.com_user_data SET id_user_account= 9 WHERE id_user_data = 9;
+                UPDATE public.com_user_data SET id_user_account= 10 WHERE id_user_data = 10;
+                UPDATE public.com_user_data SET id_user_account= 11 WHERE id_user_data = 11;
+        </sql>
+    </changeSet>
+</databaseChangeLog>

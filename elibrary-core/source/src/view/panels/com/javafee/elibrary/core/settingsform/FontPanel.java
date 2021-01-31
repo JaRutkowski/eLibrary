@@ -31,6 +31,7 @@ public class FontPanel extends BasePanel {
 
 		JLabel lblChooseAppFont = new CustomJLabel(SystemProperties.getInstance().getResourceBundle().getString("fontPanel.lblChooseAppFont"));
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
+		gbc_lblNewLabel.anchor = GridBagConstraints.WEST;
 		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 0);
 		gbc_lblNewLabel.gridx = 0;
 		gbc_lblNewLabel.gridy = 0;

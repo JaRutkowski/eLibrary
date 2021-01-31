@@ -10,6 +10,7 @@ import com.javafee.elibrary.core.model.ClientTableModel;
 import com.javafee.elibrary.core.unicomponent.action.BtnExportAction;
 import com.javafee.elibrary.core.unicomponent.action.BtnImportAction;
 import com.javafee.elibrary.core.unicomponent.jtable.imortexportable.ImportExportableJTable;
+import com.javafee.elibrary.core.uniform.AdmBlockPanel;
 import com.javafee.elibrary.core.uniform.AdmIsRegisteredPanel;
 import com.javafee.elibrary.core.uniform.CockpitEditionPanel;
 import com.javafee.elibrary.core.uniform.MessageAndAlertPanel;
@@ -25,6 +26,8 @@ public class ClientTablePanel extends BasePanel {
 	private CockpitEditionPanel cockpitEditionPanel;
 	@Getter
 	private AdmIsRegisteredPanel admIsRegisteredPanel;
+	@Getter
+	private AdmBlockPanel admBlockPanel;
 	@Getter
 	private MessageAndAlertPanel messageAndAlertPanel;
 
@@ -56,12 +59,21 @@ public class ClientTablePanel extends BasePanel {
 		admIsRegisteredPanel.setEnabled(false);
 		admIsRegisteredPanel.setVisible(false);
 		GridBagConstraints gbc_admIsRegisteredPanel = new GridBagConstraints();
-		gbc_admIsRegisteredPanel.gridwidth = 2;
-		gbc_admIsRegisteredPanel.insets = new Insets(0, 0, 5, 0);
+		gbc_admIsRegisteredPanel.insets = new Insets(0, 0, 5, 5);
 		gbc_admIsRegisteredPanel.fill = GridBagConstraints.BOTH;
 		gbc_admIsRegisteredPanel.gridx = 0;
 		gbc_admIsRegisteredPanel.gridy = 1;
 		add(admIsRegisteredPanel, gbc_admIsRegisteredPanel);
+
+		admBlockPanel = new AdmBlockPanel();
+		admBlockPanel.setEnabled(false);
+		admBlockPanel.setVisible(false);
+		GridBagConstraints gbc_admBlockPanel = new GridBagConstraints();
+		gbc_admBlockPanel.insets = new Insets(0, 0, 5, 0);
+		gbc_admBlockPanel.fill = GridBagConstraints.BOTH;
+		gbc_admBlockPanel.gridx = 1;
+		gbc_admBlockPanel.gridy = 1;
+		add(admBlockPanel, gbc_admBlockPanel);
 
 		cockpitEditionPanel = new CockpitEditionPanel();
 		GridBagConstraints gbc_alertAndMessagePanel = new GridBagConstraints();
@@ -72,11 +84,11 @@ public class ClientTablePanel extends BasePanel {
 		add(cockpitEditionPanel, gbc_alertAndMessagePanel);
 
 		messageAndAlertPanel = new MessageAndAlertPanel();
-		GridBagConstraints gbc_panel = new GridBagConstraints();
-		gbc_panel.fill = GridBagConstraints.BOTH;
-		gbc_panel.gridx = 1;
-		gbc_panel.gridy = 2;
-		add(messageAndAlertPanel, gbc_panel);
+		GridBagConstraints gbc_messageAndAlertPanel = new GridBagConstraints();
+		gbc_messageAndAlertPanel.fill = GridBagConstraints.BOTH;
+		gbc_messageAndAlertPanel.gridx = 1;
+		gbc_messageAndAlertPanel.gridy = 2;
+		add(messageAndAlertPanel, gbc_messageAndAlertPanel);
 
 	}
 }

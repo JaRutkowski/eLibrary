@@ -5,6 +5,7 @@ import java.awt.event.WindowEvent;
 import java.text.MessageFormat;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.Optional;
 
 import javax.swing.JOptionPane;
 
@@ -70,7 +71,8 @@ public class WorkerAddModEvent implements IEvent {
 		workerShallowClone.setName(workerAddModFrame.getWorkerDataPanel().getTextFieldName().getText());
 		workerShallowClone.setSurname(workerAddModFrame.getWorkerDataPanel().getTextFieldSurname().getText());
 		workerShallowClone.setAddress(workerAddModFrame.getWorkerDataPanel().getTextFieldAddress().getText());
-		workerShallowClone.setCity((City) workerAddModFrame.getWorkerDataPanel().getComboBoxCity().getSelectedItem());
+		workerShallowClone.setCity(Optional.ofNullable(workerAddModFrame.getWorkerDataPanel().getComboBoxCity().getSelectedItem()).isPresent()
+				? ((City) workerAddModFrame.getWorkerDataPanel().getComboBoxCity().getSelectedItem()).getName() : null);
 		if (workerAddModFrame.getWorkerDataPanel().getRadioButtonMale().isSelected()
 				|| workerAddModFrame.getWorkerDataPanel().getRadioButtonFemale().isSelected())
 			workerShallowClone.setSex(workerAddModFrame.getWorkerDataPanel().getRadioButtonMale().isSelected()
@@ -79,7 +81,7 @@ public class WorkerAddModEvent implements IEvent {
 		workerShallowClone
 				.setBirthDate(workerAddModFrame.getWorkerDataPanel().getDateChooserBirthDate().getDate());
 		workerShallowClone.setEMail(workerAddModFrame.getWorkerDataPanel().getTextFieldEMail().getText());
-		workerShallowClone.setLogin(workerAddModFrame.getWorkerDataPanel().getTextFieldLogin().getText());
+		workerShallowClone.getUserAccount().setLogin(workerAddModFrame.getWorkerDataPanel().getTextFieldLogin().getText());
 
 		if (!"".equals(workerShallowClone.getPeselNumber())
 				&& workerShallowClone.getPeselNumber().length() != Constants.DATA_BASE_PESEL_NUMBER_LENGHT) {
@@ -126,7 +128,6 @@ public class WorkerAddModEvent implements IEvent {
 				workerAddModFrame.getWorkerDataPanel().getPasswordField().setVisible(false);
 				reloadRegistrationPanel();
 			}
-			reloadComboBoxCity();
 			initializeEventHandlers();
 			workerAddModFrame.setVisible(true);
 		} else {
@@ -135,12 +136,7 @@ public class WorkerAddModEvent implements IEvent {
 	}
 
 	private void reloadRegistrationPanel() {
-		reloadComboBoxCity();
 		fillRegistrationPanel();
-	}
-
-	private void reloadComboBoxCity() {
-		Common.fillComboBoxCity(workerAddModFrame.getWorkerDataPanel().getComboBoxCity());
 	}
 
 	private void fillRegistrationPanel() {
@@ -149,7 +145,7 @@ public class WorkerAddModEvent implements IEvent {
 
 	@SuppressWarnings("unchecked")
 	private void registerNow() {
-		if (Validator.validateWorkerPesel(workerAddModFrame.getWorkerDataPanel().getTextFieldPeselNumber().getText())) {
+		if (Validator.validateUserDataPesel(workerAddModFrame.getWorkerDataPanel().getTextFieldPeselNumber().getText())) {
 			try {
 				Character sex = workerAddModFrame.getWorkerDataPanel().getGroupRadioButtonSex().getSelection() != null
 						? workerAddModFrame.getWorkerDataPanel().getGroupRadioButtonSex().getSelection()
@@ -178,7 +174,8 @@ public class WorkerAddModEvent implements IEvent {
 								workerAddModFrame.getWorkerDataPanel().getTextFieldName().getText(),
 								workerAddModFrame.getWorkerDataPanel().getTextFieldSurname().getText(),
 								workerAddModFrame.getWorkerDataPanel().getTextFieldAddress().getText(),
-								(City) workerAddModFrame.getWorkerDataPanel().getComboBoxCity().getSelectedItem(),
+								Optional.ofNullable(workerAddModFrame.getWorkerDataPanel().getComboBoxCity().getSelectedItem()).isPresent()
+										? workerAddModFrame.getWorkerDataPanel().getComboBoxCity().getSelectedItem().toString() : null,
 								sex, birthDate,
 								workerAddModFrame.getWorkerDataPanel().getTextFieldLogin().getText(),
 								workerAddModFrame.getWorkerDataPanel().getTextFieldEMail().getText(),

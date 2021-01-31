@@ -59,20 +59,21 @@ public class ThemePanelEvent implements IActionForm {
 				"") == JOptionPane.YES_OPTION) {
 			StringBuilder applicationColor = new StringBuilder().append(color.getRed()).append(",")
 					.append(color.getGreen()).append(",").append(color.getBlue());
-			boolean systemPropertiesAlreadyExists = LogInEvent.getUserData().getSystemProperties() != null;
+			boolean systemPropertiesAlreadyExists = LogInEvent.getUserData().getUserAccount().getSystemProperties() != null;
 
 			com.javafee.elibrary.hibernate.dto.common.SystemProperties systemProperties = Common
-					.checkAndGetSystemProperties(LogInEvent.getUserData() != null ? LogInEvent.getUserData().getIdUserData()
+					//FIXME: null check
+					.checkAndGetSystemProperties(LogInEvent.getUserData() != null ? LogInEvent.getUserData().getUserAccount().getIdUserAccount()
 							: Constants.DATA_BASE_ADMIN_ID);
 
 			HibernateUtil.beginTransaction();
 			if (!systemPropertiesAlreadyExists) {
 				systemProperties.setColor(applicationColor.toString());
-				LogInEvent.getUserData().setSystemProperties(systemProperties);
+				LogInEvent.getUserData().getUserAccount().setSystemProperties(systemProperties);
 				HibernateUtil.getSession().update(UserData.class.getName(), LogInEvent.getUserData());
 			} else {
-				LogInEvent.getUserData().getSystemProperties().setColor(applicationColor.toString());
-				HibernateUtil.getSession().update(SystemProperties.class.getName(), LogInEvent.getUserData().getSystemProperties());
+				LogInEvent.getUserData().getUserAccount().getSystemProperties().setColor(applicationColor.toString());
+				HibernateUtil.getSession().update(SystemProperties.class.getName(), LogInEvent.getUserData().getUserAccount().getSystemProperties());
 			}
 			HibernateUtil.commitTransaction();
 			delegateLogOutActionExecution();

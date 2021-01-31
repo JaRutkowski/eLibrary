@@ -12,7 +12,7 @@
 
 	<groupId>com.javafee.elibrary</groupId>
 	<artifactId>elibrary-hibernate</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<version>4.0-SNAPSHOT</version>
 
 	<properties>
 		<maven.compiler.source>13</maven.compiler.source>
@@ -20,7 +20,7 @@
 		<org.liquibase.version>3.8.0</org.liquibase.version>
 		<org.apache.maven.plugins>3.1.0</org.apache.maven.plugins>
 		<com.heroku.sdk>0.5.6</com.heroku.sdk>
-		<postgresql.driver.version>42.2.12</postgresql.driver.version>
+		<postgresql.version>42.2.12</postgresql.version>
 		<org.hibernate.version>5.4.14.Final</org.hibernate.version>
 		<org.reflections.version>0.9.10</org.reflections.version>
 		<sonar.maven.plugin.version>3.4.0.905</sonar.maven.plugin.version>
@@ -113,7 +113,7 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
+			<version>4.13.1</version>
 			<scope>test</scope>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
@@ -131,7 +131,7 @@
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-			<version>${postgresql.driver.version}</version>
+			<version>${postgresql.version}</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok-maven -->
 		<dependency>

@@ -56,11 +56,6 @@ public class Actions implements IRegistrationForm {
 
 	@Override
 	public void reloadRegistrationPanel() {
-		reloadComboBoxCity();
-	}
-
-	private void reloadComboBoxCity() {
-		com.javafee.elibrary.core.common.Common.fillComboBoxCity(startForm.getRegistrationPanel().getComboBoxCity());
 	}
 
 	private void onClickBtnForgotPassword() {
@@ -70,7 +65,7 @@ public class Actions implements IRegistrationForm {
 					"") == JOptionPane.YES_OPTION) {
 				UserData userData = (UserData) Params.getInstance().get("USER_DATA");
 				String generatedPassword = com.javafee.elibrary.core.common.Common.generatePassword();
-				userData.setPassword(com.javafee.elibrary.core.common.Common.createMd5(generatedPassword));
+				userData.getUserAccount().setPassword(com.javafee.elibrary.core.common.Common.createMd5(generatedPassword));
 
 				HibernateUtil.beginTransaction();
 				HibernateUtil.getSession().update(UserData.class.getName(), userData);
@@ -116,6 +111,11 @@ public class Actions implements IRegistrationForm {
 					errorBuilder.append(
 							SystemProperties.getInstance().getResourceBundle().getString("startForm.logInError9"));
 					Params.getInstance().remove("NOT_HIRED");
+				}
+				if (Params.getInstance().get("BLOCKED") != null) {
+					errorBuilder.append(
+							SystemProperties.getInstance().getResourceBundle().getString("startForm.logInError10"));
+					Params.getInstance().remove("BLOCKED");
 				}
 
 				LogGuiException.logError(
@@ -164,11 +164,12 @@ public class Actions implements IRegistrationForm {
 							startForm.getRegistrationPanel().getTextFieldName().getText(),
 							startForm.getRegistrationPanel().getTextFieldSurname().getText(),
 							startForm.getRegistrationPanel().getTextFieldAddress().getText(),
-							(City) startForm.getRegistrationPanel().getComboBoxCity().getSelectedItem(), sex, birthDate,
+							Optional.ofNullable(startForm.getRegistrationPanel().getComboBoxCity().getSelectedItem()).isPresent()
+									? ((City) startForm.getRegistrationPanel().getComboBoxCity().getSelectedItem()).getName() : null, sex, birthDate,
 							startForm.getRegistrationPanel().getTextFieldLogin().getText(),
 							startForm.getRegistrationPanel().getTextFieldEMail().getText(),
 							String.valueOf(startForm.getRegistrationPanel().getPasswordField().getPassword()),
-							Role.WORKER_LIBRARIAN);
+							Role.CLIENT);
 				} else {
 					Params.getInstance().add("INCORRECT_BIRTH_DATE", RegistrationFailureCause.INCORRECT_BIRTH_DATE);
 					throw new RefusedRegistrationException("Cannot register to the system");
@@ -324,10 +325,14 @@ public class Actions implements IRegistrationForm {
 							.getString("startForm.validateForgotPassword1Title"),
 					JOptionPane.ERROR_MESSAGE);
 		else {
-			Client client = (Client) HibernateUtil.getSession().getNamedQuery("Client.checkIfClientLoginExist")
-					.setParameter("login", startForm.getLogInPanel().getTextFieldLogin().getText()).uniqueResult();
-			Worker worker = (Worker) HibernateUtil.getSession().getNamedQuery("Worker.checkIfWorkerLoginExist")
-					.setParameter("login", startForm.getLogInPanel().getTextFieldLogin().getText()).uniqueResult();
+			Client client = HibernateUtil.getSession().getNamedQuery("Client.checkIfUserDataLoginExist")
+					.setParameter("login", startForm.getLogInPanel().getTextFieldLogin().getText()).uniqueResult() != null
+					? (Client) ((Object[]) HibernateUtil.getSession().getNamedQuery("Client.checkIfUserDataLoginExist")
+					.setParameter("login", startForm.getLogInPanel().getTextFieldLogin().getText()).uniqueResult())[0] : null;
+			Worker worker = HibernateUtil.getSession().getNamedQuery("Worker.checkIfUserDataLoginExist")
+					.setParameter("login", startForm.getLogInPanel().getTextFieldLogin().getText()).uniqueResult() != null
+					? (Worker) ((Object[]) HibernateUtil.getSession().getNamedQuery("Worker.checkIfUserDataLoginExist")
+					.setParameter("login", startForm.getLogInPanel().getTextFieldLogin().getText()).uniqueResult())[0] : null;
 
 			if (client == null && worker == null)
 				JOptionPane.showMessageDialog(startForm.getFrame(),

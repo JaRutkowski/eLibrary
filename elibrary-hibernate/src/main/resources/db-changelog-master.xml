@@ -11,8 +11,10 @@
 	<property name="clobType" value="clob" dbms="postgresql"/>
 	<property name="uuidType" value="uuid" dbms="postgresql"/>
 
+	<!-- Pre-processing -->
 	<!-- Increment id of changeSet -->
 	<include file="src/main/resources/db/changelog/truncate-all-cascade-changelog.xml" relativeToChangelogFile="false"/>
+
 	<!-- Version data -->
 	<!-- generated using mvn liquibase:generateChangeLog -Dliquibase.diffTypes=data -->
 	<!-- liquibase plugin part - db configuration - should be commented in pom.xml -->
@@ -22,7 +24,29 @@
 	<!--<include file="src/main/resources/db/changelog/db-changelog-20200422210318UTC.xml" relativeToChangelogFile="false"/>-->
 	<!--<include file="src/main/resources/db/changelog/db-changelog-20200501192149UTC.xml" relativeToChangelogFile="false"/>-->
 	<!--<include file="src/main/resources/db/changelog/db-changelog-20200514202928UTC.xml" relativeToChangelogFile="false"/>-->
-	<include file="src/main/resources/db/changelog/db-changelog-20200607205831UTC.xml" relativeToChangelogFile="false"/>
+	<!--<include file="src/main/resources/db/changelog/db-changelog-20200607205831UTC.xml" relativeToChangelogFile="false"/>-->
+	<!--<include file="src/main/resources/db/changelog/db-changelog-20200629152316UTC.xml" relativeToChangelogFile="false"/>-->
+	<!--<include file="src/main/resources/db/changelog/db-changelog-20200629152317UTC.xml" relativeToChangelogFile="false"/>-->
+	<!--<include file="src/main/resources/db/changelog/db-changelog-20200629152318UTC.xml" relativeToChangelogFile="false"/>-->
+	<!--<include file="src/main/resources/db/changelog/db-changelog-20200703213344UTC.xml" relativeToChangelogFile="false"/>-->
+	<!--<include file="src/main/resources/db/changelog/db-changelog-ddl-20200703213345UTC.xml" relativeToChangelogFile="false"/>-->
+	<!--<include file="src/main/resources/db/changelog/db-changelog-20200722123232UTC.xml" relativeToChangelogFile="false"/>-->
+	<!--<include file="src/main/resources/db/changelog/db-changelog-ddl-20200803134708UTC.xml" relativeToChangelogFile="false"/>-->
+	<!--<include file="src/main/resources/db/changelog/db-changelog-20200925200743UTC.xml" relativeToChangelogFile="false"/>-->
+	<!--<include file="src/main/resources/db/changelog/db-changelog-ddl-20201018191045UTC.xml" relativeToChangelogFile="false"/>-->
+	<!--<include file="src/main/resources/db/changelog/db-changelog-20201018191345UTC.xml" relativeToChangelogFile="false"/>-->
+	<!--<include file="src/main/resources/db/changelog/db-changelog-ddl-20201028162212UTC.xml" relativeToChangelogFile="false"/>-->
+	<!--<include file="src/main/resources/db/changelog/db-changelog-ddl-20201118172712UTC.xml" relativeToChangelogFile="false"/>-->
+	<!--<include file="src/main/resources/db/changelog/db-changelog-20201123164445UTC.xml" relativeToChangelogFile="false"/>-->
+	<!--<include file="src/main/resources/db/changelog/db-changelog-20201123161902UTC.xml" relativeToChangelogFile="false"/>-->
+	<!--<include file="src/main/resources/db/changelog/db-changelog-20201125160909UTC.xml" relativeToChangelogFile="false"/>-->
+	<!--<include file="src/main/resources/db/changelog/db-changelog-20201220195517UTC.xml" relativeToChangelogFile="false"/>-->
+	<!--<include file="src/main/resources/db/changelog/db-changelog-20201223115209UTC.xml" relativeToChangelogFile="false"/>-->
+	<include file="src/main/resources/db/changelog/db-changelog-20210131103122UTC.xml" relativeToChangelogFile="false"/>
+
+	<!-- Post-processing -->
+	<!-- Increment id of changeSet -->
+	<include file="src/main/resources/db/changelog/init-sequences-changelog.xml" relativeToChangelogFile="false"/>
 
 	<!-- Notes -->
 	<!-- it is possible to run DML on local: -->

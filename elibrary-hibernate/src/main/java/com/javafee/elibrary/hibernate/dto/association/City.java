@@ -10,10 +10,14 @@ import javax.persistence.Table;
 
 import lombok.Data;
 
+/**
+ * @deprecated As of release v5.0, domain object will be replaced by simple DTO
+ */
 @Data
 @Entity
 @Table(name = "com_city")
 @SequenceGenerator(name = "seq_com_city", sequenceName = "seq_com_city", allocationSize = 1)
+@Deprecated
 public class City {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_com_city")

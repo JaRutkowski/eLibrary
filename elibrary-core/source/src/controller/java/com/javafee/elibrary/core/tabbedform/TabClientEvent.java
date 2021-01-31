@@ -54,6 +54,8 @@ public final class TabClientEvent implements IActionForm {
 		tabbedForm.getPanelClient().getCockpitEditionPanel().getBtnDelete().addActionListener(e -> onClickBtnDelete());
 		tabbedForm.getPanelClient().getAdmIsRegisteredPanel().getDecisionPanel().getBtnAccept()
 				.addActionListener(e -> onClickBtnAccept());
+		tabbedForm.getPanelClient().getAdmBlockPanel().getBtnBlock().addActionListener(e -> onClickBtnBlock(Boolean.TRUE));
+		tabbedForm.getPanelClient().getAdmBlockPanel().getBtnUnblock().addActionListener(e -> onClickBtnBlock(Boolean.FALSE));
 		tabbedForm.getPanelClient().getClientTable().getModel().addTableModelListener(e -> reloadClientTable());
 		tabbedForm.getPanelClient().getClientTable().getSelectionModel().addListSelectionListener(e -> {
 			if (!e.getValueIsAdjusting())
@@ -102,6 +104,26 @@ public final class TabClientEvent implements IActionForm {
 
 	private void reloadChckbxIsRegistered(boolean isRegistered) {
 		tabbedForm.getPanelClient().getAdmIsRegisteredPanel().getChckbxIsRegistered().setSelected(isRegistered);
+	}
+
+	private void reloadChckbxIsBlocked(boolean isBlocked) {
+		tabbedForm.getPanelClient().getAdmBlockPanel().getChckbxIsBlocked().setSelected(isBlocked);
+	}
+
+	private void reloadAdmBlockPanel(boolean isBlocked) {
+		reloadChckbxIsBlocked(isBlocked);
+		int selectedRowIndex = tabbedForm.getPanelClient().getClientTable()
+				.convertRowIndexToModel(tabbedForm.getPanelClient().getClientTable().getSelectedRow());
+		if (selectedRowIndex != -1 && isBlocked) {
+			Client selectedClient = ((ClientTableModel) tabbedForm.getPanelClient().getClientTable().getModel())
+					.getClient(selectedRowIndex);
+			tabbedForm.getPanelClient().getAdmBlockPanel().getDateChooserBlockDate().setDate(selectedClient.getUserAccount().getBlockDate());
+			tabbedForm.getPanelClient().getAdmBlockPanel().getTextFieldBlockReason().setText(selectedClient.getUserAccount().getBlockReason());
+		} else if (selectedRowIndex != -1 && !isBlocked) {
+			tabbedForm.getPanelClient().getAdmBlockPanel().getDateChooserBlockDate().setDate(null);
+			tabbedForm.getPanelClient().getAdmBlockPanel().getTextFieldBlockReason().setText(null);
+		}
+		setEnableAdmBlockPanelControls(isBlocked);
 	}
 
 	private void reloadClientTable() {
@@ -158,27 +180,17 @@ public final class TabClientEvent implements IActionForm {
 					if (Utils.displayConfirmDialog(
 							SystemProperties.getInstance().getResourceBundle().getString("confirmDialog.deleteMessage"),
 							"") == JOptionPane.YES_OPTION) {
-						if (!Validator.validateIfUserCorrespondenceExists(selectedClient.getIdUserData())) {
-							HibernateUtil.beginTransaction();
-							HibernateUtil.getSession().delete(selectedClient);
-							HibernateUtil.commitTransaction();
-							((ClientTableModel) tabbedForm.getPanelClient().getClientTable().getModel())
-									.remove(selectedClient);
-						} else {
+						if (!Validator.validateIfUserCorrespondenceExists(selectedClient.getIdUserData()))
+							this.performDelete(selectedClient);
+						else {
 							if (Utils.displayConfirmDialog(
 									SystemProperties.getInstance().getResourceBundle().getString("confirmDialog.clearClientCorrespondenceData"),
-									"") == JOptionPane.YES_OPTION) {
-								if (Common.clearMessagesRecipientData(selectedClient.getIdUserData()) > 0) {
-									HibernateUtil.beginTransaction();
-									HibernateUtil.getSession().delete(selectedClient);
-									HibernateUtil.commitTransaction();
-									((ClientTableModel) tabbedForm.getPanelClient().getClientTable().getModel())
-											.remove(selectedClient);
-									JOptionPane.showMessageDialog(tabbedForm.getFrame(),
-											SystemProperties.getInstance().getResourceBundle().getString("tabClientEvent.deleteClientSuccess"),
-											SystemProperties.getInstance().getResourceBundle().getString("tabClientEvent.deleteClientSuccessTitle"),
-											JOptionPane.INFORMATION_MESSAGE);
-								}
+									"") == JOptionPane.YES_OPTION && Common.clearMessagesRecipientData(selectedClient.getIdUserData()) > 0) {
+								performDelete(selectedClient);
+								JOptionPane.showMessageDialog(tabbedForm.getFrame(),
+										SystemProperties.getInstance().getResourceBundle().getString("tabClientEvent.deleteClientSuccess"),
+										SystemProperties.getInstance().getResourceBundle().getString("tabClientEvent.deleteClientSuccessTitle"),
+										JOptionPane.INFORMATION_MESSAGE);
 							}
 						}
 					}
@@ -201,7 +213,7 @@ public final class TabClientEvent implements IActionForm {
 					.getClient(selectedRowIndex);
 			Client clientShallowClone = (Client) selectedClient.clone();
 
-			clientShallowClone.setRegistered(
+			clientShallowClone.getUserAccount().setRegistered(
 					tabbedForm.getPanelClient().getAdmIsRegisteredPanel().getChckbxIsRegistered().isSelected());
 
 			HibernateUtil.beginTransaction();
@@ -219,32 +231,91 @@ public final class TabClientEvent implements IActionForm {
 					SystemProperties.getInstance().getResourceBundle().getString(
 							"tabClientEvent.updateClientSuccessTitle"),
 					JOptionPane.INFORMATION_MESSAGE);
-
-		} else {
+		} else
 			Utils.displayOptionPane(
 					SystemProperties.getInstance().getResourceBundle()
 							.getString("tabClientEvent.validateClientTableSelectionWarning1"),
 					SystemProperties.getInstance().getResourceBundle().getString(
 							"tabClientEvent.validateClientTableSelectionWarning1Title"),
 					JOptionPane.WARNING_MESSAGE);
-		}
+	}
+
+	private void onClickBtnBlock(boolean block) {
+		if (validateClientTableSelection(tabbedForm.getPanelClient().getClientTable().getSelectedRow())) {
+			int selectedRowIndex = tabbedForm.getPanelClient().getClientTable()
+					.convertRowIndexToModel(tabbedForm.getPanelClient().getClientTable().getSelectedRow());
+			Client selectedClient = ((ClientTableModel) tabbedForm.getPanelClient().getClientTable().getModel())
+					.getClient(selectedRowIndex);
+			if (block)
+				Common.blockUserAccount(selectedClient, Boolean.FALSE,
+						tabbedForm.getPanelClient().getAdmBlockPanel().getDateChooserBlockDate().getDate(),
+						tabbedForm.getPanelClient().getAdmBlockPanel().getTextFieldBlockReason().getText());
+			else
+				Common.unblockUserAccount(selectedClient);
+
+			Utils.displayOptionPane(
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("tabClientEvent.blockClientSuccess"),
+					SystemProperties.getInstance().getResourceBundle().getString(
+							"tabClientEvent.updateClientSuccessTitle"),
+					JOptionPane.INFORMATION_MESSAGE);
+
+			reloadAdmBlockPanel(selectedClient.getUserAccount().getBlocked());
+			reloadClientTable();
+		} else
+			LogGuiException.logWarning(
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("tabClientEvent.notSelectedClientWarningTitle"),
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("tabClientEvent.notSelectedClientWarning"));
 	}
 
 	private void onClientTableListSelectionChange() {
 		if (tabbedForm.getPanelClient().getClientTable().getSelectedRow() != -1
 				&& tabbedForm.getPanelClient().getClientTable()
-				.convertRowIndexToModel(tabbedForm.getPanelClient().getClientTable().getSelectedRow()) != -1)
+				.convertRowIndexToModel(tabbedForm.getPanelClient().getClientTable().getSelectedRow()) != -1) {
 			reloadChckbxIsRegistered(
 					(SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.registeredTrueVal"))
 							.equals(tabbedForm.getPanelClient().getClientTable().getModel().getValueAt(
 									tabbedForm.getPanelClient().getClientTable().convertRowIndexToModel(
 											tabbedForm.getPanelClient().getClientTable().getSelectedRow()),
 									Constants.ClientTableColumn.COL_REGISTERED.getValue())));
+			reloadAdmBlockPanel(
+					(SystemProperties.getInstance().getResourceBundle().getString("clientTableModel.registeredTrueVal"))
+							.equals(tabbedForm.getPanelClient().getClientTable().getModel().getValueAt(
+									tabbedForm.getPanelClient().getClientTable().convertRowIndexToModel(
+											tabbedForm.getPanelClient().getClientTable().getSelectedRow()),
+									Constants.ClientTableColumn.COL_BLOCKED.getValue())));
+		}
+	}
+
+	private void performDelete(Client selectedClient) {
+		HibernateUtil.beginTransaction();
+		// Without clearing the Session, there's still deleted object in it so that previously once the user deleted the Client,
+		// then the Client data was still appearing in the outbox/draft tables despite reloading it.
+		HibernateUtil.getSession().clear();
+		HibernateUtil.getSession().delete(selectedClient);
+		HibernateUtil.commitTransaction();
+		((ClientTableModel) tabbedForm.getPanelClient().getClientTable().getModel())
+				.remove(selectedClient);
+		Common.invokeEmailModuleEventsMethods();
 	}
 
 	private void switchPerspectiveToAdm(boolean isAdminOrAccountant) {
 		tabbedForm.getPanelClient().getAdmIsRegisteredPanel().setEnabled(isAdminOrAccountant);
 		tabbedForm.getPanelClient().getAdmIsRegisteredPanel().setVisible(isAdminOrAccountant);
+		tabbedForm.getPanelClient().getAdmBlockPanel().setEnabled(isAdminOrAccountant);
+		tabbedForm.getPanelClient().getAdmBlockPanel().setVisible(isAdminOrAccountant);
+	}
+
+	private void setEnableAdmBlockPanelControls(boolean isBlocked) {
+		tabbedForm.getPanelClient().getAdmBlockPanel().getChckbxIsBlocked().setEnabled(Boolean.FALSE);
+		tabbedForm.getPanelClient().getAdmBlockPanel().getLblBlockDate().setEnabled(!isBlocked);
+		tabbedForm.getPanelClient().getAdmBlockPanel().getDateChooserBlockDate().setEnabled(!isBlocked);
+		tabbedForm.getPanelClient().getAdmBlockPanel().getLblBlockReason().setEnabled(!isBlocked);
+		tabbedForm.getPanelClient().getAdmBlockPanel().getTextFieldBlockReason().setEnabled(!isBlocked);
+		tabbedForm.getPanelClient().getAdmBlockPanel().getBtnBlock().setEnabled(!isBlocked);
+		tabbedForm.getPanelClient().getAdmBlockPanel().getBtnUnblock().setEnabled(isBlocked);
 	}
 
 	public boolean validateClientTableSelection(int index) {

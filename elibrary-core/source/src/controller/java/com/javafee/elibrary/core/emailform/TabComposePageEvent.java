@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import javax.swing.DefaultComboBoxModel;
@@ -87,6 +90,7 @@ public class TabComposePageEvent implements IActionForm {
 	@Override
 	public void initializeForm() {
 		reloadComboBoxes();
+		addReloadComboBoxesMethodToParams();
 	}
 
 	private void onTabComposeOpen() {
@@ -113,35 +117,37 @@ public class TabComposePageEvent implements IActionForm {
 		emailForm.getPanelComposePage().getEditorPaneContent().setText(messageToPreview.getContent());
 
 		messageToPreview.getRecipient().forEach(recipient -> {
-			Client client = null;
-			if (recipient.getIsCC() != null && recipient.getIsCC()) {
-				emailForm.getPanelComposePage().getLblCC().setVisible(true);
-				emailForm.getPanelComposePage().getChckbxCC().setSelected(true);
-				emailForm.getPanelComposePage().getComboBoxCC().setVisible(true);
-				client = (Client) HibernateUtil.getSession().getNamedQuery("Client.checkIfClientLoginExist")
-						.setParameter("login", recipient.getUserData().getLogin()).uniqueResult();
-				emailForm.getPanelComposePage().getComboBoxCC().setSelectedItem(client);
-			} else if (recipient.getIsBCC() != null && recipient.getIsBCC()) {
-				emailForm.getPanelComposePage().getLblBCC().setVisible(true);
-				emailForm.getPanelComposePage().getChckbxBCC().setSelected(true);
-				emailForm.getPanelComposePage().getComboBoxBCC().setVisible(true);
-				client = (Client) HibernateUtil.getSession().getNamedQuery("Client.checkIfClientLoginExist")
-						.setParameter("login", recipient.getUserData().getLogin()).uniqueResult();
-				emailForm.getPanelComposePage().getComboBoxBCC().setSelectedItem(client);
-			} else {
-				client = (Client) HibernateUtil.getSession().getNamedQuery("Client.checkIfClientLoginExist")
-						.setParameter("login", recipient.getUserData().getLogin()).uniqueResult();
-				emailForm.getPanelComposePage().getComboBoxTo().setSelectedItem(client);
+			if (Optional.ofNullable(recipient.getUserData()).isPresent()) {
+				Client client;
+				if (recipient.getIsCC() != null && recipient.getIsCC()) {
+					emailForm.getPanelComposePage().getLblCC().setVisible(true);
+					emailForm.getPanelComposePage().getChckbxCC().setSelected(true);
+					emailForm.getPanelComposePage().getComboBoxCC().setVisible(true);
+					client = (Client) ((Object[]) HibernateUtil.getSession().getNamedQuery("Client.checkIfUserDataLoginExist")
+							.setParameter("login", recipient.getUserData().getUserAccount().getLogin()).uniqueResult())[0];
+					emailForm.getPanelComposePage().getComboBoxCC().setSelectedItem(client);
+				} else if (recipient.getIsBCC() != null && recipient.getIsBCC()) {
+					emailForm.getPanelComposePage().getLblBCC().setVisible(true);
+					emailForm.getPanelComposePage().getChckbxBCC().setSelected(true);
+					emailForm.getPanelComposePage().getComboBoxBCC().setVisible(true);
+					client = (Client) ((Object[]) HibernateUtil.getSession().getNamedQuery("Client.checkIfUserDataLoginExist")
+							.setParameter("login", recipient.getUserData().getUserAccount().getLogin()).uniqueResult())[0];
+					emailForm.getPanelComposePage().getComboBoxBCC().setSelectedItem(client);
+				} else {
+					client = (Client) ((Object[]) HibernateUtil.getSession().getNamedQuery("Client.checkIfUserDataLoginExist")
+							.setParameter("login", recipient.getUserData().getUserAccount().getLogin()).uniqueResult())[0];
+					emailForm.getPanelComposePage().getComboBoxTo().setSelectedItem(client);
+				}
 			}
 		});
 	}
 
 	private void reloadComboBoxes() {
-		DefaultComboBoxModel<Client> comboBoxToModel = new DefaultComboBoxModel<Client>();
-		DefaultComboBoxModel<Client> comboBoxCCModel = new DefaultComboBoxModel<Client>();
-		DefaultComboBoxModel<Client> comboBoxBCCModel = new DefaultComboBoxModel<Client>();
+		DefaultComboBoxModel<Client> comboBoxToModel = new DefaultComboBoxModel<>();
+		DefaultComboBoxModel<Client> comboBoxCCModel = new DefaultComboBoxModel<>();
+		DefaultComboBoxModel<Client> comboBoxBCCModel = new DefaultComboBoxModel<>();
 
-		HibernateDao<Client, Integer> client = new HibernateDao<Client, Integer>(Client.class);
+		HibernateDao<Client, Integer> client = new HibernateDao<>(Client.class);
 		List<Client> clientListToSort = client.findAll().stream(). //
 				filter(c -> c.getEMail() != null && !"".equals(c.getEMail())). //
 				collect(Collectors.toList());
@@ -217,6 +223,12 @@ public class TabComposePageEvent implements IActionForm {
 
 	private void onChangeChckbxBCC() {
 		setVisibleBCCControls(!emailForm.getPanelComposePage().getComboBoxBCC().isVisible());
+	}
+
+	private void addReloadComboBoxesMethodToParams() {
+		Map<String, Consumer> emailEventsMethods = com.javafee.elibrary.core.common.Common.getEmailModuleEventsMethodsMapParam();
+		emailEventsMethods.put(com.javafee.elibrary.core.common.Common.getMethodReference("reloadComboBoxes"), c -> this.reloadComboBoxes());
+		Params.getInstance().add("EMAIL_MODULE_EVENTS_METHODS", emailEventsMethods);
 	}
 
 	private void setVisibleControls() {
@@ -383,18 +395,18 @@ public class TabComposePageEvent implements IActionForm {
 	}
 
 	private List<SimpleEntry<javax.mail.Message.RecipientType, UserData>> getRecipientTo(javax.mail.Message.RecipientType recipientType) {
-		List<SimpleEntry<javax.mail.Message.RecipientType, UserData>> result = new ArrayList<SimpleEntry<javax.mail.Message.RecipientType, UserData>>();
+		List<SimpleEntry<javax.mail.Message.RecipientType, UserData>> result = new ArrayList<>();
 		if (javax.mail.Message.RecipientType.TO.equals(recipientType)) {
 			UserData selectedUser = (UserData) emailForm.getPanelComposePage().getComboBoxTo().getSelectedItem();
-			result.add(new SimpleEntry<javax.mail.Message.RecipientType, UserData>(javax.mail.Message.RecipientType.TO, selectedUser));
+			result.add(new SimpleEntry<>(javax.mail.Message.RecipientType.TO, selectedUser));
 		}
 		if (javax.mail.Message.RecipientType.CC.equals(recipientType)) {
 			UserData selectedUser = (UserData) emailForm.getPanelComposePage().getComboBoxCC().getSelectedItem();
-			result.add(new SimpleEntry<javax.mail.Message.RecipientType, UserData>(javax.mail.Message.RecipientType.CC, selectedUser));
+			result.add(new SimpleEntry<>(javax.mail.Message.RecipientType.CC, selectedUser));
 		}
 		if (javax.mail.Message.RecipientType.BCC.equals(recipientType)) {
 			UserData selectedUser = (UserData) emailForm.getPanelComposePage().getComboBoxBCC().getSelectedItem();
-			result.add(new SimpleEntry<javax.mail.Message.RecipientType, UserData>(javax.mail.Message.RecipientType.BCC, selectedUser));
+			result.add(new SimpleEntry<>(javax.mail.Message.RecipientType.BCC, selectedUser));
 		}
 		return result;
 	}

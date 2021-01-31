@@ -8,12 +8,15 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
+import com.javafee.elibrary.hibernate.dto.association.Language;
+import com.javafee.elibrary.hibernate.dto.association.Language_;
 import com.javafee.elibrary.hibernate.dto.association.MessageType;
 import com.javafee.elibrary.hibernate.dto.association.MessageType_;
 import com.javafee.elibrary.hibernate.dto.common.SystemData;
 import com.javafee.elibrary.hibernate.dto.common.SystemParameter;
 import com.javafee.elibrary.hibernate.dto.common.SystemProperties;
 import com.javafee.elibrary.hibernate.dto.common.SystemProperties_;
+import com.javafee.elibrary.hibernate.dto.common.UserAccount;
 import com.javafee.elibrary.hibernate.dto.common.UserData;
 import com.javafee.elibrary.hibernate.dto.library.Client;
 import com.javafee.elibrary.hibernate.dto.library.LibraryData;
@@ -44,6 +47,18 @@ public class Common {
 		}
 
 		return systemProperties;
+	}
+
+	public static Optional<UserAccount> findUserAccountById(final int id) {
+		Optional<UserAccount> userAccount = Optional.empty();
+
+		try {
+			userAccount = Optional.ofNullable(HibernateUtil.getSession().get(UserAccount.class, id));
+		} catch (Exception e) {
+			log.severe(e.getMessage());
+		}
+
+		return userAccount;
 	}
 
 	public static Optional<UserData> findUserDataById(final int id) {
@@ -78,8 +93,8 @@ public class Common {
 			if (userData.isPresent()) {
 				result = new StringBuilder();
 				result.append("[").append(userData.get().getIdUserData()).append(",")
-						.append(userData.get().getLogin()).append(",")
-						.append(userData.get().getPassword())
+						.append(userData.get().getUserAccount().getLogin()).append(",")
+						.append(userData.get().getUserAccount().getPassword())
 						.append("]");
 			}
 		} catch (Exception e) {
@@ -88,7 +103,7 @@ public class Common {
 		return result != null ? result.toString() : null;
 	}
 
-	public static Optional<SystemProperties> findSystemPropertiesByUserDataId(final int userDataId) {
+	public static Optional<SystemProperties> findSystemPropertiesByUserAccountId(final int userAccountId) {
 		Optional<SystemProperties> systemProperties = Optional.empty();
 
 		try {
@@ -96,8 +111,8 @@ public class Common {
 			CriteriaQuery<SystemProperties> criteria = cb.createQuery(SystemProperties.class);
 			Root<SystemProperties> systemPropertiesRoot = criteria.from(SystemProperties.class);
 			criteria.select(systemPropertiesRoot);
-			criteria.where(cb.equal(systemPropertiesRoot.get(SystemProperties_.userData),
-					Common.findUserDataById(userDataId).get()));
+			criteria.where(cb.equal(systemPropertiesRoot.get(SystemProperties_.userAccount),
+					Common.findUserAccountById(userAccountId).get()));
 			systemProperties = Optional
 					.ofNullable(!HibernateUtil.getEntityManager().createQuery(criteria).getResultList().isEmpty()
 							? HibernateUtil.getEntityManager().createQuery(criteria).getResultList().get(0)
@@ -155,20 +170,20 @@ public class Common {
 		return result != null ? result.toString() : null;
 	}
 
-	public static SystemProperties checkAndGetSystemProperties(final int userDataId) {
-		Optional<SystemProperties> systemProperties = Common.findSystemPropertiesByUserDataId(userDataId);
+	public static SystemProperties checkAndGetSystemProperties(final int userAccountId) {
+		Optional<SystemProperties> systemProperties = Common.findSystemPropertiesByUserAccountId(userAccountId);
 		SystemProperties result;
 
 		if (!systemProperties.isPresent()) {
-			UserData userData = Common.findUserDataById(userDataId).get();
+			UserAccount userAccount = Common.findUserAccountById(userAccountId).get();
 			HibernateUtil.beginJpaTransaction();
 			result = new SystemProperties();
-			userData.setSystemProperties(result);
+			userAccount.setSystemProperties(result);
 
 			HibernateUtil.getEntityManager().persist(result);
 			HibernateUtil.commitJpaTransaction();
 		} else
-			result = Common.findSystemPropertiesByUserDataId(userDataId).get();
+			result = Common.findSystemPropertiesByUserAccountId(userAccountId).get();
 
 		return result;
 	}
@@ -182,6 +197,12 @@ public class Common {
 	public static boolean checkIfAnySystemDataExists() {
 		CriteriaQuery<SystemData> cq = HibernateUtil.getSession().getCriteriaBuilder().createQuery(SystemData.class);
 		TypedQuery<SystemData> allQuery = HibernateUtil.getSession().createQuery(cq.select(cq.from(SystemData.class)));
+		return !allQuery.getResultList().isEmpty();
+	}
+
+	public static boolean checkIfAnyLanguageExists() {
+		CriteriaQuery<Language> cq = HibernateUtil.getSession().getCriteriaBuilder().createQuery(Language.class);
+		TypedQuery<Language> allQuery = HibernateUtil.getSession().createQuery(cq.select(cq.from(Language.class)));
 		return !allQuery.getResultList().isEmpty();
 	}
 
@@ -203,5 +224,25 @@ public class Common {
 		}
 
 		return messageType;
+	}
+
+	public static Optional<Language> findLanguageByName(final String name) {
+		Optional<Language> language = Optional.empty();
+
+		try {
+			CriteriaBuilder cb = HibernateUtil.createAndGetEntityManager().getCriteriaBuilder();
+			CriteriaQuery<Language> criteria = cb.createQuery(Language.class);
+			Root<Language> messageTypeRoot = criteria.from(Language.class);
+			criteria.select(messageTypeRoot);
+			criteria.where(cb.equal(messageTypeRoot.get(Language_.name), name));
+			language = Optional
+					.ofNullable(!HibernateUtil.getEntityManager().createQuery(criteria).getResultList().isEmpty()
+							? HibernateUtil.getEntityManager().createQuery(criteria).getResultList().get(0)
+							: null);
+		} catch (Exception e) {
+			log.severe(e.getMessage());
+		}
+
+		return language;
 	}
 }

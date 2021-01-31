@@ -14,17 +14,21 @@ import com.javafee.elibrary.core.common.SystemProperties;
 import com.javafee.elibrary.core.common.Utils;
 import com.javafee.elibrary.core.common.action.IActionForm;
 import com.javafee.elibrary.core.startform.LogInEvent;
+import com.javafee.elibrary.hibernate.dao.HibernateUtil;
+import com.javafee.elibrary.hibernate.dto.common.UserData;
 
 public class Actions implements IActionForm {
 	private TabbedForm tabbedForm = new TabbedForm();
 
 	private com.javafee.elibrary.core.settingsform.Actions actionSettings = null;
+	private com.javafee.elibrary.core.aboutform.Actions actionAbout = null;
 
 	public void control() {
 		tabbedForm.getFrame().setVisible(true);
 		initializeForm();
 
 		tabbedForm.getTabbedPane().addChangeListener(e -> onChangeTabbedPane());
+		tabbedForm.getBtnInformation().addActionListener(e -> onClickBtnAbout());
 		tabbedForm.getBtnSettings().addActionListener(e -> onClickBtnSettings());
 		tabbedForm.getBtnLogOut().addActionListener(e -> onClickBtnLogOut());
 		tabbedForm.getComboBoxLanguage().addActionListener(e -> onChangeComboBoxLanguage());
@@ -37,6 +41,26 @@ public class Actions implements IActionForm {
 			Constants.APPLICATION_LANGUAGE = (String) tabbedForm.getComboBoxLanguage().getSelectedItem();
 			SystemProperties.getInstance()
 					.setResourceBundleLanguage((String) tabbedForm.getComboBoxLanguage().getSelectedItem());
+
+			boolean systemPropertiesAlreadyExists = LogInEvent.getUserData().getUserAccount().getSystemProperties() != null;
+			com.javafee.elibrary.hibernate.dto.common.SystemProperties systemProperties = com.javafee.elibrary.hibernate.dao.common.Common
+					//FIXME: null check
+					.checkAndGetSystemProperties(LogInEvent.getWorker() != null ? LogInEvent.getWorker().getUserAccount().getIdUserAccount()
+							: Constants.DATA_BASE_ADMIN_ID);
+			if (!systemPropertiesAlreadyExists) {
+				systemProperties.setLanguage(com.javafee.elibrary.hibernate.dao.common.Common.findLanguageByName((String) tabbedForm.getComboBoxLanguage().getSelectedItem()).get());
+				LogInEvent.getUserData().getUserAccount().setSystemProperties(systemProperties);
+
+				HibernateUtil.beginTransaction();
+				HibernateUtil.getSession().update(UserData.class.getName(), LogInEvent.getUserData());
+				HibernateUtil.commitTransaction();
+			} else {
+				HibernateUtil.beginTransaction();
+				LogInEvent.getUserData().getUserAccount().getSystemProperties().setLanguage(com.javafee.elibrary.hibernate.dao.common.Common.findLanguageByName((String) tabbedForm.getComboBoxLanguage().getSelectedItem()).get());
+				HibernateUtil.getSession().update(com.javafee.elibrary.hibernate.dto.common.SystemProperties.class.getName(), LogInEvent.getUserData().getUserAccount().getSystemProperties());
+				HibernateUtil.commitTransaction();
+			}
+
 			onClickBtnLogOut();
 		}
 	}
@@ -209,12 +233,22 @@ public class Actions implements IActionForm {
 		openStartForm();
 	}
 
+	private void onClickBtnAbout() {
+		openAboutForm();
+	}
+
 	private void onClickBtnSettings() {
 		openSettingsForm();
 	}
 
 	private void onChangeTabbedPane() {
 		reloadTabbedPane();
+	}
+
+	private void openAboutForm() {
+		if (actionAbout == null)
+			actionAbout = new com.javafee.elibrary.core.aboutform.Actions();
+		actionAbout.control();
 	}
 
 	private void openSettingsForm() {

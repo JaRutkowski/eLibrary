@@ -8,7 +8,7 @@ import com.javafee.elibrary.core.common.Constants.Role;
 import com.javafee.elibrary.core.common.Params;
 import com.javafee.elibrary.core.exception.RefusedRegistrationException;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
-import com.javafee.elibrary.hibernate.dto.association.City;
+import com.javafee.elibrary.hibernate.dto.common.UserAccount;
 import com.javafee.elibrary.hibernate.dto.common.UserData;
 import com.javafee.elibrary.hibernate.dto.library.Client;
 import com.javafee.elibrary.hibernate.dto.library.LibraryWorker;
@@ -32,7 +32,7 @@ public class RegistrationEvent {
 	}
 
 	public static RegistrationEvent getInstance(String peselNumber, String documentNumber, String name, String surname,
-	                                            String address, City city, Character sex, Date birthDate, String login, String eMail, String password,
+	                                            String address, String city, Character sex, Date birthDate, String login, String eMail, String password,
 	                                            Role role) throws RefusedRegistrationException {
 		if (checkRegistration(login, password, peselNumber, role)) {
 			registrationEvent = new RegistrationEvent();
@@ -50,12 +50,12 @@ public class RegistrationEvent {
 
 	private static boolean checkRegistration(String login, String password, String peselNumber, Role role) {
 		boolean result = false;
-		UserData userData = (UserData) HibernateUtil.getSession().getNamedQuery("UserData.checkIfUserDataLoginExist")
+		UserAccount userAccount = (UserAccount) HibernateUtil.getSession().getNamedQuery("UserAccount.checkIfUserDataLoginExist")
 				.setParameter("login", login).uniqueResult();
 		switch (role) {
 			case WORKER_LIBRARIAN:
 			case CLIENT:
-				result = performCheck(userData, password);
+				result = performCheck(userAccount, password);
 			case ADMIN:
 				break;
 			case WORKER_ACCOUNTANT:
@@ -67,9 +67,9 @@ public class RegistrationEvent {
 		return result;
 	}
 
-	private static boolean performCheck(UserData userData, String password) {
+	private static boolean performCheck(UserAccount userAccount, String password) {
 		boolean result = false;
-		if (userData != null)
+		if (userAccount != null)
 			Params.getInstance().add("ALREADY_REGISTERED", RegistrationFailureCause.ALREADY_REGISTERED);
 		else if (Common.checkPasswordStrength(password))
 			result = true;
@@ -79,13 +79,19 @@ public class RegistrationEvent {
 	}
 
 	private static UserData createUser(String peselNumber, String documentNumber, String name, String surname,
-	                                   String address, City city, Character sex, Date birthDate, String login, String eMail, String password,
+	                                   String address, String city, Character sex, Date birthDate, String login, String eMail, String password,
 	                                   Role role) {
 		HibernateUtil.beginTransaction();
 		UserData resultUserData = null;
 
 		switch (role) {
 			case WORKER_LIBRARIAN:
+				UserAccount workerUserAccount = new UserAccount();
+				workerUserAccount.setLogin(login);
+				workerUserAccount.setPassword(Common.createMd5(password));
+				workerUserAccount.setRegistered(Constants.DATA_BASE_REGISTER_DEFAULT_FLAG);
+				workerUserAccount.setRegistrationDate(registrationDate);
+				HibernateUtil.getSession().save(workerUserAccount);
 				Worker worker = new Worker();
 				worker.setPeselNumber(peselNumber);
 				worker.setDocumentNumber(documentNumber);
@@ -95,10 +101,8 @@ public class RegistrationEvent {
 				worker.setCity(city);
 				worker.setSex(sex);
 				worker.setBirthDate(birthDate);
-				worker.setLogin(login);
 				worker.setEMail(eMail);
-				worker.setPassword(Common.createMd5(password));
-				worker.setRegistered(Constants.DATA_BASE_REGISTER_DEFAULT_FLAG);
+				worker.setUserAccount(workerUserAccount);
 				HibernateUtil.getSession().save(worker);
 				HibernateUtil.commitTransaction();
 
@@ -115,6 +119,12 @@ public class RegistrationEvent {
 			case ADMIN:
 				break;
 			case CLIENT:
+				UserAccount clientUserAccount = new UserAccount();
+				clientUserAccount.setLogin(login);
+				clientUserAccount.setPassword(Common.createMd5(password));
+				clientUserAccount.setRegistered(Constants.DATA_BASE_REGISTER_DEFAULT_FLAG);
+				clientUserAccount.setRegistrationDate(registrationDate);
+				HibernateUtil.getSession().save(clientUserAccount);
 				Client client = new Client();
 				client.setPeselNumber(peselNumber);
 				client.setDocumentNumber(documentNumber);
@@ -124,10 +134,8 @@ public class RegistrationEvent {
 				client.setCity(city);
 				client.setSex(sex);
 				client.setBirthDate(birthDate);
-				client.setLogin(login);
 				client.setEMail(eMail);
-				client.setPassword(Common.createMd5(password));
-				client.setRegistered(Constants.DATA_BASE_REGISTER_DEFAULT_FLAG);
+				client.setUserAccount(clientUserAccount);
 				HibernateUtil.getSession().save(client);
 				resultUserData = client;
 				break;
