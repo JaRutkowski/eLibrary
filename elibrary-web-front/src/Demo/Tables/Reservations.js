@@ -11,7 +11,7 @@ class Reservations extends React.Component {
     };
 
     async componentDidMount() {
-        const response = await fetch('/api/v1/reservations/active-lends/9');
+        const response = await fetch('/api/v1/reservations/active-lends/1');
         const body = await response.json();
         this.setState({ activeLends: body, isLoading: false });
     }
