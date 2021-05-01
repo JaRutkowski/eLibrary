@@ -391,8 +391,8 @@ public final class Constants {
 	public static final String LANGUAGE_RESOURCE_BUNDLE = "messages";
 	public static final String APPLICATION_PROPERTIES = "application.properties";
 
-	public static final int MAIN_SPLASH_SCREEN_DURATION = 1000;
-	public static final String MAIN_SPLASH_SCREEN_IMAGE = "source/resources/images/splashScreen.jpg";
+	public static final int MAIN_SPLASH_SCREEN_DURATION = 3000;
+	public static final String MAIN_SPLASH_SCREEN_IMAGE = "/images/splashScreen.jpg";
 
 	public static final String APPLICATION_NAME = "e-library";
 	public static final String APPLICATION_BUILD_STATUS_SUCCEEDED = "succeeded";

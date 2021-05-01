@@ -63,7 +63,7 @@ public class HibernateUtil {
 			Set<Class<?>> classes = reflections.getTypesAnnotatedWith(javax.persistence.Entity.class);
 
 			MetadataSources sources = new MetadataSources(registry);
-			classes.forEach(c -> sources.addAnnotatedClass(c));
+			classes.forEach(sources::addAnnotatedClass);
 
 			Metadata metadata = sources.getMetadataBuilder().build();
 			sessionFactory = metadata.getSessionFactoryBuilder().build();

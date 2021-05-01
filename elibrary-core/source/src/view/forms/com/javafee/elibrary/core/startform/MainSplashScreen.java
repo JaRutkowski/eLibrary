@@ -19,7 +19,7 @@ class MainSplashScreen extends JWindow {
 
 	private MainSplashScreen(String filename, final Frame f, int waitTime) {
 		super(f);
-		JLabel pictureLabel = new CustomJLabel(new ImageIcon(filename));
+		JLabel pictureLabel = new CustomJLabel(new ImageIcon(MainSplashScreen.class.getResource(filename)));
 		getContentPane().add(pictureLabel, BorderLayout.CENTER);
 		pack();
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
