@@ -3,6 +3,7 @@ package com.javafee.elibrary.core.process.ws;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -16,14 +17,16 @@ import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
+import lombok.Setter;
 import lombok.extern.java.Log;
 
 @Log
 public class FetchCitiesWithElibraryRestApiWS implements Process, Runnable {
+	@Setter
+	private Consumer reloadAction;
+
 	@Override
 	public void execute() {
-		//initializeCitiesWithElibraryRestApi();
-		//TODO Optimize
 		Thread t = new Thread(this);
 		t.start();
 	}
@@ -32,15 +35,16 @@ public class FetchCitiesWithElibraryRestApiWS implements Process, Runnable {
 		List<City> citiesPackage = invokeElibraryRestApi();
 		if (Optional.ofNullable(citiesPackage).isPresent() && !citiesPackage.isEmpty())
 			Common.getCities().addAll(citiesPackage);
+		Optional.ofNullable(reloadAction).ifPresent(e -> e.accept(null));
 	}
 
 	private List<City> invokeElibraryRestApi() {
-		List<City> responseCities = new ArrayList();
-		JsonNode response = null;
+		List responseCities = new ArrayList<City>();
+		JsonNode response;
 		HttpResponse<JsonNode> uniResponse;
 
-		Long fromQueryParam = SystemProperties.getInstance().getCitiesFromIndex() + (Common.getCitiesPackageSize() * SystemProperties.getInstance().getCitiesDataPackageNumber());
-		Long toQueryParam = fromQueryParam + (Common.getCitiesPackageSize() - 1);
+		long fromQueryParam = SystemProperties.getInstance().getCitiesFromIndex() + (Common.getCitiesPackageSize() * SystemProperties.getInstance().getCitiesDataPackageNumber()),
+				toQueryParam = fromQueryParam + (Common.getCitiesPackageSize() - 1);
 		try {
 			uniResponse = Unirest.get(SystemProperties.getConfigProperties().getProperty("app.api.url") + "/teryt/get-cities-from-file?from=" + fromQueryParam + "&to=" + toQueryParam)
 					.header("Authorization", "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTU5MTk5NTUwOCwiZXhwIjoxOTA3NDQ1NjAwfQ.X5QudAylDMyXy-mUQEsevQDOv9Wv4YOK8OCruvamGiIcu74SB8hmeOh3VA-7vz9RZZZaanbocVudV72DsMZZVg")

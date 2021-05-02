@@ -8,6 +8,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 import java.util.ResourceBundle;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -49,7 +50,6 @@ public class SystemProperties {
 		initializeHibernateUtil();
 		initializeCoreProperties();
 		initializeSystemParameters();
-		fetchCitiesPackage();
 		initializeObjectMapper();
 	}
 
@@ -103,12 +103,13 @@ public class SystemProperties {
 	 *
 	 * @see Constants APPLICATION_PREDEFINED_COMBO_BOX_PACKAGE_SIZE
 	 */
-	public static void fetchCitiesPackage() {
+	public static void fetchCitiesPackage(Consumer reloadAction) {
 		try {
 			Common.removeMoreComboBoxCityElementIfExists();
-			ProcessFactory.create(FetchCitiesWithElibraryRestApiWS.class).execute();
-			Common.getCities().sort(Comparator.comparing(City::getName, Comparator.nullsFirst(Comparator.naturalOrder())));
-			Common.prepareMoreComboBoxCityElement(Common.getCities());
+			FetchCitiesWithElibraryRestApiWS fetchCitiesWithElibraryRestApiWS
+					= (FetchCitiesWithElibraryRestApiWS) ProcessFactory.create(FetchCitiesWithElibraryRestApiWS.class);
+			fetchCitiesWithElibraryRestApiWS.setReloadAction(reloadAction);
+			fetchCitiesWithElibraryRestApiWS.execute();
 		} catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException e) {
 			log.severe(e.getMessage());
 		}

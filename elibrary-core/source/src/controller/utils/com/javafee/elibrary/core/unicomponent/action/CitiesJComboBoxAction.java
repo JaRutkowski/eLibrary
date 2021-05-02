@@ -21,6 +21,6 @@ public class CitiesJComboBoxAction extends Action {
 		if (Optional.ofNullable(citiesJComboBox.getSelectedItem()).isPresent()
 				&& SystemProperties.getInstance().getResourceBundle().getString("comboBoxMoreElement")
 				.equals(((City) citiesJComboBox.getSelectedItem()).getName()))
-			citiesJComboBox.fetchNextDataPackage();
+			citiesJComboBox.fetchNextDataPackage(e -> citiesJComboBox.fillComboBoxCity());
 	}
 }
