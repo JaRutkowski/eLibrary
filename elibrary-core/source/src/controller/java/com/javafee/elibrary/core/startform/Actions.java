@@ -56,6 +56,9 @@ public class Actions implements IRegistrationForm {
 
 	@Override
 	public void reloadRegistrationPanel() {
+		if (com.javafee.elibrary.core.common.Common.getCities().isEmpty())
+			startForm.getRegistrationPanel().getComboBoxCity().fetchNextDataPackage(
+					e -> startForm.getRegistrationPanel().getComboBoxCity().fillComboBoxCity());
 	}
 
 	private void onClickBtnForgotPassword() {
