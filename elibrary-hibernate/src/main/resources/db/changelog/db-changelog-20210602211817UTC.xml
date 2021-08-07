@@ -1,0 +1,1496 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet author="rutko (generated)" id="1628346161402-1">
+        <insert tableName="com_authorization">
+            <column name="id_authorization" valueNumeric="1"/>
+            <column name="login" value="admin"/>
+            <column name="private_key" value="rsLpZA5G8XM="/>
+        </insert>
+    </changeSet>
+    <changeSet author="rutko (generated)" id="1628346161402-2">
+        <insert tableName="com_language">
+            <column name="id_language" valueNumeric="1"/>
+            <column name="name" value="pl"/>
+        </insert>
+        <insert tableName="com_language">
+            <column name="id_language" valueNumeric="2"/>
+            <column name="name" value="en"/>
+        </insert>
+    </changeSet>
+    <changeSet author="rutko (generated)" id="1628346161402-3">
+        <insert tableName="com_system_data">
+            <column name="id_system_data" valueNumeric="1"/>
+            <column name="build_number" value="e31c793d5fdc1b12451866a3e48b9f96087976a2"/>
+            <column name="has_license" valueBoolean="true"/>
+            <column name="installation_date" valueDate="2020-01-31"/>
+            <column name="license_number"/>
+            <column name="name"/>
+            <column name="number_of_system_parameters" valueNumeric="11"/>
+            <column name="system_data_initialization_date" valueDate="2020-05-01"/>
+            <column name="version" value="#DSK-2021-31-01-e31c793d5fdc1b12451866a3e48b9f96087976a2"/>
+        </insert>
+    </changeSet>
+    <changeSet author="rutko (generated)" id="1628346161402-4">
+        <insert tableName="com_system_parameter">
+            <column name="id_system_parameter" valueNumeric="1"/>
+            <column name="default_value" value="0.6"/>
+            <column name="name" value="APPLICATION_PENALTY_VALUE"/>
+            <column name="value" value="0.6"/>
+        </insert>
+        <insert tableName="com_system_parameter">
+            <column name="id_system_parameter" valueNumeric="2"/>
+            <column name="default_value" value="3"/>
+            <column name="name" value="APPLICATION_RESERVATIONS_LIMIT"/>
+            <column name="value" value="3"/>
+        </insert>
+        <insert tableName="com_system_parameter">
+            <column name="id_system_parameter" valueNumeric="3"/>
+            <column name="default_value" value="nreply.elibrary@gmail.com"/>
+            <column name="name" value="APPLICATION_EMAIL_ADDRESS"/>
+            <column name="value" value="nreply.elibrary@gmail.com"/>
+        </insert>
+        <insert tableName="com_system_parameter">
+            <column name="id_system_parameter" valueNumeric="4"/>
+            <column name="default_value" value="Admin95!"/>
+            <column name="name" value="APPLICATION_EMAIL_PASSWORD"/>
+            <column name="value" value="Admin95!"/>
+        </insert>
+        <insert tableName="com_system_parameter">
+            <column name="id_system_parameter" valueNumeric="5"/>
+            <column name="default_value" value="16"/>
+            <column name="name" value="APPLICATION_GENERATED_PASSWORD_LENGTH"/>
+            <column name="value" value="16"/>
+        </insert>
+        <insert tableName="com_system_parameter">
+            <column name="id_system_parameter" valueNumeric="6"/>
+            <column name="default_value" value="eLib-mes-templates"/>
+            <column name="name" value="APPLICATION_TEMPLATE_DIRECTORY_NAME"/>
+            <column name="value" value="eLib-mes-templates"/>
+        </insert>
+        <insert tableName="com_system_parameter">
+            <column name="id_system_parameter" valueNumeric="7"/>
+            <column name="default_value" value="8"/>
+            <column name="name" value="APPLICATION_MIN_PASSWORD_LENGTH"/>
+            <column name="value" value="8"/>
+        </insert>
+        <insert tableName="com_system_parameter">
+            <column name="id_system_parameter" valueNumeric="8"/>
+            <column name="default_value" value="16"/>
+            <column name="name" value="APPLICATION_MAX_PASSWORD_LENGTH"/>
+            <column name="value" value="16"/>
+        </insert>
+        <insert tableName="com_system_parameter">
+            <column name="id_system_parameter" valueNumeric="9"/>
+            <column name="default_value" value="20000"/>
+            <column name="name" value="APPLICATION_COMBO_BOX_DATA_PACKAGE_SIZE"/>
+            <column name="value" value="20000"/>
+        </insert>
+        <insert tableName="com_system_parameter">
+            <column name="id_system_parameter" valueNumeric="10"/>
+            <column name="default_value" value="3"/>
+            <column name="name" value="APPLICATION_NUMBER_OF_ATTEMPTS_LIMIT"/>
+            <column name="value" value="3"/>
+        </insert>
+        <insert tableName="com_system_parameter">
+            <column name="id_system_parameter" valueNumeric="11"/>
+            <column name="default_value" value="true"/>
+            <column name="name" value="APPLICATION_BLOCK_ACCOUNT_FUNCTIONALITY"/>
+            <column name="value" value="true"/>
+        </insert>
+    </changeSet>
+    <changeSet author="rutko (generated)" id="1628346161402-5">
+        <insert tableName="com_user_account">
+            <column name="id_user_account" valueNumeric="0"/>
+            <column name="block_date"/>
+            <column name="block_reason"/>
+            <column name="blocked"/>
+            <column name="login" value="admin"/>
+            <column name="number_of_failed_password_attempts"/>
+            <column name="password" value="f7e3c24e1a04758097f69be41aa3cf18"/>
+            <column name="registered"/>
+            <column name="registration_date"/>
+            <column name="id_system_properties"/>
+        </insert>
+        <insert tableName="com_user_account">
+            <column name="id_user_account" valueNumeric="7"/>
+            <column name="block_date"/>
+            <column name="block_reason"/>
+            <column name="blocked" valueBoolean="false"/>
+            <column name="login" value="RaBrzazak"/>
+            <column name="number_of_failed_password_attempts" valueNumeric="0"/>
+            <column name="password" value="b86101561d1558c5b2015174070e26b8"/>
+            <column name="registered" valueBoolean="false"/>
+            <column name="registration_date"/>
+            <column name="id_system_properties"/>
+        </insert>
+        <insert tableName="com_user_account">
+            <column name="id_user_account" valueNumeric="8"/>
+            <column name="block_date"/>
+            <column name="block_reason"/>
+            <column name="blocked" valueBoolean="false"/>
+            <column name="login" value="MaGrazyna"/>
+            <column name="number_of_failed_password_attempts" valueNumeric="0"/>
+            <column name="password" value="b86101561d1558c5b2015174070e26b8"/>
+            <column name="registered" valueBoolean="false"/>
+            <column name="registration_date"/>
+            <column name="id_system_properties"/>
+        </insert>
+        <insert tableName="com_user_account">
+            <column name="id_user_account" valueNumeric="9"/>
+            <column name="block_date"/>
+            <column name="block_reason"/>
+            <column name="blocked" valueBoolean="false"/>
+            <column name="login" value="TyBudzisz"/>
+            <column name="number_of_failed_password_attempts" valueNumeric="0"/>
+            <column name="password" value="b86101561d1558c5b2015174070e26b8"/>
+            <column name="registered" valueBoolean="false"/>
+            <column name="registration_date"/>
+            <column name="id_system_properties"/>
+        </insert>
+        <insert tableName="com_user_account">
+            <column name="id_user_account" valueNumeric="10"/>
+            <column name="block_date"/>
+            <column name="block_reason"/>
+            <column name="blocked" valueBoolean="false"/>
+            <column name="login" value="AnKraszyk"/>
+            <column name="number_of_failed_password_attempts" valueNumeric="0"/>
+            <column name="password" value="b86101561d1558c5b2015174070e26b8"/>
+            <column name="registered" valueBoolean="true"/>
+            <column name="registration_date"/>
+            <column name="id_system_properties"/>
+        </insert>
+        <insert tableName="com_user_account">
+            <column name="id_user_account" valueNumeric="11"/>
+            <column name="block_date"/>
+            <column name="block_reason"/>
+            <column name="blocked" valueBoolean="false"/>
+            <column name="login" value="KaKrol"/>
+            <column name="number_of_failed_password_attempts" valueNumeric="0"/>
+            <column name="password" value="b86101561d1558c5b2015174070e26b8"/>
+            <column name="registered" valueBoolean="true"/>
+            <column name="registration_date"/>
+            <column name="id_system_properties"/>
+        </insert>
+        <insert tableName="com_user_account">
+            <column name="id_user_account" valueNumeric="1"/>
+            <column name="block_date"/>
+            <column name="block_reason"/>
+            <column name="blocked" valueBoolean="false"/>
+            <column name="login" value="TestCMS"/>
+            <column name="number_of_failed_password_attempts" valueNumeric="0"/>
+            <column name="password" value="b86101561d1558c5b2015174070e26b8"/>
+            <column name="registered" valueBoolean="true"/>
+            <column name="registration_date"/>
+            <column name="id_system_properties"/>
+        </insert>
+        <insert tableName="com_user_account">
+            <column name="id_user_account" valueNumeric="2"/>
+            <column name="block_date"/>
+            <column name="block_reason"/>
+            <column name="blocked" valueBoolean="false"/>
+            <column name="login" value="TestCJR"/>
+            <column name="number_of_failed_password_attempts" valueNumeric="0"/>
+            <column name="password" value="b86101561d1558c5b2015174070e26b8"/>
+            <column name="registered" valueBoolean="true"/>
+            <column name="registration_date"/>
+            <column name="id_system_properties"/>
+        </insert>
+        <insert tableName="com_user_account">
+            <column name="id_user_account" valueNumeric="12"/>
+            <column name="block_date"/>
+            <column name="block_reason"/>
+            <column name="blocked" valueBoolean="false"/>
+            <column name="login" value="TestCMG"/>
+            <column name="number_of_failed_password_attempts" valueNumeric="0"/>
+            <column name="password" value="b86101561d1558c5b2015174070e26b8"/>
+            <column name="registered" valueBoolean="true"/>
+            <column name="registration_date" valueDate="2020-11-25"/>
+            <column name="id_system_properties"/>
+        </insert>
+        <insert tableName="com_user_account">
+            <column name="id_user_account" valueNumeric="3"/>
+            <column name="block_date"/>
+            <column name="block_reason"/>
+            <column name="blocked" valueBoolean="false"/>
+            <column name="login" value="TestAMS"/>
+            <column name="number_of_failed_password_attempts" valueNumeric="0"/>
+            <column name="password" value="b86101561d1558c5b2015174070e26b8"/>
+            <column name="registered" valueBoolean="true"/>
+            <column name="registration_date"/>
+            <column name="id_system_properties"/>
+        </insert>
+        <insert tableName="com_user_account">
+            <column name="id_user_account" valueNumeric="4"/>
+            <column name="block_date"/>
+            <column name="block_reason"/>
+            <column name="blocked" valueBoolean="false"/>
+            <column name="login" value="TestAJR"/>
+            <column name="number_of_failed_password_attempts" valueNumeric="0"/>
+            <column name="password" value="b86101561d1558c5b2015174070e26b8"/>
+            <column name="registered" valueBoolean="true"/>
+            <column name="registration_date"/>
+            <column name="id_system_properties"/>
+        </insert>
+        <insert tableName="com_user_account">
+            <column name="id_user_account" valueNumeric="5"/>
+            <column name="block_date"/>
+            <column name="block_reason"/>
+            <column name="blocked" valueBoolean="false"/>
+            <column name="login" value="TestWJR"/>
+            <column name="number_of_failed_password_attempts" valueNumeric="0"/>
+            <column name="password" value="b86101561d1558c5b2015174070e26b8"/>
+            <column name="registered" valueBoolean="true"/>
+            <column name="registration_date"/>
+            <column name="id_system_properties"/>
+        </insert>
+        <insert tableName="com_user_account">
+            <column name="id_user_account" valueNumeric="6"/>
+            <column name="block_date"/>
+            <column name="block_reason"/>
+            <column name="blocked" valueBoolean="false"/>
+            <column name="login" value="TestWMS"/>
+            <column name="number_of_failed_password_attempts" valueNumeric="0"/>
+            <column name="password" value="b86101561d1558c5b2015174070e26b8"/>
+            <column name="registered" valueBoolean="true"/>
+            <column name="registration_date"/>
+            <column name="id_system_properties"/>
+        </insert>
+        <insert tableName="com_user_account">
+            <column name="id_user_account" valueNumeric="13"/>
+            <column name="block_date"/>
+            <column name="block_reason"/>
+            <column name="blocked" valueBoolean="false"/>
+            <column name="login" value="TestWMG"/>
+            <column name="number_of_failed_password_attempts" valueNumeric="0"/>
+            <column name="password" value="b86101561d1558c5b2015174070e26b8"/>
+            <column name="registered" valueBoolean="true"/>
+            <column name="registration_date" valueDate="2020-11-25"/>
+            <column name="id_system_properties"/>
+        </insert>
+        <insert tableName="com_user_account">
+            <column name="id_user_account" valueNumeric="14"/>
+            <column name="block_date"/>
+            <column name="block_reason"/>
+            <column name="blocked" valueBoolean="false"/>
+            <column name="login" value="TestAMG"/>
+            <column name="number_of_failed_password_attempts" valueNumeric="0"/>
+            <column name="password" value="b86101561d1558c5b2015174070e26b8"/>
+            <column name="registered" valueBoolean="true"/>
+            <column name="registration_date" valueDate="2020-11-25"/>
+            <column name="id_system_properties"/>
+        </insert>
+        <insert tableName="com_user_account">
+            <column name="id_user_account" valueNumeric="15"/>
+            <column name="block_date"/>
+            <column name="block_reason"/>
+            <column name="blocked" valueBoolean="false"/>
+            <column name="login" value="TestCAP"/>
+            <column name="number_of_failed_password_attempts" valueNumeric="0"/>
+            <column name="password" value="b86101561d1558c5b2015174070e26b8"/>
+            <column name="registered" valueBoolean="true"/>
+            <column name="registration_date" valueDate="2020-12-21"/>
+            <column name="id_system_properties"/>
+        </insert>
+        <insert tableName="com_user_account">
+            <column name="id_user_account" valueNumeric="16"/>
+            <column name="block_date"/>
+            <column name="block_reason"/>
+            <column name="blocked" valueBoolean="false"/>
+            <column name="login" value="TestAAP"/>
+            <column name="number_of_failed_password_attempts" valueNumeric="0"/>
+            <column name="password" value="b86101561d1558c5b2015174070e26b8"/>
+            <column name="registered" valueBoolean="true"/>
+            <column name="registration_date" valueDate="2020-12-21"/>
+            <column name="id_system_properties"/>
+        </insert>
+        <insert tableName="com_user_account">
+            <column name="id_user_account" valueNumeric="17"/>
+            <column name="block_date"/>
+            <column name="block_reason"/>
+            <column name="blocked" valueBoolean="false"/>
+            <column name="login" value="TestWAP"/>
+            <column name="number_of_failed_password_attempts" valueNumeric="0"/>
+            <column name="password" value="b86101561d1558c5b2015174070e26b8"/>
+            <column name="registered" valueBoolean="true"/>
+            <column name="registration_date" valueDate="2020-12-21"/>
+            <column name="id_system_properties"/>
+        </insert>
+        <insert tableName="com_user_account">
+            <column name="id_user_account" valueNumeric="19"/>
+            <column name="block_date"/>
+            <column name="block_reason"/>
+            <column name="blocked" valueBoolean="false"/>
+            <column name="login" value="TestAJM"/>
+            <column name="number_of_failed_password_attempts" valueNumeric="0"/>
+            <column name="password" value="b86101561d1558c5b2015174070e26b8"/>
+            <column name="registered" valueBoolean="true"/>
+            <column name="registration_date" valueDate="2021-08-07"/>
+            <column name="id_system_properties"/>
+        </insert>
+        <insert tableName="com_user_account">
+            <column name="id_user_account" valueNumeric="20"/>
+            <column name="block_date"/>
+            <column name="block_reason"/>
+            <column name="blocked" valueBoolean="false"/>
+            <column name="login" value="TestWJM"/>
+            <column name="number_of_failed_password_attempts" valueNumeric="0"/>
+            <column name="password" value="b86101561d1558c5b2015174070e26b8"/>
+            <column name="registered" valueBoolean="true"/>
+            <column name="registration_date" valueDate="2021-08-07"/>
+            <column name="id_system_properties"/>
+        </insert>
+        <insert tableName="com_user_account">
+            <column name="id_user_account" valueNumeric="18"/>
+            <column name="block_date"/>
+            <column name="block_reason"/>
+            <column name="blocked" valueBoolean="false"/>
+            <column name="login" value="TestCJM"/>
+            <column name="number_of_failed_password_attempts" valueNumeric="0"/>
+            <column name="password" value="b86101561d1558c5b2015174070e26b8"/>
+            <column name="registered" valueBoolean="true"/>
+            <column name="registration_date" valueDate="2021-08-07"/>
+            <column name="id_system_properties"/>
+        </insert>
+    </changeSet>
+    <changeSet author="rutko (generated)" id="1628346161402-6">
+        <insert tableName="com_user_data">
+            <column name="id_user_data" valueNumeric="7"/>
+            <column name="address" value=""/>
+            <column name="birth_date" valueDate="1999-05-03"/>
+            <column name="city"/>
+            <column name="document_number" value="FOZ394460"/>
+            <column name="e_mail" value=""/>
+            <column name="name" value="Rafał"/>
+            <column name="pesel" value="62070870460"/>
+            <column name="sex"/>
+            <column name="surname" value="Brzazak"/>
+            <column name="id_user_account" valueNumeric="7"/>
+        </insert>
+        <insert tableName="com_user_data">
+            <column name="id_user_data" valueNumeric="8"/>
+            <column name="address" value=""/>
+            <column name="birth_date" valueDate="1996-02-20"/>
+            <column name="city"/>
+            <column name="document_number" value="UIP872754"/>
+            <column name="e_mail" value=""/>
+            <column name="name" value="Maria"/>
+            <column name="pesel" value="12250584939"/>
+            <column name="sex" value="F"/>
+            <column name="surname" value="Grażyna"/>
+            <column name="id_user_account" valueNumeric="8"/>
+        </insert>
+        <insert tableName="com_user_data">
+            <column name="id_user_data" valueNumeric="9"/>
+            <column name="address" value=""/>
+            <column name="birth_date" valueDate="1965-11-26"/>
+            <column name="city"/>
+            <column name="document_number" value="VNC494856"/>
+            <column name="e_mail" value=""/>
+            <column name="name" value="Tymoteusz"/>
+            <column name="pesel" value="57032924756"/>
+            <column name="sex" value="M"/>
+            <column name="surname" value="Budzisz"/>
+            <column name="id_user_account" valueNumeric="9"/>
+        </insert>
+        <insert tableName="com_user_data">
+            <column name="id_user_data" valueNumeric="10"/>
+            <column name="address" value=""/>
+            <column name="birth_date" valueDate="1957-10-07"/>
+            <column name="city"/>
+            <column name="document_number" value="ZDV683862"/>
+            <column name="e_mail" value=""/>
+            <column name="name" value="Antoni"/>
+            <column name="pesel" value="90110156720"/>
+            <column name="sex" value="M"/>
+            <column name="surname" value="Kraszyk"/>
+            <column name="id_user_account" valueNumeric="10"/>
+        </insert>
+        <insert tableName="com_user_data">
+            <column name="id_user_data" valueNumeric="11"/>
+            <column name="address" value=""/>
+            <column name="birth_date" valueDate="1993-12-17"/>
+            <column name="city"/>
+            <column name="document_number" value="ASO653411"/>
+            <column name="e_mail" value=""/>
+            <column name="name" value="Karolina"/>
+            <column name="pesel" value="92072096508"/>
+            <column name="sex" value="F"/>
+            <column name="surname" value="Król"/>
+            <column name="id_user_account" valueNumeric="11"/>
+        </insert>
+        <insert tableName="com_user_data">
+            <column name="id_user_data" valueNumeric="0"/>
+            <column name="address"/>
+            <column name="birth_date"/>
+            <column name="city"/>
+            <column name="document_number"/>
+            <column name="e_mail"/>
+            <column name="name"/>
+            <column name="pesel"/>
+            <column name="sex"/>
+            <column name="surname"/>
+            <column name="id_user_account" valueNumeric="0"/>
+        </insert>
+        <insert tableName="com_user_data">
+            <column name="id_user_data" valueNumeric="1"/>
+            <column name="address" value="ul. Oriona 16/4"/>
+            <column name="birth_date" valueDate="1976-05-19"/>
+            <column name="city"/>
+            <column name="document_number" value="FDF531211"/>
+            <column name="e_mail" value="szymczyk.dent@gmail.com"/>
+            <column name="name" value="Jan"/>
+            <column name="pesel" value="09072178806"/>
+            <column name="sex" value="M"/>
+            <column name="surname" value="Michalski"/>
+            <column name="id_user_account" valueNumeric="1"/>
+        </insert>
+        <insert tableName="com_user_data">
+            <column name="id_user_data" valueNumeric="2"/>
+            <column name="address" value="ul. Wolności 271/56"/>
+            <column name="birth_date" valueDate="1977-12-20"/>
+            <column name="city"/>
+            <column name="document_number" value="DRU986241"/>
+            <column name="e_mail" value="rutkowskik6@gmail.com"/>
+            <column name="name" value="Przemysław"/>
+            <column name="pesel" value="68052266803"/>
+            <column name="sex" value="M"/>
+            <column name="surname" value="Gut"/>
+            <column name="id_user_account" valueNumeric="2"/>
+        </insert>
+        <insert tableName="com_user_data">
+            <column name="id_user_data" valueNumeric="12"/>
+            <column name="address" value="ul. Powstańców 12"/>
+            <column name="birth_date" valueDate="1980-11-20"/>
+            <column name="city" value="Adolfin"/>
+            <column name="document_number" value="NPV376977"/>
+            <column name="e_mail" value="mgarbas1@gmail.com"/>
+            <column name="name" value="Tadeusz"/>
+            <column name="pesel" value="80112067757"/>
+            <column name="sex" value="M"/>
+            <column name="surname" value="Lubicz"/>
+            <column name="id_user_account" valueNumeric="12"/>
+        </insert>
+        <insert tableName="com_user_data">
+            <column name="id_user_data" valueNumeric="3"/>
+            <column name="address" value="ul. Mikołowska 41"/>
+            <column name="birth_date" valueDate="1989-06-13"/>
+            <column name="city"/>
+            <column name="document_number" value="ZSV071899"/>
+            <column name="e_mail" value=""/>
+            <column name="name" value="Marta"/>
+            <column name="pesel" value="23042175783"/>
+            <column name="sex" value="F"/>
+            <column name="surname" value="Kopień"/>
+            <column name="id_user_account" valueNumeric="3"/>
+        </insert>
+        <insert tableName="com_user_data">
+            <column name="id_user_data" valueNumeric="4"/>
+            <column name="address" value="ul. Krzywa 16/2"/>
+            <column name="birth_date" valueDate="1979-11-08"/>
+            <column name="city" value="Pyskowice"/>
+            <column name="document_number" value="NCQ035225"/>
+            <column name="e_mail" value=""/>
+            <column name="name" value="Sylwia"/>
+            <column name="pesel" value="79121281382"/>
+            <column name="sex" value="F"/>
+            <column name="surname" value="Kalina"/>
+            <column name="id_user_account" valueNumeric="4"/>
+        </insert>
+        <insert tableName="com_user_data">
+            <column name="id_user_data" valueNumeric="5"/>
+            <column name="address" value="ul. Lawendowa 5a"/>
+            <column name="birth_date" valueDate="1993-02-09"/>
+            <column name="city"/>
+            <column name="document_number" value="AMY441931"/>
+            <column name="e_mail" value=""/>
+            <column name="name" value="Sebastian"/>
+            <column name="pesel" value="79120251841"/>
+            <column name="sex" value="M"/>
+            <column name="surname" value="Krus"/>
+            <column name="id_user_account" valueNumeric="5"/>
+        </insert>
+        <insert tableName="com_user_data">
+            <column name="id_user_data" valueNumeric="6"/>
+            <column name="address" value="ul. Leśna 14"/>
+            <column name="birth_date" valueDate="1988-06-27"/>
+            <column name="city"/>
+            <column name="document_number" value="ECG689414"/>
+            <column name="e_mail" value=""/>
+            <column name="name" value="Anna"/>
+            <column name="pesel" value="54110200988"/>
+            <column name="sex" value="F"/>
+            <column name="surname" value="Miła"/>
+            <column name="id_user_account" valueNumeric="6"/>
+        </insert>
+        <insert tableName="com_user_data">
+            <column name="id_user_data" valueNumeric="13"/>
+            <column name="address" value="ul. Jasna 12"/>
+            <column name="birth_date" valueDate="1982-10-15"/>
+            <column name="city" value="Tarnawa"/>
+            <column name="document_number" value="MTI655582"/>
+            <column name="e_mail" value=""/>
+            <column name="name" value="Robert"/>
+            <column name="pesel" value="82101541587"/>
+            <column name="sex" value="M"/>
+            <column name="surname" value="Orłowski"/>
+            <column name="id_user_account" valueNumeric="13"/>
+        </insert>
+        <insert tableName="com_user_data">
+            <column name="id_user_data" valueNumeric="14"/>
+            <column name="address" value="ul. Drozdów 5"/>
+            <column name="birth_date" valueDate="1988-09-02"/>
+            <column name="city" value="Ustroń"/>
+            <column name="document_number" value="NKJ870195"/>
+            <column name="e_mail" value=""/>
+            <column name="name" value="Marek"/>
+            <column name="pesel" value="88090202638"/>
+            <column name="sex" value="M"/>
+            <column name="surname" value="Czempiel"/>
+            <column name="id_user_account" valueNumeric="14"/>
+        </insert>
+        <insert tableName="com_user_data">
+            <column name="id_user_data" valueNumeric="16"/>
+            <column name="address" value=""/>
+            <column name="birth_date" valueDate="1964-01-05"/>
+            <column name="city"/>
+            <column name="document_number" value="H2908283"/>
+            <column name="e_mail" value=""/>
+            <column name="name" value="Anand"/>
+            <column name="pesel" value="64010571246"/>
+            <column name="sex" value="M"/>
+            <column name="surname" value="Viswanathan"/>
+            <column name="id_user_account" valueNumeric="16"/>
+        </insert>
+        <insert tableName="com_user_data">
+            <column name="id_user_data" valueNumeric="15"/>
+            <column name="address" value=""/>
+            <column name="birth_date" valueDate="1959-09-23"/>
+            <column name="city"/>
+            <column name="document_number" value="J8369854"/>
+            <column name="e_mail" value="ajitsp708@gmail.com"/>
+            <column name="name" value="Sita Maha Lakshmi"/>
+            <column name="pesel" value=""/>
+            <column name="sex" value="F"/>
+            <column name="surname" value="Ramadugula"/>
+            <column name="id_user_account" valueNumeric="15"/>
+        </insert>
+        <insert tableName="com_user_data">
+            <column name="id_user_data" valueNumeric="17"/>
+            <column name="address" value=""/>
+            <column name="birth_date" valueDate="1964-07-13"/>
+            <column name="city"/>
+            <column name="document_number" value="AJC684656"/>
+            <column name="e_mail" value=""/>
+            <column name="name" value="Patel"/>
+            <column name="pesel" value="64071343301"/>
+            <column name="sex" value="M"/>
+            <column name="surname" value="Jaydipkumar Ashokbhai"/>
+            <column name="id_user_account" valueNumeric="17"/>
+        </insert>
+        <insert tableName="com_user_data">
+            <column name="id_user_data" valueNumeric="19"/>
+            <column name="address" value=""/>
+            <column name="birth_date" valueDate="1981-12-13"/>
+            <column name="city"/>
+            <column name="document_number" value="CQJ331659"/>
+            <column name="e_mail" value=""/>
+            <column name="name" value="Kryspin"/>
+            <column name="pesel" value="81121345261"/>
+            <column name="sex" value="M"/>
+            <column name="surname" value="Korycik"/>
+            <column name="id_user_account" valueNumeric="19"/>
+        </insert>
+        <insert tableName="com_user_data">
+            <column name="id_user_data" valueNumeric="20"/>
+            <column name="address" value=""/>
+            <column name="birth_date" valueDate="1983-04-03"/>
+            <column name="city"/>
+            <column name="document_number" value="XZR232174"/>
+            <column name="e_mail" value=""/>
+            <column name="name" value="Kacper"/>
+            <column name="pesel" value="83040317060"/>
+            <column name="sex" value="M"/>
+            <column name="surname" value="Marek"/>
+            <column name="id_user_account" valueNumeric="20"/>
+        </insert>
+        <insert tableName="com_user_data">
+            <column name="id_user_data" valueNumeric="18"/>
+            <column name="address" value=""/>
+            <column name="birth_date" valueDate="2000-08-22"/>
+            <column name="city"/>
+            <column name="document_number" value="TSG092545"/>
+            <column name="e_mail" value="janmaczulski@gmail.com"/>
+            <column name="name" value="Konstanty"/>
+            <column name="pesel" value="00282295916"/>
+            <column name="sex" value="M"/>
+            <column name="surname" value="Wilk"/>
+            <column name="id_user_account" valueNumeric="18"/>
+        </insert>
+    </changeSet>
+    <changeSet author="rutko (generated)" id="1628346161402-7">
+        <insert tableName="lib_author">
+            <column name="id_author" valueNumeric="1"/>
+            <column name="birth_date"/>
+            <column name="name" value="Jan"/>
+            <column name="nickname" value=""/>
+            <column name="surname" value="Twardowski"/>
+        </insert>
+        <insert tableName="lib_author">
+            <column name="id_author" valueNumeric="2"/>
+            <column name="birth_date"/>
+            <column name="name" value="Walt"/>
+            <column name="nickname" value=""/>
+            <column name="surname" value="Disney"/>
+        </insert>
+        <insert tableName="lib_author">
+            <column name="id_author" valueNumeric="3"/>
+            <column name="birth_date"/>
+            <column name="name" value="Stan"/>
+            <column name="nickname" value=""/>
+            <column name="surname" value="Lee"/>
+        </insert>
+        <insert tableName="lib_author">
+            <column name="id_author" valueNumeric="4"/>
+            <column name="birth_date"/>
+            <column name="name" value="Émilie"/>
+            <column name="nickname" value=""/>
+            <column name="surname" value="Beaumont"/>
+        </insert>
+        <insert tableName="lib_author">
+            <column name="id_author" valueNumeric="5"/>
+            <column name="birth_date"/>
+            <column name="name" value="Czesław"/>
+            <column name="nickname" value=""/>
+            <column name="surname" value="Miłosz"/>
+        </insert>
+        <insert tableName="lib_author">
+            <column name="id_author" valueNumeric="6"/>
+            <column name="birth_date"/>
+            <column name="name" value="Tadeusz"/>
+            <column name="nickname" value=""/>
+            <column name="surname" value="Różewicz"/>
+        </insert>
+        <insert tableName="lib_author">
+            <column name="id_author" valueNumeric="7"/>
+            <column name="birth_date"/>
+            <column name="name" value="Robert"/>
+            <column name="nickname" value=""/>
+            <column name="surname" value="Kirkman"/>
+        </insert>
+        <insert tableName="lib_author">
+            <column name="id_author" valueNumeric="8"/>
+            <column name="birth_date"/>
+            <column name="name" value="Charlie"/>
+            <column name="nickname" value=""/>
+            <column name="surname" value="Adlard"/>
+        </insert>
+        <insert tableName="lib_author">
+            <column name="id_author" valueNumeric="9"/>
+            <column name="birth_date"/>
+            <column name="name" value="Maria"/>
+            <column name="nickname" value=""/>
+            <column name="surname" value="Konopnicka"/>
+        </insert>
+        <insert tableName="lib_author">
+            <column name="id_author" valueNumeric="10"/>
+            <column name="birth_date"/>
+            <column name="name" value="Beata"/>
+            <column name="nickname" value=""/>
+            <column name="surname" value="Pawlikowska"/>
+        </insert>
+        <insert tableName="lib_author">
+            <column name="id_author" valueNumeric="11"/>
+            <column name="birth_date"/>
+            <column name="name" value="J.R.R"/>
+            <column name="nickname" value=""/>
+            <column name="surname" value="Tolkien"/>
+        </insert>
+        <insert tableName="lib_author">
+            <column name="id_author" valueNumeric="12"/>
+            <column name="birth_date"/>
+            <column name="name" value="Alan"/>
+            <column name="nickname" value=""/>
+            <column name="surname" value="Grant"/>
+        </insert>
+        <insert tableName="lib_author">
+            <column name="id_author" valueNumeric="13"/>
+            <column name="birth_date"/>
+            <column name="name" value="Julia"/>
+            <column name="nickname" value=""/>
+            <column name="surname" value="Hartwig"/>
+        </insert>
+        <insert tableName="lib_author">
+            <column name="id_author" valueNumeric="14"/>
+            <column name="birth_date"/>
+            <column name="name" value="Gene"/>
+            <column name="nickname" value=""/>
+            <column name="surname" value="Wolfe"/>
+        </insert>
+        <insert tableName="lib_author">
+            <column name="id_author" valueNumeric="15"/>
+            <column name="birth_date"/>
+            <column name="name" value="Zbigniew"/>
+            <column name="nickname" value=""/>
+            <column name="surname" value="Lew-Starowicz"/>
+        </insert>
+        <insert tableName="lib_author">
+            <column name="id_author" valueNumeric="16"/>
+            <column name="birth_date"/>
+            <column name="name" value="Stanisła"/>
+            <column name="nickname" value=""/>
+            <column name="surname" value="Lem"/>
+        </insert>
+        <insert tableName="lib_author">
+            <column name="id_author" valueNumeric="17"/>
+            <column name="birth_date"/>
+            <column name="name" value="Agatha"/>
+            <column name="nickname" value=""/>
+            <column name="surname" value="Christie"/>
+        </insert>
+        <insert tableName="lib_author">
+            <column name="id_author" valueNumeric="18"/>
+            <column name="birth_date"/>
+            <column name="name" value="Alan"/>
+            <column name="nickname" value=""/>
+            <column name="surname" value="Bradly"/>
+        </insert>
+    </changeSet>
+    <changeSet author="rutko (generated)" id="1628346161402-8">
+        <insert tableName="lib_book">
+            <column name="id_book" valueNumeric="1"/>
+            <column name="ext_file_metadata"/>
+            <column name="file"/>
+            <column name="isbn_number" value="9788378396574"/>
+            <column name="number_of_page" valueNumeric="264"/>
+            <column name="number_of_tomes"/>
+            <column name="title" value="Upadek króla Artura"/>
+        </insert>
+        <insert tableName="lib_book">
+            <column name="id_book" valueNumeric="2"/>
+            <column name="ext_file_metadata"/>
+            <column name="file"/>
+            <column name="isbn_number" value="9788381230735"/>
+            <column name="number_of_page" valueNumeric="368"/>
+            <column name="number_of_tomes"/>
+            <column name="title" value="Beren i Lúthien. Pod redakcją Christophera Tolkiena"/>
+        </insert>
+        <insert tableName="lib_book">
+            <column name="id_book" valueNumeric="3"/>
+            <column name="ext_file_metadata"/>
+            <column name="file"/>
+            <column name="isbn_number" value="9788381233675"/>
+            <column name="number_of_page" valueNumeric="272"/>
+            <column name="number_of_tomes"/>
+            <column name="title" value="Dzieci Húrina. Pod redakcją Christophera Tolkiena"/>
+        </insert>
+        <insert tableName="lib_book">
+            <column name="id_book" valueNumeric="4"/>
+            <column name="ext_file_metadata"/>
+            <column name="file"/>
+            <column name="isbn_number" value="9780007120826"/>
+            <column name="number_of_page" valueNumeric="351"/>
+            <column name="number_of_tomes"/>
+            <column name="title" value="4.50 from Paddington"/>
+        </insert>
+        <insert tableName="lib_book">
+            <column name="id_book" valueNumeric="5"/>
+            <column name="ext_file_metadata"/>
+            <column name="file"/>
+            <column name="isbn_number" value="9780008164928"/>
+            <column name="number_of_page" valueNumeric="310"/>
+            <column name="number_of_tomes"/>
+            <column name="title" value="Murder in the mews: and other stories"/>
+        </insert>
+        <insert tableName="lib_book">
+            <column name="id_book" valueNumeric="6"/>
+            <column name="ext_file_metadata"/>
+            <column name="file"/>
+            <column name="isbn_number" value="9780008262310"/>
+            <column name="number_of_page" valueNumeric="117"/>
+            <column name="number_of_tomes"/>
+            <column name="title" value="The Murder at the Vicarage"/>
+        </insert>
+    </changeSet>
+    <changeSet author="rutko (generated)" id="1628346161402-9">
+        <insert tableName="lib_book_author">
+            <column name="id_book" valueNumeric="1"/>
+            <column name="id_author" valueNumeric="11"/>
+        </insert>
+        <insert tableName="lib_book_author">
+            <column name="id_book" valueNumeric="2"/>
+            <column name="id_author" valueNumeric="1"/>
+        </insert>
+        <insert tableName="lib_book_author">
+            <column name="id_book" valueNumeric="3"/>
+            <column name="id_author" valueNumeric="1"/>
+        </insert>
+        <insert tableName="lib_book_author">
+            <column name="id_book" valueNumeric="4"/>
+            <column name="id_author" valueNumeric="17"/>
+        </insert>
+        <insert tableName="lib_book_author">
+            <column name="id_book" valueNumeric="5"/>
+            <column name="id_author" valueNumeric="17"/>
+        </insert>
+        <insert tableName="lib_book_author">
+            <column name="id_book" valueNumeric="6"/>
+            <column name="id_author" valueNumeric="17"/>
+        </insert>
+    </changeSet>
+    <changeSet author="rutko (generated)" id="1628346161402-12">
+        <insert tableName="lib_category">
+            <column name="id_category" valueNumeric="1"/>
+            <column name="name" value="Akcja"/>
+        </insert>
+        <insert tableName="lib_category">
+            <column name="id_category" valueNumeric="2"/>
+            <column name="name" value="Biograficzne"/>
+        </insert>
+        <insert tableName="lib_category">
+            <column name="id_category" valueNumeric="3"/>
+            <column name="name" value="Dla dzieci"/>
+        </insert>
+        <insert tableName="lib_category">
+            <column name="id_category" valueNumeric="4"/>
+            <column name="name" value="Fantastyka"/>
+        </insert>
+        <insert tableName="lib_category">
+            <column name="id_category" valueNumeric="5"/>
+            <column name="name" value="Historia"/>
+        </insert>
+        <insert tableName="lib_category">
+            <column name="id_category" valueNumeric="6"/>
+            <column name="name" value="Horror"/>
+        </insert>
+        <insert tableName="lib_category">
+            <column name="id_category" valueNumeric="7"/>
+            <column name="name" value="Języki obce"/>
+        </insert>
+        <insert tableName="lib_category">
+            <column name="id_category" valueNumeric="8"/>
+            <column name="name" value="Klasyka"/>
+        </insert>
+        <insert tableName="lib_category">
+            <column name="id_category" valueNumeric="9"/>
+            <column name="name" value="Komiks"/>
+        </insert>
+        <insert tableName="lib_category">
+            <column name="id_category" valueNumeric="10"/>
+            <column name="name" value="Kryminał"/>
+        </insert>
+        <insert tableName="lib_category">
+            <column name="id_category" valueNumeric="11"/>
+            <column name="name" value="Książki kucharskie"/>
+        </insert>
+        <insert tableName="lib_category">
+            <column name="id_category" valueNumeric="12"/>
+            <column name="name" value="Literatura faktu"/>
+        </insert>
+        <insert tableName="lib_category">
+            <column name="id_category" valueNumeric="13"/>
+            <column name="name" value="Literatura naukowa/popularnonaukowa"/>
+        </insert>
+        <insert tableName="lib_category">
+            <column name="id_category" valueNumeric="14"/>
+            <column name="name" value="Literatura piękna"/>
+        </insert>
+        <insert tableName="lib_category">
+            <column name="id_category" valueNumeric="15"/>
+            <column name="name" value="Literatura podróżnicza"/>
+        </insert>
+        <insert tableName="lib_category">
+            <column name="id_category" valueNumeric="16"/>
+            <column name="name" value="Literatura współczesna"/>
+        </insert>
+        <insert tableName="lib_category">
+            <column name="id_category" valueNumeric="17"/>
+            <column name="name" value="Magia i parapsychologia"/>
+        </insert>
+        <insert tableName="lib_category">
+            <column name="id_category" valueNumeric="18"/>
+            <column name="name" value="Mangi"/>
+        </insert>
+        <insert tableName="lib_category">
+            <column name="id_category" valueNumeric="19"/>
+            <column name="name" value="Młodzieżowa"/>
+        </insert>
+        <insert tableName="lib_category">
+            <column name="id_category" valueNumeric="20"/>
+            <column name="name" value="Obyczajowa"/>
+        </insert>
+        <insert tableName="lib_category">
+            <column name="id_category" valueNumeric="21"/>
+            <column name="name" value="Opowiadania"/>
+        </insert>
+        <insert tableName="lib_category">
+            <column name="id_category" valueNumeric="22"/>
+            <column name="name" value="Paranormal romance"/>
+        </insert>
+        <insert tableName="lib_category">
+            <column name="id_category" valueNumeric="23"/>
+            <column name="name" value="Poezja"/>
+        </insert>
+        <insert tableName="lib_category">
+            <column name="id_category" valueNumeric="24"/>
+            <column name="name" value="Poradnik"/>
+        </insert>
+        <insert tableName="lib_category">
+            <column name="id_category" valueNumeric="25"/>
+            <column name="name" value="Psychologiczna"/>
+        </insert>
+        <insert tableName="lib_category">
+            <column name="id_category" valueNumeric="26"/>
+            <column name="name" value="Religijna"/>
+        </insert>
+        <insert tableName="lib_category">
+            <column name="id_category" valueNumeric="27"/>
+            <column name="name" value="Romans"/>
+        </insert>
+        <insert tableName="lib_category">
+            <column name="id_category" valueNumeric="28"/>
+            <column name="name" value="Romans historyczny"/>
+        </insert>
+        <insert tableName="lib_category">
+            <column name="id_category" valueNumeric="29"/>
+            <column name="name" value="Science-fiction"/>
+        </insert>
+        <insert tableName="lib_category">
+            <column name="id_category" valueNumeric="30"/>
+            <column name="name" value="Sensacja"/>
+        </insert>
+        <insert tableName="lib_category">
+            <column name="id_category" valueNumeric="31"/>
+            <column name="name" value="Steampunk"/>
+        </insert>
+        <insert tableName="lib_category">
+            <column name="id_category" valueNumeric="32"/>
+            <column name="name" value="Thriller"/>
+        </insert>
+    </changeSet>
+    <changeSet author="rutko (generated)" id="1628346161402-10">
+        <insert tableName="lib_book_category">
+            <column name="id_book" valueNumeric="1"/>
+            <column name="id_category" valueNumeric="1"/>
+        </insert>
+        <insert tableName="lib_book_category">
+            <column name="id_book" valueNumeric="2"/>
+            <column name="id_category" valueNumeric="1"/>
+        </insert>
+        <insert tableName="lib_book_category">
+            <column name="id_book" valueNumeric="3"/>
+            <column name="id_category" valueNumeric="1"/>
+        </insert>
+        <insert tableName="lib_book_category">
+            <column name="id_book" valueNumeric="4"/>
+            <column name="id_category" valueNumeric="10"/>
+        </insert>
+        <insert tableName="lib_book_category">
+            <column name="id_book" valueNumeric="5"/>
+            <column name="id_category" valueNumeric="10"/>
+        </insert>
+        <insert tableName="lib_book_category">
+            <column name="id_book" valueNumeric="6"/>
+            <column name="id_category" valueNumeric="10"/>
+        </insert>
+    </changeSet>
+    <changeSet author="rutko (generated)" id="1628346161402-19">
+        <insert tableName="lib_publishing_house">
+            <column name="id_publishing_house" valueNumeric="1"/>
+            <column name="name" value="Księgarnia Wydawnicza Trzaska, Evert i Michalski"/>
+        </insert>
+        <insert tableName="lib_publishing_house">
+            <column name="id_publishing_house" valueNumeric="2"/>
+            <column name="name" value="Wydawnictwo Uniwersytetu Łódzkiego"/>
+        </insert>
+        <insert tableName="lib_publishing_house">
+            <column name="id_publishing_house" valueNumeric="3"/>
+            <column name="name" value="Agencja Wydawnicza Runa"/>
+        </insert>
+        <insert tableName="lib_publishing_house">
+            <column name="id_publishing_house" valueNumeric="4"/>
+            <column name="name" value="Państwowy Instytut Wydawniczy"/>
+        </insert>
+        <insert tableName="lib_publishing_house">
+            <column name="id_publishing_house" valueNumeric="5"/>
+            <column name="name" value="Prószyński i S-ka"/>
+        </insert>
+        <insert tableName="lib_publishing_house">
+            <column name="id_publishing_house" valueNumeric="6"/>
+            <column name="name" value="Wydawnictwo Naukowe PWN"/>
+        </insert>
+        <insert tableName="lib_publishing_house">
+            <column name="id_publishing_house" valueNumeric="7"/>
+            <column name="name" value="Wydawnictwo Naukowe Scholar"/>
+        </insert>
+        <insert tableName="lib_publishing_house">
+            <column name="id_publishing_house" valueNumeric="8"/>
+            <column name="name" value="Nowy Świat (wydawnictwo)"/>
+        </insert>
+        <insert tableName="lib_publishing_house">
+            <column name="id_publishing_house" valueNumeric="9"/>
+            <column name="name" value="Świat Książki"/>
+        </insert>
+        <insert tableName="lib_publishing_house">
+            <column name="id_publishing_house" valueNumeric="10"/>
+            <column name="name" value="Wydawnictwa Szkolne i Pedagogiczne"/>
+        </insert>
+        <insert tableName="lib_publishing_house">
+            <column name="id_publishing_house" valueNumeric="11"/>
+            <column name="name" value="Wydawnictwo „Nasza Księgarnia”"/>
+        </insert>
+        <insert tableName="lib_publishing_house">
+            <column name="id_publishing_house" valueNumeric="12"/>
+            <column name="name" value="Noir sur Blanc"/>
+        </insert>
+        <insert tableName="lib_publishing_house">
+            <column name="id_publishing_house" valueNumeric="14"/>
+            <column name="name" value="HarperCollins Publishers"/>
+        </insert>
+    </changeSet>
+    <changeSet author="rutko (generated)" id="1628346161402-11">
+        <insert tableName="lib_book_publishing_house">
+            <column name="id_book" valueNumeric="1"/>
+            <column name="id_publishing_house" valueNumeric="5"/>
+        </insert>
+        <insert tableName="lib_book_publishing_house">
+            <column name="id_book" valueNumeric="2"/>
+            <column name="id_publishing_house" valueNumeric="5"/>
+        </insert>
+        <insert tableName="lib_book_publishing_house">
+            <column name="id_book" valueNumeric="3"/>
+            <column name="id_publishing_house" valueNumeric="5"/>
+        </insert>
+        <insert tableName="lib_book_publishing_house">
+            <column name="id_book" valueNumeric="4"/>
+            <column name="id_publishing_house" valueNumeric="14"/>
+        </insert>
+        <insert tableName="lib_book_publishing_house">
+            <column name="id_book" valueNumeric="5"/>
+            <column name="id_publishing_house" valueNumeric="14"/>
+        </insert>
+        <insert tableName="lib_book_publishing_house">
+            <column name="id_book" valueNumeric="6"/>
+            <column name="id_publishing_house" valueNumeric="14"/>
+        </insert>
+    </changeSet>
+    <changeSet author="rutko (generated)" id="1628346161402-13">
+        <insert tableName="lib_client">
+            <column name="id_client" valueNumeric="1"/>
+        </insert>
+        <insert tableName="lib_client">
+            <column name="id_client" valueNumeric="2"/>
+        </insert>
+        <insert tableName="lib_client">
+            <column name="id_client" valueNumeric="7"/>
+        </insert>
+        <insert tableName="lib_client">
+            <column name="id_client" valueNumeric="8"/>
+        </insert>
+        <insert tableName="lib_client">
+            <column name="id_client" valueNumeric="9"/>
+        </insert>
+        <insert tableName="lib_client">
+            <column name="id_client" valueNumeric="10"/>
+        </insert>
+        <insert tableName="lib_client">
+            <column name="id_client" valueNumeric="11"/>
+        </insert>
+        <insert tableName="lib_client">
+            <column name="id_client" valueNumeric="12"/>
+        </insert>
+        <insert tableName="lib_client">
+            <column name="id_client" valueNumeric="15"/>
+        </insert>
+        <insert tableName="lib_client">
+            <column name="id_client" valueNumeric="18"/>
+        </insert>
+    </changeSet>
+    <changeSet author="rutko (generated)" id="1628346161402-16">
+        <insert tableName="lib_library_data">
+            <column name="id_library_data" valueNumeric="1"/>
+            <column name="name" value="Library"/>
+        </insert>
+    </changeSet>
+    <changeSet author="rutko (generated)" id="1628346161402-15">
+        <insert tableName="lib_library_branch_data">
+            <column name="id_library_branch_data" valueNumeric="1"/>
+            <column name="address"/>
+            <column name="name" value="Main branch"/>
+            <column name="id_city"/>
+            <column name="id_library_data" valueNumeric="1"/>
+        </insert>
+    </changeSet>
+    <changeSet author="rutko (generated)" id="1628346161402-17">
+        <insert tableName="lib_library_system_data">
+            <column name="id_library_system_data" valueNumeric="1"/>
+            <column name="id_library_data" valueNumeric="1"/>
+        </insert>
+    </changeSet>
+    <changeSet author="rutko (generated)" id="1628346161402-22">
+        <insert tableName="lib_worker">
+            <column name="salary"/>
+            <column name="id_worker" valueNumeric="3"/>
+        </insert>
+        <insert tableName="lib_worker">
+            <column name="salary"/>
+            <column name="id_worker" valueNumeric="4"/>
+        </insert>
+        <insert tableName="lib_worker">
+            <column name="salary"/>
+            <column name="id_worker" valueNumeric="5"/>
+        </insert>
+        <insert tableName="lib_worker">
+            <column name="salary"/>
+            <column name="id_worker" valueNumeric="6"/>
+        </insert>
+        <insert tableName="lib_worker">
+            <column name="salary"/>
+            <column name="id_worker" valueNumeric="13"/>
+        </insert>
+        <insert tableName="lib_worker">
+            <column name="salary"/>
+            <column name="id_worker" valueNumeric="14"/>
+        </insert>
+        <insert tableName="lib_worker">
+            <column name="salary"/>
+            <column name="id_worker" valueNumeric="16"/>
+        </insert>
+        <insert tableName="lib_worker">
+            <column name="salary"/>
+            <column name="id_worker" valueNumeric="17"/>
+        </insert>
+        <insert tableName="lib_worker">
+            <column name="salary"/>
+            <column name="id_worker" valueNumeric="19"/>
+        </insert>
+        <insert tableName="lib_worker">
+            <column name="salary"/>
+            <column name="id_worker" valueNumeric="20"/>
+        </insert>
+    </changeSet>
+    <changeSet author="rutko (generated)" id="1628346161402-18">
+        <insert tableName="lib_library_worker">
+            <column name="is_accountant" valueBoolean="true"/>
+            <column name="id_library_data" valueNumeric="1"/>
+            <column name="id_worker" valueNumeric="3"/>
+        </insert>
+        <insert tableName="lib_library_worker">
+            <column name="is_accountant" valueBoolean="true"/>
+            <column name="id_library_data" valueNumeric="1"/>
+            <column name="id_worker" valueNumeric="4"/>
+        </insert>
+        <insert tableName="lib_library_worker">
+            <column name="is_accountant" valueBoolean="false"/>
+            <column name="id_library_data" valueNumeric="1"/>
+            <column name="id_worker" valueNumeric="5"/>
+        </insert>
+        <insert tableName="lib_library_worker">
+            <column name="is_accountant" valueBoolean="false"/>
+            <column name="id_library_data" valueNumeric="1"/>
+            <column name="id_worker" valueNumeric="6"/>
+        </insert>
+        <insert tableName="lib_library_worker">
+            <column name="is_accountant" valueBoolean="false"/>
+            <column name="id_library_data" valueNumeric="1"/>
+            <column name="id_worker" valueNumeric="13"/>
+        </insert>
+        <insert tableName="lib_library_worker">
+            <column name="is_accountant" valueBoolean="true"/>
+            <column name="id_library_data" valueNumeric="1"/>
+            <column name="id_worker" valueNumeric="14"/>
+        </insert>
+        <insert tableName="lib_library_worker">
+            <column name="is_accountant" valueBoolean="false"/>
+            <column name="id_library_data" valueNumeric="1"/>
+            <column name="id_worker" valueNumeric="17"/>
+        </insert>
+        <insert tableName="lib_library_worker">
+            <column name="is_accountant" valueBoolean="true"/>
+            <column name="id_library_data" valueNumeric="1"/>
+            <column name="id_worker" valueNumeric="16"/>
+        </insert>
+        <insert tableName="lib_library_worker">
+            <column name="is_accountant" valueBoolean="true"/>
+            <column name="id_library_data" valueNumeric="1"/>
+            <column name="id_worker" valueNumeric="19"/>
+        </insert>
+        <insert tableName="lib_library_worker">
+            <column name="is_accountant" valueBoolean="false"/>
+            <column name="id_library_data" valueNumeric="1"/>
+            <column name="id_worker" valueNumeric="20"/>
+        </insert>
+    </changeSet>
+    <changeSet author="rutko (generated)" id="1628346161402-21">
+        <insert tableName="lib_volume">
+            <column name="id_volume" valueNumeric="1"/>
+            <column name="inventory_number" value="2020220700001"/>
+            <column name="is_reading_room" valueBoolean="false"/>
+            <column name="penalty_value"/>
+            <column name="state"/>
+            <column name="id_book" valueNumeric="1"/>
+        </insert>
+        <insert tableName="lib_volume">
+            <column name="id_volume" valueNumeric="2"/>
+            <column name="inventory_number" value="2020220700002"/>
+            <column name="is_reading_room" valueBoolean="false"/>
+            <column name="penalty_value"/>
+            <column name="state"/>
+            <column name="id_book" valueNumeric="1"/>
+        </insert>
+        <insert tableName="lib_volume">
+            <column name="id_volume" valueNumeric="3"/>
+            <column name="inventory_number" value="2020220700003"/>
+            <column name="is_reading_room" valueBoolean="false"/>
+            <column name="penalty_value"/>
+            <column name="state"/>
+            <column name="id_book" valueNumeric="1"/>
+        </insert>
+        <insert tableName="lib_volume">
+            <column name="id_volume" valueNumeric="4"/>
+            <column name="inventory_number" value="2020220701001"/>
+            <column name="is_reading_room" valueBoolean="false"/>
+            <column name="penalty_value"/>
+            <column name="state"/>
+            <column name="id_book" valueNumeric="2"/>
+        </insert>
+        <insert tableName="lib_volume">
+            <column name="id_volume" valueNumeric="5"/>
+            <column name="inventory_number" value="2020220701002"/>
+            <column name="is_reading_room" valueBoolean="false"/>
+            <column name="penalty_value"/>
+            <column name="state"/>
+            <column name="id_book" valueNumeric="2"/>
+        </insert>
+        <insert tableName="lib_volume">
+            <column name="id_volume" valueNumeric="6"/>
+            <column name="inventory_number" value="2020220702001"/>
+            <column name="is_reading_room" valueBoolean="false"/>
+            <column name="penalty_value"/>
+            <column name="state"/>
+            <column name="id_book" valueNumeric="3"/>
+        </insert>
+        <insert tableName="lib_volume">
+            <column name="id_volume" valueNumeric="7"/>
+            <column name="inventory_number" value="2020220702002"/>
+            <column name="is_reading_room" valueBoolean="false"/>
+            <column name="penalty_value"/>
+            <column name="state"/>
+            <column name="id_book" valueNumeric="3"/>
+        </insert>
+        <insert tableName="lib_volume">
+            <column name="id_volume" valueNumeric="8"/>
+            <column name="inventory_number" value="2020220702003"/>
+            <column name="is_reading_room" valueBoolean="false"/>
+            <column name="penalty_value"/>
+            <column name="state"/>
+            <column name="id_book" valueNumeric="3"/>
+        </insert>
+        <insert tableName="lib_volume">
+            <column name="id_volume" valueNumeric="9"/>
+            <column name="inventory_number" value="2020231203001"/>
+            <column name="is_reading_room" valueBoolean="false"/>
+            <column name="penalty_value"/>
+            <column name="state"/>
+            <column name="id_book" valueNumeric="4"/>
+        </insert>
+        <insert tableName="lib_volume">
+            <column name="id_volume" valueNumeric="10"/>
+            <column name="inventory_number" value="2020231203002"/>
+            <column name="is_reading_room" valueBoolean="false"/>
+            <column name="penalty_value"/>
+            <column name="state"/>
+            <column name="id_book" valueNumeric="4"/>
+        </insert>
+        <insert tableName="lib_volume">
+            <column name="id_volume" valueNumeric="11"/>
+            <column name="inventory_number" value="2020231203003"/>
+            <column name="is_reading_room" valueBoolean="false"/>
+            <column name="penalty_value"/>
+            <column name="state"/>
+            <column name="id_book" valueNumeric="4"/>
+        </insert>
+        <insert tableName="lib_volume">
+            <column name="id_volume" valueNumeric="12"/>
+            <column name="inventory_number" value="2020231203004"/>
+            <column name="is_reading_room" valueBoolean="false"/>
+            <column name="penalty_value"/>
+            <column name="state"/>
+            <column name="id_book" valueNumeric="4"/>
+        </insert>
+        <insert tableName="lib_volume">
+            <column name="id_volume" valueNumeric="13"/>
+            <column name="inventory_number" value="2020231204001"/>
+            <column name="is_reading_room" valueBoolean="false"/>
+            <column name="penalty_value"/>
+            <column name="state"/>
+            <column name="id_book" valueNumeric="5"/>
+        </insert>
+        <insert tableName="lib_volume">
+            <column name="id_volume" valueNumeric="14"/>
+            <column name="inventory_number" value="2020231204002"/>
+            <column name="is_reading_room" valueBoolean="false"/>
+            <column name="penalty_value"/>
+            <column name="state"/>
+            <column name="id_book" valueNumeric="5"/>
+        </insert>
+        <insert tableName="lib_volume">
+            <column name="id_volume" valueNumeric="15"/>
+            <column name="inventory_number" value="2020231204003"/>
+            <column name="is_reading_room" valueBoolean="false"/>
+            <column name="penalty_value"/>
+            <column name="state"/>
+            <column name="id_book" valueNumeric="5"/>
+        </insert>
+        <insert tableName="lib_volume">
+            <column name="id_volume" valueNumeric="16"/>
+            <column name="inventory_number" value="2020231204004"/>
+            <column name="is_reading_room" valueBoolean="false"/>
+            <column name="penalty_value"/>
+            <column name="state"/>
+            <column name="id_book" valueNumeric="5"/>
+        </insert>
+        <insert tableName="lib_volume">
+            <column name="id_volume" valueNumeric="17"/>
+            <column name="inventory_number" value="2020231205001"/>
+            <column name="is_reading_room" valueBoolean="false"/>
+            <column name="penalty_value"/>
+            <column name="state"/>
+            <column name="id_book" valueNumeric="6"/>
+        </insert>
+        <insert tableName="lib_volume">
+            <column name="id_volume" valueNumeric="18"/>
+            <column name="inventory_number" value="2020231205002"/>
+            <column name="is_reading_room" valueBoolean="false"/>
+            <column name="penalty_value"/>
+            <column name="state"/>
+            <column name="id_book" valueNumeric="6"/>
+        </insert>
+        <insert tableName="lib_volume">
+            <column name="id_volume" valueNumeric="19"/>
+            <column name="inventory_number" value="2020231205003"/>
+            <column name="is_reading_room" valueBoolean="false"/>
+            <column name="penalty_value"/>
+            <column name="state"/>
+            <column name="id_book" valueNumeric="6"/>
+        </insert>
+    </changeSet>
+    <changeSet author="rutko (generated)" id="1628346161402-20">
+        <insert tableName="lib_reservation">
+            <column name="id_reservation" valueNumeric="1"/>
+            <column name="is_active" valueBoolean="true"/>
+            <column name="is_cancelled" valueBoolean="false"/>
+            <column name="reservation_date" valueDate="2020-12-21"/>
+            <column name="id_client" valueNumeric="2"/>
+            <column name="id_volume" valueNumeric="6"/>
+        </insert>
+        <insert tableName="lib_reservation">
+            <column name="id_reservation" valueNumeric="2"/>
+            <column name="is_active" valueBoolean="true"/>
+            <column name="is_cancelled" valueBoolean="false"/>
+            <column name="reservation_date" valueDate="2020-12-21"/>
+            <column name="id_client" valueNumeric="15"/>
+            <column name="id_volume" valueNumeric="3"/>
+        </insert>
+        <insert tableName="lib_reservation">
+            <column name="id_reservation" valueNumeric="3"/>
+            <column name="is_active" valueBoolean="true"/>
+            <column name="is_cancelled" valueBoolean="false"/>
+            <column name="reservation_date" valueDate="2020-12-21"/>
+            <column name="id_client" valueNumeric="1"/>
+            <column name="id_volume" valueNumeric="1"/>
+        </insert>
+        <insert tableName="lib_reservation">
+            <column name="id_reservation" valueNumeric="4"/>
+            <column name="is_active" valueBoolean="true"/>
+            <column name="is_cancelled" valueBoolean="false"/>
+            <column name="reservation_date" valueDate="2020-12-21"/>
+            <column name="id_client" valueNumeric="12"/>
+            <column name="id_volume" valueNumeric="7"/>
+        </insert>
+    </changeSet>
+    <changeSet author="rutko (generated)" id="1628346161402-14">
+        <insert tableName="lib_lend">
+            <column name="id_lend" valueNumeric="2"/>
+            <column name="is_returned" valueBoolean="false"/>
+            <column name="lend_date" valueDate="2020-12-21"/>
+            <column name="prolognation"/>
+            <column name="queue_client"/>
+            <column name="returned_date" valueDate="2021-01-21"/>
+            <column name="id_client" valueNumeric="2"/>
+            <column name="id_reservation"/>
+            <column name="id_volume" valueNumeric="2"/>
+        </insert>
+        <insert tableName="lib_lend">
+            <column name="id_lend" valueNumeric="3"/>
+            <column name="is_returned" valueBoolean="false"/>
+            <column name="lend_date" valueDate="2020-12-21"/>
+            <column name="prolognation"/>
+            <column name="queue_client"/>
+            <column name="returned_date" valueDate="2021-01-21"/>
+            <column name="id_client" valueNumeric="2"/>
+            <column name="id_reservation"/>
+            <column name="id_volume" valueNumeric="4"/>
+        </insert>
+        <insert tableName="lib_lend">
+            <column name="id_lend" valueNumeric="4"/>
+            <column name="is_returned" valueBoolean="false"/>
+            <column name="lend_date" valueDate="2020-12-21"/>
+            <column name="prolognation"/>
+            <column name="queue_client"/>
+            <column name="returned_date" valueDate="2021-01-21"/>
+            <column name="id_client" valueNumeric="1"/>
+            <column name="id_reservation" valueNumeric="1"/>
+            <column name="id_volume" valueNumeric="6"/>
+        </insert>
+        <insert tableName="lib_lend">
+            <column name="id_lend" valueNumeric="6"/>
+            <column name="is_returned" valueBoolean="false"/>
+            <column name="lend_date" valueDate="2020-12-21"/>
+            <column name="prolognation"/>
+            <column name="queue_client"/>
+            <column name="returned_date" valueDate="2021-01-21"/>
+            <column name="id_client" valueNumeric="12"/>
+            <column name="id_reservation" valueNumeric="2"/>
+            <column name="id_volume" valueNumeric="3"/>
+        </insert>
+        <insert tableName="lib_lend">
+            <column name="id_lend" valueNumeric="1"/>
+            <column name="is_returned" valueBoolean="false"/>
+            <column name="lend_date" valueDate="2020-12-21"/>
+            <column name="prolognation"/>
+            <column name="queue_client"/>
+            <column name="returned_date" valueDate="2021-01-21"/>
+            <column name="id_client" valueNumeric="2"/>
+            <column name="id_reservation" valueNumeric="3"/>
+            <column name="id_volume" valueNumeric="1"/>
+        </insert>
+        <insert tableName="lib_lend">
+            <column name="id_lend" valueNumeric="5"/>
+            <column name="is_returned" valueBoolean="false"/>
+            <column name="lend_date" valueDate="2020-12-21"/>
+            <column name="prolognation"/>
+            <column name="queue_client"/>
+            <column name="returned_date" valueDate="2021-01-21"/>
+            <column name="id_client" valueNumeric="15"/>
+            <column name="id_reservation" valueNumeric="4"/>
+            <column name="id_volume" valueNumeric="7"/>
+        </insert>
+    </changeSet>
+    <changeSet author="rutko (generated)" id="1628346161402-23">
+        <insert tableName="mes_message_type">
+            <column name="id_message_type" valueNumeric="0"/>
+            <column name="description" value=""/>
+            <column name="name" value="usr_message"/>
+        </insert>
+        <insert tableName="mes_message_type">
+            <column name="id_message_type" valueNumeric="1"/>
+            <column name="description" value=""/>
+            <column name="name" value="sys_message"/>
+        </insert>
+        <insert tableName="mes_message_type">
+            <column name="id_message_type" valueNumeric="2"/>
+            <column name="description" value=""/>
+            <column name="name" value="sys_notification"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
