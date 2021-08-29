@@ -38,10 +38,6 @@ public class Actions implements IActionForm {
 		if (Utils.displayConfirmDialog(
 				SystemProperties.getInstance().getResourceBundle().getString("confirmDialog.languageChange"),
 				"") == JOptionPane.YES_OPTION) {
-			Constants.APPLICATION_LANGUAGE = (String) tabbedForm.getComboBoxLanguage().getSelectedItem();
-			SystemProperties.getInstance()
-					.setResourceBundleLanguage((String) tabbedForm.getComboBoxLanguage().getSelectedItem());
-
 			boolean systemPropertiesAlreadyExists = LogInEvent.getUserData().getUserAccount().getSystemProperties() != null;
 			com.javafee.elibrary.hibernate.dto.common.SystemProperties systemProperties = com.javafee.elibrary.hibernate.dao.common.Common
 					//FIXME: null check
@@ -67,8 +63,7 @@ public class Actions implements IActionForm {
 
 	@Override
 	public void initializeForm() {
-		tabbedForm.getComboBoxLanguage().addItem(Constants.APPLICATION_LANGUAGE_PL);
-		tabbedForm.getComboBoxLanguage().addItem(Constants.APPLICATION_LANGUAGE_EN);
+		reloadComboBoxLanguage();
 		Common.registerTimerServiceListenerSingleton(tabbedForm.getLblTime());
 		reloadLblLogInInformationDynamic();
 		registerNetworkServiceListener();
@@ -127,6 +122,17 @@ public class Actions implements IActionForm {
 					tabbedForm.getPanelWorker(), null);
 			tabbedForm.pack();
 		}
+	}
+
+	private void reloadComboBoxLanguage() {
+		tabbedForm.getComboBoxLanguage().addItem(Constants.APPLICATION_LANGUAGE_PL);
+		tabbedForm.getComboBoxLanguage().addItem(Constants.APPLICATION_LANGUAGE_EN);
+		if (LogInEvent.getUserData().getUserAccount().getSystemProperties() != null
+				&& LogInEvent.getUserData().getUserAccount().getSystemProperties().getLanguage() != null)
+			tabbedForm.getComboBoxLanguage().setSelectedItem(
+					LogInEvent.getUserData().getUserAccount().getSystemProperties().getLanguage().getName());
+		else
+			tabbedForm.getComboBoxLanguage().setSelectedItem(Constants.APPLICATION_LANGUAGE);
 	}
 
 	private void reloadLblLogInInformationDynamic() {
