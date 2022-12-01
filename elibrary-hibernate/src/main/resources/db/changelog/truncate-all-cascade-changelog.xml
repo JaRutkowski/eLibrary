@@ -5,7 +5,7 @@
 	<changeSet author="Jakub.Rutkowski" id="0000000019">
 		<comment>Clear any existing legacy data in the tables</comment>
 		<sql splitStatements="true">
-			TRUNCATE TABLE public.com_authorization CONTINUE IDENTITY CASCADE;
+			-- TRUNCATE TABLE public.com_authorization CONTINUE IDENTITY CASCADE;
 			TRUNCATE TABLE public.com_city CONTINUE IDENTITY CASCADE;
 			TRUNCATE TABLE public.com_language CONTINUE IDENTITY CASCADE;
 			TRUNCATE TABLE public.com_system_data CONTINUE IDENTITY CASCADE;

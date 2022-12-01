@@ -392,7 +392,7 @@ public final class Constants {
 	public static final String APPLICATION_PROPERTIES = "application.properties";
 
 	public static final int MAIN_SPLASH_SCREEN_DURATION = 3000;
-	public static final String MAIN_SPLASH_SCREEN_IMAGE = "/images/splashScreen.jpg";
+	public static final String MAIN_SPLASH_SCREEN_IMAGE = "/images/splashScreen_v4_2023.jpg";
 
 	public static final String APPLICATION_NAME = "e-library";
 	public static final String APPLICATION_BUILD_STATUS_SUCCEEDED = "succeeded";
@@ -472,7 +472,7 @@ public final class Constants {
 	public static final Boolean DATA_BASE_REGISTER_DEFAULT_FLAG = false;
 	public static final Integer DATA_BASE_ADMIN_ID = 0;
 	public static final String DATA_BASE_ADMIN_LOGIN = "admin";
-	public static final String DATA_BASE_ADMIN_PASSWORD = "f7e3c24e1a04758097f69be41aa3cf18";
+	public static final String DATA_BASE_ADMIN_PASSWORD = "b86101561d1558c5b2015174070e26b8";
 	public static final Integer DATA_BASE_INVENTORY_NUMBER_LENGTH = 13;
 	public static final Integer DATA_BASE_ISBN_NUMBER_LENGTH = 13;
 	public static final Integer DATA_BASE_PESEL_NUMBER_LENGHT = 11;
