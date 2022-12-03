@@ -392,7 +392,7 @@ public final class Constants {
 	public static final String APPLICATION_PROPERTIES = "application.properties";
 
 	public static final int MAIN_SPLASH_SCREEN_DURATION = 3000;
-	public static final String MAIN_SPLASH_SCREEN_IMAGE = "/images/splashScreen.jpg";
+	public static final String MAIN_SPLASH_SCREEN_IMAGE = "/images/splashScreen_v4_2023.jpg";
 
 	public static final String APPLICATION_NAME = "e-library";
 	public static final String APPLICATION_BUILD_STATUS_SUCCEEDED = "succeeded";
