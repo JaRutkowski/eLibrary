@@ -1,14 +1,14 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
-    <changeSet author="Mój (generated)" id="1593444482106-0">
-        <createTable tableName="com_authorization">
-            <column name="id_authorization" type="INTEGER">
-                <constraints primaryKey="true" primaryKeyName="com_authorization_pkey"/>
-            </column>
-            <column name="login" type="VARCHAR(80)"/>
-            <column name="private_key" type="VARCHAR(80)"/>
-        </createTable>
-    </changeSet>
+<!--    <changeSet author="Mój (generated)" id="1593444482106-0">-->
+<!--        <createTable tableName="com_authorization">-->
+<!--            <column name="id_authorization" type="INTEGER">-->
+<!--                <constraints primaryKey="true" primaryKeyName="com_authorization_pkey"/>-->
+<!--            </column>-->
+<!--            <column name="login" type="VARCHAR(80)"/>-->
+<!--            <column name="private_key" type="VARCHAR(80)"/>-->
+<!--        </createTable>-->
+<!--    </changeSet>-->
     <changeSet author="rutko (generated)" id="1629108662681-1">
         <insert tableName="com_authorization">
             <column name="id_authorization" valueNumeric="1"/>
