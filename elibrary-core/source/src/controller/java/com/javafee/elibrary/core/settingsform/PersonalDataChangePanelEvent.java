@@ -1,5 +1,6 @@
 package com.javafee.elibrary.core.settingsform;
 
+import java.util.Objects;
 import java.util.Optional;
 
 import javax.swing.JOptionPane;
@@ -15,6 +16,7 @@ import com.javafee.elibrary.core.model.WorkerTableModel;
 import com.javafee.elibrary.core.startform.LogInEvent;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
 import com.javafee.elibrary.hibernate.dto.association.City;
+import com.javafee.elibrary.hibernate.dto.common.UserAccount;
 import com.javafee.elibrary.hibernate.dto.common.UserData;
 import com.javafee.elibrary.hibernate.dto.library.Client;
 import com.javafee.elibrary.hibernate.dto.library.Worker;
@@ -84,8 +86,9 @@ public class PersonalDataChangePanelEvent implements IActionForm {
 							.getString("clientAddModEvent.updatingClientPeselErrorTitle"),
 					JOptionPane.ERROR_MESSAGE);
 		} else {
-			if (roleWorker && Validator.validateClientUpdate((Worker) userData) ||
-					roleClient && Validator.validateClientUpdate((Client) userData)) {
+			UserAccount userAccount = (UserAccount) HibernateUtil.getSession().getNamedQuery("UserAccount.checkIfUserDataLoginExist")
+					.setParameter("login", personalDataChangePanel.getTextFieldLogin().getText()).uniqueResult();
+			if (Objects.isNull(userAccount)) {
 				HibernateUtil.beginTransaction();
 				HibernateUtil.getSession().update(UserData.class.getName(), userData);
 				HibernateUtil.commitTransaction();

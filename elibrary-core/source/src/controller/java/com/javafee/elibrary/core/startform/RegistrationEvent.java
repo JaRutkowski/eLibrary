@@ -49,29 +49,16 @@ public class RegistrationEvent {
 	}
 
 	private static boolean checkRegistration(String login, String password, String peselNumber, Role role) {
-		boolean result = false;
 		UserAccount userAccount = (UserAccount) HibernateUtil.getSession().getNamedQuery("UserAccount.checkIfUserDataLoginExist")
 				.setParameter("login", login).uniqueResult();
-		switch (role) {
-			case WORKER_LIBRARIAN:
-			case CLIENT:
-				result = performCheck(userAccount, password);
-			case ADMIN:
-				break;
-			case WORKER_ACCOUNTANT:
-				break;
-			default:
-				break;
-		}
-
-		return result;
+		return performCheck(userAccount, password);
 	}
 
 	private static boolean performCheck(UserAccount userAccount, String password) {
 		boolean result = false;
 		if (userAccount != null)
 			Params.getInstance().add("ALREADY_REGISTERED", RegistrationFailureCause.ALREADY_REGISTERED);
-		else if (Common.checkPasswordStrength(password))
+		if (Common.checkPasswordStrength(password))
 			result = true;
 		else
 			Params.getInstance().add("WEAK_PASSWORD", RegistrationFailureCause.WEAK_PASSWORD);
