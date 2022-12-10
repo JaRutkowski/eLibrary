@@ -46,4 +46,17 @@ public class Query {
 		}
 	}
 
+	public enum ActionsTabbedForm {
+		SYSTEM_PROPERTIES_BY_USER_ACCOUNT_ID("from SystemProperties sp where sp.userAccount.idUserAccount = :idUserAccount");
+
+		private final String value;
+
+		ActionsTabbedForm(final String newValue) {
+			value = newValue;
+		}
+
+		public String getValue() {
+			return value;
+		}
+	}
 }
