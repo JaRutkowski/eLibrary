@@ -266,8 +266,8 @@ public class TabLoanServiceEvent implements IActionForm {
 		} else
 			if (validatePenalty())
 				JOptionPane.showMessageDialog(tabbedForm.getFrame(),
-						SystemProperties.getInstance().getResourceBundle().getString("loanServicePanel.penaltyError") + " "
-								+ calculatePenalty() + Constants.APPLICATION_CURRENCY,
+						MessageFormat.format(SystemProperties.getInstance().getResourceBundle().getString("loanServicePanel.penaltyError"),  calculatePenalty(),
+								   Constants.APPLICATION_CURRENCY),
 						SystemProperties.getInstance().getResourceBundle().getString("loanServicePanel.penaltyErrorTitle"),
 						JOptionPane.ERROR_MESSAGE);
 			 else
@@ -452,12 +452,10 @@ public class TabLoanServiceEvent implements IActionForm {
 	}
 
 	private boolean validateLoanTableSelection() {
-		final ImportExportableJTable jTable = tabbedForm.getPanelLoanService().getLoanTable();
-		return jTable.getSelectedRow() != -1;
+		return tabbedForm.getPanelLoanService().getLoanTable().getSelectedRow() != -1;
 	}
+
 	private boolean validatePenalty() {
-		double penalty = calculatePenalty();
-		if (penalty == 0) return false;
-		return true;
+		return calculatePenalty() != 0;
 	}
 }
