@@ -3,19 +3,19 @@ package com.javafee.elibrary.core.tabbedform;
 import javax.swing.Icon;
 import javax.swing.JOptionPane;
 
-import com.javafee.elibrary.core.common.Common;
-import com.javafee.elibrary.core.common.Constants;
+import com.javafee.elibrary.core.common.*;
 import com.javafee.elibrary.core.common.Constants.Role;
 import com.javafee.elibrary.core.common.Constants.Tab_Accountant;
 import com.javafee.elibrary.core.common.Constants.Tab_Client;
 import com.javafee.elibrary.core.common.Constants.Tab_Worker;
-import com.javafee.elibrary.core.common.Params;
-import com.javafee.elibrary.core.common.SystemProperties;
-import com.javafee.elibrary.core.common.Utils;
 import com.javafee.elibrary.core.common.action.IActionForm;
 import com.javafee.elibrary.core.startform.LogInEvent;
+import com.javafee.elibrary.hibernate.dao.HibernateDao;
 import com.javafee.elibrary.hibernate.dao.HibernateUtil;
 import com.javafee.elibrary.hibernate.dto.common.UserData;
+import com.javafee.elibrary.hibernate.dto.library.Book;
+
+import java.util.List;
 
 public class Actions implements IActionForm {
 	private TabbedForm tabbedForm = new TabbedForm();
@@ -39,23 +39,23 @@ public class Actions implements IActionForm {
 				SystemProperties.getInstance().getResourceBundle().getString("confirmDialog.languageChange"),
 				"") == JOptionPane.YES_OPTION) {
 			boolean systemPropertiesAlreadyExists = LogInEvent.getUserData().getUserAccount().getSystemProperties() != null;
-			com.javafee.elibrary.hibernate.dto.common.SystemProperties systemProperties = com.javafee.elibrary.hibernate.dao.common.Common
-					//FIXME: null check
-					.checkAndGetSystemProperties(LogInEvent.getWorker() != null ? LogInEvent.getWorker().getUserAccount().getIdUserAccount()
-							: Constants.DATA_BASE_ADMIN_ID);
+			List<com.javafee.elibrary.hibernate.dto.common.SystemProperties> somePieceOfSheet = HibernateUtil.getSession().createQuery(Query.ActionsTabbedForm.SYSTEM_PROPERTIES_BY_USER_ACCOUNT_ID.getValue()). //
+					setParameter("idUserAccount", LogInEvent.getWorker() != null ? LogInEvent.getWorker().getUserAccount().getIdUserAccount()
+					: Constants.DATA_BASE_ADMIN_ID).list();
+			com.javafee.elibrary.hibernate.dto.common.SystemProperties systemProperties = somePieceOfSheet.get(0);
+			HibernateUtil.beginTransaction();
 			if (!systemPropertiesAlreadyExists) {
 				systemProperties.setLanguage(com.javafee.elibrary.hibernate.dao.common.Common.findLanguageByName((String) tabbedForm.getComboBoxLanguage().getSelectedItem()).get());
 				LogInEvent.getUserData().getUserAccount().setSystemProperties(systemProperties);
 
-				HibernateUtil.beginTransaction();
-				HibernateUtil.getSession().update(UserData.class.getName(), LogInEvent.getUserData());
-				HibernateUtil.commitTransaction();
+				HibernateUtil.getSession().evict(LogInEvent.getUserData());
+				HibernateUtil.getSession().saveOrUpdate(UserData.class.getName(), LogInEvent.getUserData());
 			} else {
-				HibernateUtil.beginTransaction();
-				LogInEvent.getUserData().getUserAccount().getSystemProperties().setLanguage(com.javafee.elibrary.hibernate.dao.common.Common.findLanguageByName((String) tabbedForm.getComboBoxLanguage().getSelectedItem()).get());
-				HibernateUtil.getSession().update(com.javafee.elibrary.hibernate.dto.common.SystemProperties.class.getName(), LogInEvent.getUserData().getUserAccount().getSystemProperties());
-				HibernateUtil.commitTransaction();
+				systemProperties.setLanguage(com.javafee.elibrary.hibernate.dao.common.Common.findLanguageByName((String) tabbedForm.getComboBoxLanguage().getSelectedItem()).get());
+				HibernateUtil.getSession().evict(systemProperties);
+				HibernateUtil.getSession().saveOrUpdate(com.javafee.elibrary.hibernate.dto.common.SystemProperties.class.getName(), systemProperties);
 			}
+			HibernateUtil.commitTransaction();
 
 			onClickBtnLogOut();
 		}
