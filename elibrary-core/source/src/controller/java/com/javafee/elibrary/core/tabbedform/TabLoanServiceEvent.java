@@ -207,7 +207,7 @@ public class TabLoanServiceEvent implements IActionForm {
 
 	@SuppressWarnings("deprecation")
 	private void onClickBtnProlongation() {
-		if (validateLoanTableSelection()) {
+		if (validateLoanTableSelection() && !validatePenalty()) {
 			final ImportExportableJTable jTable = tabbedForm.getPanelLoanService().getLoanTable();
 			Lend lend = ((LoanTableModel) jTable.getModel())
 					.getLend(jTable.convertRowIndexToModel(jTable.getSelectedRow()));
@@ -264,13 +264,17 @@ public class TabLoanServiceEvent implements IActionForm {
 						JOptionPane.ERROR_MESSAGE);
 			}
 		} else
-			LogGuiException.logWarning(
-					SystemProperties.getInstance().getResourceBundle()
-							.getString("tabLoanEvent.notSelectedTablesWarningTitle"),
-					SystemProperties.getInstance().getResourceBundle()
-							.getString("tabLoanEvent.notSelectedTablesWarning"));
+			if (validatePenalty())
+				JOptionPane.showMessageDialog(tabbedForm.getFrame(),
+						MessageFormat.format(SystemProperties.getInstance().getResourceBundle().getString("loanServicePanel.penaltyError"),  calculatePenalty(),
+								   Constants.APPLICATION_CURRENCY),
+						SystemProperties.getInstance().getResourceBundle().getString("loanServicePanel.penaltyErrorTitle"),
+						JOptionPane.ERROR_MESSAGE);
+			 else
+				LogGuiException.logWarning(SystemProperties.getInstance().getResourceBundle().
+						getString("tabLoanEvent.notSelectedTablesWarning"), SystemProperties.getInstance()
+						.getResourceBundle().getString("tabLoanEvent.notSelectedTablesWarning"));
 	}
-
 	private void onClickBtnReturn() {
 		if (!validateLoanTableSelection()) {
 			LogGuiException.logWarning(
@@ -448,7 +452,10 @@ public class TabLoanServiceEvent implements IActionForm {
 	}
 
 	private boolean validateLoanTableSelection() {
-		final ImportExportableJTable jTable = tabbedForm.getPanelLoanService().getLoanTable();
-		return jTable.getSelectedRow() != -1;
+		return tabbedForm.getPanelLoanService().getLoanTable().getSelectedRow() != -1;
+	}
+
+	private boolean validatePenalty() {
+		return calculatePenalty() != 0;
 	}
 }
