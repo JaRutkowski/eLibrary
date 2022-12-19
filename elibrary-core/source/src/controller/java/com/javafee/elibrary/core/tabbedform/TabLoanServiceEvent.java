@@ -286,8 +286,8 @@ public class TabLoanServiceEvent implements IActionForm {
 			final Lend lend = getSelectedLend();
 			if (calculatePenalty() != new BigDecimal(0).doubleValue())
 				JOptionPane.showMessageDialog(tabbedForm.getFrame(),
-						SystemProperties.getInstance().getResourceBundle().getString("loanServicePanel.penaltyError") + " "
-								+ calculatePenalty() + Constants.APPLICATION_CURRENCY,
+						MessageFormat.format(SystemProperties.getInstance().getResourceBundle().getString("loanServicePanel.penaltyError"), calculatePenalty(),
+						Constants.APPLICATION_CURRENCY),
 						SystemProperties.getInstance().getResourceBundle().getString("loanServicePanel.penaltyErrorTitle"),
 						JOptionPane.ERROR_MESSAGE);
 			else if (!validateIfActiveReservationForLendExists(lend)) {
@@ -437,14 +437,13 @@ public class TabLoanServiceEvent implements IActionForm {
 				}
 			}
 		}
-		return diffMonth * Double.valueOf(SystemProperties.getInstance().getSystemParameters().get(Constants.APPLICATION_PENALTY_VALUE).getValue());
+		return diffMonth * Double.parseDouble(SystemProperties.getSystemParameters().get(Constants.APPLICATION_PENALTY_VALUE).getValue());
 	}
 
 	private Lend getSelectedLend() {
 		final ImportExportableJTable jTable = tabbedForm.getPanelLoanService().getLoanTable();
-		final Lend lend = ((LoanTableModel) jTable.getModel())
+		return ((LoanTableModel) jTable.getModel())
 				.getLend(jTable.convertRowIndexToModel(jTable.getSelectedRow()));
-		return lend;
 	}
 
 	private boolean validateIfActiveReservationForLendExists(Lend lend) {
