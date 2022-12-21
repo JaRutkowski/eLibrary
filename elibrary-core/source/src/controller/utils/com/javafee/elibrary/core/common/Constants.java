@@ -472,7 +472,6 @@ public final class Constants {
 	public static final Boolean DATA_BASE_REGISTER_DEFAULT_FLAG = false;
 	public static final Integer DATA_BASE_ADMIN_ID = 0;
 	public static final String DATA_BASE_ADMIN_LOGIN = "admin";
-	public static final String DATA_BASE_ADMIN_PASSWORD = "b86101561d1558c5b2015174070e26b8";
 	public static final Integer DATA_BASE_INVENTORY_NUMBER_LENGTH = 13;
 	public static final Integer DATA_BASE_ISBN_NUMBER_LENGTH = 13;
 	public static final Integer DATA_BASE_PESEL_NUMBER_LENGHT = 11;
