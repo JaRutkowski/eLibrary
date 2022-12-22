@@ -13,6 +13,7 @@
 
 	<!-- Pre-processing -->
 	<!-- Increment id of changeSet -->
+	<include file="src/main/resources/db/changelog/truncate-all-cascade-changelog.xml" relativeToChangelogFile="false"/>
 
 	<!-- Version data -->
 	<!-- generated using mvn liquibase:generateChangeLog -Dliquibase.diffTypes=data -->
@@ -53,4 +54,5 @@
 	<!-- it is possible to run DML on local: -->
 	<!--   - liquibase plugin part - db configuration - should be commented in pom.xml; -->
 	<!--   - all data should be truncated; -->
+	<!--   - last version changelog should be applied using mvn liquibase:update using dev profile. -->
 </databaseChangeLog>
