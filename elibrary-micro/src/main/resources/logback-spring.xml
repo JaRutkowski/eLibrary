@@ -1,0 +1,47 @@
+<configuration debug="true">
+	<timestamp key="onTime" datePattern="yyyyMMdd'T'HHmmss"/>
+	<timestamp key="onTime2" datePattern="yyyyMMdd'T'HHmmss'_'SSS"/>
+	<timestamp key="onDate" datePattern="yyyyMMdd"/>
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS}, "trace": "%X{X-B3-TraceId:-}", [%thread] %-5level %logger{36} - %msg%n</pattern>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>INFO</level>
+		</filter>
+	</appender>
+
+	<appender name="FILE" class="ch.qos.logback.core.FileAppender">
+		<append>true</append>
+		<file>./elibrary-micro-logs/elibrary-micro-${onDate}.log</file>
+		<encoder>
+			<pattern>%date %level [%thread] %logger{10} [%file:%line] %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="TIME_FILE" class="ch.qos.logback.core.FileAppender">
+		<append>true</append>
+		<file>./elibrary-micro-logs/time-${onDate}.log</file>
+		<encoder>
+			<pattern>%date %level [%thread] "trace": [%X{X-B3-TraceId:-}] %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<logger name="com.jfs.operations" level="DEBUG" additivity="false">
+		<appender-ref ref="FILE"></appender-ref>
+	</logger>
+
+	<logger name="com.jfs.operations" level="INFO" additivity="false">
+		<appender-ref ref="STDOUT"></appender-ref>
+	</logger>
+
+	<logger name="com.jfs.operations.infrastructure" level="INFO" additivity="false">
+		<appender-ref ref="TIME_FILE"></appender-ref>
+	</logger>
+
+	<root level="INFO">
+		<appender-ref ref="STDOUT"/>
+		<appender-ref ref="FILE"/>
+	</root>
+</configuration>
