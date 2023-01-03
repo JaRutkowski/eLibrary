@@ -1,0 +1,39 @@
+version: '3.1'
+services:
+  app:
+    container_name: app-springboot-postgresql
+    image: app-springboot-postgresql
+    build: ./
+    ports:
+      - "8081:8080"
+    depends_on:
+      - dbpostgresql
+  dbpostgresql:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=elibrary-micro
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: elibrary-micro
+spec:
+  selector:
+    matchLabels:
+      app: elibrary-micro
+  replicas: 5
+  template:
+    metadata:
+      labels:
+        app: elibrary-micro
+    spec:
+      containers:
+        - name: elibrary-micro
+          image: elibrary-micro
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5000

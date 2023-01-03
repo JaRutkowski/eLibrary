@@ -70,5 +70,6 @@
 		<module>elibrary-hibernate</module>
 		<module>elibrary-web-rest-api</module>
 		<module>elibrary-web-front</module>
+		<module>elibrary-micro</module>
 	</modules>
 </project>
