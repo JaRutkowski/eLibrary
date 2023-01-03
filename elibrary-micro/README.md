@@ -1,6 +1,6 @@
-# jfs-operations
+# elibrary-micro
 
-jfs-operations is the backend application which consists of the three layers:
+elibrary-micro is the backend application which consists of the three layers:
 
 * model (domain entities and repositories),
 * service (business logic implementation),
@@ -34,7 +34,7 @@ To enforce profile with maven the `-P<profile_name>` switch should be added to r
 ## Technical specification - quick overview
 
 ### Docker&Kubernetes
-The jfs-operations docker image could be run with `docker-compose up --build`. The docker configuration consist of the 
+The elibrary-micro docker image could be run with `docker-compose up --build`. The docker configuration consist of the 
 Spring Boot app image and postgresql.
 
 ### API versioning
@@ -76,7 +76,7 @@ and then is used in the Aspect method:
 @Aspect
 @Component
 public class SomeAspect {
-  @AfterReturning(value = "com.jfs.operations.infrastructure.aspect.joinpoint.SomeJoinPoint.execPointcut()", returning = "result")
+  @AfterReturning(value = "com.elibrary.micro.infrastructure.aspect.joinpoint.SomeJoinPoint.execPointcut()", returning = "result")
   public void methodInvoked(JoinPoint joinPoint, Object result) {
   }
 }
@@ -122,7 +122,7 @@ Logging is configured in the `src/main/resources/logback-spring.xml` file as fol
     of the following pattern: `%d{HH:mm:ss.SSS}, "trace": "%X{X-B3-TraceId:-}", [%thread] %-5level %logger{36} - %msg%n`,
   * 'General' file: `<appender name="FILE" class="ch.qos.logback.core.FileAppender">` - for general purposes, set to DEBUG level, 
     of the following pattern: `%date %level [%thread] %logger{10} [%file:%line] %msg%n`, once the server is started 
-    the new file with current timestamp and `jfs-operations-` prefix is created,
+    the new file with current timestamp and `elibrary-micro-` prefix is created,
   * 'Time' file: `<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">` - for REST method diagnosing purposes, 
     set to INFO level, of the following pattern: `%date %level [%thread] "trace": [%X{X-B3-TraceId:-}] %msg%n`, once the server 
     is started the new file with current timestamp and `time-` prefix is created.
@@ -132,7 +132,7 @@ Logging is configured in the `src/main/resources/logback-spring.xml` file as fol
     log.debug("Some message")
     log.error("Some message", e) // where e is the Throwable type object
     ```
-* Logs are located in the jfs-operations-logs directory in the main project level.
+* Logs are located in the elibrary-micro-logs directory in the main project level.
 
 ### Actuator
 
