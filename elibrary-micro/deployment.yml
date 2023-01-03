@@ -15,25 +15,25 @@ services:
     environment:
       - POSTGRES_PASSWORD=password
       - POSTGRES_USER=postgres
-      - POSTGRES_DB=jfs-operations
+      - POSTGRES_DB=elibrary-micro
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: jfs-operations-app
+  name: elibrary-micro
 spec:
   selector:
     matchLabels:
-      app: jfs-operations-app
+      app: elibrary-micro
   replicas: 5
   template:
     metadata:
       labels:
-        app: jfs-operations-app
+        app: elibrary-micro
     spec:
       containers:
-        - name: jfs-operations-app
-          image: jfs-operations-app
+        - name: elibrary-micro
+          image: elibrary-micro
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5000

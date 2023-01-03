@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 import javax.validation.ConstraintViolationException;
 
 import com.javafee.elibrary.micro.config.SystemProperties;
-import com.javafee.elibrary.micro.service.dto.JfsExceptionDto;
+import com.javafee.elibrary.micro.service.dto.ELibraryMicroExceptionDto;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -83,8 +83,8 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 		return body;
 	}
 
-	private JfsExceptionDto prepareCustomExceptionDto(Exception e, HttpStatus status, List<String> messages, String path, String method) {
-		return JfsExceptionDto.builder()
+	private ELibraryMicroExceptionDto prepareCustomExceptionDto(Exception e, HttpStatus status, List<String> messages, String path, String method) {
+		return ELibraryMicroExceptionDto.builder()
 				.timestamp(new Date())
 				.status(status.value())
 				.messages(messages)

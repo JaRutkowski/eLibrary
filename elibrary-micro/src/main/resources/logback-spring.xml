@@ -28,15 +28,15 @@
 		</encoder>
 	</appender>
 
-	<logger name="com.jfs.operations" level="DEBUG" additivity="false">
+	<logger name="com.javafee.elibrary.micro" level="DEBUG" additivity="false">
 		<appender-ref ref="FILE"></appender-ref>
 	</logger>
 
-	<logger name="com.jfs.operations" level="INFO" additivity="false">
+	<logger name="com.javafee.elibrary.micro" level="INFO" additivity="false">
 		<appender-ref ref="STDOUT"></appender-ref>
 	</logger>
 
-	<logger name="com.jfs.operations.infrastructure" level="INFO" additivity="false">
+	<logger name="com.javafee.elibrary.micro.infrastructure" level="INFO" additivity="false">
 		<appender-ref ref="TIME_FILE"></appender-ref>
 	</logger>
 

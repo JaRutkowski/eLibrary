@@ -27,7 +27,7 @@ public class CommandRunnerConfig implements CommandLineRunner {
 	}
 
 	private void logDBConnectionInfo() throws Exception {
-		log.info("jfs-operations startup, connected to " + connectionString + " as "
+		log.info("elibrary-micro startup, connected to " + connectionString + " as "
 				+ dataSource.getConnection().getMetaData().getUserName()
 				+ ", profile: " + activeProfile);
 	}

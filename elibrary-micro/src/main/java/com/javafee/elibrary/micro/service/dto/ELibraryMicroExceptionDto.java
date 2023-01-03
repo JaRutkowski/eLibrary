@@ -8,7 +8,7 @@ import lombok.Builder;
 
 @AllArgsConstructor
 @Builder
-public class JfsExceptionDto {
+public class ELibraryMicroExceptionDto {
 	public Date timestamp;
 	public int status;
 	public List<String> messages;
