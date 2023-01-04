@@ -79,6 +79,8 @@ public class TabDraftPageEvent implements IMessageForm {
 		emailForm.getPanelDraftPage().getDraftNavigationPanel().getBtnDelete()
 				.addActionListener(e -> onClickBtnDelete());
 		emailForm.getPanelDraftPage().getDraftNavigationPanel().getBtnSend().addActionListener(e -> onClickBtnSend());
+		emailForm.getPanelDraftPage().getRootPane().setDefaultButton(emailForm.getPanelDraftPage()
+				.getDraftNavigationPanel().getBtnSend());
 	}
 
 	@Override

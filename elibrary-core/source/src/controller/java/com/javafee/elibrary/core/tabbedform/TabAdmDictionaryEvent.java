@@ -52,7 +52,8 @@ public class TabAdmDictionaryEvent implements IActionForm {
 		fillDictionaryData(Constants.RADIO_BUTTON_AUTHOR);
 		fillDictionaryData(Constants.RADIO_BUTTON_CATEGORY);
 		fillDictionaryData(Constants.RADIO_BUTTON_PUBLISHING_HOUSE);
-
+		tabbedForm.getFrame().getRootPane().setDefaultButton(tabbedForm.getPanelAdmDictionary()
+				.getCockpitEditionPanel().getBtnAdd());
 		tabbedForm.getPanelAdmDictionary().getRadioButtonAuthor()
 				.addActionListener(e -> switchRadioButtonsEnable(Constants.RADIO_BUTTON_AUTHOR));
 		tabbedForm.getPanelAdmDictionary().getRadioButtonCategory()

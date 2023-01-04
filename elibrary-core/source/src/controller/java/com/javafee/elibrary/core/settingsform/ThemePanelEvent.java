@@ -42,6 +42,8 @@ public class ThemePanelEvent implements IActionForm {
 
 		settingsForm.getSettingsPanel().getThemePanel().getColorChooser().getSelectionModel().addChangeListener(e -> onChangeColor());
 		settingsForm.getSettingsPanel().getThemePanel().getBtnAccept().addActionListener(e -> onClickBtnAccept());
+		settingsForm.getSettingsPanel().getRootPane().setDefaultButton(settingsForm.getSettingsPanel()
+				.getThemePanel().getBtnAccept());
 	}
 
 	@Override

@@ -86,6 +86,8 @@ public class SystemDataFeedingPanelEvent implements IActionForm {
 				.getSystemDataFeedingTable().initialize(2);
 		settingsForm.getSettingsPanel().getSystemDataFeedingPanel().getBtnCheckAllDataValues().addActionListener(e -> onClickBtnCheckAllDataValues());
 		settingsForm.getSettingsPanel().getSystemDataFeedingPanel().getBtnRunAll().addActionListener(e -> onClickBtnRunAll());
+		settingsForm.getSettingsPanel().getRootPane().setDefaultButton(settingsForm.getSettingsPanel()
+				.getSystemDataFeedingPanel().getBtnCheckAllDataValues());
 	}
 
 	@Override

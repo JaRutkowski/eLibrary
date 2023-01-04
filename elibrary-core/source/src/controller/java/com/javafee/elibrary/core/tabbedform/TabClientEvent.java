@@ -48,7 +48,6 @@ public final class TabClientEvent implements IActionForm {
 	public void control(TabbedForm tabbedForm) {
 		setTabbedForm(tabbedForm);
 		initializeForm();
-
 		tabbedForm.getPanelClient().getCockpitEditionPanel().getBtnAdd().addActionListener(e -> onClickBtnAdd());
 		tabbedForm.getPanelClient().getCockpitEditionPanel().getBtnModify().addActionListener(e -> onClickBtnModify());
 		tabbedForm.getPanelClient().getCockpitEditionPanel().getBtnDelete().addActionListener(e -> onClickBtnDelete());
@@ -131,6 +130,7 @@ public final class TabClientEvent implements IActionForm {
 	}
 
 	private void onClickBtnAdd() {
+
 		if (clientAddModEvent == null)
 			clientAddModEvent = new ClientAddModEvent();
 		clientAddModEvent.control(Constants.Context.ADDITION,

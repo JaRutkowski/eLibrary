@@ -60,7 +60,8 @@ public class TabTemplatePageEvent implements IActionForm {
 				.addActionListener(e -> onClickBtnSaveTemplateToLibrary());
 		emailForm.getPanelTemplatePage().getTemplateManagementPanel().getBtnPreviewTemplateLibrary()
 				.addActionListener(e -> onClickBtnPreviewTemplateLibrary());
-
+		emailForm.getPanelTemplatePage().getRootPane().setDefaultButton(emailForm.getPanelTemplatePage()
+				.getHtmlEditorPanel().getBtnParse());
 	}
 
 	@Override

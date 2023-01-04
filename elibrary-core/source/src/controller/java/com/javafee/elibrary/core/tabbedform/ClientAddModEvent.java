@@ -51,6 +51,7 @@ public class ClientAddModEvent implements IEvent {
 
 		clientAddModFrame.getCockpitConfirmationPanel().getBtnAccept()
 				.addActionListener(e -> onClickBtnAccept(context));
+		clientAddModFrame.getRootPane().setDefaultButton(clientAddModFrame.getCockpitConfirmationPanel().getBtnAccept());
 	}
 
 	private void openClientAddModFrame(Context context) {

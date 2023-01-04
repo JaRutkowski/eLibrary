@@ -54,7 +54,7 @@ public class TabLoanServiceEvent implements IActionForm {
 	public void control(TabbedForm tabbedForm) {
 		setTabbedForm(tabbedForm);
 		initializeForm();
-
+		tabbedForm.getFrame().getRootPane().setDefaultButton(tabbedForm.getPanelLoanService().getBtnLoan());
 		tabbedForm.getPanelLoanService().getBtnLoan().addActionListener(e -> onClickBtnLoan());
 		tabbedForm.getPanelLoanService().getBtnReservation().addActionListener(e -> onClickBtnReservation());
 		tabbedForm.getPanelLoanService().getBtnProlongation().addActionListener(e -> onClickBtnProlongation());

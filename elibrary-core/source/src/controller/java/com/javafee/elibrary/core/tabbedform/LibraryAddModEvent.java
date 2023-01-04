@@ -53,6 +53,7 @@ public class LibraryAddModEvent implements IEvent {
 
 		libraryAddModFrame.getCockpitConfirmationPanel().getBtnAccept()
 				.addActionListener(e -> onClickBtnAccept(context, loanOrReadingRoom));
+		libraryAddModFrame.getRootPane().setDefaultButton(libraryAddModFrame.getCockpitConfirmationPanel().getBtnAccept());
 	}
 
 	private void onClickBtnAccept(Context context, Context loanOrReadingRoom) {
