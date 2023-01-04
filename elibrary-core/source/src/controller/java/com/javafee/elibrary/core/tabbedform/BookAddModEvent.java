@@ -65,6 +65,7 @@ public class BookAddModEvent implements IEvent {
 		bookAddModFrame.getBtnRefreshTables().addActionListener(e -> onClickBtnRefreshTables());
 		bookAddModFrame.getBookDataPanel().getBtnChooseBookImageFile().addActionListener(e -> onClickBtnChooseBookImageFile());
 		bookAddModFrame.getCockpitConfirmationPanel().getBtnAccept().addActionListener(e -> onClickBtnAccept(context));
+		bookAddModFrame.getRootPane().setDefaultButton(bookAddModFrame.getCockpitConfirmationPanel().getBtnAccept());
 	}
 
 	private void onClickBtnRefreshTables() {

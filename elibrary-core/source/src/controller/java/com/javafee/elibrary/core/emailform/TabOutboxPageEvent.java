@@ -87,6 +87,8 @@ public class TabOutboxPageEvent implements IMessageForm {
 				.addActionListener(e -> onClickBtnDelete());
 		emailForm.getPanelOutboxPage().getOutboxNavigationPanel().getBtnSendAgain()
 				.addActionListener(e -> onClickBtnSend());
+		emailForm.getPanelOutboxPage().getRootPane().setDefaultButton(emailForm.getPanelOutboxPage()
+				.getOutboxNavigationPanel().getBtnPreview());
 	}
 
 	@Override

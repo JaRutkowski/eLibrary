@@ -42,6 +42,8 @@ public class SystemParametersPanelEvent implements IActionForm {
 
 		settingsForm.getSettingsPanel().getSystemParametersPanel().getBtnAccept().addActionListener(e -> onClickBtnAccept());
 		settingsForm.getSettingsPanel().getSystemParametersPanel().getBtnRestoreDefaultValues().addActionListener(e -> onClickBtnRestoreDefaultValues());
+		settingsForm.getSettingsPanel().getRootPane().setDefaultButton(settingsForm.getSettingsPanel()
+				.getSystemParametersPanel().getBtnAccept());
 	}
 
 	@Override

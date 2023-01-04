@@ -38,6 +38,8 @@ public class TabBrowseReservationEvent implements IActionForm {
 		initializeForm();
 
 		clientReservationPanel.getBrowseReservationPanel().getActiveClientReservationPanel().getBtnCancelReservation().addActionListener(e -> onClickBtnCancelReservation());
+		clientReservationPanel.getRootPane().setDefaultButton(clientReservationPanel.getBrowseReservationPanel().
+				getActiveClientReservationPanel().getBtnCancelReservation());
 	}
 
 	@Override

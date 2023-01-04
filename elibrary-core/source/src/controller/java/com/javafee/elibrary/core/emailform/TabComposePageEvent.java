@@ -85,6 +85,8 @@ public class TabComposePageEvent implements IActionForm {
 				.addActionListener(e -> onClickBtnSend());
 		emailForm.getPanelComposePage().getComposeNavigationEmailPanel().getBtnClear()
 				.addActionListener(e -> onClickBtnClear());
+		emailForm.getPanelComposePage().getRootPane().setDefaultButton(emailForm.getPanelComposePage()
+				.getComposeNavigationEmailPanel().getBtnSend());
 	}
 
 	@Override

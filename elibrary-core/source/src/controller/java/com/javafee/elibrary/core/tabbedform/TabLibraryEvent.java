@@ -51,7 +51,7 @@ public class TabLibraryEvent implements IActionForm {
 	public void control(TabbedForm tabbedForm) {
 		setTabbedForm(tabbedForm);
 		initializeForm();
-
+		tabbedForm.getFrame().getRootPane().setDefaultButton(tabbedForm.getPanelLibrary().getCockpitEditionPanelLoan().getBtnAdd());
 		tabbedForm.getPanelLibrary().getCockpitEditionPanelLoan().getBtnAdd()
 				.addActionListener(e -> onClickBtnAddVolumeLoan());
 		tabbedForm.getPanelLibrary().getCockpitEditionPanelLoan().getBtnModify()

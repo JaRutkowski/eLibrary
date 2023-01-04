@@ -40,6 +40,8 @@ public class SystemMonitorPanelEvent implements IActionForm {
 		initializeForm();
 
 		settingsForm.getSettingsPanel().getSystemMonitorPanel().getBtnCheckHealth().addActionListener(e -> onClickBtnCheckHealth());
+		settingsForm.getSettingsPanel().getRootPane().setDefaultButton(settingsForm.getSettingsPanel()
+				.getSystemMonitorPanel().getBtnCheckHealth());
 	}
 
 	@Override

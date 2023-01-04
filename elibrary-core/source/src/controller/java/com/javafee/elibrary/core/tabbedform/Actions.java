@@ -32,6 +32,7 @@ public class Actions implements IActionForm {
 		tabbedForm.getBtnSettings().addActionListener(e -> onClickBtnSettings());
 		tabbedForm.getBtnLogOut().addActionListener(e -> onClickBtnLogOut());
 		tabbedForm.getComboBoxLanguage().addActionListener(e -> onChangeComboBoxLanguage());
+		tabbedForm.getFrame().getRootPane().setDefaultButton(tabbedForm.getBtnSettings());
 	}
 
 	private void onChangeComboBoxLanguage() {
@@ -258,6 +259,7 @@ public class Actions implements IActionForm {
 	}
 
 	private void openSettingsForm() {
+		tabbedForm.getFrame().getRootPane().setDefaultButton(tabbedForm.getBtnSettings());
 		if (!Params.getInstance().contains("TABBED_FORM_ACTIONS"))
 			Params.getInstance().add("TABBED_FORM_ACTIONS", this);
 		if (LogInEvent.getRole() != Role.CLIENT

@@ -43,6 +43,7 @@ public class TabCreateReservationEvent implements IActionForm {
 		initializeForm();
 
 		clientReservationPanel.getCreateReservationPanel().getBtnReservation().addActionListener(e -> onClickBtnReservation());
+		clientReservationPanel.getRootPane().setDefaultButton(clientReservationPanel.getCreateReservationPanel().getBtnReservation());
 	}
 
 	@Override

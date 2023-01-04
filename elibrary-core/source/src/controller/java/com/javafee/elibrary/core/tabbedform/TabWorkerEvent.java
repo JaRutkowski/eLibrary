@@ -44,7 +44,7 @@ public final class TabWorkerEvent implements IActionForm {
 	public void control(TabbedForm tabbedForm) {
 		setTabbedForm(tabbedForm);
 		initializeForm();
-
+		tabbedForm.getFrame().getRootPane().setDefaultButton(tabbedForm.getPanelWorker().getCockpitEditionPanel().getBtnAdd());
 		tabbedForm.getPanelWorker().getCockpitEditionPanel().getBtnAdd().addActionListener(e -> onClickBtnAdd());
 		tabbedForm.getPanelWorker().getCockpitEditionPanel().getBtnModify().addActionListener(e -> onClickBtnModify());
 		tabbedForm.getPanelWorker().getCockpitEditionPanel().getBtnDelete().addActionListener(e -> onClickBtnDelete());

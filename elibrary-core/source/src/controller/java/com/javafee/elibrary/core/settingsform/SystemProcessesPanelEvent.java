@@ -38,6 +38,8 @@ public class SystemProcessesPanelEvent implements IActionForm {
 
 		settingsForm.getSettingsPanel().getSystemProcessesPanel().getBtnStop().addActionListener(e -> onClickBtnStop());
 		settingsForm.getSettingsPanel().getSystemProcessesPanel().getBtnCheckHealth().addActionListener(e -> onClickBtnCheckHealth());
+		settingsForm.getSettingsPanel().getRootPane().setDefaultButton(settingsForm.getSettingsPanel()
+				.getSystemProcessesPanel().getBtnCheckHealth());
 	}
 
 	@Override

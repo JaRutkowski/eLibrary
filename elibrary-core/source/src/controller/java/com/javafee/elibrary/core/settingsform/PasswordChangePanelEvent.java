@@ -41,6 +41,8 @@ public class PasswordChangePanelEvent implements IActionForm {
 		initializeForm();
 
 		settingsForm.getSettingsPanel().getPasswordChangePanel().getBtnAccept().addActionListener(e -> onClickBtnAccept());
+		settingsForm.getSettingsPanel().getRootPane().setDefaultButton(settingsForm.getSettingsPanel()
+				.getPasswordChangePanel().getBtnAccept());
 	}
 
 	public void initializeForm() {

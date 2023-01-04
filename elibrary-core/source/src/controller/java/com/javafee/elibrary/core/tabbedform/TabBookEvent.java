@@ -44,7 +44,7 @@ public class TabBookEvent implements IActionForm {
 	public void control(TabbedForm tabbedForm) {
 		setTabbedForm(tabbedForm);
 		initializeForm();
-
+		tabbedForm.getFrame().getRootPane().setDefaultButton(tabbedForm.getPanelBook().getCockpitEditionPanelBook().getBtnAdd());
 		tabbedForm.getPanelBook().getCockpitEditionPanelBook().getBtnAdd().addActionListener(e -> onClickBtnAdd());
 		tabbedForm.getPanelBook().getCockpitEditionPanelBook().getBtnModify()
 				.addActionListener(e -> onClickBtnModify());

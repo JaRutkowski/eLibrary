@@ -45,6 +45,8 @@ public class PersonalDataChangePanelEvent implements IActionForm {
 		initializeForm();
 
 		settingsForm.getSettingsPanel().getPersonalDataChangePanel().getCockpitConfirmationPanel().getBtnAccept().addActionListener(e -> onClickBtnAccept());
+		settingsForm.getSettingsPanel().getRootPane().setDefaultButton(settingsForm.getSettingsPanel()
+				.getPersonalDataChangePanel().getCockpitConfirmationPanel().getBtnAccept());
 	}
 
 	@Override

@@ -51,6 +51,7 @@ public class WorkerAddModEvent implements IEvent {
 
 		workerAddModFrame.getCockpitConfirmationPanel().getBtnAccept()
 				.addActionListener(e -> onClickBtnAccept(context));
+		workerAddModFrame.getRootPane().setDefaultButton(workerAddModFrame.getCockpitConfirmationPanel().getBtnAccept());
 	}
 
 	private void onClickBtnAccept(Context context) {

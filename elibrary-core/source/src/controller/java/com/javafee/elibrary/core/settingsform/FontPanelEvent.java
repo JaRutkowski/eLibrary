@@ -37,6 +37,8 @@ public class FontPanelEvent implements IActionForm {
 		initializeForm();
 
 		settingsForm.getSettingsPanel().getFontPanel().getBtnAccept().addActionListener(e -> onClickBtnAccept());
+		settingsForm.getSettingsPanel().getRootPane().setDefaultButton(settingsForm.getSettingsPanel()
+				.getFontPanel().getBtnAccept());
 	}
 
 	@Override
