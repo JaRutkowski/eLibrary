@@ -107,7 +107,7 @@
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.apache.xmlgraphics/batik-transcoder -->
 		<dependency>
-			<groupId>batik</groupId>
+			<groupId>org.apache.xmlgraphics</groupId>
 			<artifactId>batik-transcoder</artifactId>
 			<version>${batik.version}</version>
 		</dependency>
@@ -122,6 +122,12 @@
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>${log4j.version}</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>${org.apache.logging.log4j.version}</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.bidib.org.oxbow/swingbits -->
 		<dependency>

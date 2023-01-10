@@ -7,7 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.safety.Whitelist;
+import org.jsoup.safety.Safelist;
 
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
@@ -28,7 +28,7 @@ public class HTMLProcessor {
 		this.htmlString = htmlDocument;
 	}
 
-	public boolean validateWhitelistTags(Whitelist whitelist) {
+	public boolean validateWhitelistTags(Safelist whitelist) {
 		return Jsoup.isValid(htmlString, whitelist);
 	}
 

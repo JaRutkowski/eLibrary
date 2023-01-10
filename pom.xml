@@ -18,43 +18,44 @@
 		<org.codehaus.mojo.version>3.1.0</org.codehaus.mojo.version>
 		<sonar.maven.plugin.version>3.4.0.905</sonar.maven.plugin.version>
 		<junit.version>4.13</junit.version>
-		<org.reflections.version>0.9.12</org.reflections.version>
-		<jaxb.api.version>2.2.11</jaxb.api.version>
-		<jaxb.core.version>2.2.11</jaxb.core.version>
-		<jaxb.impl.version>2.2.11</jaxb.impl.version>
+		<org.reflections.version>0.10.2</org.reflections.version>
+		<jaxb.api.version>2.3.1</jaxb.api.version>
+		<jaxb.core.version>4.0.1</jaxb.core.version>
+		<jaxb.impl.version>4.0.1</jaxb.impl.version>
 		<jcalendar.version>1.4</jcalendar.version>
 		<jfontchooser.version>1.0.5-3</jfontchooser.version>
-		<com.twelvemonkeys.imageio.version>3.2.1</com.twelvemonkeys.imageio.version>
-		<batik.version>1.6-1</batik.version>
+		<com.twelvemonkeys.imageio.version>3.9.4</com.twelvemonkeys.imageio.version>
+		<batik.version>1.16</batik.version>
 		<edu.vt.middleware.version>3.1.2</edu.vt.middleware.version>
 		<log4j.version>1.2.17</log4j.version>
+		<org.apache.logging.log4j.version>2.19.0</org.apache.logging.log4j.version>
 		<org.bidib.org.oxbow.version>1.2.2</org.bidib.org.oxbow.version>
-		<net.coderazzi.version>5.5.1</net.coderazzi.version>
+		<net.coderazzi.version>5.5.4</net.coderazzi.version>
 		<com.sun.mail.version>1.6.2</com.sun.mail.version>
-		<org.projectlombok.version>1.18.12</org.projectlombok.version>
-		<common.io.version>2.6</common.io.version>
+		<org.projectlombok.version>1.18.24</org.projectlombok.version>
+		<common.io.version>2.11.0</common.io.version>
 		<opencsv.version>4.6</opencsv.version>
-		<org.apache.poi.version>3.17</org.apache.poi.version>
-		<xerces.version>2.12.0</xerces.version>
-		<com.itextpdf.version>5.5.10</com.itextpdf.version>
-		<org.apache.pdfbox.version>2.0.4</org.apache.pdfbox.version>
-		<org.bouncycastle.version>1.56</org.bouncycastle.version>
-		<org.jsoup.version>1.13.1</org.jsoup.version>
-		<org.apache.httpcomponents.version>4.4.13</org.apache.httpcomponents.version>
+		<org.apache.poi.version>5.2.3</org.apache.poi.version>
+		<xerces.version>2.12.2</xerces.version>
+		<com.itextpdf.version>5.5.1</com.itextpdf.version>
+		<org.apache.pdfbox.version>3.0.0-RC1</org.apache.pdfbox.version>
+		<org.bouncycastle.version>1.70</org.bouncycastle.version>
+		<org.jsoup.version>1.15.3</org.jsoup.version>
+		<org.apache.httpcomponents.version>4.4.16</org.apache.httpcomponents.version>
 		<com.mashape.unirest.version>1.4.9</com.mashape.unirest.version>
-		<org.json.version>20190722</org.json.version>
+		<org.json.version>20220924</org.json.version>
 
-		<postgresql.version>42.2.12</postgresql.version>
-		<org.apache.maven.plugins>3.2.3</org.apache.maven.plugins>
+		<postgresql.version>42.5.1</postgresql.version>
+		<org.apache.maven.plugins>3.3.0</org.apache.maven.plugins>
 		<org.hibernate.javax.persistence.version>1.0.1.Final</org.hibernate.javax.persistence.version>
 		<org.hibernate.version>5.4.10.Final</org.hibernate.version>
 		<javax.ws.rs.version>2.1.1</javax.ws.rs.version>
 		<org.glassfish.jersey.core.version>3.0.0</org.glassfish.jersey.core.version>
-		<com.fasterxml.jackson.core.version>2.11.0</com.fasterxml.jackson.core.version>
+		<com.fasterxml.jackson.core.version>2.14.1</com.fasterxml.jackson.core.version>
 		<jboss.annotations.api.1.2.spec.version>1.0.2.Final</jboss.annotations.api.1.2.spec.version>
 		<org.jboss.spec.javax.el.version>2.0.0.Final</org.jboss.spec.javax.el.version>
 		<javax.version>8.0</javax.version>
-		<com.google.code.gson.version>2.8.6</com.google.code.gson.version>
+		<com.google.code.gson.version>2.10.1</com.google.code.gson.version>
 		<io.jsonwebtoken.version>0.9.1</io.jsonwebtoken.version>
 		<org.reflections.version>0.9.10</org.reflections.version>
 		<postgresql.driver.version>42.2.12</postgresql.driver.version>
