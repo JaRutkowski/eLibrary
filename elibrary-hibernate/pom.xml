@@ -120,7 +120,7 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
-			<version>${org.hibernate.version}</version>
+			<version>5.4.10.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>org.reflections</groupId>

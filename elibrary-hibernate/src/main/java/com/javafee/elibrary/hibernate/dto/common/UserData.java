@@ -2,6 +2,7 @@ package com.javafee.elibrary.hibernate.dto.common;
 
 import java.util.Date;
 
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,7 +20,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
-
 import lombok.Data;
 
 @Data

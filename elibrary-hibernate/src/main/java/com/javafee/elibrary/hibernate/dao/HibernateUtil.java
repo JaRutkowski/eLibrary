@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+
 import javax.persistence.EntityManager;
 
 import org.hibernate.HibernateException;
@@ -20,6 +21,7 @@ import org.hibernate.cfg.Environment;
 import org.reflections.Reflections;
 
 import com.javafee.elibrary.hibernate.dao.common.Constants;
+
 
 import lombok.Getter;
 import lombok.extern.java.Log;
@@ -46,13 +48,14 @@ public class HibernateUtil {
 
 			StandardServiceRegistryBuilder registryBuilder = new StandardServiceRegistryBuilder();
 
-			Map<String, String> settings = new HashMap<>();
+			Map<String, Object> settings = new HashMap<>();
 			settings.put(Environment.DRIVER, "org.postgresql.Driver");
 			settings.put(Environment.URL, prop.getProperty("db.url"));
 			settings.put(Environment.USER, prop.getProperty("db.username"));
 			settings.put(Environment.PASS, prop.getProperty("db.password"));
 			settings.put(Environment.DIALECT, "org.hibernate.dialect.PostgreSQL9Dialect");
-			settings.put(Environment.CACHE_PROVIDER_CONFIG, "org.hibernate.cache.internal.NoCacheProvider");
+			//TODO: property commented after upgrade to Hibernate 6
+			//settings.put(Environment.CACHE_PROVIDER_CONFIG, "org.hibernate.cache.internal.NoCacheProvider");
 			settings.put(Environment.HBM2DDL_AUTO, "update");
 			settings.put(Environment.NON_CONTEXTUAL_LOB_CREATION, "true");
 
