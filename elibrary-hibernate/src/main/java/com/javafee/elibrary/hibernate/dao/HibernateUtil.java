@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
-
 import javax.persistence.EntityManager;
 
 import org.hibernate.HibernateException;
@@ -21,7 +20,6 @@ import org.hibernate.cfg.Environment;
 import org.reflections.Reflections;
 
 import com.javafee.elibrary.hibernate.dao.common.Constants;
-
 
 import lombok.Getter;
 import lombok.extern.java.Log;

@@ -9,7 +9,6 @@ import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.criterion.Example;
 
-
 public class HibernateDao<T, Id extends Serializable> implements GenericDao<T, Id> {
 
 	private Class<T> persistentClass;
