@@ -48,14 +48,13 @@ public class HibernateUtil {
 
 			StandardServiceRegistryBuilder registryBuilder = new StandardServiceRegistryBuilder();
 
-			Map<String, Object> settings = new HashMap<>();
+			Map<String, String> settings = new HashMap<>();
 			settings.put(Environment.DRIVER, "org.postgresql.Driver");
 			settings.put(Environment.URL, prop.getProperty("db.url"));
 			settings.put(Environment.USER, prop.getProperty("db.username"));
 			settings.put(Environment.PASS, prop.getProperty("db.password"));
 			settings.put(Environment.DIALECT, "org.hibernate.dialect.PostgreSQL9Dialect");
-			//TODO: property commented after upgrade to Hibernate 6
-			//settings.put(Environment.CACHE_PROVIDER_CONFIG, "org.hibernate.cache.internal.NoCacheProvider");
+			settings.put(Environment.CACHE_PROVIDER_CONFIG, "org.hibernate.cache.internal.NoCacheProvider");
 			settings.put(Environment.HBM2DDL_AUTO, "update");
 			settings.put(Environment.NON_CONTEXTUAL_LOB_CREATION, "true");
 
