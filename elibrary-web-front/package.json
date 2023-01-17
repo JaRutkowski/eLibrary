@@ -6,7 +6,7 @@
     "bootstrap": "^4.5.3",
     "font-awesome": "^4.7.0",
     "google-maps-react": "^2.0.2",
-    "jquery": "^3.4.0",
+    "jquery": "^3.5.0",
     "node-sass": "^8.0.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.4",
