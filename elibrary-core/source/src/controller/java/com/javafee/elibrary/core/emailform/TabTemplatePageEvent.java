@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -27,7 +28,9 @@ import com.javafee.elibrary.hibernate.dto.common.SystemProperties;
 import com.javafee.elibrary.hibernate.dto.common.UserData;
 
 import lombok.Setter;
+import lombok.extern.java.Log;
 
+@Log
 public class TabTemplatePageEvent implements IActionForm {
 	@Setter
 	private EmailForm emailForm;
@@ -74,6 +77,13 @@ public class TabTemplatePageEvent implements IActionForm {
 		Optional<SystemProperties> systemProperties = Common.findSystemPropertiesByUserAccountId(
 				LogInEvent.getWorker() != null ? LogInEvent.getWorker().getIdUserData() : Constants.DATA_BASE_ADMIN_ID);
 		if (systemProperties.isPresent() && !Strings.isEmpty(systemProperties.get().getTemplateDirectory())) {
+			if (!new File(systemProperties.get().getTemplateDirectory()).exists()){
+				try {
+					Files.createDirectory(Path.of(systemProperties.get().getTemplateDirectory()));
+				} catch (IOException e) {
+					log.severe(e.getMessage());
+				}
+			}
 			File[] files = new File(systemProperties.get().getTemplateDirectory()).listFiles();
 			List<String> names = Arrays.asList(files).parallelStream().map(file -> file.getName())
 					.collect(Collectors.toList());
