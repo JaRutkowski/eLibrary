@@ -71,7 +71,7 @@ public class TemplateManagementPanel extends BasePanel {
 
 		btnPreviewTemplateLibrary = new CustomJButton(
 				SystemProperties.getInstance().getResourceBundle().getString("htmlEditor.btnPreviewTemplateLibrary"));
-		btnPreviewTemplateLibrary.setIcon(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnAccept-ico.png"))
+		btnPreviewTemplateLibrary.setIcon(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnRoundParse-ico.png"))
 				.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
 		GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
 		gbc_btnNewButton_1.fill = GridBagConstraints.BOTH;
