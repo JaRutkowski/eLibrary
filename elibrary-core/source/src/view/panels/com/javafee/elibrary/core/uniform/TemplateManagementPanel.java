@@ -2,13 +2,12 @@ package com.javafee.elibrary.core.uniform;
 
 import java.awt.*;
 
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
+import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
 import com.javafee.elibrary.core.common.BasePanel;
 import com.javafee.elibrary.core.common.SystemProperties;
+import com.javafee.elibrary.core.startform.RegistrationPanel;
 import com.javafee.elibrary.core.unicomponent.border.CustomTitledBorder;
 import com.javafee.elibrary.core.unicomponent.jbutton.CustomJButton;
 import com.javafee.elibrary.core.unicomponent.jcombobox.CustomJComboBox;
@@ -61,6 +60,8 @@ public class TemplateManagementPanel extends BasePanel {
 
 		btnSaveTemplateToLibrary = new CustomJButton(
 				SystemProperties.getInstance().getResourceBundle().getString("htmlEditor.btnSaveTemplateToLibrary"));
+		btnSaveTemplateToLibrary.setIcon(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnAccept-ico.png"))
+				.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
 		GridBagConstraints gbc_btnNewButton11 = new GridBagConstraints();
 		gbc_btnNewButton11.fill = GridBagConstraints.BOTH;
 		gbc_btnNewButton11.insets = new Insets(0, 0, 5, 0);
@@ -70,6 +71,8 @@ public class TemplateManagementPanel extends BasePanel {
 
 		btnPreviewTemplateLibrary = new CustomJButton(
 				SystemProperties.getInstance().getResourceBundle().getString("htmlEditor.btnPreviewTemplateLibrary"));
+		btnPreviewTemplateLibrary.setIcon(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnRoundParse-ico.png"))
+				.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
 		GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
 		gbc_btnNewButton_1.fill = GridBagConstraints.BOTH;
 		gbc_btnNewButton_1.gridx = 1;
