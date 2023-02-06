@@ -43,12 +43,9 @@ public class WatchServiceDirectory implements Runnable {
 								LogInEvent.getWorker() != null ? LogInEvent.getWorker().getIdUserData()
 										: Constants.DATA_BASE_ADMIN_ID);
 				if (systemProperties.isPresent()) {
-					WatchService watchService;
-					watchService = FileSystems.getDefault().newWatchService();
-
-					Path path = Paths.get(systemProperties.get().getTemplateDirectory());
-
-					path.register(watchService, StandardWatchEventKinds.ENTRY_CREATE,
+					Optional.ofNullable(systemProperties.get().getTemplateDirectory()).orElseThrow();
+					WatchService watchService = FileSystems.getDefault().newWatchService();
+					Paths.get(systemProperties.get().getTemplateDirectory()).register(watchService, StandardWatchEventKinds.ENTRY_CREATE,
 							StandardWatchEventKinds.ENTRY_DELETE, StandardWatchEventKinds.ENTRY_MODIFY);
 
 					WatchKey key;
