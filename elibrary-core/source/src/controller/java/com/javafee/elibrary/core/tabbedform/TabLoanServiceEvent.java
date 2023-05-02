@@ -58,6 +58,7 @@ public class TabLoanServiceEvent implements IActionForm {
 		tabbedForm.getPanelLoanService().getBtnLoan().addActionListener(e -> onClickBtnLoan());
 		tabbedForm.getPanelLoanService().getBtnReservation().addActionListener(e -> onClickBtnReservation());
 		tabbedForm.getPanelLoanService().getBtnProlongation().addActionListener(e -> onClickBtnProlongation());
+		tabbedForm.getPanelLoanService().getBtnCancelLoan().addActionListener(e -> onClickBtnCancelLoan());
 		tabbedForm.getPanelLoanService().getBtnReturn().addActionListener(e -> onClickBtnReturn());
 		tabbedForm.getPanelLoanService().getBtnPenalty().addActionListener(e -> onClickBtnPenalty());
 		tabbedForm.getPanelLoanService().getLoanTable().getSelectionModel().addListSelectionListener(e -> {
@@ -274,6 +275,36 @@ public class TabLoanServiceEvent implements IActionForm {
 				LogGuiException.logWarning(SystemProperties.getInstance().getResourceBundle().
 						getString("tabLoanEvent.notSelectedTablesWarning"), SystemProperties.getInstance()
 						.getResourceBundle().getString("tabLoanEvent.notSelectedTablesWarning"));
+	}
+	private void onClickBtnCancelLoan() {
+		if (tabbedForm.getPanelLoanService().getLoanTable().getSelectedRow() != -1) {
+			int selectedRowIndex = tabbedForm.getPanelLoanService().getLoanTable()
+					.convertRowIndexToModel(tabbedForm.getPanelLoanService().getLoanTable().getSelectedRow());
+
+			if (selectedRowIndex != -1) {
+				Lend selectedLend = ((LoanTableModel) tabbedForm.getPanelLoanService().getLoanTable()
+						.getModel()).getLend(selectedRowIndex);
+				selectedLend.setIsReturned(true);
+
+				HibernateUtil.beginTransaction();
+				HibernateUtil.getSession().update(Lend.class.getName(), selectedLend);
+				HibernateUtil.commitTransaction();
+
+				((LoanTableModel) tabbedForm.getPanelLoanService().getLoanTable().getModel()).reloadData();
+
+				JOptionPane.showMessageDialog(tabbedForm.getFrame(),
+						SystemProperties.getInstance().getResourceBundle()
+								.getString("tabLoanServiceEvent.loanCancelSuccess"),
+						SystemProperties.getInstance().getResourceBundle().getString(
+								"tabLoanServiceEvent.loanCancelSuccessTitle"),
+						JOptionPane.INFORMATION_MESSAGE);
+			}
+		} else
+			LogGuiException.logWarning(
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("tabLoanEvent.notSelectedTablesWarningTitle"),
+					SystemProperties.getInstance().getResourceBundle()
+							.getString("tabLoanEvent.notSelectedTablesWarning"));
 	}
 	private void onClickBtnReturn() {
 		if (!validateLoanTableSelection()) {

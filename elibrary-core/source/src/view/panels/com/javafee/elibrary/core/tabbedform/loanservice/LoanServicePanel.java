@@ -24,6 +24,7 @@ import com.javafee.elibrary.core.unicomponent.jbutton.CustomJButton;
 import com.javafee.elibrary.core.unicomponent.jtable.imortexportable.ImportExportableJTable;
 
 import lombok.Getter;
+import javax.swing.Box;
 
 public class LoanServicePanel extends BasePanel {
 	private static final long serialVersionUID = 1L;
@@ -44,6 +45,8 @@ public class LoanServicePanel extends BasePanel {
 	@Getter
 	private JButton btnProlongation;
 	@Getter
+	private JButton btnCancelLoan;
+	@Getter
 	private JButton btnReturn;
 	@Getter
 	private JButton btnReservation;
@@ -58,13 +61,15 @@ public class LoanServicePanel extends BasePanel {
 	private JPanel volumePanel;
 	@Getter
 	private JButton btnCancelReservation;
+	private Component horizontalGlue;
+	private Component verticalGlue;
 
 	public LoanServicePanel() {
 		super();
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{751, 64, 0, 165, 0};
+		gridBagLayout.columnWidths = new int[]{751, 0, 0, 0, 0, 165, 0};
 		gridBagLayout.rowHeights = new int[]{189, 0, 0, 0, 0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{1.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{1.0, 0.0, 1.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 
@@ -107,7 +112,7 @@ public class LoanServicePanel extends BasePanel {
 				TitledBorder.LEADING, CustomTitledBorder.TOP, null, null));
 		GridBagConstraints gbc_volumePanel = new GridBagConstraints();
 		gbc_volumePanel.fill = GridBagConstraints.BOTH;
-		gbc_volumePanel.gridwidth = 3;
+		gbc_volumePanel.gridwidth = 5;
 		gbc_volumePanel.insets = new Insets(0, 0, 5, 0);
 		gbc_volumePanel.gridx = 1;
 		gbc_volumePanel.gridy = 0;
@@ -133,16 +138,17 @@ public class LoanServicePanel extends BasePanel {
 				true);
 		volumeLoanTable.setActions(new BtnImportAction(volumeLoanTable), new BtnExportAction(volumeLoanTable));
 		scrollPane_loanTable_2.setViewportView(volumeLoanTable);
-
-		btnLoan = new CustomJButton(SystemProperties.getInstance().getResourceBundle().getString("loanServicePanel.btnLoan"));
-		btnLoan.setIcon(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnAddToList-ico.png"))
-				.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
-		GridBagConstraints gbc_btnLoan = new GridBagConstraints();
-		gbc_btnLoan.anchor = GridBagConstraints.NORTHWEST;
-		gbc_btnLoan.insets = new Insets(0, 0, 5, 5);
-		gbc_btnLoan.gridx = 1;
-		gbc_btnLoan.gridy = 1;
-		add(btnLoan, gbc_btnLoan);
+		
+				btnLoan = new CustomJButton(SystemProperties.getInstance().getResourceBundle().getString("loanServicePanel.btnLoan"));
+				btnLoan.setIcon(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnAddToList-ico.png"))
+						.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
+				GridBagConstraints gbc_btnLoan = new GridBagConstraints();
+				gbc_btnLoan.fill = GridBagConstraints.HORIZONTAL;
+				gbc_btnLoan.anchor = GridBagConstraints.NORTH;
+				gbc_btnLoan.insets = new Insets(0, 0, 5, 5);
+				gbc_btnLoan.gridx = 1;
+				gbc_btnLoan.gridy = 1;
+				add(btnLoan, gbc_btnLoan);
 
 		loanPanel = new JPanel();
 		loanPanel.setBackground(Utils.getApplicationUserDefinedColor());
@@ -151,7 +157,7 @@ public class LoanServicePanel extends BasePanel {
 				TitledBorder.LEADING, CustomTitledBorder.TOP, null, null));
 		GridBagConstraints gbc_loanPanel = new GridBagConstraints();
 		gbc_loanPanel.fill = GridBagConstraints.BOTH;
-		gbc_loanPanel.gridwidth = 4;
+		gbc_loanPanel.gridwidth = 6;
 		gbc_loanPanel.insets = new Insets(0, 0, 5, 0);
 		gbc_loanPanel.gridx = 0;
 		gbc_loanPanel.gridy = 2;
@@ -177,39 +183,59 @@ public class LoanServicePanel extends BasePanel {
 				true);
 		loanTable.setActions(new BtnImportAction(loanTable), new BtnExportAction(loanTable));
 		scrollPane_loanTable_1.setViewportView(loanTable);
+						
+						horizontalGlue = Box.createHorizontalGlue();
+						GridBagConstraints gbc_horizontalGlue = new GridBagConstraints();
+						gbc_horizontalGlue.insets = new Insets(0, 0, 5, 5);
+						gbc_horizontalGlue.gridx = 0;
+						gbc_horizontalGlue.gridy = 3;
+						add(horizontalGlue, gbc_horizontalGlue);
+				
+						btnReservation = new CustomJButton(
+								SystemProperties.getInstance().getResourceBundle().getString("loanServicePanel.btnReservation"));
+						btnReservation
+								.setIcon(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnAdd-ico.png"))
+										.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
+						GridBagConstraints gbc_btnReservation = new GridBagConstraints();
+						gbc_btnReservation.fill = GridBagConstraints.HORIZONTAL;
+						gbc_btnReservation.anchor = GridBagConstraints.NORTH;
+						gbc_btnReservation.insets = new Insets(0, 0, 5, 5);
+						gbc_btnReservation.gridx = 1;
+						gbc_btnReservation.gridy = 3;
+						add(btnReservation, gbc_btnReservation);
+		
+				btnProlongation = new CustomJButton(
+						SystemProperties.getInstance().getResourceBundle().getString("loanServicePanel.btnProlongation"));
+				btnProlongation
+						.setIcon(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnReload-ico.png"))
+								.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
+				GridBagConstraints gbc_btnProlongation = new GridBagConstraints();
+				gbc_btnProlongation.fill = GridBagConstraints.HORIZONTAL;
+				gbc_btnProlongation.anchor = GridBagConstraints.NORTH;
+				gbc_btnProlongation.insets = new Insets(0, 0, 5, 5);
+				gbc_btnProlongation.gridx = 2;
+				gbc_btnProlongation.gridy = 3;
+				add(btnProlongation, gbc_btnProlongation);
 
-		btnReservation = new CustomJButton(
-				SystemProperties.getInstance().getResourceBundle().getString("loanServicePanel.btnReservation"));
-		btnReservation
-				.setIcon(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnAdd-ico.png"))
-						.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
-		GridBagConstraints gbc_btnReservation = new GridBagConstraints();
-		gbc_btnReservation.anchor = GridBagConstraints.NORTHEAST;
-		gbc_btnReservation.insets = new Insets(0, 0, 5, 5);
-		gbc_btnReservation.gridx = 0;
-		gbc_btnReservation.gridy = 3;
-		add(btnReservation, gbc_btnReservation);
-
-		btnProlongation = new CustomJButton(
-				SystemProperties.getInstance().getResourceBundle().getString("loanServicePanel.btnProlongation"));
-		btnProlongation
-				.setIcon(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnReload-ico.png"))
-						.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
-		GridBagConstraints gbc_btnProlongation = new GridBagConstraints();
-		gbc_btnProlongation.anchor = GridBagConstraints.NORTH;
-		gbc_btnProlongation.insets = new Insets(0, 0, 5, 5);
-		gbc_btnProlongation.gridx = 1;
-		gbc_btnProlongation.gridy = 3;
-		add(btnProlongation, gbc_btnProlongation);
+		btnCancelLoan = new CustomJButton(SystemProperties.getInstance().getResourceBundle().getString("loanServicePanel.btnCancelLoan"));
+		btnCancelLoan.setIcon(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnDelete-ico.png"))
+				.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
+		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
+		gbc_btnNewButton.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnNewButton.insets = new Insets(0, 0, 5, 5);
+		gbc_btnNewButton.gridx = 3;
+		gbc_btnNewButton.gridy = 3;
+		add(btnCancelLoan, gbc_btnNewButton);
 
 		btnReturn = new CustomJButton(
 				SystemProperties.getInstance().getResourceBundle().getString("loanServicePanel.btnReturn"));
 		btnReturn.setIcon(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnClear-ico.png"))
 				.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
 		GridBagConstraints gbc_btnReturn = new GridBagConstraints();
+		gbc_btnReturn.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnReturn.anchor = GridBagConstraints.NORTH;
 		gbc_btnReturn.insets = new Insets(0, 0, 5, 5);
-		gbc_btnReturn.gridx = 2;
+		gbc_btnReturn.gridx = 4;
 		gbc_btnReturn.gridy = 3;
 		add(btnReturn, gbc_btnReturn);
 
@@ -218,9 +244,10 @@ public class LoanServicePanel extends BasePanel {
 		btnPenalty.setIcon(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnAdd-ico.png"))
 				.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
 		GridBagConstraints gbc_btnPenalty = new GridBagConstraints();
+		gbc_btnPenalty.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnPenalty.anchor = GridBagConstraints.NORTH;
 		gbc_btnPenalty.insets = new Insets(0, 0, 5, 0);
-		gbc_btnPenalty.gridx = 3;
+		gbc_btnPenalty.gridx = 5;
 		gbc_btnPenalty.gridy = 3;
 		add(btnPenalty, gbc_btnPenalty);
 
@@ -232,7 +259,7 @@ public class LoanServicePanel extends BasePanel {
 		GridBagConstraints gbc_reservationPanel = new GridBagConstraints();
 		gbc_reservationPanel.insets = new Insets(0, 0, 5, 0);
 		gbc_reservationPanel.fill = GridBagConstraints.BOTH;
-		gbc_reservationPanel.gridwidth = 4;
+		gbc_reservationPanel.gridwidth = 6;
 		gbc_reservationPanel.gridx = 0;
 		gbc_reservationPanel.gridy = 4;
 		add(reservationPanel, gbc_reservationPanel);
@@ -257,6 +284,14 @@ public class LoanServicePanel extends BasePanel {
 				true);
 		reservationTable.setActions(new BtnImportAction(reservationTable), new BtnExportAction(reservationTable));
 		scrollPane_reservationTable.setViewportView(reservationTable);
+		
+		verticalGlue = Box.createVerticalGlue();
+		GridBagConstraints gbc_verticalGlue = new GridBagConstraints();
+		gbc_verticalGlue.gridwidth = 5;
+		gbc_verticalGlue.insets = new Insets(0, 0, 0, 5);
+		gbc_verticalGlue.gridx = 0;
+		gbc_verticalGlue.gridy = 5;
+		add(verticalGlue, gbc_verticalGlue);
 
 		btnCancelReservation = new CustomJButton(
 				SystemProperties.getInstance().getResourceBundle().getString("loanServicePanel.btnCancelReservation"));
@@ -264,7 +299,8 @@ public class LoanServicePanel extends BasePanel {
 				.setIcon(new ImageIcon(new ImageIcon(RegistrationPanel.class.getResource("/images/btnDelete-ico.png"))
 						.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH)));
 		GridBagConstraints gbc_btnCancelReservation = new GridBagConstraints();
-		gbc_btnCancelReservation.gridx = 3;
+		gbc_btnCancelReservation.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnCancelReservation.gridx = 5;
 		gbc_btnCancelReservation.gridy = 5;
 		add(btnCancelReservation, gbc_btnCancelReservation);
 	}
