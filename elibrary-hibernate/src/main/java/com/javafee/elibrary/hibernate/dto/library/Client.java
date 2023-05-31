@@ -1,11 +1,12 @@
 package com.javafee.elibrary.hibernate.dto.library;
 
-import com.javafee.elibrary.hibernate.dto.common.UserData;
 import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+
+import com.javafee.elibrary.hibernate.dto.common.UserData;
 
 @Entity
 @NamedQueries({
